@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="숙소 설명">
+    <meta name="keywords" content="SEO 키워드">
+    <title>오시는길 - 숙소명</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="../styles/common.css" as="style">
+    <link rel="preload" href="../styles/directions.css" as="style">
+    <link rel="stylesheet" href="../styles/common.css">
+    <link rel="stylesheet" href="../styles/directions.css">
+</head>
+<body>
+    <div class="directions-page">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <!-- Background Image -->
+            <div class="hero-background">
+                <img data-directions-hero-image
+                     src="https://images.unsplash.com/photo-1661183977745-e71963f46e02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGxhbmRzY2FwZSUyMGhlcm98ZW58MXx8fHwxNzU1MDQ4NTI5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                     alt="Mountain Landscape"
+                     loading="eager">
+            </div>
+            <div class="hero-overlay"></div>
+
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <!-- Back Button -->
+                <button class="back-button" onclick="navigateToHome()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
+                    Back to Home
+                </button>
+
+                <!-- Title -->
+                <h1 class="hero-title" data-directions-hero-title>오시는길</h1>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="content-section">
+            <div class="content-container">
+                <!-- Resort Info Section -->
+                <div class="resort-info">
+                    <h2 class="section-title" data-directions-section-title>오시는길 섹션 타이틀</h2>
+
+                    <div class="info-grid">
+                        <div class="info-content">
+                            <div class="address-section">
+                                <h3>네비게이션 이용 시</h3>
+
+                                <div class="address-item">
+                                    <svg class="address-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                    </svg>
+                                    <div class="address-details">
+                                        <p>도로명 주소</p>
+                                        <p data-directions-road-address>도로명 주소</p>
+                                    </div>
+                                </div>
+
+                                <div class="address-item">
+                                    <svg class="address-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.158.69-.158 1.006 0l4.994 2.497c.317.158.69.158 1.007 0z" />
+                                    </svg>
+                                    <div class="address-details">
+                                        <p>지번 주소</p>
+                                        <p data-directions-lot-address>지번 주소</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="info-notice">
+                                <p data-directions-notice>오시는길 안내 메시지</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="map-container">
+                <h3 class="map-title" data-directions-map-title>지도 섹션 타이틀</h3>
+
+                <!-- Map Container -->
+                <div class="map-wrapper">
+                    <!-- Map Background Image -->
+                    <img class="map-image" src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXAlMjBqZWp1fGVufDF8fHx8MTc1NTA1NDMzOXww&ixlib=rb-4.1.0&q=80&w=1080" alt="지도 이미지">
+
+                    <!-- Map Overlay Content -->
+                    <div class="map-overlay">
+                        <div class="map-content">
+                            <svg class="map-pin-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                            </svg>
+                            <h4 data-directions-property-name>숙소명</h4>
+                            <p class="address" data-directions-address>숙소 주소</p>
+                            <div class="map-buttons">
+                                <button class="map-button kakao-button">카카오맵으로 보기</button>
+                                <button class="map-button google-button">Google 지도로 보기</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Copyright notice -->
+                    <div class="map-copyright">kakaomap</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- Include ImageWithFallback script -->
+    <script src="../js/image-with-fallback.js"></script>
+
+    <!-- Image Helpers -->
+    <script src="../js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="../js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Directions Page Mapper -->
+    <script src="../js/data-mapper/pages/directions-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="../js/preview-handler.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="../js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="../js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
+    <script src="../js/pages/directions.js"></script>
+
+</body>
+</html>

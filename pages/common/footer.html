@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Component</title>
+    <link rel="stylesheet" href="../styles/footer.css">
+</head>
+<body>
+    <!-- Footer Component -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Main Footer Content -->
+            <div class="footer-main">
+                <!-- Logo Section -->
+                <div class="footer-logo-section">
+                    <div class="footer-logo-container">
+                        <!-- Logo Image -->
+                        <div class="footer-logo">
+                            <img data-footer-logo src="data:image/svg+xml,%3Csvg width='64' height='80' viewBox='0 0 64 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 35 L16 25 L24 15 L32 8 L40 15 L48 25 L56 35 L8 35 Z' fill='white' fill-opacity='0.9'/%3E%3Cpath d='M12 35 L20 28 L28 20 L32 16 L36 20 L44 28 L52 35 L12 35 Z' fill='white' fill-opacity='0.7'/%3E%3Crect x='30' y='45' width='4' height='12' fill='white' fill-opacity='0.8'/%3E%3Ccircle cx='32' cy='42' r='5' fill='white' fill-opacity='0.9'/%3E%3Ccircle cx='32' cy='38' r='4' fill='white' fill-opacity='0.8'/%3E%3Ctext x='32' y='70' text-anchor='middle' fill='white' fill-opacity='0.9' font-size='8' font-weight='600'%3E제주포레스트%3C/text%3E%3C/svg%3E" alt="로고" class="footer-logo-image">
+                        </div>
+                        <!-- Logo Text (별도 div로 분리) -->
+                        <div class="footer-logo-text-container">
+                            <span class="footer-logo-text" data-footer-logo-text>숙소명</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information Section -->
+                <div class="footer-contact">
+                    <!-- Business Info Grid (2x2) -->
+                    <div class="footer-info-grid">
+                        <!-- First Row -->
+                        <div class="footer-info-row">
+                            <div class="footer-info-item" data-footer-phone>숙소 전화번호 : 010-1234-1234</div>
+                            <div class="footer-info-item" data-footer-business-number>사업자번호 : 123-45-67890</div>
+                        </div>
+                        <!-- Second Row -->
+                        <div class="footer-info-row">
+                            <div class="footer-info-item" data-footer-address>주소 : 숙소주소</div>
+                            <div class="footer-info-item" data-footer-ecommerce>통신판매업신고번호 : 2025-통신판매업-0123</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section - Full Width -->
+            <div class="footer-copyright-section">
+                <p class="footer-copyright" data-footer-copyright>
+                    © 2025 숙소명. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer script -->
+    <script src="../js/common/footer.js"></script>
+</body>
+</html>
