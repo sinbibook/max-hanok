@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.0.0",
-    "generatedAt": "2025-10-14T10:15:11.454Z",
+    "version": "1.1.0",
+    "generatedAt": "2025-10-14T10:18:52.290Z",
     "templateType": "gamseong",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -671,7 +671,7 @@
                     {
                       "id": "6c28cd45-6199-4c43-89a9-01f1e5d4a8a0",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1760436598165-qad9s10bx8j.jpg",
-                      "sortOrder": 2,
+                      "sortOrder": 0,
                       "description": "",
                       "isSelected": true,
                       "blockId": "34009fb2-09b8-4259-9229-91e93bb4c900"
@@ -679,7 +679,7 @@
                     {
                       "id": "79c48bf1-8867-4fa5-a60e-7fbfbe82dc05",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1760436598165-z1d9q4ntxc.jpg",
-                      "sortOrder": 3,
+                      "sortOrder": 1,
                       "description": "",
                       "isSelected": true,
                       "blockId": "34009fb2-09b8-4259-9229-91e93bb4c900"
@@ -694,7 +694,7 @@
                     {
                       "id": "c0e5a3fc-c172-4b8a-923b-ff90400b845d",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1760413898179-np66o9qx4e.jpg",
-                      "sortOrder": 0,
+                      "sortOrder": 2,
                       "description": "",
                       "isSelected": false,
                       "blockId": "5f2e6186-eb74-4907-86e9-a3f44867ed1a"
@@ -702,7 +702,7 @@
                     {
                       "id": "58b03780-2363-46e2-8081-c37fb81f713f",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1760413898179-ec6wx4ahwmg.jpg",
-                      "sortOrder": 1,
+                      "sortOrder": 3,
                       "description": "",
                       "isSelected": false,
                       "blockId": "5f2e6186-eb74-4907-86e9-a3f44867ed1a"
