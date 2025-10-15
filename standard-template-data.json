@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.10.0",
-    "generatedAt": "2025-10-15T05:14:36.619Z",
+    "version": "1.11.0",
+    "generatedAt": "2025-10-15T07:08:37.049Z",
     "templateType": "gamseong",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -672,7 +672,7 @@
                       "id": "6c28cd45-6199-4c43-89a9-01f1e5d4a8a0",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1760436598165-qad9s10bx8j.jpg",
                       "sortOrder": 0,
-                      "description": "",
+                      "description": "12",
                       "isSelected": true,
                       "blockId": "34009fb2-09b8-4259-9229-91e93bb4c900"
                     },
@@ -680,13 +680,13 @@
                       "id": "79c48bf1-8867-4fa5-a60e-7fbfbe82dc05",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1760436598165-z1d9q4ntxc.jpg",
                       "sortOrder": 1,
-                      "description": "",
+                      "description": "34",
                       "isSelected": true,
                       "blockId": "34009fb2-09b8-4259-9229-91e93bb4c900"
                     }
                   ],
                   "blockId": "34009fb2-09b8-4259-9229-91e93bb4c900",
-                  "description": "자신만의 도자기를 만들어보세요."
+                  "description": "자신만의 도자기를 만들어보세요.\n집 까지 안전하게 배송해드립니다."
                 },
                 {
                   "title": "정통 민속놀이",
