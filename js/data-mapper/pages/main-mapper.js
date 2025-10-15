@@ -238,7 +238,7 @@ class MainMapper extends BaseDataMapper {
     }
 
     /**
-     * 이미지 그리드 채우기 헬퍼 함수 (최대 2개까지만 표시)
+     * 이미지 그리드 채우기 헬퍼 함수 (isSelected: true인 이미지만 최대 2개까지 표시)
      */
     populateImageGrid(container, images) {
         if (!container) return;
@@ -263,8 +263,13 @@ class MainMapper extends BaseDataMapper {
             return;
         }
 
-        // 최대 2개까지만 표시
-        const limitedImages = images.slice(0, 2);
+        // isSelected: true인 이미지만 필터링하고 sortOrder로 정렬한 후 최대 2개까지만 표시
+        const selectedImages = images
+            .filter(img => img.isSelected)
+            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+            .slice(0, 2);
+
+        const limitedImages = selectedImages;
 
         limitedImages.forEach((image, index) => {
             // 기존 HTML 구조와 동일하게 .image-item div로 래핑
