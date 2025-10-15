@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.9.0",
-    "generatedAt": "2025-10-15T04:00:07.647Z",
+    "version": "1.10.0",
+    "generatedAt": "2025-10-15T05:14:36.619Z",
     "templateType": "gamseong",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -551,28 +551,28 @@
                     "id": "8e2a45bb-8d8b-4f58-8543-22d94174ea97",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759230272798-zgq0yxoxodn.jpg",
                     "sortOrder": 1,
-                    "description": "새 이미지 업로드 테스트 설명 이미지 삭제",
+                    "description": "라운지",
                     "isSelected": true
                   },
                   {
                     "id": "237e8d86-fd28-4403-8b51-c4abd18dff04",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759230404281-4e5ix1jmk3h.jpg",
                     "sortOrder": 2,
-                    "description": "새 이미지 추가 2",
+                    "description": "로비",
                     "isSelected": true
                   },
                   {
                     "id": "8b5dd59a-7c9d-456b-92d3-0aecd386f058",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759123286967-geht43pai0v.jpg",
                     "sortOrder": 3,
-                    "description": "도자기와 함께2",
+                    "description": "도자기와 함께",
                     "isSelected": true
                   },
                   {
                     "id": "6f447b21-6253-4aea-b389-6f74efedbe09",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759231037895-q8i05um6tf.jpg",
                     "sortOrder": 4,
-                    "description": "새 이미지 추가 3",
+                    "description": "주방",
                     "isSelected": true
                   }
                 ],
@@ -603,10 +603,10 @@
                     "isSelected": true
                   },
                   {
-                    "id": "8a24de54-6ac6-4ccb-a1b1-7e424e13b3c9",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_signature/1759123365218-baiotchspq7.jpg",
+                    "id": "bebf8266-c527-4c77-9714-924b686b432e",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_signature/1760505256903-rdimqoq59kf.jpg",
                     "sortOrder": 3,
-                    "description": "공용 사우나",
+                    "description": "찜질방",
                     "isSelected": true
                   }
                 ],
