@@ -50,27 +50,34 @@ class HeaderFooterLoader {
                     document.head.appendChild(newLink);
                 });
                 
-                // Add scripts to body
-                scriptElements.forEach(script => {
-                    const newScript = document.createElement('script');
+                // Add scripts to body and wait for them to load
+                const scriptPromises = Array.from(scriptElements).map(script => {
+                    return new Promise((resolve, reject) => {
+                        const newScript = document.createElement('script');
 
-                    // Handle external script files (src attribute)
-                    if (script.src) {
-                        newScript.src = script.src;
-                    } else {
-                        // Handle inline scripts
-                        newScript.textContent = script.textContent;
-                    }
+                        // Handle external script files (src attribute)
+                        if (script.src) {
+                            newScript.src = script.src;
+                            newScript.onload = resolve;
+                            newScript.onerror = reject;
+                        } else {
+                            // Handle inline scripts (execute immediately)
+                            newScript.textContent = script.textContent;
+                            resolve();
+                        }
 
-                    document.body.appendChild(newScript);
+                        document.body.appendChild(newScript);
+                    });
                 });
-                
-                // Wait a bit for scripts to execute, then set up event listeners
-                setTimeout(() => {
-                    this.setupHeaderEventListeners();
-                    // Header 매핑을 event listener 설정 후에 실행
-                    this.applyHeaderFooterMapping();
-                }, 500);
+
+                // Wait for all scripts to load before setting up event listeners
+                await Promise.all(scriptPromises);
+
+                // Set up event listeners after scripts are loaded
+                this.setupHeaderEventListeners();
+
+                // Header 매핑은 즉시 실행 (FOUC 방지)
+                this.applyHeaderFooterMapping();
                 
                 // Dynamically calculate and adjust body padding to account for fixed header
                 this.adjustBodyPadding();

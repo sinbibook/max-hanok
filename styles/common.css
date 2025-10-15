@@ -65,15 +65,15 @@ html {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
-    
+
     .no-print {
         display: none !important;
     }
-    
+
     .print-block {
         display: block !important;
     }
-    
+
     @page {
         margin: 2cm;
     }
@@ -89,7 +89,7 @@ html {
     .container-query {
         container-type: inline-size;
     }
-    
+
     @container (min-width: 400px) {
         .container-responsive {
             display: grid;
