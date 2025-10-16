@@ -13,14 +13,15 @@ class HeaderFooterLoader {
             const response = await fetch('./common/header.html');
             const html = await response.text();
             
-            // Parse the HTML and extract the header element
+            // Parse the HTML and extract the header element and mobile menu
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             const headerElement = doc.querySelector('header');
+            const mobileMenuElement = doc.querySelector('.mobile-menu');
             const styleElements = doc.querySelectorAll('head style');
             const linkElements = doc.querySelectorAll('head link[rel="stylesheet"]');
             const scriptElements = doc.querySelectorAll('script');
-            
+
             if (headerElement) {
                 // Create header container at the top of body
                 const headerContainer = document.createElement('div');
@@ -31,9 +32,15 @@ class HeaderFooterLoader {
                 headerContainer.style.right = '0';
                 headerContainer.style.zIndex = '1000';
                 headerContainer.innerHTML = headerElement.outerHTML;
-                
+
                 // Insert header at the beginning of body
                 document.body.insertBefore(headerContainer, document.body.firstChild);
+
+                // mobile-menu가 header 밖에 별도로 있으면 body에 직접 추가
+                if (mobileMenuElement && !headerElement.contains(mobileMenuElement)) {
+                    const mobileMenuClone = mobileMenuElement.cloneNode(true);
+                    document.body.appendChild(mobileMenuClone);
+                }
                 
                 // Add styles to head
                 styleElements.forEach(style => {
@@ -71,7 +78,12 @@ class HeaderFooterLoader {
                 });
 
                 // Wait for all scripts to load before setting up event listeners
-                await Promise.all(scriptPromises);
+                const results = await Promise.allSettled(scriptPromises);
+                results.forEach(result => {
+                    if (result.status === 'rejected') {
+                        console.error('A script failed to load:', result.reason);
+                    }
+                });
 
                 // Set up event listeners after scripts are loaded
                 this.setupHeaderEventListeners();
@@ -119,7 +131,7 @@ class HeaderFooterLoader {
                 footerContainer.style.display = 'block';
                 footerContainer.style.width = '100%';
                 footerContainer.style.position = 'relative';
-                footerContainer.style.zIndex = '9998';
+                footerContainer.style.zIndex = '10'; // mobile-menu(1001) 아래로
                 footerContainer.style.clear = 'both';
                 
                 // Ensure footer appears at the very end of body

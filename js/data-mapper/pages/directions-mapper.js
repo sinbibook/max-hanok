@@ -4,6 +4,9 @@
  * BaseDataMapper를 상속받아 오시는길 페이지 전용 기능 제공
  */
 class DirectionsMapper extends BaseDataMapper {
+    // OpenStreetMap bbox zoom level constant
+    static OSM_BBOX_ZOOM = 0.01;
+
     constructor() {
         super();
     }
@@ -105,7 +108,7 @@ class DirectionsMapper extends BaseDataMapper {
     }
 
     /**
-     * 지도 섹션 매핑 (지도 제목, 펜션명, 주소, 버튼 기능)
+     * 지도 섹션 매핑 (지도 제목)
      */
     mapMapSection() {
         if (!this.isDataLoaded || !this.data.property) return;
@@ -117,24 +120,6 @@ class DirectionsMapper extends BaseDataMapper {
         if (mapTitleElement) {
             mapTitleElement.textContent = '위치 안내';
         }
-
-        // 펜션명 매핑
-        const propertyNameElement = this.safeSelect('[data-directions-property-name]');
-        if (propertyNameElement && property.name) {
-            propertyNameElement.textContent = property.name;
-        }
-
-        // 지도 영역 주소 매핑
-        const addressElement = this.safeSelect('[data-directions-address]');
-        if (addressElement && property.address) {
-            addressElement.textContent = property.address;
-        }
-
-        // 카카오맵 버튼 기능 설정
-        this.setupKakaoMapButton();
-
-        // Google 지도 버튼 기능 설정
-        this.setupGoogleMapButton();
     }
 
     /**
@@ -144,13 +129,15 @@ class DirectionsMapper extends BaseDataMapper {
         const property = this.data.property;
         const kakaoButton = this.safeSelect('.kakao-button');
 
-        if (kakaoButton && property.latitude && property.longitude && property.name) {
+        if (kakaoButton && property.latitude && property.longitude) {
             // 기존 이벤트 리스너 제거
             kakaoButton.onclick = null;
 
             // 새로운 이벤트 리스너 추가
             kakaoButton.addEventListener('click', () => {
-                const kakaoMapUrl = `https://map.kakao.com/link/map/${encodeURIComponent(property.name)},${property.latitude},${property.longitude}`;
+                // 장소명: 펜션명 + 주소 조합으로 더 정확한 정보 제공
+                const placeName = property.address || property.name || '선택한 위치';
+                const kakaoMapUrl = `https://map.kakao.com/link/map/${encodeURIComponent(placeName)},${property.latitude},${property.longitude}`;
                 window.open(kakaoMapUrl, '_blank');
             });
         }
@@ -169,9 +156,36 @@ class DirectionsMapper extends BaseDataMapper {
 
             // 새로운 이벤트 리스너 추가
             googleButton.addEventListener('click', () => {
-                const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${property.latitude},${property.longitude}`;
+                // 주소가 있으면 주소로 검색, 없으면 위도/경도로 검색
+                const query = property.address
+                    ? encodeURIComponent(property.address)
+                    : `${property.latitude},${property.longitude}`;
+                const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
                 window.open(googleMapUrl, '_blank');
             });
+        }
+    }
+
+    /**
+     * OpenStreetMap iframe 매핑
+     */
+    mapMapIframe() {
+        if (!this.isDataLoaded || !this.data.property) return;
+
+        const property = this.data.property;
+        const iframe = this.safeSelect('iframe[data-property-latitude][data-property-longitude]');
+
+        if (iframe && property.latitude && property.longitude) {
+            // OpenStreetMap embed URL 생성
+            const lat = property.latitude;
+            const lon = property.longitude;
+            const zoom = DirectionsMapper.OSM_BBOX_ZOOM;
+
+            const bbox = `${lon - zoom}%2C${lat - zoom}%2C${lon + zoom}%2C${lat + zoom}`;
+            const marker = `${lat}%2C${lon}`;
+
+            iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
+            iframe.title = `${property.name} 위치`;
         }
     }
 
@@ -241,6 +255,7 @@ class DirectionsMapper extends BaseDataMapper {
         this.mapHeroSection();
         this.mapAddressSection();
         this.mapMapSection();
+        this.mapMapIframe(); // OpenStreetMap iframe 매핑 추가
         this.mapLegacySelectors();
 
         // 메타 태그 업데이트 (페이지별 SEO 적용)

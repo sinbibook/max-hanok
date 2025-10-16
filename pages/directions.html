@@ -91,27 +91,21 @@
 
                 <!-- Map Container -->
                 <div class="map-wrapper">
-                    <!-- Map Background Image -->
-                    <img class="map-image" src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXAlMjBqZWp1fGVufDF8fHx8MTc1NTA1NDMzOXww&ixlib=rb-4.1.0&q=80&w=1080" alt="지도 이미지">
-
-                    <!-- Map Overlay Content -->
-                    <div class="map-overlay">
-                        <div class="map-content">
-                            <svg class="map-pin-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                            </svg>
-                            <h4 data-directions-property-name></h4>
-                            <p class="address" data-directions-address></p>
-                            <div class="map-buttons">
-                                <button class="map-button kakao-button">카카오맵으로 보기</button>
-                                <button class="map-button google-button">Google 지도로 보기</button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- OpenStreetMap Embed -->
+                    <iframe
+                        data-property-latitude
+                        data-property-longitude
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        scrolling="no"
+                        marginheight="0"
+                        marginwidth="0"
+                        src="">
+                    </iframe>
 
                     <!-- Copyright notice -->
-                    <div class="map-copyright">kakaomap</div>
+                    <div class="map-copyright-center">© OpenStreetMap contributors</div>
                 </div>
             </div>
         </section>

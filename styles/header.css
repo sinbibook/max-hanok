@@ -11,6 +11,7 @@
     padding: 0 1rem;
     z-index: 1000;
     min-height: auto;
+    overflow: visible; /* mobile-menu가 header 밖으로 나갈 수 있도록 */
 }
 
 /* Scrolled header state */
@@ -79,7 +80,7 @@
     align-items: center;
     gap: 0.75rem;
     cursor: pointer;
-    z-index: 50;
+    z-index: 1002;
     position: relative;
 }
 
@@ -320,7 +321,7 @@
     display: block;
     color: white;
     padding: 0.5rem;
-    z-index: 50;
+    z-index: 1002;
     position: relative;
     cursor: pointer;
     transition: transform 0.1s ease;
@@ -344,7 +345,7 @@
     bottom: 0;
     background: rgba(31, 41, 55, 0.95);
     backdrop-filter: blur(12px);
-    z-index: 40;
+    z-index: 1001;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -353,6 +354,27 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+}
+
+/* Mobile Menu Close Button */
+.mobile-menu-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: white;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 1002;
+    transition: transform 0.1s ease;
+}
+
+.mobile-menu-close:active {
+    transform: scale(0.95);
+}
+
+.mobile-menu-close .icon {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .mobile-menu.show {

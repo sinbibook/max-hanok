@@ -449,12 +449,15 @@ class RoomMapper extends BaseDataMapper {
         // Main exterior area 이미지 매핑 (첫 번째 exterior 이미지 사용)
         const mainExteriorImage = this.safeSelect('[data-room-main-exterior-image]');
         if (mainExteriorImage) {
-            const exteriorImages = room.images?.[0]?.exterior;
             mainExteriorImage.innerHTML = '';
 
             const img = document.createElement('img');
 
+            // exterior 이미지 확인
+            const exteriorImages = room.images?.[0]?.exterior;
+
             if (exteriorImages && exteriorImages.length > 0) {
+                // 이미지가 있으면 첫 번째 이미지 사용
                 const sortedImages = exteriorImages.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
                 const firstImage = sortedImages[0];
 
@@ -463,9 +466,8 @@ class RoomMapper extends BaseDataMapper {
                 img.className = 'w-full h-full object-cover';
                 img.setAttribute('data-image-fallback', '');
             } else {
-                img.src = ImageHelpers.EMPTY_IMAGE_SVG;
-                img.alt = '이미지 없음';
-                img.className = 'w-full h-full object-cover empty-image-placeholder';
+                // 이미지가 없으면 placeholder 사용
+                ImageHelpers.applyPlaceholder(img);
             }
 
             mainExteriorImage.appendChild(img);
