@@ -159,12 +159,27 @@ class HeaderFooterMapper extends BaseDataMapper {
             const existingItems = desktopMenu.querySelectorAll(`[class*="${classPrefix}"]`);
             existingItems.forEach(item => item.remove());
 
+            // 메뉴 카테고리별 left 위치 정의
+            const leftPositions = {
+                'sub-about-': 25,
+                'sub-spaces-': 131,
+                'sub-specials-': 238,
+                'sub-reservation-': 342
+            };
+
+            // 현재 카테고리의 left 위치 가져오기
+            const leftPosition = leftPositions[classPrefix] || 0;
+
             // 새로운 메뉴 아이템들 생성
             const displayItems = maxItems ? items.slice(0, maxItems) : items;
             displayItems.forEach((item, index) => {
                 const menuItem = document.createElement('div');
                 menuItem.className = `sub-menu-item ${classPrefix}${index + 1}`;
                 menuItem.textContent = item.name || `${defaultNamePrefix}${index + 1}`;
+
+                // 동적으로 위치 계산 (첫 번째: 9px, 그 다음부터 34px씩 증가)
+                const topPosition = 9 + (index * 34);
+                menuItem.style.cssText = `left: ${leftPosition}px; top: ${topPosition}px;`;
 
                 // 클릭 이벤트 추가
                 menuItem.addEventListener('click', () => {
@@ -177,6 +192,28 @@ class HeaderFooterMapper extends BaseDataMapper {
 
                 desktopMenu.appendChild(menuItem);
             });
+
+            // 서브메뉴 컨테이너 높이 동적 조정
+            // 가장 많은 메뉴를 가진 카테고리 기준으로 높이 계산
+            const allSubMenuItems = desktopMenu.querySelectorAll('.sub-menu-item');
+            if (allSubMenuItems.length > 0) {
+                // 각 메뉴 아이템 중 가장 아래에 있는 항목의 bottom 위치 계산
+                let maxBottom = 0;
+                allSubMenuItems.forEach(item => {
+                    // inline style과 CSS로 정의된 top 값 모두 읽기
+                    const computedTop = window.getComputedStyle(item).top;
+                    const top = parseInt(computedTop) || parseInt(item.style.top) || 0;
+                    const itemHeight = 34; // 각 메뉴 아이템 높이 (padding 포함)
+                    const bottom = top + itemHeight;
+                    if (bottom > maxBottom) {
+                        maxBottom = bottom;
+                    }
+                });
+
+                // 여유 공간 추가 (상단 9px + 하단 여유)
+                const containerHeight = maxBottom + 10;
+                desktopMenu.style.height = `${containerHeight}px`;
+            }
         }
 
         // Mobile 서브메뉴 업데이트

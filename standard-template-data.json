@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.18.0",
-    "generatedAt": "2025-10-16T06:47:28.885Z",
+    "version": "1.19.0",
+    "generatedAt": "2025-10-16T11:43:00.983Z",
     "templateType": "gamseong",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -75,7 +75,7 @@
         "id": "bec67e73-5b27-451f-a33b-6a9fee7c0690",
         "name": "찜질방",
         "description": "찜질방 설명입니다.",
-        "usageGuide": "- 18:00 ~ 20:00 까지 이용 가능\n- 수건 무료 제공",
+        "usageGuide": "[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시\n[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시\n[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시",
         "displayOrder": 0,
         "images": [
           {
@@ -126,6 +126,27 @@
           {
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-nmortwduvv.jpg",
             "sortOrder": 3,
+            "description": "",
+            "isSelected": true
+          }
+        ]
+      },
+      {
+        "id": "2999b3b8-99f8-472f-b42a-c9bc05021f87",
+        "name": "서비스",
+        "description": "서비스입니다.",
+        "usageGuide": "ㅇㅇ",
+        "displayOrder": 0,
+        "images": [
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2999b3b8-99f8-472f-b42a-c9bc05021f87/main/1760606774468-ftu5tdvqxs.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2999b3b8-99f8-472f-b42a-c9bc05021f87/main/1760606774467-s9rczm5pp3j.jpg",
+            "sortOrder": 0,
             "description": "",
             "isSelected": true
           }
@@ -463,14 +484,14 @@
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/logo/1760513650827-s0no8yy6n9.png",
             "sortOrder": 0,
             "description": "",
-            "isSelected": true
+            "isSelected": false
           },
           {
             "id": "f1b40cf3-9651-4b96-bb42-d945a2c84b7a",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/logo/1759141297738-acbbf1ujy59.png",
             "sortOrder": 1,
             "description": "",
-            "isSelected": false
+            "isSelected": true
           },
           {
             "id": "71be0bf0-acc9-41b8-bf3f-ec951a870f0d",
