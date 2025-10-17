@@ -3,14 +3,16 @@ class HeaderFooterLoader {
     constructor() {
         this.headerLoaded = false;
         this.footerLoaded = false;
+        // 모든 페이지가 루트에 있으므로 경로 통일
+        this.basePath = './';
     }
-    
+
     // Extract content from header.html
     async loadHeader() {
         if (this.headerLoaded) return;
 
         try {
-            const response = await fetch('./common/header.html');
+            const response = await fetch(`${this.basePath}common/header.html`);
             const html = await response.text();
             
             // Parse the HTML and extract the header element and mobile menu
@@ -53,10 +55,10 @@ class HeaderFooterLoader {
                 linkElements.forEach(link => {
                     const newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    newLink.href = link.href;
+                    newLink.href = link.getAttribute('href');
                     document.head.appendChild(newLink);
                 });
-                
+
                 // Add scripts to body and wait for them to load
                 const scriptPromises = Array.from(scriptElements).map(script => {
                     return new Promise((resolve, reject) => {
@@ -64,7 +66,7 @@ class HeaderFooterLoader {
 
                         // Handle external script files (src attribute)
                         if (script.src) {
-                            newScript.src = script.src;
+                            newScript.src = script.getAttribute('src');
                             newScript.onload = resolve;
                             newScript.onerror = reject;
                         } else {
@@ -106,7 +108,7 @@ class HeaderFooterLoader {
         if (this.footerLoaded) return;
 
         try {
-            const response = await fetch('./common/footer.html');
+            const response = await fetch(`${this.basePath}common/footer.html`);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -120,6 +122,7 @@ class HeaderFooterLoader {
             const parsedFooterElement = doc.querySelector('footer');
             const styleElements = doc.querySelectorAll('head style');
             const linkElements = doc.querySelectorAll('head link[rel="stylesheet"]');
+            const scriptElements = doc.querySelectorAll('script');
             
             if (parsedFooterElement) {
                 // Create footer container at the bottom of body
@@ -149,10 +152,25 @@ class HeaderFooterLoader {
                 linkElements.forEach(link => {
                     const newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    newLink.href = link.href;
+                    newLink.href = link.getAttribute('href');
                     document.head.appendChild(newLink);
                 });
-                
+
+                // Add scripts to body
+                scriptElements.forEach(script => {
+                    const newScript = document.createElement('script');
+
+                    // Handle external script files (src attribute)
+                    if (script.src || script.getAttribute('src')) {
+                        newScript.src = script.getAttribute('src');
+                    } else {
+                        // Handle inline scripts
+                        newScript.textContent = script.textContent;
+                    }
+
+                    document.body.appendChild(newScript);
+                });
+
                 // Ensure proper footer positioning
                 this.ensureFooterPositioning();
                 
