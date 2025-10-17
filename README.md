@@ -1,0 +1,2 @@
+# template-full-banner-image
+
