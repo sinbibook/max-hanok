@@ -21,7 +21,7 @@ class BaseDataMapper {
         try {
             // 캐시 방지를 위한 타임스탬프 추가
             const timestamp = new Date().getTime();
-            const response = await fetch(`../standard-template-data.json?t=${timestamp}`);
+            const response = await fetch(`./standard-template-data.json?t=${timestamp}`);
             this.data = await response.json();
             this.isDataLoaded = true;
             return this.data;
