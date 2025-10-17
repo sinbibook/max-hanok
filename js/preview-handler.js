@@ -327,24 +327,66 @@ class PreviewHandler {
 
         }
 
-        // Header & Footer 매핑 (모든 페이지에서 공통 실행)
-        if (window.HeaderFooterMapper) {
-            const headerFooterMapper = new window.HeaderFooterMapper();
-            headerFooterMapper.data = data;
-            headerFooterMapper.isDataLoaded = true;
-            headerFooterMapper.mapHeaderFooter();
+        // Header & Footer 매핑 (header DOM 로드 대기 후 실행)
+        this.waitForHeaderAndMap(data);
+    }
+
+    /**
+     * Header DOM 로드 대기 후 Header/Footer 매핑
+     */
+    waitForHeaderAndMap(data, retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100; // 100ms
+
+        // Header DOM 확인
+        const headerElement = document.querySelector('header#header') ||
+                            document.querySelector('.header') ||
+                            document.getElementById('header-container');
+
+        if (headerElement) {
+            // Header DOM이 로드됨 → 매핑 실행
+            if (window.HeaderFooterMapper) {
+                const headerFooterMapper = new window.HeaderFooterMapper();
+                headerFooterMapper.data = data;
+                headerFooterMapper.isDataLoaded = true;
+                headerFooterMapper.mapHeaderFooter();
+            }
+        } else if (retryCount < maxRetries) {
+            // Header DOM이 아직 없음 → 재시도
+            setTimeout(() => {
+                this.waitForHeaderAndMap(data, retryCount + 1);
+            }, retryDelay);
+        } else {
+            console.warn('⚠️ Header DOM 로드 실패: 최대 재시도 횟수 초과');
         }
+    }
 
-        // Logo 매핑 (모든 페이지에서 공통 실행)
-        const logoElement = document.querySelector('[data-logo]');
-        const logoTextElement = document.querySelector('[data-logo-text]');
+    /**
+     * Header DOM 로드 대기 후 특정 섹션 매핑
+     */
+    waitForHeaderAndMapSection(section, retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100; // 100ms
 
-        if (logoElement && data?.template?.logo) {
-            logoElement.src = data.template.logo;
-        }
+        // Header DOM 확인
+        const headerElement = document.querySelector('header#header') ||
+                            document.querySelector('.header') ||
+                            document.getElementById('header-container');
 
-        if (logoTextElement && data?.template?.logoText) {
-            logoTextElement.textContent = data.template.logoText;
+        if (headerElement) {
+            // Header DOM이 로드됨 → 특정 섹션 매핑 실행
+            if (section === 'logo' && window.HeaderFooterMapper) {
+                const mapper = this.createMapper(HeaderFooterMapper);
+                mapper.mapHeaderLogo();
+                mapper.mapFooterLogo();
+            }
+        } else if (retryCount < maxRetries) {
+            // Header DOM이 아직 없음 → 재시도
+            setTimeout(() => {
+                this.waitForHeaderAndMapSection(section, retryCount + 1);
+            }, retryDelay);
+        } else {
+            console.warn('⚠️ Header DOM 로드 실패: 최정 섹션 업데이트 불가');
         }
     }
 
@@ -456,9 +498,8 @@ class PreviewHandler {
     updateSpecificSection(page, section) {
         // Header/Footer 관련 섹션 (모든 페이지 공통)
         if (section === 'logo' && window.HeaderFooterMapper) {
-            const mapper = this.createMapper(HeaderFooterMapper);
-            mapper.mapHeaderLogo();
-            mapper.mapFooterLogo();
+            // Header DOM 로드 대기 후 실행
+            this.waitForHeaderAndMapSection('logo');
             return;
         }
 

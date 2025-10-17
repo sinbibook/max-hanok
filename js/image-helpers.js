@@ -61,6 +61,7 @@ const ImageHelpers = {
 
     /**
      * 로고 URL 추출 헬퍼 (header-footer-mapper에서 이동)
+     * isSelected가 true인 로고를 우선 선택, 없으면 sortOrder 0번째 선택
      */
     extractLogoUrl(data) {
         if (!data) return null;
@@ -70,6 +71,13 @@ const ImageHelpers = {
 
         for (const imageItem of imagesArray) {
             if (imageItem.logo && Array.isArray(imageItem.logo) && imageItem.logo.length > 0) {
+                // 1. isSelected가 true인 로고 찾기
+                const selectedLogo = imageItem.logo.find(logo => logo.isSelected === true);
+                if (selectedLogo && selectedLogo.url) {
+                    return selectedLogo.url;
+                }
+
+                // 2. 없으면 sortOrder 기준으로 정렬해서 0번째 선택 (fallback)
                 const sortedLogos = imageItem.logo.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
                 return sortedLogos[0].url;
             }
