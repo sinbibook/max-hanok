@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Component</title>
+    <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body>
+    <!-- Footer Component -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Main Footer Content -->
+            <div class="footer-main">
+                <!-- Logo Section -->
+                <div class="footer-logo-section">
+                    <div class="footer-logo-container">
+                        <!-- Logo Image -->
+                        <div class="footer-logo">
+                            <img data-footer-logo src="" alt="로고" class="footer-logo-image">
+                        </div>
+                        <!-- Logo Text (별도 div로 분리) -->
+                        <div class="footer-logo-text-container">
+                            <span class="footer-logo-text" data-footer-logo-text></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information Section -->
+                <div class="footer-contact">
+                    <!-- Business Info Grid (2x2) -->
+                    <div class="footer-info-grid">
+                        <!-- First Row -->
+                        <div class="footer-info-row">
+                            <div class="footer-info-item" data-footer-phone></div>
+                            <div class="footer-info-item" data-footer-business-number></div>
+                        </div>
+                        <!-- Second Row -->
+                        <div class="footer-info-row">
+                            <div class="footer-info-item" data-footer-address></div>
+                            <div class="footer-info-item" data-footer-ecommerce></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright Section - Full Width -->
+            <div class="footer-copyright-section">
+                <p class="footer-copyright" data-footer-copyright></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer script -->
+    <script src="js/common/footer.js"></script>
+</body>
+</html>
