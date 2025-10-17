@@ -439,6 +439,103 @@ class RoomMapper extends BaseDataMapper {
         galleryGrid.appendChild(galleryRight);
     }
 
+    /**
+     * Exterior Area 섹션 매핑
+     */
+    mapExteriorArea() {
+        const room = this.getCurrentRoom();
+        if (!room) return;
+
+        // Main exterior area 이미지 매핑 (첫 번째 exterior 이미지 사용)
+        const mainExteriorImage = this.safeSelect('[data-room-main-exterior-image]');
+        if (mainExteriorImage) {
+            mainExteriorImage.innerHTML = '';
+
+            const img = document.createElement('img');
+
+            // exterior 이미지 확인
+            const exteriorImages = room.images?.[0]?.exterior;
+
+            if (exteriorImages && exteriorImages.length > 0) {
+                // 이미지가 있으면 첫 번째 이미지 사용
+                const sortedImages = exteriorImages.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+                const firstImage = sortedImages[0];
+
+                img.src = firstImage.url;
+                img.alt = firstImage.description || room.name + ' Exterior';
+                img.className = 'w-full h-full object-cover';
+                img.setAttribute('data-image-fallback', '');
+            } else {
+                // 이미지가 없으면 placeholder 사용
+                ImageHelpers.applyPlaceholder(img);
+            }
+
+            mainExteriorImage.appendChild(img);
+        }
+
+        // Exterior area 텍스트 매핑 (gallery JSON 구조 기반)
+        const exteriorDescription = this.safeSelect('[data-room-exterior-description]');
+        if (exteriorDescription) {
+            const roomPageData = this.getCurrentRoomPageData();
+            const gallery = roomPageData?.data?.sections?.[0]?.gallery;
+
+            if (gallery?.title) {
+                // \n\n을 <br><br>로 변환하여 개행 처리
+                const formattedText = gallery.title.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+                exteriorDescription.innerHTML = formattedText;
+            }
+        }
+
+        // Mobile gallery 매핑 (exterior 이미지 0,1,2번째만)
+        this._createExteriorGallery('[data-room-mobile-gallery]', 'mobile-gallery-item', room);
+
+        // Desktop gallery 매핑 (exterior 이미지 0,1,2번째만)
+        this._createExteriorGallery('[data-room-desktop-gallery]', 'desktop-gallery-item', room);
+    }
+
+    /**
+     * Exterior Gallery 생성 헬퍼
+     * @param {string} containerSelector - 갤러리 컨테이너 셀렉터
+     * @param {string} itemClassName - 갤러리 아이템 클래스명
+     * @param {Object} room - 객실 정보
+     */
+    _createExteriorGallery(containerSelector, itemClassName, room) {
+        const gallery = this.safeSelect(containerSelector);
+        if (!gallery) return;
+
+        gallery.innerHTML = '';
+
+        const exteriorImages = room.images?.[0]?.exterior;
+        const sortedImages = exteriorImages && exteriorImages.length > 0
+            ? exteriorImages.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+            : [];
+
+        const firstThreeImages = sortedImages.slice(0, 3);
+
+        // 최대 3개까지 표시, 부족하면 빈 이미지로 채우기
+        for (let i = 0; i < 3; i++) {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = itemClassName;
+
+            const img = document.createElement('img');
+
+            if (firstThreeImages[i]) {
+                img.src = firstThreeImages[i].url;
+                img.alt = firstThreeImages[i].description || room.name;
+                img.className = 'w-full h-full object-cover';
+                img.loading = 'lazy';
+                img.setAttribute('data-image-fallback', '');
+            } else {
+                img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                img.alt = '이미지 없음';
+                img.className = 'w-full h-full object-cover empty-image-placeholder';
+                img.loading = 'lazy';
+            }
+
+            galleryItem.appendChild(img);
+            gallery.appendChild(galleryItem);
+        }
+    }
 
     // ============================================================================
     // 🔄 TEMPLATE METHODS IMPLEMENTATION
@@ -464,6 +561,7 @@ class RoomMapper extends BaseDataMapper {
         this.mapRoomInfoSection();
         this.mapRoomAmenities();
         this.mapRoomGallery();
+        this.mapExteriorArea();
 
         // 메타 태그 업데이트 (페이지별 SEO 적용)
         const property = this.data.property;
@@ -474,6 +572,25 @@ class RoomMapper extends BaseDataMapper {
         this.mapEcommerceRegistration();
     }
 
+    /**
+     * Room 페이지 Gallery 텍스트만 업데이트 (성능 최적화용)
+     */
+    mapRoomGalleryText() {
+        if (!this.isDataLoaded) return;
+
+        // Exterior area 텍스트 매핑 (gallery JSON 구조 기반)
+        const exteriorDescription = this.safeSelect('[data-room-exterior-description]');
+        if (exteriorDescription) {
+            const roomPageData = this.getCurrentRoomPageData();
+            const gallery = roomPageData?.data?.sections?.[0]?.gallery;
+
+            if (gallery?.title) {
+                // \n\n을 <br><br>로 변환하여 개행 처리
+                const formattedText = gallery.title.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+                exteriorDescription.innerHTML = formattedText;
+            }
+        }
+    }
 
     /**
      * 네비게이션 함수 설정
