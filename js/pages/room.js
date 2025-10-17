@@ -7,12 +7,6 @@
 let currentSlide = 0;
 let autoSlideTimer;
 
-// Mobile gallery drag functionality
-let isDragging = false;
-let startX = 0;
-let scrollLeft = 0;
-const mobileGallery = document.getElementById('mobile-gallery');
-
 // Navigation function
 function navigateToHome() {
     window.location.href = './index.html';
@@ -104,41 +98,8 @@ function initializeSlider() {
 // 전역으로 노출
 window.initializeSlider = initializeSlider;
 
-// Mobile gallery drag handlers
-function initializeMobileGallery() {
-    if (!mobileGallery) return;
-
-    mobileGallery.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        mobileGallery.classList.add('dragging');
-        startX = e.pageX - mobileGallery.offsetLeft;
-        scrollLeft = mobileGallery.scrollLeft;
-        e.preventDefault();
-    });
-
-    mobileGallery.addEventListener('mouseleave', () => {
-        isDragging = false;
-        mobileGallery.classList.remove('dragging');
-    });
-
-    mobileGallery.addEventListener('mouseup', () => {
-        isDragging = false;
-        mobileGallery.classList.remove('dragging');
-    });
-
-    mobileGallery.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - mobileGallery.offsetLeft;
-        const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
-        mobileGallery.scrollLeft = scrollLeft - walk;
-    });
-}
-
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize mobile gallery
-  initializeMobileGallery();
 
   // Initialize hero slider navigation buttons
   const prevButton = document.querySelector('.nav-button.prev');
