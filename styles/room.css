@@ -237,7 +237,7 @@
 /* Room Info Section */
 .room-info {
     min-height: 800px;
-    padding: 4rem 2rem 8rem 2rem;
+    padding: 4rem 2rem;
     background: rgba(255,255,255,1);
 }
 
@@ -396,6 +396,7 @@
     .room-info {
         min-height: 1200px;
         padding: 14rem 8.75rem;
+        margin-bottom: 20rem;
     }
 
     .room-grid {
