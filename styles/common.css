@@ -1,19 +1,14 @@
 @charset "utf-8";
-@font-face {
-  font-family: 'GowoonDodum';
-  src: url('../fonts/GowunDodum-Regular.woff') format('woff');
-  font-weight: normal;
-  font-display: swap;
-}
+/* @font-face는 config.js에서 동적으로 생성됨 */
 /*default*/
 * {
-  margin: 0; padding: 0; box-sizing: border-box;     font-family: 'GowoonDodum', sans-serif !important;
+  margin: 0; padding: 0; box-sizing: border-box;     font-family: 'GowoonDodum' !important;
 }
 html, body {
   color: #343434; -webkit-text-size-adjust: antialiased;-moz-osx-font-smoothing: grayscale;background: #f0f1f3
 }
 h1, h2, h3, h4, h5, p, a, li, th, td {
-  transform: skew(0.03deg); font-family: 'GowoonDodum', sans-serif !important
+  transform: skew(0.03deg); font-family: 'GowoonDodum' !important
 }
 li {
   list-style: none
