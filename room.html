@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="js/config.js"></script>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" data-homepage-images-0-logo-0-url>
+    <title data-homepage-seo-title>Document</title>
+    <meta name="description" data-homepage-seo-description content="">
+    <meta name="keywords" data-homepage-seo-keywords content="">
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/room.css" />
+  </head>
+  <body>
+    <div class="wrapper mainWrap roomWrap">
+      <main>
+        <section class="con2">
+          <nav class="subNav">
+            <h2 data-room-name>
+            </h2>
+            <p class="mt5" data-homepage-customFields-pages-room-0-sections-0-hero-title>
+            </p>
+          </nav>
+        </section>
+        <section class="con1 fullPage con1Room">
+          <div class="sliderContainer roomHeroImgWrap" data-visible-count="1" data-autoplay="5000" id="roomStandardHeroSlider">
+            <button class="prev" type="button" aria-label="Previous hero slide">
+              ❮
+            </button>
+            <div class="slider room-slide-wrapper">
+              <!-- 슬라이드가 동적으로 생성됩니다 -->
+            </div>
+            <button class="next" type="button" aria-label="Next hero slide">
+              ❯
+            </button>
+          </div>
+          <aside class="roomGallery">
+            <ul class="roomGalleryList room-thumbnail-wrapper">
+              <!-- 썸네일이 동적으로 생성됩니다 -->
+            </ul>
+          </aside>
+        </section>
+        <section class="con3 con3Room">
+          <nav class="subNav">
+            <h3>
+              객실정보
+            </h3>
+            <p class="mt5" data-room-description>
+            </p>
+          </nav>
+          <figure class="itemInfoWrap">
+            <div class="roomDetails">
+              <div class="roomDetailsContent">
+                <!-- Room Features -->
+                <div class="roomHighlights">
+                  <div class="roomHighlightsGrid">
+                    <div class="roomHighlight">
+                      <span class="roomHighlightLabel">기준 / 최대 인원</span>
+                      <span id="room-capacity" class="roomHighlightValue" data-room-base-occupancy data-room-max-occupancy>
+                      </span>
+                    </div>
+                    <div class="roomHighlight">
+                      <span class="roomHighlightLabel">침대 타입</span>
+                      <span id="room-bed-type" class="roomHighlightValue" data-room-bed-types>
+                      </span>
+                    </div>
+                    <div class="roomHighlight">
+                      <span class="roomHighlightLabel">뷰 타입</span>
+                      <span id="room-view" class="roomHighlightValue" data-room-views>
+                      </span>
+                    </div>
+                    <div class="roomHighlight">
+                      <span class="roomHighlightLabel">체크인 / 체크아웃</span>
+                      <span id="room-checkin-checkout" class="roomHighlightValue room-checkin-checkout" data-property-checkin data-property-checkout>
+                      </span>
+                    </div>
+                    <div class="roomHighlight">
+                      <span class="roomHighlightLabel">객실 구조</span>
+                      <span id="room-structure" class="roomHighlightValue" data-room-structures>
+                      </span>
+                    </div>
+                    <div class="roomHighlight">
+                      <span class="roomHighlightLabel">객실 크기</span>
+                      <span id="room-size" class="roomHighlightValue" data-room-size>
+                      </span>
+                    </div>
+                    <div class="roomHighlight">
+                      <span class="roomHighlightLabel">객실 편의시설</span>
+                      <div class="amenitiesList" data-room-amenities>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="roomGuideSection">
+                  <h4>객실 이용안내</h4>
+                  <p class="mt5" data-room-roomInfo></p>
+              </div>
+                <div class="btnWrap">
+                  <a href="https://gpnew.gpension.kr/reser/reservation.php?pension_id=beclassy14" class="goRes btnBorder mt5 textCenter" target="_blank">
+                    실시간예약 바로가기
+                  </a>
+                </div>
+              </div>
+            </div>
+          </figure>
+        </section>
+      </main>
+    </div>
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+
+    <script src="js/image-with-fallback.js"></script>
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/room-mapper.js"></script>
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/header-footer-loader.js"></script>
+    <script src="js/common/scroll-animation.js"></script>
+    <script src="js/common/header.js"></script>
+    <script src="js/pages/room.js"></script>
+
+    <!-- Preview Handler (어드민 연동) -->
+    <script src="js/preview-handler.js"></script>
+  </body>
+</html>

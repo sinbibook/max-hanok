@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="js/config.js"></script>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" data-homepage-images-0-logo-0-url>
+    <title data-homepage-seo-title>오시는길</title>
+    <meta name="description" data-homepage-seo-description content="">
+    <meta name="keywords" data-homepage-seo-keywords content="">
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/direction.css" />
+  </head>
+  <body>
+    <div class="wrapper mainWrap">
+      <main>
+        <section class="con2">
+          <nav class="subNav">
+            <h2>
+              오시는길
+            </h2>
+            <p class="mt5">
+              <span data-property-name>제주 포레스트</span> 오시는길을 안내 드립니다.
+            </p>
+          </nav>
+        </section>
+        
+        <section class="con3 content-section" style="margin-top: 0; margin-bottom: 50px">
+          <div class="fBanner" data-homepage-customFields-pages-directions-sections-0-hero-images data-bg-extra="fixed" style="margin-bottom: 100px;">
+          </div>
+          <div class="content-container">
+              <!-- Resort Info Section -->
+              <div class="resort-info textCenter">
+                  <div class="info-grid">
+                      <div class="info-content">
+                          <div class="address-section">
+                              <h3>네비게이션 이용 시</h3>
+                              <div class="address-item">
+                                  <div class="address-details mt5">
+                                      <p>도로명 주소 : <span data-property-address></span></p>
+                                  </div>
+                              </div>
+                              <div class="address-item">
+                                  <div class="address-details">
+                                      <p>지번 주소 : <span data-property-address></span></p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+          <section class="mapSection" aria-labelledby="map-heading">
+            <div class="mapCard">
+              <div class="mapCard__body">
+                <iframe
+                  data-property-latitude
+                  data-property-longitude
+                  allowfullscreen
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+          </section>
+      </main>
+    </div>
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+    <script src="js/image-with-fallback.js"></script>
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/directions-mapper.js"></script>
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/header-footer-loader.js"></script>
+    <script src="js/common/scroll-animation.js"></script>
+    <script src="js/common/header.js"></script>
+    <script src="js/pages/directions.js"></script>
+
+    <!-- Preview Handler (어드민 연동) -->
+    <script src="js/preview-handler.js"></script>
+  </body>
+</html>
