@@ -53,6 +53,8 @@ class PreviewHandler {
      * 메시지 처리 메인 함수
      */
     handleMessage(event) {
+        console.log('[Preview] 메시지 수신:', event.origin, event.data?.type);
+
         // 보안을 위해 origin 체크 (정확한 매칭)
         const allowedOrigins = [
             'localhost',              // 로컬 개발 환경
@@ -128,6 +130,8 @@ class PreviewHandler {
      * 초기 데이터 처리 (숙소 선택 + 템플릿 초기 설정)
      */
     handleInitialData(data) {
+        console.log('[Preview] 초기 데이터 수신:', data);
+
         this.currentData = data;
         this.isInitialized = true;
         this.adminDataReceived = true;  // 어드민 데이터 수신됨
@@ -151,6 +155,8 @@ class PreviewHandler {
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
     handleTemplateUpdate(data) {
+        console.log('[Preview] 템플릿 업데이트 수신:', data);
+
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -327,66 +333,24 @@ class PreviewHandler {
 
         }
 
-        // Header & Footer 매핑 (header DOM 로드 대기 후 실행)
-        this.waitForHeaderAndMap(data);
-    }
-
-    /**
-     * Header DOM 로드 대기 후 Header/Footer 매핑
-     */
-    waitForHeaderAndMap(data, retryCount = 0) {
-        const maxRetries = 10;
-        const retryDelay = 100; // 100ms
-
-        // Header DOM 확인
-        const headerElement = document.querySelector('header#header') ||
-                            document.querySelector('.header') ||
-                            document.getElementById('header-container');
-
-        if (headerElement) {
-            // Header DOM이 로드됨 → 매핑 실행
-            if (window.HeaderFooterMapper) {
-                const headerFooterMapper = new window.HeaderFooterMapper();
-                headerFooterMapper.data = data;
-                headerFooterMapper.isDataLoaded = true;
-                headerFooterMapper.mapHeaderFooter();
-            }
-        } else if (retryCount < maxRetries) {
-            // Header DOM이 아직 없음 → 재시도
-            setTimeout(() => {
-                this.waitForHeaderAndMap(data, retryCount + 1);
-            }, retryDelay);
-        } else {
-            console.warn('⚠️ Header DOM 로드 실패: 최대 재시도 횟수 초과');
+        // Header & Footer 매핑 (모든 페이지에서 공통 실행)
+        if (window.HeaderFooterMapper) {
+            const headerFooterMapper = new window.HeaderFooterMapper();
+            headerFooterMapper.data = data;
+            headerFooterMapper.isDataLoaded = true;
+            headerFooterMapper.mapHeaderFooter();
         }
-    }
 
-    /**
-     * Header DOM 로드 대기 후 특정 섹션 매핑
-     */
-    waitForHeaderAndMapSection(section, retryCount = 0) {
-        const maxRetries = 10;
-        const retryDelay = 100; // 100ms
+        // Logo 매핑 (모든 페이지에서 공통 실행)
+        const logoElement = document.querySelector('[data-logo]');
+        const logoTextElement = document.querySelector('[data-logo-text]');
 
-        // Header DOM 확인
-        const headerElement = document.querySelector('header#header') ||
-                            document.querySelector('.header') ||
-                            document.getElementById('header-container');
+        if (logoElement && data?.template?.logo) {
+            logoElement.src = data.template.logo;
+        }
 
-        if (headerElement) {
-            // Header DOM이 로드됨 → 특정 섹션 매핑 실행
-            if (section === 'logo' && window.HeaderFooterMapper) {
-                const mapper = this.createMapper(HeaderFooterMapper);
-                mapper.mapHeaderLogo();
-                mapper.mapFooterLogo();
-            }
-        } else if (retryCount < maxRetries) {
-            // Header DOM이 아직 없음 → 재시도
-            setTimeout(() => {
-                this.waitForHeaderAndMapSection(section, retryCount + 1);
-            }, retryDelay);
-        } else {
-            console.warn('⚠️ Header DOM 로드 실패: 최정 섹션 업데이트 불가');
+        if (logoTextElement && data?.template?.logoText) {
+            logoTextElement.textContent = data.template.logoText;
         }
     }
 
@@ -452,6 +416,7 @@ class PreviewHandler {
      */
     handleSectionUpdate(messageData) {
         const { page, section, data } = messageData;
+        console.log('[Preview] 섹션 업데이트:', { page, section, data });
 
         // logo 섹션 특별 처리 (모든 페이지 공통)
         if (section === 'logo') {
@@ -498,8 +463,9 @@ class PreviewHandler {
     updateSpecificSection(page, section) {
         // Header/Footer 관련 섹션 (모든 페이지 공통)
         if (section === 'logo' && window.HeaderFooterMapper) {
-            // Header DOM 로드 대기 후 실행
-            this.waitForHeaderAndMapSection('logo');
+            const mapper = this.createMapper(HeaderFooterMapper);
+            mapper.mapHeaderLogo();
+            mapper.mapFooterInfo();
             return;
         }
 
@@ -554,7 +520,7 @@ class PreviewHandler {
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapFacilityText();
+                mapper.mapFacilityBasicInfo();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -564,7 +530,15 @@ class PreviewHandler {
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
                 const mapper = this.createMapper(DirectionsMapper);
-                mapper.mapPage();
+
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroImages();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
             }
         }
     }

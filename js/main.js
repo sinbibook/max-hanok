@@ -49,7 +49,6 @@
 
         script.onload = onComplete;
         script.onerror = function() {
-            console.warn(`⚠️ Script load failed, continuing: ${src}`);
             onComplete(); // 실패해도 계속 진행
         };
 
@@ -151,12 +150,9 @@
         const unsupported = Object.keys(support).filter(feature => !support[feature]);
         
         if (unsupported.length > 0) {
-            console.warn('⚠️ Unsupported features:', unsupported);
-            
             // 중요한 기능이 없으면 폴백 모드 활성화
             if (!support.intersectionObserver) {
                 window.FALLBACK_MODE = true;
-                console.info('🔄 Fallback mode enabled for animations');
             }
         }
 
@@ -171,7 +167,6 @@
         const isSupported = checkBrowserSupport();
         
         if (!isSupported) {
-            console.warn('⚠️ Browser may not fully support all features');
         }
 
         // CSS 로드

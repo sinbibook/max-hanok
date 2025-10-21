@@ -2,7 +2,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_image",
+    "templateType": "center_slider",
     "images": [
       {
         "logo": [
@@ -550,33 +550,6 @@
     },
     "facilities": [
       {
-        "id": "bec67e73-5b27-451f-a33b-6a9fee7c0690",
-        "name": "찜질방",
-        "description": "찜질방 설명입니다.",
-        "usageGuide": "[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시\n[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시\n[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시",
-        "displayOrder": 0,
-        "images": [
-          {
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760077922031-d2qlve01qk.jpg",
-            "sortOrder": 2,
-            "description": "",
-            "isSelected": true
-          },
-          {
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760077922030-fntbshky4sm.jpg",
-            "sortOrder": 0,
-            "description": "",
-            "isSelected": true
-          },
-          {
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760077922031-u76fcclz4bc.jpg",
-            "sortOrder": 1,
-            "description": "",
-            "isSelected": true
-          }
-        ]
-      },
-      {
         "id": "3a00278d-ed36-4da4-ba90-9cbd5ea9ba07",
         "name": "민속놀이",
         "description": "민속놀이 즐겨요",
@@ -627,6 +600,51 @@
             "sortOrder": 0,
             "description": "",
             "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2999b3b8-99f8-472f-b42a-c9bc05021f87/main/1760946429794-4af618f1lms.jpg",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true
+          }
+        ]
+      },
+      {
+        "id": "bec67e73-5b27-451f-a33b-6a9fee7c0690",
+        "name": "찜질방",
+        "description": "찜질방 설명입니다.",
+        "usageGuide": "[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시\n[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시\n[바베큐장]\n- 종류: 숯불바베큐 (공동바베큐장)\n- 이용요금: 숯+ 그릴 25,000원 (1박기준/현장결제)\n- 이용시간: 17시~22시",
+        "displayOrder": 0,
+        "images": [
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760945385091-6x5e1nwb03h.jpg",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760077922030-fntbshky4sm.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760077922031-u76fcclz4bc.jpg",
+            "sortOrder": 2,
+            "description": "",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760077922031-d2qlve01qk.jpg",
+            "sortOrder": 3,
+            "description": "",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760945385093-6xdd6u76zuy.jpg",
+            "sortOrder": 4,
+            "description": "",
+            "isSelected": true
           }
         ]
       }
@@ -650,7 +668,7 @@
       }
     ],
     "refundSettings": {
-      "customerRefundNotice": "",
+      "customerRefundNotice": "환불 정책 안내문 입니다.",
       "immediateRefundEnabled": false,
       "immediateRefundTimeLimit": "60"
     },
@@ -687,7 +705,7 @@
     {
       "id": "2e5a7cc2-cb44-4cac-81c7-9bf3f8b200ea",
       "name": "난이당",
-      "description": "맥스 펜션 더블 객실입니다.",
+      "description": "난이당 객실은 편안함을 제공합니다.",
       "roomInfo": "체크인, 체크아웃 필수\n객실 내 흡연 금지",
       "size": 43,
       "baseOccupancy": 1,
@@ -949,10 +967,10 @@
     }
   ],
   "metadata": {
-    "generatedAt": "2025-10-17T08:43:15.375Z",
+    "generatedAt": "2025-10-21T07:39:43.792Z",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
-    "templateType": "full_banner_image",
-    "version": "1.10.0"
+    "templateType": "center_slider",
+    "version": "1.11.0"
   }
 }
