@@ -5,14 +5,16 @@
 
 // Navigation function
 function navigateToHome() {
-    window.location.href = 'index.html';
+    window.location.href = './index.html';
 }
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize DirectionsMapper
-    const directionsMapper = new DirectionsMapper();
-    directionsMapper.initialize().then(() => {
-        directionsMapper.mapPage();
-    });
+    // Initialize DirectionsMapper (PreviewHandler가 없을 때만)
+    if (!window.previewHandler) {
+        const directionsMapper = new DirectionsMapper();
+        directionsMapper.initialize().then(() => {
+            directionsMapper.mapPage();
+        });
+    }
 });
