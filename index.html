@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script src="js/config.js"></script>    <meta charset="UTF-8">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" data-homepage-images-0-logo-0-url>
-    <title data-homepage-seo-title>Document</title>
-    <meta name="description" data-homepage-seo-description content="">
-    <meta name="keywords" data-homepage-seo-keywords content="">
-    <link rel="stylesheet" href="styles/common.css" />
-    <link rel="stylesheet" href="styles/index.css" />
-    <!-- Open Graph Meta Tags for Social Media -->
+    <meta name="description" content="숙소 설명">
+    <meta name="keywords" content="SEO 키워드">
+    <title>숙소명 - 템플릿</title>
+
+    <!-- Open Graph / 소셜 미디어 공유용 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="숙소명 - 템플릿">
+    <meta property="og:description" content="숙소 설명">
+    <meta property="og:image" content="">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/index.css" as="style">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/index.css">
+
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션" />
   <meta property="og:description" content="자연과 함께하는 맥스 펜션에서 편안한 휴식을 취할 수 있습니다.
@@ -24,88 +37,128 @@
 편하게 휴식을 취하고 힐링하고 가세요." />
   
 </head>
-  <body>
-    <div class="wrapper mainWrap IndexWrap">
+<body>
     <!-- Hero Section -->
-      <main>
-        <section class="mainTitleGrp">
-          <div class="heroImgWrap sliderContainer heroSlider" data-visible-count="1">
-            <button class="prev" type="button" aria-label="Previous hero slide">
-              ❮
-            </button>
-            <div class="slider index-hero-slider-wrapper">
-              <!-- Hero slides will be dynamically generated here -->
-            </div>
-            <button class="next" type="button" aria-label="Next hero slide">
-              ❯
-            </button>
-            <div class="heroOverlay">
-              <h1 data-property-name class="heroHeading">
-              </h1>
-              <p data-hero-title class="heroHeadingSub"></p>
-            </div>
-          </div>
-          <div class="heroDescription">
-            <p data-homepage-customFields-pages-index-sections-0-essence-title>
-            </p>
-            <p data-homepage-customFields-pages-index-sections-0-essence-description>
-            </p>
-          </div>
-        </section>
-        <section class="con2 mobilemt">
-          <div class="titWrap">
-            <h1 class="conTit">
-              ROOMS
-            </h1>
-            <p>
-              <span data-property-name>제주 포레스트</span>의 아늑한 객실입니다.
-            </p>
-          </div>
-          <div class="rooms">
-            <!-- Rooms will be dynamically generated here -->
-          </div>
-        </section>
-        <section class="con3 specialsSection">
-          <div class="titWrap">
-            <h1 class="conTit">
-              SPECIALS
-            </h1>
-            <p>
-              <span data-property-name>제주 포레스트</span>의 특별한 부가서비스입니다.
-            </p>
-          </div>
-          <aside class="gallery">
-            <div class="sliderContainer specialSlider" data-visible-count="3">
-              <button class="prev" type="button" aria-label="Previous specials slide">
-                ❮
-              </button>
-              <div class="slider">
-              </div>
-              <button class="next" type="button" aria-label="Next specials slide">
-                ❯
-              </button>
-            </div>
-          </aside>
-        </section>
-        <section class="con4">
-          <div class="titWrap">
-            <h1 class="conTit">RESERVATION</h1>
-            <p>
-              지금 예약하세요.
-            </p>
-          </div>
-          <p class="resTxt">
-            <a href="pages/reservation.html" class="goRes mt5 btnBorder">
-              지금 예약하기
-            </a>
-          </p>
-        </section>
-        <div class="fBanner" data-homepage-customFields-pages-reservation-sections-0-hero-images-0>
+    <section class="hero-section">
+        <!-- Background Image -->
+        <div class="hero-background">
+            <img data-index-hero-image
+                 src=""
+                 alt="메인 히어로 이미지"
+                 loading="eager">
+            <div class="hero-overlay"></div>
+            <div class="hero-vignette"></div>
         </div>
-      </main>
-    </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- Premium Brand Name -->
+                <div class="brand-name">
+                    <h1 class="brand-title" data-index-property-name></h1>
+                    <div class="brand-divider"></div>
+                    <p class="brand-subtitle" data-index-property-name-en></p>
+                </div>
+
+                <!-- Emotional Tagline -->
+                <div class="tagline">
+                    <p class="tagline-main" data-index-hero-title></p>
+                    <p class="tagline-sub" data-index-property-description></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Scroll Indicator - React Style -->
+        <div class="scroll-indicator" onclick="scrollToNextSection()">
+            <div class="scroll-container">
+                <div class="scroll-mouse">
+                    <div class="scroll-dot"></div>
+                </div>
+                <div class="scroll-chevron"></div>
+                <span class="scroll-text">Scroll</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Essence Section -->
+    <section class="essence-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="fade-in-up">
+                    <div class="section-divider"></div>
+                    <h2 class="section-title" data-index-essence-title></h2>
+                    <p class="section-description" data-index-essence-description></p>
+                    <div class="section-divider"></div>
+                </div>
+            </div>
+
+            <div class="essence-image-container fade-in-scale">
+                <img data-index-essence-image
+                     src=""
+                     alt="특징 섹션 이미지"
+                     class="essence-image"
+                     loading="lazy">
+                <div class="essence-image-overlay"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Gallery Section -->
+    <section class="signature-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="fade-in-up">
+                    <div class="section-divider"></div>
+                    <h2 class="section-title" data-index-gallery-title></h2>
+                    <p class="section-description" data-index-gallery-description></p>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="signature-grid" data-index-gallery-items>
+                <!-- Gallery items will be loaded from data -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Moments Section -->
+    <section class="signature-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="fade-in-up">
+                    <div class="section-divider" style="background: #a8a29e;"></div>
+                    <h2 class="section-title" data-index-signature-title></h2>
+                    <p class="section-description" data-index-signature-description></p>
+                </div>
+            </div>
+
+            <div class="signature-grid" data-index-signature-items>
+                <!-- Signature items will be loaded from data -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing Hero Pool Section -->
+    <section class="index-closing">
+        <img
+             data-index-closing-image
+             src=""
+             alt="마무리 섹션 이미지"
+             loading="lazy">
+        <div class="index-closing-overlay">
+            <div class="index-closing-text">
+                <h3 class="index-closing-title" data-index-closing-title></h3>
+                <div class="index-closing-divider"></div>
+                <p class="index-closing-description" data-index-closing-description></p>
+            </div>
+        </div>
+    </section>
+
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
 
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
@@ -119,19 +172,11 @@
     <!-- Header Footer Mapper -->
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
 
-    <!-- Header/Footer loader -->
+    <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
 
-    <script src="js/common/scroll-animation.js"></script>
-
-    <!-- Header interactions -->
-    <script src="js/common/header.js"></script>
-
-    <!-- Page script -->
+    <!-- Page-specific script -->
     <script src="js/pages/index.js"></script>
 
-    <!-- Preview Handler (어드민 연동) -->
-    <script src="js/preview-handler.js"></script>
-
-  </body>
+</body>
 </html>

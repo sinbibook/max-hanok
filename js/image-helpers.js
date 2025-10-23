@@ -3,11 +3,7 @@
  * 모든 페이지 mapper에서 공통으로 사용하는 이미지 관련 헬퍼 함수
  */
 const ImageHelpers = {
-    // 단순 회색 배경 (아이콘 없음 - 기본)
-    EMPTY_IMAGE_SVG: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"%3E%3Crect fill="%23d1d5db" width="800" height="600"/%3E%3C/svg%3E',
-
-    // 아이콘 포함된 버전 (필요시 사용)
-    EMPTY_IMAGE_WITH_ICON: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"%3E%3Crect fill="%23d1d5db" width="800" height="600"/%3E%3Cg transform="translate(400, 300)"%3E%3Crect x="-48" y="-48" width="96" height="96" rx="8" ry="8" fill="none" stroke="%23374151" stroke-width="3"/%3E%3Ccircle cx="-20" cy="-20" r="6" fill="%23374151"/%3E%3Cpolyline points="48,-12 20,-40 -48,28" fill="none" stroke="%23374151" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/g%3E%3C/svg%3E',
+    EMPTY_IMAGE_SVG: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"%3E%3Crect fill="%23d1d5db" width="800" height="600"/%3E%3Cg transform="translate(400, 300)"%3E%3Crect x="-48" y="-48" width="96" height="96" rx="8" ry="8" fill="none" stroke="%23374151" stroke-width="3"/%3E%3Ccircle cx="-20" cy="-20" r="6" fill="%23374151"/%3E%3Cpolyline points="48,-12 20,-40 -48,28" fill="none" stroke="%23374151" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/g%3E%3C/svg%3E',
 
     /**
      * 공통 이미지 처리 헬퍼 함수 (에러 처리 포함)

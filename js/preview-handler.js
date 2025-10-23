@@ -53,8 +53,6 @@ class PreviewHandler {
      * 메시지 처리 메인 함수
      */
     handleMessage(event) {
-        console.log('[Preview] 메시지 수신:', event.origin, event.data?.type);
-
         // 보안을 위해 origin 체크 (정확한 매칭)
         const allowedOrigins = [
             'localhost',              // 로컬 개발 환경
@@ -130,8 +128,6 @@ class PreviewHandler {
      * 초기 데이터 처리 (숙소 선택 + 템플릿 초기 설정)
      */
     handleInitialData(data) {
-        console.log('[Preview] 초기 데이터 수신:', data);
-
         this.currentData = data;
         this.isInitialized = true;
         this.adminDataReceived = true;  // 어드민 데이터 수신됨
@@ -155,8 +151,6 @@ class PreviewHandler {
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
     handleTemplateUpdate(data) {
-        console.log('[Preview] 템플릿 업데이트 수신:', data);
-
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -416,7 +410,6 @@ class PreviewHandler {
      */
     handleSectionUpdate(messageData) {
         const { page, section, data } = messageData;
-        console.log('[Preview] 섹션 업데이트:', { page, section, data });
 
         // logo 섹션 특별 처리 (모든 페이지 공통)
         if (section === 'logo') {
@@ -465,7 +458,7 @@ class PreviewHandler {
         if (section === 'logo' && window.HeaderFooterMapper) {
             const mapper = this.createMapper(HeaderFooterMapper);
             mapper.mapHeaderLogo();
-            mapper.mapFooterInfo();
+            mapper.mapFooterLogo();
             return;
         }
 
@@ -520,7 +513,7 @@ class PreviewHandler {
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapFacilityBasicInfo();
+                mapper.mapFacilityText();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -530,15 +523,7 @@ class PreviewHandler {
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
                 const mapper = this.createMapper(DirectionsMapper);
-
-                switch (section) {
-                    case 'hero':
-                        mapper.mapHeroImages();
-                        break;
-                    default:
-                        mapper.mapPage();
-                        break;
-                }
+                mapper.mapPage();
             }
         }
     }
