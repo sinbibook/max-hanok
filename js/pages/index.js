@@ -189,6 +189,13 @@ function initHeroSlider() {
 }
 
 function initSpecialSlider() {
+    // 상수 정의
+    const MOBILE_BREAKPOINT = 1024;
+    const MOBILE_VISIBLE_SLIDES = 1;
+    const DESKTOP_VISIBLE_SLIDES = 3;
+    const AUTO_SLIDE_INTERVAL_MS = 3000;
+    const SINGLE_SLIDE_THRESHOLD = 1;
+
     const containers = document.querySelectorAll('.specialSlider');
 
     containers.forEach((container) => {
@@ -205,140 +212,138 @@ function initSpecialSlider() {
         const prevButton = container.querySelector('.prev');
         const nextButton = container.querySelector('.next');
 
-        const getVisibleCount = () => {
-            return window.innerWidth <= 1024 ? 1 : (parseInt(container.dataset.visibleCount, 10) || 3);
-        };
+        // 유효한 이미지가 있는 슬라이드만 필터링 (empty-image-placeholder는 포함)
+        const validSlides = originalSlides.filter(slide => {
+            const img = slide.querySelector('img');
+            if (!img || !img.src || img.src === '') return false;
 
-        if (originalSlides.length <= 1) {
-            const visibleCount = getVisibleCount();
-            originalSlides.forEach((slide) => {
-                slide.style.flex = `0 0 ${100 / visibleCount}%`;
-            });
+            // empty-image-placeholder는 유효한 슬라이드로 처리
+            if (img.classList.contains('empty-image-placeholder')) return true;
+
+            // 빈 이미지나 플레이스홀더 제외 (empty-image-placeholder 제외)
+            const invalidPatterns = [
+                'placeholder',
+                'about:blank',
+                'data:image/gif;base64,R0lGOD', // 빈 gif
+                'undefined'
+            ];
+
+            // data:image/svg+xml이지만 empty-image-placeholder가 아닌 경우만 제외
+            if (img.src.includes('data:image/svg+xml') && !img.classList.contains('empty-image-placeholder')) {
+                return false;
+            }
+
+            return !invalidPatterns.some(pattern => img.src.includes(pattern)) &&
+                   (img.src.startsWith('http') || img.classList.contains('empty-image-placeholder'));
+        });
+
+        // 슬라이드가 없어도 컨테이너는 숨기지 않음 (empty placeholder가 표시되어야 하므로)
+        if (validSlides.length === 0) {
+            // 모든 슬라이드가 유효하지 않은 경우에만 숨김
+            return;
+        }
+
+        // 단일 슬라이드인 경우
+        if (validSlides.length <= SINGLE_SLIDE_THRESHOLD) {
+            track.innerHTML = '';
+            track.appendChild(validSlides[0].cloneNode(true));
             if (prevButton) prevButton.style.display = 'none';
             if (nextButton) nextButton.style.display = 'none';
             container.dataset.specialSliderInitialized = 'true';
             return;
         }
 
-        // 앞뒤로 1개씩만 복제
-        const firstClone = originalSlides[0].cloneNode(true);
-        const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
+        // 기본 슬라이더 설정
+        track.innerHTML = '';
+        validSlides.forEach(slide => {
+            track.appendChild(slide.cloneNode(true));
+        });
 
-        track.appendChild(firstClone);
-        track.insertBefore(lastClone, track.firstChild);
+        const slides = Array.from(track.children);
+        let currentIndex = 0;
+        let autoSlideTimer = null;
 
-        const allSlides = Array.from(track.children);
-        const totalSlides = allSlides.length;
+        // 반응형 슬라이드 설정
+        const getVisibleSlidesCount = () => window.innerWidth <= MOBILE_BREAKPOINT ? MOBILE_VISIBLE_SLIDES : DESKTOP_VISIBLE_SLIDES;
 
-        const updateSlideSizing = () => {
-            const currentVisible = getVisibleCount();
-            allSlides.forEach((slide) => {
-                slide.style.flex = `0 0 ${100 / currentVisible}%`;
+        const updateSlideLayout = () => {
+            const visibleSlides = getVisibleSlidesCount();
+
+            slides.forEach(slide => {
+                slide.style.flex = `0 0 calc(100% / ${visibleSlides})`;
+                slide.style.minWidth = 0;
             });
+
+            return visibleSlides;
         };
 
-        updateSlideSizing();
-
-        let currentIndex = 1; // 복제 후 첫 번째 원본 슬라이드
-        let autoTimer = null;
-        let isTransitioning = false;
-
-        const getStep = () => {
-            if (!allSlides[0]) return 0;
-            const style = window.getComputedStyle(track);
-            const gap = parseFloat(style.columnGap || style.gap || '0');
-            return allSlides[0].getBoundingClientRect().width + gap;
+        const goToSlide = (index) => {
+            const visibleSlides = updateSlideLayout();
+            currentIndex = Math.max(0, Math.min(index, slides.length - visibleSlides));
+            const slideWidth = container.getBoundingClientRect().width / visibleSlides;
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            updateButtonStates();
         };
 
-        const updatePosition = (animate = true) => {
-            track.style.transition = animate ? 'transform 0.6s ease' : 'none';
-            const step = getStep();
-            track.style.transform = `translateX(-${currentIndex * step}px)`;
-        };
+        const updateButtonStates = () => {
+            const visibleSlides = getVisibleSlidesCount();
 
-        updatePosition(false);
+            if (prevButton) {
+                prevButton.style.opacity = currentIndex === 0 ? '0.3' : '1';
+                prevButton.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+            }
 
-        const moveToNext = () => {
-            if (isTransitioning) return;
-            isTransitioning = true;
-
-            currentIndex++;
-            updatePosition(true);
-
-            if (currentIndex >= totalSlides - 1) {
-                setTimeout(() => {
-                    currentIndex = 1;
-                    updatePosition(false);
-                    isTransitioning = false;
-                }, 600);
-            } else {
-                setTimeout(() => {
-                    isTransitioning = false;
-                }, 600);
+            if (nextButton) {
+                nextButton.style.opacity = currentIndex >= slides.length - visibleSlides ? '0.3' : '1';
+                nextButton.style.pointerEvents = currentIndex >= slides.length - visibleSlides ? 'none' : 'auto';
             }
         };
 
-        const moveToPrev = () => {
-            if (isTransitioning) return;
-            isTransitioning = true;
-
-            currentIndex--;
-            updatePosition(true);
-
-            if (currentIndex <= 0) {
-                setTimeout(() => {
-                    currentIndex = totalSlides - 2;
-                    updatePosition(false);
-                    isTransitioning = false;
-                }, 600);
-            } else {
-                setTimeout(() => {
-                    isTransitioning = false;
-                }, 600);
-            }
+        const startAutoSlide = () => {
+            stopAutoSlide();
+            autoSlideTimer = setInterval(() => {
+                const visibleSlides = getVisibleSlidesCount();
+                if (currentIndex >= slides.length - visibleSlides) {
+                    goToSlide(0);
+                } else {
+                    goToSlide(currentIndex + 1);
+                }
+            }, AUTO_SLIDE_INTERVAL_MS);
         };
 
-        const stopAuto = () => {
-            if (autoTimer) {
-                clearInterval(autoTimer);
-                autoTimer = null;
+        const stopAutoSlide = () => {
+            if (autoSlideTimer) {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = null;
             }
-        };
-
-        const startAuto = () => {
-            stopAuto();
-            autoTimer = setInterval(() => {
-                moveToNext();
-            }, 5000);
         };
 
         prevButton?.addEventListener('click', () => {
-            moveToPrev();
-            startAuto();
+            goToSlide(currentIndex - 1);
+            startAutoSlide();
         });
 
         nextButton?.addEventListener('click', () => {
-            moveToNext();
-            startAuto();
+            goToSlide(currentIndex + 1);
+            startAutoSlide();
         });
 
+        // 호버 시 자동 슬라이드 멈춤
         container.addEventListener('mouseenter', () => {
-            if (window.innerWidth > 1024) {
-                stopAuto();
-            }
+            if (window.innerWidth > MOBILE_BREAKPOINT) stopAutoSlide();
         });
 
         container.addEventListener('mouseleave', () => {
-            if (window.innerWidth > 1024) {
-                startAuto();
-            }
+            if (window.innerWidth > MOBILE_BREAKPOINT) startAutoSlide();
         });
 
+        // 모바일 터치 스와이프
         let touchStartX = 0;
         let touchEndX = 0;
 
         container.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            stopAutoSlide();
         }, { passive: true });
 
         container.addEventListener('touchend', (e) => {
@@ -348,25 +353,23 @@ function initSpecialSlider() {
 
             if (Math.abs(diff) > swipeThreshold) {
                 if (diff > 0) {
-                    moveToNext();
+                    goToSlide(currentIndex + 1);
                 } else {
-                    moveToPrev();
-                }
-                if (window.innerWidth <= 1024) {
-                    startAuto();
+                    goToSlide(currentIndex - 1);
                 }
             }
+            startAutoSlide();
         }, { passive: true });
 
+        // 창 크기 변경 시 재조정
         window.addEventListener('resize', () => {
-            updateSlideSizing();
-            updatePosition(false);
+            goToSlide(currentIndex);
         });
 
-        updatePosition(false);
+        // 초기화
+        goToSlide(0);
+        startAutoSlide();
         container.dataset.specialSliderInitialized = 'true';
-
-        startAuto();
     });
 }
 

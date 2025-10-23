@@ -23,6 +23,10 @@
   width: auto !important;
 }
 
+.IndexWrap .con2Bottom .left .txtGrp {
+  width: auto !important;
+}
+
 /*con3 - index page specific overrides*/
 .IndexWrap .con3 {
   width: 100%;
@@ -88,32 +92,61 @@
   .IndexWrap .con2>div {
     min-height: unset;
   }
-  .con2Top .left .imgGrp,
-  .con2Bottom .right .imgGrp,
-  .con2Top .right .txtGrpImg,
-  .con2Bottom .left .txtGrpImg {
+
+  /* 모바일에서 rooms 영역: 큰 이미지만 보이고 작은 이미지 숨기기 */
+  .IndexWrap .con2Top,
+  .IndexWrap .con2Bottom {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 첫 번째 영역: 이미지 먼저 */
+  .IndexWrap .con2Top .left {
+    order: 1; /* 이미지 영역이 먼저 */
+  }
+
+  .IndexWrap .con2Top .right {
+    order: 2; /* 텍스트 영역이 나중에 */
+  }
+
+  /* 두 번째 영역: 이미지 먼저 */
+  .IndexWrap .con2Bottom .right {
+    order: 1; /* 이미지 영역이 먼저 */
+    align-content: end; /* 이미지를 바닥에 정렬 */
+    height: auto;
+  }
+
+  .IndexWrap .con2Bottom .left {
+    order: 2; /* 텍스트 영역이 나중에 */
+  }
+
+  .IndexWrap .con2Top .left .imgGrp,
+  .IndexWrap .con2Bottom .right .imgGrp {
     width: 100%;
     height: clamp(260px, 60vw, 520px);
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 0;
+    margin-bottom: 20px;
     background-position: center;
     border-radius: 10px;
   }
-  .con2Top .right .txtGrpTxt {
-    width: 100%
+
+  /* 작은 이미지들 숨기기 */
+  .IndexWrap .con2Top .right .txtGrpImg,
+  .IndexWrap .con2Bottom .left .txtGrpImg {
+    display: none;
   }
-  .con2Bottom .left .txtGrp {
-    margin-top: 0; width: 100%; float: none
-  }
-  .con2Bottom .right .imgGrp {
-    margin-top: 0;
+
+  .IndexWrap .con2Top .right .txtGrpTxt,
+  .IndexWrap .con2Bottom .left .txtGrpTxt {
     width: 100%;
-    float: none;
-    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
   }
+
   .con2Bottom .left .txtGrpTxt {
     width: 100%
   }
+
   .con2Bottom .left {
     margin-bottom: 0
   }
