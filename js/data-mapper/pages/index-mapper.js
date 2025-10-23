@@ -331,6 +331,12 @@ class IndexMapper extends BaseDataMapper {
         const slider = this.safeSelect('.specialsSection .slider');
         if (!slider) return;
 
+        // 컨테이너가 숨겨져 있을 수 있으므로 명시적으로 표시
+        const container = this.safeSelect('.specialsSection .specialSlider');
+        if (container) {
+            container.style.display = '';
+        }
+
         slider.innerHTML = '';
 
         const collectedImages = [];

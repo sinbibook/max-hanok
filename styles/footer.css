@@ -98,6 +98,7 @@ footer {
         flex-direction: column;
         padding: 0 1rem;
         gap: 2rem;
+        align-items: center;
     }
 
     .footer-section {

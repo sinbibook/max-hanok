@@ -187,22 +187,43 @@ class HeaderFooterMapper extends BaseDataMapper {
             logoText.textContent = this.data.property.name;
         }
 
-        // 전화번호 매핑
+        // 전화번호 매핑 (기존 .footer-phone p는 비워둠)
         const footerPhone = this.safeSelect('.footer-phone p');
-        if (footerPhone && businessInfo.businessPhone) {
-            footerPhone.textContent = `숙소 전화번호 : ${businessInfo.businessPhone}`;
+        if (footerPhone) {
+            footerPhone.textContent = '';
         }
 
-        // 사업자번호 매핑 (.footer-phone 다음 첫 번째 div)
-        const businessNumberElement = this.safeSelect('.footer-info > div:nth-child(3)');
+        // 대표자명 매핑
+        const representativeElement = this.safeSelect('.footer-representative');
+        if (representativeElement && businessInfo.representativeName) {
+            representativeElement.textContent = `대표자 : ${businessInfo.representativeName}`;
+        }
+
+        // 숙소 전화번호 매핑
+        const phoneElement = this.safeSelect('.footer-contact-phone');
+        if (phoneElement && this.data.property.contactPhone) {
+            phoneElement.textContent = `숙소 전화번호 : ${this.data.property.contactPhone}`;
+        }
+
+        // 사업자번호 매핑
+        const businessNumberElement = this.safeSelect('.footer-business-number');
         if (businessNumberElement && businessInfo.businessNumber) {
             businessNumberElement.textContent = `사업자번호 : ${businessInfo.businessNumber}`;
         }
 
-        // 주소 매핑 (.footer-phone 다음 두 번째 div)
-        const addressElement = this.safeSelect('.footer-info > div:nth-child(4)');
+        // 주소 매핑
+        const addressElement = this.safeSelect('.footer-address');
         if (addressElement && businessInfo.businessAddress) {
             addressElement.textContent = `주소 : ${businessInfo.businessAddress}`;
+        }
+
+        // 통신판매업신고번호 매핑 (.ecommerce-registration)
+        const ecommerceElement = this.safeSelect('.ecommerce-registration');
+        // JSON의 첫 번째 property.businessInfo.eCommerceRegistrationNumber에서 가져오기
+        const ecommerceNumber = this.safeGet(this.data, 'property.businessInfo.eCommerceRegistrationNumber');
+
+        if (ecommerceElement && ecommerceNumber) {
+            ecommerceElement.textContent = `통신판매업신고번호 : ${ecommerceNumber}`;
         }
 
         // 저작권 정보 매핑
@@ -297,9 +318,6 @@ class HeaderFooterMapper extends BaseDataMapper {
 
         // Footer 매핑
         this.mapFooterInfo();
-
-        // E-commerce registration 매핑
-        this.mapEcommerceRegistration();
     }
 
     /**

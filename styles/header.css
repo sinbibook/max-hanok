@@ -8,7 +8,8 @@
   cursor: pointer;
   transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   color: #1f2937;
-  z-index: 4000;
+  z-index: 5000;
+  position: relative;
 }
 
 @media all and (max-width: 1024px) {
@@ -56,7 +57,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 3500;
+  z-index: 4500;
   overflow: hidden;
 }
 
@@ -64,6 +65,18 @@
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
+}
+
+.mobile-menu.is-open a {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  touch-action: manipulation !important;
+}
+
+.mobile-menu.is-open .mobile-menu-title {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  touch-action: manipulation !important;
 }
 
 .mobile-menu-scrollable {
@@ -248,13 +261,13 @@ body.mobile-menu-open {
 }
 
 .header .logo {
-  position: absolute; left: 0px; width: auto; min-width: 100px; top: 5px; transition: 0.8s; white-space: nowrap;
+  position: static; width: auto; min-width: 100px; transition: 0.8s; white-space: nowrap; text-align: center; display: block;
 }
 .header .logo img {
   width: 100%
 }
 .header>div>h1 {
-  position: absolute; left: 50%; margin-left: -64px
+  position: fixed; left: 50%; transform: translateX(-50%); top: 20px; z-index: 3001; margin: 0;
 }
 .header.on {
   background: rgba(240,241,243,0.8)
@@ -263,7 +276,7 @@ body.mobile-menu-open {
   top: 0px
 }
 .header.on>div>h1 {
-  position: absolute; left: 50%; margin-left: -70px
+  position: fixed; left: 50%; transform: translateX(-50%); top: 20px; z-index: 3001; margin: 0;
 }
 .mainWrap .header.on>div>h1 {
   top: 0px
@@ -357,7 +370,7 @@ body.mobile-menu-open {
 }
 
 .header.on .logo {
-  font-family: 'abigail'; color: #666; font-weight: 400; font-size: 26px;text-align: center; margin-top: -5px; opacity: 1; display: block
+  font-family: 'abigail'; color: #666; font-weight: 400; font-size: 26px;text-align: center; opacity: 1; display: block
 }
 .header.on .logo img {
   width: 140px; margin-top: -15px;margin-left: 14px
@@ -508,7 +521,7 @@ body.mobile-menu-open {
     opacity: 1; top: -30px; font-size: 28px
   }
   .header h1 {
-    left: 0%; margin-left: 30px
+    left: 50%; transform: translateX(-50%);
   }
   .mHd {
     padding: 50px 0 40px 0;background: rgba(240,241,243,0.8);
@@ -529,7 +542,7 @@ body.mobile-menu-open {
     opacity: 1; top: -30px; font-size: 28px
   }
   .mHd h1 {
-    left: 0%; margin-left: 30px
+    left: 50%; transform: translateX(-50%);
   }
   .mainTitleGrp {
     display: block;
@@ -654,7 +667,7 @@ body.mobile-menu-open {
     display: none;
   }
   .header.on .logo {
-    width: 60px; top: 10px; left: 30px
+    width: 60px; top: 10px; left: 50%; transform: translateX(-50%);
   }
 }
 
@@ -687,12 +700,12 @@ body.mobile-menu-open {
     width: auto
   }
   .mHd .logo {
-    top: -10px; font-size: 20px; left: -30px; text-align: left
+    top: -10px; font-size: 20px; left: 50%; transform: translateX(-50%); text-align: center;
   }
   .mHd .logo img {
     width: 100px
   }
   .header .logo {
-    left: -20px; top: -10px; font-size: 22px
+    left: 50%; transform: translateX(-50%); top: -10px; font-size: 22px
   }
 }
