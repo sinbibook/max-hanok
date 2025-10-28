@@ -187,6 +187,7 @@ class DirectionsMapper extends BaseDataMapper {
         this.mapMapIframe();
         this.updateMetaTags(this.data.property);
         this.updatePageTitle();
+        this.updateFavicon();
     }
 
     /**

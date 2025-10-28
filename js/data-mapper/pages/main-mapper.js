@@ -23,6 +23,7 @@ class MainMapper extends BaseDataMapper {
         this.mapHeroImage();
         this.mapWaveBackgroundImage();
         this.updateMetaTags(this.data.property);
+        this.updateFavicon();
     }
 
 

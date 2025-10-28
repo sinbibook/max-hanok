@@ -469,7 +469,7 @@ class RoomMapper extends BaseDataMapper {
     }
 
     /**
-     * SEO 정보 업데이트
+     * SEO 정보 및 Favicon 업데이트
      */
     updateSEO() {
         const room = this.getCurrentRoom();
@@ -484,6 +484,16 @@ class RoomMapper extends BaseDataMapper {
             metaDesc.setAttribute('content', `${room.name} - ${room.description}`);
         }
 
+        // Favicon 업데이트 (homepage.images[0].logo에서 isSelected: true인 항목)
+        if (this.data && this.data.homepage && this.data.homepage.images && this.data.homepage.images[0] && this.data.homepage.images[0].logo) {
+            const selectedLogo = this.data.homepage.images[0].logo.find(logo => logo.isSelected === true);
+            if (selectedLogo && selectedLogo.url) {
+                const faviconElement = document.querySelector('[data-homepage-favicon]');
+                if (faviconElement) {
+                    faviconElement.href = selectedLogo.url;
+                }
+            }
+        }
     }
 
     /**
