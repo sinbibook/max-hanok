@@ -58,6 +58,21 @@ class BaseDataMapper {
         }
     }
 
+    /**
+     * Favicon 업데이트 공통 메서드
+     */
+    updateFavicon() {
+        if (this.data && this.data.homepage && this.data.homepage.images && this.data.homepage.images[0] && this.data.homepage.images[0].logo) {
+            const selectedLogo = this.data.homepage.images[0].logo.find(logo => logo.isSelected === true);
+            if (selectedLogo && selectedLogo.url) {
+                const faviconElement = document.querySelector('[data-homepage-favicon]');
+                if (faviconElement) {
+                    faviconElement.href = selectedLogo.url;
+                }
+            }
+        }
+    }
+
     // ============================================================================
     // 🖼️ IMAGE UTILITIES
     // ============================================================================

@@ -558,7 +558,7 @@ class IndexMapper extends BaseDataMapper {
     }
 
     /**
-     * SEO 메타 태그 업데이트
+     * SEO 메타 태그 및 Favicon 업데이트
      */
     updateSEOInfo(property, seoData) {
         // Property 기반 기본 타이틀 설정
@@ -589,6 +589,17 @@ class IndexMapper extends BaseDataMapper {
                 const keywordsElement = document.querySelector('[data-homepage-seo-keywords]');
                 if (keywordsElement) {
                     keywordsElement.content = seoData.keywords;
+                }
+            }
+        }
+
+        // Favicon 업데이트 (homepage.images[0].logo에서 isSelected: true인 항목)
+        if (this.data && this.data.homepage && this.data.homepage.images && this.data.homepage.images[0] && this.data.homepage.images[0].logo) {
+            const selectedLogo = this.data.homepage.images[0].logo.find(logo => logo.isSelected === true);
+            if (selectedLogo && selectedLogo.url) {
+                const faviconElement = document.querySelector('[data-homepage-favicon]');
+                if (faviconElement) {
+                    faviconElement.href = selectedLogo.url;
                 }
             }
         }

@@ -421,6 +421,9 @@ class ReservationMapper extends BaseDataMapper {
 
         // HTML title 매핑
         this.updatePageTitle();
+
+        // Favicon 업데이트
+        this.updateFavicon();
     }
 
     /**
