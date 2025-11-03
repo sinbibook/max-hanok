@@ -4,12 +4,12 @@
  * BaseDataMapper를 상속받아 오시는길 페이지 전용 기능 제공
  */
 class DirectionsMapper extends BaseDataMapper {
-    constructor(data = null) {
+    // Kakao Map 설정 상수
+    static KAKAO_MAP_ZOOM_LEVEL = 3;
+    static SDK_WAIT_INTERVAL = 100; // ms
+
+    constructor() {
         super();
-        if (data) {
-            this.data = data;
-            this.isDataLoaded = true;
-        }
     }
 
     // ============================================================================
@@ -17,155 +17,283 @@ class DirectionsMapper extends BaseDataMapper {
     // ============================================================================
 
     /**
-     * SEO 메타태그 매핑
+     * Hero 섹션 매핑 (배경 이미지, 제목) - customFields 활용
      */
-    mapSEOTags() {
-        if (!this.isDataLoaded || !this.data.homepage) return;
+    mapHeroSection() {
+        if (!this.isDataLoaded || !this.data.property) return;
 
-        const seo = this.data.homepage.seo;
-        if (!seo) return;
+        // directions 페이지 전용 hero 섹션 데이터 가져오기
+        const directionsHeroData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero');
 
-        // Title
-        const titleEl = this.safeSelect('[data-homepage-seo-title]');
-        if (titleEl && seo.title) {
-            titleEl.textContent = seo.title;
+        // Hero 제목 매핑 (customFields에서 우선, 없으면 기본값)
+        const heroTitleElement = this.safeSelect('[data-directions-hero-title]');
+        if (heroTitleElement) {
+            if (directionsHeroData?.title) {
+                heroTitleElement.textContent = directionsHeroData.title;
+            } else if (this.data.property?.name) {
+                // fallback: 펜션명 + 오시는길
+                heroTitleElement.textContent = `${this.data.property.name} 오시는길`;
+            }
         }
 
-        // Description
-        const descEl = this.safeSelect('[data-homepage-seo-description]');
-        if (descEl && seo.description) {
-            descEl.setAttribute('content', seo.description);
+        // Hero 배경 이미지 매핑 (JSON에서 동적으로)
+        this.mapHeroImage();
+    }
+
+    /**
+     * Hero 이미지 동적 매핑 (directions 전용 customFields 활용)
+     */
+    mapHeroImage() {
+        if (!this.isDataLoaded) return;
+
+        // directions 페이지 전용 hero 섹션 데이터 가져오기
+        const directionsHeroData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero');
+
+        const heroImageElement = this.safeSelect('[data-directions-hero-image]');
+
+        if (!heroImageElement) return;
+
+        const images = directionsHeroData?.images;
+
+        // 이미지가 없으면 빈 이미지 표시
+        if (!images || images.length === 0) {
+            ImageHelpers.applyPlaceholder(heroImageElement);
+            return;
         }
 
-        // Keywords
-        const keywordsEl = this.safeSelect('[data-homepage-seo-keywords]');
-        if (keywordsEl && seo.keywords) {
-            keywordsEl.setAttribute('content', seo.keywords);
+        // sortOrder로 정렬해서 첫 번째 이미지 사용
+        const sortedImages = images.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+        const firstImage = sortedImages[0];
+
+        if (firstImage?.url) {
+            heroImageElement.src = firstImage.url;
+            heroImageElement.alt = firstImage.description || `${this.data.property?.name} 오시는길`;
+            heroImageElement.loading = 'eager';
+            heroImageElement.classList.remove('empty-image-placeholder');
+        } else {
+            ImageHelpers.applyPlaceholder(heroImageElement);
         }
     }
 
     /**
-     * Property address 매핑
+     * 주소 정보 섹션 매핑
      */
-    mapPropertyAddress() {
+    mapAddressSection() {
         if (!this.isDataLoaded || !this.data.property) return;
 
         const property = this.data.property;
 
-        this.safeSelectAll('[data-property-address]').forEach((addressEl) => {
-            if (addressEl && property.address) {
-                addressEl.textContent = property.address;
-            }
-        });
-    }
-
-    /**
-     * Hero 이미지 매핑 (directions hero images)
-     */
-    mapHeroImages() {
-        const heroImages = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero.images');
-
-        // 선택된 이미지 필터링 및 정렬
-        let selectedImages = [];
-        if (Array.isArray(heroImages) && heroImages.length > 0) {
-            selectedImages = heroImages
-                .filter(img => img.isSelected === true && img.url)
-                .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+        // 섹션 제목 매핑
+        const sectionTitleElement = this.safeSelect('[data-directions-section-title]');
+        if (sectionTitleElement && property.name) {
+            sectionTitleElement.textContent = `${property.name} 오시는길`;
         }
 
-        // Hero section 0번째 이미지 매핑
-        const heroElement = this.safeSelect('[data-homepage-customfields-pages-directions-sections-0-hero-images-0-url]');
-        if (heroElement) {
-            if (selectedImages.length > 0) {
-                heroElement.src = selectedImages[0].url;
-                heroElement.alt = selectedImages[0].description || '오시는길 히어로 이미지';
-                heroElement.classList.remove('empty-image-placeholder');
-            } else {
-                heroElement.src = '';
-                heroElement.alt = '이미지 없음';
-                heroElement.classList.add('empty-image-placeholder');
-            }
+        // 도로명 주소 매핑
+        const roadAddressElement = this.safeSelect('[data-directions-road-address]');
+        if (roadAddressElement && property.address) {
+            roadAddressElement.textContent = property.address;
         }
 
-        // Circular section 1번째 이미지 매핑
-        const circularElement = this.safeSelect('[data-homepage-customfields-pages-directions-sections-0-hero-images-1-url]');
-        if (circularElement) {
-            if (selectedImages.length > 1) {
-                circularElement.src = selectedImages[1].url;
-                circularElement.alt = selectedImages[1].description || '오시는길 원형 이미지';
-                circularElement.classList.remove('empty-image-placeholder');
-            } else {
-                circularElement.src = '';
-                circularElement.alt = '이미지 없음';
-                circularElement.classList.add('empty-image-placeholder');
-            }
+        // 지번 주소 매핑 - 향후 요구사항 변경 시 활성화 예정
+        // const lotAddressElement = this.safeSelect('[data-directions-lot-address]');
+        // if (lotAddressElement && property.address) {
+        //     lotAddressElement.textContent = property.address;
+        // }
+
+        // 안내사항 매핑
+        const noticeElement = this.safeSelect('[data-directions-notice]');
+        if (noticeElement && property.name) {
+            noticeElement.textContent = `네비게이션 검색 시 '${property.name}' 또는 주소를 이용해 주세요.`;
         }
     }
 
     /**
-     * 안내사항 매핑 (1번째 이미지 description 사용)
+     * Notice 섹션 매핑 (customFields 기반)
      */
-    mapDirectionsNotice() {
-        const heroImages = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero.images');
-        const noticeElement = this.safeSelect('[data-homepage-customfields-pages-directions-sections-0-directions-notice]');
+    mapNoticeSection() {
+        if (!this.isDataLoaded) return;
 
-        if (noticeElement) {
-            if (Array.isArray(heroImages) && heroImages.length > 1 && heroImages[1].description) {
-                noticeElement.textContent = heroImages[1].description;
-            } else {
-                noticeElement.textContent = '정확한 위치 확인을 위해 도로명 주소를 사용해 주세요.';
+        // directions 페이지 전용 섹션 데이터 가져오기
+        const directionsData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0');
+        const noticeSection = this.safeSelect('[data-directions-notice-section]');
+        const notice = directionsData?.notice;
+
+        // notice 데이터가 없거나 title/description이 모두 비어있으면 섹션 숨김
+        const hasTitle = notice?.title && notice.title.trim() !== '';
+        const hasDescription = notice?.description && notice.description.trim() !== '';
+
+        if (!notice || (!hasTitle && !hasDescription)) {
+            if (noticeSection) noticeSection.style.display = 'none';
+            return;
+        }
+
+        // notice 데이터가 있으면 섹션 표시
+        if (noticeSection) noticeSection.style.display = '';
+
+        // Notice 제목 매핑
+        const noticeTitle = this.safeSelect('[data-directions-notice-title]');
+        if (noticeTitle) {
+            noticeTitle.textContent = hasTitle ? notice.title : '';
+        }
+
+        // Notice 설명 매핑
+        const noticeDescription = this.safeSelect('[data-directions-notice-description]');
+        if (noticeDescription) {
+            noticeDescription.innerHTML = ''; // 기존 콘텐츠 초기화 및 XSS 방지
+            if (hasDescription) {
+                // \n을 <br>로 변환하여 안전하게 줄바꿈 처리
+                const lines = notice.description.split('\n');
+                lines.forEach((line, index) => {
+                    noticeDescription.appendChild(document.createTextNode(line));
+                    if (index < lines.length - 1) {
+                        noticeDescription.appendChild(document.createElement('br'));
+                    }
+                });
             }
         }
     }
 
+    /**
+     * 지도 섹션 매핑 (지도 제목)
+     */
+    mapMapSection() {
+        if (!this.isDataLoaded || !this.data.property) return;
 
+        // 지도 제목 매핑
+        const mapTitleElement = this.safeSelect('[data-directions-map-title]');
+        if (mapTitleElement) {
+            mapTitleElement.textContent = '위치 안내';
+        }
+    }
 
     /**
-     * Map iframe 매핑 (좌표 기반 OpenStreetMap)
+     * 카카오맵 초기화 및 표시
      */
-    mapMapIframe() {
+    initKakaoMap() {
+        if (!this.isDataLoaded || !this.data.property) {
+            return;
+        }
+
+        const property = this.data.property;
+        const mapContainer = document.getElementById('kakao-map');
+
+        if (!mapContainer || !property.latitude || !property.longitude) {
+            return;
+        }
+
+        // 지도 생성 함수
+        const createMap = () => {
+            try {
+                // 검색 쿼리 및 URL 생성 (한 번만)
+                const searchQuery = property.address || property.name || '선택한 위치';
+                const kakaoMapUrl = `https://map.kakao.com/?q=${encodeURIComponent(searchQuery)}`;
+                const openKakaoMap = () => window.open(kakaoMapUrl, '_blank');
+
+                // 지도 중심 좌표
+                const mapCenter = new kakao.maps.LatLng(property.latitude, property.longitude);
+
+                // 지도 옵션
+                const mapOptions = {
+                    center: mapCenter,
+                    level: DirectionsMapper.KAKAO_MAP_ZOOM_LEVEL,
+                    draggable: false,
+                    scrollwheel: false,
+                    disableDoubleClick: true,
+                    disableDoubleClickZoom: true
+                };
+
+                // 지도 생성
+                const map = new kakao.maps.Map(mapContainer, mapOptions);
+                map.setZoomable(false);
+
+                // 마커 생성 및 클릭 이벤트
+                const marker = new kakao.maps.Marker({
+                    position: mapCenter,
+                    map: map
+                });
+                kakao.maps.event.addListener(marker, 'click', openKakaoMap);
+
+                // 인포윈도우 콘텐츠 DOM 생성 및 이벤트 핸들러 연결
+                const infowindowContent = document.createElement('div');
+                infowindowContent.style.cssText = 'padding:5px; font-size:14px; cursor:pointer;';
+                infowindowContent.innerHTML = `${property.name}<br/><small style="color:#666;">클릭하면 카카오맵으로 이동</small>`;
+                infowindowContent.addEventListener('click', openKakaoMap);
+
+                const infowindow = new kakao.maps.InfoWindow({
+                    content: infowindowContent
+                });
+                infowindow.open(map, marker);
+            } catch (error) {
+                console.error('Failed to create Kakao Map:', error);
+            }
+        };
+
+        // SDK 로드 확인 및 지도 생성
+        const checkSdkAndLoad = (retryCount = 0) => {
+            const MAX_RETRIES = 20; // 20 * 100ms = 2초
+            if (window.kakao && window.kakao.maps && window.kakao.maps.load) {
+                // kakao.maps.load() 공식 API 사용
+                window.kakao.maps.load(createMap);
+            } else if (retryCount < MAX_RETRIES) {
+                // SDK가 아직 로드되지 않았으면 대기
+                setTimeout(() => checkSdkAndLoad(retryCount + 1), DirectionsMapper.SDK_WAIT_INTERVAL);
+            } else {
+                console.error('Failed to load Kakao Map SDK after multiple retries.');
+            }
+        };
+
+        checkSdkAndLoad();
+    }
+
+    /**
+     * 레거시 CSS 선택자 기반 매핑 (기존 mapDirectionsPage 호환성)
+     */
+    mapLegacySelectors() {
         if (!this.isDataLoaded || !this.data.property) return;
 
         const property = this.data.property;
-        const iframe = this.safeSelect('iframe[data-property-latitude][data-property-longitude]');
 
-        if (iframe && property.latitude && property.longitude) {
-            // OpenStreetMap embed URL 생성
-            const lat = property.latitude;
-            const lon = property.longitude;
-            const zoom = 0.01; // bbox 범위
+        // 기존 CSS 선택자 기반 매핑들 (data 속성이 없는 요소들을 위해)
 
-            const bbox = `${lon - zoom}%2C${lat - zoom}%2C${lon + zoom}%2C${lat + zoom}`;
-            const marker = `${lat}%2C${lon}`;
+        // 도로명 주소 매핑 (첫 번째 주소 항목)
+        const roadAddressElement = this.safeSelect('.address-item:first-of-type .address-details p:last-child');
+        if (roadAddressElement && property.address) {
+            roadAddressElement.textContent = property.address;
+        }
 
-            iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
-            iframe.title = `${property.name} 위치`;
+        // 지번 주소 매핑 - 향후 요구사항 변경 시 활성화 예정
+        // const lotAddressElement = this.safeSelect('.address-item:last-of-type .address-details p:last-child');
+        // if (lotAddressElement && property.address) {
+        //     lotAddressElement.textContent = property.address;
+        // }
+
+        // 지도 콘텐츠 영역 주소 매핑
+        const mapAddressElement = this.safeSelect('.map-content .address');
+        if (mapAddressElement && property.address) {
+            mapAddressElement.textContent = property.address;
+        }
+
+        // 지도 콘텐츠 영역 펜션명 매핑
+        const mapPropertyNameElement = this.safeSelect('.map-content h4');
+        if (mapPropertyNameElement && property.name) {
+            mapPropertyNameElement.textContent = property.name;
+        }
+
+        // 섹션 제목 매핑 (CSS 선택자 기반)
+        const legacySectionTitleElement = this.safeSelect('.section-title');
+        if (legacySectionTitleElement && property.name) {
+            legacySectionTitleElement.textContent = `${property.name} 오시는길`;
+        }
+
+        // 안내 문구 매핑 (CSS 선택자 기반)
+        const legacyNoticeElement = this.safeSelect('.info-notice p');
+        if (legacyNoticeElement && property.name) {
+            const originalText = legacyNoticeElement.textContent;
+            const updatedText = originalText.replace('제주 포레스트', property.name);
+            legacyNoticeElement.textContent = updatedText;
         }
     }
-
-    /**
-     * Property phone 매핑 (맵 하단 문의전화)
-     */
-    mapPropertyPhone() {
-        if (!this.isDataLoaded || !this.data.property) return;
-
-        const property = this.data.property;
-        const businessInfo = property?.businessInfo;
-
-        // businessPhone이 있으면 우선 사용, 없으면 contactPhone 사용
-        const phoneNumber = (businessInfo?.businessPhone && businessInfo.businessPhone.trim())
-            ? businessInfo.businessPhone
-            : property.contactPhone;
-
-        const phoneElements = this.safeSelectAll('[data-property-phone]');
-        phoneElements.forEach((phoneEl) => {
-            if (phoneEl && phoneNumber) {
-                phoneEl.textContent = phoneNumber;
-            }
-        });
-    }
-
-
 
     // ============================================================================
     // 🔄 TEMPLATE METHODS IMPLEMENTATION
@@ -179,27 +307,61 @@ class DirectionsMapper extends BaseDataMapper {
             return;
         }
 
-        this.mapSEOTags();
-        this.mapPropertyAddress();
-        this.mapPropertyPhone();
-        this.mapHeroImages();
-        this.mapDirectionsNotice();
-        this.mapMapIframe();
-        this.updateMetaTags(this.data.property);
-        this.updatePageTitle();
-        this.updateFavicon();
+        // 순차적으로 각 섹션 매핑
+        this.mapHeroSection();
+        this.mapAddressSection();
+        this.mapNoticeSection(); // Notice 섹션 매핑 추가
+        this.mapMapSection();
+        this.initKakaoMap(); // 카카오맵 초기화 및 표시
+        this.mapLegacySelectors();
+
+        // 메타 태그 업데이트 (페이지별 SEO 적용)
+        const property = this.data.property;
+        const directionsData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero');
+        const pageSEO = {
+            title: property?.name ? `오시는길 - ${property.name}` : 'SEO 타이틀',
+            description: directionsData?.description || property?.description || 'SEO 설명'
+        };
+        this.updateMetaTags(pageSEO);
+
+        // OG 이미지 업데이트 (hero 이미지 사용)
+        this.updateOGImage(directionsData);
+
+        // E-commerce registration 매핑
+        this.mapEcommerceRegistration();
     }
 
     /**
-     * 페이지 제목 업데이트
+     * OG 이미지 업데이트 (directions hero 이미지 사용, 없으면 로고)
+     * @param {Object} directionsData - directions hero 섹션 데이터
      */
-    updatePageTitle() {
-        const property = this.data.property;
-        const htmlTitle = this.safeSelect('title');
+    updateOGImage(directionsData) {
+        if (!this.isDataLoaded) return;
 
-        if (htmlTitle && property?.name) {
-            htmlTitle.textContent = `오시는길 - ${property.name}`;
+        const ogImage = this.safeSelect('meta[property="og:image"]');
+        if (!ogImage) return;
+
+        // 우선순위: hero 이미지 > 로고 이미지
+        if (directionsData?.images && directionsData.images.length > 0 && directionsData.images[0]?.url) {
+            ogImage.setAttribute('content', directionsData.images[0].url);
+        } else {
+            const defaultImage = this.getDefaultOGImage();
+            if (defaultImage) {
+                ogImage.setAttribute('content', defaultImage);
+            }
         }
+    }
+
+    /**
+     * Directions 페이지 텍스트만 업데이트
+     */
+    mapDirectionsText() {
+        if (!this.isDataLoaded) return;
+
+        // 텍스트 관련 섹션들만 업데이트
+        this.mapHeroSection();
+        this.mapLocationInfo();
+        this.mapDirectionsInfo();
     }
 }
 

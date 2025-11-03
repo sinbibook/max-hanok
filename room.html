@@ -3,280 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-homepage-seo-title></title>
-    <meta name="description" content="" data-homepage-seo-description>
-    <meta name="keywords" content="" data-homepage-seo-keywords>
-    <link rel="icon" type="image/png" href="" data-homepage-favicon>
+    <meta name="description" content="숙소 설명">
+    <meta name="keywords" content="SEO 키워드">
+    <title id="page-title">객실 안내 - 숙소명</title>
 
-    <script src="js/config.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles/common.css"/>
-    <link rel="stylesheet" href="styles/room.css"/>
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/room.css" as="style">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/room.css">
+
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 객실안내" />
-  <meta property="og:description" content="자연과 함께하는 맥스 펜션에서 편안한 휴식을 취할 수 있습니다.
-편하게 휴식을 취하고 힐링하고 가세요." />
+  
   <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
   <meta property="og:url" content="https://max-hanok.com" />
 
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="맥스 한옥 펜션 - 객실안내" />
-  <meta name="twitter:description" content="자연과 함께하는 맥스 펜션에서 편안한 휴식을 취할 수 있습니다.
-편하게 휴식을 취하고 힐링하고 가세요." />
+  
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-
-    <!-- Fullscreen Menu Container -->
-    <div id="fullscreen-menu-container"></div>
-
-    <div class="main-container" data-name="객실페이지">
-
-        <!-- Section 1: Hero with Background Image and Room Name -->
-        <section id="section1" class="relative w-full overflow-hidden" style="height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh;">
-            <!-- Hero Background Image -->
-            <div id="hero-image-container" class="absolute inset-0 w-full h-full">
-                <img src=""
-                     alt="객실 이미지"
-                     class="absolute inset-0 w-full h-full object-cover empty-image-placeholder"
-                     style="width: 100%; height: 100vh; min-height: 100vh; object-fit: cover; display: block; position: absolute; inset: 0px;"
-                     data-room-hero-image>
+    <div class="min-h-screen bg-white overflow-x-hidden">
+        <!-- Hero Section with Image Slider -->
+        <section class="hero-section">
+            <!-- Background Slides - will be populated by data-mapper -->
+            <div data-room-hero-slides-container>
+                <!-- Hero slides will be dynamically inserted here -->
             </div>
 
-            <!-- 오버레이 그라데이션 -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-
-            <!-- Room Name 텍스트 -->
-            <div class="absolute bottom-8 left-8 md:bottom-12 md:left-8 lg:bottom-16 lg:left-12 xl:left-24 slide-in-left">
-                <div class="text-center">
-                    <h1 class="responsive-title text-white font-bold drop-shadow-lg en-title">
-                        Spaces
-                    </h1>
-                    <div class="w-[280px] md:w-[350px] lg:w-[400px] h-px bg-white mt-4 mx-auto"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: Room Point Cards -->
-        <section class="relative w-full py-16 lg:py-24">
-            <div class="max-w-7xl mx-auto px-6">
-                <!-- Section Title -->
-                <div class="text-left mb-16">
-                    <h3 class="text-2xl md:text-3xl font-bold ko-title fade-in-up" style="color: rgb(96, 83, 71);" data-room-name></h3>
-                    <div class="w-full h-px mt-6 fade-in-up" style="background-color: rgb(96, 83, 71);"></div>
-                    <p class="text-lg text-gray-600 ko-body mt-6 fade-in-up" data-room-description></p>
-                </div>
-            </div>
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-row gap-4 md:gap-8 lg:gap-12 items-start">
-
-                    <!-- Left Side: Image Slider (50%) -->
-                    <div class="w-1/2 slide-in-left">
-                        <div class="sticky top-8">
-                            <!-- Slider Container -->
-                            <div class="relative">
-                                <!-- Main Image Display -->
-                                <div class="w-full px-8 lg:pl-0 lg:pr-12">
-                                    <div class="border-2 border-dashed rounded-t-full p-2 w-full" style="border-color: rgb(96, 83, 71);">
-                                        <div class="w-full h-[400px] md:h-[550px] lg:h-[650px] overflow-hidden bg-gray-200 shadow-lg" style="border-radius: 260px 260px 10px 10px;">
-                                        <div class="relative w-full h-full">
-                                            <img id="main-slider-image"
-                                                 src=""
-                                                 alt="객실 이미지"
-                                                 class="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity empty-image-placeholder"
-                                                 data-room-slider-main>
-
-                                            <!-- Click to view icon -->
-                                            <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-80 hover:opacity-100 transition-opacity pointer-events-none">
-                                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-                                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-                                                </svg>
-                                            </div>
-
-                                            <!-- Click to enlarge hint -->
-                                            <div class="absolute bottom-4 left-4 right-4 bg-black bg-opacity-50 text-white text-center py-2 px-3 rounded opacity-70 hover:opacity-90 transition-opacity pointer-events-none flex items-center justify-center">
-                                                <span class="text-sm ko-body">클릭하여 전체 이미지 보기</span>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Side: Accordions (50%) -->
-                    <div class="w-1/2 slide-in-right">
-
-                <!-- Room Information Accordion (Default Open) -->
-                <div class="border-b mb-4" style="border-color: rgb(96, 83, 71);">
-                    <button class="w-full py-6 flex items-center justify-between text-left focus:outline-none group">
-                        <h3 class="text-lg md:text-2xl en-title" style="color: rgb(96, 83, 71);">Room Information</h3>
-                        <svg class="w-6 h-6 transition-transform duration-200" style="color: rgb(96, 83, 71);"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </button>
-                    <div class="accordion-content mb-2 overflow-hidden transition-all duration-300 accordion-open">
-                        <div class="bg-stone-50 rounded-lg p-6 border" style="border-color: rgb(96, 83, 71);">
-                            <div class="space-y-4">
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                    <span class="text-sm md:text-base text-gray-600 ko-body">객실 크기</span>
-                                    <span class="text-sm md:text-base font-medium ko-body" data-room-size></span>
-                                </div>
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                    <span class="text-sm md:text-base text-gray-600 ko-body">침대 타입</span>
-                                    <span class="text-sm md:text-base font-medium ko-body" data-room-bed-type></span>
-                                </div>
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                    <span class="text-sm md:text-base text-gray-600 ko-body">객실 구성</span>
-                                    <span class="text-sm md:text-base font-medium ko-body" data-room-structure></span>
-                                </div>
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                    <span class="text-sm md:text-base text-gray-600 ko-body">기준 인원</span>
-                                    <span class="text-sm md:text-base font-medium ko-body" data-room-base-occupancy></span>
-                                </div>
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                    <span class="text-sm md:text-base text-gray-600 ko-body">최대 인원</span>
-                                    <span class="text-sm md:text-base font-medium ko-body" data-room-max-occupancy></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Facilities Accordion -->
-                <div class="border-b mb-4" style="border-color: rgb(96, 83, 71);">
-                    <button class="w-full py-6 flex items-center justify-between text-left focus:outline-none group">
-                        <h3 class="text-lg md:text-2xl en-title" style="color: rgb(96, 83, 71);">Amenities</h3>
-                        <svg class="w-6 h-6 transition-transform duration-200" style="color: rgb(96, 83, 71);"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </button>
-                    <div class="accordion-content mb-2 overflow-hidden transition-all duration-300 max-h-0">
-                        <div class="bg-stone-50 rounded-lg p-6 border" style="border-color: rgb(96, 83, 71);">
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4" data-room-amenities></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Check-in/Check-out Accordion -->
-                <div class="border-b mb-4" style="border-color: rgb(96, 83, 71);">
-                    <button class="w-full py-6 flex items-center justify-between text-left focus:outline-none group">
-                        <h3 class="text-lg md:text-2xl en-title" style="color: rgb(96, 83, 71);">Check-in & Check-out</h3>
-                        <svg class="w-6 h-6 transition-transform duration-200" style="color: rgb(96, 83, 71);"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </button>
-                    <div class="accordion-content mb-2 overflow-hidden transition-all duration-300 max-h-0">
-                        <div class="bg-stone-50 rounded-lg p-6 border" style="border-color: rgb(96, 83, 71);">
-                            <div class="space-y-4">
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                    <span class="text-sm md:text-base text-gray-600 ko-body">체크인</span>
-                                    <span class="text-sm md:text-base font-medium ko-body" data-property-checkin></span>
-                                </div>
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                                    <span class="text-sm md:text-base text-gray-600 ko-body">체크아웃</span>
-                                    <span class="text-sm md:text-base font-medium ko-body" data-property-checkout></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Usage Guide and Check-in Info -->
-        <section class="relative w-full py-8 lg:py-12">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col gap-6">
-
-                    <!-- Usage Guide Section -->
-                    <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: rgb(96, 83, 71);">
-                        <h4 class="text-xl font-semibold mb-4 en-title" style="color: rgb(96, 83, 71);">Usage Guide</h4>
-                        <p class="text-gray-700 ko-body leading-relaxed" data-room-info></p>
-                    </div>
-
-                    <!-- Check-in/Check-out Info Section -->
-                    <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: rgb(96, 83, 71);">
-                        <h4 class="text-xl font-semibold mb-4 en-title" style="color: rgb(96, 83, 71);">Check-in & Check-out Information</h4>
-                        <p class="text-gray-700 ko-body leading-relaxed" data-property-checkin-checkout-info></p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Wave Background Section -->
-        <section class="wave-bg-section relative overflow-hidden">
-            <div class="wave-bg relative w-full">
-                <!-- SVG Clipping Path -->
-                <svg width="0" height="0" style="position: absolute;">
-                    <defs>
-                        <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
-                            <path d="M0,0.1 C0.125,0.05 0.25,0.05 0.375,0.1 C0.5,0.15 0.625,0.15 0.75,0.1 C0.875,0.05 1,0.05 1,0.05 L1,1 L0,1 Z"/>
-                        </clipPath>
-                        <clipPath id="wave-clip-mobile" clipPathUnits="objectBoundingBox">
-                            <path d="M0,0.2 C0.2,0.12 0.4,0.1 0.5,0.1 C0.6,0.1 0.8,0.12 1,0.2 L1,1 L0,1 Z"/>
-                        </clipPath>
-                    </defs>
+            <!-- Navigation Buttons -->
+            <button class="nav-button prev">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
+            </button>
+            <button class="nav-button next">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
 
-                <!-- Background Image -->
-                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
-                     style="background-image: url(''); background-attachment: fixed; clip-path: url(#wave-clip);"
-                     data-room-wave-background>
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <button class="back-button" onclick="navigateToHome()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
+                    Back to Home
+                </button>
 
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-black/30"></div>
+                <div class="hero-text">
+                    <h1 id="room-hero-name" class="text-4xl md:text-6xl mb-4" data-room-hero-name></h1>
+                    <p id="room-hero-description" class="text-base md:text-xl max-w-2xl mx-auto leading-relaxed px-4" data-room-hero-description></p>
+                </div>
+
+                <!-- Custom Slide Indicators -->
+                <div class="slide-indicators">
+                    <span class="indicator-current">01</span>
+                    <div class="indicator-line">
+                        <div class="indicator-bg"></div>
+                        <div class="indicator-progress"></div>
+                    </div>
+                    <span class="indicator-total" data-room-total-slides>01</span>
                 </div>
             </div>
-        </section>
-
-    </div>
-
-    <!-- Image Modal -->
-    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center" style="z-index: 10001;">
-        <div class="relative max-w-4xl max-h-[90vh] w-full mx-4">
-            <!-- Close Button -->
-            <button id="modal-close" class="absolute top-4 right-4 text-white text-3xl z-10 hover:text-gray-300">
-                ×
-            </button>
-
-            <!-- Previous Button -->
-            <button id="modal-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl z-10 hover:text-gray-300">
-                ‹
-            </button>
-
-            <!-- Next Button -->
-            <button id="modal-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl z-10 hover:text-gray-300">
-                ›
-            </button>
-
-            <!-- Modal Image -->
-            <img id="modal-image" src="" alt="" class="w-full h-auto max-h-[90vh] object-contain rounded-lg">
         </div>
+
+        <!-- Room Info Section -->
+        <div class="room-info page-content">
+            <div class="room-grid">
+                <!-- Room Details -->
+                <div class="room-details">
+                    <div class="room-details-content">
+                        <div>
+                            <h2 id="room-info-name" class="room-title" data-room-info-name></h2>
+                            <p id="room-info-description" class="room-description" data-room-info-description></p>
+                        </div>
+
+                        <!-- Room Features -->
+                        <div class="room-features">
+                            <div class="features-list">
+                                <div class="feature-item">
+                                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>
+                                    </svg>
+                                    <span id="room-capacity" class="text-base md:text-lg" data-room-capacity></span>
+                                </div>
+                                <div class="feature-item">
+                                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21l8-8-8-8"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h6l1 1v14l-1 1H3z"/>
+                                    </svg>
+                                    <span id="room-bed-type" class="text-base md:text-lg" data-room-bed-type></span>
+                                </div>
+                                <div class="feature-item">
+                                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    <span id="room-view" class="text-base md:text-lg" data-room-view></span>
+                                </div>
+                                <div class="feature-item">
+                                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="12,6 12,12 16,14"/>
+                                    </svg>
+                                    <span id="room-checkin-checkout" class="text-base md:text-lg" data-room-checkin-checkout></span>
+                                </div>
+                            </div>
+                            <div class="features-list">
+                                <p class="font-medium text-gray-800">객실 구조</p>
+                                <p id="room-structure" class="text-gray-600 text-base md:text-lg" data-room-structure></p>
+                            </div>
+                        </div>
+
+                        <!-- Amenities -->
+                        <div class="amenities-section">
+                            <h4 class="font-medium text-gray-800 mb-4">어메니티</h4>
+                            <div id="amenities-grid" class="amenities-grid" data-room-amenities-grid>
+                                <!-- Amenities will be dynamically populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Room Usage Guide -->
+                        <div class="room-guide-section">
+                            <h4 class="font-medium text-gray-800 mb-3">객실 이용안내</h4>
+                            <p id="room-additional-info" class="text-gray-600 text-base md:text-lg leading-relaxed" data-room-additional-info></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Gallery -->
+                <div class="room-gallery">
+                    <div id="room-gallery-grid" class="gallery-grid" data-room-gallery-grid>
+                        <!-- Gallery images will be dynamically populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Page Specific Scripts -->
+
+    <!-- Image With Fallback -->
+    <script src="js/image-with-fallback.js"></script>
+
+    <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
-    <script src="js/header-footer-loader.js"></script>
-    <script src="js/accordion.js"></script>
-    <script src="js/room-slider.js"></script>
+
+    <!-- Base Data Mapper -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Room Page Mapper -->
     <script src="js/data-mapper/pages/room-mapper.js"></script>
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
     <script src="js/preview-handler.js"></script>
-    <script src="js/common/scroll-animation.js"></script>
-    <script src="js/pages/room.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
+    <script type="module" src="js/pages/room.js"></script>
 
 </body>
 </html>

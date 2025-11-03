@@ -14,6 +14,23 @@ class BaseDataMapper {
     // 🔧 CORE UTILITIES
     // ============================================================================
 
+    /**
+     * JSON 데이터 로드
+     */
+    async loadData() {
+        try {
+            // 캐시 방지를 위한 타임스탬프 추가
+            const timestamp = new Date().getTime();
+            const response = await fetch(`./standard-template-data.json?t=${timestamp}`);
+            this.data = await response.json();
+            this.isDataLoaded = true;
+            return this.data;
+        } catch (error) {
+            console.error('Failed to load property data:', error);
+            this.isDataLoaded = false;
+            throw error;
+        }
+    }
 
     /**
      * 시간 포맷팅 함수 (HH:MM:SS -> HH:MM)
@@ -43,6 +60,7 @@ class BaseDataMapper {
         try {
             return document.querySelector(selector);
         } catch (error) {
+            console.warn(`Invalid selector: ${selector}`);
             return null;
         }
     }
@@ -54,22 +72,8 @@ class BaseDataMapper {
         try {
             return document.querySelectorAll(selector);
         } catch (error) {
+            console.warn(`Invalid selector: ${selector}`);
             return [];
-        }
-    }
-
-    /**
-     * Favicon 업데이트 공통 메서드
-     */
-    updateFavicon() {
-        if (this.data && this.data.homepage && this.data.homepage.images && this.data.homepage.images[0] && this.data.homepage.images[0].logo) {
-            const selectedLogo = this.data.homepage.images[0].logo.find(logo => logo.isSelected === true);
-            if (selectedLogo && selectedLogo.url) {
-                const faviconElement = document.querySelector('[data-homepage-favicon]');
-                if (faviconElement) {
-                    faviconElement.href = selectedLogo.url;
-                }
-            }
         }
     }
 
@@ -183,34 +187,16 @@ class BaseDataMapper {
     // ============================================================================
 
     /**
-     * 메타 태그 업데이트
+     * 메타 태그 업데이트 (homepage.seo + 페이지별 SEO 병합)
+     * @param {Object} pageSEO - 페이지별 SEO 데이터 (선택사항, 전역 SEO보다 우선 적용)
      */
-    updateMetaTags(property) {
-        if (!property) return;
-
-        // 타이틀 업데이트
-        const title = this.safeSelect('title');
-        if (title && property.subtitle) {
-            title.textContent = `${property.name} - ${property.subtitle}`;
-        }
-
-        // 메타 description 업데이트
-        const metaDescription = this.safeSelect('meta[name="description"]');
-        if (metaDescription && property.description) {
-            metaDescription.setAttribute('content', property.description);
-        }
-
-        // 메타 keywords 업데이트
-        const metaKeywords = this.safeSelect('meta[name="keywords"]');
-        if (metaKeywords && property.city && property.province) {
-            const keywords = [
-                property.city.name + '펜션',
-                property.province.name + '숙박',
-                property.name,
-                '감성펜션',
-                '자연휴양지'
-            ].join(', ');
-            metaKeywords.setAttribute('content', keywords);
+    updateMetaTags(pageSEO = null) {
+        // homepage.seo 글로벌 SEO 데이터 적용
+        const globalSEO = this.safeGet(this.data, 'homepage.seo') || {};
+        // 전역 SEO와 페이지별 SEO를 병합합니다. 페이지별 설정이 우선됩니다.
+        const finalSEO = { ...globalSEO, ...(pageSEO || {}) };
+        if (Object.keys(finalSEO).length > 0) {
+            this.updateSEOInfo(finalSEO);
         }
     }
 
@@ -223,17 +209,43 @@ class BaseDataMapper {
         if (seo.title) {
             const title = this.safeSelect('title');
             if (title) title.textContent = seo.title;
+
+            // OG Title도 같이 업데이트
+            const ogTitle = this.safeSelect('meta[property="og:title"]');
+            if (ogTitle) ogTitle.setAttribute('content', seo.title);
         }
 
         if (seo.description) {
             const metaDescription = this.safeSelect('meta[name="description"]');
             if (metaDescription) metaDescription.setAttribute('content', seo.description);
+
+            // OG Description도 같이 업데이트
+            const ogDescription = this.safeSelect('meta[property="og:description"]');
+            if (ogDescription) ogDescription.setAttribute('content', seo.description);
         }
 
         if (seo.keywords) {
             const metaKeywords = this.safeSelect('meta[name="keywords"]');
             if (metaKeywords) metaKeywords.setAttribute('content', seo.keywords);
         }
+
+        // OG URL은 현재 페이지 URL로 설정
+        const ogUrl = this.safeSelect('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+    }
+
+    /**
+     * 기본 OG 이미지 가져오기 (로고 이미지 사용)
+     */
+    getDefaultOGImage() {
+        if (!this.isDataLoaded) return null;
+
+        const logoImages = this.safeGet(this.data, 'homepage.images.0.logo');
+        if (logoImages && logoImages.length > 0 && logoImages[0]?.url) {
+            return logoImages[0].url;
+        }
+
+        return null;
     }
 
     // ============================================================================
@@ -249,12 +261,13 @@ class BaseDataMapper {
 
     /**
      * 페이지별 초기화 (서브클래스에서 오버라이드)
-     * 데이터는 생성자에서 전달받으므로 별도 로딩 불필요
      */
     async initialize() {
         try {
+            await this.loadData();
             await this.mapPage();
         } catch (error) {
+            console.error('Failed to initialize mapper:', error);
         }
     }
 

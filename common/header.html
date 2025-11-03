@@ -4,55 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header Component</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="../styles/header.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="styles/header.css">
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션" />
-  <meta property="og:description" content="자연과 함께하는 맥스 펜션에서 편안한 휴식을 취할 수 있습니다.
-편하게 휴식을 취하고 힐링하고 가세요." />
+  
   <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
   <meta property="og:url" content="https://max-hanok.com" />
 
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="맥스 한옥 펜션" />
-  <meta name="twitter:description" content="자연과 함께하는 맥스 펜션에서 편안한 휴식을 취할 수 있습니다.
-편하게 휴식을 취하고 힐링하고 가세요." />
+  
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <header id="main-header" class="fixed top-0 left-0 right-0 w-full bg-transparent border-0 z-40 transition-all duration-300">
-        <div class="flex items-center justify-between p-6 md:p-8">
-            <!-- Brand Logo -->
-            <div class="brand-logo">
-                <button id="pension-logo" class="hover:opacity-80 transition-opacity flex items-center gap-3">
-                    <div>
-                        <div class="logo-text hero-logo-text text-white text-xl md:text-2xl lg:text-3xl ko-title" data-property-name></div>
+    <!-- Header Component -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <div class="header-inner">
+                <!-- Logo -->
+                <div class="logo-container" onclick="navigateTo('home')">
+                    <div class="logo-icon">
+                        <img data-logo src="" alt="로고" class="logo-image">
                     </div>
-                </button>
-            </div>
-
-            <!-- Menu Button -->
-            <button id="hamburger-menu" 
-                    class="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
-                    aria-label="메뉴">
-                <div class="w-6 h-6 flex flex-col justify-center items-center space-y-1">
-                    <div id="line1" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
-                    <div id="line2" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
-                    <div id="line3" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
+                    <span class="logo-text" data-logo-text></span>
                 </div>
-            </button>
+
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav">
+                    <nav class="nav-container">
+                        <!-- Main Menu Container -->
+                        <div class="main-menu">
+                            <!-- About -->
+                            <div class="menu-item menu-about" onclick="navigateTo('main')">About</div>
+
+                            <!-- Spaces -->
+                            <div class="menu-item menu-spaces" data-room-link>Spaces</div>
+
+                            <!-- Specials -->
+                            <div class="menu-item menu-specials" data-facility-link>Specials</div>
+
+                            <!-- Reservation -->
+                            <div class="menu-item menu-reservation" onclick="navigateTo('reservation-info')">Reservation</div>
+                        </div>
+
+                        <!-- Sub Menus -->
+                        <div class="sub-menus" id="sub-menus">
+                            <!-- About Sub Menu -->
+                            <div class="sub-menu-item sub-about-1" onclick="navigateTo('main')">메인</div>
+                            <div class="sub-menu-item sub-about-2" onclick="navigateTo('directions')">오시는길</div>
+
+                            <!-- Spaces Sub Menu (동적으로 생성됨) -->
+
+                            <!-- Specials Sub Menu (동적으로 생성됨) -->
+
+                            <!-- Reservation Sub Menu -->
+                            <div class="sub-menu-item sub-reservation-1" onclick="navigateTo('reservation-info')">예약안내</div>
+                        </div>
+                    </nav>
+
+                    <!-- Desktop Reservation Button -->
+                    <button class="reservation-btn" data-booking-engine>
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25A8.966 8.966 0 0118 3.75c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0118 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                        </svg>
+                        <span>예약</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="mobile-toggle" onclick="toggleMobileMenu()">
+                    <svg class="icon" id="menu-icon" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg class="icon" id="close-icon" viewBox="0 0 24 24" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </div>
+            </div>
         </div>
     </header>
 
-    <div id="fullscreen-menu-container"></div>
+    <!-- Mobile Menu (header 밖에 위치) -->
+    <div class="mobile-menu" id="mobile-menu">
+            <!-- Mobile Menu Close Button -->
+            <div class="mobile-menu-close" onclick="toggleMobileMenu()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </div>
+
+            <div class="mobile-menu-grid">
+                <!-- About Section -->
+                <div class="mobile-menu-section">
+                    <h3 class="mobile-menu-title">About</h3>
+                    <div class="mobile-sub-items">
+                        <button class="mobile-sub-item" onclick="navigateTo('main')">메인</button>
+                        <button class="mobile-sub-item" onclick="navigateTo('directions')">오시는길</button>
+                    </div>
+                </div>
+
+                <!-- Spaces Section -->
+                <div class="mobile-menu-section">
+                    <h3 class="mobile-menu-title">Spaces</h3>
+                    <div class="mobile-sub-items" id="mobile-spaces-items">
+                        <!-- 동적으로 로드됨 -->
+                    </div>
+                </div>
+
+                <!-- Specials Section -->
+                <div class="mobile-menu-section">
+                    <h3 class="mobile-menu-title">Specials</h3>
+                    <div class="mobile-sub-items" id="mobile-specials-items">
+                        <!-- 동적으로 로드됨 -->
+                    </div>
+                </div>
+
+                <!-- Reservation Section -->
+                <div class="mobile-menu-section">
+                    <h3 class="mobile-menu-title">Reservation</h3>
+                    <div class="mobile-sub-items">
+                        <button class="mobile-sub-item" onclick="navigateTo('reservation-info')">예약안내</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Reservation Button -->
+            <button class="mobile-reservation-btn" data-booking-engine>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25A8.966 8.966 0 0118 3.75c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0118 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                </svg>
+                <span>예약</span>
+            </button>
+        </div>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header script -->
+    <script src="js/common/header.js"></script>
 </body>
 </html>

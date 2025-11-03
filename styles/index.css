@@ -1,589 +1,761 @@
-/* Index Page Styles */
+/* Index Page Specific Styles */
 
-/* Index hero swiper - main.html과 동일한 empty-image-placeholder 사용 */
-.hero-swiper img.empty-image-placeholder {
-    /* main.html hero와 동일하게 기본 스타일 사용, border-radius만 0으로 */
-    border-radius: 0 !important;
-}
-
-/* About 섹션 첫 번째 이미지 (프리미엄 스파) */
-.about-section .about-content:nth-child(1) img.empty-image-placeholder {
-    border-radius: 40px 0 40px 0 !important;
-}
-
-/* About 섹션 짝수 번째 이미지 - 반대 모서리 (데스크톱용) */
-.about-section .about-content:nth-child(even) img.empty-image-placeholder {
-    border-radius: 0 40px 0 40px !important;
-}
-
-/* 모바일에서는 모든 섹션이 첫 번째와 동일한 border-radius */
-@media (max-width: 768px) {
-    .about-section .about-content:nth-child(even) img.empty-image-placeholder {
-        border-radius: 40px 0 40px 0 !important;
-    }
-}
-
-/* About 섹션 세 번째 이미지 (펫 카페) */
-.about-section .about-content:nth-child(3) img.empty-image-placeholder {
-    border-radius: 40px 0 40px 0 !important;
-}
-
+/* Empty State Placeholder - Common Style */
+/* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, #a8d5d8 0%, #d4e6f1 50%, #f9f9f9 100%);
-}
-
-/* Swiper 컨테이너 overflow 방지 */
-.hero-swiper {
-    width: 100% !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    overflow: hidden !important;
-    background-color: transparent !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-}
-
-.swiper-wrapper {
-    width: 100% !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    background-color: transparent !important;
-}
-
-.swiper-slide {
-    width: 100% !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    background-color: transparent !important;
-}
-
-/* Swiper fade effect fixes */
-.hero-swiper .swiper-slide {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    opacity: 0 !important;
-    pointer-events: none;
-    transition: opacity 1s ease-in-out !important;
-}
-
-.hero-swiper .swiper-slide img {
-    width: 100% !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    object-fit: cover !important;
-    display: block !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-}
-
-.hero-swiper .swiper-slide-active {
-    opacity: 1 !important;
-    pointer-events: auto;
-}
-
-.hero-swiper .swiper-slide-prev,
-.hero-swiper .swiper-slide-next {
-    opacity: 0 !important;
-}
-
-/* Swiper 초기화 전 깜빡임 방지 */
-.hero-swiper:not(.swiper-initialized) {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.hero-swiper.swiper-initialized {
-    opacity: 1;
-}
-
-/* Hero Content 전체 영역이 클릭을 차단하지 않도록 */
-#section1 .absolute.inset-0.flex {
-    pointer-events: none !important;
-}
-
-/* Hero 텍스트가 배경 이미지 위에 보이도록 z-index 조정 */
-.hero-section .hero-text {
     position: relative;
-    z-index: 30 !important;
-    pointer-events: none; /* 텍스트 영역이 클릭을 차단하지 않도록 */
-}
-
-.hero-section h1,
-.hero-section p {
-    position: relative;
-    z-index: 31 !important;
-    pointer-events: none; /* 텍스트는 클릭 불가 */
-}
-
-.hero-section button {
-    position: relative;
-    z-index: 31 !important;
-    pointer-events: auto; /* 펜션 둘러보기 버튼만 클릭 가능 */
-}
-
-.watch-movie-btn {
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/* Hero 섹션에서 공통 header 활성화 */
-#main-header {
-    display: block;
-}
-
-
-
-/* About Section Image Stack Styles */
-.about-section {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-}
-
-.about-content {
-    display: flex;
-    align-items: center;
-    gap: 4rem;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .about-section {
-        padding: 3rem 0.75rem;
-    }
-
-    .about-content {
-        flex-direction: column;
-        gap: 3rem;
-        text-align: center;
-    }
-
-    /* 모바일에서는 모든 about-content가 동일 */
-    .about-content {
-        flex-direction: column !important;
-    }
-
-    .about-image {
-        width: 85% !important;
-        max-width: 400px !important;
-        margin: 0 auto;
-        order: 0 !important;
-    }
-
-    .about-text {
-        width: 100% !important;
-        padding: 0 1rem !important;
-        margin-top: 1rem;
-        order: 1 !important;
-    }
-
-    .about-text.px-16 {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-
-    .about-title {
-        font-size: 2rem !important;
-        margin-bottom: 1rem !important;
-    }
-
-    .about-description {
-        font-size: 1rem !important;
-        line-height: 1.7 !important;
-        margin-bottom: 1.5rem !important;
-    }
-
-    .arrow-button {
-        justify-content: center !important;
-        margin: 2rem auto 0 auto !important;
-    }
-
-    .about-content:nth-child(1) .about-image.fade-in-scale.animate img {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    .about-content:nth-child(1) .about-image.fade-in-scale.animate::before {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    .about-image.fade-in-scale.animate img {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    .about-image.fade-in-scale.animate::before {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    /* 모바일에서는 모든 섹션이 동일한 border-radius */
-    .about-image.fade-in-scale.animate img {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    .about-image.fade-in-scale.animate::before {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    /* placeholder 이미지도 동일하게 */
-    .about-content img.empty-image-placeholder {
-        border-radius: 40px 0 40px 0 !important;
-    }
-}
-
-/* Tablet Responsive */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .about-section {
-        padding: 3.5rem 2rem;
-    }
-
-    .about-content {
-        gap: 3rem;
-    }
-
-    .about-image {
-        width: 45%;
-    }
-
-    .about-text {
-        width: 55%;
-        padding: 0 1.5rem;
-    }
-
-    .about-title {
-        font-size: 2.25rem;
-    }
-
-    .about-description {
-        font-size: 1.063rem;
-    }
-}
-
-.about-image {
-    width: 50%;
-    position: relative;
-}
-
-.about-image::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 100%;
-    height: 100%;
-    background-color: #d2c9bf;
-    border-radius: 0 0 0 0;
-    z-index: -1;
-    transition: all 1.5s ease-out;
-}
-
-.about-content:nth-child(even) .about-image::before {
-    left: -20px;
-}
-
-/* 짝수 번째 about-content에서 텍스트와 이미지 순서 바꾸기 (동적 생성 대응) */
-.about-content:nth-child(even) {
-    flex-direction: row-reverse;
-}
-
-.about-text {
-    width: 50%;
+    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
-.about-title {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: rgb(96, 83, 71); /* 푸터 컬러와 동일 */
+.hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
 }
 
-.about-description {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    color: #666;
-}
-
-.about-image img {
+.hero-background img {
     width: 100%;
-    height: auto;
-    border-radius: 0 0 0 0;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Enhanced Gradient Overlay */
+
+/* Subtle Vignette Effect */
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 0%, transparent 50%, rgba(0,0,0,0.3) 100%);
+}
+
+.hero-content {
     position: relative;
-    z-index: 1;
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 1.5s ease-out;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
 }
 
-.about-content:nth-child(even) .about-image img {
-    border-radius: 0 0 0 0;
+.hero-text {
+    text-align: center;
+    color: white;
+    max-width: 64rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.about-image.fade-in-scale.animate img {
-    border-radius: 40px 0 40px 0;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.about-image.fade-in-scale.animate::before {
-    border-radius: 40px 0 40px 0;
-}
-
-.about-content:nth-child(even) .about-image.fade-in-scale.animate img {
-    border-radius: 0 40px 0 40px;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.about-content:nth-child(even) .about-image.fade-in-scale.animate::before {
-    border-radius: 0 40px 0 40px;
-}
-
-.about-image img:hover {
-    transition: all 0.3s ease;
-}
-
-.about-image img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-@keyframes border-morph-once {
-    0% {
-        border-radius: 0 0 0 0;
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    50% {
-        border-radius: 80px 0 80px 0;
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        border-radius: 60px 0 60px 0;
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes border-morph-once-reverse {
-    0% {
-        border-radius: 0 0 0 0;
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    50% {
-        border-radius: 0 80px 0 80px;
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        border-radius: 0 60px 0 60px;
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Hero Text Sequential Animations */
-.hero-title-1, .hero-title-2, .hero-description-animation, .hero-cta-animation, .hero-controls-animation {
+.brand-name {
+    margin-bottom: 1.5rem;
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
+    animation: fadeInUp 2.8s ease-out forwards;
+    animation-delay: 0.6s;
 }
 
-.hero-title-1.animate {
-    opacity: 1;
-    transform: translateY(0);
+.brand-title {
+    font-size: 1.875rem;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    color: white;
 }
 
-.hero-title-2.animate {
-    opacity: 1;
-    transform: translateY(0);
+.brand-divider {
+    width: 4rem;
+    height: 1px;
+    background: rgba(255,255,255,0.6);
+    margin: 0 auto 1rem;
 }
 
-.hero-description-animation.animate {
-    opacity: 1;
-    transform: translateY(0);
+.brand-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    font-weight: 600;
 }
 
-.hero-cta-animation.animate {
-    opacity: 1;
-    transform: translateY(0);
+.tagline {
+    margin: 0.75rem 0 1.5rem;
+    opacity: 0;
+    animation: fadeInUp 2.8s ease-out forwards;
+    animation-delay: 1.2s;
 }
 
-.hero-controls-animation.animate {
-    opacity: 1;
-    transform: translateY(0);
+.tagline-main {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.95);
+    margin-bottom: 0.75rem;
 }
 
-/* Hero Image Zoom Effect */
-.hero-swiper .swiper-slide img {
+.tagline-sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    max-width: 32rem;
+    margin: 0 auto;
+    line-height: 1.5;
+    padding: 0 1rem;
+}
+
+/* Enhanced Scroll Indicator - React Style */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeInScrollIndicator 2.8s cubic-bezier(0.12, 0, 0.39, 0) forwards;
+    animation-delay: 2.8s;
+}
+
+.scroll-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.7s ease;
+    animation: scrollBounce 3s infinite ease-in-out;
+}
+
+.scroll-container:hover {
+    color: white;
     transform: scale(1.1);
-    transition: transform 8s ease-out;
+    animation-play-state: paused;
 }
 
-.hero-swiper .swiper-slide-active img {
-    transform: scale(1);
+/* Enhanced Mouse Design */
+.scroll-mouse {
+    width: 1.25rem;
+    height: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    transition: border-color 0.7s ease;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Scroll Animations */
-.fade-in-up {
+.scroll-container:hover .scroll-mouse {
+    border-color: rgba(255, 255, 255, 1);
+}
+
+/* Enhanced Scroll Dot with React-style Animation */
+.scroll-dot {
+    width: 0.25rem;
+    height: 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 0.5rem;
+    position: absolute;
+    left: 50%;
+    top: 0.5rem;
+    transform: translateX(-50%);
+    animation: scrollDotMove 2s infinite ease-in-out;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Chevron with SVG-like styling */
+.scroll-chevron {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-bottom: 0.25rem;
+    opacity: 0.6;
+    transition: opacity 0.7s ease;
+    position: relative;
+    color: white;
+}
+
+.scroll-chevron::before {
+    content: '';
+    position: absolute;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-right: 1.5px solid white;
+    border-bottom: 1.5px solid white;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.6)) drop-shadow(-1px -1px 0 rgba(0, 0, 0, 0.3));
+    transform: rotate(45deg);
+    top: 0;
+    left: 0;
+}
+
+.scroll-container:hover .scroll-chevron {
+    opacity: 1;
+}
+
+.scroll-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: opacity 0.7s ease;
+    margin-top: 0.25rem;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-container:hover .scroll-text {
+    opacity: 1;
+}
+
+/* React-style Animations */
+@keyframes fadeInScrollIndicator {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes scrollBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+@keyframes scrollDotMove {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(-50%) translateY(12px);
+        opacity: 0.3;
+    }
+}
+
+/* Brand Essence Section */
+.essence-section {
+    background: linear-gradient(to bottom, #fafaf9, #ffffff);
+    padding: 4rem 0;
+}
+
+.section-container {
+    max-width: 112rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-divider {
+    width: 3rem;
+    height: 1px;
+    background: #d6d3d1;
+    margin: 2rem auto;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    color: #1c1917;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    font-size: 0.875rem;
+    color: #78716c;
+    font-weight: 300;
+    max-width: 48rem;
+    margin: 0 auto;
+    line-height: 1.5;
+    padding: 0 1rem;
+}
+
+.essence-image-container {
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.essence-image {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+}
+
+
+
+
+/* Featured Pool Image */
+.featured-pool {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
     opacity: 0;
     transform: translateY(50px);
-    transition: all 0.8s ease-out;
+}
+
+.featured-pool.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.featured-pool img {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+}
+
+.featured-pool-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.featured-pool-text {
+    text-align: center;
+}
+
+.featured-pool-title {
+    font-size: 1.125rem;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.featured-pool-description {
+    font-size: 0.75rem;
+    color: white;
+    font-weight: 300;
+}
+
+/* Gallery & Signature Sections - Shared Styles */
+.gallery-section,
+.signature-section {
+    background: linear-gradient(to bottom, #fafaf9, #f5f5f4);
+    padding: 4rem 0;
+}
+
+.gallery-grid,
+.signature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    min-height: 200px;
+}
+
+.gallery-item,
+.signature-item {
+    position: relative;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.gallery-item.animate,
+.signature-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-item img,
+.signature-item img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.gallery-item:hover img,
+.signature-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-item-overlay,
+.signature-item-overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.gallery-item-text,
+.signature-item-text {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.75rem;
+}
+
+.gallery-item-title,
+.signature-item-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: white;
+    margin-bottom: 0.25rem;
+}
+
+.gallery-item-title.has-text,
+.signature-item-title.has-text {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-item-subtitle,
+.signature-item-subtitle {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+    margin-bottom: 0.25rem;
+}
+
+.gallery-item-description,
+.signature-item-description {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0;
+}
+
+/* Closing Hero Pool Section */
+.index-closing {
+    background: white;
+    position: relative;
+    max-height: 30vh;
+}
+
+.index-closing img {
+    width: 100%;
+    height: 30vh;
+    object-fit: cover;
+}
+
+.index-closing-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.index-closing-text {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    padding: 1.2rem 1rem 0.6rem 1rem;
+}
+
+.index-closing-title,
+.index-closing-description {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.index-closing-text.animate {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 1s ease-out;
+    transition-delay: 0.3s;
+}
+
+.index-closing-title {
+    font-size: 1.125rem;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    /* margin-bottom: 0.75rem; */
+    color: white;
+}
+
+.index-closing-divider {
+    width: 3rem;
+    height: 1px;
+    color: white;
+    margin: 0 auto 0.75rem;
+}
+
+.index-closing-description {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 300;
+    margin-bottom: 0;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .fade-in-up.animate {
-    opacity: 1;
-    transform: translateY(0);
+    animation: fadeInUp 1.2s ease-out forwards;
 }
 
 .fade-in-scale {
     opacity: 0;
-    transform: scale(0.9) translateY(30px);
-    transition: all 0.8s ease-out;
+    transform: scale(0.95);
 }
 
 .fade-in-scale.animate {
-    opacity: 1;
-    transform: scale(1) translateY(0);
+    animation: fadeInScale 1.4s ease-out forwards;
 }
 
-/* Hero Slider Controls Container - 버튼 아래 컴팩트 디자인 */
-.hero-controls {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 16px;
-    z-index: 200 !important;
-    pointer-events: auto;
-    margin-left: -20px;
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.hero-controls > * {
-    pointer-events: auto;
+/* Responsive Design */
+@media (min-width: 640px) {
+    .scroll-indicator {
+        bottom: 3rem;
+    }
+
+    .scroll-mouse {
+        width: 1.5rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .scroll-dot {
+        height: 0.75rem;
+        top: 0.75rem;
+    }
+
+    .scroll-chevron {
+        width: 1rem;
+        height: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .scroll-chevron::before {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .scroll-text {
+        margin-top: 0.5rem;
+    }
+
+    @keyframes scrollDotMove {
+        0%, 100% {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        50% {
+            transform: translateX(-50%) translateY(16px);
+            opacity: 0.3;
+        }
+    }
+
+
+
+    .brand-title {
+        font-size: 2.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .brand-divider {
+        width: 5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .brand-subtitle {
+        font-size: 1rem;
+        letter-spacing: 0.2em;
+    }
+
+    .tagline-main {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .tagline-sub {
+        font-size: 1rem;
+    }
+
+    .essence-section,
+    .gallery-section,
+    .signature-section {
+        padding: 6rem 0;
+    }
+
+    .section-container {
+        padding: 0 1.5rem;
+    }
+
+    .section-header {
+        margin-bottom: 4rem;
+    }
+
+    .section-divider {
+        width: 4rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .section-description {
+        font-size: 1rem;
+    }
+
+    .essence-image {
+        height: 50vh;
+    }
+
+    .gallery-grid,
+    .signature-grid {
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .gallery-item img,
+    .signature-item img {
+        height: 16rem;
+    }
+
+    .featured-pool img {
+        height: 40vh;
+    }
+
+    .featured-pool-title {
+        font-size: 1.25rem;
+    }
+
+    .featured-pool-description {
+        font-size: 1rem;
+    }
+
+    .index-closing-title {
+        font-size: 1.25rem;
+    }
+
 }
 
-/* Navigation Buttons - 작은 원형 */
-.hero-controls .swiper-button-next,
-.hero-controls .swiper-button-prev {
-    position: relative;
-    width: 32px;
-    height: 32px;
-    margin: 0;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 50%;
-    color: white !important;
-    font-size: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    cursor: pointer !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    pointer-events: auto;
-    z-index: 20;
+@media (min-width: 768px) {
+    .brand-title {
+        font-size: 3rem;
+    }
+
+    .brand-divider {
+        width: 6rem;
+    }
+
+    .tagline-main {
+        font-size: 1.5rem;
+    }
+
+    .essence-section,
+    .gallery-section,
+    .signature-section {
+        padding: 8rem 0;
+    }
+
+    .section-header {
+        margin-bottom: 5rem;
+    }
+
+    .section-title {
+        font-size: 1.875rem;
+    }
+
+    .section-description {
+        font-size: 1.125rem;
+    }
+
+    .essence-image {
+        height: 60vh;
+    }
+
+    .gallery-grid,
+    .signature-grid {
+        gap: 2rem;
+    }
 }
 
-.hero-controls .swiper-button-next:hover,
-.hero-controls .swiper-button-prev:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+@media (min-width: 640px) {
+    .gallery-item img,
+    .signature-item img {
+        height: 20rem;
+    }
+
+    .featured-pool img {
+        height: 50vh;
+    }
+
+    .featured-pool-title {
+        font-size: 1.5rem;
+    }
+
+    .index-closing-title {
+        font-size: 1.5rem;
+    }
 }
 
-.hero-controls .swiper-button-next::after,
-.hero-controls .swiper-button-prev::after {
-    font-size: 12px;
-    font-weight: bold;
+@media (min-width: 1024px) {
+    .brand-title {
+        font-size: 3.75rem;
+    }
+
+    .tagline-main {
+        font-size: 2rem;
+    }
+
+    .tagline-sub {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 2.25rem;
+    }
+
+    .gallery-grid,
+    .signature-grid {
+        gap: 3rem;
+    }
+
+    .essence-image,
+    .featured-pool img {
+        height: 70vh;
+    }
 }
 
-/* Progress Bar - 가운데 작은 바 */
-.hero-progress-bar {
-    width: 120px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 1px;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-progress {
-    height: 100%;
-    background: white;
-    border-radius: 1px;
-    width: 0%;
-    transition: width 0.3s ease;
-}
-
-/* Pagination 숨기기 (프로그레스 바로 대체) */
-.hero-swiper .swiper-pagination {
-    display: none;
-}
-
-/* Scrollbar 숨기기 */
-.hero-swiper .swiper-scrollbar {
-    display: none;
-}
-
-/* Arrow Button */
-.arrow-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    color: #333;
-    transition: all 0.3s ease;
-}
-
-.arrow-line {
-    width: 40px;
-    height: 1px;
-    background-color: #333;
-    transition: all 0.3s ease;
-    margin-right: 8px;
-}
-
-.arrow-text {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    margin-right: 12px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.arrow-head {
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.arrow-button:hover .arrow-line {
-    width: 60px;
-    background-color: #000;
-}
-
-.arrow-button:hover .arrow-text {
-    color: #000;
-}
-
-.arrow-button:hover .arrow-head {
-    transform: translateX(5px);
-    color: #000;
+@media (min-width: 1280px) {
+    .brand-title {
+        font-size: 4.5rem;
+    }
 }
