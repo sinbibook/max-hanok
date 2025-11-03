@@ -3,129 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-homepage-seo-title></title>
-    <meta name="description" content="" data-homepage-seo-description>
-    <meta name="keywords" content="" data-homepage-seo-keywords>
-    <link rel="icon" type="image/png" href="" data-homepage-favicon>
+    <meta name="description" content="숙소 설명">
+    <meta name="keywords" content="SEO 키워드">
+    <title>숙소명 - 템플릿</title>
 
-    <script src="js/config.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="styles/common.css"/>
-    <link rel="stylesheet" href="styles/index.css"/>
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/index.css" as="style">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/index.css">
+
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 홈" />
-  <meta property="og:description" content="자연과 함께하는 맥스 펜션에서 편안한 휴식을 취할 수 있습니다.
-편하게 휴식을 취하고 힐링하고 가세요." />
+  
   <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
   <meta property="og:url" content="https://max-hanok.com" />
 
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="맥스 한옥 펜션 - 홈" />
-  <meta name="twitter:description" content="자연과 함께하는 맥스 펜션에서 편안한 휴식을 취할 수 있습니다.
-편하게 휴식을 취하고 힐링하고 가세요." />
+  
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <!-- Background Image -->
+        <div class="hero-background">
+            <img data-index-hero-image
+                 src=""
+                 alt="메인 히어로 이미지"
+                 loading="eager">
+            <div class="hero-vignette"></div>
+        </div>
 
-    <div id="fullscreen-menu-container"></div>
-
-    <div class="w-full min-h-screen overflow-x-hidden" data-name="랜딩페이지">
-        <!-- Hero Section -->
-        <section id="section1" class="relative w-full overflow-hidden" style="height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh;">
-            <!-- Hero Swiper Container -->
-            <div id="hero-swiper" class="swiper hero-swiper absolute inset-0 w-full h-full">
-                <div class="swiper-wrapper" data-homepage-customFields-pages-index-sections-0-hero-images>
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- Premium Brand Name -->
+                <div class="brand-name">
+                    <h1 class="brand-title" data-index-property-name></h1>
+                    <div class="brand-divider"></div>
+                    <p class="brand-subtitle" data-index-property-name-en></p>
                 </div>
 
-                <!-- Swiper 컨트롤들 -->
-                <div class="swiper-pagination"></div>
-                <div class="swiper-scrollbar"></div>
-            </div>
-
-            <!-- 오버레이 -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-
-            <div class="absolute inset-0 flex flex-col justify-center items-start text-left z-20 pt-16 pl-6 md:pt-20 md:pl-16 lg:pl-20">
-                <div class="relative z-30 max-w-4xl px-4 md:px-6 hero-text">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl text-white mb-4 md:mb-6 ko-title hero-title-animation text-left">
-                        <p class="block hero-title ko-title hero-title-1" data-property-name></p>
-                    </h1>
-                    <p class="text-sm md:text-md text-white/90 mb-4 md:mb-6 hero-description ko-body font-light leading-relaxed hero-description-animation text-left" data-homepage-customFields-pages-index-sections-0-hero-description>
-                    </p>
-
-                    <div class="hero-controls hero-controls-animation">
-                        <div class="swiper-button-prev"></div>
-                        <div class="hero-progress-bar">
-                            <div class="hero-progress"></div>
-                        </div>
-                        <div class="swiper-button-next"></div>
-                    </div>
+                <!-- Emotional Tagline -->
+                <div class="tagline">
+                    <p class="tagline-main" data-index-hero-title></p>
+                    <p class="tagline-sub" data-index-property-description></p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="flex items-center justify-center pt-32">
-            <div class="text-center mb-16">
-                <h3 class="text-2xl md:text-3xl font-bold ko-title en-title fade-in-up" style="color: rgb(96, 83, 71);" data-homepage-customFields-pages-index-sections-0-essence-title>
-                </h3>
-                <div class="w-full h-px mt-6 fade-in-up" style="background-color: rgb(96, 83, 71);"></div>
-                <p class="text-lg text-gray-600 ko-body mt-6 fade-in-up" data-homepage-customFields-pages-index-sections-0-essence-description>
-                </p>
+        <!-- Enhanced Scroll Indicator - React Style -->
+        <div class="scroll-indicator" onclick="scrollToNextSection()">
+            <div class="scroll-container">
+                <div class="scroll-mouse">
+                    <div class="scroll-dot"></div>
+                </div>
+                <div class="scroll-chevron"></div>
+                <span class="scroll-text">Scroll</span>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Signature Section -->
-        <section class="about-section">
-            <div data-homepage-customFields-pages-index-sections-signature-items>
-            </div>
-        </section>
-
-        <!-- Closing Section -->
-        <section class="wave-bg-section relative overflow-hidden">
-            <div class="wave-bg relative w-full">
-                <svg width="0" height="0" style="position: absolute;">
-                    <defs>
-                        <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
-                            <path d="M0,0.1 C0.125,0.05 0.25,0.05 0.375,0.1 C0.5,0.15 0.625,0.15 0.75,0.1 C0.875,0.05 1,0.05 1,0.05 L1,1 L0,1 Z"/>
-                        </clipPath>
-                        <clipPath id="wave-clip-mobile" clipPathUnits="objectBoundingBox">
-                            <path d="M0,0.2 C0.2,0.12 0.4,0.1 0.5,0.1 C0.6,0.1 0.8,0.12 1,0.2 L1,1 L0,1 Z"/>
-                        </clipPath>
-                    </defs>
-                </svg>
-
-                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed empty-image-placeholder"
-                     style="background-image: url(''); background-attachment: fixed; clip-path: url(#wave-clip);"
-                     data-index-wave-background>
-
-                    <div class="absolute inset-0 bg-black/30"></div>
-
-                    <div class="absolute inset-0 z-10 flex items-center justify-center px-6">
-                        <div class="banner-content text-center text-white max-w-3xl md:pt-20">
-                            <div class="animated-text">
-                                <h1 class="banner-title text-4xl md:text-5xl font-bold mb-8 fade-in-up ko-title en-title" data-homepage-customFields-pages-index-sections-0-closing-title>
-                                </h1>
-                                <p class="banner-description text-lg md:text-xl font-light leading-relaxed fade-in-up ko-body" data-homepage-customFields-pages-index-sections-0-closing-description>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Brand Essence Section -->
+    <section class="essence-section page-content">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="fade-in-up">
+                    <div class="section-divider"></div>
+                    <h2 class="section-title" data-index-essence-title></h2>
+                    <p class="section-description" data-index-essence-description></p>
+                    <div class="section-divider"></div>
                 </div>
             </div>
-        </section>
 
-    </div>
+            <div class="essence-image-container fade-in-scale">
+                <img data-index-essence-image
+                     src=""
+                     alt="특징 섹션 이미지"
+                     class="essence-image"
+                     loading="lazy">
+                <div class="essence-image-overlay"></div>
+            </div>
+        </div>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="js/image-helpers.js"></script>
-    <script src="js/header-footer-loader.js"></script>
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/index-mapper.js"></script>
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <!-- Experience Gallery Section -->
+    <section class="signature-section page-content">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="fade-in-up">
+                    <div class="section-divider"></div>
+                    <h2 class="section-title" data-index-gallery-title></h2>
+                    <p class="section-description" data-index-gallery-description></p>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="signature-grid" data-index-gallery-items>
+                <!-- Gallery items will be loaded from data -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Moments Section -->
+    <section class="signature-section page-content">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="fade-in-up">
+                    <div class="section-divider" style="background: #a8a29e;"></div>
+                    <h2 class="section-title" data-index-signature-title></h2>
+                    <p class="section-description" data-index-signature-description></p>
+                </div>
+            </div>
+
+            <div class="signature-grid" data-index-signature-items>
+                <!-- Signature items will be loaded from data -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing Hero Pool Section -->
+    <section class="index-closing">
+        <img
+             data-index-closing-image
+             src=""
+             alt="마무리 섹션 이미지"
+             loading="lazy">
+        <div class="index-closing-overlay">
+            <div class="index-closing-text">
+                <h3 class="index-closing-title" data-index-closing-title></h3>
+                <div class="index-closing-divider"></div>
+                <p class="index-closing-description" data-index-closing-description></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
     <script src="js/preview-handler.js"></script>
+
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Index Page Mapper -->
+    <script src="js/data-mapper/pages/index-mapper.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
     <script src="js/pages/index.js"></script>
+
 </body>
 </html>

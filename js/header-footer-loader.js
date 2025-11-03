@@ -3,29 +3,28 @@ class HeaderFooterLoader {
     constructor() {
         this.headerLoaded = false;
         this.footerLoaded = false;
+        // 모든 페이지가 루트에 있으므로 경로 통일
+        this.basePath = './';
     }
-    
+
     // Extract content from header.html
     async loadHeader() {
         if (this.headerLoaded) return;
 
         try {
-            // GitHub Pages 지원: config.js의 경로 헬퍼 사용
-            const headerPath = window.APP_CONFIG
-                ? window.APP_CONFIG.getResourcePath('common/header.html')
-                : './common/header.html';
-            const response = await fetch(headerPath);
+            const response = await fetch(`${this.basePath}common/header.html`);
             const html = await response.text();
-
-            // Parse the HTML and extract all header elements and mobile menu
+            
+            // Parse the HTML and extract the header element and mobile menu
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            const headerElements = doc.querySelectorAll('header');
+            const headerElement = doc.querySelector('header');
             const mobileMenuElement = doc.querySelector('.mobile-menu');
             const styleElements = doc.querySelectorAll('head style');
             const linkElements = doc.querySelectorAll('head link[rel="stylesheet"]');
+            const scriptElements = doc.querySelectorAll('script');
 
-            if (headerElements.length > 0) {
+            if (headerElement) {
                 // Create header container at the top of body
                 const headerContainer = document.createElement('div');
                 headerContainer.id = 'header-container';
@@ -34,20 +33,17 @@ class HeaderFooterLoader {
                 headerContainer.style.left = '0';
                 headerContainer.style.right = '0';
                 headerContainer.style.zIndex = '1000';
-
-                // Add all header elements
-                headerElements.forEach(header => {
-                    headerContainer.innerHTML += header.outerHTML;
-                });
-
-                // Add mobile menu
-                if (mobileMenuElement) {
-                    headerContainer.innerHTML += mobileMenuElement.outerHTML;
-                }
+                headerContainer.innerHTML = headerElement.outerHTML;
 
                 // Insert header at the beginning of body
                 document.body.insertBefore(headerContainer, document.body.firstChild);
 
+                // mobile-menu가 header 밖에 별도로 있으면 body에 직접 추가
+                if (mobileMenuElement && !headerElement.contains(mobileMenuElement)) {
+                    const mobileMenuClone = mobileMenuElement.cloneNode(true);
+                    document.body.appendChild(mobileMenuClone);
+                }
+                
                 // Add styles to head
                 styleElements.forEach(style => {
                     const newStyle = document.createElement('style');
@@ -59,42 +55,43 @@ class HeaderFooterLoader {
                 linkElements.forEach(link => {
                     const newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    // GitHub Pages 지원: 상대 경로 변환
-                    const originalHref = link.getAttribute('href');
-                    newLink.href = window.APP_CONFIG && !originalHref.startsWith('http')
-                        ? window.APP_CONFIG.getResourcePath(originalHref)
-                        : originalHref;
+                    newLink.href = link.getAttribute('href');
                     document.head.appendChild(newLink);
                 });
 
-                // Execute HeaderComponent scripts from header.html (dog-friendly specific)
-                const scripts = doc.querySelectorAll('script');
-                scripts.forEach((script) => {
-                    if (script.textContent.trim()) {
+                // Add scripts to body and wait for them to load
+                const scriptPromises = Array.from(scriptElements).map(script => {
+                    return new Promise((resolve, reject) => {
                         const newScript = document.createElement('script');
-                        newScript.textContent = script.textContent;
+
+                        // Handle external script files (src attribute)
+                        if (script.src) {
+                            newScript.src = script.getAttribute('src');
+                            newScript.onload = resolve;
+                            newScript.onerror = reject;
+                        } else {
+                            // Handle inline scripts (execute immediately)
+                            newScript.textContent = script.textContent;
+                            resolve();
+                        }
+
                         document.body.appendChild(newScript);
+                    });
+                });
+
+                // Wait for all scripts to load before setting up event listeners
+                const results = await Promise.allSettled(scriptPromises);
+                results.forEach(result => {
+                    if (result.status === 'rejected') {
+                        console.error('A script failed to load:', result.reason);
                     }
                 });
 
-                // Load header-component.js manually AFTER HeaderComponent initialization
-                if (!window.headerComponentLoaded) {
-                    window.headerComponentLoaded = true;
-                    const basePath = './';
-                    const headerScript = document.createElement('script');
-                    headerScript.src = basePath + 'js/components/header-component.js';
-                    headerScript.onload = () => {
-                        // Setup event listeners after header-component.js loads
-                        this.setupHeaderEventListeners();
-                        // HeaderComponent already handles mobile menu functionality
-                        // No need to load separate mobile-menu.js
-                        // Header 매핑을 event listener 설정 후에 실행
-                        setTimeout(() => {
-                            this.applyHeaderFooterMapping();
-                        }, 200);
-                    };
-                    document.body.appendChild(headerScript);
-                }
+                // Set up event listeners after scripts are loaded
+                this.setupHeaderEventListeners();
+
+                // Header 매핑은 즉시 실행 (FOUC 방지)
+                this.applyHeaderFooterMapping();
                 
                 // Dynamically calculate and adjust body padding to account for fixed header
                 this.adjustBodyPadding();
@@ -102,6 +99,7 @@ class HeaderFooterLoader {
                 this.headerLoaded = true;
             }
         } catch (error) {
+            console.error('Failed to load header:', error);
         }
     }
     
@@ -110,11 +108,7 @@ class HeaderFooterLoader {
         if (this.footerLoaded) return;
 
         try {
-            // GitHub Pages 지원: config.js의 경로 헬퍼 사용
-            const footerPath = window.APP_CONFIG
-                ? window.APP_CONFIG.getResourcePath('common/footer.html')
-                : './common/footer.html';
-            const response = await fetch(footerPath);
+            const response = await fetch(`${this.basePath}common/footer.html`);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -126,32 +120,21 @@ class HeaderFooterLoader {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             const parsedFooterElement = doc.querySelector('footer');
-            const floatingBookingBtn = doc.querySelector('.fixed'); // Get floating button
-            const scrollToTopButton = doc.querySelector('.scroll-to-top');
             const styleElements = doc.querySelectorAll('head style');
             const linkElements = doc.querySelectorAll('head link[rel="stylesheet"]');
-
+            const scriptElements = doc.querySelectorAll('script');
+            
             if (parsedFooterElement) {
                 // Create footer container at the bottom of body
                 const footerContainer = document.createElement('div');
                 footerContainer.id = 'footer-container';
                 footerContainer.innerHTML = parsedFooterElement.outerHTML;
-
-                // Add floating booking button if it exists
-                if (floatingBookingBtn) {
-                    document.body.appendChild(floatingBookingBtn.cloneNode(true));
-                }
-
-                // Add scroll to top button if it exists
-                if (scrollToTopButton) {
-                    document.body.appendChild(scrollToTopButton.cloneNode(true));
-                }
                 
                 // Force immediate style application BEFORE appending
                 footerContainer.style.display = 'block';
                 footerContainer.style.width = '100%';
                 footerContainer.style.position = 'relative';
-                footerContainer.style.zIndex = '100';
+                footerContainer.style.zIndex = '10'; // mobile-menu(1001) 아래로
                 footerContainer.style.clear = 'both';
                 
                 // Ensure footer appears at the very end of body
@@ -169,42 +152,32 @@ class HeaderFooterLoader {
                 linkElements.forEach(link => {
                     const newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    // GitHub Pages 지원: 상대 경로 변환
-                    const originalHref = link.getAttribute('href');
-                    newLink.href = window.APP_CONFIG && !originalHref.startsWith('http')
-                        ? window.APP_CONFIG.getResourcePath(originalHref)
-                        : originalHref;
+                    newLink.href = link.getAttribute('href');
                     document.head.appendChild(newLink);
+                });
+
+                // Add scripts to body
+                scriptElements.forEach(script => {
+                    const newScript = document.createElement('script');
+
+                    // Handle external script files (src attribute)
+                    if (script.src || script.getAttribute('src')) {
+                        newScript.src = script.getAttribute('src');
+                    } else {
+                        // Handle inline scripts
+                        newScript.textContent = script.textContent;
+                    }
+
+                    document.body.appendChild(newScript);
                 });
 
                 // Ensure proper footer positioning
                 this.ensureFooterPositioning();
-
-                // Load footer.js for scroll to top functionality
-                if (!window.footerJsLoaded) {
-                    window.footerJsLoaded = true;
-                    const basePath = './';
-                    const footerScript = document.createElement('script');
-                    footerScript.src = basePath + 'js/common/footer.js';
-                    footerScript.onload = () => {
-                        // FooterComponent와 매핑이 footer.js에서 자동으로 초기화됨
-
-                        // Footer 로딩 완료 후 매핑 실행
-                        setTimeout(() => {
-                            this.applyHeaderFooterMapping();
-                        }, 300);
-                    };
-                    document.body.appendChild(footerScript);
-                } else {
-                    // Footer.js가 이미 로드된 경우에도 매핑 실행
-                    setTimeout(() => {
-                        this.applyHeaderFooterMapping();
-                    }, 300);
-                }
-
+                
                 this.footerLoaded = true;
             }
         } catch (error) {
+            console.error('Failed to load footer:', error);
         }
     }
     
@@ -294,8 +267,16 @@ class HeaderFooterLoader {
             });
         }
         
-        // Mobile toggle event listeners are already handled by header.js
-        // No need to add them again here
+        // Ensure mobile menu toggle is working
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        if (mobileToggle) {
+            mobileToggle.onclick = null; // Remove inline handler
+            mobileToggle.addEventListener('click', function() {
+                if (window.toggleMobileMenu) {
+                    window.toggleMobileMenu();
+                }
+            });
+        }
         
         // Ensure logo navigation is working
         const logoContainer = document.querySelector('.logo-container');
@@ -357,69 +338,45 @@ class HeaderFooterLoader {
     async applyHeaderFooterMapping() {
         // HeaderFooterMapper가 로드되어 있는지 확인
         if (typeof HeaderFooterMapper === 'undefined') {
-            // 잠시 기다린 후 재시도
-            setTimeout(() => this.applyHeaderFooterMapping(), 500);
-            return;
-        }
-
-        // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 매핑 담당
-        if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
+            console.warn('⚠️ HeaderFooterMapper not loaded, skipping header/footer mapping');
             return;
         }
 
         try {
+            // iframe 환경(미리보기)인 경우
+            if (window.parent !== window) {
+                // PreviewHandler가 데이터를 제공할 때까지 대기
+                // 최대 5초 동안 100ms 간격으로 확인
+                let attempts = 0;
+                const maxAttempts = 50;
 
-            // JSON 데이터 로드
-            let templateData = null;
+                const waitForData = async () => {
+                    // PreviewHandler가 데이터를 받았는지 확인
+                    if (window.previewHandler?.currentData) {
+                        // 데이터가 있으면 즉시 매핑
+                        const headerFooterMapper = new HeaderFooterMapper();
+                        headerFooterMapper.data = window.previewHandler.currentData;
+                        headerFooterMapper.isDataLoaded = true;
+                        await headerFooterMapper.mapHeaderFooter();
+                        return;
+                    }
 
-            // 1. 페이지별 mapper에서 데이터 가져오기 시도
-            if (window.IndexMapper && window.indexMapper && window.indexMapper.data) {
-                templateData = window.indexMapper.data;
-            } else if (window.MainMapper && window.mainMapper && window.mainMapper.data) {
-                templateData = window.mainMapper.data;
-            } else if (window.RoomMapper && window.roomMapper && window.roomMapper.data) {
-                templateData = window.roomMapper.data;
+                    // 아직 데이터가 없으면 재시도
+                    attempts++;
+                    if (attempts < maxAttempts) {
+                        setTimeout(waitForData, 100);
+                    }
+                };
+
+                waitForData();
             } else {
-                // 2. JSON 파일 직접 로드 (GitHub Pages 경로 지원)
-                const dataPath = window.APP_CONFIG
-                    ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
-                    : './standard-template-data.json';
-                const response = await fetch(dataPath);
-                templateData = await response.json();
+                // 일반 환경에서는 기존 로직 유지
+                const headerFooterMapper = new HeaderFooterMapper();
+                await headerFooterMapper.initialize();
+                await headerFooterMapper.mapHeaderFooter();
             }
-
-            if (!templateData) {
-                setTimeout(() => this.applyHeaderFooterMapping(), 500);
-                return;
-            }
-
-            // HeaderFooterMapper 인스턴스 생성
-            const headerFooterMapper = new HeaderFooterMapper();
-
-            // 데이터 설정
-            headerFooterMapper.data = templateData;
-            headerFooterMapper.isDataLoaded = true;
-
-            // Header와 Footer 매핑 실행
-            await headerFooterMapper.mapHeaderFooter();
         } catch (error) {
-        }
-    }
-
-    // Load mobile menu script after header is ready
-    loadMobileMenuScript() {
-        if (!window.mobileMenuJsLoaded) {
-            window.mobileMenuJsLoaded = true;
-            const basePath = './';
-            const mobileMenuScript = document.createElement('script');
-            // Add timestamp to bypass cache
-            mobileMenuScript.src = basePath + 'js/common/mobile-menu.js?v=' + Date.now();
-            mobileMenuScript.onload = () => {
-                if (typeof initMobileMenu === 'function') {
-                    initMobileMenu();
-                }
-            };
-            document.body.appendChild(mobileMenuScript);
+            console.error('❌ Header/Footer mapping failed:', error);
         }
     }
 

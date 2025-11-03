@@ -127,7 +127,7 @@ class PreviewHandler {
     /**
      * 초기 데이터 처리 (숙소 선택 + 템플릿 초기 설정)
      */
-    async handleInitialData(data) {
+    handleInitialData(data) {
         this.currentData = data;
         this.isInitialized = true;
         this.adminDataReceived = true;  // 어드민 데이터 수신됨
@@ -138,17 +138,19 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
-        // 전체 템플릿 렌더링 (await로 완료 보장)
-        await this.renderTemplate(data);
+        // 디버그 정보 업데이트
 
-        // 렌더링 완료 후 부모 창에 알림
+        // 전체 템플릿 렌더링
+        this.renderTemplate(data);
+
+        // 부모 창에 렌더링 완료 신호
         this.notifyRenderComplete('INITIAL_RENDER_COMPLETE');
     }
 
     /**
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
-    async handleTemplateUpdate(data) {
+    handleTemplateUpdate(data) {
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -160,7 +162,7 @@ class PreviewHandler {
 
         // 초기화되지 않은 경우 초기 데이터로 처리
         if (!this.isInitialized) {
-            await this.handleInitialData(data);
+            this.handleInitialData(data);
             return;
         }
 
@@ -182,8 +184,8 @@ class PreviewHandler {
             this.currentData = this.mergeData(this.currentData, data);
         }
 
-        // 전체 페이지 다시 렌더링 (await로 완료 보장)
-        await this.renderTemplate(this.currentData);
+        // 전체 페이지 다시 렌더링 (폴백)
+        this.renderTemplate(this.currentData);
 
         // 부모 창에 업데이트 완료 신호
         this.notifyRenderComplete('UPDATE_COMPLETE');
@@ -192,14 +194,14 @@ class PreviewHandler {
     /**
      * 숙소 변경 처리 (다른 숙소 선택)
      */
-    async handlePropertyChange(data) {
+    handlePropertyChange(data) {
         this.currentData = data;
         this.isInitialized = true;
 
         // 디버그 정보 업데이트
 
-        // 전체 다시 렌더링 (await로 완료 보장)
-        await this.renderTemplate(data);
+        // 전체 다시 렌더링
+        this.renderTemplate(data);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
     }
@@ -275,7 +277,7 @@ class PreviewHandler {
     /**
      * 전체 템플릿 렌더링 (초기 로드 또는 숙소 변경 시)
      */
-    async renderTemplate(data) {
+    renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
         let mapper = null;
 
@@ -320,9 +322,9 @@ class PreviewHandler {
             mapper.data = data;
             mapper.isDataLoaded = true;
 
-            // 기존 매핑 로직 실행 (await로 완료 보장)
-            await mapper.mapPage();
-            // mapPage 완료 후 슬라이더는 이미 초기화됨 (setTimeout 불필요!)
+            // 기존 매핑 로직 실행
+            mapper.mapPage();
+
         }
 
         // Header & Footer 매핑 (모든 페이지에서 공통 실행)
@@ -354,6 +356,34 @@ class PreviewHandler {
         if (!this.currentData.homepage) this.currentData.homepage = {};
         if (!this.currentData.homepage.customFields) this.currentData.homepage.customFields = {};
         if (!this.currentData.homepage.customFields.pages) this.currentData.homepage.customFields.pages = {};
+    }
+
+    /**
+     * Footer DOM 로드 대기 후 소셜 링크 매핑
+     */
+    waitForFooterAndMapSocialLinks(retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100; // 100ms
+
+        // Footer DOM 확인
+        const footerElement = document.querySelector('footer.footer') ||
+                            document.querySelector('.footer') ||
+                            document.getElementById('footer-container');
+
+        if (footerElement) {
+            // Footer DOM이 로드됨 → 소셜 링크 매핑 실행
+            if (window.HeaderFooterMapper) {
+                const mapper = this.createMapper(HeaderFooterMapper);
+                mapper.mapSocialLinks();
+            }
+        } else if (retryCount < maxRetries) {
+            // Footer DOM이 아직 없음 → 재시도
+            setTimeout(() => {
+                this.waitForFooterAndMapSocialLinks(retryCount + 1);
+            }, retryDelay);
+        } else {
+            console.warn('⚠️ Footer DOM 로드 실패: 소셜 링크 업데이트 불가');
+        }
     }
 
     /**
@@ -421,6 +451,15 @@ class PreviewHandler {
             return;
         }
 
+        // socialLinks 섹션 특별 처리 (모든 페이지 공통)
+        if (section === 'socialLinks') {
+            if (!this.currentData.homepage) this.currentData.homepage = {};
+            this.currentData.homepage.socialLinks = data || {};
+            this.updateSpecificSection(page, section);
+            this.notifyRenderComplete('SECTION_UPDATE_COMPLETE');
+            return;
+        }
+
         // 지원하는 페이지 확인
         const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions'];
         if (!supportedPages.includes(page)) {
@@ -460,6 +499,13 @@ class PreviewHandler {
             return;
         }
 
+        // socialLinks 섹션 업데이트 (모든 페이지 공통)
+        if (section === 'socialLinks' && window.HeaderFooterMapper) {
+            // Footer DOM 로드 대기 후 실행
+            this.waitForFooterAndMapSocialLinks();
+            return;
+        }
+
         if (page === 'index' && window.IndexMapper) {
             const mapper = this.createMapper(IndexMapper);
 
@@ -486,7 +532,7 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroImage();
+                        mapper.mapMainHeroSection();
                         break;
                     case 'about':
                         mapper.mapMainContentSections();
@@ -496,22 +542,22 @@ class PreviewHandler {
         } else if (page === 'room') {
             if (window.RoomMapper) {
                 const mapper = this.createMapper(RoomMapper);
+                const currentRoom = mapper.getCurrentRoom();
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapRoomBasicInfo();
-                        mapper.mapSliderImages();
+                        mapper.mapHeroText(currentRoom);
+                        mapper.initializeHeroSlider(currentRoom);
+                        break;
+                    case 'gallery':
+                        mapper.mapRoomGalleryText();
                         break;
                 }
             }
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapFacilityBasicInfo();
-                mapper.mapAdditionalInfos();
-                mapper.mapFeatures();
-                mapper.mapBenefits();
-                mapper.adjustExperienceGridLayout();
+                mapper.mapFacilityText();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -521,7 +567,18 @@ class PreviewHandler {
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
                 const mapper = this.createMapper(DirectionsMapper);
-                mapper.mapPage();
+
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroSection();
+                        break;
+                    case 'notice':
+                        mapper.mapNoticeSection();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
             }
         }
     }
