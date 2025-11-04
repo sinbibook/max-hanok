@@ -15,21 +15,11 @@ class BaseDataMapper {
     // ============================================================================
 
     /**
-     * JSON 데이터 로드
+     * 데이터 설정
      */
-    async loadData() {
-        try {
-            // 캐시 방지를 위한 타임스탬프 추가
-            const timestamp = new Date().getTime();
-            const response = await fetch(`../standard-template-data.json?t=${timestamp}`);
-            this.data = await response.json();
-            this.isDataLoaded = true;
-            return this.data;
-        } catch (error) {
-            console.error('Failed to load property data:', error);
-            this.isDataLoaded = false;
-            throw error;
-        }
+    setData(data) {
+        this.data = data;
+        this.isDataLoaded = !!data;
     }
 
     /**
@@ -54,27 +44,12 @@ class BaseDataMapper {
     }
 
     /**
-     * 이미지 배열에서 선택된 이미지를 필터링하고 정렬하는 헬퍼 메서드
-     * @param {Array} images - 이미지 배열
-     * @returns {Array} 선택되고 정렬된 이미지 배열
-     */
-    _getSortedSelectedImages(images) {
-        if (!images || !Array.isArray(images)) {
-            return [];
-        }
-        return images
-            .filter(img => img.isSelected)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-    }
-
-    /**
      * DOM 요소 안전 선택
      */
     safeSelect(selector) {
         try {
             return document.querySelector(selector);
         } catch (error) {
-            console.warn(`Invalid selector: ${selector}`);
             return null;
         }
     }
@@ -86,8 +61,22 @@ class BaseDataMapper {
         try {
             return document.querySelectorAll(selector);
         } catch (error) {
-            console.warn(`Invalid selector: ${selector}`);
             return [];
+        }
+    }
+
+    /**
+     * Favicon 업데이트 공통 메서드
+     */
+    updateFavicon() {
+        if (this.data && this.data.homepage && this.data.homepage.images && this.data.homepage.images[0] && this.data.homepage.images[0].logo) {
+            const selectedLogo = this.data.homepage.images[0].logo.find(logo => logo.isSelected === true);
+            if (selectedLogo && selectedLogo.url) {
+                const faviconElement = document.querySelector('[data-homepage-favicon]');
+                if (faviconElement) {
+                    faviconElement.href = selectedLogo.url;
+                }
+            }
         }
     }
 
@@ -201,16 +190,34 @@ class BaseDataMapper {
     // ============================================================================
 
     /**
-     * 메타 태그 업데이트 (homepage.seo + 페이지별 SEO 병합)
-     * @param {Object} pageSEO - 페이지별 SEO 데이터 (선택사항, 전역 SEO보다 우선 적용)
+     * 메타 태그 업데이트
      */
-    updateMetaTags(pageSEO = null) {
-        // homepage.seo 글로벌 SEO 데이터 적용
-        const globalSEO = this.safeGet(this.data, 'homepage.seo') || {};
-        // 전역 SEO와 페이지별 SEO를 병합합니다. 페이지별 설정이 우선됩니다.
-        const finalSEO = { ...globalSEO, ...(pageSEO || {}) };
-        if (Object.keys(finalSEO).length > 0) {
-            this.updateSEOInfo(finalSEO);
+    updateMetaTags(property) {
+        if (!property) return;
+
+        // 타이틀 업데이트
+        const title = this.safeSelect('title');
+        if (title && property.subtitle) {
+            title.textContent = `${property.name} - ${property.subtitle}`;
+        }
+
+        // 메타 description 업데이트
+        const metaDescription = this.safeSelect('meta[name="description"]');
+        if (metaDescription && property.description) {
+            metaDescription.setAttribute('content', property.description);
+        }
+
+        // 메타 keywords 업데이트
+        const metaKeywords = this.safeSelect('meta[name="keywords"]');
+        if (metaKeywords && property.city && property.province) {
+            const keywords = [
+                property.city.name + '펜션',
+                property.province.name + '숙박',
+                property.name,
+                '감성펜션',
+                '자연휴양지'
+            ].join(', ');
+            metaKeywords.setAttribute('content', keywords);
         }
     }
 
@@ -248,50 +255,13 @@ class BaseDataMapper {
     }
 
     /**
-     * Open Graph 메타 태그 매핑 (동적 생성)
-     * @param {string} title - OG title
-     * @param {string} description - OG description
-     * @param {string} imageUrl - OG image URL
-     */
-    mapOpenGraphTags(title = '', description = '', imageUrl = '') {
-        /**
-         * 메타 태그 생성 또는 업데이트 헬퍼 함수
-         * @param {string} property - OG property 이름
-         * @param {string} content - 메타 태그 content 값
-         */
-        const createOrUpdateMeta = (property, content) => {
-            if (!content) return;
-
-            let meta = document.querySelector(`meta[property="${property}"]`);
-            if (!meta) {
-                meta = document.createElement('meta');
-                meta.setAttribute('property', property);
-                document.head.appendChild(meta);
-            }
-            meta.setAttribute('content', content);
-        };
-
-        // OG 메타 태그 생성 또는 업데이트
-        createOrUpdateMeta('og:type', 'website');
-        createOrUpdateMeta('og:title', title);
-        createOrUpdateMeta('og:description', description);
-        createOrUpdateMeta('og:image', imageUrl);
-        createOrUpdateMeta('og:url', window.location.href);
-
-        if (this.data?.property?.name) {
-            createOrUpdateMeta('og:site_name', this.data.property.name);
-        }
-    }
-
-    /**
      * 페이지별 초기화 (서브클래스에서 오버라이드)
+     * 데이터는 생성자에서 전달받으므로 별도 로딩 불필요
      */
     async initialize() {
         try {
-            await this.loadData();
             await this.mapPage();
         } catch (error) {
-            console.error('Failed to initialize mapper:', error);
         }
     }
 
