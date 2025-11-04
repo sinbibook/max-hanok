@@ -1,1 +1,2 @@
-# template-center-slider
+# template-full-banner-image
+
