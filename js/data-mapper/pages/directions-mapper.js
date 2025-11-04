@@ -5,7 +5,7 @@
  */
 class DirectionsMapper extends BaseDataMapper {
     // Kakao Map 설정 상수
-    static KAKAO_MAP_ZOOM_LEVEL = 3;
+    static KAKAO_MAP_ZOOM_LEVEL = 5;
     static SDK_WAIT_INTERVAL = 100; // ms
 
     constructor() {
