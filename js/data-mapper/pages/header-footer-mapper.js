@@ -84,29 +84,29 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 시설 메뉴 동적 생성
         this.mapFacilityMenuItems();
 
-        // 예약 버튼에 gpension_id 매핑
+        // 예약 버튼에 realtimeBookingId 매핑
         this.mapReservationButtons();
     }
 
     /**
-     * 예약 버튼에 gpension_id 매핑
+     * 예약 버튼에 realtimeBookingId 매핑
      */
     mapReservationButtons() {
         if (!this.isDataLoaded || !this.data.property) {
             return;
         }
 
-        // gpension_id 찾기
-        const gpensionId = this.data.property.gpensionId;
+        // realtimeBookingId 찾기
+        const realtimeBookingId = this.data.property.realtimeBookingId;
 
-        if (!gpensionId) {
+        if (!realtimeBookingId) {
             return;
         }
 
-        // 모든 예약 버튼에 gpension_id 설정
+        // 모든 예약 버튼에 realtimeBookingId 설정
         const reservationButtons = document.querySelectorAll('[data-booking-engine]');
         reservationButtons.forEach(button => {
-            button.setAttribute('data-gpension-id', gpensionId);
+            button.setAttribute('data-realtime-booking-id', realtimeBookingId);
         });
     }
 

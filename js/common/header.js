@@ -153,17 +153,17 @@ window.addEventListener('scroll', requestTick);
 window.openReservation = function() {
     const isPreviewMode = window.parent !== window;
     const buttons = document.querySelectorAll('[data-booking-engine]');
-    const gpensionId = buttons.length > 0 ? buttons[0].getAttribute('data-gpension-id') : null;
+    const realtimeBookingId = buttons.length > 0 ? buttons[0].getAttribute('data-realtime-booking-id') : null;
 
-    if (gpensionId) {
-        const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${gpensionId}`;
+    if (realtimeBookingId) {
+        const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}`;
 
         if (isPreviewMode) {
             // 미리보기 환경: 부모 창(어드민)에 메시지 전송
             window.parent.postMessage({
                 type: 'OPEN_RESERVATION',
                 url: reservationUrl,
-                gpensionId: gpensionId
+                realtimeBookingId: realtimeBookingId
             }, window.previewHandler?.parentOrigin || '*');
         } else {
             // 일반 환경: 새 창으로 열기
@@ -178,7 +178,7 @@ window.openReservation = function() {
 
 /**
  * 예약 버튼 초기화
- * gpension_id를 사용하여 예약 페이지를 새 창으로 열기
+ * realtimeBookingId를 사용하여 예약 페이지를 새 창으로 열기
  */
 function initializeReservationButtons() {
     const reservationButtons = document.querySelectorAll('[data-booking-engine]');
