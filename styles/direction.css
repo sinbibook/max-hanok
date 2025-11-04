@@ -1,0 +1,191 @@
+/*direction.html page specific styles*/
+.mapSection {
+  width: 100%;
+  margin: 0 auto;
+}
+.mapCard {
+  border-radius: 0;
+  padding: 0 0 clamp(1.8rem, 0vw, 2.8rem) 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+.mapCard__header {
+  margin-bottom: clamp(1.2rem, 3vw, 2rem);
+}
+.mapCard__title {
+  font-family: "GowoonDodum", sans-serif;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  color: #333;
+}
+.mapCard__subtitle {
+  margin-top: 0.6rem;
+  color: #555;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+}
+.mapCard__body {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 500px;
+  margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+/* Kakao Map 스타일 */
+#kakao-map {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border-radius: 10px;
+}
+
+/* 레거시 iframe 스타일 (호환성 유지) */
+.mapCard__body iframe {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100%;
+  border: 0;
+  border-radius: 10px;
+}
+.mapCard__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  color: #444;
+}
+
+/*resort info section*/
+.resort-info {
+  padding: 2rem 0;
+}
+
+.info-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.info-content {
+  padding: 2rem;
+}
+
+.address-section h3 {
+  font-family: "GowoonDodum", sans-serif;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.address-item {
+  margin-bottom: 1rem;
+}
+
+.address-details {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.address-details p {
+  margin-bottom: 0.5rem;
+}
+
+.content-container {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding: 0 var(--layout-gutter);
+}
+
+/* Address info section */
+.address-info-section {
+  margin-bottom: 2rem;
+}
+
+/* Directions notice section */
+.notice-section {
+  margin-top: 4rem;
+}
+
+.directions-notice {
+  position: relative;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: clamp(1.2rem, 2.8vw, 1.8rem);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  justify-content: flex-start;
+}
+
+.directions-notice::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0) 40%, rgba(241, 245, 249, 0.35) 100%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.directions-notice:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.directions-notice:hover::after {
+  opacity: 1;
+}
+
+.directions-notice-label,
+.directions-notice-value {
+  position: relative;
+  z-index: 1;
+}
+
+.directions-notice-label {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7a8f;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(107, 122, 143, 0.3);
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.directions-notice-value {
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  color: #1f2937;
+  line-height: 1.55;
+  text-align: left;
+}
+
+@media all and (max-width:768px) {
+  .mapCard__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .mapCard__body {
+    min-height: 350px;
+  }
+
+  .mapCard__body iframe {
+    height: 100%;
+  }
+
+  .info-content {
+    padding: 1.5rem;
+  }
+
+  .address-section h3 {
+    font-size: 1.25rem;
+  }
+
+  .directions-notice {
+    padding: 1rem 1.3rem;
+  }
+}

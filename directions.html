@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
+<html lang="en">
+  <head>
+    <script src="js/config.js"></script>    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="숙소 설명">
-    <meta name="keywords" content="SEO 키워드">
-    <title>오시는길 - 숙소명</title>
-
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/common.css" as="style">
-    <link rel="preload" href="styles/directions.css" as="style">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/directions.css">
-  <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="icon" type="image/png" data-homepage-images-0-logo-0-url>
+    <title data-homepage-seo-title>오시는길</title>
+    <meta name="description" data-homepage-seo-description content="">
+    <meta name="keywords" data-homepage-seo-keywords content="">
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/direction.css" />
+    <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 오시는길" />
   
@@ -25,118 +22,90 @@
   
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
-<body>
-    <div class="directions-page">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <!-- Background Image -->
-            <div class="hero-background">
-                <img data-directions-hero-image
-                     src=""
-                     alt="Mountain Landscape"
-                     loading="eager">
-            </div>
-            <!-- Hero Content -->
-            <div class="hero-content">
-                <!-- Back Button -->
-                <button class="back-button" onclick="navigateToHome()">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                    </svg>
-                    Back to Home
-                </button>
-
-                <!-- Title -->
-                <h1 class="hero-title" data-directions-hero-title></h1>
-            </div>
+  <body>
+    <div class="wrapper mainWrap">
+      <main>
+        <section class="con2">
+          <nav class="subNav">
+            <h2>
+              오시는길
+            </h2>
+            <p class="mt5">
+              <span data-property-name>제주 포레스트</span> 오시는길을 안내 드립니다.
+            </p>
+          </nav>
         </section>
+        
+        <section class="con3 content-section" style="margin-top: 0; margin-bottom: 50px">
+          <div class="fBanner" data-homepage-customFields-pages-directions-sections-0-hero-images data-bg-extra="fixed">
+          </div>
+      </section>
 
-        <!-- Content Section -->
-        <section class="content-section">
-            <div class="content-container">
-                <!-- Resort Info Section -->
-                <div class="resort-info">
-                    <h2 class="section-title" data-directions-section-title></h2>
-
-                    <div class="info-grid">
-                        <div class="info-content">
-                            <div class="address-section">
-                                <div class="address-item">
-                                    <svg class="address-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+      <section class="content-section address-info-section">
+        <div class="content-container">
+          <!-- Resort Info Section -->
+          <div class="resort-info textCenter">
+              <div class="info-grid">
+                  <div class="info-content">
+                      <div class="address-section">
+                          <div class="address-item">
+                              <div class="address-details">
+                                  <p>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 8px;">
+                                      <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
                                     </svg>
-                                    <div class="address-details">
-                                        <p>도로명 주소</p>
-                                        <p data-directions-road-address></p>
-                                    </div>
-                                </div>
-                                <!-- 향후 지번 주소 활성화 예정 -->
-                                <!-- <div class="address-item">
-                                    <svg class="address-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.158.69-.158 1.006 0l4.994 2.497c.317.158.69.158 1.007 0z" />
-                                    </svg>
-                                    <div class="address-details">
-                                        <p>지번 주소</p>
-                                        <p data-directions-lot-address></p>
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- custom information section -->
-                <div class="notice-section" data-directions-notice-section>
-                    <h3 class="map-title notice-title" data-directions-notice-title></h3>
-                    <div class="address-item notice-item">
-                        <div class="address-details">
-                            <p data-directions-notice-description></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                    도로명 주소 : <span data-property-address></span>
+                                  </p>
+                              </div>
+                          </div>
+                          <!-- 향후 지번주소 활성화 예정 -->
+                          <!-- <div class="address-item">
+                              <div class="address-details">
+                                  <p>지번 주소 : <span data-property-lot-address></span></p>
+                              </div>
+                          </div> -->
+                      </div>
 
-        <!-- Map Section -->
-        <section class="map-section">
-            <div class="map-container">
-                <h3 class="map-title" data-directions-map-title></h3>
-
-                <!-- Map Container -->
-                <div class="map-wrapper">
-                    <!-- Kakao Map -->
-                    <div id="kakao-map"></div>
-                </div>
+                      <!-- Directions Notice Section -->
+                      <div class="notice-section" data-directions-notice-section>
+                        <div class="directions-notice">
+                          <span class="directions-notice-label" data-directions-notice-title></span>
+                          <pre class="directions-notice-value" data-property-directions-notice-description></pre>
+                        </div>
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+      </section>
+          <section class="mapSection" aria-labelledby="map-heading">
+            <div class="mapCard">
+              <div class="mapCard__body">
+                <!-- Kakao Map -->
+                <div id="kakao-map"></div>
+              </div>
             </div>
-        </section>
+          </section>
+      </main>
     </div>
-
-    <!-- Kakao Map SDK - Local File -->
-    <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>
-
-    <!-- Include ImageWithFallback script -->
-    <script src="js/image-with-fallback.js"></script>
+    <!-- Kakao Map SDK -->
+    <script src="js/kakao-maps-sdk.js"></script>
 
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
-
-    <!-- Base Data Mapper -->
+    <script src="js/image-with-fallback.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-
-    <!-- Directions Page Mapper -->
     <script src="js/data-mapper/pages/directions-mapper.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
-
-    <!-- Header Footer Mapper -->
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
-    <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
-
-    <!-- Page-specific script -->
+    <script src="js/common/scroll-animation.js"></script>
+    <script src="js/common/header.js"></script>
+    <!-- iOS Parallax Fix -->
     <script src="js/pages/directions.js"></script>
 
-</body>
+    <!-- Preview Handler (어드민 연동) -->
+    <script src="js/preview-handler.js"></script>
+  </body>
 </html>
