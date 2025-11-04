@@ -1,213 +1,280 @@
 /**
- * Header Component Functionality
- * 헤더 컴포넌트 기능
+ * Header interactions used across modern pages.
+ * Handles navigation, mobile menu toggling, and scroll styling.
  */
+(function () {
+    const PAGE_MAP = {
+        // home is handled separately in navigateTo function
+        main: 'main.html',
+        directions: 'directions.html',
+        'reservation-info': 'reservation.html',
+        room: 'room.html',
+    };
+    const RESERVATION_URL = 'https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}';
 
-// Header functionality - Make functions global for dynamic loading
-let mobileMenuOpen = false;
-let subMenusVisible = false;
+    // Initialize variables - will be populated after DOM is ready
+    let body;
+    let headers;
+    let mobileMenu;
+    let mobileToggleButtons;
+    let desktopMenuItems;
+    let mobileHeaderItems;
+    let allMenuGroups;
 
-// 모든 페이지가 루트에 있으므로 경로 통일
-const basePath = './';
-
-// Global navigation function
-window.navigateTo = function(page) {
-    // Validate page parameter
-    if (!page || page === 'undefined' || page === 'null' || typeof page !== 'string') {
-        return false;
-    }
-
-    // Handle special cases
-    if (page === 'home') {
-        window.location.href = `${basePath}index.html`;
-        return;
-    }
-    if (page === 'reservation-info') {
-        window.location.href = `${basePath}reservation.html`;
-        return;
-    }
-
-    // Use URL router if available, otherwise direct navigation
-    if (window.navigateToPage) {
-        window.navigateToPage(page);
-    } else {
-        // Direct navigation fallback
-        window.location.href = `${basePath}${page}.html`;
-    }
-
-    closeMobileMenu();
-    window.hideSubMenus();
-};
-
-// Room navigation is now handled by PropertyDataMapper.navigateToRoom
-
-// Make mobile menu functions global
-window.toggleMobileMenu = function() {
-    mobileMenuOpen = !mobileMenuOpen;
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
-    const closeIcon = document.getElementById('close-icon');
-    const body = document.body;
-
-    if (mobileMenuOpen) {
-        if (mobileMenu) mobileMenu.classList.add('show');
-        if (menuIcon) menuIcon.style.display = 'none';
-        if (closeIcon) closeIcon.style.display = 'block';
-
-        // body 스크롤 막기
-        body.style.overflow = 'hidden';
-    } else {
-        if (mobileMenu) mobileMenu.classList.remove('show');
-        if (menuIcon) menuIcon.style.display = 'block';
-        if (closeIcon) closeIcon.style.display = 'none';
-
-        // body 스크롤 복원
-        body.style.overflow = '';
-    }
-};
-
-function closeMobileMenu() {
-    if (mobileMenuOpen) {
-        window.toggleMobileMenu();
-    }
-}
-
-// Make submenu functions global
-window.showSubMenus = function() {
-    if (window.innerWidth >= 1024) {
-        subMenusVisible = true;
-        const subMenus = document.getElementById('sub-menus');
-        const subMenuItems = document.querySelectorAll('.sub-menu-item');
-
-        if (subMenus) subMenus.classList.add('show');
-
-        // Animate sub menu items
-        subMenuItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.classList.add('animate');
-            }, index * 50);
+    function syncAriaExpanded(collection) {
+        collection.forEach((item) => {
+            const trigger = item.querySelector('a');
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', item.classList.contains('is-open') ? 'true' : 'false');
+            }
         });
     }
-};
 
-window.hideSubMenus = function() {
-    if (window.innerWidth >= 1024) {
-        subMenusVisible = false;
-        const subMenus = document.getElementById('sub-menus');
-        const subMenuItems = document.querySelectorAll('.sub-menu-item');
+    let isMobileMenuOpen = false;
 
-        if (subMenus) subMenus.classList.remove('show');
-        subMenuItems.forEach(item => {
-            item.classList.remove('animate');
+    function updateHeaderAppearance() {
+        const shouldActivate = window.scrollY > 40;
+        headers.forEach((headerEl) => {
+            if (!headerEl) return;
+            headerEl.classList.toggle('scrolled', shouldActivate);
         });
     }
-};
 
-// Close mobile menu when clicking outside or resizing
-window.addEventListener('resize', () => {
-    if (window.innerWidth >= 1024 && mobileMenuOpen) {
-        closeMobileMenu();
-    }
-    if (window.innerWidth < 1024 && subMenusVisible) {
-        window.hideSubMenus();
-    }
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    const header = document.getElementById('header');
-    if (mobileMenuOpen && !header.contains(e.target)) {
-        closeMobileMenu();
-    }
-});
-
-// Header scroll effect
-let lastScrollY = 0;
-let ticking = false;
-
-function updateHeader() {
-    const header = document.getElementById('header');
-    const scrollY = window.scrollY;
-
-    if (scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
+    function setBodyScrollLock(locked) {
+        body.style.overflow = locked ? 'hidden' : '';
     }
 
-    lastScrollY = scrollY;
-    ticking = false;
-}
+    function closeMobileMenu() {
+        if (!isMobileMenuOpen) return;
+        isMobileMenuOpen = false;
 
-function requestTick() {
-    if (!ticking) {
-        requestAnimationFrame(updateHeader);
-        ticking = true;
-    }
-}
+        // Re-query DOM elements to ensure we have the latest references
+        const currentMobileMenu = document.getElementById('mobile-menu');
+        const currentMobileToggleButtons = document.querySelectorAll('.mobile-toggle');
 
-// Listen for scroll events
-window.addEventListener('scroll', requestTick);
+        currentMobileMenu?.classList.remove('is-open');
+        currentMobileMenu?.setAttribute('aria-hidden', 'true');
+        currentMobileToggleButtons.forEach((btn) => {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-expanded', 'false');
+        });
 
-// 전역 예약 함수 (어디서든 호출 가능)
-window.openReservation = function() {
-    const isPreviewMode = window.parent !== window;
-    const buttons = document.querySelectorAll('[data-booking-engine]');
-    const realtimeBookingId = buttons.length > 0 ? buttons[0].getAttribute('data-realtime-booking-id') : null;
-
-    if (realtimeBookingId) {
-        const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}`;
-
-        if (isPreviewMode) {
-            // 미리보기 환경: 부모 창(어드민)에 메시지 전송
-            window.parent.postMessage({
-                type: 'OPEN_RESERVATION',
-                url: reservationUrl,
-                realtimeBookingId: realtimeBookingId
-            }, window.previewHandler?.parentOrigin || '*');
+        if (body) {
+            body.style.overflow = '';
+            body.classList.remove('mobile-menu-open');
         } else {
-            // 일반 환경: 새 창으로 열기
-            window.open(reservationUrl, '_blank', 'noopener,noreferrer');
+            document.body.style.overflow = '';
+            document.body.classList.remove('mobile-menu-open');
         }
+
+        if (allMenuGroups && allMenuGroups.length > 0) {
+            allMenuGroups.forEach(closeAllMenuItems);
+        }
+    }
+
+    function openMobileMenu() {
+        if (isMobileMenuOpen) return;
+        isMobileMenuOpen = true;
+
+        // Re-query DOM elements to ensure we have the latest references
+        const currentMobileMenu = document.getElementById('mobile-menu');
+        const currentMobileToggleButtons = document.querySelectorAll('.mobile-toggle');
+
+        currentMobileMenu?.classList.add('is-open');
+        currentMobileMenu?.setAttribute('aria-hidden', 'false');
+        currentMobileToggleButtons.forEach((btn) => {
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-expanded', 'true');
+        });
+
+        if (body) {
+            body.style.overflow = 'hidden';
+            body.classList.add('mobile-menu-open');
+        } else {
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('mobile-menu-open');
+        }
+    }
+
+    function toggleMobileMenu() {
+        if (isMobileMenuOpen) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    }
+
+    function navigateTo(page) {
+        if (!page) return;
+
+        if (page === 'reservation-link') {
+            // DOM에서 동적으로 생성된 예약 링크 URL 가져오기
+            const reservationLink = document.querySelector('[data-property-realtime-booking-id]');
+            const reservationUrl = reservationLink?.getAttribute('href') || RESERVATION_URL;
+            window.open(reservationUrl, '_blank');
+            closeMobileMenu();
+            return;
+        }
+
+        if (page === 'home') {
+            window.location.href = 'index.html';
+            closeMobileMenu();
+            return;
+        }
+
+        const targetPath = PAGE_MAP[page];
+        if (targetPath) {
+            // All files are in root directory
+            window.location.href = targetPath;
+            closeMobileMenu();
+            return;
+        }
+    }
+
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.navigateTo = navigateTo;
+    function closeAllMenuItems(collection) {
+        collection.forEach((item) => item.classList.remove('is-open'));
+        syncAriaExpanded(collection);
+    }
+
+    function toggleMenuItem(item, collection) {
+        const alreadyOpen = item.classList.contains('is-open');
+        closeAllMenuItems(collection);
+        if (!alreadyOpen) {
+            item.classList.add('is-open');
+        }
+        syncAriaExpanded(collection);
+    }
+
+    function attachMenuToggleHandlers(menuItems, options = {}) {
+        menuItems.forEach((item) => {
+            const trigger = item.querySelector('a');
+            if (!trigger) return;
+
+            trigger.addEventListener('click', (event) => {
+                const shouldHandle = options.shouldHandle ? options.shouldHandle() : true;
+                if (!shouldHandle) return;
+
+                if (trigger.getAttribute('href') === 'javascript:void(0)') {
+                    event.preventDefault();
+                }
+
+                toggleMenuItem(item, menuItems);
+            });
+
+            trigger.addEventListener('keydown', (event) => {
+                if ((event.key === 'Enter' || event.key === ' ') && (!options.shouldHandle || options.shouldHandle())) {
+                    event.preventDefault();
+                    toggleMenuItem(item, menuItems);
+                }
+            });
+        });
+    }
+
+    // Initialize DOM elements and event listeners
+    function initializeHeader() {
+        // Populate DOM element references
+        body = document.body;
+        headers = Array.from(document.querySelectorAll('.header, .mHd'));
+        mobileMenu = document.getElementById('mobile-menu');
+        mobileToggleButtons = Array.from(document.querySelectorAll('.mobile-toggle'));
+        desktopMenuItems = Array.from(document.querySelectorAll('.header .mainMenu > li'));
+        mobileHeaderItems = Array.from(document.querySelectorAll('.mHd .mainMenu > li'));
+        allMenuGroups = [desktopMenuItems, mobileHeaderItems];
+
+
+        // Setup menu toggle handlers
+        attachMenuToggleHandlers(desktopMenuItems, {
+            shouldHandle: () => window.innerWidth >= 1024
+        });
+
+        attachMenuToggleHandlers(mobileHeaderItems, {
+            shouldHandle: () => window.innerWidth < 1024
+        });
+
+        allMenuGroups.forEach(syncAriaExpanded);
+
+        // Setup mobile toggle buttons
+        mobileToggleButtons.forEach((btn) => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                toggleMobileMenu();
+            });
+        });
+
+        // Global click handler
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+
+            if (isMobileMenuOpen) {
+                const clickInsideMenu = mobileMenu?.contains(target);
+                const clickOnToggle = mobileToggleButtons.some((btn) => btn.contains(target));
+                if (!clickInsideMenu && !clickOnToggle) {
+                    closeMobileMenu();
+                }
+            }
+
+            if (window.innerWidth >= 1024) {
+                const insideMenu = target.closest('.header .mainMenu');
+                if (!insideMenu) {
+                    closeAllMenuItems(desktopMenuItems);
+                }
+            }
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                closeMobileMenu();
+            }
+            allMenuGroups.forEach(closeAllMenuItems);
+            allMenuGroups.forEach(syncAriaExpanded);
+        });
+
+        // Scroll handler
+        window.addEventListener('scroll', updateHeaderAppearance, { passive: true });
+        updateHeaderAppearance();
+    }
+
+    // Mobile submenu toggle function
+    function toggleMobileSubmenu(element) {
+        const menuItem = element.closest('li');
+        if (!menuItem) return;
+
+        const isOpen = menuItem.classList.contains('is-open');
+
+        // Close all other mobile menu items
+        const mobileMenuItems = Array.from(document.querySelectorAll('#mobile-menu .mainMenu > li'));
+        mobileMenuItems.forEach((item) => {
+            if (item !== menuItem) {
+                item.classList.remove('is-open');
+            }
+        });
+
+        // Toggle current menu item
+        menuItem.classList.toggle('is-open', !isOpen);
+    }
+
+    // Expose global functions
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.navigateTo = navigateTo;
+    window.toggleMobileSubmenu = toggleMobileSubmenu;
+    window.showSubMenus = () => {
+        if (window.innerWidth >= 1024) {
+            desktopMenuItems.forEach((item) => item.classList.add('is-open'));
+        }
+    };
+    window.hideSubMenus = () => {
+        allMenuGroups.forEach(closeAllMenuItems);
+    };
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeHeader);
     } else {
-        if (!isPreviewMode) {
-            window.location.href = `${basePath}reservation.html`;
-        }
+        // DOM already loaded, initialize immediately
+        initializeHeader();
     }
-};
-
-/**
- * 예약 버튼 초기화
- * realtimeBookingId를 사용하여 예약 페이지를 새 창으로 열기
- */
-function initializeReservationButtons() {
-    const reservationButtons = document.querySelectorAll('[data-booking-engine]');
-
-    if (reservationButtons.length === 0) {
-        return;
-    }
-
-    reservationButtons.forEach((button) => {
-        button.onclick = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            window.openReservation();
-        };
-    });
-}
-
-// 여러 시점에서 초기화 시도
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        updateHeader();
-        initializeReservationButtons();
-    });
-} else {
-    updateHeader();
-    initializeReservationButtons();
-}
-
-// 추가 안전장치: load 이벤트에서도 초기화
-window.addEventListener('load', () => {
-    initializeReservationButtons();
-});
+})();

@@ -1,372 +1,292 @@
-/* Reservation Page Specific Styles */
-
-/* Hero Title Background */
-.hero-title {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+/*reservation.html page specific styles*/
+.reservationWrap .con3, .reservationWrap .con4 {
+  margin-top: 50px !important;
+  width: 1200px;
+  margin: 0 auto;
+}
+.reservationWrap .con2>div {
+  height: auto !important
 }
 
-/* Mobile hero height */
-@media (max-width: 767px) {
-    .hero-section {
-        height: 70vh;
-        min-height: 70vh;
-    }
+.reservationWrap .con2 .titWrap {
+  text-align: center;
+  margin-top: 50px;
 }
 
-.hero-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.reservationWrap .usageSection {
+  margin-top: 0 !important;
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 10px;
+  padding: 25px;
+  color: #666;
 }
 
-/* Back Button Position */
-.back-button {
-    position: absolute;
-    bottom: 2rem;
-    left: 2rem;
+.reservationWrap .usageSection .sectionHeader {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
 }
 
-/* Section 1: 예약 정보 */
-.reservation-info-section {
-    background: white;
+.reservationWrap .checkinCheckoutSection  {
+  margin-top: 20px !important;
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 10px;
+  padding: 25px;
+  color: #666;
 }
 
-.reservation-container {
-    width: 100%;
+.reservationWrap .checkinCheckoutSection .sectionHeader {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.reservationWrap .refundSection {
+  margin-top: 20px !important;
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 10px;
+  padding: 25px;
+  color: #666;
+}
+
+.reservationWrap .refundSection .sectionHeader {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.usageRules p, .checkinCheckoutRules p, .refundRules p {
+  margin-bottom: 7px !important;
+}
+.reservationWrap .tableSection {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.reservationWrap table {
+  opacity : 0.8;
+}
+
+.reservationWrap table tr:hover {
+  opacity: 1;
+  transition: all .5s;
+}
+
+.reservationWrap .tableSection .sectionTitle {
+  margin-bottom: 30px;
+}
+
+.reservationWrap .tableWrapper {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.reservationWrap .refundTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.reservationWrap .refundTable caption {
+  caption-side: top;
+  padding: 16px 24px;
+  font-weight: 600;
+  font-size: 18px;
+  color: #444;
+  text-align: left;
+}
+
+.reservationWrap .refundTable thead {
+  background: linear-gradient(90deg, rgba(77,121,89,0.12), rgba(77,121,89,0.26));
+}
+
+.reservationWrap .refundTable th,
+.reservationWrap .refundTable td {
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #4a4a4a;
+}
+
+.reservationWrap .refundTable th {
+  font-weight: 600;
+  color: #2a3a32;
+  letter-spacing: 0.02em;
+}
+
+.reservationWrap .refundTable tbody tr:nth-child(even) {
+  background-color: rgba(240,241,243,0.6);
+}
+
+.reservationWrap .refundTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.reservationWrap .refundTable td {
+  border-bottom: 1px solid rgba(221,221,221,0.7);
+}
+
+.reservationWrap .refundTable .noRefund {
+  color: #c94b4b;
+  font-weight: 700;
+}
+
+.reserSubWrap {
+  width: 60%; margin: 0 auto; text-align: center
+}
+.reserSubWrap li {
+  width: 33.3%;  float: left
+}
+
+/*policy card component for reservation page*/
+.policySection {
+  width: min(960px, 92%);
+  margin: clamp(3rem, 8vw, 5rem) auto;
+}
+.policyCard {
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 24px;
+  padding: clamp(2rem, 5vw, 3.2rem);
+  box-shadow: 0 24px 50px rgba(17, 23, 39, 0.12);
+  border: 1px solid rgba(226, 232, 240, 0.55);
+}
+.policyCard__header {
+  margin-bottom: clamp(1.5rem, 4vw, 2.6rem);
+}
+.policyCard__title {
+  font-family: "GowoonDodum", sans-serif;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  color: #333;
+}
+.policyCard__subtitle {
+  margin-top: 0.6rem;
+  color: #666;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.6;
+}
+.policyList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+.policyList li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06);
+}
+.policyList li strong {
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #333;
+}
+.policyList li span {
+  color: #555;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+}
+.policyNotice {
+  background: rgba(248, 250, 252, 0.9);
+  padding: clamp(1.2rem, 2.5vw, 1.8rem);
+  border-radius: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  color: #444;
+  line-height: 1.7;
+}
+.policyTableWrapper {
+  margin-top: clamp(2rem, 4vw, 2.5rem);
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+}
+.policyTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.96);
+}
+.policyTable th,
+.policyTable td {
+  padding: clamp(0.9rem, 2vw, 1.2rem);
+  text-align: left;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+  color: #333;
+}
+.policyTable thead th {
+  background: rgba(243, 246, 249, 0.9);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+.policyTable__noRefund {
+  color: #d9534f;
+  font-weight: 600;
+}
+
+/*reservation page responsive styles*/
+@media (max-width: 768px) {
+  .reservationWrap .tableWrapper {
     max-width: none;
-}
+  }
 
-.reservation-layout {
-    width: 100%;
-    padding: 4rem 0;
-}
+  .reservationWrap .refundTable {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 10px;
+  }
 
-.reservation-content {
-    width: 100%;
+  .reservationWrap .refundTable caption {
+    padding-bottom: 8px;
+  }
+
+  .reservationWrap .refundTable thead {
+    display: none;
+  }
+
+  .reservationWrap .refundTable tbody tr {
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-    padding: 0 1rem;
+    margin-bottom: 8px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(221,221,221,0.3);
+  }
+
+  .reservationWrap .refundTable tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .reservationWrap .refundTable td {
+    flex: 1;
+    padding: 14px 18px;
+    border-bottom: none;
+    text-align: center;
+  }
+
+  .policyCard {
+    padding: clamp(1.6rem, 5vw, 2.4rem);
+  }
+  .policyList li {
+    padding: clamp(0.9rem, 4vw, 1.2rem);
+  }
+  .policyTable th,
+  .policyTable td {
+    padding: clamp(0.8rem, 4vw, 1rem);
+  }
 }
 
-@media (min-width: 768px) {
-    .reservation-content {
-        flex-direction: row;
-        gap: 2rem;
-    }
+@media all and (max-width:700px) {
+  .reserSubWrap {
+    width: 70%
+  }
 }
 
-.image-column {
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    .image-column {
-        width: 50%;
-    }
-}
-
-.info-image {
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    border-radius: 0.5rem;
-}
-
-.info-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.text-column {
-    width: 100%;
-    padding-left: 0;
-}
-
-@media (min-width: 768px) {
-    .text-column {
-        width: 50%;
-        padding-left: 2rem;
-    }
-}
-
-.text-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.main-info h2 {
-    font-size: 1.875rem;
-    margin-bottom: 1rem;
-}
-
-.main-info p {
-    color: #4b5563;
-    line-height: 1.6;
-}
-
-.contact-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: flex-start;
-}
-
-.contact-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    color: #6b7280;
-    margin-top: 0.25rem;
-    margin-right: 0.75rem;
-    flex-shrink: 0;
-}
-
-.contact-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-label {
-    font-weight: 500;
-}
-
-.contact-value {
-    color: #4b5563;
-}
-
-/* Section 2: 예약안내 */
-.reservation-guide-section {
-    padding: 3.5rem 2rem;
-    background: white;
-}
-
-@media (min-width: 768px) {
-    .reservation-guide-section {
-        padding: 3.5rem 8.75rem;
-    }
-}
-
-.reservation-guide-container {
-    width: 100%;
-    max-width: none;
-}
-
-.reservation-guide-content {
-    background: white;
-    padding: 0;
-}
-
-.reservation-guide-rules {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    color: #374151;
-    line-height: 1.6;
-}
-
-.reservation-guide-rules p {
-    margin: 0;
-}
-
-/* Section 3: 이용안내 */
-.usage-section {
-    padding: 3.5rem 2rem;
-    background: white;
-}
-
-@media (min-width: 768px) {
-    .usage-section {
-        padding: 3.5rem 8.75rem;
-    }
-}
-
-.usage-container {
-    width: 100%;
-    max-width: none;
-}
-
-.section-header {
-    margin-bottom: 2rem;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #111827;
-    margin-bottom: 1rem;
-}
-
-.section-divider {
-    border: none;
-    border-top: 1px solid #d1d5db;
-}
-
-.usage-content {
-    background: white;
-    padding: 0;
-}
-
-.usage-rules {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    color: #374151;
-    line-height: 1.6;
-}
-
-.usage-rules p {
-    margin: 0;
-}
-
-.subsection {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e5e7eb;
-}
-
-.subsection h4 {
-    font-weight: 500;
-    color: #111827;
-    margin-bottom: 1rem;
-}
-
-.subsection-rules {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    color: #374151;
-}
-
-.subsection-rules p {
-    margin: 0;
-}
-
-/* Section 3: 입/퇴실 안내 */
-.checkin-checkout-section {
-    padding: 3.5rem 2rem;
-    background: white;
-}
-
-@media (min-width: 768px) {
-    .checkin-checkout-section {
-        padding: 3.5rem 8.75rem;
-    }
-}
-
-.checkin-checkout-container {
-    width: 100%;
-    max-width: none;
-}
-
-.checkin-checkout-content {
-    background: white;
-    padding: 0;
-}
-
-.checkin-checkout-rules {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    color: #374151;
-}
-
-.checkin-checkout-rules p {
-    margin: 0;
-}
-
-/* Section 4: 환불규정 */
-.refund-section {
-    padding: 3.5rem 2rem;
-    background: white;
-}
-
-@media (min-width: 768px) {
-    .refund-section {
-        padding: 3.5rem 8.75rem;
-    }
-}
-
-.refund-container {
-    width: 100%;
-    max-width: none;
-}
-
-.refund-content {
-    background: white;
-}
-
-.refund-rules {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    color: #374151;
-    line-height: 1.6;
-}
-
-.refund-rules p {
-    margin: 0;
-}
-
-.table-section {
-    margin-top: 1.75rem;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-}
-
-.table-title {
-    font-weight: 500;
-    color: #111827;
-    margin-bottom: 1rem;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-.refund-table {
-    width: 500px;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #d1d5db;
-}
-
-.refund-table thead {
-    background: #f9fafb;
-}
-
-.refund-table th {
-    width: 50%;
-    border: 1px solid #d1d5db;
-    padding: 0.75rem 1rem;
-    text-align: left;
-    font-weight: 500;
-}
-
-.refund-table td {
-    border: 1px solid #d1d5db;
-    padding: 0.75rem 1rem;
-}
-
-.refund-table tbody tr:nth-child(even) {
-    background: #f9fafb;
-}
-
-.refund-table .no-refund {
-    color: #111827;
-    font-weight: 500;
-}
-
-@media (min-width: 768px) {
-    .refund-content {
-        /* padding removed */
-    }
+table {
+  width: 100%
 }

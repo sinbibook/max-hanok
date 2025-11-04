@@ -5,7 +5,7 @@
 
 // Navigation function
 function navigateToHome() {
-    window.location.href = './index.html';
+    window.location.href = 'index.html';
 }
 
 // Facility Slider Functions
@@ -98,17 +98,120 @@ function handleFacilityTouchEnd(e) {
     }
 }
 
+// Experience Section 렌더링
+function renderExperienceSection(facilityData) {
+    const experienceSection = document.querySelector('[data-experience-section]');
+    const experienceContainer = document.querySelector('[data-experience-container]');
+
+    if (!experienceSection || !experienceContainer) return;
+
+    // URL에서 facility id 추출
+    const urlParams = new URLSearchParams(window.location.search);
+    const facilityId = urlParams.get('id');
+
+    if (!facilityId) {
+        experienceSection.classList.add('is-hidden');
+        return;
+    }
+
+    // 현재 시설의 customFields에서 experience 데이터 가져오기
+    const facilityCustomFields = facilityData?.homepage?.customFields?.pages?.facility;
+
+    const currentFacility = facilityCustomFields?.find(f => f.id === facilityId);
+
+    const experience = currentFacility?.sections?.[0]?.experience;
+
+    if (!experience) {
+        experienceSection.classList.add('is-hidden');
+        return;
+    }
+
+    // experience 객체 내의 데이터 확인
+    const hasData = (experience.features && experience.features.length > 0) ||
+                    (experience.additionalInfos && experience.additionalInfos.length > 0) ||
+                    (experience.benefits && experience.benefits.length > 0);
+
+    if (!hasData) {
+        experienceSection.classList.add('is-hidden');
+        return;
+    }
+
+    // 섹션 표시
+    experienceSection.classList.remove('is-hidden');
+    experienceContainer.innerHTML = '';
+
+    // 카드 생성 - 순서 유지를 위해 배열 순서대로 처리
+    const cardDataTypes = ['features', 'additionalInfos', 'benefits'];
+    cardDataTypes.forEach(type => {
+        const items = experience[type];
+        if (items && items.length > 0) {
+            const card = createExperienceCard(items);
+            experienceContainer.appendChild(card);
+        }
+    });
+}
+
+// Experience 카드 생성 헬퍼 함수
+function createExperienceCard(items) {
+    const card = document.createElement('div');
+    card.className = 'experience-card';
+
+    // 각 아이템을 직접 카드에 추가
+    items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'experience-item';
+
+        // title 추가
+        if (item.title) {
+            const titleEl = document.createElement('strong');
+            titleEl.textContent = item.title;
+            itemDiv.appendChild(titleEl);
+        }
+
+        // description 추가 (개행 처리는 CSS white-space: pre-line으로 처리)
+        if (item.description) {
+            const descEl = document.createElement('div');
+            descEl.className = 'experience-item-desc';
+            // textContent 사용으로 XSS 방지, CSS가 개행 처리
+            descEl.textContent = item.description;
+            itemDiv.appendChild(descEl);
+        }
+
+        card.appendChild(itemDiv);
+    });
+
+    return card;
+}
+
+// FacilityMapper 초기화
+async function initializeFacilityMapper() {
+    try {
+        const facilityMapper = new FacilityMapper();
+        await facilityMapper.initialize();
+
+        // setupNavigation이 있으면 호출
+        if (typeof facilityMapper.setupNavigation === 'function') {
+            facilityMapper.setupNavigation();
+        }
+
+        // Experience Section 렌더링 - facilityMapper.data 사용
+        const data = facilityMapper.data || window.templateData;
+        if (data) {
+            renderExperienceSection(data);
+        }
+    } catch (error) {
+        console.error('Error initializing facility mapper:', error);
+    }
+}
+
 // Mouse hover와 Touch 이벤트 설정
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize FacilityMapper (PreviewHandler가 없을 때만)
-    if (!window.previewHandler) {
-        const facilityMapper = new FacilityMapper();
-        facilityMapper.initialize().then(() => {
-            facilityMapper.setupNavigation();
-        }).catch(error => {
-            console.error('❌ FacilityMapper initialization failed:', error);
-        });
+    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
+    if (!window.APP_CONFIG.isInIframe()) {
+        // 일반 환경: FacilityMapper가 직접 초기화
+        initializeFacilityMapper();
     }
+    // iframe 환경에서는 PreviewHandler가 FacilityMapper 호출
 
     setTimeout(() => {
         const sliderWrapper = document.querySelector('.facility-slider-wrapper');

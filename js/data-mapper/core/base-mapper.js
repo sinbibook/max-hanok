@@ -21,7 +21,11 @@ class BaseDataMapper {
         try {
             // 캐시 방지를 위한 타임스탬프 추가
             const timestamp = new Date().getTime();
-            const response = await fetch(`./standard-template-data.json?t=${timestamp}`);
+            // GitHub Pages 지원: config.js의 경로 헬퍼 사용
+            const dataPath = window.APP_CONFIG
+                ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
+                : '../standard-template-data.json';
+            const response = await fetch(`${dataPath}?t=${timestamp}`);
             this.data = await response.json();
             this.isDataLoaded = true;
             return this.data;
@@ -109,6 +113,45 @@ class BaseDataMapper {
         return descriptions[code] || '';
     }
 
+    /**
+     * 선택된 이미지만 필터링하고 정렬하는 공통 헬퍼 메서드
+     * @private
+     */
+    _getSelectedAndSortedImages(images) {
+        if (!Array.isArray(images)) return [];
+        return images
+            .filter(img => img.isSelected)
+            .sort((a, b) => a.sortOrder - b.sortOrder);
+    }
+
+    /**
+     * HTML 특수 문자를 이스케이프 처리하는 헬퍼 메서드 (XSS 방지)
+     * @private
+     */
+    _escapeHTML(text) {
+        if (!text) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '/': '&#x2F;'
+        };
+        return text.replace(/[&<>"'\/]/g, (char) => map[char]);
+    }
+
+    /**
+     * 텍스트의 줄바꿈을 HTML <br> 태그로 변환하는 헬퍼 메서드 (XSS 안전)
+     * @private
+     */
+    _formatTextWithLineBreaks(text) {
+        if (!text) return '';
+        // 먼저 HTML 특수 문자를 이스케이프 처리한 후 줄바꿈 변환
+        const escapedText = this._escapeHTML(text);
+        return escapedText.replace(/\n/g, '<br>');
+    }
+
     // ============================================================================
     // 🎨 ANIMATION UTILITIES
     // ============================================================================
@@ -187,16 +230,34 @@ class BaseDataMapper {
     // ============================================================================
 
     /**
-     * 메타 태그 업데이트 (homepage.seo + 페이지별 SEO 병합)
-     * @param {Object} pageSEO - 페이지별 SEO 데이터 (선택사항, 전역 SEO보다 우선 적용)
+     * 메타 태그 업데이트
      */
-    updateMetaTags(pageSEO = null) {
-        // homepage.seo 글로벌 SEO 데이터 적용
-        const globalSEO = this.safeGet(this.data, 'homepage.seo') || {};
-        // 전역 SEO와 페이지별 SEO를 병합합니다. 페이지별 설정이 우선됩니다.
-        const finalSEO = { ...globalSEO, ...(pageSEO || {}) };
-        if (Object.keys(finalSEO).length > 0) {
-            this.updateSEOInfo(finalSEO);
+    updateMetaTags(property) {
+        if (!property) return;
+
+        // 타이틀 업데이트
+        const title = this.safeSelect('title');
+        if (title && property.subtitle) {
+            title.textContent = `${property.name} - ${property.subtitle}`;
+        }
+
+        // 메타 description 업데이트
+        const metaDescription = this.safeSelect('meta[name="description"]');
+        if (metaDescription && property.description) {
+            metaDescription.setAttribute('content', property.description);
+        }
+
+        // 메타 keywords 업데이트
+        const metaKeywords = this.safeSelect('meta[name="keywords"]');
+        if (metaKeywords && property.city && property.province) {
+            const keywords = [
+                property.city.name + '펜션',
+                property.province.name + '숙박',
+                property.name,
+                '감성펜션',
+                '자연휴양지'
+            ].join(', ');
+            metaKeywords.setAttribute('content', keywords);
         }
     }
 
@@ -209,43 +270,34 @@ class BaseDataMapper {
         if (seo.title) {
             const title = this.safeSelect('title');
             if (title) title.textContent = seo.title;
-
-            // OG Title도 같이 업데이트
-            const ogTitle = this.safeSelect('meta[property="og:title"]');
-            if (ogTitle) ogTitle.setAttribute('content', seo.title);
         }
 
         if (seo.description) {
             const metaDescription = this.safeSelect('meta[name="description"]');
             if (metaDescription) metaDescription.setAttribute('content', seo.description);
-
-            // OG Description도 같이 업데이트
-            const ogDescription = this.safeSelect('meta[property="og:description"]');
-            if (ogDescription) ogDescription.setAttribute('content', seo.description);
         }
 
         if (seo.keywords) {
             const metaKeywords = this.safeSelect('meta[name="keywords"]');
             if (metaKeywords) metaKeywords.setAttribute('content', seo.keywords);
         }
-
-        // OG URL은 현재 페이지 URL로 설정
-        const ogUrl = this.safeSelect('meta[property="og:url"]');
-        if (ogUrl) ogUrl.setAttribute('content', window.location.href);
     }
 
     /**
-     * 기본 OG 이미지 가져오기 (로고 이미지 사용)
+     * Favicon 매핑
      */
-    getDefaultOGImage() {
-        if (!this.isDataLoaded) return null;
+    mapFavicon() {
+        if (!this.isDataLoaded) return;
 
         const logoImages = this.safeGet(this.data, 'homepage.images.0.logo');
-        if (logoImages && logoImages.length > 0 && logoImages[0]?.url) {
-            return logoImages[0].url;
-        }
+        const faviconEl = this.safeSelect('link[data-homepage-images-0-logo-0-url]');
 
-        return null;
+        if (faviconEl && Array.isArray(logoImages) && logoImages.length > 0) {
+            const logoUrl = logoImages[0]?.url;
+            if (logoUrl) {
+                faviconEl.setAttribute('href', logoUrl);
+            }
+        }
     }
 
     // ============================================================================
