@@ -156,7 +156,7 @@ window.openReservation = function() {
     const gpensionId = buttons.length > 0 ? buttons[0].getAttribute('data-gpension-id') : null;
 
     if (gpensionId) {
-        const reservationUrl = `https://gpnew.gpension.kr/reser/reservation.php?pension_id=${gpensionId}`;
+        const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${gpensionId}`;
 
         if (isPreviewMode) {
             // 미리보기 환경: 부모 창(어드민)에 메시지 전송

@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.9.0",
-    "generatedAt": "2025-11-03T03:29:42.968Z",
+    "version": "1.10.0",
+    "generatedAt": "2025-11-04T05:08:42.740Z",
     "templateType": "full_banner_image_simple",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -114,7 +114,7 @@
         "name": "민속놀이",
         "description": "민속놀이 즐겨요",
         "usageGuide": "- 12:00 ~ 17:00 까지 이용 가능\n- 필요한 용품 제공",
-        "displayOrder": 0,
+        "displayOrder": 1,
         "images": [
           {
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613234-pwza1c2ilc.jpg",
@@ -147,7 +147,7 @@
         "name": "서비스",
         "description": "서비스입니다.",
         "usageGuide": "서비스이용안내입니다.",
-        "displayOrder": 0,
+        "displayOrder": 2,
         "images": [
           {
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2999b3b8-99f8-472f-b42a-c9bc05021f87/main/1760946429794-4af618f1lms.jpg",
@@ -970,7 +970,7 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287240706-6fepbqg4ale.jpg",
                       "sortOrder": 1,
                       "description": "",
-                      "isSelected": false,
+                      "isSelected": true,
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
                     },
                     {
@@ -1010,16 +1010,7 @@
                 },
                 {
                   "title": "33",
-                  "images": [
-                    {
-                      "id": "269678a9-2d2b-4309-8315-21a707d438a4",
-                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287269177-9wc3c9yqg9n.jpg",
-                      "sortOrder": 5,
-                      "description": "",
-                      "isSelected": true,
-                      "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
-                    }
-                  ],
+                  "images": [],
                   "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23",
                   "description": "33"
                 }
