@@ -15,11 +15,25 @@ class BaseDataMapper {
     // ============================================================================
 
     /**
-     * 데이터 설정
+     * JSON 데이터 로드
      */
-    setData(data) {
-        this.data = data;
-        this.isDataLoaded = !!data;
+    async loadData() {
+        try {
+            // 캐시 방지를 위한 타임스탬프 추가
+            const timestamp = new Date().getTime();
+            // GitHub Pages 지원: config.js의 경로 헬퍼 사용
+            const dataPath = window.APP_CONFIG
+                ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
+                : '../standard-template-data.json';
+            const response = await fetch(`${dataPath}?t=${timestamp}`);
+            this.data = await response.json();
+            this.isDataLoaded = true;
+            return this.data;
+        } catch (error) {
+            console.error('Failed to load property data:', error);
+            this.isDataLoaded = false;
+            throw error;
+        }
     }
 
     /**
@@ -50,6 +64,7 @@ class BaseDataMapper {
         try {
             return document.querySelector(selector);
         } catch (error) {
+            console.warn(`Invalid selector: ${selector}`);
             return null;
         }
     }
@@ -61,22 +76,8 @@ class BaseDataMapper {
         try {
             return document.querySelectorAll(selector);
         } catch (error) {
+            console.warn(`Invalid selector: ${selector}`);
             return [];
-        }
-    }
-
-    /**
-     * Favicon 업데이트 공통 메서드
-     */
-    updateFavicon() {
-        if (this.data && this.data.homepage && this.data.homepage.images && this.data.homepage.images[0] && this.data.homepage.images[0].logo) {
-            const selectedLogo = this.data.homepage.images[0].logo.find(logo => logo.isSelected === true);
-            if (selectedLogo && selectedLogo.url) {
-                const faviconElement = document.querySelector('[data-homepage-favicon]');
-                if (faviconElement) {
-                    faviconElement.href = selectedLogo.url;
-                }
-            }
         }
     }
 
@@ -110,6 +111,45 @@ class BaseDataMapper {
             'SPA': '힐링과 휴식을 위한 스파 시설'
         };
         return descriptions[code] || '';
+    }
+
+    /**
+     * 선택된 이미지만 필터링하고 정렬하는 공통 헬퍼 메서드
+     * @private
+     */
+    _getSelectedAndSortedImages(images) {
+        if (!Array.isArray(images)) return [];
+        return images
+            .filter(img => img.isSelected)
+            .sort((a, b) => a.sortOrder - b.sortOrder);
+    }
+
+    /**
+     * HTML 특수 문자를 이스케이프 처리하는 헬퍼 메서드 (XSS 방지)
+     * @private
+     */
+    _escapeHTML(text) {
+        if (!text) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '/': '&#x2F;'
+        };
+        return text.replace(/[&<>"'\/]/g, (char) => map[char]);
+    }
+
+    /**
+     * 텍스트의 줄바꿈을 HTML <br> 태그로 변환하는 헬퍼 메서드 (XSS 안전)
+     * @private
+     */
+    _formatTextWithLineBreaks(text) {
+        if (!text) return '';
+        // 먼저 HTML 특수 문자를 이스케이프 처리한 후 줄바꿈 변환
+        const escapedText = this._escapeHTML(text);
+        return escapedText.replace(/\n/g, '<br>');
     }
 
     // ============================================================================
@@ -243,6 +283,23 @@ class BaseDataMapper {
         }
     }
 
+    /**
+     * Favicon 매핑
+     */
+    mapFavicon() {
+        if (!this.isDataLoaded) return;
+
+        const logoImages = this.safeGet(this.data, 'homepage.images.0.logo');
+        const faviconEl = this.safeSelect('link[data-homepage-images-0-logo-0-url]');
+
+        if (faviconEl && Array.isArray(logoImages) && logoImages.length > 0) {
+            const logoUrl = logoImages[0]?.url;
+            if (logoUrl) {
+                faviconEl.setAttribute('href', logoUrl);
+            }
+        }
+    }
+
     // ============================================================================
     // 🔄 TEMPLATE METHODS (서브클래스에서 구현)
     // ============================================================================
@@ -256,12 +313,13 @@ class BaseDataMapper {
 
     /**
      * 페이지별 초기화 (서브클래스에서 오버라이드)
-     * 데이터는 생성자에서 전달받으므로 별도 로딩 불필요
      */
     async initialize() {
         try {
+            await this.loadData();
             await this.mapPage();
         } catch (error) {
+            console.error('Failed to initialize mapper:', error);
         }
     }
 

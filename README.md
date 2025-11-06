@@ -1,1 +1,1 @@
-# template-full-banner-slider
+# template-center-slider

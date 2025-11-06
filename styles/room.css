@@ -1,190 +1,720 @@
-/* Room Page Styles */
-
-.hero-section {
-    background: #FFF4E1;
-    position: relative;
+/*room.html page specific styles*/
+.con1Room {
+  margin-top: 30px
+}
+.roomWrap .con2::after {
+  content: ""; display: table; clear: both
+}
+.roomWrap .con2 aside {
+  float: left
+}
+.roomWrap .con2 .left {
+  width: 50%
+}
+.roomWrap .con2 .right {
+  width: 50%; margin-top: -45px;    margin-bottom: 100px
+}
+.roomWrap .con2 .goRes {
+  width: 235px; height: 45px; text-align: center; line-height: 45px; margin: 30px auto; display: block; border: 1px solid #818181; color: #818181; font-size: 14px; position: relative
+}
+.roomWrap .con2 .goRes .fal {
+  color: #818181; font-size: 16px;margin-right: 20px; margin-left: -20px
+}
+.roomWrap .con2 .goRes span {
+  width: 40px; height: 1px; background-color: #818181; top: 22px; right: 10px; position: absolute; transform-origin: left
+}
+.roomWrap .con2 .goRes:hover span {
+  animation: line_res 1s linear
+}
+.roomWrap .con3 {
+  margin-top: 100px
+}
+.roomWrap .con3::after {
+  content: ""; display: table; clear: both
+}
+.roomWrap .con3 aside {
+  width: 50%; float: left
+}
+.roomWrap .con3 .left {
+  margin-top: 30px
+}
+.roomWrap .con3 .right {
+  padding-left: 75px
+}
+.roomWrap .con3 .right h2 {
+  font-size: 18px; margin-bottom: 45px
+}
+.roomWrap .con3 .right p {
+  font-size: 15px; line-height: 1.8; margin-top: 40px
+}
+.roomWrap .con3 .right span {
+  display: block; position: relative
+}
+.roomWrap .con3 {
+  margin-bottom: 70px;
+  width: 100%;
+  max-width: var(--layout-max);
+  margin: 0 auto;
 }
 
-.swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.con3Room .subListTt {
+  color: #666; margin: 75px 0 20px 0; padding: 15px 10px
 }
 
-.fade-slide-enter {
-    opacity: 0;
-    transition: opacity 1000ms ease-in-out;
+/*room hero image and slider*/
+.sliderContainer.roomHeroImgWrap {
+  margin-top: 50px;
 }
 
-.fade-slide-active {
-    opacity: 1;
+.roomHeroImgWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;  /* 16:9 비율로 설정 - 일반적인 룸 사진 비율 */
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #f3f4f6;
 }
 
-.modal-backdrop {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
+.roomHeroImgWrap.sliderContainer {
+  display: block !important;
+  overflow: hidden;
+  align-items: unset;
+  justify-content: unset;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.roomHeroImgWrap .slider.room-slide-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block !important;
+  transform: none !important;
+  transition: none !important;
 }
 
-@keyframes zoomIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.roomHeroImgWrap .slide {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  flex: none !important;
+  display: block !important;
+  align-items: unset;
+  justify-content: unset;
+  box-sizing: border-box;
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.3s ease-in-out;
+.roomHeroImgWrap .slide.active {
+  opacity: 1;
 }
 
-.animate-zoom-in {
-    animation: zoomIn 0.5s ease-in-out;
+.roomHeroImgWrap .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* 16:9 영역을 꽉 채우도록 */
+  display: block;
+  border-radius: 16px;
 }
 
-/* Hero 섹션에서 공통 header 활성화 */
-#main-header {
+.roomWrap .con1.fullPage {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  padding: 0;
+}
+
+.roomWrap .roomGallery {
+  width: 100%;
+  margin-bottom: clamp(2rem, 6vw, 3.5rem);
+  position: relative;
+  height: auto;
+  overflow: hidden;
+}
+
+/* Gallery navigation buttons */
+.roomGalleryNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(17, 24, 39, 0.7);
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s ease, opacity 0.25s ease;
+  z-index: 10;
+  font-size: 16px;
+}
+
+.roomGalleryNav:hover {
+  background: rgba(17, 24, 39, 0.9);
+}
+
+.roomGalleryNav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.roomGalleryNav--prev {
+  left: -20px;
+}
+
+.roomGalleryNav--next {
+  right: -20px;
+}
+
+.roomGalleryNav--prev::before {
+  content: "‹";
+}
+
+.roomGalleryNav--next::before {
+  content: "›";
+}
+
+/* Thumbnail navigation buttons */
+.thumbnailNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #333;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+  z-index: 10;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnailNav:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnailNav--prev {
+  left: 5px;
+}
+
+.thumbnailNav--next {
+  right: 5px;
+}
+
+.thumbnailNav--prev::before {
+  content: "‹";
+}
+
+.thumbnailNav--next::before {
+  content: "›";
+}
+
+.roomGalleryList,
+.room-thumbnail-wrapper {
+  list-style: none;
+  margin: 0;
+  padding: 20px 20px 15px 20px;
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 1rem);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
+  max-height: calc(20vw + 40px);
+  min-height: 80px;
+}
+
+.roomGalleryList::-webkit-scrollbar,
+.room-thumbnail-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.roomGalleryList img {
+  border-radius: 12px;
+}
+
+/* room.html specific styles - horizontal scrolling thumbnails */
+.roomWrap .roomGalleryList {
+  flex-wrap: nowrap;
+}
+
+/* roomGalleryItem and roomGalleryThumb styles moved from common.css */
+.roomGalleryItem {
+  position: relative;
+  flex: 0 0 auto;
+  width: calc((100% - 4 * clamp(0.75rem, 2vw, 1rem)) / 5);
+  max-width: 20vw;
+  min-width: 60px;
+}
+
+.roomGalleryThumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+  transition: transform 0.25s ease;
+  position: relative;
+}
+
+/* room.html specific thumbnails - fixed square size */
+.roomWrap .roomGalleryThumb {
+  border-radius: 12px;
+}
+
+.roomGalleryThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 썸네일 개수에 따른 그리드 조정 */
+/* 4개일 때 */
+.room-thumbnail-wrapper[data-thumbnail-count="4"] .roomGalleryItem {
+  width: calc((100% - 3 * clamp(0.75rem, 2vw, 1rem)) / 4);
+}
+
+/* 3개 이하일 때 */
+.room-thumbnail-wrapper[data-thumbnail-count="1"] .roomGalleryItem,
+.room-thumbnail-wrapper[data-thumbnail-count="2"] .roomGalleryItem,
+.room-thumbnail-wrapper[data-thumbnail-count="3"] .roomGalleryItem {
+  width: calc((100% - 2 * clamp(0.75rem, 2vw, 1rem)) / 3);
+}
+
+/* Moved from common.css - room specific hover and active states */
+.roomGalleryItem:hover .roomGalleryThumb {
+  transform: translateY(-4px);
+}
+
+.roomGalleryItem.is-active .roomGalleryThumb {
+  outline: 3px solid rgba(77, 121, 89, 0.85);
+  outline-offset: 3px;
+}
+
+/*room highlights section*/
+.roomHighlights {
+  margin: clamp(2.5rem, 6vw, 2rem) 0;
+}
+.roomHighlightsTitle {
+  font-family: "GowoonDodum", sans-serif;
+  font-size: clamp(1.45rem, 2.4vw, 1.9rem);
+  color: #394150;
+  margin-bottom: clamp(1.4rem, 2.8vw, 2.2rem);
+}
+.roomHighlightsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-rows: minmax(140px, auto);
+  gap: clamp(1rem, 2.5vw, 1.8rem);
+}
+.roomHighlight {
+  position: relative;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: clamp(1.2rem, 2.8vw, 1.8rem);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  justify-content: flex-start;
+}
+.roomHighlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0) 40%, rgba(241, 245, 249, 0.35) 100%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.roomHighlight:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 42px rgba(15, 23, 42, 0.16);
+}
+.roomHighlight:hover::after {
+  opacity: 1;
+}
+.roomHighlightLabel,
+.roomGuideSection h4 {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7a8f;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(107, 122, 143, 0.3);
+  margin-bottom: 5px;
+}
+
+.roomHighlightValue {
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  color: #1f2937;
+  line-height: 1.55;
+}
+
+.roomGuideSection {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: clamp(1.2rem, 2.8vw, 1.8rem);
+  margin-bottom: 30px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.roomDetailsContent {
+  padding: 30px; border-radius: 10px
+}
+
+/*room gallery slider*/
+.roomGallerySlider {
+  margin: clamp(2rem, 6vw, 4rem) 0;
+}
+.roomSlider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  --room-slider-gap: clamp(12px, 2vw, 18px);
+}
+.roomSliderTrack {
+  display: flex;
+  gap: var(--room-slider-gap);
+  will-change: transform;
+  transition: transform 0.55s ease;
+}
+.roomSlide {
+  flex: 0 0 auto; width: auto;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 36px rgba(17, 24, 39, 0.18);
+}
+.roomSlide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.roomSliderNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(17, 24, 39, 0.45);
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.25s ease, opacity 0.25s ease;
+}
+.roomSliderNav:hover {
+  background: rgba(17, 24, 39, 0.65);
+}
+.roomSliderNav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.roomSliderNav--prev {
+  left: clamp(0.5rem, 2vw, 1.5rem);
+}
+.roomSliderNav--next {
+  right: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.roomSlider::before,
+.roomSlider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(30px, 5vw, 60px);
+  pointer-events: none;
+  z-index: 2;
+}
+.roomSlider::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0));
+}
+.roomSlider::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(255,255,255,0.95), rgba(255,255,255,0));
+}
+
+@supports not (aspect-ratio: 1) {
+  /* Moved from common.css - fallback for browsers without aspect-ratio support */
+  .roomGalleryThumb::before {
+    content: '';
     display: block;
+    padding-top: 100%;
+  }
+
+  .roomGalleryThumb img {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* 16:9 aspect ratio fallback for room hero image */
+  .roomHeroImgWrap {
+    height: 0;
+    padding-top: 56.25%; /* 16:9 aspect ratio fallback */
+  }
+
+  .roomHeroImgWrap .slider.room-slide-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
-/* Fix border-radius mismatch between dashed border and image container */
-.border-2.border-dashed.rounded-t-full > div {
-    border-radius: 258px 258px 8px 8px !important;
+/*room page responsive styles*/
+@media (max-width: 960px) {
+  .roomGalleryNav {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .roomHighlightsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
 }
 
-/* Tablet responsive border-radius */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .border-2.border-dashed.rounded-t-full {
-        border-radius: 200px 200px 10px 10px !important;
-    }
+@media (max-width: 640px) {
+  .roomGalleryList {
+    gap: clamp(0.4rem, 3vw, 0.6rem);
+  }
 
-    .border-2.border-dashed.rounded-t-full > div {
-        border-radius: 198px 198px 8px 8px !important;
-    }
+  .roomGalleryItem {
+    width: calc((100% - 4 * clamp(0.4rem, 3vw, 0.6rem)) / 5);
+  }
+
+  /* Moved from common.css */
+  .roomGalleryItem.is-active .roomGalleryThumb {
+    outline-offset: 2px;
+  }
+
+  .roomGalleryNav {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .roomGalleryNav--prev {
+    left: -16px;
+  }
+
+  .roomGalleryNav--next {
+    right: -16px;
+  }
 }
 
-/* Mobile Responsive - Room Layout */
-/* Gallery Item Styles */
-.gallery-item {
-    border-bottom: 1px solid var(--brand-color-primary);
+@media all and (max-width:700px) {
+  .roomHighlights {
+    padding: 0;
+    border-radius: 22px;
+  }
+  .roomHighlightsGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, auto);
+    gap: 1rem;
+  }
+  .roomHighlight {
+    padding: 1rem 1.3rem;
+  }
+
+  .roomDetailsContent {
+    padding: 0 !important;
+  }
+
+  .roomHeroImgWrap {
+    margin-top: 30px;
+    aspect-ratio: 4 / 3;  /* 모바일에서는 4:3 비율이 더 적합 */
+  }
+
+  .roomGalleryList,
+  .room-thumbnail-wrapper {
+    max-height: calc(25vw + 30px);
+    min-height: 70px;
+    padding: 15px 15px 10px 15px;
+  }
+
+  .roomGalleryItem {
+    max-width: 25vw;
+    min-width: 50px;
+  }
+
+  .roomWrap .con1 {
+    height: auto !important;
+  }
+  .con1Room {
+    margin-top: 0px;width: 100%
+  }
+  .roomWrap .con3 {
+    width: 85%
+  }
+  .con3Room h4 {
+    width: 100%
+  }
+  .roomWrap .con2 aside {
+    float: unset
+  }
+  .roomWrap .con2 .left {
+    width: 100%
+  }
+  .roomWrap .con2 .right {
+    width: 100%
+  }
+  .roomWrap .con3 aside {
+    width: 100%; float: unset
+  }
+  .roomWrap .con3 .right {
+    padding-left: 0px
+  }
+  .roomWrap .con3 .right p {
+    font-size: 12px; margin-top: 25px; letter-spacing: -1px
+  }
+  .con3Room .subListTt {
+    margin: 75px 0 15px 0; padding: 15px 5px
+  }
 }
 
-.gallery-item-first {
-    border-top: 1px solid var(--brand-color-primary);
+@media all and (max-width:1024px) {
+  .roomWrap .con3 {
+    width: 95%
+  }
+  .roomSliderTrack {
+    gap: clamp(10px, 3vw, 16px);
+  }
 }
 
-.gallery-item-text-container {
-    border-right: 1px solid var(--brand-color-primary);
+@media all and (max-width:720px) {
+  .roomSliderTrack {
+    gap: 12px;
+  }
+  .roomSliderNav {
+    width: 38px;
+    height: 38px;
+  }
 }
 
-.gallery-placeholder {
-    border-top: 1px solid var(--brand-color-primary);
-    border-bottom: 1px solid var(--brand-color-primary);
+.roomSubWrap {
+  width: 100%; margin: 0 auto; text-align: center
+}
+.roomSubWrap .subMenu {
+  display: flex; align-items: flex-start; flex-wrap: wrap
+}
+.roomTap  .roomSubWrap li {
+  width: 33.3%;  float: left
 }
 
-/* Gallery 영역에서만 영어 폰트 사이즈 조정 및 중앙정렬 */
-#room-gallery-container .en-title {
-    font-size: 1.1em; /* 기본 크기의 110% */
+/* Room Exterior Section */
+.roomExteriorSection {
+  margin-top: 60px;
 }
 
-#room-gallery-container h4 {
-    text-align: center;
+.roomExteriorSection h4 {
+  margin-bottom: 30px;
 }
 
+/* Image Accordion */
+.exteriorAccordion {
+  display: flex;
+  height: 500px;
+  gap: 20px;
+}
+
+.accordionItem {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 16px;
+  transition: flex 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.accordionItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease, object-position 0.5s ease;
+}
+
+/* 호버 시 이미지 포지션 조정 - 더 많은 부분 보이게 */
+.accordionItem:hover img {
+  object-position: center center;
+}
+
+/* 호버되지 않은 이미지들은 일부만 보이게 */
+.accordionItem:not(:hover) img {
+  transform: scale(1.2);
+  object-position: center center;
+}
+
+/* 이미지 개수에 따른 호버 확대 비율 조정 */
+.exteriorAccordion[data-image-count="1"] .accordionItem:hover {
+  flex: 1; /* 1개일 때는 변화 없음 */
+}
+
+.exteriorAccordion[data-image-count="2"] .accordionItem:hover {
+  flex: 3.5;
+}
+
+.exteriorAccordion[data-image-count="3"] .accordionItem:hover {
+  flex: 3;
+}
+
+.exteriorAccordion[data-image-count="4"] .accordionItem:hover {
+  flex: 2.5;
+}
+
+.accordionItem:hover img {
+  transform: scale(1);
+}
+
+
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
-    /* Change main container to column layout */
-    .max-w-7xl.mx-auto.px-6 .flex.flex-row {
-        flex-direction: column !important;
-        gap: 2rem !important;
-    }
+  .exteriorAccordion {
+    flex-direction: column;
+    height: auto;
+    gap: 15px;
+  }
 
-    /* Make both left and right sections 100% width */
-    .max-w-7xl.mx-auto.px-6 .flex.flex-row > div {
-        width: 100% !important;
-    }
+  .accordionItem {
+    flex: 1;
+    height: 150px;
+    min-height: 150px;
+    border-radius: 12px;
+  }
 
-    /* Remove sticky positioning on mobile */
-    .sticky {
-        position: static !important;
-    }
-
-    /* Adjust image container for mobile */
-    .max-w-7xl.mx-auto.px-6 .w-full.px-8 {
-        padding: 0 !important;
-    }
-
-    /* Reduce image height significantly on mobile */
-    .h-\\[650px\\] {
-        height: 300px !important;
-    }
-
-    /* Adjust image border radius for mobile - rounded top, straight bottom */
-    .border-2.border-dashed.rounded-t-full {
-        border-radius: 250px 250px 0 0 !important;
-    }
-
-    /* Make inner image container match the dashed border radius */
-    .border-2.border-dashed.rounded-t-full > div {
-        border-radius: 248px 248px 0 0 !important;
-    }
-
-    /* Reduce section padding */
-    .py-16.lg\\:py-24 {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-    }
-
-    /* Adjust accordion button padding */
-    .py-6.flex.items-center {
-        padding-top: 1rem !important;
-        padding-bottom: 1rem !important;
-    }
-
-    /* Reduce accordion margins */
-    .border-b.mb-4 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    /* Make section title smaller on mobile */
-    .text-2xl.md\\:text-3xl {
-        font-size: 1.5rem !important;
-    }
-
-    /* Hide gallery borders on mobile */
-    .gallery-item,
-    .gallery-item-first,
-    .gallery-item-text-container,
-    .gallery-placeholder {
-        border: none !important;
-    }
-
-    /* Modal navigation buttons on mobile */
-    #modal-prev,
-    #modal-next {
-        width: 40px !important;
-        height: 40px !important;
-        padding: 8px !important;
-        left: 8px !important;
-        top: 35% !important;
-    }
-
-    #modal-next {
-        right: 8px !important;
-        left: auto !important;
-        top: 35% !important;
-    }
-
-    #modal-prev svg,
-    #modal-next svg {
-        width: 20px !important;
-        height: 20px !important;
-    }
+  .accordionItem:hover {
+    flex: 1;
+    height: 300px;
+  }
 }
-

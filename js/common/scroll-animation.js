@@ -1,24 +1,64 @@
-const initScrollAnimation = () => {
-    // Create intersection observer for scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+const applyScrollAnimationTargets = () => {
+    const selectors = [
+      'main section',
+      'main .tableSection',
+      'main .heroDescription',
+      'main .gallery',
+      'main .con2Top',
+      'main .con2Bottom'
+    ];
+  
+    const baseTargets = document.querySelectorAll(selectors.join(','));
+    baseTargets.forEach(element => {
+      if (element.tagName === 'SECTION' && element.querySelector('.fBanner')) {
+        return;
+      }
+      if (!element.dataset.animate) {
+        element.dataset.animate = 'fade-up';
+      }
+    });
+  
+    const staggerTargets = document.querySelectorAll('[data-gallery-stagger] .specialGalleryItem');
+    staggerTargets.forEach((item, index) => {
+      item.dataset.animate = 'fade-up';
+      item.dataset.animateDelay = `${index * 80}`;
+      item.style.transitionDelay = `${index * 80}ms`;
+    });
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // 이미 animate 클래스가 있으면 skip
-                if (!entry.target.classList.contains('animate')) {
-                    entry.target.classList.add('animate');
-                }
-            }
-        });
-    }, observerOptions);
+    const roomGalleryItems = document.querySelectorAll('.roomGalleryItem');
+    roomGalleryItems.forEach((item, index) => {
+      item.dataset.animate = 'fade-up';
+      item.dataset.animateDelay = `${index * 80}`;
+      item.style.transitionDelay = `${index * 80}ms`;
+    });
+  };
+  
+  const initScrollAnimation = () => {
+    applyScrollAnimationTargets();
+    const animatedItems = document.querySelectorAll('[data-animate]');
 
-    // Observe all elements with animation classes
-    const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-scale, .slide-in-left, .slide-in-right, .fade-in-line');
-    animatedElements.forEach(el => observer.observe(el));
+    if (!animatedItems.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      animatedItems.forEach(element => {
+        element.classList.add('is-visible');
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.15
+    });
+
+    animatedItems.forEach(element => observer.observe(element));
   };
 
   document.addEventListener('DOMContentLoaded', () => {

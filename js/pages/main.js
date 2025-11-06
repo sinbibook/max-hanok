@@ -1,48 +1,17 @@
 /**
  * Main Page Functionality
- * 메인 페이지 기능 (header-footer-loader.js 사용)
+ * main.html 페이지 전용 스크립트
  */
 
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        loadDataMapper();
-    }, 100);
+  // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
+  if (!window.APP_CONFIG.isInIframe()) {
+    // 일반 환경: MainMapper가 직접 초기화
+    const mainMapper = new MainMapper();
+    mainMapper.initialize().catch(error => {
+      console.error('❌ MainMapper initialization failed:', error);
+    });
+  }
+  // iframe 환경에서는 PreviewHandler가 MainMapper 호출
 });
-
-/**
- * Data mapper loader and initializer
- */
-async function loadDataMapper() {
-    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
-    if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
-        return;
-    }
-
-    try {
-        const dataPath = window.APP_CONFIG
-            ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
-            : './standard-template-data.json';
-        const response = await fetch(dataPath);
-        const data = await response.json();
-
-        window.dogFriendlyDataMapper = {
-            data: data,
-            isDataLoaded: true
-        };
-
-        const initMapper = () => {
-            if (window.MainMapper) {
-                const mapper = new MainMapper(data);
-                mapper.mapPage();
-            }
-        };
-
-        if (window.MainMapper) {
-            initMapper();
-        } else {
-            setTimeout(initMapper, 1000);
-        }
-    } catch (error) {
-    }
-}
-
