@@ -1,420 +1,265 @@
-/* Facility Page Styles */
+/*facility.html page specific styles*/
 
-/* Experience Section Styles */
-.experience-section .experience-info-item {
-    padding: 1rem 0;
-    border-bottom: 1px solid #e5e7eb;
+/* facilityWrap styles (previously specialWrap) */
+.facilityWrap .con2>div {
+  height: auto;
 }
 
-.experience-section .experience-info-item:last-child {
-    border-bottom: none;
+/* con2Top flex layout */
+.facilityWrap .con2Top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3rem) 0;
 }
 
-.experience-section .info-title {
-    color: #5D4037;
-    font-weight: 600;
-    margin-right: 0.5rem;
+.facilityWrap .con2Top .left {
+  flex: 1;
+  max-width: 50%;
 }
 
-.experience-section .info-description {
-    color: #666;
-    line-height: 1.6;
+.facilityWrap .con2Top .right {
+  flex: 1;
+  max-width: 50%;
 }
 
-.experience-section .experience-benefit-item {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #e5e7eb;
+.facilityWrap .con2Top .left .imgGrp {
+  width: 100%;
+  height: clamp(400px, 50vw, 650px);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-.experience-section .experience-benefit-item:last-child {
-    border-bottom: none;
+.facilityWrap .con2Top .left .imgGrp .imgGrpPic {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.experience-section .benefit-title {
-    color: #5D4037;
-    font-weight: 600;
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
+.facilityWrap .con2Top .right .txtGrp {
+  width: 100%;
+  height: auto;
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
-.experience-section .benefit-description {
-    color: #666;
-    line-height: 1.6;
-    margin: 0;
+.facilityWrap .con2Top .right .txtGrpTxt {
+  width: 100%;
 }
 
-/* Gallery Layout Styles */
-
-/* 갤러리 섹션 배경 */
-.gallery-section {
-    width: 100%;
+.facilityWrap .con3 {
+  margin-top: 0
 }
 
-/* 갤러리 컨테이너 고정 높이로 레이아웃 안정화 */
-#facility-gallery-container {
-    min-height: 600px; /* 최소 높이 설정 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.gallery {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin: 100px auto;
+  padding-left: clamp(0px, 2vw, 12px);
+  padding-right: clamp(0px, 2vw, 12px);
 }
 
-/* Grid Layout Styles */
-.gallery-grid {
-    display: grid;
-    gap: 2rem;
-    animation: fadeIn 0.8s ease;
-    padding: 0 2rem;
-    width: 100%;
+/* Gallery list grid layout for facility page */
+/* JavaScript에서 동적으로 grid-template-columns 적용 */
+.gallery .roomGalleryList {
+  display: grid;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* 1 image - centered */
-.gallery-grid-1 {
-    grid-template-columns: 1fr;
-    max-width: 800px;
+/* Gallery items styling for facility page */
+.gallery .roomGalleryItem {
+  position: relative;
+  width: 100%;
+}
+
+.gallery .roomGalleryThumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery .roomGalleryThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+
+.gallery .roomGalleryItem:hover .roomGalleryThumb {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+}
+
+
+@media all and (max-width:1024px) {
+  .gallery {
+    width: 95%
+  }
+
+  .gallery .roomGalleryList {
+    gap: 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .facilityWrap .con2Top {
+    flex-direction: column;
+    gap: clamp(1.5rem, 4vw, 2rem);
+    padding: clamp(1.5rem, 3vw, 2rem) 0;
+  }
+
+  .facilityWrap .con2Top .left,
+  .facilityWrap .con2Top .right {
+    max-width: 100%;
+  }
+
+  .facilityWrap .con2Top .left .imgGrp {
+    width: calc(100vw - 40px) !important;
+    max-width: 500px !important;
+    height: clamp(300px, 40vw, 400px) !important;
     margin: 0 auto;
-}
+    min-height: 300px;
+  }
 
-/* 2 images - side by side */
-.gallery-grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 1000px;
-    margin: 0 auto;
-    gap: 2.5rem;
-}
-
-/* 3 images - triangle or row */
-.gallery-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 1400px;
-    margin: 0 auto;
-    gap: 2rem;
-    align-items: start; /* 상단 정렬로 중앙 이미지가 아래로 내려가는 효과 */
-}
-
-/* Facility main image placeholder 스타일 - hero 영역과 동일하게 */
-.facility-info-section img.empty-image-placeholder {
-    /* 기본 empty-image-placeholder 스타일 사용하되 둥근 모서리 유지 */
-    border-radius: 1.5rem !important; /* rounded-3xl */
-}
-
-/* Facility main image placeholder 아이콘 강제 표시 */
-.facility-info-section img.empty-image-placeholder::after {
-    content: "" !important;
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 64px !important;
-    height: 64px !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%236b7280' stroke-width='1.5' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E") !important;
-    background-size: contain !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    z-index: 2 !important;
-    display: block !important;
-}
-
-/* Gallery placeholder 컨테이너 크기 고정 */
-.gallery-grid .gallery-item {
-    width: 100%;
-    height: auto;
-    min-height: 300px; /* 최소 높이 설정 */
-}
-
-.gallery-grid .gallery-item > div {
-    width: 100%;
-    height: 100%;
-    min-height: 300px; /* placeholder와 동일한 최소 높이 */
-}
-
-/* Gallery items */
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    background: white;
-}
-
-/* 3개 이미지 그리드의 중앙 아이템은 margin-top 유지하면서 hover 효과 적용 */
-.gallery-grid-3 .gallery-item:nth-child(2):hover {
-    transform: translateY(-8px) scale(1.02); /* 일반적인 hover 효과 */
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.gallery-item:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gallery-item:hover img {
-    transform: scale(1.08);
-}
-
-
-/* Slider Styles - 참고 사이트처럼 */
-.gallery-slider {
-    position: relative;
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0;
-    min-height: 500px; /* 슬라이더 최소 높이 설정 */
-    display: flex;
-    align-items: center;
-}
-
-.slider-track-container {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    position: relative;
-    height: 500px; /* 고정 높이로 레이아웃 안정화 */
-    display: flex;
-    align-items: center;
-}
-
-.slider-track {
-    display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    gap: 20px;
-    align-items: center;
-    padding: 0;
-    will-change: transform; /* GPU 가속으로 부드러운 transform */
-    backface-visibility: hidden; /* 백페이스 숨김으로 렌더링 최적화 */
-}
-
-.slider-item {
-    flex: 0 0 320px;
-    height: 360px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0;
-    cursor: pointer;
-    transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 1;
-    transform: translateY(0);
-    will-change: flex, height, opacity; /* GPU 가속으로 부드러운 애니메이션 */
-}
-
-.slider-item.active {
-    flex: 0 0 520px;
-    height: 500px;
-    opacity: 1;
-    z-index: 2;
-    transform: translateY(0);
-}
-
-/* 데스크탑에서만 side 아이템 opacity 효과 적용 */
-@media (min-width: 769px) {
-    .slider-item.side {
-        opacity: 0.7;
-    }
-}
-
-.slider-item.side {
-    flex: 0 0 320px;
-    height: 360px;
-    transform: translateY(0);
-}
-
-.slider-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
-    transition: transform 0.5s ease;
-}
-
-.slider-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    border: none;
-    width: 50px;
-    height: 50px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.slider-nav:hover {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.slider-nav.prev {
-    left: 10px;
-}
-
-.slider-nav.next {
-    right: 10px;
-}
-
-.slider-nav svg {
-    width: 24px;
-    height: 24px;
-    stroke: #333;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    /* 모바일에서 1,2,3개 이미지는 동일한 사이즈와 여백으로 정렬 */
-    .gallery-grid-1 {
-        max-width: 100%;
-        padding: 0 1rem;
-    }
-
-    .gallery-grid-2 {
-        grid-template-columns: 1fr;
-        max-width: 100%;
-        padding: 0 1rem;
-        gap: 1.5rem; /* 동일한 여백 */
-    }
-
-    .gallery-grid-3 {
-        grid-template-columns: 1fr;
-        max-width: 100%;
-        padding: 0 1rem;
-        gap: 1.5rem; /* 동일한 여백 */
-        align-items: stretch; /* 모바일에서는 정렬 무시 */
-    }
-
-    /* 모바일에서 모든 갤러리 아이템 동일한 높이 */
-    .gallery-grid-1 .gallery-item,
-    .gallery-grid-2 .gallery-item,
-    .gallery-grid-3 .gallery-item {
-        height: 280px !important; /* 동일한 높이 강제 적용 */
-        transform: none !important; /* transform 효과 제거 */
-        margin-top: 0 !important; /* margin-top 효과 제거 */
-    }
-
-    /* 모바일에서 hover 효과 간소화 */
-    .gallery-grid-1 .gallery-item:hover,
-    .gallery-grid-2 .gallery-item:hover,
-    .gallery-grid-3 .gallery-item:hover {
-        transform: none !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 모바일에서도 갤러리 컨테이너 고정 높이 */
-    #facility-gallery-container {
-        min-height: 450px;
-    }
-
-    /* 모바일에서 갤러리 섹션 패딩 줄이기 - py-32를 py-8로 */
-    .gallery-section {
-        padding-top: 2rem !important; /* py-8 */
-        padding-bottom: 2rem !important; /* py-8 */
-    }
-
-    /* 모바일에서 시설 정보 섹션 하단 패딩 제거 */
-    .facility-info-section {
-        padding-bottom: 0 !important; /* pb-0 */
-    }
-
-    .slider-track-container {
-        max-width: 100%;
-        overflow: hidden;
-        height: 350px; /* 모바일 고정 높이 */
-    }
-
-    .slider-track {
-        gap: 0;
-    }
-
-    .slider-item {
-        flex: 0 0 100%;
-        height: 350px;
-        opacity: 1;
-    }
-
-    .slider-item.active {
-        flex: 0 0 100%;
-        height: 350px;
-        opacity: 1;
-    }
-
-    .slider-item.side {
-        flex: 0 0 100%;
-        height: 350px;
-        opacity: 1;
-    }
-
-    .gallery-slider {
-        padding: 0;
-    }
-
-    .slider-nav {
-        width: 40px;
-        height: 40px;
-    }
-
-    .slider-nav.prev {
-        left: 5px;
-    }
-
-    .slider-nav.next {
-        right: 5px;
-    }
-}
-
-/* Image Modal Styles */
-#image-modal {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
-#image-modal.hidden {
-    display: none !important;
-}
-
-#image-modal.flex {
-    display: flex !important;
-}
-
-/* 모달 열림 시 body 스크롤 방지 */
-body.modal-open {
-    overflow: hidden !important;
-    position: fixed !important;
+  .facilityWrap .con2Top .left .imgGrp .imgGrpPic {
     width: 100% !important;
+    height: 100% !important;
+    min-height: 300px;
+  }
+
+  .facilityWrap .con2Top .right .txtGrp {
+    padding: clamp(0.5rem, 2vw, 1rem);
+  }
+
+  .facilityWrap .con2 {
+    margin-bottom: 50px
+  }
+
+  /* 768px 이하에서도 데스크톱과 동일한 동적 레이아웃 적용 */
+  .gallery .roomGalleryList {
+    gap: 12px;
+  }
 }
 
-/* 모달 이미지 스타일 */
-#modal-image {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 8px;
+/* Experience Section - 동적 커스텀 섹션 */
+.experience-section {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin: 50px auto;
+  padding-left: clamp(0px, 2vw, 12px);
+  padding-right: clamp(0px, 2vw, 12px);
 }
 
-/* 모달 버튼은 HTML의 Tailwind 클래스 사용 (room.html과 동일) */
+/* 가시성 제어 클래스 */
+.is-hidden {
+  display: none !important;
+}
 
-/* Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.experience-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* 모바일 */
+@media (max-width: 767px) {
+  .experience-container {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+}
+
+/* 태블릿 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .experience-container {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 30px;
+  }
+}
+
+.experience-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: clamp(1.2rem, 2.8vw, 1.8rem);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.experience-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0) 40%, rgba(241, 245, 249, 0.35) 100%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 42px rgba(15, 23, 42, 0.16);
+}
+
+.experience-card:hover::after {
+  opacity: 1;
+}
+
+.experience-item {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  color: #1f2937;
+  line-height: 1.55;
+}
+
+.experience-item strong {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7a8f;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(107, 122, 143, 0.3);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.experience-item-desc {
+  margin-top: 10px;
+  white-space: pre-line;
+}
+
+@media screen and (max-width: 768px) {
+  .experience-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* 작은 모바일에서는 모든 grid를 1열로 */
+  .gallery .roomGalleryList {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .gallery .roomGalleryItem {
+    grid-column: span 1 !important;
+  }
 }

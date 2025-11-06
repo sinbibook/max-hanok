@@ -14,6 +14,7 @@ const ImageHelpers = {
      */
     applyImageOrPlaceholder(imageElement, imagesData, overlayElement = null) {
         if (!imageElement) {
+            console.warn('⚠️ ImageHelpers: imageElement is null or undefined');
             return;
         }
 
@@ -32,6 +33,7 @@ const ImageHelpers = {
 
                 // 이미지 로드 에러 처리
                 imageElement.onerror = () => {
+                    console.warn('⚠️ 이미지 로드 실패, placeholder 적용:', firstImage.url);
                     this.applyPlaceholder(imageElement, overlayElement);
                 };
 
@@ -44,6 +46,7 @@ const ImageHelpers = {
                 this.applyPlaceholder(imageElement, overlayElement);
             }
         } catch (error) {
+            console.error('❌ ImageHelpers 에러:', error);
             this.applyPlaceholder(imageElement, overlayElement);
         }
     },
@@ -53,47 +56,11 @@ const ImageHelpers = {
      */
     applyPlaceholder(imageElement, overlayElement = null) {
         if (!imageElement) return;
-        imageElement.src = this.EMPTY_IMAGE_WITH_ICON;
+        imageElement.src = this.EMPTY_IMAGE_SVG;
         imageElement.alt = '이미지 없음';
         imageElement.classList.add('empty-image-placeholder');
         imageElement.style.opacity = '1';
         if (overlayElement) overlayElement.style.display = 'none';
-    },
-
-    /**
-     * 선택된 이미지를 필터링하고 정렬하여 반환합니다.
-     * @param {Array} images - 이미지 객체 배열
-     * @returns {Array} isSelected가 true이고 유효한 url을 가진 이미지들을 sortOrder에 따라 정렬한 배열
-     */
-    getSelectedImages(images) {
-        if (!Array.isArray(images) || images.length === 0) {
-            return [];
-        }
-        return images
-            .filter(img => img && img.isSelected === true && img.url && img.url.trim() !== '')
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-    },
-
-    /**
-     * 첫 번째 선택된 이미지를 반환합니다.
-     * @param {Array} images - 이미지 객체 배열
-     * @returns {Object|null} 첫 번째 선택된 이미지 또는 null
-     */
-    getFirstSelectedImage(images) {
-        const selected = this.getSelectedImages(images);
-        return selected.length > 0 ? selected[0] : null;
-    },
-
-    /**
-     * N번째 선택된 이미지를 반환합니다. (fallback 포함)
-     * @param {Array} images - 이미지 객체 배열
-     * @param {number} index - 가져올 이미지의 인덱스
-     * @param {number} fallbackIndex - 대체 인덱스 (기본값: 0)
-     * @returns {Object|null} N번째 이미지 또는 fallback 이미지 또는 null
-     */
-    getNthSelectedImage(images, index, fallbackIndex = 0) {
-        const selected = this.getSelectedImages(images);
-        return selected[index] || selected[fallbackIndex] || null;
     },
 
     /**
@@ -112,6 +79,40 @@ const ImageHelpers = {
             }
         }
         return null;
+    },
+
+    /**
+     * isSelected가 true인 이미지만 필터링하고 sortOrder로 정렬
+     * @param {Array} images - 이미지 배열
+     * @returns {Array} 필터링되고 정렬된 이미지 배열
+     */
+    filterSelectedImages(images) {
+        if (!images || !Array.isArray(images)) return [];
+
+        return images
+            .filter(img => img && img.isSelected === true)
+            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    },
+
+    /**
+     * 선택된 이미지 중 첫 번째 이미지 가져오기
+     * @param {Array} images - 이미지 배열
+     * @returns {Object|null} 첫 번째 선택된 이미지 또는 null
+     */
+    getFirstSelectedImage(images) {
+        const selected = this.filterSelectedImages(images);
+        return selected.length > 0 ? selected[0] : null;
+    },
+
+    /**
+     * 선택된 이미지들 중 특정 인덱스의 이미지 가져오기
+     * @param {Array} images - 이미지 배열
+     * @param {number} index - 원하는 인덱스
+     * @returns {Object|null} 해당 인덱스의 선택된 이미지 또는 null
+     */
+    getSelectedImageByIndex(images, index = 0) {
+        const selected = this.filterSelectedImages(images);
+        return selected[index] || null;
     }
 };
 

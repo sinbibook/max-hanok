@@ -1,54 +1,10 @@
 /* Footer Styles */
-
-/* Responsive Container */
-.responsive-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-@media (min-width: 768px) {
-    .responsive-container {
-        padding: 0 2rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .responsive-container {
-        padding: 0 3rem;
-    }
-}
-
-@media (max-width: 767px) {
-     footer {
-        padding: 0rem 0 2rem !important;
-    }
-}
-
-footer,
-footer.w-full,
-body footer {
-    background-color: var(--brand-color-primary) !important;
-    color: #ffffff;
+footer {
+    background-color: #ffffff;
+    color: #333333;
     padding: 3rem 0 2rem;
-    margin-top: 0;
+    margin-top: 4rem;
     width: 100%;
-    z-index: 10;
-    position: relative;
-}
-
-/* 소셜 링크 기본 스타일 - 모든 footer 내 소셜 링크에 적용 */
-footer a[data-homepage-socialLinks-facebook],
-footer a[data-homepage-socialLinks-instagram],
-footer a[data-homepage-socialLinks-blog],
-footer a[data-homepage-socialLinks-youtube] {
-    align-items: center;
-    justify-content: center;
-}
-
-/* JS에서 추가하는 hidden-social-link 클래스 */
-.hidden-social-link {
-    display: none !important;
 }
 
 .footer-container {
@@ -69,7 +25,8 @@ footer a[data-homepage-socialLinks-youtube] {
 }
 
 .footer-section h3 {
-    color: #ffffff;
+    color: #2c3e50;
+    margin-top: 1rem;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
     font-weight: 600;
@@ -78,14 +35,14 @@ footer a[data-homepage-socialLinks-youtube] {
 .footer-section p {
     margin-bottom: 0.8rem;
     line-height: 1.6;
-    color: #e2e8f0;
+    color: #666666;
     font-size: 1rem;
 }
 
 .footer-section div {
     margin-bottom: 0.8rem;
     line-height: 1.6;
-    color: #e2e8f0;
+    color: #666666;
     font-size: 1rem;
 }
 
@@ -128,20 +85,21 @@ footer a[data-homepage-socialLinks-youtube] {
 
 .footer-bottom p {
     margin: 0;
-    color: #a0aec0;
+    color: #999999;
     font-size: 0.9rem;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     footer {
-        padding: 0;
+        padding: 2rem 0 1.5rem;
     }
 
     .footer-container {
         flex-direction: column;
         padding: 0 1rem;
         gap: 2rem;
+        align-items: center;
     }
 
     .footer-section {
@@ -183,7 +141,7 @@ footer a[data-homepage-socialLinks-youtube] {
 
 @media (max-width: 480px) {
     footer {
-        padding: 0;
+        padding: 1.5rem 0 1rem;
         margin-top: 2rem;
     }
 
@@ -225,7 +183,7 @@ footer a[data-homepage-socialLinks-youtube] {
     }
 
     .footer-bottom {
-        margin-top: 1rem;
+        margin-top: 0rem;
         padding-top: 0.8rem;
     }
 

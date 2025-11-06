@@ -22,8 +22,8 @@ function getResourcePath(relativePath) {
         return relativePath;
     }
 
-    // ../ 또는 ./ 제거하고 정리
-    let cleanPath = relativePath.replace(/^(\.\.\/)+/, '').replace(/^\.\//, '');
+    // ../ 제거하고 정리
+    let cleanPath = relativePath.replace(/^(\.\.\/)+/, '');
 
     // / 로 시작하지 않으면 추가
     if (!cleanPath.startsWith('/')) {

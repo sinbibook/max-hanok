@@ -25,12 +25,12 @@ class PreviewHandler {
         // 부모 창에 준비 완료 신호 전송
         this.notifyReady();
 
-        // 어드민 데이터 대기 (2초 후 fallback)
+        // 어드민 데이터 대기 (3초 후 fallback) - 타이밍 여유 증가
         this.fallbackTimeout = setTimeout(() => {
             if (!this.adminDataReceived) {
                 this.loadFallbackData();
             }
-        }, 2000);
+        }, 3000);
 
     }
 
@@ -138,10 +138,12 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
-        // 전체 템플릿 렌더링 (await로 완료 보장)
+        // 디버그 정보 업데이트
+
+        // 전체 템플릿 렌더링 (완료 대기)
         await this.renderTemplate(data);
 
-        // 렌더링 완료 후 부모 창에 알림
+        // 부모 창에 렌더링 완료 신호
         this.notifyRenderComplete('INITIAL_RENDER_COMPLETE');
     }
 
@@ -182,7 +184,7 @@ class PreviewHandler {
             this.currentData = this.mergeData(this.currentData, data);
         }
 
-        // 전체 페이지 다시 렌더링 (await로 완료 보장)
+        // 전체 페이지 다시 렌더링 (완료 대기)
         await this.renderTemplate(this.currentData);
 
         // 부모 창에 업데이트 완료 신호
@@ -198,7 +200,7 @@ class PreviewHandler {
 
         // 디버그 정보 업데이트
 
-        // 전체 다시 렌더링 (await로 완료 보장)
+        // 전체 다시 렌더링 (완료 대기)
         await this.renderTemplate(data);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
@@ -320,17 +322,22 @@ class PreviewHandler {
             mapper.data = data;
             mapper.isDataLoaded = true;
 
-            // 기존 매핑 로직 실행 (await로 완료 보장)
+            // 기존 매핑 로직 실행 (완료 대기)
             await mapper.mapPage();
-            // mapPage 완료 후 슬라이더는 이미 초기화됨 (setTimeout 불필요!)
+
+            // mapPage 완료 후 슬라이더는 이미 초기화되어 있음
+            // (IndexMapper.mapPage 내부에서 _reinitializeHeroSlider 호출)
         }
 
         // Header & Footer 매핑 (모든 페이지에서 공통 실행)
+        // 헤더 DOM이 로드될 때까지 대기
+        await this.waitForHeaderDOM();
+
         if (window.HeaderFooterMapper) {
             const headerFooterMapper = new window.HeaderFooterMapper();
             headerFooterMapper.data = data;
             headerFooterMapper.isDataLoaded = true;
-            headerFooterMapper.mapHeaderFooter();
+            await headerFooterMapper.mapHeaderFooter();
         }
 
         // Logo 매핑 (모든 페이지에서 공통 실행)
@@ -346,6 +353,35 @@ class PreviewHandler {
         }
     }
 
+
+    /**
+     * 헤더 DOM이 로드될 때까지 대기
+     */
+    async waitForHeaderDOM() {
+        const maxWaitTime = 5000; // 최대 5초 대기
+        const checkInterval = 50; // 50ms마다 체크
+        let waitedTime = 0;
+
+        return new Promise((resolve) => {
+            const checkHeader = () => {
+                const headerContainer = document.getElementById('header-container');
+
+                if (headerContainer) {
+                    // 헤더 컨테이너 존재
+                    resolve();
+                } else if (waitedTime >= maxWaitTime) {
+                    // 타임아웃 - 헤더 없이 진행
+                    resolve();
+                } else {
+                    // 계속 대기
+                    waitedTime += checkInterval;
+                    setTimeout(checkHeader, checkInterval);
+                }
+            };
+
+            checkHeader();
+        });
+    }
 
     /**
      * 데이터 구조 초기화 헬퍼 함수
@@ -456,7 +492,7 @@ class PreviewHandler {
         if (section === 'logo' && window.HeaderFooterMapper) {
             const mapper = this.createMapper(HeaderFooterMapper);
             mapper.mapHeaderLogo();
-            mapper.mapFooterLogo();
+            mapper.mapFooterInfo();
             return;
         }
 
@@ -486,7 +522,7 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroImage();
+                        mapper.mapMainHeroSection();
                         break;
                     case 'about':
                         mapper.mapMainContentSections();
@@ -496,11 +532,15 @@ class PreviewHandler {
         } else if (page === 'room') {
             if (window.RoomMapper) {
                 const mapper = this.createMapper(RoomMapper);
+                const currentRoom = mapper.getCurrentRoom();
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapRoomBasicInfo();
-                        mapper.mapSliderImages();
+                        mapper.mapHeroText(currentRoom);
+                        mapper.initializeHeroSlider(currentRoom);
+                        break;
+                    case 'gallery':
+                        mapper.mapRoomGalleryText();
                         break;
                 }
             }
@@ -508,10 +548,6 @@ class PreviewHandler {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
                 mapper.mapFacilityBasicInfo();
-                mapper.mapAdditionalInfos();
-                mapper.mapFeatures();
-                mapper.mapBenefits();
-                mapper.adjustExperienceGridLayout();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -521,7 +557,15 @@ class PreviewHandler {
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
                 const mapper = this.createMapper(DirectionsMapper);
-                mapper.mapPage();
+
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroImages();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
             }
         }
     }

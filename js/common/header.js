@@ -4,12 +4,13 @@
  */
 (function () {
     const PAGE_MAP = {
-        home: 'index.html',
+        // home is handled separately in navigateTo function
         main: 'main.html',
         directions: 'directions.html',
         'reservation-info': 'reservation.html',
         room: 'room.html',
     };
+    const RESERVATION_URL = 'https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}';
 
     // Initialize variables - will be populated after DOM is ready
     let body;
@@ -96,13 +97,6 @@
     }
 
     function toggleMobileMenu() {
-        // Check if HeaderComponent is available (highest priority)
-        if (window.headerComponent) {
-            window.headerComponent.toggleMenu();
-            return;
-        }
-
-        // Fallback to old mobile menu logic
         if (isMobileMenuOpen) {
             closeMobileMenu();
         } else {
@@ -113,20 +107,27 @@
     function navigateTo(page) {
         if (!page) return;
 
-        // 현재 페이지가 루트에 있는지 pages 폴더에 있는지 확인
-        const isInRoot = !window.location.pathname.includes('/pages/');
-        const pathPrefix = isInRoot ? 'pages/' : '';
-
-        const targetPath = PAGE_MAP[page];
-        if (targetPath) {
-            window.location.href = `${pathPrefix}${targetPath}`;
+        if (page === 'reservation-link') {
+            // DOM에서 동적으로 생성된 예약 링크 URL 가져오기
+            const reservationLink = document.querySelector('[data-property-realtime-booking-id]');
+            const reservationUrl = reservationLink?.getAttribute('href') || RESERVATION_URL;
+            window.open(reservationUrl, '_blank');
             closeMobileMenu();
             return;
         }
 
         if (page === 'home') {
-            window.location.href = isInRoot ? 'index.html' : '../index.html';
+            window.location.href = 'index.html';
             closeMobileMenu();
+            return;
+        }
+
+        const targetPath = PAGE_MAP[page];
+        if (targetPath) {
+            // All files are in root directory
+            window.location.href = targetPath;
+            closeMobileMenu();
+            return;
         }
     }
 
@@ -237,9 +238,29 @@
         updateHeaderAppearance();
     }
 
+    // Mobile submenu toggle function
+    function toggleMobileSubmenu(element) {
+        const menuItem = element.closest('li');
+        if (!menuItem) return;
+
+        const isOpen = menuItem.classList.contains('is-open');
+
+        // Close all other mobile menu items
+        const mobileMenuItems = Array.from(document.querySelectorAll('#mobile-menu .mainMenu > li'));
+        mobileMenuItems.forEach((item) => {
+            if (item !== menuItem) {
+                item.classList.remove('is-open');
+            }
+        });
+
+        // Toggle current menu item
+        menuItem.classList.toggle('is-open', !isOpen);
+    }
+
     // Expose global functions
     window.toggleMobileMenu = toggleMobileMenu;
     window.navigateTo = navigateTo;
+    window.toggleMobileSubmenu = toggleMobileSubmenu;
     window.showSubMenus = () => {
         if (window.innerWidth >= 1024) {
             desktopMenuItems.forEach((item) => item.classList.add('is-open'));
