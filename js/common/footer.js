@@ -1,57 +1,23 @@
-/**
- * Footer Component Functionality
- * 푸터 컴포넌트 기능
- */
+// Footer JavaScript
+(function() {
+    'use strict';
 
-// Function to initialize scroll to top button
-function initScrollToTop() {
-    // Scroll to top button functionality
-    const scrollToTopButton = document.getElementById('scrollToTop');
+    // Footer functionality can be added here if needed
+    // For example: dynamic year update, form submissions, etc.
 
-    if (scrollToTopButton) {
-        // Show/hide button based on scroll position
-        function toggleScrollButton() {
-            const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    // Update copyright year dynamically
+    function updateCopyrightYear() {
+        const yearElements = document.querySelectorAll('.copyright');
+        const currentYear = new Date().getFullYear();
 
-            if (scrollPosition > 300) {
-                scrollToTopButton.classList.add('visible');
-            } else {
-                scrollToTopButton.classList.remove('visible');
-            }
-        }
-
-        // Throttle scroll event for better performance
-        let isScrolling = false;
-        window.addEventListener('scroll', function() {
-            if (!isScrolling) {
-                window.requestAnimationFrame(function() {
-                    toggleScrollButton();
-                    isScrolling = false;
-                });
-                isScrolling = true;
-            }
+        yearElements.forEach(element => {
+            element.innerHTML = element.innerHTML.replace(/\d{4}/, currentYear);
         });
-
-        // Scroll to top when button is clicked
-        scrollToTopButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Initial check
-        toggleScrollButton();
     }
-}
 
-// Initialize immediately if DOM is already loaded, otherwise wait
-if (document.readyState === 'loading') {
+    // Initialize footer
     document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(initScrollToTop, 500);
+        updateCopyrightYear();
     });
-} else {
-    // DOM is already loaded, initialize after a short delay
-    setTimeout(initScrollToTop, 500);
-}
+
+})();

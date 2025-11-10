@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script src="js/config.js"></script>    <meta charset="UTF-8">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" data-homepage-images-0-logo-0-url>
-    <title data-homepage-seo-title>Document</title>
-    <meta name="description" data-homepage-seo-description content="">
-    <meta name="keywords" data-homepage-seo-keywords content="">
-    <link rel="stylesheet" href="styles/common.css" />
-    <link rel="stylesheet" href="styles/reservation.css" />
-    <!-- Open Graph Meta Tags for Social Media -->
+    <meta name="description" content="숙소 설명">
+    <meta name="keywords" content="SEO 키워드">
+    <title>예약안내 - 숙소명</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/reservation.css" as="style">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/reservation.css">
+
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 예약안내" />
   
@@ -22,107 +26,156 @@
   
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
-  <body>
-    <div class="wrapper mainWrap reservationWrap">
-      <main>
-        <section class="con2">
-          <nav class="subNav">
-            <h2>
-              예약안내
-            </h2>
-            <p class="mt5" data-homepage-customFields-pages-reservation-sections-0-hero-title>
-            </p>
-          </nav>
-        </section>
-        <section class="con1 fullPage con1Room" style="height: auto;">
-          <div class="fBanner" data-homepage-customFields-pages-reservation-sections-0-hero-images-0-url style="margin-bottom: 100px;">
-          </div>
-        </section>
-        
-        <!-- Section 2: 이용안내 -->
-        <section class="con3 usageSection">
-          <div class="usageContainer">
-            <div class="sectionHeader">
-              <h3 class="sectionTitle">
-                이용안내
-              </h3>
-            </div>
-            <div class="usageContent">
-              <div class="usageRules" data-property-usageGuide>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- Section 3: 입/퇴실 안내 -->
-        <section class="con3 checkinCheckoutSection">
-          <div class="checkinCheckoutContainer">
-            <div class="sectionHeader">
-              <h3 class="sectionTitle">
-                입/퇴실 안내
-              </h3>
-            </div>
-            <div class="checkinCheckoutContent">
-              <div class="checkinCheckoutRules" data-property-checkInOutInfo>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- Section 4: 환불규정 -->
-        <section class="con3 refundSection">
-          <div class="refundContainer">
-            <div class="sectionHeader">
-              <h3 class="sectionTitle">
-                환불규정
-              </h3>
-            </div>
-            <div class="refundContent">
-              <div class="refundRules" data-property-refundSettings-customerRefundNotice>
-              </div>
+<body>
+    <!-- Header will be loaded here -->
+    <div id="header-placeholder"></div>
 
+    <div class="reservation-page">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background">
+                <img src="images/14.jpg" alt="예약안내 배경" data-reservation-hero-image-0>
+                <div class="hero-overlay"></div>
             </div>
-          </div>
+            <div class="hero-content">
+                <div class="hero-text-center">
+                    <h1 class="hero-title" data-reservation-hero-title></h1>
+                </div>
+            </div>
+
+            <!-- Scroll Down Indicator -->
+            <div class="hero-scroll-down" onclick="scrollToNextSection()">
+                <svg class="scroll-arrow" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </div>
         </section>
 
-        <!-- 환불 규정 테이블 -->
-        <div class="tableSection">
-          <div class="sectionHeader textCenter">
-            <h3 class="sectionTitle">
-              취소 수수료 안내
-            </h3>
-          </div>
-          <div class="tableWrapper">
-            <table class="refundTable">
-              <thead>
-                <tr>
-                  <th>
-                    취소 시점
-                  </th>
-                  <th>
-                    환불율
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="refundTableBody">
-              </tbody>
-            </table>
-          
-        </div>
-        </div>
-      </main>
+        <!-- Reservation Info Section -->
+        <section class="reservation-info-section main-content-fade-in">
+            <!-- Facility Introduction Section -->
+            <div class="facility-intro-section">
+                <div class="facility-intro-content">
+                    <div class="facility-label">
+                        <span class="facility-number" data-customfield-reservation-about-title></span>
+                    </div>
+                    <p class="facility-description" data-customfield-reservation-about-description></p>
+                </div>
+            </div>
+
+            <!-- Banner Image Section -->
+            <div class="reservation-banner-section">
+                <div class="container">
+                    <img src="images/14.jpg" alt="예약안내 배너" class="reservation-banner-image" data-reservation-hero-image-1>
+                </div>
+            </div>
+
+            <!-- 이용안내 섹션 -->
+            <div class="reservation-content-layout">
+                <!-- Reservation Info Content -->
+                <div class="reservation-info-content">
+                    <!-- Reservation Details Accordion Section -->
+                    <div class="reservation-details-section">
+                        <!-- 이용안내 Section -->
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h3 class="accordion-title">이용안내</h3>
+                                <button class="accordion-close active" data-target="usage-content">
+                                    <svg class="close-icon" viewBox="0 0 24 24">
+                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="accordion-content active" id="usage-content" data-reservation-usage-content>
+                            </div>
+                        </div>
+
+                        <!-- 입/퇴실 안내 Section -->
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h3 class="accordion-title">입/퇴실 안내</h3>
+                                <button class="accordion-close active" data-target="checkin-content">
+                                    <svg class="close-icon" viewBox="0 0 24 24">
+                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="accordion-content active" id="checkin-content" data-reservation-checkin-content>
+                            </div>
+                        </div>
+
+                        <!-- 환불규정 Section -->
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h3 class="accordion-title">환불규정</h3>
+                                <button class="accordion-close active" data-target="refund-content">
+                                    <svg class="close-icon" viewBox="0 0 24 24">
+                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="accordion-content active" id="refund-content">
+                                <p class="accordion-text">취소 시점에 따른 환불 규정은 다음과 같습니다:</p>
+                                <div class="table-section">
+                                    <div class="table-wrapper">
+                                        <table class="refund-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>취소 시점</th>
+                                                    <th>환불율</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="refund-table-body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 취소수수료 Section -->
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h3 class="accordion-title">취소수수료</h3>
+                                <button class="accordion-close active" data-target="fee-content">
+                                    <svg class="close-icon" viewBox="0 0 24 24">
+                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="accordion-content active" id="fee-content" data-reservation-fee-content>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
     </div>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-placeholder"></div>
+
+
+    <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
+
+    <!-- Property Data Mapper -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
     <script src="js/data-mapper/pages/reservation-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
-    <script src="js/common/scroll-animation.js"></script>
-    <script src="js/common/header.js"></script>
-    <!-- iOS Parallax Fix -->
+
+    <!-- Page-specific script -->
     <script src="js/pages/reservation.js"></script>
 
-    <!-- Preview Handler (어드민 연동) -->
-    <script src="js/preview-handler.js"></script>
-  </body>
+</body>
 </html>

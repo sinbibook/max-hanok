@@ -1,26 +1,62 @@
 /**
- * Reservation Page Functionality
- * 예약 페이지 기능
+ * Reservation Page JavaScript
  */
 
-function navigateToHome() {
-    window.location.href = './index.html';
-}
+(function() {
+    'use strict';
 
-async function initializeReservationMapper() {
-    try {
-        const reservationMapper = new ReservationMapper();
-        await reservationMapper.initialize();
-        reservationMapper.setupNavigation();
-    } catch (error) {
-    }
-}
+    let ticking = false;
 
-document.addEventListener('DOMContentLoaded', function() {
-    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
-    if (!window.APP_CONFIG.isInIframe()) {
-        // 일반 환경: ReservationMapper가 직접 초기화
-        initializeReservationMapper();
+
+    // Scroll to next section function
+    function scrollToNextSection() {
+        const nextSection = document.querySelector('.reservation-info-section');
+
+        if (nextSection) {
+            const targetPosition = nextSection.offsetTop;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
     }
-    // iframe 환경에서는 PreviewHandler가 ReservationMapper 호출
-});
+
+
+    // Make function globally available
+    window.scrollToNextSection = scrollToNextSection;
+
+    // Simple initialization - no animations needed for facility-style layout
+
+    // Accordion functionality
+    function initializeAccordion() {
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const content = item.querySelector('.accordion-content');
+            const button = item.querySelector('.accordion-close');
+
+            // Initially open the first accordion
+            content.classList.add('active');
+            button.classList.add('active');
+
+            header.addEventListener('click', () => {
+                // Toggle current accordion only
+                content.classList.toggle('active');
+                button.classList.toggle('active');
+            });
+        });
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', async function() {
+        // ReservationMapper 초기화
+        if (typeof ReservationMapper !== 'undefined') {
+            const reservationMapper = new ReservationMapper();
+            await reservationMapper.initialize();
+        }
+
+        initializeAccordion();
+    });
+
+})();
