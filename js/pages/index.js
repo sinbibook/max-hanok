@@ -969,21 +969,21 @@
         return false;
     }
 
-    // Initialize logo animation
-    function initLogoAnimation() {
-        const logoReveal = document.getElementById('hero-logo-reveal');
+    // Initialize brand reveal animation
+    function initBrandRevealAnimation() {
+        const brandReveal = document.getElementById('hero-brand-reveal');
         const heroContent = document.getElementById('hero-content');
         const brandName = document.getElementById('brand-name');
         const heroImages = document.querySelectorAll('.hero-image');
         const heroOverlays = document.querySelectorAll('.hero-image-overlay');
 
-        if (!logoReveal) return;
+        if (!brandReveal) return;
 
         const showAnimation = shouldShowLogoAnimation();
 
         if (!showAnimation) {
-            // Skip logo reveal animation - hide it immediately
-            logoReveal.style.display = 'none';
+            // Skip brand reveal animation - hide it immediately
+            brandReveal.style.display = 'none';
 
             // Show hero content immediately with smooth entrance animation
             if (heroContent) {
@@ -1024,7 +1024,7 @@
 
         } else {
             // Show full animation sequence
-            logoReveal.style.display = 'flex';
+            brandReveal.style.display = 'flex';
 
             // Keep animation classes
             if (heroContent) {
@@ -1220,7 +1220,7 @@
     }
 
     function init() {
-        const hasAnimation = initLogoAnimation();
+        const hasAnimation = initBrandRevealAnimation();
         // initHeroSlider는 index-mapper.js에서 슬라이드 생성 후 호출됨
         // generateGalleryContent는 index-mapper.js에서 처리됨
         // generateSignatureContent는 index-mapper.js에서 처리됨
