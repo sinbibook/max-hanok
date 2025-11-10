@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.18.0",
-    "generatedAt": "2025-11-07T02:39:38.000Z",
-    "templateType": "center_slider",
+    "version": "1.19.0",
+    "generatedAt": "2025-11-10T11:13:23.169Z",
+    "templateType": "full_banner_slider_group",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -71,11 +71,44 @@
     },
     "facilities": [
       {
+        "id": "3a00278d-ed36-4da4-ba90-9cbd5ea9ba07",
+        "name": "서비스",
+        "description": "1212",
+        "usageGuide": "12",
+        "displayOrder": 0,
+        "images": [
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613234-pwza1c2ilc.jpg",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-8pw23atnlte.jpg",
+            "sortOrder": 1,
+            "description": "test",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-bemhe14wvq7.jpg",
+            "sortOrder": 2,
+            "description": "",
+            "isSelected": true
+          },
+          {
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-nmortwduvv.jpg",
+            "sortOrder": 3,
+            "description": "",
+            "isSelected": true
+          }
+        ]
+      },
+      {
         "id": "bec67e73-5b27-451f-a33b-6a9fee7c0690",
         "name": "찜질방",
         "description": "찜질방 설명입니다.",
         "usageGuide": "[찜질방]\n  - 운영시간: 연중무휴 24시간 운영 (매월 둘째주 월요일 휴무)\n  - 입장료: 성인 12,000원 / 어린이(36개월~초등학생) 7,000원 / 경로(만 65세 이상) 9,000원\n  - 이용시간: 기본 12시간 이용 가능 (연장 시 2시간당 2,000원 추가)\n  - 주차안내: 무료 주차 지원 (이용 고객 한정, 최대 12시간)\n  - 준비물: 입장 시 수건 2장, 찜질복 1벌, 락커키 제공 (개인 세면도구는 별도 준비)\n  - 샤워실: 남녀 구분된 샤워실과 사우나 운영 (샴푸, 바디워시, 드라이기 비치)\n  - 찜질방 시설: 황토방, 소금방, 얼음방, 수면실 등 다양한 테마방 운영\n  - 식당: 찜질방 내 식당에서 식혜, 계란, 라면 등 간단한 식사 및 음료 판매\n  - 효능: 혈액순환 개선, 피로회복, 피부미용, 스트레스 해소",
-        "displayOrder": 0,
+        "displayOrder": 2,
         "images": [
           {
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760945385091-6x5e1nwb03h.jpg",
@@ -104,39 +137,6 @@
           {
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/bec67e73-5b27-451f-a33b-6a9fee7c0690/main/1760945385093-6xdd6u76zuy.jpg",
             "sortOrder": 4,
-            "description": "",
-            "isSelected": true
-          }
-        ]
-      },
-      {
-        "id": "3a00278d-ed36-4da4-ba90-9cbd5ea9ba07",
-        "name": "서비스",
-        "description": "1212",
-        "usageGuide": "12",
-        "displayOrder": 2,
-        "images": [
-          {
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613234-pwza1c2ilc.jpg",
-            "sortOrder": 0,
-            "description": "",
-            "isSelected": true
-          },
-          {
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-8pw23atnlte.jpg",
-            "sortOrder": 1,
-            "description": "test",
-            "isSelected": true
-          },
-          {
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-bemhe14wvq7.jpg",
-            "sortOrder": 2,
-            "description": "",
-            "isSelected": true
-          },
-          {
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-nmortwduvv.jpg",
-            "sortOrder": 3,
             "description": "",
             "isSelected": true
           }
@@ -214,11 +214,210 @@
   },
   "rooms": [
     {
+      "id": "c20a834f-87a0-458c-a75f-bc81df58ab98",
+      "name": "별하방",
+      "description": "별하방입니다.",
+      "roomInfo": "이것저것 많아요",
+      "group": "A동(미디어아트)",
+      "size": 13,
+      "baseOccupancy": 1,
+      "maxOccupancy": 2,
+      "totalRoomCount": {
+        "bedroom": 1,
+        "bathroom": 10,
+        "livingRoom": 0
+      },
+      "bedTypes": [
+        "이층침대",
+        "이불"
+      ],
+      "amenities": [
+        "발코니",
+        "침대",
+        "냉장고",
+        "커피머신",
+        "전자레인지",
+        "화장실"
+      ],
+      "roomViews": [
+        "강전망"
+      ],
+      "roomStructures": [
+        "복층",
+        "로프트"
+      ],
+      "images": [
+        {
+          "thumbnail": [
+            {
+              "id": "ec9d7fdb-e312-4b87-b513-23508d97162d",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/thumbnail/1761648257752-094bnpcmddig.jpg",
+              "sortOrder": 0,
+              "description": "1.jpg",
+              "isSelected": true
+            }
+          ],
+          "interior": [],
+          "exterior": [
+            {
+              "id": "eb7bfc78-4248-45fb-821f-7bd033a881ec",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-etjfnqhkmt7.jpg",
+              "sortOrder": 0,
+              "description": "7.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "c5ec047c-7e7a-49f2-a4a1-ba14876a6144",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-5gxa406cun9.jpg",
+              "sortOrder": 1,
+              "description": "8.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "3549262d-282f-4e8e-b4fd-fe89c33157c1",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-6fv9t0c2ebd.jpg",
+              "sortOrder": 2,
+              "description": "9.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "aeedc56e-6ae5-40cc-8ecf-51a6ea6d616f",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-yyaua96qp4.jpg",
+              "sortOrder": 3,
+              "description": "10.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "c1af3f67-7173-4653-ae69-656bc36228d0",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-g5mn9nw5us7.jpg",
+              "sortOrder": 5,
+              "description": "12.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "2eea646e-5de2-4049-b1d8-cdd129e23390",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-bfiyw7xnjro.jpg",
+              "sortOrder": 6,
+              "description": "13.jpg",
+              "isSelected": true
+            }
+          ]
+        }
+      ],
+      "displayOrder": 0
+    },
+    {
+      "id": "33d68482-d69e-4989-aafc-b0ab144cea7e",
+      "name": "한별당",
+      "description": "한별당입니다",
+      "roomInfo": "한별당",
+      "group": "A동(미디어아트)",
+      "size": 11,
+      "baseOccupancy": 1,
+      "maxOccupancy": 1,
+      "totalRoomCount": {
+        "bedroom": 0,
+        "bathroom": 0,
+        "livingRoom": 0
+      },
+      "bedTypes": [
+        "이층침대",
+        "이불"
+      ],
+      "amenities": [
+        "발코니",
+        "침대",
+        "전자레인지",
+        "전기포트"
+      ],
+      "roomViews": [
+        "풀뷰",
+        "숲전망"
+      ],
+      "roomStructures": [
+        "온돌"
+      ],
+      "images": [
+        {
+          "thumbnail": [
+            {
+              "id": "80c5d7fe-b675-42eb-8811-4f8fd5bc1daa",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/thumbnail/1761649471123-9r1xk9kyepo.jpg",
+              "sortOrder": 0,
+              "description": "2.jpg",
+              "isSelected": true
+            }
+          ],
+          "interior": [
+            {
+              "id": "28670ca7-4e84-4a17-b29e-70fae62e2b2c",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-287tj4255oo.jpg",
+              "sortOrder": 0,
+              "description": "8.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "79343fb0-5e9e-4992-8894-dd52133547c0",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-7vs9b0m1o0m.jpg",
+              "sortOrder": 1,
+              "description": "9.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "b1ea83cc-9fdf-455a-85d5-a30699f4daa9",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-yi0puipqhn.jpg",
+              "sortOrder": 2,
+              "description": "10.jpg",
+              "isSelected": true
+            },
+            {
+              "id": "5df15813-4ca8-4228-acf8-9285a1c7fe4b",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-wddnp9w6i8o.jpg",
+              "sortOrder": 3,
+              "description": "11.jpg",
+              "isSelected": true
+            }
+          ],
+          "exterior": [
+            {
+              "id": "4e628de1-f3fd-48bf-b2b9-3995f809ee4c",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/exterior/1762759574203-sa63nrjalcq.jpg",
+              "sortOrder": 0,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "4a97e160-43a1-4c81-8e84-64d750ffd4ad",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/exterior/1762759574204-e2istlrve0u.jpg",
+              "sortOrder": 1,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "0f13588e-1b21-4137-a3a3-8451c1b0e775",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/exterior/1762759574204-6fig3ulwy5n.jpg",
+              "sortOrder": 2,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "57aacacd-c2da-4c15-8032-b56ff65d1f64",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/exterior/1762759574204-y5x7cwwbqke.jpg",
+              "sortOrder": 3,
+              "description": "",
+              "isSelected": true
+            }
+          ]
+        }
+      ],
+      "displayOrder": 1
+    },
+    {
       "id": "43387b98-deb4-4271-a3ee-dd2045ae75e6",
       "name": "다온방",
       "description": "맥스펜션 다온방 객실입니다.",
       "roomInfo": "체크인,체크아웃 시간 준수\n객실 내 흡연 금지\n나오실 때 분리수거 필수",
-      "group": "스탠다드",
+      "group": "A동(미디어아트)",
       "size": 25,
       "baseOccupancy": 2,
       "maxOccupancy": 2,
@@ -310,14 +509,14 @@
           ]
         }
       ],
-      "displayOrder": 0
+      "displayOrder": 2
     },
     {
       "id": "b4b7a37b-2bf9-46ca-859c-55031677bf63",
       "name": "사랑방",
       "description": "편안하고 분위기 좋은 사랑방입니다.",
       "roomInfo": "",
-      "group": "스탠다드",
+      "group": "B동(반려견동반)",
       "size": 18,
       "baseOccupancy": 1,
       "maxOccupancy": 1,
@@ -407,14 +606,14 @@
           ]
         }
       ],
-      "displayOrder": 1
+      "displayOrder": 3
     },
     {
       "id": "2e5a7cc2-cb44-4cac-81c7-9bf3f8b200ea",
       "name": "난이당",
       "description": "",
       "roomInfo": "객실 이용안내입니다.",
-      "group": null,
+      "group": "B동(반려견동반)",
       "size": 43,
       "baseOccupancy": 1,
       "maxOccupancy": 1,
@@ -539,203 +738,40 @@
           ]
         }
       ],
-      "displayOrder": 2
-    },
-    {
-      "id": "c20a834f-87a0-458c-a75f-bc81df58ab98",
-      "name": "별하방",
-      "description": "별하방입니다.",
-      "roomInfo": "이것저것 많아요",
-      "group": null,
-      "size": 0,
-      "baseOccupancy": 1,
-      "maxOccupancy": 1,
-      "totalRoomCount": {
-        "bedroom": 1,
-        "bathroom": 10,
-        "livingRoom": 0
-      },
-      "bedTypes": [
-        "이층침대",
-        "이불"
-      ],
-      "amenities": [
-        "발코니",
-        "침대",
-        "냉장고",
-        "커피머신",
-        "전자레인지",
-        "화장실"
-      ],
-      "roomViews": [
-        "강전망"
-      ],
-      "roomStructures": [
-        "복층",
-        "로프트"
-      ],
-      "images": [
-        {
-          "thumbnail": [
-            {
-              "id": "ec9d7fdb-e312-4b87-b513-23508d97162d",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/thumbnail/1761648257752-094bnpcmddig.jpg",
-              "sortOrder": 0,
-              "description": "1.jpg",
-              "isSelected": true
-            }
-          ],
-          "interior": [],
-          "exterior": [
-            {
-              "id": "eb7bfc78-4248-45fb-821f-7bd033a881ec",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-etjfnqhkmt7.jpg",
-              "sortOrder": 0,
-              "description": "7.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "c5ec047c-7e7a-49f2-a4a1-ba14876a6144",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-5gxa406cun9.jpg",
-              "sortOrder": 1,
-              "description": "8.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "3549262d-282f-4e8e-b4fd-fe89c33157c1",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-6fv9t0c2ebd.jpg",
-              "sortOrder": 2,
-              "description": "9.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "aeedc56e-6ae5-40cc-8ecf-51a6ea6d616f",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-yyaua96qp4.jpg",
-              "sortOrder": 3,
-              "description": "10.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "c1af3f67-7173-4653-ae69-656bc36228d0",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-g5mn9nw5us7.jpg",
-              "sortOrder": 5,
-              "description": "12.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "2eea646e-5de2-4049-b1d8-cdd129e23390",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-bfiyw7xnjro.jpg",
-              "sortOrder": 6,
-              "description": "13.jpg",
-              "isSelected": true
-            }
-          ]
-        }
-      ],
-      "displayOrder": 3
-    },
-    {
-      "id": "33d68482-d69e-4989-aafc-b0ab144cea7e",
-      "name": "한별당",
-      "description": "한별당입니다",
-      "roomInfo": "한별당",
-      "group": null,
-      "size": 11,
-      "baseOccupancy": 1,
-      "maxOccupancy": 1,
-      "totalRoomCount": {
-        "bedroom": 0,
-        "bathroom": 0,
-        "livingRoom": 0
-      },
-      "bedTypes": [
-        "이층침대",
-        "이불"
-      ],
-      "amenities": [
-        "발코니",
-        "침대",
-        "전자레인지",
-        "전기포트"
-      ],
-      "roomViews": [
-        "풀뷰",
-        "숲전망"
-      ],
-      "roomStructures": [
-        "온돌"
-      ],
-      "images": [
-        {
-          "thumbnail": [
-            {
-              "id": "80c5d7fe-b675-42eb-8811-4f8fd5bc1daa",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/thumbnail/1761649471123-9r1xk9kyepo.jpg",
-              "sortOrder": 0,
-              "description": "2.jpg",
-              "isSelected": true
-            }
-          ],
-          "interior": [
-            {
-              "id": "28670ca7-4e84-4a17-b29e-70fae62e2b2c",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-287tj4255oo.jpg",
-              "sortOrder": 0,
-              "description": "8.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "79343fb0-5e9e-4992-8894-dd52133547c0",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-7vs9b0m1o0m.jpg",
-              "sortOrder": 1,
-              "description": "9.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "b1ea83cc-9fdf-455a-85d5-a30699f4daa9",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-yi0puipqhn.jpg",
-              "sortOrder": 2,
-              "description": "10.jpg",
-              "isSelected": true
-            },
-            {
-              "id": "5df15813-4ca8-4228-acf8-9285a1c7fe4b",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/33d68482-d69e-4989-aafc-b0ab144cea7e/interior/1761649471123-wddnp9w6i8o.jpg",
-              "sortOrder": 3,
-              "description": "11.jpg",
-              "isSelected": true
-            }
-          ],
-          "exterior": []
-        }
-      ],
       "displayOrder": 4
     }
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "center_slider",
+    "templateType": "full_banner_slider_group",
     "images": [
       {
         "logo": [
           {
+            "id": "a0f48a54-cfa9-463b-8b8f-c7ef60be98fd",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/logo/1762765531589-a95wbi8odh.png",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true
+          },
+          {
             "id": "de07b53e-2fd4-4982-b534-d6e79e2499dc",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/logo/1760513650827-s0no8yy6n9.png",
-            "sortOrder": 0,
+            "sortOrder": 1,
             "description": "",
             "isSelected": false
           },
           {
             "id": "f1b40cf3-9651-4b96-bb42-d945a2c84b7a",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/logo/1759141297738-acbbf1ujy59.png",
-            "sortOrder": 1,
+            "sortOrder": 2,
             "description": "",
-            "isSelected": true
+            "isSelected": false
           },
           {
             "id": "71be0bf0-acc9-41b8-bf3f-ec951a870f0d",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/logo/1759299095222-lin07tx1fsp.jpg",
-            "sortOrder": 2,
+            "sortOrder": 3,
             "description": "",
             "isSelected": false
           }
@@ -787,40 +823,47 @@
                 "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
               },
               "essence": {
-                "title": "한옥의 느낌을 느껴보세요.",
+                "title": "한옥의 멋을 느껴보세요.",
                 "images": [
+                  {
+                    "id": "34098bc7-5787-4f46-8211-41672ed333c0",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1762753836719-n94acropqtn.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  },
                   {
                     "id": "248feeac-3629-4f29-929a-bee4058d4edb",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1759229421988-vbkoo87rmda.jpg",
-                    "sortOrder": 0,
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": true
                   }
                 ],
-                "description": "한옥과 함께 편안한 휴식을 제공합니다."
+                "description": "한옥과 함께 \n편안한 휴식을 제공합니다."
               },
               "gallery": {
-                "title": "뜻깊은 순간",
+                "title": "Gallery",
                 "images": [
-                  {
-                    "id": "27f38dec-fac8-4e04-a3b3-da42ac1e37c7",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759230404280-4hs5ag0mcux.jpg",
-                    "sortOrder": 0,
-                    "description": "새 이미지 추가",
-                    "isSelected": false
-                  },
                   {
                     "id": "8e2a45bb-8d8b-4f58-8543-22d94174ea97",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759230272798-zgq0yxoxodn.jpg",
-                    "sortOrder": 1,
+                    "sortOrder": 0,
                     "description": "라운지",
-                    "isSelected": true
+                    "isSelected": false
                   },
                   {
                     "id": "237e8d86-fd28-4403-8b51-c4abd18dff04",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759230404281-4e5ix1jmk3h.jpg",
-                    "sortOrder": 2,
+                    "sortOrder": 1,
                     "description": "로비",
+                    "isSelected": true
+                  },
+                  {
+                    "id": "27f38dec-fac8-4e04-a3b3-da42ac1e37c7",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1759230404280-4hs5ag0mcux.jpg",
+                    "sortOrder": 2,
+                    "description": "새 이미지 추가",
                     "isSelected": true
                   },
                   {
@@ -914,10 +957,10 @@
                 "title": "한옥의 멋",
                 "images": [
                   {
-                    "id": "7a6937a1-3fb4-4628-bbfd-f43824628fcb",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1760084067557-sx1j1s99c5n.jpg",
+                    "id": "d83219b9-3046-44c0-9e56-41639cba1b26",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1759123442318-laqpu8bsysl.jpg",
                     "sortOrder": 0,
-                    "description": "",
+                    "description": "메인 슬라이더4",
                     "isSelected": true
                   },
                   {
@@ -928,10 +971,10 @@
                     "isSelected": true
                   },
                   {
-                    "id": "d83219b9-3046-44c0-9e56-41639cba1b26",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1759123442318-laqpu8bsysl.jpg",
+                    "id": "7a6937a1-3fb4-4628-bbfd-f43824628fcb",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1760084067557-sx1j1s99c5n.jpg",
                     "sortOrder": 2,
-                    "description": "메인 슬라이더4",
+                    "description": "",
                     "isSelected": true
                   }
                 ],
@@ -939,14 +982,14 @@
               },
               "about": [
                 {
-                  "title": "1",
+                  "title": "소개 블록1",
                   "images": [
                     {
                       "id": "5f86d412-4ac0-4029-9a21-8bae524fce7b",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287201453-csrkd6t24su.jpg",
                       "sortOrder": 0,
                       "description": "",
-                      "isSelected": false,
+                      "isSelected": true,
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
                     },
                     {
@@ -967,33 +1010,10 @@
                     }
                   ],
                   "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11",
-                  "description": "111"
+                  "description": "소개 블록1 설명입니다."
                 },
                 {
-                  "title": "",
-                  "images": [
-                    {
-                      "id": "503a23b9-5b59-4c07-9f34-e5b63775072b",
-                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287174696-9i6frlf50n.jpg",
-                      "sortOrder": 3,
-                      "description": "",
-                      "isSelected": true,
-                      "blockId": "5e516a21-3431-4db8-8936-bf5b3311e166"
-                    },
-                    {
-                      "id": "0ddcc6b9-15f5-475e-bf4c-53fafb1d56e2",
-                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287174698-rec824icrfk.jpg",
-                      "sortOrder": 4,
-                      "description": "",
-                      "isSelected": true,
-                      "blockId": "5e516a21-3431-4db8-8936-bf5b3311e166"
-                    }
-                  ],
-                  "blockId": "5e516a21-3431-4db8-8936-bf5b3311e166",
-                  "description": "22"
-                },
-                {
-                  "title": "33",
+                  "title": "소개 블록3",
                   "images": [
                     {
                       "id": "3c262154-f606-4675-b1fc-7b951f74d8ba",
@@ -1021,7 +1041,7 @@
                     }
                   ],
                   "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23",
-                  "description": "33"
+                  "description": "소개 블록3 설명입니다."
                 }
               ]
             }
@@ -1131,9 +1151,24 @@
                   "description": ""
                 },
                 "experience": {
-                  "benefits": [],
-                  "features": [],
-                  "additionalInfos": []
+                  "benefits": [
+                    {
+                      "title": "혜택 제목",
+                      "description": "혜택 설명"
+                    }
+                  ],
+                  "features": [
+                    {
+                      "title": "특징제목",
+                      "description": "특징 설명"
+                    }
+                  ],
+                  "additionalInfos": [
+                    {
+                      "title": "추가 정보 제목",
+                      "description": "추가 정보 설명"
+                    }
+                  ]
                 }
               }
             ]
@@ -1184,6 +1219,13 @@
                     "id": "652de64b-e5e1-45d0-9b8b-78725429f558",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/reservation_hero/1759123623260-a92dibpzky.jpg",
                     "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  },
+                  {
+                    "id": "79277822-0b4d-4f9e-a041-e07b6f37c4cd",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/reservation_hero/1762761886330-rk834pqu5e8.jpg",
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": true
                   }
