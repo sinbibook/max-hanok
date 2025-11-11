@@ -93,7 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
     min-height: 300px;
     opacity: 0;
     transform: translateY(40px);
@@ -187,7 +187,7 @@
 .room-grid {
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 80px;
     width: 100%;
     margin: 0;
 }
@@ -245,7 +245,7 @@
 .room-card-image {
     position: relative;
     width: 60%;
-    height: 400px;
+    height: 500px;
     overflow: hidden;
     flex: 0 0 60%;
     border-radius: 0;
@@ -351,13 +351,13 @@
 
 .room-info-label {
     font-family: 'MaruBuri', sans-serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #999;
 }
 
 .room-info-value {
     font-family: 'MaruBuri', sans-serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #333;
 }

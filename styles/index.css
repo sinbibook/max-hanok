@@ -1218,6 +1218,24 @@
     transition: all 0.8s ease;
 }
 
+/* First accordion item border-radius when not expanded */
+.experience-accordion-left .experience-accordion-item:first-child:not(:hover) {
+    border-top-left-radius: 40px;
+}
+
+.experience-accordion-right .experience-accordion-item:nth-child(2):not(:hover) {
+    border-top-right-radius: 40px;
+}
+
+/* Accordion item border-radius when expanded (on hover) */
+.experience-accordion-left .experience-accordion-item:nth-child(2):hover {
+    border-top-right-radius: 40px;
+}
+
+.experience-accordion-right .experience-accordion-item:first-child:hover {
+    border-top-left-radius: 40px;
+}
+
 .experience-accordion-item.visible {
     opacity: 1;
     transform: translateY(0);
