@@ -124,6 +124,10 @@ class IndexMapper extends BaseDataMapper {
                     <span class="room-tab-number">${String(index + 1).padStart(2, '0')}</span>
                     <span class="room-tab-name">${group}</span>
                 `;
+                // 클릭 시 room-list로 이동
+                tab.addEventListener('click', () => {
+                    window.location.href = `room-list.html?group=${encodeURIComponent(group)}`;
+                });
                 tabsContainer.appendChild(tab);
 
                 // 설명 생성
