@@ -557,6 +557,7 @@
 .room-tab {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 10px 20px;
     border: none;
     /* background: rgba(255, 255, 255, 0.7);
@@ -602,6 +603,60 @@
 .room-tab.active .room-tab-number,
 .room-tab.active .room-tab-name {
     color: #fff;
+}
+
+/* Room Tab Content */
+.room-tab-content {
+    display: flex;
+    align-items: center;
+}
+
+/* Room Tab Detail Button */
+.room-tab-detail-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 0;
+    font-family: 'Chonburi', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    margin-left: auto;
+}
+
+.room-tab.active .room-tab-detail-btn {
+    display: inline-flex;
+}
+
+.room-tab-detail-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+}
+
+.room-tab-detail-btn .btn-text {
+    display: inline-block;
+}
+
+.room-tab-detail-btn .icon {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s ease;
+}
+
+.room-tab-detail-btn:hover .icon {
+    transform: translate(2px, -2px);
 }
 
 /* Room Descriptions Area */
@@ -840,6 +895,16 @@
         padding: 12px 18px;
     }
 
+    .room-tab-detail-btn {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+    }
+
+    .room-tab-detail-btn .icon {
+        width: 12px;
+        height: 12px;
+    }
+
     .room-tabs-descs {
         padding: 30px;
         min-height: 90px;
@@ -873,7 +938,7 @@
         position: relative;
         width: 100%;
         height: 400px;
-        margin-top: 40px;
+        margin-top: 0px;
         transform: none;
     }
 
@@ -897,6 +962,17 @@
 
     .room-tab {
         padding: 10px 15px;
+    }
+
+    .room-tab-detail-btn {
+        padding: 5px 10px;
+        font-size: 0.65rem;
+        gap: 4px;
+    }
+
+    .room-tab-detail-btn .icon {
+        width: 10px;
+        height: 10px;
     }
 
     .room-tab-number {

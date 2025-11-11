@@ -121,14 +121,26 @@ class IndexMapper extends BaseDataMapper {
                 tab.className = `room-tab${index === 0 ? ' active' : ''}`;
                 tab.setAttribute('data-room', group);
                 tab.innerHTML = `
-                    <span class="room-tab-number">${String(index + 1).padStart(2, '0')}</span>
-                    <span class="room-tab-name">${group}</span>
+                    <span class="room-tab-content">
+                        <span class="room-tab-number">${String(index + 1).padStart(2, '0')}</span>
+                        <span class="room-tab-name">${group}</span>
+                    </span>
+                    <button class="room-tab-detail-btn" data-group="${group}">
+                        <span class="btn-text">VIEW</span>
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7,7 17,7 17,17"></polyline>
+                        </svg>
+                    </button>
                 `;
-                // 클릭 시 room-list로 이동
-                tab.addEventListener('click', () => {
+                tabsContainer.appendChild(tab);
+
+                // VIEW 버튼 클릭 이벤트
+                const detailBtn = tab.querySelector('.room-tab-detail-btn');
+                detailBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // tab 클릭 이벤트 방지
                     window.location.href = `room-list.html?group=${encodeURIComponent(group)}`;
                 });
-                tabsContainer.appendChild(tab);
 
                 // 설명 생성
                 const descItem = document.createElement('div');
