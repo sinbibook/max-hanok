@@ -381,6 +381,10 @@ body.mobile-menu-open {
     top: 20px;
     right: 20px;
     cursor: pointer;
+    z-index: 10;
+    padding: 10px;
+    background: transparent;
+    border: none;
 }
 
 .mobile-menu-close .icon {
@@ -389,6 +393,7 @@ body.mobile-menu-open {
     stroke: white;
     stroke-width: 2;
     fill: none;
+    pointer-events: none;
 }
 
 .mobile-menu-grid {
