@@ -33,6 +33,12 @@
     background: #f8f8f8;
 }
 
+/* Reservation Content Container */
+.reservation-content-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
 /* Facility Introduction Section */
 .facility-intro-section {
     text-align: center;
@@ -76,7 +82,6 @@
 }
 
 .reservation-banner-section .container {
-    max-width: 1400px;
     margin: 0 auto;
     padding: 0 40px;
 }
@@ -93,7 +98,6 @@
 .reservation-content-layout {
     display: flex;
     justify-content: center;
-    max-width: 1400px;
     margin: 0 auto;
     padding: 0 40px;
 }
@@ -283,6 +287,10 @@
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+    .reservation-content-container {
+        max-width: 100%;
+    }
+
     .reservation-info-section {
         padding: 60px 0;
     }
@@ -359,7 +367,6 @@
 .usage-container,
 .checkin-checkout-container,
 .refund-container {
-    max-width: 1400px;
     margin: 0 auto;
     padding: 0 40px;
 }

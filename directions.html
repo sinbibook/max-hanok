@@ -29,7 +29,7 @@
     <!-- 메인 소개 섹션 히어로 0번째 이미지-->
     <section class="hero-section">
         <div class="hero-background">
-            <img src="images/14.jpg" alt="오시는길 배경" data-customfield-directions-hero-image-0>
+            <img src="" alt="오시는길 배경" data-customfield-directions-hero-image-0>
             <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
@@ -48,6 +48,7 @@
 
     <!-- Location Info Section -->
     <section class="location-info-section">
+        <div class="directions-content-container">
         <!-- Facility Introduction Section -->
         <div class="facility-intro-section">
             <div class="facility-intro-content">
@@ -63,36 +64,36 @@
         <!-- Banner Image Section 히어로 1번째 이미지 -->
         <div class="directions-banner-section">
             <div class="container">
-                <img src="images/14.jpg" alt="오시는길 배너" class="directions-banner-image" data-customfield-directions-hero-image-1>
-            </div>
-        </div>
-    </section>
-
-    <!-- 지도 섹션 -->
-    <section class="map-section main-content-fade-in">
-        <div class="container">
-            <div class="address-section">
-                <p>
-                    <svg class="location-icon" viewBox="0 0 24 24">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    <span data-directions-address></span>
-                </p>
-                <!-- 안내사항  -->
-                 <div class="notice-wrap">
-                    <h4 data-customfield-directions-notice-title>안내사항</h4>
-                    <p data-customfield-directions-notice-description>안내사항 1</p>
-                 </div>
+                <img src="" alt="오시는길 배너" class="directions-banner-image" data-customfield-directions-hero-image-1>
             </div>
         </div>
 
-        <div class="container">
-            <div class="map-container">
-                <div id="kakao-map"></div>
+        <!-- 지도 섹션 -->
+        <section class="map-section main-content-fade-in">
+            <div class="container">
+                <div class="address-section">
+                    <p>
+                        <svg class="location-icon" viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span data-directions-address></span>
+                    </p>
+                    <!-- 안내사항  -->
+                     <div class="notice-wrap">
+                        <h4 data-customfield-directions-notice-title>안내사항</h4>
+                        <p data-customfield-directions-notice-description>안내사항 1</p>
+                     </div>
+                </div>
             </div>
-        </div>
-    </section>
+
+            <div class="container">
+                <div class="map-container">
+                    <div id="kakao-map"></div>
+                </div>
+            </div>
+        </section>
+        </div> <!-- directions-content-container -->
 
     <!-- Kakao Map SDK -->
     <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>

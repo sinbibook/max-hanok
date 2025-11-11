@@ -218,11 +218,17 @@ class IndexMapper extends BaseDataMapper {
         const titleEl = this.safeSelect('[data-essence-title]');
         const descEl = this.safeSelect('[data-essence-description]');
 
-        if (titleEl && essenceData.description) {
-            titleEl.innerHTML = essenceData.description.replace(/\n/g, '<br>');
+        if (titleEl) {
+            const description = (essenceData.description !== undefined && essenceData.description !== '')
+                ? essenceData.description
+                : '특징 섹션 설명';
+            titleEl.innerHTML = description.replace(/\n/g, '<br>');
         }
-        if (descEl && essenceData.title) {
-            descEl.textContent = essenceData.title;
+        if (descEl) {
+            const title = (essenceData.title !== undefined && essenceData.title !== '')
+                ? essenceData.title
+                : '특징 섹션 타이틀';
+            descEl.textContent = title;
         }
 
         // 어드민에서 이미 선택된 이미지만 전송하므로 필터링 불필요
@@ -265,7 +271,12 @@ class IndexMapper extends BaseDataMapper {
         const titleElement = this.safeSelect('[data-gallery-title]');
         const imagesWrapper = this.safeSelect('[data-gallery-images]');
 
-        if (titleElement) titleElement.textContent = galleryData.title || '';
+        if (titleElement) {
+            const title = (galleryData.title !== undefined && galleryData.title !== '')
+                ? galleryData.title
+                : '갤러리 섹션 타이틀';
+            titleElement.textContent = title;
+        }
         if (!imagesWrapper) {
             return;
         }
@@ -288,7 +299,7 @@ class IndexMapper extends BaseDataMapper {
                 img.loading = 'lazy';
                 const overlay = document.createElement('div');
                 overlay.className = 'experience-accordion-overlay';
-                overlay.innerHTML = '<h4>No Images</h4>';
+                overlay.innerHTML = '<h4>갤러리 섹션 설명</h4>';
                 placeholderItem.appendChild(img);
                 placeholderItem.appendChild(overlay);
                 return placeholderItem;
@@ -314,12 +325,13 @@ class IndexMapper extends BaseDataMapper {
             const leftAccordion = document.createElement('div');
             leftAccordion.className = 'experience-accordion-left';
             leftImages.forEach(img => {
+                const description = img.description || '갤러리 섹션 설명';
                 const item = document.createElement('div');
                 item.className = 'experience-accordion-item visible';
                 item.innerHTML = `
-                    <img src="${img.url}" alt="${img.description}" loading="lazy">
+                    <img src="${img.url}" alt="${description}" loading="lazy">
                     <div class="experience-accordion-overlay">
-                        <h4>${img.description}</h4>
+                        <h4>${description}</h4>
                     </div>
                 `;
                 leftAccordion.appendChild(item);
@@ -328,12 +340,13 @@ class IndexMapper extends BaseDataMapper {
             const rightAccordion = document.createElement('div');
             rightAccordion.className = 'experience-accordion-right';
             rightImages.forEach(img => {
+                const description = img.description || '갤러리 섹션 설명';
                 const item = document.createElement('div');
                 item.className = 'experience-accordion-item visible';
                 item.innerHTML = `
-                    <img src="${img.url}" alt="${img.description}" loading="lazy">
+                    <img src="${img.url}" alt="${description}" loading="lazy">
                     <div class="experience-accordion-overlay">
-                        <h4>${img.description}</h4>
+                        <h4>${description}</h4>
                     </div>
                 `;
                 rightAccordion.appendChild(item);
@@ -388,7 +401,7 @@ class IndexMapper extends BaseDataMapper {
                 </div>
                 <div class="signature-slide-content">
                     <span class="quote-mark quote-top">"</span>
-                    <h3 class="signature-slide-title">이미지 설명을 입력해 주세요.</h3>
+                    <h3 class="signature-slide-title">시그니처 섹션 설명</h3>
                     <span class="quote-mark quote-bottom">"</span>
                 </div>
             `;

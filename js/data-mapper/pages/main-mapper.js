@@ -37,25 +37,25 @@ class MainMapper extends BaseDataMapper {
 
         // data-main-title 매핑
         const mainTitleElement = this.safeSelect('[data-main-title]');
-        if (mainTitleElement && mainHeroData && mainHeroData.title) {
+        if (mainTitleElement && mainHeroData && mainHeroData.title !== undefined) {
             mainTitleElement.textContent = mainHeroData.title;
         }
 
         // data-main-description 매핑
         const mainDescriptionElement = this.safeSelect('[data-main-description]');
-        if (mainDescriptionElement && mainHeroData && mainHeroData.description) {
+        if (mainDescriptionElement && mainHeroData && mainHeroData.description !== undefined) {
             mainDescriptionElement.innerHTML = mainHeroData.description.replace(/\n/g, '<br>');
         }
 
         // 펜션 이름 매핑 - main 페이지의 hero.title 사용
         const propertyNameElement = this.safeSelect('[data-main-property-name]');
-        if (propertyNameElement && mainHeroData && mainHeroData.title) {
+        if (propertyNameElement && mainHeroData && mainHeroData.title !== undefined) {
             propertyNameElement.textContent = mainHeroData.title;
         }
 
         // Hero 설명 매핑 - main 페이지의 hero.description 사용
         const heroDescriptionElement = this.safeSelect('[data-main-hero-description]');
-        if (heroDescriptionElement && mainHeroData && mainHeroData.description) {
+        if (heroDescriptionElement && mainHeroData && mainHeroData.description !== undefined) {
             heroDescriptionElement.innerHTML = mainHeroData.description.replace(/\n/g, '<br>');
         }
     }

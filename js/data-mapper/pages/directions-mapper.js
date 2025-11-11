@@ -28,7 +28,7 @@ class DirectionsMapper extends BaseDataMapper {
         // Hero 제목 매핑 (customFields에서 우선, 없으면 기본값)
         const heroTitleElement = this.safeSelect('[data-directions-hero-title]');
         if (heroTitleElement) {
-            if (directionsHeroData?.title) {
+            if (directionsHeroData?.title !== undefined) {
                 heroTitleElement.textContent = directionsHeroData.title;
             } else if (this.data.property?.name) {
                 // fallback: 펜션명 + 오시는길

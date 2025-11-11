@@ -500,7 +500,7 @@
 }
 
 .room-preview-container {
-    max-width: 1400px;
+    max-width: 80%;
     margin: 0 auto;
     padding: 0 60px;
     position: relative;
@@ -856,6 +856,7 @@
 
 @media (max-width: 768px) {
     .room-preview-container {
+        max-width: 95%;
         padding: 0 20px;
         flex-direction: column;
         align-items: stretch;
@@ -942,7 +943,7 @@
 
 .essence-wrapper {
     position: relative;
-    max-width: 1400px;
+    max-width: 80%;
     margin: 0 auto;
     padding: 0 20px;
     display: grid;
@@ -1082,6 +1083,7 @@
     }
 
     .essence-wrapper {
+        max-width: 100%;
         gap: 30px;
     }
 
@@ -1128,7 +1130,7 @@
 }
 
 .experience-container {
-    max-width: 1400px;
+    max-width: 80%;
     margin: 0 auto;
     padding: 0 60px;
 }
@@ -1289,7 +1291,7 @@
 }
 
 .signature-container {
-    max-width: 1400px;
+    max-width: 80%;
     width: 100%;
     margin: 0 auto;
     padding: 0 60px;
@@ -1438,6 +1440,7 @@
     }
 
     .signature-container {
+        max-width: 100%;
         padding: 0 20px;
     }
 
@@ -1589,6 +1592,7 @@
     }
 
     .experience-container {
+        max-width: 100%;
         padding: 0 30px;
     }
 

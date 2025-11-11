@@ -56,7 +56,6 @@
 
 /* Facility Introduction Section */
 .facility-intro-section {
-    max-width: 1400px;
     margin: 0 auto;
     padding: 0 80px;
     display: flex;
@@ -116,7 +115,6 @@
 .facility-images-section {
     display: flex;
     gap: 30px;
-    max-width: 1400px;
     margin: 0 auto 0;
     padding: 0 20px;
     position: relative;
@@ -163,7 +161,6 @@
 
 /* Facility Usage Guide Section - Grid Style */
 .facility-usage-section {
-    max-width: 1400px;
     margin: 80px auto;
     padding: 0 20px;
     opacity: 0;
@@ -240,12 +237,17 @@
     margin: 0;
 }
 
+/* Facility Content Container */
+.facility-content-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
 /* New Facility Content Sections */
 .facility-content-section {
     display: flex;
     gap: 60px;
-    max-width: 1400px;
-    margin: 80px auto;
+    margin: 80px 0;
     padding: 0 20px;
     align-items: center;
     opacity: 0;
@@ -334,6 +336,10 @@
     .main-content-section {
         will-change: auto;
         transform: none !important;
+    }
+
+    .facility-content-container {
+        max-width: 100%;
     }
 
     .hero-slider-section {
