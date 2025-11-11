@@ -110,25 +110,9 @@
     transition: border-radius 0.8s ease;
 }
 
-/* 기본 상태 - border-radius 0 with transitions */
-.hero-image-half:nth-child(odd) img {
-    border-top-right-radius: 0;
-    transition: border-top-right-radius 0.8s ease;
-}
-
-.hero-image-half:nth-child(even) img {
-    border-top-left-radius: 0;
-    transition: border-top-left-radius 0.8s ease;
-}
-
-/* 홀수번째 이미지 - 우측 상단 100px border-radius (애니메이션) */
-.hero-image-half.animate-in:nth-child(odd) img {
-    border-top-right-radius: 100px;
-}
-
-/* 짝수번째 이미지 - 좌측 상단 100px border-radius (애니메이션) */
-.hero-image-half.animate-in:nth-child(even) img {
-    border-top-left-radius: 100px;
+/* 모든 hero-image-half 이미지에 12px border-radius */
+.hero-image-half img {
+    border-radius: 12px;
 }
 
 
