@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.20.0",
-    "generatedAt": "2025-11-10T11:32:51.441Z",
+    "version": "1.21.0",
+    "generatedAt": "2025-11-11T02:02:22.335Z",
     "templateType": "full_banner_slider_group",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -9,7 +9,7 @@
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "name": "맥스 한옥 펜션",
-    "description": "",
+    "description": "맥스 한옥 펜션으로 놀러오세요",
     "subtitle": "",
     "address": "서울특별시 금천구 가산디지털2로 144",
     "latitude": 37.4810281626186,
@@ -805,6 +805,13 @@
                     "sortOrder": 1,
                     "description": "",
                     "isSelected": true
+                  },
+                  {
+                    "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
+                    "sortOrder": 2,
+                    "description": "",
+                    "isSelected": true
                   }
                 ],
                 "description": "한옥느낌의 맥스펜션"
@@ -1018,7 +1025,7 @@
                     {
                       "id": "3c262154-f606-4675-b1fc-7b951f74d8ba",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857849-94b8jg0plxq.jpg",
-                      "sortOrder": 5,
+                      "sortOrder": 3,
                       "description": "",
                       "isSelected": true,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
@@ -1026,7 +1033,7 @@
                     {
                       "id": "b387ffb4-ffe9-4941-b4aa-68e849602957",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857850-4fft2g0x8n5.jpg",
-                      "sortOrder": 6,
+                      "sortOrder": 4,
                       "description": "",
                       "isSelected": true,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
@@ -1034,7 +1041,7 @@
                     {
                       "id": "18809828-802d-4e18-86cc-445985cbcf0b",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857850-wnw3ksxcgib.jpg",
-                      "sortOrder": 7,
+                      "sortOrder": 5,
                       "description": "",
                       "isSelected": true,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
