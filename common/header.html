@@ -27,7 +27,7 @@
             <!-- Logo Area -->
             <div class="logo-container" onclick="navigateTo('home')">
                 <div class="logo-icon">
-                    <img data-logo src="images/logo.svg" alt="로고" class="logo-image">
+                    <img data-logo src="" alt="로고" class="logo-image">
                 </div>
                 <!-- <span class="logo-text" data-logo-text></span> -->
             </div>
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="menu-item-wrapper">
-                            <button class="menu-item" data-menu="reservation" onclick="navigateTo('reservation-info')">Reservation</button>
+                            <button class="menu-item" data-menu="reservation">Reservation</button>
                             <div class="submenu">
                                 <button class="submenu-item" onclick="navigateTo('reservation-info')">예약안내</button>
                             </div>
@@ -112,7 +112,7 @@
         <div class="mobile-menu-grid">
             <!-- About Section -->
             <div class="mobile-menu-section">
-                <div class="mobile-accordion-header" onclick="toggleMobileAccordion(this)">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
                     <h3 class="mobile-menu-title">About</h3>
                     <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
                         <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -126,7 +126,7 @@
 
             <!-- Spaces Section -->
             <div class="mobile-menu-section">
-                <div class="mobile-accordion-header" onclick="toggleMobileAccordion(this)">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
                     <h3 class="mobile-menu-title">Spaces</h3>
                     <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
                         <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -139,7 +139,7 @@
 
             <!-- Specials Section -->
             <div class="mobile-menu-section">
-                <div class="mobile-accordion-header" onclick="toggleMobileAccordion(this)">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
                     <h3 class="mobile-menu-title">Specials</h3>
                     <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
                         <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -153,7 +153,7 @@
 
             <!-- Reservation Section -->
             <div class="mobile-menu-section">
-                <div class="mobile-accordion-header" onclick="toggleMobileAccordion(this)">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
                     <h3 class="mobile-menu-title">Reservation</h3>
                     <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
                         <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -166,23 +166,26 @@
 
         </div>
 
-        <!-- Mobile YBS Button -->
-        <button class="mobile-ybs-btn" data-ybs-button>
-            <span class="btn-text">YBS</span>
-            <svg class="icon" viewBox="0 0 24 24">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7,7 17,7 17,17"></polyline>
-            </svg>
-        </button>
+        <!-- Mobile Buttons Container -->
+        <div class="mobile-buttons-container">
+            <!-- Mobile YBS Button -->
+            <button class="mobile-ybs-btn" data-ybs-button>
+                <span class="btn-text">YBS</span>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7,7 17,7 17,17"></polyline>
+                </svg>
+            </button>
 
-        <!-- Mobile Reservation Button -->
-        <button class="mobile-reservation-btn" data-booking-engine>
-            <span>BOOK NOW</span>
-            <svg class="icon" viewBox="0 0 24 24">
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7,7 17,7 17,17"></polyline>
-            </svg>
-        </button>
+            <!-- Mobile Reservation Button -->
+            <button class="mobile-reservation-btn" data-booking-engine>
+                <span>BOOK NOW</span>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7,7 17,7 17,17"></polyline>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <!-- Preview Handler for Admin Integration -->

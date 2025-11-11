@@ -144,12 +144,12 @@
 }
 
 .room-gallery-container {
-    max-width: 1400px;
     margin: 0 auto;
     padding: 0 80px;
     display: flex;
     gap: 80px;
     align-items: flex-start;
+    justify-content: space-evenly;
 }
 
 /* Gallery Images Area - Left Side */
@@ -296,7 +296,7 @@
         font-size: 2rem;
     }
 
-    .gallery-property-english-name {
+    .room-gallery-section-wrap .room-gallery-container .gallery-property-english-name {
         font-size: 3rem;
     }
 }
@@ -328,8 +328,8 @@
         font-size: 1rem;
     }
 
-    .gallery-property-english-name {
-        font-size: 2.5rem;
+    .room-gallery-container .gallery-property-english-name {
+        font-size: 2rem;
         letter-spacing: 0.1em;
         margin-top: 15px;
     }
@@ -351,6 +351,11 @@
     transform: translate3d(0, 0, 0);
 }
 
+.room-content-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
 /* Mobile optimizations - disable parallax transforms */
 @media (max-width: 1024px) {
     .main-content-section {
@@ -364,6 +369,10 @@
         will-change: auto;
         transform: none !important;
         padding: 60px 20px 50px 20px !important;
+    }
+
+    .room-content-container {
+        max-width: 100%;
     }
 
     .room-header-info {
@@ -392,7 +401,6 @@
     justify-content: center;
     margin: 0 auto 80px auto;
     min-height: 300px;
-    max-width: 1400px;
     padding: 0 20px;
     opacity: 0;
     transform: translateY(40px);
@@ -430,7 +438,6 @@
     text-align: right;
     margin: -240px auto 60px auto;
     padding: 0 0 0 20px;
-    max-width: 1400px;
     opacity: 0;
     transform: translateY(40px);
     transition: all 0.8s ease;
@@ -463,7 +470,6 @@
 .room-images-section {
     display: flex;
     gap: 30px;
-    max-width: 1400px;
     margin: -30px auto 0;
     padding: 0;
     position: relative;
@@ -514,7 +520,6 @@
 
 /* Room Large Image Section */
 .room-large-image-section {
-    max-width: 1400px;
     margin: 30px auto 50px;
     padding: 0;
     opacity: 0;
@@ -541,7 +546,6 @@
 
 /* Room Details Accordion Section */
 .room-details-section {
-    max-width: 1400px;
     margin: 80px auto 0;
     padding: 0 20px;
     opacity: 0;
@@ -688,7 +692,6 @@
     display: flex;
     flex-direction: column;
     gap: 80px;
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -1088,7 +1091,6 @@
 .room-info-layout {
     display: flex;
     gap: 80px;
-    max-width: 1400px;
     margin: 0 auto 80px;
     padding: 0 80px;
     align-items: flex-start;

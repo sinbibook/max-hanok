@@ -70,6 +70,11 @@ class HeaderFooterMapper extends BaseDataMapper {
             if (logoUrl) {
                 logoImage.src = logoUrl;
                 logoImage.alt = property.name || '로고';
+                logoImage.classList.remove('empty-image-placeholder');
+            } else {
+                logoImage.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                logoImage.alt = '로고 없음';
+                logoImage.classList.add('empty-image-placeholder');
             }
         }
     }
@@ -138,13 +143,20 @@ class HeaderFooterMapper extends BaseDataMapper {
         // ybsId 찾기
         const ybsId = this.data.property.ybsId;
 
+        // 모든 YBS 버튼 찾기
+        const ybsButtons = document.querySelectorAll('[data-ybs-button]');
+
         if (!ybsId) {
+            // ybsId가 없으면 모든 YBS 버튼 숨김
+            ybsButtons.forEach(button => {
+                button.style.display = 'none';
+            });
             return;
         }
 
-        // 모든 YBS 버튼에 클릭 이벤트 설정
-        const ybsButtons = document.querySelectorAll('[data-ybs-button]');
+        // ybsId가 있으면 버튼 표시 및 클릭 이벤트 설정
         ybsButtons.forEach(button => {
+            button.style.display = '';
             button.setAttribute('data-ybs-id', ybsId);
             button.addEventListener('click', () => {
                 window.open(`${YBS_URL}${ybsId}`, '_blank');
@@ -154,29 +166,11 @@ class HeaderFooterMapper extends BaseDataMapper {
 
     /**
      * 메인 메뉴 아이템 클릭 핸들러 설정
+     * 비활성화: 메인 메뉴는 호버만, 서브메뉴에만 클릭 이벤트
      */
     mapMainMenuItems() {
-        // Spaces 메뉴 - 첫 번째 객실로 이동
-        const spacesMenu = document.querySelector('[data-room-link]');
-        if (spacesMenu) {
-            const rooms = this.safeGet(this.data, 'rooms');
-            if (rooms && rooms.length > 0) {
-                spacesMenu.onclick = () => {
-                    window.location.href = `room.html?id=${rooms[0].id}`;
-                };
-            }
-        }
-
-        // Specials 메뉴 - 첫 번째 시설로 이동
-        const specialsMenu = document.querySelector('[data-facility-link]');
-        if (specialsMenu) {
-            const facilities = this.safeGet(this.data, 'property.facilities');
-            if (facilities && facilities.length > 0) {
-                specialsMenu.onclick = () => {
-                    window.location.href = `facility.html?id=${facilities[0].id}`;
-                };
-            }
-        }
+        // 메인 메뉴 클릭 이벤트 제거됨
+        // 호버로 서브메뉴만 표시, 서브메뉴 아이템만 클릭 가능
     }
 
     /**
@@ -457,6 +451,11 @@ class HeaderFooterMapper extends BaseDataMapper {
             if (logoUrl) {
                 footerLogoImage.src = logoUrl;
                 footerLogoImage.alt = property.name || '로고';
+                footerLogoImage.classList.remove('empty-image-placeholder');
+            } else {
+                footerLogoImage.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                footerLogoImage.alt = '로고 없음';
+                footerLogoImage.classList.add('empty-image-placeholder');
             }
         }
 

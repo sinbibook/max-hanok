@@ -172,7 +172,7 @@ img {
 }
 
 .section-container {
-    max-width: 1200px;
+    max-width: 80%;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -361,10 +361,13 @@ img {
     .section-description {
         font-size: 1rem;
     }
+
+    /* Mobile font size will be handled by specific page CSS files */
 }
 
 @media (max-width: 768px) {
     .section-container {
+        max-width: 100%;
         padding: 0 15px;
     }
 

@@ -29,7 +29,6 @@
 
 /* Container */
 .container {
-    max-width: 1400px;
     margin: 0 auto;
     padding: 0 40px;
 }
@@ -37,6 +36,12 @@
 /* Location Info Section */
 .location-info-section {
     padding: 100px 0 0 0;
+}
+
+/* Directions Content Container */
+.directions-content-container {
+    max-width: 80%;
+    margin: 0 auto;
 }
 
 /* Facility Introduction Section */
@@ -256,6 +261,10 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .directions-content-container {
+        max-width: 100%;
+    }
+
     .container {
         padding: 0 20px;
     }
