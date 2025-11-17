@@ -1,75 +1,92 @@
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-content">
-        <!-- Top Section -->
-        <div class="footer-top">
-            <div class="footer-info-grid">
-                <!-- Company Info -->
-                <div class="footer-section footer-company">
-                    <h3 class="footer-title" data-footer-logo-text>숙소명</h3>
-                    <div class="footer-info-item">
-                        <span class="footer-label">대표자</span>
-                        <span class="footer-value" data-footer-representative-name>홍길동</span>
-                    </div>
-                    <div class="footer-info-item">
-                        <span class="footer-label">사업자번호</span>
-                        <span class="footer-value" data-footer-business-number>000-00-00000</span>
-                    </div>
-                    <div class="footer-info-item">
-                        <span class="footer-label">통신판매업</span>
-                        <span class="footer-value" data-footer-ecommerce>제2024-0000호</span>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Component</title>
+    <link rel="stylesheet" href="styles/footer.css">
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="맥스 한옥 펜션" />
+  <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
+  <meta property="og:url" content="https://max-hanok.com" />
 
-                <!-- Contact Info -->
-                <div class="footer-section footer-contact">
-                    <h3 class="footer-title">CONTACT</h3>
-                    <div class="footer-info-item">
-                        <span class="footer-label">TEL</span>
-                        <span class="footer-value" data-footer-phone>000-0000-0000</span>
-                    </div>
-                    <div class="footer-info-item">
-                        <span class="footer-label">EMAIL</span>
-                        <span class="footer-value" data-footer-email>info@hotel.com</span>
-                    </div>
-                    <div class="footer-info-item">
-                        <span class="footer-label">ADDRESS</span>
-                        <span class="footer-value" data-footer-address>주소를 입력해주세요</span>
-                    </div>
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="맥스 한옥 펜션" />
+  <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
+</head>
+<body>
+    <!-- Footer Component -->
+    <footer class="footer">
+        <div class="content-wrap">
+            <div class="footer-content">
+            <!-- Left Section - 30% -->
+            <div class="footer-left">
+                <div class="footer-logo-image">
+                    <!-- <img data-footer-logo src="images/logo.png" alt="로고" class="footer-logo-img"> -->
                 </div>
+                <div class="footer-logo-text" data-footer-logo-text>Mutenlol</div>
+                <div class="footer-phone">
+                    <span class="footer-phone-text" data-footer-phone>010-1111-1234</span>
+                </div>
+            </div>
 
-                <!-- Social & Follow Us -->
-                <div class="footer-section footer-social" data-social-links-section>
-                    <h3 class="footer-title">FOLLOW US</h3>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon" data-social-instagram aria-label="Instagram" style="display: none;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-icon" data-social-facebook aria-label="Facebook" style="display: none;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-icon" data-social-blog aria-label="Blog" style="display: none;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 19l8-8 4 4 6-6"/>
-                                <circle cx="9" cy="7" r="2"/>
-                            </svg>
-                        </a>
+            <!-- Right Section - 70% -->
+            <div class="footer-right">
+                <div class="footer-contact-info">
+                    <div class="footer-business-info">
+                        <div class="footer-info-line">
+                            대표자 : <span data-footer-representative-name>홍길동</span>
+                        </div>
+                        <div class="footer-info-line">
+                            주소 : <span data-footer-address>서울시 금천구 가산디지털로 144</span>
+                        </div>
+                        <div class="footer-info-line">
+                            사업자번호 : <span data-footer-business-number>123-45-67890</span>
+                        </div>
+                        <div class="footer-info-line">
+                            통신판매업 : <span data-footer-ecommerce>제2024-서울금천-1234호</span>
+                        </div>
+                    </div>
+                    <div class="social-section">
+                        <div class="social-divider"></div>
+                        <div class="social-links">
+                            <a href="#" class="social-icon" data-social-facebook aria-label="Facebook">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-icon" data-social-instagram aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-icon" data-social-blog aria-label="Blog">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14,2 14,8 20,8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10,9 9,9 8,9"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="footer-copyright">
+                        <p data-footer-copyright>Copyright(c) 2025 숙소명. All rights reserved.</p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Bottom Section -->
-        <div class="footer-bottom">
-            <div class="footer-bottom-content">
-                <p class="footer-copyright" data-footer-copyright>© 2024 숙소명. All rights reserved.</p>
-            </div>
         </div>
-    </div>
-</footer>
+    </footer>
+
+    <!-- Footer script -->
+    <script src="js/common/footer.js"></script>
+</body>
+</html>

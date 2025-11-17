@@ -1,37 +1,17 @@
-/* ===================================
-   Common Styles - Used Across All Pages
-   =================================== */
-
-/* Font Face Declarations */
-
-/* English Font - Chonburi */
+/* Font Face */
 @font-face {
-    font-family: 'Chonburi';
-    src: url('../fonts/Chonburi-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-display: swap;
-}
-
-/* Heading Font */
-@font-face {
-    font-family: 'KccImKwonTaek';
-    src: url('../fonts/KCC-Imkwontaek.ttf') format('truetype');
+    font-family: 'Chosunilbo';
+    src: url('../fonts/ChosunNm.ttf') format('truetype');
     font-weight: normal;
-    font-display: swap;
-}
-
-/* Body Font */
-@font-face {
-    font-family: 'Pretendard';
-    src: url('../fonts/Pretendard-Regular.otf') format('opentype');
-    font-weight: 400;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'MaruBuri';
-    src: url('../fonts/MaruBuri-Regular.ttf') format('truetype');
-    font-weight: 400;
+    font-family: 'Continuous';
+    src: url('../fonts/continuous.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
     font-display: swap;
 }
 
@@ -45,101 +25,65 @@
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'MaruBuri', sans-serif;
+    font-family: 'Chosunilbo', Arial, sans-serif;
     font-weight: 400;
+    line-height: 1.6;
     color: #333;
     overflow-x: hidden;
-    background: #f8f8f8;
+    background: #e8ebe6;
     position: relative;
-    z-index: 100;
-}
-
-/* Remove header cover during loading */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    background: transparent;
-    z-index: 500;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-
-/* Common Hero Styles */
-.hero-title,
-.hero-subtitle {
-    font-family: 'Chonburi', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    color: white;
     margin: 0;
-    opacity: 0.8;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 0;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
 }
 
-/* Hero Scroll Down Arrow */
-.hero-scroll-down {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: white;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+/* Mobile viewport fix */
+@supports (-webkit-touch-callout: none) {
+    html {
+        height: -webkit-fill-available;
+    }
 }
 
-.hero-scroll-down:hover {
-    opacity: 1;
+/* Ensure no extra space from line-height */
+.hero-section,
+.main-section {
+    line-height: 1;
 }
 
-.hero-scroll-down .scroll-text {
-    font-family: 'Chonburi', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+/* Hero Fade In Effect for all pages */
+.hero-section,
+.main-section.fullscreen-slider,
+.fullscreen-slider-container,
+.hero-slider-section {
+    opacity: 0;
+    animation: heroFadeIn 1.8s ease-out forwards;
+    animation-delay: 0.2s;
 }
 
-.hero-scroll-down .scroll-arrow {
-    width: 24px;
-    height: 24px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
         transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-8px);
-    }
-    60% {
-        transform: translateY(-4px);
     }
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Pretendard', 'Chonburi', sans-serif;
+    font-family: 'Chosunilbo', serif;
     font-weight: 700;
     line-height: 1.2;
+    color: #7a8471;
 }
 
 a {
@@ -152,18 +96,11 @@ a:hover {
     opacity: 0.8;
 }
 
-/* 데이터 로드 전 빈 이미지 완전히 숨김 (깜빡임 방지) */
-img[src=""],
-img:not([src]) {
-  display: none !important;
-}
-
 img {
     max-width: 100%;
     height: auto;
     display: block;
 }
-
 
 /* Common Layout Classes */
 .page-content {
@@ -172,89 +109,29 @@ img {
 }
 
 .section-container {
-    max-width: 80%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-.section-header {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.section-divider {
-    width: 60px;
-    height: 1px;
-    background: #333;
-    margin: 0 auto 30px;
-}
-
-.section-title {
-    font-family: 'Pretendard', 'Chonburi', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: #333;
-    margin: 0 0 20px 0;
-}
-
-.section-description {
-    font-size: 1.1rem;
-    color: #666;
-    line-height: 1.8;
-    max-width: 800px;
+.content-wrap {
+    width: 90%;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
-/* Buttons */
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    background: #333;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
+/* 27인치 모니터급 큰 화면에서만 80% */
+@media (min-width: 1920px) {
+    .content-wrap {
+        width: 80%;
+    }
 }
 
-.btn:hover {
-    background: #555;
-    transform: translateY(-2px);
-}
-
-.btn-outline {
-    background: transparent;
-    border: 2px solid #333;
-    color: #333;
-}
-
-.btn-outline:hover {
-    background: #333;
-    color: #fff;
-}
-
-.btn-outline-white {
-    padding: 15px 40px;
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    outline: none;
-}
-
-.btn-outline-white:hover {
-    background: white;
-    color: #333;
-    transform: translateY(-2px);
+/* 모바일에서 content-wrap 패딩 제거 */
+@media (max-width: 768px) {
+    .content-wrap {
+        padding: 0;
+    }
 }
 
 /* Utility Classes */
@@ -270,31 +147,6 @@ img {
     text-align: right;
 }
 
-.mt-1 { margin-top: 1rem; }
-.mt-2 { margin-top: 2rem; }
-.mt-3 { margin-top: 3rem; }
-.mt-4 { margin-top: 4rem; }
-.mt-5 { margin-top: 5rem; }
-
-.mb-1 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 2rem; }
-.mb-3 { margin-bottom: 3rem; }
-.mb-4 { margin-bottom: 4rem; }
-.mb-5 { margin-bottom: 5rem; }
-
-.pt-1 { padding-top: 1rem; }
-.pt-2 { padding-top: 2rem; }
-.pt-3 { padding-top: 3rem; }
-.pt-4 { padding-top: 4rem; }
-.pt-5 { padding-top: 5rem; }
-
-.pb-1 { padding-bottom: 1rem; }
-.pb-2 { padding-bottom: 2rem; }
-.pb-3 { padding-bottom: 3rem; }
-.pb-4 { padding-bottom: 4rem; }
-.pb-5 { padding-bottom: 5rem; }
-
-/* Hide/Show Classes */
 .hidden {
     display: none !important;
 }
@@ -303,249 +155,96 @@ img {
     display: block !important;
 }
 
-.invisible {
-    visibility: hidden;
+/* Scrolling Marquee */
+.marquee-section {
+    padding: 0;
+    overflow: hidden;
 }
 
-/* Loading States */
-.loading {
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-text {
+    display: inline-block;
+    animation: marquee 60s linear infinite;
+    font-family: 'ChosunNm', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: #7a8471;
+    letter-spacing: 8px;
+    font-style: italic;
+}
+
+.marquee-text span {
+    padding-right: 80px;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Full Banner Section */
+.full-banner {
+    height: 70vh;
+    background-image: url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
-    pointer-events: none;
-    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 30px;
-    height: 30px;
-    border: 3px solid #ddd;
-    border-top-color: #333;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
+/* Desktop only - parallax effect */
+@media (min-width: 1024px) {
+    .full-banner {
+        background-attachment: fixed;
     }
 }
 
-/* Responsive Grid */
-.grid {
-    display: grid;
-    gap: 30px;
-}
-
-.grid-cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.grid-cols-3 {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.grid-cols-4 {
-    grid-template-columns: repeat(4, 1fr);
-}
-
-/* Media Queries */
-@media (max-width: 1024px) {
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .section-description {
-        font-size: 1rem;
-    }
-
-    /* Mobile font size will be handled by specific page CSS files */
-}
-
+/* Responsive Marquee */
 @media (max-width: 768px) {
-    .section-container {
-        max-width: 100%;
-        padding: 0 15px;
+    .marquee-text {
+        font-size: 2rem;
+        letter-spacing: 4px;
     }
 
-    .section-header {
-        margin-bottom: 40px;
+    .marquee-text span {
+        padding-right: 50px;
     }
 
-    .section-title {
-        font-size: 1.8rem;
-    }
-
-    .grid-cols-3,
-    .grid-cols-4 {
-        grid-template-columns: repeat(2, 1fr);
+    .full-banner {
+        height: 60vh;
+        background-attachment: scroll;
     }
 }
 
 @media (max-width: 480px) {
-    .section-title {
-        font-size: 1.5rem;
+    .marquee-section {
+        padding: 10px 0;
     }
 
-    .grid-cols-2,
-    .grid-cols-3,
-    .grid-cols-4 {
-        grid-template-columns: 1fr;
+    .marquee-text {
+        font-size: 2rem;
+        letter-spacing: 2px;
+        font-weight: bold;
     }
-}
 
-/* ===================================
-   Hero Slider Progress - Shared Component
-   =================================== */
-
-/* Slider Progress Bar */
-.hero-slider-progress {
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    z-index: 10;
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 1px;
-}
-
-.hero-slider-current,
-.hero-slider-total {
-    font-family: 'Pretendard', sans-serif;
-    opacity: 0.9;
-}
-
-.hero-slider-line {
-    width: 100px;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-slider-line-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0%;
-    background: white;
-    transition: width 4000ms linear;
-}
-
-/* Hero Slider Navigation Arrows */
-.hero-slider-nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.hero-slider-arrow {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 8px;
-    transition: all 0.3s ease;
-    opacity: 0.7;
-    user-select: none;
-}
-
-.hero-slider-arrow:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-.hero-slider-arrow:active {
-    transform: scale(0.95);
-}
-
-.hero-slider-arrow.prev::before {
-    content: '‹';
-}
-
-.hero-slider-arrow.next::before {
-    content: '›';
-}
-
-.hero-content {
-    position: absolute;
-    bottom: 85px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    text-align: center;
-    color: white;
-    padding: 0 40px;
-}
-
-/* ===================================
-   Common Typography Styles
-   =================================== */
-
-.facility-number {
-    font-family: 'Chonburi', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: rgba(93, 109, 126, 0.7);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-}
-
-/* ===================================
-   Page Load Animation
-   =================================== */
-
-/* Smooth fade-in for main content - 임시 비활성화 */
-.main-content-fade-in {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-.main-content-fade-in.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Initial page fade in */
-body {
-    opacity: 0;
-    animation: pageLoadFadeIn 0.8s ease-out forwards;
-    animation-delay: 0.1s;
-}
-
-@keyframes pageLoadFadeIn {
-    from {
-        opacity: 0;
+    .marquee-text span {
+        padding-right: 30px;
     }
-    to {
-        opacity: 1;
+
+    .full-banner {
+        height: 50vh;
     }
-}
-
-.gallery-property-english-name {
-    font-family: 'Chonburi', sans-serif;
-    font-size: 4rem;
-    font-weight: 400;
-    color: rgba(160, 160, 160, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    margin-top: 50px;
-    line-height: 1;
-}
-
-/* Empty Image Placeholder - 모든 페이지 공통 */
-.empty-image-placeholder {
-    border: 2px dashed #9ca3af !important;
-    border-radius: 0.75rem !important;
-    background: #d1d5db !important;
 }

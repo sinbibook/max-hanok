@@ -8,6 +8,8 @@
     <title>오시는길 - 숙소명</title>
 
     <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/slider.css">
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/directions.css">
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
@@ -23,77 +25,67 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Include Header -->
-    <div id="header-placeholder"></div>
 
-    <!-- 메인 소개 섹션 히어로 0번째 이미지-->
-    <section class="hero-section">
-        <div class="hero-background">
-            <img src="" alt="오시는길 배경" data-customfield-directions-hero-image-0>
-            <div class="hero-overlay"></div>
-        </div>
-        <div class="hero-content">
-            <div class="hero-text-center">
-                <h1 class="hero-title" data-directions-hero-title>LOCATION</h1>
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <section class="main-section fullscreen-slider">
+          <div class="fullscreen-slider-container">
+            <div class="fullscreen-slider-inner">
+              <div class="fullscreen-slide active">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="도로 및 오시는길">
+              </div>
+              <div class="fullscreen-slide">
+                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="위치 안내">
+              </div>
+              <div class="fullscreen-slide">
+                <img src="https://images.unsplash.com/photo-1569025743873-ea3a9ade89f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="지도 및 경로">
+              </div>
             </div>
-        </div>
-
-        <!-- Scroll Down Indicator -->
-        <div class="hero-scroll-down" onclick="scrollToNextSection()">
-            <svg class="scroll-arrow" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Location Info Section -->
-    <section class="location-info-section">
-        <div class="directions-content-container">
-        <!-- Facility Introduction Section -->
-        <div class="facility-intro-section">
-            <div class="facility-intro-content">
-                <div class="facility-label">
-                    <span class="facility-number" data-directions-title>LOCATION</span>
-                </div>
-                <p class="facility-description" data-directions-description>
-                    오시는 길 안내입니다.
-                </p>
-            </div>
-        </div>
-
-        <!-- Banner Image Section 히어로 1번째 이미지 -->
-        <div class="directions-banner-section">
-            <div class="container">
-                <img src="" alt="오시는길 배너" class="directions-banner-image" data-customfield-directions-hero-image-1>
-            </div>
-        </div>
-
-        <!-- 지도 섹션 -->
-        <section class="map-section main-content-fade-in">
-            <div class="container">
-                <div class="address-section">
-                    <p>
-                        <svg class="location-icon" viewBox="0 0 24 24">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        <span data-directions-address></span>
-                    </p>
-                    <!-- 안내사항  -->
-                     <div class="notice-wrap">
-                        <h4 data-customfield-directions-notice-title>안내사항</h4>
-                        <p data-customfield-directions-notice-description>안내사항 1</p>
-                     </div>
-                </div>
+            <!-- 하드코딩 fix! -->
+            <div class="fullscreen-slider-content">
+              <h2 class="fullscreen-slider-title centered">Location</h2>
             </div>
 
-            <div class="container">
-                <div class="map-container">
-                    <div id="kakao-map"></div>
-                </div>
+            <div class="fullscreen-slider-nav">
+              <span class="nav-arrow nav-prev">‹</span>
+              <span class="nav-current">01</span>
+              <span class="nav-divider">|</span>
+              <span class="nav-total">03</span>
+              <span class="nav-arrow nav-next">›</span>
             </div>
+          </div>
         </section>
-        </div> <!-- directions-content-container -->
+        <div class="content-wrap">
+           <div class="about-description-wrap">
+            <!-- CUSTOM FIELD : 메인 소개 섹션 타이틀 매핑 -->
+            <h2 class="about-title animate-element">Location Info</h2>
+
+            <div class="location-details animate-element">
+                <div class="location-address-wrapper animate-element">
+                    <svg class="location-icon" viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <!-- 숙소 주소 매핑 -->
+                    <p class="location-address">서울시 금천구 가산디지털로 144</p>
+                </div>
+            </div>
+            <!-- CUSTOM FIELD : 안내사항 섹션 매핑, 없으면 display none -->
+             <div class="location-note animate-element" data-directions-notes>대중교통 이용시 2호선 가산디지털단지역에서 도보 5분
+자가용 이용시 경부고속도로 서초IC에서 15분
+주차장은 건물 지하 1층에 있습니다</div>
+           </div>
+
+           <!-- 지도 섹션 -->
+           <section class="map-section animate-element">
+
+               <div class="map-container animate-element">
+                   <div id="kakao-map"></div>
+               </div>
+           </section>
+        </div>
+    </main>
 
     <!-- Kakao Map SDK -->
     <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>
@@ -121,6 +113,9 @@
 
     <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
+
+    <!-- Fullscreen Slider Component -->
+    <script src="js/components/fullscreen-slider.js"></script>
 
     <!-- Page-specific script -->
     <script src="js/pages/directions.js"></script>

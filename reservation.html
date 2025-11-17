@@ -11,6 +11,8 @@
     <link rel="preload" href="styles/common.css" as="style">
     <link rel="preload" href="styles/reservation.css" as="style">
     <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/slider.css">
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/reservation.css">
 
   <!-- Open Graph Meta Tags for Social Media -->
@@ -27,98 +29,125 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Header will be loaded here -->
-    <div id="header-placeholder"></div>
 
-    <div class="reservation-page">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-background">
-                <img src="" alt="예약안내 배경" data-reservation-hero-image-0>
-                <div class="hero-overlay"></div>
-            </div>
-            <div class="hero-content">
-                <div class="hero-text-center">
-                    <h1 class="hero-title" data-reservation-hero-title></h1>
-                </div>
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- CUSTOM FIELD : 메인 소개 섹션 -->
+        <section class="main-section fullscreen-slider">
+          <div class="fullscreen-slider-container">
+            <div class="fullscreen-slider-inner">
+              <!-- 메인 소개 섹션 업로드 이미지 전체 순서대로 매핑 -->
+              <div class="fullscreen-slide active">
+                <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="예약 안내">
+              </div>
+              <div class="fullscreen-slide">
+                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="리셉션 데스크">
+              </div>
+              <div class="fullscreen-slide">
+                <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="예약 옵션">
+              </div>
             </div>
 
-            <!-- Scroll Down Indicator -->
-            <div class="hero-scroll-down" onclick="scrollToNextSection()">
-                <svg class="scroll-arrow" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                </svg>
+            <!-- 하드코딩 fix! -->
+            <div class="fullscreen-slider-content">
+              <h2 class="fullscreen-slider-title centered">Reservation</h2>
             </div>
+
+            <div class="fullscreen-slider-nav">
+              <span class="nav-arrow nav-prev">‹</span>
+              <span class="nav-current">01</span>
+              <span class="nav-divider">|</span>
+              <span class="nav-total">03</span>
+              <span class="nav-arrow nav-next">›</span>
+            </div>
+          </div>
         </section>
 
-        <!-- Reservation Info Section -->
+    </main>
+
+    <div class="reservation-page">
+
         <section class="reservation-info-section main-content-fade-in">
-            <div class="reservation-content-container">
-            <!-- Facility Introduction Section -->
-            <div class="facility-intro-section">
-                <div class="facility-intro-content">
-                    <div class="facility-label">
-                        <span class="facility-number" data-customfield-reservation-about-title></span>
+            <div class="reservation-intro-section">
+                <div class="reservation-intro-content">
+                    <div class="reservation-label">
+                        <!-- CUSTOM FIELD : 이용안내 섹션 타이틀 매핑 -->
+                        <span class="reservation-number">RESERVATION</span>
                     </div>
-                    <p class="facility-description" data-customfield-reservation-about-description></p>
+                    <!-- CUSTOM FIELD : 이용안내 섹션 설명 매핑 -->
+                    <p class="reservation-description">
+                        편안한 휴식을 위한 예약 안내입니다.
+                    </p>
                 </div>
             </div>
 
-            <!-- Banner Image Section -->
-            <div class="reservation-banner-section">
-                <div class="container">
-                    <img src="" alt="예약안내 배너" class="reservation-banner-image" data-reservation-hero-image-1>
-                </div>
+            <div class="reservation-book-now">
+                <a href="#" class="reservation-book-btn">BOOK NOW</a>
             </div>
 
-            <!-- 이용안내 섹션 -->
             <div class="reservation-content-layout">
-                <!-- Reservation Info Content -->
                 <div class="reservation-info-content">
-                    <!-- Reservation Details Accordion Section -->
                     <div class="reservation-details-section">
-                        <!-- 이용안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">이용안내</h3>
-                                <button class="accordion-close active" data-target="usage-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
+                        <!-- 숙소 이용안내 매핑 -->
+                        <div class="reservation-box animate-element">
+                            <div class="reservation-box-image">
+                                 <!-- images/에 있는 이미지 fix (이미지 추가예정) -->
+                                <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="이용안내 이미지">
                             </div>
-                            <div class="accordion-content active" id="usage-content" data-reservation-usage-content>
+                            <h3 class="reservation-box-title">이용안내</h3>
+                            <!-- 숙소 이용안내 텍스트 매핑 -->
+                            <div class="reservation-box-content reservation-text-content" data-usage-guide>-미성년자는 보호자 동반 없이 이용하실 수 없습니다.
+-반려동물과 함께 입실하실 수 없습니다.
+-예약 변경: 확정 후 변경 및 취소는 규정에 따릅니다
+-예약 확정: 예약금 입금 후 예약이 확정됩니다
+-실내에서 냄새가 많이 발생하는 음식 조리는 불가합니다.
+-시설물의 외부 유출이나 파손, 분실 시 동일 제품 재구입 비용을 청구합니다.</div>
+                        </div>
+
+                        <!-- 숙소 운영정보 매핑 -->
+                        <div class="reservation-box animate-element">
+                            <div class="reservation-box-image">
+                                <!-- images/에 있는 이미지 fix (이미지 추가예정) -->
+                                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="입퇴실 안내 이미지">
+                            </div>
+                            <h3 class="reservation-box-title">입/퇴실 안내</h3>
+                            <div class="reservation-box-content">
+                                <!-- 체크인/체크아웃 시간 -->
+                                <div class="checkin-checkout-times">
+                                    <div class="detail-item">
+                                        <span class="detail-label">체크인</span>
+                                        <span class="detail-value">15:00</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">체크아웃</span>
+                                        <span class="detail-value">11:00</span>
+                                    </div>
+                                </div>
+                                <!-- 운영정보 텍스트 -->
+                                <div class="operation-info-section">
+                                    <div class="reservation-text-content operation-info-text">-체크인 시 신분증을 지참해 주세요
+-체크아웃 시간을 지켜주시기 바랍니다
+-열쇠 분실 시 별도 요금이 발생합니다
+-지정된 구역에서만 흡연이 가능합니다
+-애완동물 동반은 불가합니다
+-정숙시간: 오후 10시 ~ 오전 7시</div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- 입/퇴실 안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">입/퇴실 안내</h3>
-                                <button class="accordion-close active" data-target="checkin-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
+                        <!-- 숙소 환불정책 매핑 -->
+                        <div class="reservation-box refund-box animate-element">
+                            <div class="reservation-box-image"> 
+                                <!-- images/에 있는 이미지 fix (이미지 추가예정) -->
+                                <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="환불 안내 이미지">
                             </div>
-                            <div class="accordion-content active" id="checkin-content" data-reservation-checkin-content>
-                            </div>
-                        </div>
-
-                        <!-- 환불규정 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">환불규정</h3>
-                                <button class="accordion-close active" data-target="refund-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="accordion-content active" id="refund-content">
-                                <p class="accordion-text">취소 시점에 따른 환불 규정은 다음과 같습니다:</p>
-                                <div class="table-section">
-                                    <div class="table-wrapper">
+                            <h3 class="reservation-box-title">환불/취소수수료</h3>
+                            <div class="refund-content">
+                                <div class="refund-table-section">
+                                    <h4 class="refund-section-title">환불 규정표</h4>
+                                    <div class="refund-table-wrapper">
+                                        <!-- 환불 정책 테이블 매핑 -->
                                         <table class="refund-table">
                                             <thead>
                                                 <tr>
@@ -126,44 +155,141 @@
                                                     <th>환불율</th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="refund-table-body">
+                                            <tbody>
+                                                <tr>
+                                                    <td>이용일 7일 전</td>
+                                                    <td>100% 환불</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>이용일 5~6일 전</td>
+                                                    <td>80% 환불</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>이용일 3~4일 전</td>
+                                                    <td>50% 환불</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>이용일 1~2일 전</td>
+                                                    <td>30% 환불</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>이용일 당일</td>
+                                                    <td class="no-refund">환불 불가</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                                <div class="refund-text-section">
+                                    <h4 class="refund-section-title">취소 및 환불 안내</h4>
+                                    <!-- 환불 정책 안내문 텍스트 매핑 : 없을 시 display : none -->
+                                    <div class="refund-notes reservation-text-content" data-refund-notes>-예약 취소는 체크인 전까지 가능합니다
+-환불은 결제 완료 후 3-5일 소요됩니다
+-기상악화나 천재지변 등 불가피한 사유의 경우 별도 협의 가능합니다
+-노쇼(No-show) 시에는 환불이 불가합니다
+-부분 환불은 불가하며, 전체 예약에 대해서만 환불 처리됩니다
+-환불 수수료는 위 표에 따라 차감됩니다</div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
-            </div> <!-- reservation-content-container -->
 
         </section>
     </div>
 
-    <!-- Footer will be loaded here -->
-    <div id="footer-placeholder"></div>
-
-
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
 
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
 
-    <!-- Property Data Mapper -->
+    <!-- Base Data Mapper -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Reservation Page Mapper -->
     <script src="js/data-mapper/pages/reservation-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header Footer Mapper -->
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
 
     <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
 
+    <!-- Fullscreen Slider Component -->
+    <script src="js/components/fullscreen-slider.js"></script>
+
     <!-- Page-specific script -->
     <script src="js/pages/reservation.js"></script>
+
+    <!-- 동적 화살표 스크립트 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textContents = document.querySelectorAll('.reservation-text-content');
+
+            textContents.forEach(function(content) {
+                const text = content.textContent.trim();
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+
+                // 불릿 문자를 화살표로 대체
+                const processedLines = lines.map(line => {
+                    const trimmedLine = line.trim();
+                    if (trimmedLine.startsWith('•') ||
+                        trimmedLine.startsWith('-') ||
+                        trimmedLine.startsWith('*') ||
+                        trimmedLine.length > 10) {
+                        return '>';
+                    }
+                    return '';
+                }).filter(arrow => arrow !== '');
+
+                // 원본 텍스트에서 불릿 문자 제거
+                const cleanedText = text.split('\n').map(line => {
+                    const trimmedLine = line.trim();
+                    if (trimmedLine.startsWith('•')) {
+                        return line.replace('•', '').trim();
+                    } else if (trimmedLine.startsWith('-')) {
+                        return line.replace('-', '').trim();
+                    } else if (trimmedLine.startsWith('*')) {
+                        return line.replace('*', '').trim();
+                    }
+                    return line;
+                }).join('\n');
+
+                // 원본 텍스트 내용 업데이트
+                content.innerHTML = cleanedText;
+
+                const arrows = processedLines.join('\n');
+
+                // 기존 화살표 요소가 있으면 제거
+                const existingArrow = content.querySelector('.dynamic-arrows');
+                if (existingArrow) {
+                    existingArrow.remove();
+                }
+
+                // 새 화살표 요소 추가
+                const arrowElement = document.createElement('div');
+                arrowElement.className = 'dynamic-arrows';
+                arrowElement.style.cssText = `
+                    position: absolute;
+                    left: 20px;
+                    top: 15px;
+                    color: #7a8471;
+                    font-weight: bold;
+                    line-height: 1.8;
+                    white-space: pre-line;
+                    pointer-events: none;
+                `;
+                arrowElement.textContent = arrows;
+                content.appendChild(arrowElement);
+            });
+        });
+    </script>
 
 </body>
 </html>

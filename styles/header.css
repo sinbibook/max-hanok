@@ -1,643 +1,601 @@
-/* ===================================
-   Header Styles - Transparent with Scroll Effect
-   =================================== */
-
-.header {
+/* Top Header Styles */
+.top-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: transparent;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 9999;
     transition: all 0.3s ease;
-    z-index: 1000;
-    padding: 20px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-family: 'Chosunilbo', serif;
 }
 
-/* Scrolled state */
-.header.scrolled {
-    background: rgba(51, 51, 51, 0.7);
-    padding: 15px 0;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-}
-
-.header-content {
-    max-width: 80%;
-    margin: 0 auto;
-    padding: 0 40px;
-}
-
-.header-inner {
+.top-header-content {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
+    height: 100%;
+    padding: 20px 0 0 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-/* Logo */
-.header .logo-container {
+.logo-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     cursor: pointer;
-    /* Override any animations from index.css */
-    animation: none !important;
-    opacity: 1;
-    transform: none !important;
-    transition: opacity 0.5s ease;
-}
-
-.logo-icon {
-    width: 150px;
-    height: auto;
-    transition: all 0.3s ease;
-}
-
-.header.scrolled .logo-icon {
-    width: 120px;
-    max-width: 120px;
-}
-
-@media (max-width: 480px) {
-    .logo-icon {
-        width: 100px;
-        max-width: 100px;
-    }
-
-    .header.scrolled .logo-icon {
-        width: 100px;
-        max-width: 100px;
-    }
+    flex: 1;
+    justify-content: center;
 }
 
 .logo-image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    transition: all 0.3s ease;
-    opacity: 1;
+    height: 40px;
+    width: auto;
+    display: block;
 }
 
 .logo-text {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: white;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
-    opacity: 1;
+    font-family: 'Chosunilbo', serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #7a8471;
+    display: block;
+    font-style: italic;
 }
 
-.header.scrolled .logo-text {
-    color: white;
-}
-
-/* Desktop Navigation */
-.desktop-nav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nav-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.main-menu {
-    display: flex;
-    gap: 40px;
-}
-
-.menu-item-wrapper {
-    position: relative;
-}
-
-.menu-item {
-    font-family: 'Pretendard', sans-serif;
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    position: relative;
-    padding: 8px 20px;
-    transition: all 0.3s ease;
-    background: none;
-    border: none;
-}
-
-.header.scrolled .menu-item {
-    color: white;
-}
-
-.menu-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: white;
-    transition: all 0.3s ease;
-}
-
-.header.scrolled .menu-item::after {
-    background: white;
-}
-
-.menu-item:hover::after {
-    width: 100%;
-}
-
-/* Individual Submenus */
-.submenu {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(-50%) translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 1001;
-    border-radius: 0 0 8px 8px;
-    min-width: 120px;
-    white-space: nowrap;
-}
-
-.menu-item-wrapper:hover .submenu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-.submenu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-}
-
-.submenu-item {
-    font-family: 'MaruBuri', sans-serif;
-    color: #666;
-    font-size: 0.9rem;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: none;
-    border: none;
-    text-align: center;
-    white-space: nowrap;
-    position: relative;
-}
-
-.submenu-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #333;
-    transition: all 0.3s ease;
-}
-
-.submenu-item:hover {
-    color: #333;
-}
-
-.submenu-item:hover::after {
-    width: 100%;
-}
-
-/* Reservation Button - Room List Style */
-.reservation-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 12px 24px;
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    font-family: 'Chonburi', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    border-radius: 0;
-}
-
-.reservation-btn:hover {
-    background: white;
-    color: #333;
-    border-color: white;
-}
-
-.header.scrolled .reservation-btn {
-    border-color: rgba(255, 255, 255, 0.3);
-    color: white;
-}
-
-.header.scrolled .reservation-btn:hover {
-    background: white;
-    color: #333;
-    border-color: white;
-}
-
-.reservation-btn .btn-text {
-    display: inline-block;
-}
-
-.reservation-btn .icon {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    transition: transform 0.3s ease;
-}
-
-.reservation-btn:hover .icon {
-    transform: translate(2px, -2px);
-}
-
-/* YBS Button - Same style as Reservation Button */
-.ybs-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 12px 24px;
-    background: transparent;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    font-family: 'Chonburi', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    border-radius: 0;
-}
-
-.ybs-btn:hover {
-    background: white;
-    color: #333;
-    border-color: white;
-}
-
-.header.scrolled .ybs-btn {
-    border-color: rgba(255, 255, 255, 0.3);
-    color: white;
-}
-
-.header.scrolled .ybs-btn:hover {
-    background: white;
-    color: #333;
-    border-color: white;
-}
-
-.ybs-btn .btn-text {
-    display: inline-block;
-}
-
-.ybs-btn .icon {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    transition: transform 0.3s ease;
-}
-
-.ybs-btn:hover .icon {
-    transform: translate(2px, -2px);
-}
-
-/* Mobile Toggle */
-.mobile-toggle {
-    display: none;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    padding: 8px;
-    transition: none;
-    position: relative;
-    z-index: 1001;
-}
-
-.mobile-toggle .icon {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-    stroke-width: 2;
-    fill: none;
-}
-
-.header.scrolled .mobile-toggle .icon {
-    stroke: white;
-}
-
-/* Mobile Menu */
-.mobile-menu {
+.book-now-btn {
     position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    background: rgba(0, 0, 0, 0.95);
-    transition: right 0.3s ease;
-    z-index: 2000;
-    overflow: hidden;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-}
-
-.mobile-menu.active {
-    right: 0;
-}
-
-/* 모바일 메뉴 활성화시 body 스크롤 방지 */
-body.mobile-menu-open {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-}
-
-.mobile-menu-close {
-    position: absolute;
     top: 20px;
     right: 20px;
-    cursor: pointer;
-    z-index: 10;
-    padding: 10px;
+    z-index: 1000;
+    padding: 10px 15px;
     background: transparent;
-    border: none;
+    color: #7a8471 !important;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    font-family: 'Chosunilbo', serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
 }
 
-.mobile-menu-close .icon {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-    stroke-width: 2;
-    fill: none;
-    pointer-events: none;
+.book-now-btn.scrolled {
+    background: #7a8471;
+    color: white !important;
+    border: 1px solid #7a8471;
 }
 
-.mobile-menu-grid {
+.book-now-btn::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.book-now-btn::after {
+    content: '→';
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-weight: 300;
+}
+
+.book-now-btn:hover {
+    background: #7a8471 !important;
+    color: white !important;
+    border-color: #7a8471;
+    transform: translateX(2px) translateY(-1px);
+}
+
+.book-now-btn:hover::before {
+    border-color: #7a8471;
+}
+
+.book-now-btn:hover::after {
+    transform: translateX(3px);
+}
+
+/* Side Header Styles */
+.side-header {
+    position: fixed;
+    top: 0;
+    left: -50vw;
+    width: 50vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #faf9f7 0%, #f5f2ed 100%);
+    box-shadow: 2px 0 30px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: left 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    font-family: 'Chosunilbo', serif;
+    display: flex;
+}
+
+.side-header.expanded {
+    left: 0;
+}
+
+/* Overlay for when side header is open */
+.side-header-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.side-header-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.side-header-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    background: transparent;
+    padding: 20px 40px 40px 40px;
+}
+
+.side-content-top {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 80px 20px;
-    padding-bottom: 120px;
-    margin-bottom: 0;
-    height: calc(100dvh - 200px);
 }
 
-.mobile-menu-section {
-    padding-bottom: 10px;
+.side-content-bottom {
+    margin-top: auto;
 }
 
-.mobile-menu-section:not(:last-child) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+/* Side Header Top */
+.side-header-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(106, 98, 71, 0.2);
+    position: relative;
 }
 
-.mobile-menu-title {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.side-logo-container {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
-.mobile-sub-items {
+.side-logo-container:hover {
+    opacity: 0.8;
+}
+
+.side-logo-text {
+    font-family: 'Chosunilbo', serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: #7a8471;
+    font-style: italic;
+}
+
+
+.side-menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.menu-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
-.mobile-sub-items .mobile-sub-item:last-child {
-    border-bottom: none;
+.menu-section-title {
+    font-family: 'Continuous', serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #7a8471;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #7a8471;
 }
 
-.mobile-sub-item {
-    font-family: 'MaruBuri', sans-serif;
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-    padding: 10px;
-    text-align: left;
+.menu-section-title.expandable {
     cursor: pointer;
-    transition: all 0.3s ease;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-.mobile-sub-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    padding-left: 15px;
-}
-
-.mobile-menu-title-button {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 700;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-    padding: 15px 0;
-    transition: all 0.3s ease;
-}
-
-.mobile-menu-title-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    padding-left: 10px;
-}
-
-/* Mobile Accordion Styles */
-.mobile-accordion-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    padding: 8px 0;
-}
-
-.mobile-accordion-icon {
-    width: 16px;
-    height: 16px;
-    stroke: white;
-    stroke-width: 2;
-    fill: none;
+.menu-section-title.expandable::after {
+    content: '▼';
+    position: absolute;
+    right: 0;
+    font-size: 12px;
     transition: transform 0.3s ease;
 }
 
-.mobile-accordion-header.active .mobile-accordion-icon {
-    transform: rotate(45deg);
+.menu-section-title.expandable.active::after {
+    transform: rotate(180deg);
 }
 
-.mobile-accordion-content {
+.menu-section-title.expandable:hover {
+    color: #7a8471;
+}
+
+.menu-section-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menu-section-list li {
+    width: 50%;
+    margin-bottom: 8px;
+}
+
+/* Multi-column layout for more than 4 items */
+.menu-section-list.multi-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: calc(4 * 32px); /* 고정 높이 */
+    align-content: flex-start;
+}
+
+.menu-section-list.multi-column li {
+    width: calc(50% - 10px);
+    height: 32px;
+    display: flex;
+    align-items: center;
+}
+
+.menu-section-list a {
+    color: #7a8471;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.menu-section-list a:hover {
+    color: #7a8471;
+}
+
+.side-image-banner {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80');
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.side-image-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+
+/* Hamburger Button - Independent of side header */
+.hamburger-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    z-index: 1001;
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.hamburger-button::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.hamburger-button:hover {
+    background: #7a8471;
+}
+
+.hamburger-button:hover::before {
+    border-color: #7a8471;
+}
+
+.hamburger-button:hover .toggle-icon span {
+    background: white;
+}
+
+.hamburger-button .toggle-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hamburger-button .toggle-icon span {
+    position: absolute;
+    width: 18px;
+    height: 2px;
+    background: #7a8471;
+    transition: all 0.3s ease;
+    left: 0;
+}
+
+.hamburger-button .toggle-icon span:first-child {
+    top: 3px;
+}
+
+.hamburger-button .toggle-icon span:nth-child(2) {
+    top: 8px;
+}
+
+.hamburger-button .toggle-icon span:last-child {
+    top: 13px;
+}
+
+/* Hamburger button scroll state */
+.hamburger-button.scrolled {
+    background: #7a8471;
+}
+
+.hamburger-button.scrolled .toggle-icon span {
+    background: white;
+}
+
+
+
+/* Accordion Content Animation */
+.accordion-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
 }
 
-.mobile-accordion-content.active {
-    max-height: 500px;
+.accordion-content.active {
+    max-height: 300px;
 }
 
-
-.mobile-buttons-container {
-    display: none;
-    gap: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.95);
-    padding: 20px;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom));
-    z-index: 2001;
+.accordion-content.active.multi-column {
+    max-height: 150px; /* 멀티컬럼일 때는 더 낮은 높이 */
 }
 
-.mobile-menu.active .mobile-buttons-container {
-    display: flex;
+/* Scrollable content for large lists */
+.accordion-content.active.scrollable {
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #7a8471 transparent;
 }
 
-.mobile-reservation-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 16px;
-    background: white;
-    border: none;
-    color: #333;
-    font-family: 'Chonburi', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    border-radius: 0;
-    margin: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    position: relative;
+.accordion-content.active.scrollable::-webkit-scrollbar {
+    width: 4px;
 }
 
-.mobile-reservation-btn:hover {
-    background: rgba(255, 255, 255, 0.95);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+.accordion-content.active.scrollable::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.mobile-reservation-btn:hover .icon {
-    transform: translate(2px, -2px);
+.accordion-content.active.scrollable::-webkit-scrollbar-thumb {
+    background: #7a8471;
+    border-radius: 2px;
 }
 
-.mobile-reservation-btn .icon {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    transition: transform 0.3s ease;
+/* X shape when side header is expanded - Fixed */
+.side-header.expanded + .hamburger-button .toggle-icon span:first-child,
+.hamburger-button.active .toggle-icon span:first-child {
+    transform: rotate(45deg);
+    top: 8px;
 }
 
-/* Mobile YBS Button - Same style as Mobile Reservation Button */
-.mobile-ybs-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 16px;
-    background: white;
-    border: none;
-    color: #333;
-    font-family: 'Chonburi', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    border-radius: 0;
-    margin: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    position: relative;
+.side-header.expanded + .hamburger-button .toggle-icon span:nth-child(2),
+.hamburger-button.active .toggle-icon span:nth-child(2) {
+    opacity: 0;
 }
 
-.mobile-ybs-btn:hover {
-    background: rgba(255, 255, 255, 0.95);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+.side-header.expanded + .hamburger-button .toggle-icon span:last-child,
+.hamburger-button.active .toggle-icon span:last-child {
+    transform: rotate(-45deg);
+    top: 8px;
 }
 
-.mobile-ybs-btn:hover .icon {
-    transform: translate(2px, -2px);
-}
-
-.mobile-ybs-btn .icon {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    transition: transform 0.3s ease;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .desktop-nav {
-        display: none;
-    }
-
-    .mobile-toggle {
-        display: block;
-    }
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
-    .header-content {
-        padding: 0 20px;
+    .side-header {
+        left: -100%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
     }
 
-    .header-inner {
-        position: relative;
+    .side-header.expanded {
+        left: 0;
+        width: 100%;
+    }
+
+    .side-nav {
+        padding: 100px 40px 40px 40px;
+        text-align: center;
+    }
+
+    .nav-list {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .nav-item-header {
+        font-size: 18px;
+        padding: 20px;
+        border-left: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-main-item > a {
+        font-size: 18px;
+        padding: 20px;
+        border-left: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-sub-list a {
+        font-size: 16px;
+        padding: 15px 20px;
+    }
+
+    /* Top Header Mobile */
+    .top-header-content {
+        padding: 0 20px;
+        height: 85px;
     }
 
     .logo-text {
-        font-size: 1rem;
+        font-size: 26px;
     }
 
-    .mobile-toggle {
+    .book-now-btn {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        font-size: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: fixed !important;
-        right: 15px !important;
-        top: 15px !important;
+        top: 20px !important;
+        right: 20px !important;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
         transform: none !important;
-        margin: 0 !important;
-        z-index: 1002 !important;
-        border-radius: 0 !important;
-        padding: 8px !important;
+        transition: none !important;
+    }
+
+    .book-now-btn:hover,
+    .book-now-btn:active {
+        background: #7a8471 !important;
+        border-color: #7a8471 !important;
+        transform: none !important;
+        position: fixed !important;
+        top: 20px !important;
+        right: 20px !important;
+    }
+
+    .book-now-btn:hover::before,
+    .book-now-btn:active::before {
+        border-color: #7a8471 !important;
+    }
+
+    .book-now-btn:hover::after,
+    .book-now-btn:active::after {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') !important;
+        transform: translate(-50%, -50%) !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+    }
+
+    .book-now-btn::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: 1px solid #7a8471;
+        border-radius: 0;
+        transition: border-color 0.3s ease;
+    }
+
+    .book-now-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        pointer-events: none;
+    }
+
+    .book-now-btn:active::after {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+    }
+
+    .book-now-btn.scrolled::before {
+        border-color: #7a8471;
+    }
+
+    .book-now-btn.scrolled::after {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+    }
+
+    /* Mobile menu section list - one item per line */
+    .menu-section-list li {
+        width: 100%;
+    }
+
+    .menu-section-list.multi-column li {
+        width: 100%;
+    }
+
+    /* Add margin-bottom to side image banner on mobile */
+    .side-image-banner {
+        margin-bottom: 60px;
     }
 }
