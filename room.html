@@ -34,17 +34,8 @@
     <main class="main-content">
         <section class="main-section fullscreen-slider">
           <div class="fullscreen-slider-container">
-            <div class="fullscreen-slider-inner">
-              <!-- 객실 내부 이미지 전체 순서대로 매핑 -->
-              <div class="fullscreen-slide active">
-                <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="감성적인 객실">
-              </div>
-              <div class="fullscreen-slide">
-                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="편안한 릴러">
-              </div>
-              <div class="fullscreen-slide">
-                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="바다 뷰 침실">
-              </div>
+            <div class="fullscreen-slider-inner" data-room-slider>
+              <!-- 동적으로 슬라이드가 생성됩니다 -->
             </div>
 
             <!-- 하드코딩 fix! -->
@@ -65,13 +56,13 @@
         <div class="content-wrap">
          <div class="room-description-wrap">
           <!-- 객실 이름 매핑 -->
-          <h2 class="room-title animate-element">B202</h2>
+          <h2 class="room-title animate-element" data-room-name></h2>
           <div class="room-image-circle">
             <!-- 객실 썸네일 이미지 매핑 -->
-            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="객실 대표 이미지">
+            <img data-room-thumbnail src="" alt="객실 대표 이미지">
           </div>
           <!-- 객실 소개 매핑 -->
-          <p class="room-description animate-element">침대룸A(퀸1) | 화장실1 </p>
+          <p class="room-description animate-element" data-room-description></p>
         </div>
 
         <!-- 하드코딩 -->
@@ -79,26 +70,15 @@
         <section class="room-info-section">
             <div class="room-info-container">
               <!-- CUSTOM FIELD : 메인 소개 섹션 소개문구 매핑 -->
-               <p class="room-custom-description">뮤튼롤의 오션뷰 객실입니다.</p>
+               <p class="room-custom-description" data-room-info-description></p>
                 <div class="room-info-content">
                     <div class="room-info-left">
                         <!-- 객실 내부 이미지 4장 끝에서부터 순서대로 매핑 -->
                         <div class="room-main-image">
-                            <img id="room-main-img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="객실 이미지">
+                            <img id="room-main-img" data-room-main-img src="" alt="객실 이미지">
                         </div>
-                        <div class="room-thumbnails">
-                            <div class="room-thumb active">
-                                <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="객실 전체">
-                            </div>
-                            <div class="room-thumb">
-                                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="침실">
-                            </div>
-                            <div class="room-thumb">
-                                <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="화장실">
-                            </div>
-                            <div class="room-thumb">
-                                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="거실">
-                            </div>
+                        <div class="room-thumbnails" data-room-thumbnails>
+                            <!-- 동적으로 썸네일이 생성됩니다 -->
                         </div>
                     </div>
                     <div class="room-info-right">
@@ -107,27 +87,27 @@
                         <div class="room-details-grid">
                             <div class="room-detail-item">
                                 <span class="detail-label">객실 크기</span>
-                                <span class="detail-value">25㎡</span>
+                                <span class="detail-value" data-room-size></span>
                             </div>
                             <div class="room-detail-item">
                                 <span class="detail-label">침대 타입</span>
-                                <span class="detail-value">킹사이즈 침대</span>
+                                <span class="detail-value" data-room-bed-types></span>
                             </div>
                             <div class="room-detail-item">
                                 <span class="detail-label">객실 구성</span>
-                                <span class="detail-value">침실 1개, 화장실 1개, 거실 1개</span>
+                                <span class="detail-value" data-room-composition></span>
                             </div>
                             <div class="room-detail-item">
                                 <span class="detail-label">인원</span>
-                                <span class="detail-value">2명/4명</span>
+                                <span class="detail-value" data-room-capacity></span>
                             </div>
                             <div class="room-detail-item">
                                 <span class="detail-label">체크인</span>
-                                <span class="detail-value">15:00</span>
+                                <span class="detail-value" data-room-checkin></span>
                             </div>
                             <div class="room-detail-item">
                                 <span class="detail-label">체크아웃</span>
-                                <span class="detail-value">11:00</span>
+                                <span class="detail-value" data-room-checkout></span>
                             </div>
                         </div>
 
@@ -135,9 +115,7 @@
                         <div class="room-usage-guide">
                             <div class="usage-guide-content">
                               <h4 class="usage-guide-title">객실 안내사항</h4>
-                              <p>인원추가요금 (1박기준/현장결제)
-- 중학생 이상 30,000원(이불 포함)
-- 초등학생 이하는 무료</p>
+                              <p data-room-guide></p>
                             </div>
                         </div>
                     </div>
@@ -150,42 +128,24 @@
       <!-- 숙소 영문명 매핑-->
       <div class="marquee-section">
         <div class="marquee-container">
-          <div class="marquee-text">
-            <span>MUTENLOL OVEAN VIEW PENSION</span>
-            <span>MUTENLOL OVEAN VIEW PENSION</span>
-            <span>MUTENLOL OVEAN VIEW PENSION</span>
-            <span>MUTENLOL OVEAN VIEW PENSION</span>
-            <span>MUTENLOL OVEAN VIEW PENSION</span>
+          <div class="marquee-text" data-room-marquee>
+            <!-- 동적으로 영문명이 생성됩니다 -->
           </div>
         </div>
       </div>
 
-      <!-- 객실 외경이미지 0번쨰 매핑 -->
-      <section class="full-banner"></section>
+      <!-- 객실 썸네일 0번쨰 매핑 -->
+      <section class="full-banner" data-room-banner></section>
 
       <!-- CUSTOM FIELD : 갤러리 섹션 설명 매핑 -->
       <section class="exterior-gallery-section">
         <div class="gallery-container">
           <!-- 갤러리 섹션 제목 매핑 -->
-          <h2 class="gallery-title">Exterior Gallery</h2>
+          <h2 class="gallery-title" data-room-gallery-title></h2>
 
           <!-- 갤러리 이미지 최대 5장 동적 변경 -->
-          <div class="dynamic-gallery">
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000&q=80" alt="감성적인 바다와 구름">
-            </div>
-
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="감성적인 인테리어">
-            </div>
-
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80" alt="오션뷰 풍경">
-            </div>
-
-            <div class="gallery-item">
-              <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200&q=80" alt="감성적인 객실">
-            </div>
+          <div class="dynamic-gallery" data-room-gallery>
+            <!-- 동적으로 갤러리 아이템이 생성됩니다 -->
           </div>
         </div>
       </section>

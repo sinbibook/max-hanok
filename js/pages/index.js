@@ -7,7 +7,7 @@ let autoSlideInterval;
 const slideDuration = 3000; // 3초마다 슬라이드
 
 // 무한 슬라이딩을 위한 카드 복사
-function setupInfiniteSlider() {
+window.setupInfiniteSlider = function setupInfiniteSlider() {
     const cards = document.querySelectorAll('.gallery-item');
 
     // 원본 카드들 저장
@@ -91,7 +91,7 @@ function nextSlide() {
 }
 
 // 자동 슬라이드 시작
-function startAutoSlide() {
+window.startAutoSlide = function startAutoSlide() {
     if (autoSlideInterval) {
         clearInterval(autoSlideInterval);
     }
@@ -113,7 +113,7 @@ function setupHoverPause() {
 }
 
 // 드래그 및 스와이프 기능
-function setupDragAndSwipe() {
+window.setupDragAndSwipe = function setupDragAndSwipe() {
     if (!gallerySlider) return;
 
     let isDragging = false;
@@ -398,76 +398,8 @@ function setupScrollAnimations() {
     setTimeout(overrideToggleFunction, 100);
 })();
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Signature Section Functionality
-    initSignatureSection();
-});
-
-// Signature Section Image Switching
-function initSignatureSection() {
-    const signatureData = [
-        {
-            mainImage: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-            title: "Sunrise",
-            description: "따뜻한 햇살이 가득한 공간<br>바닷가 실버톤 펜션, 힐링처럼서서 시작되는 아름다운 하루"
-        },
-        {
-            mainImage: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-            title: "Premium Bath",
-            description: "럭셔리한 욕실 공간<br>편안한 휴식을 위한 프리미엄 시설"
-        },
-        {
-            mainImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-            title: "Ocean View",
-            description: "탁 트인 바다 전망<br>자연과 하나되는 특별한 경험"
-        },
-        {
-            mainImage: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-            title: "Garden Suite",
-            description: "아름다운 정원이 보이는 스위트<br>자연 속에서 누리는 평온한 휴식"
-        }
-    ];
-
-    const mainImg = document.getElementById('signature-main-img');
-    const title = document.getElementById('signature-title');
-    const description = document.getElementById('signature-description');
-    const thumbnails = document.querySelectorAll('.signature-thumb');
-
-    if (!mainImg || !title || !description || thumbnails.length === 0) return;
-
-    // 초기 활성 썸네일 설정
-    thumbnails[0].classList.add('active');
-
-    // 썸네일 클릭 이벤트
-    thumbnails.forEach((thumb, index) => {
-        thumb.addEventListener('click', function() {
-            // 모든 썸네일에서 active 클래스 제거
-            thumbnails.forEach(t => t.classList.remove('active'));
-
-            // 클릭된 썸네일에 active 클래스 추가
-            this.classList.add('active');
-
-            // 메인 이미지와 텍스트 업데이트 (페이드 효과)
-            const data = signatureData[index];
-
-            // 페이드 아웃
-            mainImg.style.opacity = '0';
-
-            setTimeout(() => {
-                // 이미지 변경
-                mainImg.src = data.mainImage;
-                // title.textContent = data.title; // 타이틀은 고정
-                description.innerHTML = data.description;
-
-                // 페이드 인
-                mainImg.style.opacity = '1';
-            }, 250);
-        });
-    });
-}
-
 // Hero Slider Functionality
-function initHeroSlider() {
+window.initHeroSlider = function initHeroSlider() {
     const heroSlider = document.querySelector('.hero-slider');
     const heroSlides = document.querySelectorAll('.hero-slide');
     const prevBtn = document.querySelector('.slider-btn.prev');

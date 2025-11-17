@@ -1,12 +1,6 @@
 // Directions Page with Slider and Animation
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the fullscreen slider using the reusable component
-    const directionsSlider = new FullscreenSlider('.fullscreen-slider-container', {
-        slideDuration: 4000,
-        autoplay: true,
-        enableSwipe: true,
-        enableKeyboard: true
-    });
+    // Note: Slider는 directions-mapper.js의 reinitializeSlider()에서 초기화됨
 
     // Initialize location notes with icons
     initializeLocationNotes();
@@ -16,12 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 위치 안내 사항을 아이콘과 함께 동적으로 생성
-function initializeLocationNotes() {
+window.initializeLocationNotes = function initializeLocationNotes() {
     const noteElement = document.querySelector('[data-directions-notes]');
     if (!noteElement) return;
 
     // 텍스트 내용을 가져와서 줄바꿈으로 분할
     const noteText = noteElement.textContent.trim();
+    if (!noteText) {
+        noteElement.style.display = 'none';
+        return;
+    }
+
     const noteLines = noteText.split('\n').filter(line => line.trim() !== '');
 
     // 새로운 HTML 구조 생성 (각 아이템에 애니메이션 지연 시간 추가)
@@ -46,8 +45,8 @@ function initializeLocationNotes() {
     }, 100);
 }
 
-// �ld `�TtX $
-function setupScrollAnimations() {
+// 스크롤 애니메이션 설정
+window.setupScrollAnimations = function setupScrollAnimations() {
     const animateElements = document.querySelectorAll('.animate-element');
 
     function checkScroll() {
@@ -61,12 +60,12 @@ function setupScrollAnimations() {
         });
     }
 
-    // 0 �l
+    // 초기 실행
     checkScroll();
 
-    // �ld t�� ��
+    // 스크롤 이벤트
     window.addEventListener('scroll', checkScroll);
 
-    // İ ��t� ��� �l
+    // 리사이즈 이벤트
     window.addEventListener('resize', checkScroll);
 }

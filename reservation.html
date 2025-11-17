@@ -73,12 +73,10 @@
                 <div class="reservation-intro-content">
                     <div class="reservation-label">
                         <!-- CUSTOM FIELD : 이용안내 섹션 타이틀 매핑 -->
-                        <span class="reservation-number">RESERVATION</span>
+                        <span class="reservation-number" data-reservation-title></span>
                     </div>
                     <!-- CUSTOM FIELD : 이용안내 섹션 설명 매핑 -->
-                    <p class="reservation-description">
-                        편안한 휴식을 위한 예약 안내입니다.
-                    </p>
+                    <p class="reservation-description" data-reservation-description></p>
                 </div>
             </div>
 
@@ -97,12 +95,7 @@
                             </div>
                             <h3 class="reservation-box-title">이용안내</h3>
                             <!-- 숙소 이용안내 텍스트 매핑 -->
-                            <div class="reservation-box-content reservation-text-content" data-usage-guide>-미성년자는 보호자 동반 없이 이용하실 수 없습니다.
--반려동물과 함께 입실하실 수 없습니다.
--예약 변경: 확정 후 변경 및 취소는 규정에 따릅니다
--예약 확정: 예약금 입금 후 예약이 확정됩니다
--실내에서 냄새가 많이 발생하는 음식 조리는 불가합니다.
--시설물의 외부 유출이나 파손, 분실 시 동일 제품 재구입 비용을 청구합니다.</div>
+                            <div class="reservation-box-content reservation-text-content" data-usage-guide></div>
                         </div>
 
                         <!-- 숙소 운영정보 매핑 -->
@@ -117,28 +110,23 @@
                                 <div class="checkin-checkout-times">
                                     <div class="detail-item">
                                         <span class="detail-label">체크인</span>
-                                        <span class="detail-value">15:00</span>
+                                        <span class="detail-value" data-checkin-time></span>
                                     </div>
                                     <div class="detail-item">
                                         <span class="detail-label">체크아웃</span>
-                                        <span class="detail-value">11:00</span>
+                                        <span class="detail-value" data-checkout-time></span>
                                     </div>
                                 </div>
                                 <!-- 운영정보 텍스트 -->
                                 <div class="operation-info-section">
-                                    <div class="reservation-text-content operation-info-text">-체크인 시 신분증을 지참해 주세요
--체크아웃 시간을 지켜주시기 바랍니다
--열쇠 분실 시 별도 요금이 발생합니다
--지정된 구역에서만 흡연이 가능합니다
--애완동물 동반은 불가합니다
--정숙시간: 오후 10시 ~ 오전 7시</div>
+                                    <div class="reservation-text-content operation-info-text" data-operation-info></div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 숙소 환불정책 매핑 -->
                         <div class="reservation-box refund-box animate-element">
-                            <div class="reservation-box-image"> 
+                            <div class="reservation-box-image">
                                 <!-- images/에 있는 이미지 fix (이미지 추가예정) -->
                                 <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="환불 안내 이미지">
                             </div>
@@ -155,27 +143,7 @@
                                                     <th>환불율</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>이용일 7일 전</td>
-                                                    <td>100% 환불</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>이용일 5~6일 전</td>
-                                                    <td>80% 환불</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>이용일 3~4일 전</td>
-                                                    <td>50% 환불</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>이용일 1~2일 전</td>
-                                                    <td>30% 환불</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>이용일 당일</td>
-                                                    <td class="no-refund">환불 불가</td>
-                                                </tr>
+                                            <tbody class="refund-table-body">
                                             </tbody>
                                         </table>
                                     </div>
@@ -183,12 +151,7 @@
                                 <div class="refund-text-section">
                                     <h4 class="refund-section-title">취소 및 환불 안내</h4>
                                     <!-- 환불 정책 안내문 텍스트 매핑 : 없을 시 display : none -->
-                                    <div class="refund-notes reservation-text-content" data-refund-notes>-예약 취소는 체크인 전까지 가능합니다
--환불은 결제 완료 후 3-5일 소요됩니다
--기상악화나 천재지변 등 불가피한 사유의 경우 별도 협의 가능합니다
--노쇼(No-show) 시에는 환불이 불가합니다
--부분 환불은 불가하며, 전체 예약에 대해서만 환불 처리됩니다
--환불 수수료는 위 표에 따라 차감됩니다</div>
+                                    <div class="refund-notes reservation-text-content" data-refund-notes></div>
                                 </div>
                             </div>
                         </div>
