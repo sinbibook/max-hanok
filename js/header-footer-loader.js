@@ -29,34 +29,59 @@
 
             // Extract body content from the loaded HTML
             const bodyContent = temp.querySelector('body');
+            console.log('bodyContent:', bodyContent); // Debug
+
             if (bodyContent) {
-                // Insert header at the beginning of body
-                const header = bodyContent.querySelector('.header');
-                if (header) {
-                    document.body.insertBefore(header, document.body.firstChild);
+                // Insert top header first
+                const topHeader = bodyContent.querySelector('.top-header');
+                console.log('topHeader found:', topHeader); // Debug
+                if (topHeader) {
+                    document.body.insertBefore(topHeader, document.body.firstChild);
+                    console.log('topHeader inserted'); // Debug
                 }
 
-                // Insert mobile menu after header
-                const mobileMenu = bodyContent.querySelector('.mobile-menu');
-                if (mobileMenu) {
-                    document.body.insertBefore(mobileMenu, document.body.firstChild.nextSibling);
+                // Insert hamburger button
+                const hamburgerButton = bodyContent.querySelector('.hamburger-button');
+                console.log('hamburgerButton found:', hamburgerButton); // Debug
+                if (hamburgerButton) {
+                    document.body.insertBefore(hamburgerButton, document.body.firstChild);
+                    console.log('hamburgerButton inserted'); // Debug
+                }
+
+                // Insert side header
+                const sideHeader = bodyContent.querySelector('.side-header');
+                console.log('sideHeader found:', sideHeader); // Debug
+                if (sideHeader) {
+                    document.body.insertBefore(sideHeader, document.body.firstChild);
+                    console.log('sideHeader inserted'); // Debug
                 }
             } else {
-                // Fallback: try to get header directly
-                const header = temp.querySelector('.header');
-                if (header) {
-                    document.body.insertBefore(header, document.body.firstChild);
-                }
+                console.log('No body content found, trying direct method'); // Debug
+                // Fallback: Insert HTML directly
+                const headerHTML = html.replace(/<\/?(!DOCTYPE|html|head|title|link)[^>]*>/g, '');
+                const cleanHTML = headerHTML.replace(/<\/?body[^>]*>/g, '');
+                const firstChild = document.body.firstChild;
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = cleanHTML;
 
-                const mobileMenu = temp.querySelector('.mobile-menu');
-                if (mobileMenu) {
-                    document.body.insertBefore(mobileMenu, document.body.firstChild.nextSibling);
-                }
+                Array.from(tempDiv.children).forEach(child => {
+                    document.body.insertBefore(child, firstChild);
+                });
             }
 
             // Load header JavaScript
             const script = document.createElement('script');
             script.src = 'js/common/header.js';
+            script.onload = function() {
+                // Re-initialize hamburger button after script loads
+                setTimeout(() => {
+                    const hamburgerButton = document.getElementById('hamburger-button');
+                    if (hamburgerButton && window.toggleSideHeader) {
+                        hamburgerButton.addEventListener('click', window.toggleSideHeader);
+                        console.log('hamburger button event listener re-added after script load');
+                    }
+                }, 100);
+            };
             document.body.appendChild(script);
 
             // Immediately check scroll position after header is loaded

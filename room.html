@@ -11,6 +11,8 @@
     <link rel="preload" href="styles/common.css" as="style">
     <link rel="preload" href="styles/room.css" as="style">
     <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/slider.css">
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/room.css">
 
   <!-- Open Graph Meta Tags for Social Media -->
@@ -27,166 +29,167 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Include Header -->
-    <div id="header-placeholder"></div>
 
-    <!-- Hero Slider Section -->
-    <section class="hero-slider-section">
-        <div class="hero-slider" id="hero-slider" data-room-hero-slides-container>
-            <!-- Slides will be dynamically generated -->
-        </div>
-        <div class="hero-content">
-            <div class="hero-text-center">
-                <h1 class="hero-title" data-room-hero-name></h1>
-            </div>
-        </div>
-        <!-- Slider Progress -->
-        <div class="hero-slider-progress">
-            <div class="hero-slider-nav">
-                <button class="hero-slider-arrow prev" id="hero-prev"></button>
-                <span class="hero-slider-current" id="hero-current">01</span>
-                <div class="hero-slider-line">
-                    <div class="hero-slider-line-fill" id="hero-progress-fill"></div>
-                </div>
-                <span class="hero-slider-total" id="hero-total" data-room-total-slides>05</span>
-                <button class="hero-slider-arrow next" id="hero-next"></button>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Main Content Section -->
-    <section class="main-content-section main-content-fade-in">
-        <div class="room-content-container">
-        <!-- Stylized Title (Left Aligned for room.html) -->
-        <div class="stylized-title-container room-page-title">
-            <div class="circle-background"></div>
-            <div class="title-content">
-                <span class="title-label">DETAIL</span>
-                <h1 class="stylized-title">ROOM INFO</h1>
-            </div>
-        </div>
-
-        <!-- Room Header Info -->
-        <div class="room-header-info">
-            <h2 id="room-name-display" class="room-name-display" data-room-info-name></h2>
-            <p id="room-description-display" class="room-description-display" data-room-info-description></p>
-        </div>
-
-        <!-- Room Images Section -->
-        <div class="room-images-section">
-            <div class="room-image-horizontal">
-                <img src="" alt="Room Horizontal View" class="room-img-horizontal" data-room-interior-image-0>
-            </div>
-            <div class="room-image-vertical">
-                <img src="" alt="Room Vertical View" class="room-img-vertical" data-room-interior-image-1>
-            </div>
-        </div>
-
-        <!-- Room Details Accordion Section -->
-        <div class="room-details-section">
-            <!-- Type Section -->
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3 class="accordion-title">Room Type</h3>
-                    <button class="accordion-close" data-target="type-content">
-                        <svg class="close-icon" viewBox="0 0 24 24">
-                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="accordion-content" id="type-content">
-                    <p id="room-type-display" class="accordion-text" data-room-type>객실 타입 정보</p>
-                </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="main-section fullscreen-slider">
+          <div class="fullscreen-slider-container">
+            <div class="fullscreen-slider-inner">
+              <!-- 객실 내부 이미지 전체 순서대로 매핑 -->
+              <div class="fullscreen-slide active">
+                <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="감성적인 객실">
+              </div>
+              <div class="fullscreen-slide">
+                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="편안한 릴러">
+              </div>
+              <div class="fullscreen-slide">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="바다 뷰 침실">
+              </div>
             </div>
 
-            <!-- Room Info Section -->
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3 class="accordion-title">Room Info</h3>
-                    <button class="accordion-close" data-target="roominfo-content">
-                        <svg class="close-icon" viewBox="0 0 24 24">
-                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="accordion-content" id="roominfo-content">
-                    <p id="room-info-display" class="accordion-text" data-room-info>객실 정보</p>
-                </div>
+            <!-- 하드코딩 fix! -->
+            <div class="fullscreen-slider-content">
+              <h2 class="fullscreen-slider-title centered">Room</h2>
             </div>
 
-            <!-- Amenities Section -->
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3 class="accordion-title">Amenities</h3>
-                    <button class="accordion-close" data-target="amenities-content">
-                        <svg class="close-icon" viewBox="0 0 24 24">
-                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="accordion-content" id="amenities-content">
-                    <p id="amenities-display" class="accordion-text" data-room-amenities>편의시설</p>
-                </div>
+            <div class="fullscreen-slider-nav">
+              <span class="nav-arrow nav-prev">‹</span>
+              <span class="nav-current">01</span>
+              <span class="nav-divider">|</span>
+              <span class="nav-total">03</span>
+              <span class="nav-arrow nav-next">›</span>
             </div>
+          </div>
+        </section>
+
+        <div class="content-wrap">
+         <div class="room-description-wrap">
+          <!-- 객실 이름 매핑 -->
+          <h2 class="room-title animate-element">B202</h2>
+          <div class="room-image-circle">
+            <!-- 객실 썸네일 이미지 매핑 -->
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="객실 대표 이미지">
+          </div>
+          <!-- 객실 소개 매핑 -->
+          <p class="room-description animate-element">침대룸A(퀸1) | 화장실1 </p>
         </div>
 
-        <!-- Reservation CTA Button -->
-        <div class="reservation-cta-section">
-            <button class="reservation-cta-btn book-now-style" data-booking-engine>
-                <span class="book-text">BOOK NOW</span>
-                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7,7 17,7 17,17"></polyline>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Room Images Section -->
-         <section class="room-gallery-section-wrap">
-            <div class="room-gallery-container" data-room-gallery-grid>
-                <!-- Gallery Images - Left Side -->
-                <div class="gallery-images-area">
-                    <!-- Main Large Image -->
-                    <div class="gallery-main-image">
-                        <img src="" alt="Room Main View" data-customfield-room-gallery-main-image>
+        <!-- 하드코딩 -->
+        <h2 class="room-info-title">Room Information</h2>
+        <section class="room-info-section">
+            <div class="room-info-container">
+              <!-- CUSTOM FIELD : 메인 소개 섹션 소개문구 매핑 -->
+               <p class="room-custom-description">뮤튼롤의 오션뷰 객실입니다.</p>
+                <div class="room-info-content">
+                    <div class="room-info-left">
+                        <!-- 객실 내부 이미지 4장 끝에서부터 순서대로 매핑 -->
+                        <div class="room-main-image">
+                            <img id="room-main-img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="객실 이미지">
+                        </div>
+                        <div class="room-thumbnails">
+                            <div class="room-thumb active">
+                                <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="객실 전체">
+                            </div>
+                            <div class="room-thumb">
+                                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="침실">
+                            </div>
+                            <div class="room-thumb">
+                                <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="화장실">
+                            </div>
+                            <div class="room-thumb">
+                                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="거실">
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="room-info-right">
 
-                <!-- Gallery Content - Right Side -->
-                <div class="gallery-content-area">
-                    <!-- Text Section -->
-                    <div class="gallery-text-section">
-                        <!-- <div class="gallery-title-section">
-                            <h3 class="gallery-title" data-customfield-room-gallery-title>Jiseda Pool villa Pension</h3>
-                            <div class="gallery-title-underline"></div>
-                        </div> -->
-                        <div class="gallery-description">
-                            <p data-customfield-room-gallery-description></p>
+                        <!-- 객실 정보 매핑 -->
+                        <div class="room-details-grid">
+                            <div class="room-detail-item">
+                                <span class="detail-label">객실 크기</span>
+                                <span class="detail-value">25㎡</span>
+                            </div>
+                            <div class="room-detail-item">
+                                <span class="detail-label">침대 타입</span>
+                                <span class="detail-value">킹사이즈 침대</span>
+                            </div>
+                            <div class="room-detail-item">
+                                <span class="detail-label">객실 구성</span>
+                                <span class="detail-value">침실 1개, 화장실 1개, 거실 1개</span>
+                            </div>
+                            <div class="room-detail-item">
+                                <span class="detail-label">인원</span>
+                                <span class="detail-value">2명/4명</span>
+                            </div>
+                            <div class="room-detail-item">
+                                <span class="detail-label">체크인</span>
+                                <span class="detail-value">15:00</span>
+                            </div>
+                            <div class="room-detail-item">
+                                <span class="detail-label">체크아웃</span>
+                                <span class="detail-value">11:00</span>
+                            </div>
                         </div>
-                        <div class="gallery-property-english-name" data-property-nameEn></div>
-                    </div>
 
-                    <!-- Thumbnail Images Grid -->
-                    <div class="gallery-thumbnails">
-                        <div class="gallery-thumb">
-                            <img src="" alt="Room View 1" data-customfield-room-gallery-thumb-1>
-                        </div>
-                        <div class="gallery-thumb">
-                            <img src="" alt="Room View 2" data-customfield-room-gallery-thumb-2>
-                        </div>
-                        <div class="gallery-thumb">
-                            <img src="" alt="Room View 3" data-customfield-room-gallery-thumb-3>
+                        <!-- 객실 이용규칙/안내사항 매핑 -->
+                        <div class="room-usage-guide">
+                            <div class="usage-guide-content">
+                              <h4 class="usage-guide-title">객실 안내사항</h4>
+                              <p>인원추가요금 (1박기준/현장결제)
+- 중학생 이상 30,000원(이불 포함)
+- 초등학생 이하는 무료</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-         </section>
-        </div> <!-- room-content-container -->
-    </section>
+        </section>
 
+      </div>
 
+      <!-- 숙소 영문명 매핑-->
+      <div class="marquee-section">
+        <div class="marquee-container">
+          <div class="marquee-text">
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+          </div>
+        </div>
+      </div>
 
+      <!-- 객실 외경이미지 0번쨰 매핑 -->
+      <section class="full-banner"></section>
+
+      <!-- CUSTOM FIELD : 갤러리 섹션 설명 매핑 -->
+      <section class="exterior-gallery-section">
+        <div class="gallery-container">
+          <!-- 갤러리 섹션 제목 매핑 -->
+          <h2 class="gallery-title">Exterior Gallery</h2>
+
+          <!-- 갤러리 이미지 최대 5장 동적 변경 -->
+          <div class="dynamic-gallery">
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000&q=80" alt="감성적인 바다와 구름">
+            </div>
+
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="감성적인 인테리어">
+            </div>
+
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80" alt="오션뷰 풍경">
+            </div>
+
+            <div class="gallery-item">
+              <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1200&q=80" alt="감성적인 객실">
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
@@ -212,8 +215,38 @@
     <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
 
+    <!-- Fullscreen Slider Component -->
+    <script src="js/components/fullscreen-slider.js"></script>
+
     <!-- Page-specific script -->
     <script src="js/pages/room.js"></script>
+
+    <!-- 테스트용 디버깅 스크립트 -->
+    <script>
+        // 개발자도구에서 테스트할 수 있는 함수들
+        window.testGallery = {
+            show1: () => changeGalleryCount(1),
+            show2: () => changeGalleryCount(2),
+            show3: () => changeGalleryCount(3),
+            show4: () => changeGalleryCount(4),
+            show5: () => changeGalleryCount(5),
+            showAll: () => {
+                const gallery = document.querySelector('.dynamic-gallery');
+                const items = gallery.querySelectorAll('.gallery-item');
+                items.forEach(item => item.style.display = 'block');
+                gallery.setAttribute('data-count', items.length);
+            },
+            getCount: () => {
+                const gallery = document.querySelector('.dynamic-gallery');
+                return gallery.getAttribute('data-count');
+            }
+        };
+
+        console.log('갤러리 테스트 함수 사용법:');
+        console.log('testGallery.show1() ~ testGallery.show5() - 원하는 개수만큼 표시');
+        console.log('testGallery.showAll() - 모든 이미지 표시');
+        console.log('testGallery.getCount() - 현재 data-count 확인');
+    </script>
 
 </body>
 </html>

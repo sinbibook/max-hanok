@@ -8,6 +8,7 @@
   <title>숙소명 - 소개</title>
 
   <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/slider.css">
   <link rel="stylesheet" href="styles/main.css">
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
@@ -23,52 +24,96 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-  <!-- Include Header -->
-  <div id="header-placeholder"></div>
 
-  <!-- 메인 소개 섹션 히어로 0번째 이미지-->
-  <section class="hero-section">
-    <div class="hero-background">
-      <img src="" alt="메인 배경" data-customfield-main-hero-image-0>
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="hero-content">
-      <div class="hero-text-center">
-        <h1 class="hero-title">ABOUT</h1>
-      </div>
-    </div>
+  <!-- Main Content -->
+  <main class="main-content">
+    
+      <!-- CUSTOM FIELD : 메인 소개 섹션 -->
+      <section class="main-section fullscreen-slider">
+        <div class="fullscreen-slider-container">
+          <div class="fullscreen-slider-inner">
+            <!-- 메인 소개 섹션 업로드 이미지 전체 -->
+            <div class="fullscreen-slide active">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="감성적인 바다와 구름 이미지">
+            </div>
+            <div class="fullscreen-slide">
+              <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="바다 노을 풍경">
+            </div>
+            <div class="fullscreen-slide">
+              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="오션뷰 풍경">
+            </div>
+          </div>
 
-    <!-- Scroll Down Indicator -->
-    <div class="hero-scroll-down" onclick="scrollToNextSection()">
-      <svg class="scroll-arrow" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-      </svg>
-    </div>
-  </section>
+          <div class="fullscreen-slider-content">
+            <!-- 하드코딩 fix! -->
+            <h2 class="fullscreen-slider-title centered">About Us</h2>
+          </div>
 
-  <!-- Main Info Section -->
-  <section class="location-info-section">
-    <!-- Facility Introduction Section -->
-    <div class="facility-intro-section">
-      <div class="facility-intro-content">
-        <div class="facility-label">
-          <span class="facility-number" data-main-title>ABOUT</span>
+          <div class="fullscreen-slider-nav">
+            <span class="nav-arrow nav-prev">‹</span>
+            <span class="nav-current">01</span>
+            <span class="nav-divider">|</span>
+            <span class="nav-total">03</span>
+            <span class="nav-arrow nav-next">›</span>
+          </div>
         </div>
-        <p class="facility-description" data-main-description>메인 페이지 안내입니다.</p>
+      </section>
+      <div class="content-wrap">
+        <!-- 메인 소개 섹션 제목/설명 -->
+         <div class="about-description-wrap">
+          <h2 class="about-title animate-element" data-main-about-title>About Mutenlol</h2>
+          <p class="about-description animate-element" data-main-about-description>강릉 바다를 품은 뮤튼롤을 소개합니다.<br/>뮤튼롤은 유럽의 정취를 느낄 수 있는 곳입니다.<br/>아름다운 오션뷰를 감상할 수 있는 이곳에서<br/>당신은 완벽한 휴식을 경험할 수 있습니다.</p>
+         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- 소개섹션 custom-field (동적으로 생성됨) -->
-  <div class="main-content-wrapper">
-    <!-- JavaScript로 동적 생성됨 -->
-  </div>
+      <!-- 숙소 영문명 매핑-->
+      <div class="marquee-section">
+        <div class="marquee-container">
+          <div class="marquee-text">
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+            <span>MUTENLOL OVEAN VIEW PENSION</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 숙소 외경이미지 0번째 -->
+      <section class="full-banner"></section>
+
+      <!-- CUSTOM FIELD : 소개 섹션 (동적생성) 제목, 설명, 이미지 2개가 한 블록 -->
+      <section class="introduction-section">
+          <div class="gallery-wrap">
+            <div class="img-wrap animate-element">
+              <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="파도 풍경">
+            </div>
+            <div class="txt-wrap">
+              <h2 class="intro-title animate-element">강릉 바다를 담은</h2>
+              <p class="intro-description animate-element">뮤튼롤 펜션에서 당신의 쉼을 만끽하세요.</p>
+            </div>
+            <div class="view-img animate-element">
+              <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="바다 노을 풍경 2">
+            </div>
+          </div>
+          <!-- 두번째 소개 섹션 -->
+          <div class="gallery-wrap">
+            <div class="img-wrap animate-element">
+              <img src="https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="파도 풍경">
+            </div>
+            <div class="txt-wrap">
+              <h2 class="intro-title animate-element">강릉 바다를 담은</h2>
+              <p class="intro-description animate-element">뮤튼롤 펜션에서 당신의 쉼을 만끽하세요.</p>
+            </div>
+            <div class="view-img animate-element">
+              <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" alt="바다 노을 풍경 2">
+            </div>
+          </div>
+        </section>
+  </main>
 
   <!-- Include ImageWithFallback script -->
   <script src="js/image-with-fallback.js"></script>
-
-  <!-- Common JavaScript -->
-  <script src="js/common.js"></script>
 
   <!-- Preview Handler for Admin Integration -->
   <script src="js/preview-handler.js"></script>
@@ -87,6 +132,9 @@
 
   <!-- Header and Footer Loader -->
   <script src="js/header-footer-loader.js"></script>
+
+  <!-- Fullscreen Slider Component -->
+  <script src="js/components/fullscreen-slider.js"></script>
 
   <!-- Page-specific script -->
   <script type="module" src="js/pages/main.js"></script>
