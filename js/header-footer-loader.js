@@ -6,6 +6,20 @@
 (function() {
     'use strict';
 
+    // Track if header and footer are both loaded
+    let headerLoaded = false;
+    let footerLoaded = false;
+
+    // Initialize mapper after both header and footer are loaded
+    function tryInitializeMapper() {
+        if (headerLoaded && footerLoaded && window.HeaderFooterMapper) {
+            setTimeout(async () => {
+                const mapper = new window.HeaderFooterMapper();
+                await mapper.initialize();
+            }, 100);
+        }
+    }
+
     // Load CSS
     function loadCSS(href) {
         const link = document.createElement('link');
@@ -91,6 +105,10 @@
                     header.classList.add('scrolled');
                 }
             }
+
+            // Mark header as loaded and try to initialize mapper
+            headerLoaded = true;
+            tryInitializeMapper();
         } catch (error) {
             console.error('Error loading header:', error);
         }
@@ -120,6 +138,10 @@
                 const script = document.createElement('script');
                 script.src = 'js/common/footer.js';
                 document.body.appendChild(script);
+
+                // Mark footer as loaded and try to initialize mapper
+                footerLoaded = true;
+                tryInitializeMapper();
             }
         } catch (error) {
             console.error('Error loading footer:', error);

@@ -1,12 +1,6 @@
 // Room Page with Slider
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the fullscreen slider using the reusable component
-    const roomSlider = new FullscreenSlider('.fullscreen-slider-container', {
-        slideDuration: 4000,
-        autoplay: true,
-        enableSwipe: true,
-        enableKeyboard: true
-    });
+    // Note: Slider는 room-mapper.js의 reinitializeSlider()에서 초기화됨
 
     // Initialize other room-specific functionality
     initializeRoomAccordion();
@@ -20,7 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 300);
 
     // 스크롤 애니메이션 초기화
-    initializeScrollAnimations();
+    if (typeof window.initializeScrollAnimations === 'function') {
+        window.initializeScrollAnimations();
+    }
 
     // 갤러리 순차 애니메이션 초기화
     initializeGalleryAnimations();
@@ -29,11 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDynamicGallery();
 
     // 썸네일 클릭 기능 초기화
-    initializeThumbnailClicks();
+    if (typeof window.setupRoomThumbnailInteraction === 'function') {
+        window.setupRoomThumbnailInteraction();
+    }
 });
 
 // 스크롤 애니메이션 관찰자 설정
-function initializeScrollAnimations() {
+window.initializeScrollAnimations = function initializeScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -172,8 +170,8 @@ function initializeDynamicGallery() {
 }
 
 // 썸네일 클릭 기능
-function initializeThumbnailClicks() {
-    const mainImg = document.getElementById('room-main-img');
+window.setupRoomThumbnailInteraction = function initializeThumbnailClicks() {
+    const mainImg = document.querySelector('[data-room-main-img]');
     const thumbnails = document.querySelectorAll('.room-thumb');
 
     thumbnails.forEach(thumb => {
@@ -187,9 +185,7 @@ function initializeThumbnailClicks() {
             // 메인 이미지 변경
             const thumbImg = this.querySelector('img');
             if (mainImg && thumbImg) {
-                // 고해상도로 변경 (썸네일은 400x300, 메인은 800x600)
-                const newSrc = thumbImg.src.replace('w=400&h=300', 'w=800&h=600');
-                mainImg.src = newSrc;
+                mainImg.src = thumbImg.src;
                 mainImg.alt = thumbImg.alt;
             }
         });

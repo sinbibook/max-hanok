@@ -22,24 +22,22 @@
     <!-- Top Header -->
     <header class="top-header">
         <div class="top-header-content">
-            <div class="logo-container" onclick="navigateTo('home')">
-                <!-- <img data-logo src="images/mutenlol_logo.png" alt="로고" class="logo-image"> -->
-                <span class="logo-text" data-logo-text>Mutenlol</span>
-            </div>
-            <button class="book-now-btn" data-booking-engine>
-                BOOK NOW
-            </button>
-        </div>
-    </header>
-
-    <!-- Hamburger Button - Independent -->
-    <div class="hamburger-button" id="hamburger-button">
+            <div class="hamburger-button" id="hamburger-button">
         <div class="toggle-icon">
             <span></span>
             <span></span>
             <span></span>
         </div>
     </div>
+            <div class="logo-container" onclick="navigateTo('home')">
+                <!-- <img data-logo src="images/mutenlol_logo.png" alt="로고" class="logo-image"> -->
+                <span class="logo-text" data-logo-text></span>
+            </div>
+            <button class="book-now-btn" data-booking-engine>
+                BOOK NOW
+            </button>
+        </div>
+    </header>
 
     <!-- Side Header -->
     <div class="side-header" id="side-header">
@@ -48,7 +46,7 @@
                 <!-- Side Header Top with Logo and Close Button -->
                 <div class="side-header-top">
                     <div class="side-logo-container" onclick="navigateTo('home')">
-                        <span class="side-logo-text" data-logo-text>Mutenlol</span>
+                        <span class="side-logo-text" data-logo-text></span>
                     </div>
                 </div>
                 <div class="side-menu-grid">
@@ -64,7 +62,7 @@
                     <!-- Spaces Section -->
                     <div class="menu-section">
                         <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Spaces</h3>
-                        <ul class="menu-section-list accordion-content active">
+                        <ul class="menu-section-list accordion-content active" data-rooms-list>
                             <li><a onclick="navigateTo('room')">객실명</a></li>
                         </ul>
                     </div>
@@ -72,7 +70,7 @@
                     <!-- Specials Section -->
                     <div class="menu-section">
                         <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Specials</h3>
-                        <ul class="menu-section-list accordion-content active">
+                        <ul class="menu-section-list accordion-content active" data-facilities-list>
                             <li><a onclick="navigateTo('facility')">편의시설</a></li>
                         </ul>
                     </div>
@@ -90,7 +88,7 @@
             <!-- Image Banner -->
             <div class="side-content-bottom">
                 <!-- 숙소 외경이미지 ? 썸네일 이미지 ?  -->
-                <div class="side-image-banner" id="side-image-banner"></div>
+                <div class="side-image-banner" id="side-image-banner" data-side-banner-img></div>
             </div>
         </div>
     </div>

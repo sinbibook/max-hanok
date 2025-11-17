@@ -18,6 +18,7 @@ class HeaderFooterMapper extends BaseDataMapper {
     mapFavicon() {
         if (!this.isDataLoaded) return;
 
+        // 로고 URL 추출
         const logoUrl = ImageHelpers.extractLogoUrl(this.data);
 
         if (logoUrl) {
@@ -45,26 +46,25 @@ class HeaderFooterMapper extends BaseDataMapper {
         const property = this.data.property;
 
         // Header 로고 텍스트 매핑 (data-logo-text 속성 사용)
-        const logoText = this.safeSelect('[data-logo-text]');
-        if (logoText && property.name) {
-            logoText.textContent = property.name;
-        }
+        const logoTextElements = this.safeSelectAll('[data-logo-text]');
+        logoTextElements.forEach(logoText => {
+            if (logoText && property.name) {
+                logoText.textContent = this.sanitizeText(property.name);
+            }
+        });
 
         // Header 로고 이미지 매핑 (data-logo 속성 사용)
         const logoImage = this.safeSelect('[data-logo]');
         if (logoImage) {
+            // 로고 URL 추출
             const logoUrl = ImageHelpers.extractLogoUrl(this.data);
 
             if (logoUrl) {
                 logoImage.onerror = () => {
                     console.warn('⚠️ 헤더 로고 이미지 로드 실패');
-                    ImageHelpers.applyPlaceholder(logoImage);
                 };
                 logoImage.src = logoUrl;
-                logoImage.alt = property.name || '로고';
-                logoImage.classList.remove('empty-image-placeholder');
-            } else {
-                ImageHelpers.applyPlaceholder(logoImage);
+                logoImage.alt = this.sanitizeText(property.name, '로고');
             }
         }
     }
@@ -239,46 +239,104 @@ class HeaderFooterMapper extends BaseDataMapper {
     }
 
     /**
-     * 객실 메뉴 아이템 동적 생성
+     * 객실 메뉴 아이템 동적 생성 (Side Header용)
      */
     mapRoomMenuItems() {
         const roomData = this.safeGet(this.data, 'rooms');
+        if (!roomData || !Array.isArray(roomData)) return;
 
-        // 객실 전용 클릭 핸들러 (propertyDataMapper.navigateToRoom 지원)
-        const roomClickHandler = (roomId) => {
-            if (window.propertyDataMapper?.navigateToRoom) {
-                window.propertyDataMapper.navigateToRoom(roomId);
-            } else {
-                window.location.href = `room.html?id=${roomId}`;
-            }
-        };
+        // displayOrder로 정렬
+        const sortedRooms = [...roomData].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
 
-        this._createMenuItems(
-            roomData,
-            'sub-spaces-',
-            'mobile-spaces-items',
-            'room.html',
-            '객실',
-            null, // 최대 개수 제한 없음
-            roomClickHandler
-        );
+        // 객실 리스트 컨테이너 찾기
+        const roomsList = this.safeSelect('[data-rooms-list]');
+        if (!roomsList) return;
+
+        // 기존 내용 초기화
+        roomsList.innerHTML = '';
+
+        // 각 객실 아이템 생성
+        sortedRooms.forEach((room) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+
+            a.textContent = this.sanitizeText(room.name, '객실');
+            a.style.cursor = 'pointer';
+
+            // 클릭 이벤트 추가
+            a.addEventListener('click', () => {
+                window.location.href = `room.html?id=${room.id}`;
+            });
+
+            li.appendChild(a);
+            roomsList.appendChild(li);
+        });
     }
 
     /**
-     * 시설 메뉴 아이템 동적 생성
+     * 시설 메뉴 아이템 동적 생성 (Side Header용)
      */
     mapFacilityMenuItems() {
         const facilityData = this.safeGet(this.data, 'property.facilities');
+        if (!facilityData || !Array.isArray(facilityData)) return;
 
-        this._createMenuItems(
-            facilityData,
-            'sub-specials-',
-            'mobile-specials-items',
-            'facility.html',
-            '시설',
-            null, // 최대 개수 제한 없음
-            null // customClickHandler 없음
-        );
+        // displayOrder로 정렬
+        const sortedFacilities = [...facilityData].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+
+        // 편의시설 리스트 컨테이너 찾기
+        const facilitiesList = this.safeSelect('[data-facilities-list]');
+        if (!facilitiesList) return;
+
+        // 기존 내용 초기화
+        facilitiesList.innerHTML = '';
+
+        // 각 편의시설 아이템 생성
+        sortedFacilities.forEach((facility) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+
+            a.textContent = this.sanitizeText(facility.name, '편의시설');
+            a.style.cursor = 'pointer';
+
+            // 클릭 이벤트 추가
+            a.addEventListener('click', () => {
+                window.location.href = `facility.html?id=${facility.id}`;
+            });
+
+            li.appendChild(a);
+            facilitiesList.appendChild(li);
+        });
+    }
+
+    /**
+     * Side Header 이미지 배너 매핑
+     * property.images[0].thumbnail 중 isSelected: true인 첫 번째 이미지 사용
+     */
+    mapSideImageBanner() {
+        if (!this.isDataLoaded) return;
+
+        const banner = this.safeSelect('[data-side-banner-img]');
+        if (!banner) return;
+
+        // property.images 경로에서 썸네일 가져오기
+        const propertyImages = this.safeGet(this.data, 'property.images');
+        if (!propertyImages || !Array.isArray(propertyImages) || propertyImages.length === 0) return;
+
+        const thumbnails = this.safeGet(propertyImages[0], 'thumbnail');
+        if (!thumbnails || !Array.isArray(thumbnails) || thumbnails.length === 0) return;
+
+        // isSelected: true이고 sortOrder로 정렬된 첫 번째 이미지 찾기
+        const selectedThumbnail = thumbnails
+            .filter(img => img.isSelected === true)
+            .sort((a, b) => a.sortOrder - b.sortOrder)[0];
+
+        if (!selectedThumbnail || !selectedThumbnail.url) return;
+
+        // 배경 이미지 설정
+        banner.style.backgroundImage = `url('${selectedThumbnail.url}')`;
+        banner.style.backgroundSize = 'cover';
+        banner.style.backgroundPosition = 'center';
+        banner.style.backgroundRepeat = 'no-repeat';
     }
 
     // ============================================================================
@@ -296,25 +354,22 @@ class HeaderFooterMapper extends BaseDataMapper {
         // Footer 로고 이미지 매핑 (data-footer-logo 속성 사용)
         const footerLogoImage = this.safeSelect('[data-footer-logo]');
         if (footerLogoImage) {
+            // 로고 URL 추출
             const logoUrl = ImageHelpers.extractLogoUrl(this.data);
 
             if (logoUrl) {
                 footerLogoImage.onerror = () => {
                     console.warn('⚠️ 푸터 로고 이미지 로드 실패');
-                    ImageHelpers.applyPlaceholder(footerLogoImage);
                 };
                 footerLogoImage.src = logoUrl;
-                footerLogoImage.alt = property.name || '로고';
-                footerLogoImage.classList.remove('empty-image-placeholder');
-            } else {
-                ImageHelpers.applyPlaceholder(footerLogoImage);
+                footerLogoImage.alt = this.sanitizeText(property.name, '로고');
             }
         }
 
         // Footer 로고 텍스트 매핑
         const footerLogoText = this.safeSelect('[data-footer-logo-text]');
         if (footerLogoText && property.name) {
-            footerLogoText.textContent = property.name;
+            footerLogoText.textContent = this.sanitizeText(property.name);
         }
     }
 
@@ -357,8 +412,16 @@ class HeaderFooterMapper extends BaseDataMapper {
 
         // 통신판매업신고번호
         const ecommerceElement = this.safeSelect('[data-footer-ecommerce]');
-        if (ecommerceElement && businessInfo.eCommerceRegistrationNumber) {
-            ecommerceElement.textContent = `통신판매업신고번호 : ${businessInfo.eCommerceRegistrationNumber}`;
+        if (ecommerceElement) {
+            if (businessInfo.eCommerceRegistrationNumber) {
+                ecommerceElement.textContent = businessInfo.eCommerceRegistrationNumber;
+            } else {
+                // 통신판매업신고번호가 없으면 부모 라인 전체 숨김
+                const parentLine = ecommerceElement.closest('.footer-info-line');
+                if (parentLine) {
+                    parentLine.style.display = 'none';
+                }
+            }
         }
 
         // 저작권 정보 매핑
@@ -435,6 +498,9 @@ class HeaderFooterMapper extends BaseDataMapper {
         // Header 매핑
         this.mapHeaderLogo();
         this.mapHeaderNavigation();
+
+        // Side Header 이미지 배너 매핑
+        this.mapSideImageBanner();
     }
 
     /**

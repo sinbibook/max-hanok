@@ -31,18 +31,9 @@
 
         <section class="main-section fullscreen-slider">
           <div class="fullscreen-slider-container">
-            <div class="fullscreen-slider-inner">
-              <div class="fullscreen-slide active">
-                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="도로 및 오시는길">
-              </div>
-              <div class="fullscreen-slide">
-                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="위치 안내">
-              </div>
-              <div class="fullscreen-slide">
-                <img src="https://images.unsplash.com/photo-1569025743873-ea3a9ade89f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="지도 및 경로">
-              </div>
+            <div class="fullscreen-slider-inner" data-directions-slider>
+              <!-- 동적으로 슬라이드가 생성됩니다 -->
             </div>
-            <!-- 하드코딩 fix! -->
             <div class="fullscreen-slider-content">
               <h2 class="fullscreen-slider-title centered">Location</h2>
             </div>
@@ -59,7 +50,7 @@
         <div class="content-wrap">
            <div class="about-description-wrap">
             <!-- CUSTOM FIELD : 메인 소개 섹션 타이틀 매핑 -->
-            <h2 class="about-title animate-element">Location Info</h2>
+            <h2 class="about-title animate-element" data-directions-title></h2>
 
             <div class="location-details animate-element">
                 <div class="location-address-wrapper animate-element">
@@ -68,13 +59,11 @@
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
                     <!-- 숙소 주소 매핑 -->
-                    <p class="location-address">서울시 금천구 가산디지털로 144</p>
+                    <p class="location-address" data-directions-address></p>
                 </div>
             </div>
             <!-- CUSTOM FIELD : 안내사항 섹션 매핑, 없으면 display none -->
-             <div class="location-note animate-element" data-directions-notes>대중교통 이용시 2호선 가산디지털단지역에서 도보 5분
-자가용 이용시 경부고속도로 서초IC에서 15분
-주차장은 건물 지하 1층에 있습니다</div>
+             <div class="location-note animate-element" data-directions-notes></div>
            </div>
 
            <!-- 지도 섹션 -->

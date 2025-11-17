@@ -30,6 +30,7 @@
     cursor: pointer;
     flex: 1;
     justify-content: center;
+    z-index: 999;
 }
 
 .logo-image {
