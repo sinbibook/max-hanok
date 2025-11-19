@@ -84,30 +84,58 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 시설 메뉴 동적 생성
         this.mapFacilityMenuItems();
 
-        // 예약 버튼에 gpension_id 매핑
+        // 예약 버튼에 realtimeBookingId 매핑
         this.mapReservationButtons();
     }
 
     /**
-     * 예약 버튼에 gpension_id 매핑
+     * 예약 버튼에 realtimeBookingId 매핑 및 클릭 이벤트 설정
      */
     mapReservationButtons() {
         if (!this.isDataLoaded || !this.data.property) {
             return;
         }
 
-        // gpension_id 찾기
-        const gpensionId = this.data.property.gpensionId;
+        // realtimeBookingId 찾기
+        const realtimeBookingId = this.data.property.realtimeBookingId;
 
-        if (!gpensionId) {
-            return;
+        if (realtimeBookingId) {
+            // 예약 URL 생성
+            const bookingUrl = `https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}`;
+
+            // 모든 BOOK NOW 버튼에 클릭 이벤트 설정
+            const reservationButtons = document.querySelectorAll('[data-booking-engine]');
+            reservationButtons.forEach(button => {
+                button.setAttribute('data-realtime-booking-id', realtimeBookingId);
+                button.onclick = () => {
+                    window.open(bookingUrl, '_blank');
+                };
+            });
         }
 
-        // 모든 예약 버튼에 gpension_id 설정
-        const reservationButtons = document.querySelectorAll('[data-booking-engine]');
-        reservationButtons.forEach(button => {
-            button.setAttribute('data-gpension-id', gpensionId);
-        });
+        // ybsId 찾기
+        const ybsId = this.data.property.ybsId;
+        const ybsButtons = document.querySelectorAll('[data-ybs-booking]');
+
+        if (ybsId && ybsId.trim() !== '') {
+            // YBS 예약 URL 생성
+            const ybsUrl = `https://rev.yapen.co.kr/external?ypIdx=${ybsId}`;
+
+            // 모든 YBS 버튼에 클릭 이벤트 설정 및 표시
+            ybsButtons.forEach(button => {
+                button.setAttribute('data-ybs-id', ybsId);
+                // 데스크톱/모바일 모두 flex로 표시
+                button.style.display = 'flex';
+                button.onclick = () => {
+                    window.open(ybsUrl, '_blank');
+                };
+            });
+        } else {
+            // ybsId가 없거나 빈 문자열이면 YBS 버튼 숨김 (CSS 기본값 유지)
+            ybsButtons.forEach(button => {
+                button.style.display = 'none';
+            });
+        }
     }
 
     /**
@@ -386,10 +414,10 @@ class HeaderFooterMapper extends BaseDataMapper {
             return;
         }
 
-        // 전화번호 매핑
+        // 전화번호 매핑 - 디자인상 레이블 없이 전화번호만 표시 (푸터 왼쪽 영역에 숙소명과 연락처를 크게 강조하기 위함)
         const footerPhone = this.safeSelect('[data-footer-phone]');
         if (footerPhone && property.contactPhone) {
-            footerPhone.textContent = `숙소 전화번호 : ${property.contactPhone}`;
+            footerPhone.textContent = `${property.contactPhone}`;
         }
 
         // 대표자명 매핑

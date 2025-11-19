@@ -11,12 +11,20 @@
     let footerLoaded = false;
 
     // Initialize mapper after both header and footer are loaded
-    function tryInitializeMapper() {
+    async function tryInitializeMapper() {
         if (headerLoaded && footerLoaded && window.HeaderFooterMapper) {
-            setTimeout(async () => {
+            // 프리뷰 환경인지 확인 (iframe 내부)
+            const isPreview = window.parent !== window;
+
+            if (!isPreview) {
+                // 일반 페이지: 기본 데이터로 매핑
                 const mapper = new window.HeaderFooterMapper();
                 await mapper.initialize();
-            }, 100);
+
+                // 매핑 완료 후 헤더/사이드바 표시
+                if (window.showHeaders) window.showHeaders();
+            }
+            // 프리뷰 환경: PreviewHandler가 처리하므로 여기서는 매핑하지 않음
         }
     }
 
@@ -34,53 +42,25 @@
             // Load header CSS first
             loadCSS('styles/header.css');
 
-            const response = await fetch('common/header.html');
+            const response = await fetch('common/header.html', { cache: 'no-cache' });
             const html = await response.text();
 
             // Create a temporary container
             const temp = document.createElement('div');
             temp.innerHTML = html;
 
-            // Extract body content from the loaded HTML
-            const bodyContent = temp.querySelector('body');
-            console.log('bodyContent:', bodyContent); // Debug
+            // Find side header and top header directly from temp
+            const sideHeader = temp.querySelector('.side-header');
+            const topHeader = temp.querySelector('.top-header');
 
-            if (bodyContent) {
-                // Insert top header first
-                const topHeader = bodyContent.querySelector('.top-header');
-                console.log('topHeader found:', topHeader); // Debug
-                if (topHeader) {
-                    document.body.insertBefore(topHeader, document.body.firstChild);
-                    console.log('topHeader inserted'); // Debug
-                }
+            // Insert side header first (so it appears before top-header in DOM)
+            if (sideHeader) {
+                document.body.insertBefore(sideHeader, document.body.firstChild);
+            }
 
-                // Insert hamburger button
-                const hamburgerButton = bodyContent.querySelector('.hamburger-button');
-                console.log('hamburgerButton found:', hamburgerButton); // Debug
-                if (hamburgerButton) {
-                    document.body.insertBefore(hamburgerButton, document.body.firstChild);
-                    console.log('hamburgerButton inserted'); // Debug
-                }
-
-                // Insert side header
-                const sideHeader = bodyContent.querySelector('.side-header');
-                console.log('sideHeader found:', sideHeader); // Debug
-                if (sideHeader) {
-                    document.body.insertBefore(sideHeader, document.body.firstChild);
-                    console.log('sideHeader inserted'); // Debug
-                }
-            } else {
-                console.log('No body content found, trying direct method'); // Debug
-                // Fallback: Insert HTML directly
-                const headerHTML = html.replace(/<\/?(!DOCTYPE|html|head|title|link)[^>]*>/g, '');
-                const cleanHTML = headerHTML.replace(/<\/?body[^>]*>/g, '');
-                const firstChild = document.body.firstChild;
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = cleanHTML;
-
-                Array.from(tempDiv.children).forEach(child => {
-                    document.body.insertBefore(child, firstChild);
-                });
+            // Insert top header (hamburger-button is already inside)
+            if (topHeader) {
+                document.body.insertBefore(topHeader, document.body.firstChild);
             }
 
             // Load header JavaScript
@@ -92,7 +72,6 @@
                     const hamburgerButton = document.getElementById('hamburger-button');
                     if (hamburgerButton && window.toggleSideHeader) {
                         hamburgerButton.addEventListener('click', window.toggleSideHeader);
-                        console.log('hamburger button event listener re-added after script load');
                     }
                 }, 100);
             };
@@ -117,7 +96,7 @@
     // Load Footer
     async function loadFooter() {
         try {
-            const response = await fetch('common/footer.html');
+            const response = await fetch('common/footer.html', { cache: 'no-cache' });
             if (response.ok) {
                 // Load footer CSS
                 loadCSS('styles/footer.css');
