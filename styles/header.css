@@ -3,12 +3,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     height: 80px;
-    background: rgba(255, 255, 255, 0.1);
-    z-index: 9999;
+    z-index: 999;
     transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     font-family: 'Chosunilbo', serif;
 }
 
@@ -17,7 +15,7 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    padding: 20px 0 0 0;
+    padding: 20px 0 10px 0;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -44,14 +42,88 @@
     font-size: 30px;
     font-weight: bold;
     color: #7a8471;
-    display: block;
-    font-style: italic;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
-.book-now-btn {
+/* 스크롤 시 로고 텍스트 숨김 */
+.top-header.scrolled .logo-text {
+   visibility: hidden;
+}
+
+/* Booking Buttons Container */
+.booking-buttons {
+    display: flex;
+    gap: 10px;
     position: fixed;
     top: 20px;
     right: 20px;
+    z-index: 1000;
+}
+
+/* YBS Button Styles */
+.ybs-btn {
+    padding: 10px 15px;
+    background: transparent;
+    color: #7a8471 !important;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    font-family: 'Chosunilbo', serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    text-decoration: none;
+    display: none; /* 기본적으로 숨김 */
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    position: relative;
+}
+
+.ybs-btn::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.ybs-btn::after {
+    content: '→';
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-weight: 300;
+}
+
+.ybs-btn:hover {
+    background: #7a8471 !important;
+    color: white !important;
+    border-color: #7a8471;
+    transform: translateX(2px) translateY(-1px);
+}
+
+.ybs-btn:hover::before {
+    border-color: #7a8471;
+}
+
+.ybs-btn:hover::after {
+    transform: translateX(3px);
+}
+
+.ybs-btn.scrolled {
+    background: #7a8471;
+    color: white !important;
+    border: 1px solid #7a8471;
+}
+
+.book-now-btn {
+    position: relative;
+    padding: 10px 15px;
     z-index: 1000;
     padding: 10px 15px;
     background: transparent;
@@ -174,6 +246,7 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 20px;
+    padding-top: 5px;
     border-bottom: 1px solid rgba(106, 98, 71, 0.2);
     position: relative;
 }
@@ -193,6 +266,10 @@
     font-weight: bold;
     color: #7a8471;
     font-style: italic;
+    white-space: normal;
+    line-height: 1.3;
+    text-align: center;
+    word-break: keep-all;
 }
 
 
@@ -308,6 +385,59 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button - 데스크탑과 모바일 공통 */
+.side-header .close-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    width: 45px;
+    height: 45px;
+    color: #7a8471;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    transition: all 0.3s ease;
+}
+
+.side-header .close-button::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #7a8471;
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.side-header .close-button::after {
+    content: '×';
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    color: #7a8471;
+    transition: color 0.3s ease;
+}
+
+.side-header .close-button:hover {
+    background: #7a8471;
+    border-color: #7a8471;
+}
+
+.side-header .close-button:hover::before {
+    border-color: #7a8471;
+}
+
+.side-header .close-button:hover::after {
+    color: white;
 }
 
 
@@ -432,7 +562,16 @@
     border-radius: 2px;
 }
 
-/* X shape when side header is expanded - Fixed */
+/* Hide hamburger button when side header is expanded - 데스크탑과 모바일 공통 */
+.side-header.expanded + .hamburger-button {
+    display: none;
+}
+
+.hamburger-button.active {
+    display: none;
+}
+
+/* X shape when side header is expanded - Fixed (불필요해진 코드) */
 .side-header.expanded + .hamburger-button .toggle-icon span:first-child,
 .hamburger-button.active .toggle-icon span:first-child {
     transform: rotate(45deg);
@@ -494,13 +633,95 @@
     }
 
     /* Top Header Mobile */
+    .top-header {
+        height: 85px;
+    }
+
     .top-header-content {
         padding: 0 20px;
         height: 85px;
     }
 
     .logo-text {
-        font-size: 26px;
+        display: none; /* 모바일에서 숨김 */
+    }
+
+    /* YBS Button - Mobile */
+    .ybs-btn {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        font-size: 0;
+        display: none; /* 기본적으로 숨김 */
+        align-items: center;
+        justify-content: center;
+        position: fixed !important;
+        top: 20px !important;
+        right: 75px !important;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .ybs-btn::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: 1px solid #7a8471;
+        border-radius: 0;
+        transition: border-color 0.3s ease;
+    }
+
+    .ybs-btn::after {
+        content: 'Y';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: 700;
+        color: #7a8471;
+        pointer-events: none;
+    }
+
+    .ybs-btn:hover::before,
+    .ybs-btn:active::before {
+        border-color: #7a8471 !important;
+    }
+
+    .ybs-btn:hover,
+    .ybs-btn:active {
+        background: #7a8471 !important;
+        border-color: #7a8471 !important;
+        transform: none !important;
+        position: fixed !important;
+        top: 20px !important;
+        right: 75px !important;
+    }
+
+    .ybs-btn:hover::after,
+    .ybs-btn:active::after {
+        color: white !important;
+    }
+
+    .ybs-btn.scrolled {
+        background: #7a8471 !important;
+        border-color: #7a8471 !important;
+    }
+
+    .ybs-btn.scrolled::before {
+        border-color: #7a8471 !important;
+    }
+
+    .ybs-btn.scrolled::after {
+        color: white !important;
     }
 
     .book-now-btn {
@@ -567,7 +788,7 @@
         transform: translate(-50%, -50%);
         width: 20px;
         height: 20px;
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%237a8471" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -599,4 +820,24 @@
     .side-image-banner {
         margin-bottom: 60px;
     }
+
+    /* Side logo mobile optimization */
+    .side-logo-text {
+        font-size: clamp(20px, 5vw, 28px);
+        padding: 0 10px;
+        max-width: 100%;
+    }
+
+    /* Mobile optimizations for close button */
+    .side-header .close-button {
+        font-size: 24px;
+    }
+
+    /* Hide hamburger button when sidebar is open - 데스크탑과 모바일 공통 */
+}
+
+/* FOUC Prevention */
+.top-header.fouc-hidden,
+.side-header.fouc-hidden {
+    opacity: 0 !important;
 }

@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.29.0",
-    "generatedAt": "2025-11-17T06:56:19.049Z",
+    "version": "1.30.0",
+    "generatedAt": "2025-11-19T01:26:13.012Z",
     "templateType": "gallery_sidebar",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -283,28 +283,28 @@
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-6fv9t0c2ebd.jpg",
               "sortOrder": 2,
               "description": "9.jpg",
-              "isSelected": true
+              "isSelected": false
             },
             {
               "id": "aeedc56e-6ae5-40cc-8ecf-51a6ea6d616f",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-yyaua96qp4.jpg",
               "sortOrder": 3,
               "description": "10.jpg",
-              "isSelected": true
+              "isSelected": false
             },
             {
               "id": "c1af3f67-7173-4653-ae69-656bc36228d0",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-g5mn9nw5us7.jpg",
-              "sortOrder": 5,
+              "sortOrder": 4,
               "description": "12.jpg",
-              "isSelected": true
+              "isSelected": false
             },
             {
               "id": "2eea646e-5de2-4049-b1d8-cdd129e23390",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-bfiyw7xnjro.jpg",
-              "sortOrder": 6,
+              "sortOrder": 5,
               "description": "13.jpg",
-              "isSelected": true
+              "isSelected": false
             }
           ]
         }
@@ -498,10 +498,24 @@
               "isSelected": true
             },
             {
+              "id": "a0e28522-5fbd-45b7-89c1-429eea4161d9",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031679-e68fnsngtz8.jpg",
+              "sortOrder": 0,
+              "description": "",
+              "isSelected": true
+            },
+            {
               "id": "970788c1-d3ce-486f-84fc-771b83fbfc38",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1759117596242-x7z25eixiz9.jpg",
               "sortOrder": 1,
               "description": "2222",
+              "isSelected": true
+            },
+            {
+              "id": "db3494ba-dbde-4520-bd9b-2d235945c7d5",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031680-qbim10g0s9.jpg",
+              "sortOrder": 1,
+              "description": "",
               "isSelected": true
             },
             {

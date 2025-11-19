@@ -4,7 +4,7 @@
 
     // Update submenu position based on header height
     function updateSubmenuPosition() {
-        const header = document.querySelector('.header');
+        const header = document.querySelector('.top-header');
         const unifiedSubmenu = document.querySelector('.unified-submenu');
 
         if (header && unifiedSubmenu) {
@@ -15,7 +15,7 @@
 
     // Scroll Effect for Header
     window.addEventListener('scroll', function() {
-        const header = document.querySelector('.header');
+        const header = document.querySelector('.top-header');
         const bookNowBtn = document.querySelector('.book-now-btn');
         const hamburgerBtn = document.querySelector('.hamburger-button');
 
@@ -41,6 +41,16 @@
                 bookNowBtn.classList.add('scrolled');
             } else {
                 bookNowBtn.classList.remove('scrolled');
+            }
+        }
+
+        // YBS Button scroll effect
+        const ybsBtn = document.querySelector('.ybs-btn');
+        if (ybsBtn) {
+            if (window.scrollY > 50) {
+                ybsBtn.classList.add('scrolled');
+            } else {
+                ybsBtn.classList.remove('scrolled');
             }
         }
 
@@ -176,7 +186,7 @@
 
     // Check and set header state based on scroll position
     function checkInitialScroll() {
-        const header = document.querySelector('.header');
+        const header = document.querySelector('.top-header');
         if (header) {
             // Check if we're on main.html - always keep scrolled state
             const isMainPage = window.location.pathname.includes('main.html') ||
@@ -196,14 +206,12 @@
 
     // Side Header Toggle
     window.toggleSideHeader = function() {
-        console.log('toggleSideHeader called'); // Debug log
         const sideHeader = document.getElementById('side-header');
         const hamburgerButton = document.getElementById('hamburger-button');
         const overlay = document.getElementById('side-header-overlay');
         const body = document.body;
         const html = document.documentElement;
 
-        console.log('sideHeader element:', sideHeader); // Debug log
         if (sideHeader && hamburgerButton) {
             const isExpanded = sideHeader.classList.contains('expanded');
 
@@ -236,10 +244,6 @@
                 body.style.top = `-${scrollY}px`;
                 html.style.overflow = 'hidden';
             }
-
-            console.log('toggled expanded class, has expanded:', sideHeader.classList.contains('expanded')); // Debug log
-        } else {
-            console.log('side-header or hamburger-button element not found'); // Debug log
         }
     };
 
@@ -303,12 +307,8 @@
 
         // Initialize hamburger button toggle
         const hamburgerButton = document.getElementById('hamburger-button');
-        console.log('hamburgerButton element:', hamburgerButton); // Debug log
         if (hamburgerButton) {
             hamburgerButton.addEventListener('click', toggleSideHeader);
-            console.log('hamburger button event listener added'); // Debug log
-        } else {
-            console.log('hamburger-button element not found during initialization'); // Debug log
         }
 
         // Initialize overlay click event
@@ -373,5 +373,12 @@
 
     // Immediate check for page refresh scenarios
     checkInitialScroll();
+
+    // FOUC Prevention: Show headers after data mapping complete
+    window.showHeaders = function() {
+        document.querySelectorAll('.top-header, .side-header').forEach(el => {
+            el.classList.remove('fouc-hidden');
+        });
+    };
 
 })();

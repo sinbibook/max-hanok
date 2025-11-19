@@ -12,7 +12,6 @@
     <link rel="preload" href="styles/reservation.css" as="style">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/slider.css">
-    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/reservation.css">
 
   <!-- Open Graph Meta Tags for Social Media -->
@@ -90,8 +89,7 @@
                         <!-- 숙소 이용안내 매핑 -->
                         <div class="reservation-box animate-element">
                             <div class="reservation-box-image">
-                                 <!-- images/에 있는 이미지 fix (이미지 추가예정) -->
-                                <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="이용안내 이미지">
+                                <img src="/images/beach.jpg" alt="이용안내 이미지">
                             </div>
                             <h3 class="reservation-box-title">이용안내</h3>
                             <!-- 숙소 이용안내 텍스트 매핑 -->
@@ -101,8 +99,7 @@
                         <!-- 숙소 운영정보 매핑 -->
                         <div class="reservation-box animate-element">
                             <div class="reservation-box-image">
-                                <!-- images/에 있는 이미지 fix (이미지 추가예정) -->
-                                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="입퇴실 안내 이미지">
+                                <img src="/images/sky.jpg" alt="입퇴실 안내 이미지">
                             </div>
                             <h3 class="reservation-box-title">입/퇴실 안내</h3>
                             <div class="reservation-box-content">
@@ -127,8 +124,7 @@
                         <!-- 숙소 환불정책 매핑 -->
                         <div class="reservation-box refund-box animate-element">
                             <div class="reservation-box-image">
-                                <!-- images/에 있는 이미지 fix (이미지 추가예정) -->
-                                <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="환불 안내 이미지">
+                                <img src="/images/flower.jpg" alt="환불 안내 이미지">
                             </div>
                             <h3 class="reservation-box-title">환불/취소수수료</h3>
                             <div class="refund-content">
@@ -189,70 +185,6 @@
 
     <!-- Page-specific script -->
     <script src="js/pages/reservation.js"></script>
-
-    <!-- 동적 화살표 스크립트 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const textContents = document.querySelectorAll('.reservation-text-content');
-
-            textContents.forEach(function(content) {
-                const text = content.textContent.trim();
-                const lines = text.split('\n').filter(line => line.trim() !== '');
-
-                // 불릿 문자를 화살표로 대체
-                const processedLines = lines.map(line => {
-                    const trimmedLine = line.trim();
-                    if (trimmedLine.startsWith('•') ||
-                        trimmedLine.startsWith('-') ||
-                        trimmedLine.startsWith('*') ||
-                        trimmedLine.length > 10) {
-                        return '>';
-                    }
-                    return '';
-                }).filter(arrow => arrow !== '');
-
-                // 원본 텍스트에서 불릿 문자 제거
-                const cleanedText = text.split('\n').map(line => {
-                    const trimmedLine = line.trim();
-                    if (trimmedLine.startsWith('•')) {
-                        return line.replace('•', '').trim();
-                    } else if (trimmedLine.startsWith('-')) {
-                        return line.replace('-', '').trim();
-                    } else if (trimmedLine.startsWith('*')) {
-                        return line.replace('*', '').trim();
-                    }
-                    return line;
-                }).join('\n');
-
-                // 원본 텍스트 내용 업데이트
-                content.innerHTML = cleanedText;
-
-                const arrows = processedLines.join('\n');
-
-                // 기존 화살표 요소가 있으면 제거
-                const existingArrow = content.querySelector('.dynamic-arrows');
-                if (existingArrow) {
-                    existingArrow.remove();
-                }
-
-                // 새 화살표 요소 추가
-                const arrowElement = document.createElement('div');
-                arrowElement.className = 'dynamic-arrows';
-                arrowElement.style.cssText = `
-                    position: absolute;
-                    left: 20px;
-                    top: 15px;
-                    color: #7a8471;
-                    font-weight: bold;
-                    line-height: 1.8;
-                    white-space: pre-line;
-                    pointer-events: none;
-                `;
-                arrowElement.textContent = arrows;
-                content.appendChild(arrowElement);
-            });
-        });
-    </script>
 
 </body>
 </html>

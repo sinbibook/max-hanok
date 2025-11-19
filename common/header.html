@@ -20,7 +20,7 @@
 </head>
 <body>
     <!-- Top Header -->
-    <header class="top-header">
+    <header class="top-header fouc-hidden">
         <div class="top-header-content">
             <div class="hamburger-button" id="hamburger-button">
         <div class="toggle-icon">
@@ -33,14 +33,20 @@
                 <!-- <img data-logo src="images/mutenlol_logo.png" alt="로고" class="logo-image"> -->
                 <span class="logo-text" data-logo-text></span>
             </div>
-            <button class="book-now-btn" data-booking-engine>
-                BOOK NOW
-            </button>
+            <div class="booking-buttons">
+                <button class="ybs-btn" data-ybs-booking>
+                    YBS
+                </button>
+                <button class="book-now-btn" data-booking-engine>
+                    BOOK NOW
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Side Header -->
-    <div class="side-header" id="side-header">
+    <div class="side-header fouc-hidden" id="side-header">
+        <button class="close-button" onclick="toggleSideHeader()" aria-label="메뉴 닫기"></button>
         <div class="side-header-content">
             <div class="side-content-top">
                 <!-- Side Header Top with Logo and Close Button -->
