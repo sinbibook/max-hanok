@@ -1,6 +1,6 @@
 /* Footer Styles */
 .footer {
-    background-color: #7a8471;
+    background-color: #6c5f51;
     color: white;
     padding: 60px 0;
 }
@@ -42,7 +42,6 @@
     font-size: 32px;
     font-weight: 700;
     color: white;
-    font-style: italic;
 }
 
 /* Right Section - 60% */

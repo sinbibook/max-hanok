@@ -88,7 +88,7 @@
     left: -25px;
     width: 100%;
     aspect-ratio: 4/3;
-    border: 2px solid #7a8471;
+    border: 2px solid #6c5f51;
     background: transparent;
     z-index: -1;
 }
@@ -110,7 +110,7 @@
 }
 
 .introduction-section .gallery-wrap .txt-wrap .intro-title {
-    color: #7a8471;
+    color: #6c5f51;
     font-family: 'Chosunilbo', serif;
     font-weight: bold;
     font-size: 1.8rem;
@@ -142,7 +142,7 @@
     left: -25px;
     width: 100%;
     height: 100%;
-    border: 3px solid #7a8471;
+    border: 3px solid #6c5f51;
     background: transparent;
     z-index: -1;
 }
@@ -198,7 +198,7 @@
         width: 90%;
         height: 200px;
         aspect-ratio: unset;
-        border: 1px solid #7a8471;
+        border: 1px solid #6c5f51;
     }
 
     .introduction-section .gallery-wrap .img-wrap img {
@@ -243,7 +243,7 @@
         left: unset;
         width: 90%;
         height: 200px;
-        border: 1px solid #7a8471;
+        border: 1px solid #6c5f51;
     }
 
 

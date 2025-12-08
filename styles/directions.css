@@ -10,7 +10,7 @@
     font-family: 'Chosunilbo', serif;
     font-size: 1.3rem;
     font-weight: bold;
-    color: #7a8471;
+    color: #6c5f51;
     margin: 0 0 15px 0;
 }
 
@@ -25,7 +25,7 @@
 .location-icon {
     width: 20px;
     height: 20px;
-    stroke: #7a8471;
+    stroke: #6c5f51;
     fill: none;
     stroke-width: 2;
     flex-shrink: 0;
@@ -44,7 +44,7 @@
     margin: 0 auto;
     padding: 25px;
     background: rgba(106, 98, 71, 0.05);
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
     border-radius: 8px;
     display: block;
     text-align: left;
@@ -70,7 +70,7 @@
 .note-icon {
     width: 18px;
     height: 18px;
-    stroke: #7a8471;
+    stroke: #6c5f51;
     fill: none;
     stroke-width: 2;
     stroke-linecap: round;

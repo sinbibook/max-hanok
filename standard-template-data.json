@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.31.0",
-    "generatedAt": "2025-11-19T02:45:25.370Z",
-    "templateType": "gallery_sidebar",
+    "version": "1.32.0",
+    "generatedAt": "2025-12-08T05:19:54.838Z",
+    "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -49,10 +49,10 @@
       "representativeName": "맥스",
       "businessAddress": "테헤란로 맥스펜션",
       "businessPhone": "",
-      "businessEmail": "사업장 이메일",
-      "businessType": "individual",
-      "businessCategory": null,
-      "eCommerceRegistrationNumber": "통신판매업신고번호"
+      "businessEmail": "",
+      "businessType": "",
+      "businessCategory": "",
+      "eCommerceRegistrationNumber": ""
     },
     "contractInfo": {
       "contractStartDate": "2025-09-10T00:00:00.000Z",
@@ -170,11 +170,18 @@
       {
         "thumbnail": [
           {
+            "id": "f6512bdd-25dc-4f27-af09-fd6e9288a8da",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": true
+          },
+          {
             "id": "ef512baf-e868-452d-8e44-3687785de193",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg",
             "sortOrder": 0,
             "description": "",
-            "isSelected": true
+            "isSelected": false
           }
         ],
         "exterior": [
@@ -251,6 +258,7 @@
         "복층",
         "로프트"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -262,7 +270,92 @@
               "isSelected": true
             }
           ],
-          "interior": [],
+          "interior": [
+            {
+              "id": "dbc6dc29-1d09-4c29-ade5-6b6d1a43214c",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619922-qd9k0jtnt49.jpg",
+              "sortOrder": 0,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "8ec53510-9ef4-4427-8f0f-3c53137345a6",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-71uj42476j2.jpg",
+              "sortOrder": 1,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "e2c39105-63c1-4962-9a5a-fece21675ecf",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-2tjsd041ey.jpg",
+              "sortOrder": 2,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "49e3a1a6-0c84-4e8f-8a80-2fcf5f44bb1f",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-btjmiqpoy5j.jpg",
+              "sortOrder": 3,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "00af129c-0be4-42d5-a796-7caed73b8a44",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-mes8h2d1qgf.jpg",
+              "sortOrder": 4,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "eb7affc6-ebe9-4ee0-be87-7dc6e54762fb",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-3oy5wcnonsv.jpg",
+              "sortOrder": 5,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "a69907fe-a284-4fd4-8438-18806390fad7",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-s8e1qwhu59q.jpg",
+              "sortOrder": 6,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "a7791710-68f5-4f28-990b-98f098551e0d",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-u1nsp7jdnjh.jpg",
+              "sortOrder": 7,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "5ae884ef-4068-47f8-813f-b61000c6a0e9",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-qibrw5z73ml.jpg",
+              "sortOrder": 8,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "dcd8a652-d56a-498d-a359-e923c8240964",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-wmxbbmceor.jpg",
+              "sortOrder": 9,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "0dacd919-797e-4e25-85d4-d9c8f7f96241",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-nk3iof9xx4k.jpg",
+              "sortOrder": 10,
+              "description": "",
+              "isSelected": true
+            },
+            {
+              "id": "2c8549c8-efc5-4962-95d7-d3c8a9d5f6b3",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/interior/1764832619923-j2wotuxz469.jpg",
+              "sortOrder": 11,
+              "description": "",
+              "isSelected": true
+            }
+          ],
           "exterior": [
             {
               "id": "eb7bfc78-4248-45fb-821f-7bd033a881ec",
@@ -342,6 +435,7 @@
       "roomStructures": [
         "온돌"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -448,6 +542,7 @@
         "온돌",
         "거실분리형"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -559,6 +654,7 @@
       "roomStructures": [
         "독채"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -656,6 +752,7 @@
         "복층",
         "온돌"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -777,6 +874,7 @@
       "amenities": [],
       "roomViews": [],
       "roomStructures": [],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -862,7 +960,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "gallery_sidebar",
+    "templateType": "gallery_sidebar_beige",
     "images": [
       {
         "logo": [
