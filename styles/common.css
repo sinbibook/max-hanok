@@ -36,7 +36,7 @@ body {
     line-height: 1.6;
     color: #333;
     overflow-x: hidden;
-    background: #e8ebe6;
+    background: #fff8ef;
     position: relative;
     margin: 0;
     padding: 0;
@@ -83,7 +83,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Chosunilbo', serif;
     font-weight: 700;
     line-height: 1.2;
-    color: #7a8471;
+    color: #6c5f51;
 }
 
 a {
@@ -155,7 +155,7 @@ img {
     font-family: 'Chosunilbo', serif;
     font-size: 2rem;
     line-height: 1.6;
-    color: #7a8471;
+    color: #6c5f51;
     font-weight: bold;
     letter-spacing: 2px;
 }
@@ -230,7 +230,7 @@ img {
     font-family: 'ChosunNm', serif;
     font-size: 3rem;
     font-weight: 300;
-    color: #7a8471;
+    color: #6c5f51;
     letter-spacing: 8px;
     font-style: italic;
 }

@@ -41,7 +41,7 @@
     font-family: 'Chosunilbo', serif;
     font-size: 30px;
     font-weight: bold;
-    color: #7a8471;
+    color: #6c5f51;
     opacity: 1;
     transition: opacity 0.3s ease;
 }
@@ -65,8 +65,8 @@
 .ybs-btn {
     padding: 10px 15px;
     background: transparent;
-    color: #7a8471 !important;
-    border: 1px solid #7a8471;
+    color: #6c5f51 !important;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     font-family: 'Chosunilbo', serif;
     font-weight: 600;
@@ -88,7 +88,7 @@
     left: -4px;
     right: -4px;
     bottom: -4px;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     transition: border-color 0.3s ease;
 }
@@ -101,14 +101,14 @@
 }
 
 .ybs-btn:hover {
-    background: #7a8471 !important;
+    background: #6c5f51 !important;
     color: white !important;
-    border-color: #7a8471;
+    border-color: #6c5f51;
     transform: translateX(2px) translateY(-1px);
 }
 
 .ybs-btn:hover::before {
-    border-color: #7a8471;
+    border-color: #6c5f51;
 }
 
 .ybs-btn:hover::after {
@@ -116,9 +116,9 @@
 }
 
 .ybs-btn.scrolled {
-    background: #7a8471;
+    background: #6c5f51;
     color: white !important;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
 }
 
 .book-now-btn {
@@ -127,8 +127,8 @@
     z-index: 1000;
     padding: 10px 15px;
     background: transparent;
-    color: #7a8471 !important;
-    border: 1px solid #7a8471;
+    color: #6c5f51 !important;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     font-family: 'Chosunilbo', serif;
     font-weight: 600;
@@ -143,9 +143,9 @@
 }
 
 .book-now-btn.scrolled {
-    background: #7a8471;
+    background: #6c5f51;
     color: white !important;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
 }
 
 .book-now-btn::before {
@@ -155,7 +155,7 @@
     left: -4px;
     right: -4px;
     bottom: -4px;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     transition: border-color 0.3s ease;
 }
@@ -168,14 +168,14 @@
 }
 
 .book-now-btn:hover {
-    background: #7a8471 !important;
+    background: #6c5f51 !important;
     color: white !important;
-    border-color: #7a8471;
+    border-color: #6c5f51;
     transform: translateX(2px) translateY(-1px);
 }
 
 .book-now-btn:hover::before {
-    border-color: #7a8471;
+    border-color: #6c5f51;
 }
 
 .book-now-btn:hover::after {
@@ -186,8 +186,8 @@
 .side-header {
     position: fixed;
     top: 0;
-    left: -50vw;
-    width: 50vw;
+    left: -100%;
+    width: 60vw;
     height: 100vh;
     background: linear-gradient(135deg, #faf9f7 0%, #f5f2ed 100%);
     box-shadow: 2px 0 30px rgba(0, 0, 0, 0.15);
@@ -195,6 +195,7 @@
     transition: left 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     font-family: 'Chosunilbo', serif;
     display: flex;
+    overflow: hidden;
 }
 
 .side-header.expanded {
@@ -228,6 +229,7 @@
     width: 100%;
     background: transparent;
     padding: 20px 40px 40px 40px;
+    overflow: hidden auto;
 }
 
 .side-content-top {
@@ -264,8 +266,7 @@
     font-family: 'Chosunilbo', serif;
     font-size: 28px;
     font-weight: bold;
-    color: #7a8471;
-    font-style: italic;
+    color: #6c5f51;
     white-space: normal;
     line-height: 1.3;
     text-align: center;
@@ -283,16 +284,18 @@
 .menu-section {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .menu-section-title {
     font-family: 'Continuous', serif;
     font-size: 20px;
     font-weight: bold;
-    color: #7a8471;
+    color: #6c5f51;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #7a8471;
+    border-bottom: 2px solid #6c5f51;
 }
 
 .menu-section-title.expandable {
@@ -314,7 +317,7 @@
 }
 
 .menu-section-title.expandable:hover {
-    color: #7a8471;
+    color: #6c5f51;
 }
 
 .menu-section-list {
@@ -347,7 +350,7 @@
 }
 
 .menu-section-list a {
-    color: #7a8471;
+    color: #6c5f51;
     font-size: 16px;
     font-weight: 400;
     text-decoration: none;
@@ -361,7 +364,7 @@
 }
 
 .menu-section-list a:hover {
-    color: #7a8471;
+    color: #6c5f51;
 }
 
 .side-image-banner {
@@ -370,7 +373,6 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80');
     transition: all 0.3s ease;
     position: relative;
     border-radius: 8px;
@@ -393,11 +395,11 @@
     top: 20px;
     left: 20px;
     background: transparent;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     width: 45px;
     height: 45px;
-    color: #7a8471;
+    color: #6c5f51;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -413,7 +415,7 @@
     left: -4px;
     right: -4px;
     bottom: -4px;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     transition: border-color 0.3s ease;
 }
@@ -423,17 +425,17 @@
     font-size: 22px;
     font-weight: 300;
     line-height: 1;
-    color: #7a8471;
+    color: #6c5f51;
     transition: color 0.3s ease;
 }
 
 .side-header .close-button:hover {
-    background: #7a8471;
-    border-color: #7a8471;
+    background: #6c5f51;
+    border-color: #6c5f51;
 }
 
 .side-header .close-button:hover::before {
-    border-color: #7a8471;
+    border-color: #6c5f51;
 }
 
 .side-header .close-button:hover::after {
@@ -452,7 +454,7 @@
     padding: 10px;
     cursor: pointer;
     background: transparent;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     z-index: 1001;
     width: 45px;
@@ -468,17 +470,17 @@
     left: -4px;
     right: -4px;
     bottom: -4px;
-    border: 1px solid #7a8471;
+    border: 1px solid #6c5f51;
     border-radius: 0;
     transition: border-color 0.3s ease;
 }
 
 .hamburger-button:hover {
-    background: #7a8471;
+    background: #6c5f51;
 }
 
 .hamburger-button:hover::before {
-    border-color: #7a8471;
+    border-color: #6c5f51;
 }
 
 .hamburger-button:hover .toggle-icon span {
@@ -498,7 +500,7 @@
     position: absolute;
     width: 18px;
     height: 2px;
-    background: #7a8471;
+    background: #6c5f51;
     transition: all 0.3s ease;
     left: 0;
 }
@@ -517,7 +519,7 @@
 
 /* Hamburger button scroll state */
 .hamburger-button.scrolled {
-    background: #7a8471;
+    background: #6c5f51;
 }
 
 .hamburger-button.scrolled .toggle-icon span {
@@ -546,7 +548,7 @@
     max-height: 200px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #7a8471 transparent;
+    scrollbar-color: #6c5f51 transparent;
 }
 
 .accordion-content.active.scrollable::-webkit-scrollbar {
@@ -558,7 +560,7 @@
 }
 
 .accordion-content.active.scrollable::-webkit-scrollbar-thumb {
-    background: #7a8471;
+    background: #6c5f51;
     border-radius: 2px;
 }
 
@@ -674,7 +676,7 @@
         left: -4px;
         right: -4px;
         bottom: -4px;
-        border: 1px solid #7a8471;
+        border: 1px solid #6c5f51;
         border-radius: 0;
         transition: border-color 0.3s ease;
     }
@@ -687,19 +689,19 @@
         transform: translate(-50%, -50%);
         font-size: 20px;
         font-weight: 700;
-        color: #7a8471;
+        color: #6c5f51;
         pointer-events: none;
     }
 
     .ybs-btn:hover::before,
     .ybs-btn:active::before {
-        border-color: #7a8471 !important;
+        border-color: #6c5f51 !important;
     }
 
     .ybs-btn:hover,
     .ybs-btn:active {
-        background: #7a8471 !important;
-        border-color: #7a8471 !important;
+        background: #6c5f51 !important;
+        border-color: #6c5f51 !important;
         transform: none !important;
         position: fixed !important;
         top: 20px !important;
@@ -712,12 +714,12 @@
     }
 
     .ybs-btn.scrolled {
-        background: #7a8471 !important;
-        border-color: #7a8471 !important;
+        background: #6c5f51 !important;
+        border-color: #6c5f51 !important;
     }
 
     .ybs-btn.scrolled::before {
-        border-color: #7a8471 !important;
+        border-color: #6c5f51 !important;
     }
 
     .ybs-btn.scrolled::after {
@@ -746,8 +748,8 @@
 
     .book-now-btn:hover,
     .book-now-btn:active {
-        background: #7a8471 !important;
-        border-color: #7a8471 !important;
+        background: #6c5f51 !important;
+        border-color: #6c5f51 !important;
         transform: none !important;
         position: fixed !important;
         top: 20px !important;
@@ -756,7 +758,7 @@
 
     .book-now-btn:hover::before,
     .book-now-btn:active::before {
-        border-color: #7a8471 !important;
+        border-color: #6c5f51 !important;
     }
 
     .book-now-btn:hover::after,
@@ -775,7 +777,7 @@
         left: -4px;
         right: -4px;
         bottom: -4px;
-        border: 1px solid #7a8471;
+        border: 1px solid #6c5f51;
         border-radius: 0;
         transition: border-color 0.3s ease;
     }
@@ -800,11 +802,17 @@
     }
 
     .book-now-btn.scrolled::before {
-        border-color: #7a8471;
+        border-color: #6c5f51;
     }
 
     .book-now-btn.scrolled::after {
         background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+    }
+
+    /* Mobile menu section - overflow 처리 */
+    .menu-section {
+        overflow: auto;
+        max-height: 40vh;
     }
 
     /* Mobile menu section list - one item per line */
