@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.40.0",
-    "generatedAt": "2025-12-17T06:08:38.661Z",
+    "version": "1.41.0",
+    "generatedAt": "2025-12-17T06:11:35.173Z",
     "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1475,9 +1475,21 @@
       },
       "theme": {
         "font": {
-          "koSub": null,
-          "enMain": null,
-          "koMain": null
+          "koSub": {
+            "cdn": "https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap",
+            "key": "nanum-gothic",
+            "family": "Nanum Gothic"
+          },
+          "enMain": {
+            "cdn": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap",
+            "key": "montserrat",
+            "family": "Montserrat"
+          },
+          "koMain": {
+            "cdn": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css",
+            "key": "pretendard",
+            "family": "Pretendard"
+          }
         },
         "color": {
           "primary": "#F3F4F6",
