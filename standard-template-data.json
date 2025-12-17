@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.38.0",
-    "generatedAt": "2025-12-17T06:00:08.560Z",
+    "version": "1.39.0",
+    "generatedAt": "2025-12-17T06:05:08.780Z",
     "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1480,8 +1480,8 @@
           "koMain": null
         },
         "color": {
-          "primary": "#F9FAFB",
-          "secondary": "#111827"
+          "primary": "#F3F4F6",
+          "secondary": "#0F766E"
         }
       }
     }
