@@ -1,4 +1,4 @@
-/* Font Face */
+/* Font Face - Fallback Fonts */
 @font-face {
     font-family: 'Chosunilbo';
     src: url('../fonts/ChosunNm.ttf') format('truetype');
@@ -13,6 +13,18 @@
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+}
+
+/* CSS Variables - Theme Defaults */
+:root {
+    /* Font Variables (fallback to template default fonts) */
+    --font-ko-main: 'Chosunilbo', serif;
+    --font-ko-sub: 'Chosunilbo', serif;
+    --font-en-main: 'Continuous', serif;
+
+    /* Color Variables (fallback to template defaults) */
+    --color-primary: #fff8ef;
+    --color-secondary: #6c5f51;
 }
 
 /* Reset & Base */
@@ -31,12 +43,12 @@ html {
 }
 
 body {
-    font-family: 'Chosunilbo', Arial, sans-serif;
+    font-family: var(--font-ko-sub);
     font-weight: 400;
     line-height: 1.6;
     color: #333;
     overflow-x: hidden;
-    background: #fff8ef;
+    background: var(--color-primary);
     position: relative;
     margin: 0;
     padding: 0;
@@ -80,10 +92,10 @@ body {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Chosunilbo', serif;
+    font-family: var(--font-ko-main);
     font-weight: 700;
     line-height: 1.2;
-    color: #6c5f51;
+    color: var(--color-secondary);
 }
 
 a {
@@ -152,10 +164,10 @@ img {
 
 /* About Title */
 .about-title {
-    font-family: 'Chosunilbo', serif;
+    font-family: var(--font-ko-main);
     font-size: 2rem;
     line-height: 1.6;
-    color: #6c5f51;
+    color: var(--color-secondary);
     font-weight: bold;
     letter-spacing: 2px;
 }
@@ -227,10 +239,10 @@ img {
 .marquee-text {
     display: inline-block;
     animation: marquee 60s linear infinite;
-    font-family: 'ChosunNm', serif;
+    font-family: var(--font-en-main);
     font-size: 3rem;
     font-weight: 300;
-    color: #6c5f51;
+    color: var(--color-secondary);
     letter-spacing: 8px;
     font-style: italic;
 }

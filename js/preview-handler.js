@@ -142,6 +142,9 @@ class PreviewHandler {
             case 'section_update':
                 this.handleSectionUpdate(event.data);
                 break;
+            case 'THEME_UPDATE':
+                this.handleThemeUpdate(data);
+                break;
             default:
                 break;
         }
@@ -173,6 +176,9 @@ class PreviewHandler {
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
     async handleTemplateUpdate(data) {
+        console.log('[PreviewHandler] handleTemplateUpdate received:', data);
+        console.log('[PreviewHandler] data.theme:', data?.theme);
+
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -180,6 +186,16 @@ class PreviewHandler {
         if (this.fallbackTimeout) {
             clearTimeout(this.fallbackTimeout);
             this.fallbackTimeout = null;
+        }
+
+        // theme 데이터가 있으면 CSS 변수 즉시 업데이트
+        // theme는 data.homepage.customFields.theme에 위치
+        const theme = data?.homepage?.customFields?.theme || data?.theme;
+        if (theme) {
+            console.log('[PreviewHandler] Theme found, applying...', theme);
+            this.applyThemeVariables(theme);
+        } else {
+            console.log('[PreviewHandler] No theme in data');
         }
 
         // 초기화되지 않은 경우 초기 데이터로 처리
@@ -215,6 +231,120 @@ class PreviewHandler {
     }
 
     /**
+     * 기본 폰트 fallback 값 (common.css :root 기본값과 동일)
+     */
+    getDefaultFonts() {
+        return {
+            koMain: "'Chosunilbo', serif",
+            koSub: "'Chosunilbo', serif",
+            enMain: "'Continuous', serif"
+        };
+    }
+
+    /**
+     * 폰트 값에서 정보 추출
+     * 구조: { key, family, cdn }
+     */
+    extractFontInfo(fontValue) {
+        if (!fontValue || typeof fontValue !== 'object' || !fontValue.family) {
+            return null;
+        }
+
+        return {
+            key: fontValue.key,
+            family: `'${fontValue.family}', sans-serif`,
+            cdn: fontValue.cdn
+        };
+    }
+
+    /**
+     * CDN URL로 폰트 직접 로드
+     */
+    loadFontFromCdn(key, cdnUrl) {
+        if (!cdnUrl) return;
+
+        const linkId = `font-${key}`;
+        if (document.getElementById(linkId)) return; // 이미 로드됨
+
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = cdnUrl;
+        document.head.appendChild(link);
+        console.log('[PreviewHandler] Font loaded from CDN:', key, cdnUrl);
+    }
+
+    /**
+     * 테마 CSS 변수 적용 (font/color)
+     */
+    applyThemeVariables(theme) {
+        console.log('[PreviewHandler] applyThemeVariables called:', theme);
+        const root = document.documentElement;
+        const defaultFonts = this.getDefaultFonts();
+
+        // 폰트 데이터 추출 (theme.font 또는 직접 theme에서)
+        const fontData = theme.font || theme;
+
+        // 폰트 변수 업데이트
+        if (fontData) {
+            console.log('[PreviewHandler] Applying fonts:', fontData);
+
+            // koMain 처리
+            if (fontData.koMain !== undefined) {
+                const fontInfo = this.extractFontInfo(fontData.koMain);
+                if (fontInfo) {
+                    this.loadFontFromCdn(fontInfo.key, fontInfo.cdn);
+                    root.style.setProperty('--font-ko-main', fontInfo.family);
+                    console.log('[PreviewHandler] Set --font-ko-main:', fontInfo.family);
+                } else {
+                    // null인 경우 기본 폰트로 리셋
+                    root.style.setProperty('--font-ko-main', defaultFonts.koMain);
+                    console.log('[PreviewHandler] Reset --font-ko-main to default:', defaultFonts.koMain);
+                }
+            }
+
+            // koSub 처리
+            if (fontData.koSub !== undefined) {
+                const fontInfo = this.extractFontInfo(fontData.koSub);
+                if (fontInfo) {
+                    this.loadFontFromCdn(fontInfo.key, fontInfo.cdn);
+                    root.style.setProperty('--font-ko-sub', fontInfo.family);
+                    console.log('[PreviewHandler] Set --font-ko-sub:', fontInfo.family);
+                } else {
+                    root.style.setProperty('--font-ko-sub', defaultFonts.koSub);
+                    console.log('[PreviewHandler] Reset --font-ko-sub to default:', defaultFonts.koSub);
+                }
+            }
+
+            // enMain 처리
+            if (fontData.enMain !== undefined) {
+                const fontInfo = this.extractFontInfo(fontData.enMain);
+                if (fontInfo) {
+                    this.loadFontFromCdn(fontInfo.key, fontInfo.cdn);
+                    root.style.setProperty('--font-en-main', fontInfo.family);
+                    console.log('[PreviewHandler] Set --font-en-main:', fontInfo.family);
+                } else {
+                    root.style.setProperty('--font-en-main', defaultFonts.enMain);
+                    console.log('[PreviewHandler] Reset --font-en-main to default:', defaultFonts.enMain);
+                }
+            }
+        }
+
+        // 색상 변수 업데이트
+        if (theme.color) {
+            console.log('[PreviewHandler] Applying colors:', theme.color);
+            if (theme.color.primary) {
+                root.style.setProperty('--color-primary', theme.color.primary);
+                console.log('[PreviewHandler] Set --color-primary:', theme.color.primary);
+            }
+            if (theme.color.secondary) {
+                root.style.setProperty('--color-secondary', theme.color.secondary);
+                console.log('[PreviewHandler] Set --color-secondary:', theme.color.secondary);
+            }
+        }
+    }
+
+    /**
      * 숙소 변경 처리 (다른 숙소 선택)
      */
     async handlePropertyChange(data) {
@@ -226,6 +356,37 @@ class PreviewHandler {
         await this.renderTemplate(this.currentData);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
+    }
+
+    /**
+     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
+     */
+    handleThemeUpdate(data) {
+        if (!data) return;
+
+        const root = document.documentElement;
+
+        // 폰트 변수 업데이트
+        if (data.fontKoMain) {
+            root.style.setProperty('--font-ko-main', data.fontKoMain);
+        }
+        if (data.fontKoSub) {
+            root.style.setProperty('--font-ko-sub', data.fontKoSub);
+        }
+        if (data.fontEnMain) {
+            root.style.setProperty('--font-en-main', data.fontEnMain);
+        }
+
+        // 색상 변수 업데이트
+        if (data.colorPrimary) {
+            root.style.setProperty('--color-primary', data.colorPrimary);
+        }
+        if (data.colorSecondary) {
+            root.style.setProperty('--color-secondary', data.colorSecondary);
+        }
+
+        // 부모 창에 테마 업데이트 완료 신호
+        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
     }
 
     /**
