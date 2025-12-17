@@ -349,16 +349,6 @@ class PreviewHandler {
 
             // mapPage 완료 후 슬라이더는 이미 초기화되어 있음
             // (IndexMapper.mapPage 내부에서 _reinitializeHeroSlider 호출)
-
-            // index 페이지: 동적 생성된 요소에 애니메이션 클래스 직접 추가
-            if (currentPage === 'index') {
-                document.querySelectorAll('.room-item').forEach(item => {
-                    item.classList.add('animate-fade-in');
-                });
-                document.querySelectorAll('.gallery-item').forEach(item => {
-                    item.classList.add('animate-fade-in');
-                });
-            }
         }
 
         // Header & Footer 매핑 (모든 페이지에서 공통 실행)
@@ -423,7 +413,6 @@ class PreviewHandler {
      * 데이터 구조 초기화 헬퍼 함수
      */
     ensureDataStructure() {
-        if (!this.currentData) this.currentData = {};
         if (!this.currentData.homepage) this.currentData.homepage = {};
         if (!this.currentData.homepage.customFields) this.currentData.homepage.customFields = {};
         if (!this.currentData.homepage.customFields.pages) this.currentData.homepage.customFields.pages = {};
@@ -543,19 +532,11 @@ class PreviewHandler {
                 case 'essence':
                     mapper.mapEssenceSection();
                     break;
-                case 'rooms':
-                    mapper.mapRoomsSection();
-                    // 동적 생성된 room-item에 애니메이션 클래스 직접 추가
-                    document.querySelectorAll('.room-item').forEach(item => {
-                        item.classList.add('animate-fade-in');
-                    });
-                    break;
                 case 'gallery':
                     mapper.mapGallerySection();
-                    // 동적 생성된 gallery-item에 애니메이션 클래스 직접 추가
-                    document.querySelectorAll('.gallery-item').forEach(item => {
-                        item.classList.add('animate-fade-in');
-                    });
+                    break;
+                case 'signature':
+                    mapper.mapSignatureSection();
                     break;
                 case 'closing':
                     mapper.mapClosingSection();
@@ -571,6 +552,7 @@ class PreviewHandler {
                         break;
                     case 'about':
                         mapper.mapAboutSection();
+                        mapper.mapMarqueeSection();
                         mapper.mapIntroductionSection();
                         break;
                 }
@@ -591,21 +573,7 @@ class PreviewHandler {
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                switch (section) {
-                    case 'hero':
-                        mapper.mapFacilityHeroSlider();
-                        break;
-                    case 'about':
-                        mapper.mapFacilityTopIntro();
-                        mapper.mapFacilitySpecialSection();
-                        break;
-                    case 'experience':
-                        mapper.mapUsageGuideSection();
-                        break;
-                    default:
-                        mapper.mapPage();
-                        break;
-                }
+                mapper.mapFacilityBasicInfo();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -618,7 +586,7 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroImage();
+                        mapper.mapSliderSection();
                         mapper.mapLocationInfo();
                         break;
                     default:
