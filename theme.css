@@ -1,7 +1,7 @@
 :root {
-  --font-ko-main: 'Pretendard', sans-serif;
-  --font-ko-sub: 'Nanum Gothic', sans-serif;
+  --font-ko-main: 'Gowun Dodum', sans-serif;
+  --font-ko-sub: 'Noto Serif KR', sans-serif;
   --font-en-main: 'Montserrat', sans-serif;
-  --color-primary: #F3F4F6;
-  --color-secondary: #0F766E;
+  --color-primary: #F5F5DC;
+  --color-secondary: #053051;
 }
