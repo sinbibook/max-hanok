@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.53.0",
-    "generatedAt": "2025-12-18T11:06:26.987Z",
+    "version": "1.54.0",
+    "generatedAt": "2025-12-18T11:12:29.738Z",
     "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1484,9 +1484,9 @@
         "font": {
           "koSub": {
             "cdn": null,
-            "key": "daegu-bukseongro",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/DaeguBukseongro-Light.woff2",
-            "family": "DaeguBukseongro"
+            "key": "ownglyph-parkdahyun",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2",
+            "family": "OngleipParkDahyeon"
           },
           "enMain": {
             "cdn": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
@@ -1496,14 +1496,14 @@
           },
           "koMain": {
             "cdn": null,
-            "key": "daegu-bukseongro",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/DaeguBukseongro-Light.woff2",
-            "family": "DaeguBukseongro"
+            "key": "ownglyph-parkdahyun",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2",
+            "family": "OngleipParkDahyeon"
           }
         },
         "color": {
-          "primary": "#FFF9F1",
-          "secondary": "#B66E41"
+          "primary": "#F5F5F5",
+          "secondary": "#1D3A5F"
         }
       }
     }
