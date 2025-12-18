@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.47.0",
-    "generatedAt": "2025-12-18T06:47:51.191Z",
+    "version": "1.48.0",
+    "generatedAt": "2025-12-18T07:01:29.079Z",
     "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1482,25 +1482,13 @@
       },
       "theme": {
         "font": {
-          "koSub": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap",
-            "key": "noto-sans-kr",
-            "family": "Noto Sans KR"
-          },
-          "enMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap",
-            "key": "raleway",
-            "family": "Raleway"
-          },
-          "koMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap",
-            "key": "nanum-myeongjo",
-            "family": "Nanum Myeongjo"
-          }
+          "koSub": null,
+          "enMain": null,
+          "koMain": null
         },
         "color": {
           "primary": "#e6f3ff",
-          "secondary": "#658399"
+          "secondary": "#062032"
         }
       }
     }
