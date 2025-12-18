@@ -1,5 +1,7 @@
 :root {
-  --font-ko-sub: 'Noto Serif KR', sans-serif;
-  --color-primary: #A37538;
-  --color-secondary: #7E6349;
+  --font-ko-main: 'Nanum Myeongjo', sans-serif;
+  --font-ko-sub: 'Noto Sans KR', sans-serif;
+  --font-en-main: 'Raleway', sans-serif;
+  --color-primary: #e6f3ff;
+  --color-secondary: #658399;
 }
