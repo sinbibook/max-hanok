@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.52.0",
-    "generatedAt": "2025-12-18T10:54:19.070Z",
+    "version": "1.53.0",
+    "generatedAt": "2025-12-18T11:06:26.987Z",
     "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1483,15 +1483,16 @@
       "theme": {
         "font": {
           "koSub": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap",
-            "key": "nanum-myeongjo",
-            "woff2": null,
-            "family": "Nanum Myeongjo"
+            "cdn": null,
+            "key": "daegu-bukseongro",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/DaeguBukseongro-Light.woff2",
+            "family": "DaeguBukseongro"
           },
           "enMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap",
-            "key": "montserrat",
-            "family": "Montserrat"
+            "cdn": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
+            "key": "poppins",
+            "woff2": null,
+            "family": "Poppins"
           },
           "koMain": {
             "cdn": null,
@@ -1501,8 +1502,8 @@
           }
         },
         "color": {
-          "primary": "#152B41",
-          "secondary": "#839595"
+          "primary": "#FFF9F1",
+          "secondary": "#B66E41"
         }
       }
     }
