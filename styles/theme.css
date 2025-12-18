@@ -1,4 +1,7 @@
 :root {
-  --color-primary: #e6f3ff;
-  --color-secondary: #062032;
+  --font-ko-main: 'Noto Sans KR', sans-serif;
+  --font-ko-sub: 'Pretendard', sans-serif;
+  --font-en-main: 'Montserrat', sans-serif;
+  --color-primary: #152B41;
+  --color-secondary: #839595;
 }
