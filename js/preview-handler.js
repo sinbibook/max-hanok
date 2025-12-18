@@ -245,12 +245,12 @@ class PreviewHandler {
     }
 
     /**
-     * CDN URL로 폰트 로드
+     * CDN URL로 폰트 로드 (link 태그)
      */
     loadFontFromCdn(key, cdnUrl) {
         if (!cdnUrl || !key) return;
 
-        const linkId = `font-${key}`;
+        const linkId = `font-cdn-${key}`;
         if (document.getElementById(linkId)) return;
 
         const link = document.createElement('link');
@@ -261,6 +261,27 @@ class PreviewHandler {
     }
 
     /**
+     * woff2 URL로 폰트 로드 (@font-face)
+     */
+    loadFontFromWoff2(key, family, woff2Url) {
+        if (!woff2Url || !family) return;
+
+        const styleId = `font-woff2-${key}`;
+        if (document.getElementById(styleId)) return;
+
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+@font-face {
+    font-family: '${family}';
+    src: url('${woff2Url}') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}`;
+        document.head.appendChild(style);
+    }
+
+    /**
      * 단일 폰트 CSS 변수 적용
      */
     applyFont(fontValue, cssVar, defaultValue) {
@@ -268,7 +289,12 @@ class PreviewHandler {
 
         // fontValue가 유효한 객체인 경우
         if (fontValue && typeof fontValue === 'object' && fontValue.family) {
-            this.loadFontFromCdn(fontValue.key, fontValue.cdn);
+            // cdn이 있으면 link 태그, woff2만 있으면 style 태그
+            if (fontValue.cdn) {
+                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
+            } else if (fontValue.woff2) {
+                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
+            }
             root.style.setProperty(cssVar, `'${fontValue.family}', sans-serif`);
             return;
         }
@@ -332,29 +358,7 @@ class PreviewHandler {
      */
     handleThemeUpdate(data) {
         if (!data) return;
-
-        const root = document.documentElement;
-
-        // 폰트 변수 업데이트
-        if (data.fontKoMain) {
-            root.style.setProperty('--font-ko-main', data.fontKoMain);
-        }
-        if (data.fontKoSub) {
-            root.style.setProperty('--font-ko-sub', data.fontKoSub);
-        }
-        if (data.fontEnMain) {
-            root.style.setProperty('--font-en-main', data.fontEnMain);
-        }
-
-        // 색상 변수 업데이트
-        if (data.colorPrimary) {
-            root.style.setProperty('--color-primary', data.colorPrimary);
-        }
-        if (data.colorSecondary) {
-            root.style.setProperty('--color-secondary', data.colorSecondary);
-        }
-
-        // 부모 창에 테마 업데이트 완료 신호
+        this.applyThemeVariables(data);
         this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
     }
 
