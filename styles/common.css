@@ -1,32 +1,3 @@
-/* Font Face - Fallback Fonts */
-@font-face {
-    font-family: 'Chosunilbo';
-    src: url('../fonts/ChosunNm.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Continuous';
-    src: url('../fonts/continuous.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* CSS Variables - Theme Defaults */
-:root {
-    /* Font Variables (fallback to template default fonts) */
-    --font-ko-main: 'Chosunilbo', serif;
-    --font-ko-sub: 'Chosunilbo', serif;
-    --font-en-main: 'Continuous', serif;
-
-    /* Color Variables (fallback to template defaults) */
-    --color-primary: #fff8ef;
-    --color-secondary: #6c5f51;
-}
-
 /* Reset & Base */
 * {
     margin: 0;
