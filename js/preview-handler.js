@@ -176,9 +176,6 @@ class PreviewHandler {
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
     async handleTemplateUpdate(data) {
-        console.log('[PreviewHandler] handleTemplateUpdate received:', data);
-        console.log('[PreviewHandler] data.theme:', data?.theme);
-
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -189,13 +186,9 @@ class PreviewHandler {
         }
 
         // theme 데이터가 있으면 CSS 변수 즉시 업데이트
-        // theme는 data.homepage.customFields.theme에 위치
         const theme = data?.homepage?.customFields?.theme || data?.theme;
         if (theme) {
-            console.log('[PreviewHandler] Theme found, applying...', theme);
             this.applyThemeVariables(theme);
-        } else {
-            console.log('[PreviewHandler] No theme in data');
         }
 
         // 초기화되지 않은 경우 초기 데이터로 처리
@@ -231,115 +224,91 @@ class PreviewHandler {
     }
 
     /**
-     * 기본 폰트 fallback 값 (common.css :root 기본값과 동일)
+     * 기본 폰트 fallback 값 (theme.css 기본값과 동일)
      */
     getDefaultFonts() {
         return {
-            koMain: "'Chosunilbo', serif",
-            koSub: "'Chosunilbo', serif",
-            enMain: "'Continuous', serif"
+            koMain: "'Chosunilbo', Arial, sans-serif",
+            koSub: "'Chosunilbo', Arial, sans-serif",
+            enMain: "'Continuous', Arial, sans-serif"
         };
     }
 
     /**
-     * 폰트 값에서 정보 추출
-     * 구조: { key, family, cdn }
+     * 기본 색상 fallback 값 (theme.css 기본값과 동일)
      */
-    extractFontInfo(fontValue) {
-        if (!fontValue || typeof fontValue !== 'object' || !fontValue.family) {
-            return null;
-        }
-
+    getDefaultColors() {
         return {
-            key: fontValue.key,
-            family: `'${fontValue.family}', sans-serif`,
-            cdn: fontValue.cdn
+            primary: '#fff8ef',
+            secondary: '#6c5f51'
         };
     }
 
     /**
-     * CDN URL로 폰트 직접 로드
+     * CDN URL로 폰트 로드
      */
     loadFontFromCdn(key, cdnUrl) {
-        if (!cdnUrl) return;
+        if (!cdnUrl || !key) return;
 
         const linkId = `font-${key}`;
-        if (document.getElementById(linkId)) return; // 이미 로드됨
+        if (document.getElementById(linkId)) return;
 
         const link = document.createElement('link');
         link.id = linkId;
         link.rel = 'stylesheet';
         link.href = cdnUrl;
         document.head.appendChild(link);
-        console.log('[PreviewHandler] Font loaded from CDN:', key, cdnUrl);
+    }
+
+    /**
+     * 단일 폰트 CSS 변수 적용
+     */
+    applyFont(fontValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+
+        // fontValue가 유효한 객체인 경우
+        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
+            this.loadFontFromCdn(fontValue.key, fontValue.cdn);
+            root.style.setProperty(cssVar, `'${fontValue.family}', sans-serif`);
+            return;
+        }
+
+        // null/undefined인 경우 기본값으로 리셋
+        root.style.setProperty(cssVar, defaultValue);
+    }
+
+    /**
+     * 단일 색상 CSS 변수 적용
+     */
+    applyColor(colorValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+        root.style.setProperty(cssVar, colorValue || defaultValue);
     }
 
     /**
      * 테마 CSS 변수 적용 (font/color)
      */
     applyThemeVariables(theme) {
-        console.log('[PreviewHandler] applyThemeVariables called:', theme);
-        const root = document.documentElement;
         const defaultFonts = this.getDefaultFonts();
-
-        // 폰트 데이터 추출 (theme.font 또는 직접 theme에서)
+        const defaultColors = this.getDefaultColors();
         const fontData = theme.font || theme;
 
         // 폰트 변수 업데이트
         if (fontData) {
-            console.log('[PreviewHandler] Applying fonts:', fontData);
-
-            // koMain 처리
-            if (fontData.koMain !== undefined) {
-                const fontInfo = this.extractFontInfo(fontData.koMain);
-                if (fontInfo) {
-                    this.loadFontFromCdn(fontInfo.key, fontInfo.cdn);
-                    root.style.setProperty('--font-ko-main', fontInfo.family);
-                    console.log('[PreviewHandler] Set --font-ko-main:', fontInfo.family);
-                } else {
-                    // null인 경우 기본 폰트로 리셋
-                    root.style.setProperty('--font-ko-main', defaultFonts.koMain);
-                    console.log('[PreviewHandler] Reset --font-ko-main to default:', defaultFonts.koMain);
-                }
-            }
-
-            // koSub 처리
-            if (fontData.koSub !== undefined) {
-                const fontInfo = this.extractFontInfo(fontData.koSub);
-                if (fontInfo) {
-                    this.loadFontFromCdn(fontInfo.key, fontInfo.cdn);
-                    root.style.setProperty('--font-ko-sub', fontInfo.family);
-                    console.log('[PreviewHandler] Set --font-ko-sub:', fontInfo.family);
-                } else {
-                    root.style.setProperty('--font-ko-sub', defaultFonts.koSub);
-                    console.log('[PreviewHandler] Reset --font-ko-sub to default:', defaultFonts.koSub);
-                }
-            }
-
-            // enMain 처리
-            if (fontData.enMain !== undefined) {
-                const fontInfo = this.extractFontInfo(fontData.enMain);
-                if (fontInfo) {
-                    this.loadFontFromCdn(fontInfo.key, fontInfo.cdn);
-                    root.style.setProperty('--font-en-main', fontInfo.family);
-                    console.log('[PreviewHandler] Set --font-en-main:', fontInfo.family);
-                } else {
-                    root.style.setProperty('--font-en-main', defaultFonts.enMain);
-                    console.log('[PreviewHandler] Reset --font-en-main to default:', defaultFonts.enMain);
-                }
-            }
+            if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
+            if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
+            if ('enMain' in fontData) this.applyFont(fontData.enMain, '--font-en-main', defaultFonts.enMain);
         }
 
         // 색상 변수 업데이트
-        if (theme.color) {
-            console.log('[PreviewHandler] Applying colors:', theme.color);
-            if (theme.color.primary) {
-                root.style.setProperty('--color-primary', theme.color.primary);
-                console.log('[PreviewHandler] Set --color-primary:', theme.color.primary);
-            }
-            if (theme.color.secondary) {
-                root.style.setProperty('--color-secondary', theme.color.secondary);
-                console.log('[PreviewHandler] Set --color-secondary:', theme.color.secondary);
+        if ('color' in theme) {
+            if (!theme.color) {
+                // color가 null이면 전체 기본값으로 리셋
+                this.applyColor(null, '--color-primary', defaultColors.primary);
+                this.applyColor(null, '--color-secondary', defaultColors.secondary);
+            } else {
+                if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
+                if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
             }
         }
     }
