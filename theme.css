@@ -1,7 +1,5 @@
 :root {
-  --font-ko-main: 'Gowun Dodum', sans-serif;
   --font-ko-sub: 'Noto Serif KR', sans-serif;
-  --font-en-main: 'Montserrat', sans-serif;
-  --color-primary: #F5F5DC;
-  --color-secondary: #053051;
+  --color-primary: #FFF9F1;
+  --color-secondary: #B66E41;
 }

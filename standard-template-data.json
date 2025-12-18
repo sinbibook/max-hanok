@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.42.0",
-    "generatedAt": "2025-12-17T06:47:17.121Z",
+    "version": "1.43.0",
+    "generatedAt": "2025-12-18T06:05:39.103Z",
     "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -244,12 +244,19 @@
         "이불"
       ],
       "amenities": [
-        "발코니",
         "침대",
+        "의자",
+        "발코니",
         "냉장고",
-        "커피머신",
         "전자레인지",
-        "화장실"
+        "커피머신",
+        "화장실",
+        "샴푸",
+        "애견식기",
+        "애견배변판",
+        "애견타월",
+        "볼풀",
+        "그네"
       ],
       "roomViews": [
         "강전망"
@@ -1480,20 +1487,12 @@
             "key": "noto-serif-kr",
             "family": "Noto Serif KR"
           },
-          "enMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap",
-            "key": "montserrat",
-            "family": "Montserrat"
-          },
-          "koMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap",
-            "key": "gowun-dodum",
-            "family": "Gowun Dodum"
-          }
+          "enMain": null,
+          "koMain": null
         },
         "color": {
-          "primary": "#F5F5DC",
-          "secondary": "#053051"
+          "primary": "#FFF9F1",
+          "secondary": "#B66E41"
         }
       }
     }
