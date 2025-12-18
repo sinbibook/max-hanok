@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.51.0",
-    "generatedAt": "2025-12-18T10:48:14.449Z",
+    "version": "1.52.0",
+    "generatedAt": "2025-12-18T10:54:19.070Z",
     "templateType": "gallery_sidebar_beige",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1483,9 +1483,10 @@
       "theme": {
         "font": {
           "koSub": {
-            "cdn": "",
-            "key": "daegu-bukseongro",
-            "family": "DaeguBukseongro"
+            "cdn": "https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap",
+            "key": "nanum-myeongjo",
+            "woff2": null,
+            "family": "Nanum Myeongjo"
           },
           "enMain": {
             "cdn": "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap",
@@ -1493,8 +1494,9 @@
             "family": "Montserrat"
           },
           "koMain": {
-            "cdn": "",
+            "cdn": null,
             "key": "daegu-bukseongro",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/DaeguBukseongro-Light.woff2",
             "family": "DaeguBukseongro"
           }
         },
