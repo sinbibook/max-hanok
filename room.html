@@ -10,6 +10,7 @@
 
     <script src="js/config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles/theme.css"/>
     <link rel="stylesheet" href="styles/common.css"/>
     <link rel="stylesheet" href="styles/room.css"/>
   <!-- Open Graph Meta Tags for Social Media -->
@@ -81,8 +82,8 @@
             <div class="max-w-7xl mx-auto px-6">
                 <!-- Section Title -->
                 <div class="text-left">
-                    <h3 class="text-2xl md:text-3xl font-bold ko-title fade-in-up" style="color: rgb(96, 83, 71);" data-room-name></h3>
-                    <div class="w-full h-px mt-6 fade-in-up" style="background-color: rgb(96, 83, 71);"></div>
+                    <h3 class="text-2xl md:text-3xl font-bold ko-title fade-in-up" style="color: var(--color-secondary);" data-room-name></h3>
+                    <div class="w-full h-px mt-6 fade-in-up" style="background-color: var(--color-secondary);"></div>
                     <p class="text-lg text-gray-600 ko-body mt-6 fade-in-up" data-room-description></p>
                 </div>
             </div>
@@ -108,7 +109,7 @@
                                 </button>
                                 <!-- Main Image Display -->
                                 <div class="w-full px-8">
-                                    <div class="border-2 border-dashed p-2 w-full" style="border-color: rgb(96, 83, 71); border-radius: 260px 260px 10px 10px;">
+                                    <div class="border-2 border-dashed p-2 w-full" style="border-color: var(--color-secondary); border-radius: 260px 260px 10px 10px;">
                                         <div class="w-full h-[450px] md:h-[600px] lg:h-[750px] overflow-hidden bg-gray-200 shadow-lg" style="border-radius: 250px 250px 10px 10px;">
                                         <div class="relative w-full h-full">
                                             <img id="main-slider-image"
@@ -139,12 +140,12 @@
 
                     <!-- Room Information (50:50 Layout with Amenities) -->
                     <div class="w-full fade-in-up mt-4 px-8">
-                        <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: rgb(96, 83, 71);">
-                            <h3 class="text-xl font-semibold en-title" style="color: rgb(96, 83, 71);">Room Information</h3>
-                            <div class="w-full h-px mt-2 mb-6" style="background-color: rgb(75, 85, 99);"></div>
+                        <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: var(--color-secondary);">
+                            <h3 class="text-xl font-semibold en-title" style="color: var(--color-secondary);">Room Information</h3>
+                            <div class="w-full h-px mt-2 mb-6" style="background-color: var(--color-secondary);"></div>
 
                             <!-- Room Info Split Layout -->
-                            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-8 relative rounded-xl px-6 py-4 shadow-sm" style="background-color: rgb(250, 245, 237);">
+                            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 mb-8 relative rounded-xl px-6 py-4 shadow-sm" style="background-color: var(--color-primary);">
                                 <!-- Left Side: 객실정보 (3개) -->
                                 <div class="w-full lg:w-1/2 space-y-4">
                                     <div class="flex justify-between items-center py-3 border-b border-gray-100">
@@ -185,9 +186,9 @@
 
                             <!-- Amenities Section -->
                             <div>
-                                <h4 class="text-xl font-semibold en-title mb-4" style="color: rgb(96, 83, 71);">Amenities</h4>
-                                <div class="w-full h-px mb-4" style="background-color: rgb(75, 85, 99);"></div>
-                                <div class="rounded-xl px-6 py-4 shadow-sm" style="background-color: rgb(250, 245, 237);">
+                                <h4 class="text-xl font-semibold en-title mb-4" style="color: var(--color-secondary);">Amenities</h4>
+                                <div class="w-full h-px mb-4" style="background-color: var(--color-secondary);"></div>
+                                <div class="rounded-xl px-6 py-4 shadow-sm" style="background-color: var(--color-primary);">
                                     <div class="space-y-3" data-room-amenities></div>
                                 </div>
                             </div>
@@ -214,15 +215,15 @@
                 <div class="flex flex-col gap-6">
 
                     <!-- Usage Guide Section -->
-                    <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: rgb(96, 83, 71);">
-                        <h4 class="text-xl font-semibold en-title" style="color: rgb(96, 83, 71);">Usage Guide</h4>
+                    <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: var(--color-secondary);">
+                        <h4 class="text-xl font-semibold en-title" style="color: var(--color-secondary);">Usage Guide</h4>
                         <div class="w-full h-px mt-2 mb-4 bg-gray-200"></div>
                         <p class="text-gray-700 ko-body leading-relaxed" data-room-info></p>
                     </div>
 
                     <!-- Check-in/Check-out Info Section -->
-                    <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: rgb(96, 83, 71);">
-                        <h4 class="text-xl font-semibold en-title" style="color: rgb(96, 83, 71);">Check-in & Check-out Information</h4>
+                    <div class="bg-stone-50 rounded-lg p-6 border fade-in-up" style="border-color: var(--color-secondary);">
+                        <h4 class="text-xl font-semibold en-title" style="color: var(--color-secondary);">Check-in & Check-out Information</h4>
                         <div class="w-full h-px mt-2 mb-4 bg-gray-200"></div>
                         <p class="text-gray-700 ko-body leading-relaxed" data-property-checkin-checkout-info></p>
                     </div>

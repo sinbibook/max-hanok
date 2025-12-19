@@ -119,6 +119,9 @@ class PreviewHandler {
             case 'section_update':
                 this.handleSectionUpdate(event.data);
                 break;
+            case 'THEME_UPDATE':
+                this.handleThemeUpdate(data);
+                break;
             default:
                 break;
         }
@@ -156,6 +159,12 @@ class PreviewHandler {
         if (this.fallbackTimeout) {
             clearTimeout(this.fallbackTimeout);
             this.fallbackTimeout = null;
+        }
+
+        // theme 데이터가 있으면 CSS 변수 즉시 업데이트
+        const theme = data?.homepage?.customFields?.theme || data?.theme;
+        if (theme) {
+            this.applyThemeVariables(theme);
         }
 
         // 초기화되지 않은 경우 초기 데이터로 처리
@@ -202,6 +211,97 @@ class PreviewHandler {
         await this.renderTemplate(data);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
+    }
+
+    getDefaultFonts() {
+        return {
+            koMain: "'Cafe24SsurroundAir', 'Pretendard', sans-serif",
+            koSub: "'Cafe24SsurroundAir', 'Pretendard', sans-serif",
+            enMain: "'Miamo', 'Lato', sans-serif"
+        };
+    }
+
+    getDefaultColors() {
+        return {
+            primary: '#f7f0e5',
+            secondary: '#605347'
+        };
+    }
+
+    loadFontFromCdn(key, cdnUrl) {
+        if (!cdnUrl || !key) return;
+        const linkId = `font-cdn-${key}`;
+        if (document.getElementById(linkId)) return;
+
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = cdnUrl;
+        document.head.appendChild(link);
+    }
+
+    loadFontFromWoff2(key, family, woff2Url) {
+        if (!woff2Url || !family) return;
+        const styleId = `font-woff2-${key}`;
+        if (document.getElementById(styleId)) return;
+
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+@font-face {
+    font-family: '${family}';
+    src: url('${woff2Url}') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}`;
+        document.head.appendChild(style);
+    }
+
+    applyFont(fontValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
+            if (fontValue.cdn) {
+                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
+            } else if (fontValue.woff2) {
+                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
+            }
+            root.style.setProperty(cssVar, `'${fontValue.family}', sans-serif`);
+            return;
+        }
+        root.style.setProperty(cssVar, defaultValue);
+    }
+
+    applyColor(colorValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+        root.style.setProperty(cssVar, colorValue || defaultValue);
+    }
+
+    applyThemeVariables(theme) {
+        const defaultFonts = this.getDefaultFonts();
+        const defaultColors = this.getDefaultColors();
+        const fontData = theme.font || theme;
+
+        if (fontData) {
+            if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
+            if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
+            if ('enMain' in fontData) this.applyFont(fontData.enMain, '--font-en-main', defaultFonts.enMain);
+        }
+
+        if ('color' in theme) {
+            if (!theme.color) {
+                this.applyColor(null, '--color-primary', defaultColors.primary);
+                this.applyColor(null, '--color-secondary', defaultColors.secondary);
+            } else {
+                if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
+                if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
+            }
+        }
+    }
+
+    handleThemeUpdate(data) {
+        if (!data) return;
+        this.applyThemeVariables(data);
+        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
     }
 
     /**

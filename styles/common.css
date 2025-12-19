@@ -1,16 +1,14 @@
 /* Template Dog Friendly Lodge - Common Styles */
 
-/* CSS 커스텀 프로퍼티 (변수) 정의 */
 :root {
-    --brand-color-primary: rgb(96, 83, 71); /* 주요 브랜드 컬러 */
+    --brand-color-primary: var(--color-secondary);
 }
 
-/* 전체 레이아웃 overflow 방지 */
 html, body {
     overflow-x: hidden;
     width: 100%;
     max-width: 100%;
-    background-color: #f7f0e5; /* 부드러운 베이지색 배경 */
+    background-color: var(--color-primary);
 }
 
 * {
@@ -29,13 +27,6 @@ html, body {
     font-family: 'Lato';
     src: url('../fonts/Lato-Bold.ttf') format('truetype');
     font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Lato';
-    src: url('../fonts/Lato-Thin.ttf') format('truetype');
-    font-weight: 300;
     font-style: normal;
 }
 
@@ -64,28 +55,6 @@ html, body {
     font-family: 'Miamo';
     src: url('../fonts/Miamo SemiBold.otf') format('opentype');
     font-weight: 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Pretendard';
-    src: url('../fonts/Pretendard-Thin.otf') format('opentype');
-    font-weight: 100;
-    font-style: normal;
-}
-
-
-@font-face {
-    font-family: 'Gyrotrope';
-    src: url('../fonts/gyrotrope.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Cafe24Ssurround';
-    src: url('../fonts/Cafe24Ssurround-v2.0.ttf') format('truetype');
-    font-weight: 400;
     font-style: normal;
 }
 
@@ -151,15 +120,13 @@ html, body {
     letter-spacing: -0.3px;
 }
 
-/* 영문 제목 폰트 (큰글씨/제목) */
 .en-title {
-    font-family: 'Miamo', 'Gyrotrope', 'Lato', serif;
+    font-family: var(--font-en-main);
     font-weight: 400;
 }
 
-/* 한글 제목 폰트 (큰글씨/제목) */
 .ko-title {
-    font-family: 'Cafe24SsurroundAir', 'Pretendard', sans-serif;
+    font-family: var(--font-ko-main);
     font-weight: 400;
     letter-spacing: -0.5px;
 }
@@ -172,9 +139,8 @@ html, body {
     letter-spacing: 0.3px;
 }
 
-/* 한글 본문 폰트 (작은글씨) */
 .ko-body {
-    font-family: 'Cafe24SsurroundAir', 'Pretendard', sans-serif;
+    font-family: var(--font-ko-sub);
     font-weight: 300;
     line-height: 1.6;
 }

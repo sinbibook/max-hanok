@@ -407,6 +407,7 @@ class FullScreenMenu {
 
             // Create text span
             const textSpan = document.createElement('span');
+            textSpan.className = 'en-title';
             textSpan.textContent = menu.label;
             menuButton.appendChild(textSpan);
 
