@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="숙소 설명">
+    <meta name="keywords" content="SEO 키워드">
+    <title id="page-title">시설 안내 - 숙소명</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="../styles/common.css" as="style">
+    <link rel="preload" href="../styles/facility.css" as="style">
+    <link rel="stylesheet" href="../styles/common.css">
+    <link rel="stylesheet" href="../styles/facility.css">
+
+
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="맥스 한옥 펜션 - 시설안내" />
+  <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
+  <meta property="og:url" content="https://max-hanok.com" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="맥스 한옥 펜션 - 시설안내" />
+  <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
+
+    <!-- Font CDN -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/bruno-ace-2">
+    <!-- Font Face -->
+    <style>
+  @font-face {
+    font-family: 'Cafe24Surround';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'SokchoSeaDotum';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+  </style>
+  </head>
+<body>
+    <div class="facility-page">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background">
+                <img id="hero-image"
+                     src=""
+                     alt="시설 히어로 이미지"
+                     data-facility-hero-image
+                     class="w-full h-full object-cover">
+            </div>
+            <div class="hero-content">
+                <button class="back-button" onclick="navigateToHome()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                    </svg>
+                    Back to Home
+                </button>
+
+                <div class="hero-info">
+                    <p id="hero-subtitle" class="hero-subtitle" data-facility-hero-subtitle></p>
+                    <h1 id="hero-title" class="hero-title" data-facility-hero-title></h1>
+                    <p id="hero-description" class="hero-description" data-facility-hero-description></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading/Error States -->
+        <div id="loading-message" class="loading-message" data-facility-loading-message></div>
+        <div id="error-message" class="error-message" data-facility-error-message style="display: none;"></div>
+
+        <!-- Main Content Section -->
+        <section id="main-content" class="main-content-section page-content" data-facility-main-content style="display: none;">
+            <div class="main-grid">
+                <div class="left-column">
+                    <div class="title-section">
+                        <p id="content-subtitle" class="section-subtitle" data-facility-content-subtitle></p>
+                        <h1 id="content-title" class="section-title" data-facility-content-title></h1>
+                        <!-- <p id="content-description" class="section-description">시설 설명</p> -->
+                    </div>
+
+                    <!-- Small Image -->
+                    <div class="small-image-wrapper">
+                        <div class="small-image">
+                            <img id="small-image"
+                                 src=""
+                                 alt="시설 작은 이미지"
+                                 data-facility-small-image
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="section-description" data-facility-content>
+                        <!-- Dynamic facility content will be inserted here -->
+                    </div>
+
+                    <!-- Usage Guide -->
+                    <div class="usage-guide-section">
+                        <h3 class="usage-guide-title">이용안내</h3>
+                        <div id="usage-guide-content" class="usage-guide-content" data-facility-usage-guide>
+                            <!-- Dynamic usage guide will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <div class="large-image">
+                        <img id="large-image"
+                             src=""
+                             alt="시설 큰 이미지"
+                             data-facility-large-image
+                             class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Overview Section -->
+        <section id="experience-section" class="experience-section page-content" data-facility-experience-section style="display: none;">
+            <h2 class="experience-title">Experience Overview</h2>
+
+            <div class="experience-grid">
+                <!-- Main Content -->
+                <div data-features-main-content>
+                    <!-- 주요 특징 -->
+                    <div>
+                        <h3 class="features-title">주요 특징</h3>
+                        <div id="features-grid" class="features-grid" data-facility-features-grid>
+                            <!-- Dynamic features will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div>
+                    <div class="sidebar-card">
+                        <h3 class="sidebar-title" data-additional-info-title>추가 정보</h3>
+
+                        <div id="sidebar-info" class="sidebar-info" data-facility-sidebar-info>
+                            <!-- Dynamic sidebar info will be inserted here -->
+                        </div>
+
+                        <div>
+                            <h3 class="benefits-title" data-benefits-title>특별 혜택</h3>
+                            <ul id="benefits-list" class="benefits-list" data-facility-benefits-list>
+                                <!-- Dynamic benefits will be inserted here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section (Hidden) -->
+        <section id="gallery-section" class="px-8 sm:px-6 md:px-20 lg:px-[140px] py-8 sm:py-12 md:py-[56px] bg-white page-content" data-facility-gallery-section style="display: none;">
+            <div id="facility-fade-gallery"></div>
+        </section>
+
+        <!-- Slider Section -->
+        <section id="slider-section" class="px-8 md:px-[140px] py-8 sm:py-12 md:py-[56px] bg-white page-content" data-facility-slider-section>
+            <div class="facility-slider-wrapper">
+                <!-- Slides Container -->
+                <div class="facility-slides-container" data-facility-slides-container>
+                    <!-- Slides will be populated by data mapper -->
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button class="facility-nav-button facility-prev" onclick="prevFacilitySlide()">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <button class="facility-nav-button facility-next" onclick="nextFacilitySlide()">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+
+                <!-- Slide Indicators -->
+                <div class="facility-slide-indicators" data-facility-slide-indicators>
+                    <!-- Indicators will be populated by data mapper -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- Include ImageWithFallback script -->
+    <script src="../js/image-with-fallback.js"></script>
+
+
+    <!-- Image Helpers -->
+    <script src="../js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="../js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Facility Page Mapper -->
+    <script src="../js/data-mapper/pages/facility-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="../js/preview-handler.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="../js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="../js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
+    <script src="../js/pages/facility.js"></script>
+
+</body>
+</html>

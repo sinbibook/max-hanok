@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.56.0",
-    "generatedAt": "2025-12-19T01:51:57.691Z",
-    "templateType": "full_banner_slider",
+    "version": "1.57.0",
+    "generatedAt": "2025-12-19T07:29:18.992Z",
+    "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -967,7 +967,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "full_banner_slider",
+    "templateType": "full_banner_image",
     "images": [
       {
         "logo": [
@@ -1484,9 +1484,9 @@
         "font": {
           "koSub": {
             "cdn": null,
-            "key": "jejustonewall",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2",
-            "family": "JejuStoneWall"
+            "key": "sokchoseadotum",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
+            "family": "SokchoSeaDotum"
           },
           "enMain": {
             "cdn": "https://fonts.cdnfonts.com/css/bruno-ace-2",
@@ -1496,14 +1496,14 @@
           },
           "koMain": {
             "cdn": null,
-            "key": "jeongseonariranghon",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff",
-            "family": "JeongseonArirangHon"
+            "key": "cafe24surround",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff",
+            "family": "Cafe24Surround"
           }
         },
         "color": {
-          "primary": "#F5F5F5",
-          "secondary": "#1D3A5F"
+          "primary": "#F5F4F1",
+          "secondary": "#C36355"
         }
       }
     }
