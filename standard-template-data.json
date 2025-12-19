@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.54.0",
-    "generatedAt": "2025-12-18T11:12:29.738Z",
-    "templateType": "gallery_sidebar_beige",
+    "version": "1.55.0",
+    "generatedAt": "2025-12-19T01:38:35.438Z",
+    "templateType": "full_banner_slider",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -967,7 +967,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "gallery_sidebar_beige",
+    "templateType": "full_banner_slider",
     "images": [
       {
         "logo": [
@@ -1484,21 +1484,21 @@
         "font": {
           "koSub": {
             "cdn": null,
-            "key": "ownglyph-parkdahyun",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2",
-            "family": "OngleipParkDahyeon"
+            "key": "jejustonewall",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2",
+            "family": "JejuStoneWall"
           },
           "enMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
-            "key": "poppins",
+            "cdn": "https://fonts.cdnfonts.com/css/bruno-ace-2",
+            "key": "brunoace",
             "woff2": null,
-            "family": "Poppins"
+            "family": "Bruno Ace"
           },
           "koMain": {
             "cdn": null,
-            "key": "ownglyph-parkdahyun",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2",
-            "family": "OngleipParkDahyeon"
+            "key": "jeongseonariranghon",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff",
+            "family": "JeongseonArirangHon"
           }
         },
         "color": {

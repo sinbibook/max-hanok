@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="숙소 설명">
-    <meta name="keywords" content="SEO 키워드">
-    <title id="page-title">시설 안내 - 숙소명</title>
+    <title data-homepage-seo-title></title>
+    <meta name="description" content="" data-homepage-seo-description>
+    <meta name="keywords" content="" data-homepage-seo-keywords>
+    <link rel="icon" type="image/png" href="" data-homepage-favicon>
 
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/theme.css" as="style">
-    <link rel="preload" href="styles/common.css" as="style">
-    <link rel="preload" href="styles/facility.css" as="style">
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/slider.css">
-    <link rel="stylesheet" href="styles/facility.css">
-
-
+    <script src="js/config.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="styles/common.css"/>
+    <link rel="stylesheet" href="styles/facility.css"/>
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 시설안내" />
@@ -31,203 +27,203 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 
     <!-- Font CDN -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/bruno-ace-2">
     <!-- Font Face -->
     <style>
   @font-face {
-    font-family: 'OngleipParkDahyeon';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-family: 'JeongseonArirangHon';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'JejuStoneWall';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
     font-weight: 400;
     font-display: swap;
   }
   </style>
   </head>
 <body>
-    <!-- Main Content -->
-    <main class="main-content">
 
-        <section class="main-section fullscreen-slider">
-          <div class="fullscreen-slider-container">
-            <div class="fullscreen-slider-inner">
-              <!-- 시설 이미지 전체 순서대로 매핑 -->
-            </div>
-            <!-- 하드코딩 fix! -->
-            <div class="fullscreen-slider-content">
-              <h2 class="fullscreen-slider-title centered">Special</h2>
+    <!-- Fullscreen Menu Container -->
+    <div id="fullscreen-menu-container"></div>
+
+    <div class="main-container" data-name="시설페이지">
+
+        <!-- Section 1: Hero with Background Image and Facility Name -->
+        <section id="section1" class="relative w-full overflow-hidden" style="height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh;">
+            <!-- Hero Background Image -->
+            <div id="hero-image-container" class="absolute inset-0 w-full h-full">
+                <img src=""
+                     alt="시설 이미지"
+                     class="absolute inset-0 w-full h-full object-cover empty-image-placeholder"
+                     style="width: 100%; height: 100vh; min-height: 100vh; object-fit: cover; display: block; position: absolute; inset: 0px;"
+                     data-facility-hero-image>
             </div>
 
-            <div class="fullscreen-slider-nav">
-              <span class="nav-arrow nav-prev">‹</span>
-              <span class="nav-current">01</span>
-              <span class="nav-divider">|</span>
-              <span class="nav-total">03</span>
-              <span class="nav-arrow nav-next">›</span>
+            <!-- 오버레이 그라데이션 -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+
+            <!-- Specials 텍스트 -->
+            <div class="absolute bottom-8 left-8 md:bottom-12 md:left-8 lg:bottom-16 lg:left-12 xl:left-24 slide-in-left">
+                <h1 class="responsive-title text-white font-bold drop-shadow-lg en-title text-center">
+                    Specials
+                </h1>
+                <div class="w-[300px] md:w-[400px] lg:w-[500px] h-px bg-white mt-4"></div>
             </div>
-          </div>
         </section>
 
-        <div class="content-wrap">
+        <!-- Section 2: Facility Info with Image and Text -->
+        <section class="facility-info-section relative w-full py-16 lg:py-24">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
-            <div class="facility-intro-section">
-                <div class="facility-intro-content">
-                    <div class="facility-label">
-                        <!-- 시설명 매핑 -->
-                        <span class="facility-name" data-facility-title></span>
+                    <!-- Left: Rounded Rectangle Image -->
+                    <div class="flex justify-center lg:justify-start slide-in-left">
+                        <div class="relative w-[320px] h-[320px] md:w-[380px] md:h-[380px] lg:w-[450px] lg:h-[450px]">
+                            <!-- Shadow Rounded Rectangle Background with Animation -->
+                            <div class="absolute top-4 left-4 w-full h-full rounded-3xl opacity-60 z-0 floating-circle" style="background-color: #d2c9bf;"></div>
+
+                            <!-- Main Image with Hover Effect -->
+                            <img src=""
+                                 alt="facility-img"
+                                 class="relative z-10 w-full h-full object-cover rounded-3xl shadow-xl hover-scale empty-image-placeholder"
+                                 style="min-height: auto !important;"
+                                 data-facility-main-image>
+                        </div>
                     </div>
-                    <!-- 시설 설명 매핑 -->
-                    <p class="facility-description" data-facility-description></p>
+
+                    <!-- Right: Facility Info -->
+                    <div class="space-y-8 slide-in-right">
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-2xl md:text-3xl font-bold ko-title pb-5" style="color: rgb(96, 83, 71);" data-facility-name></h3>
+                                <div class="w-full h-px" style="background-color: rgb(96, 83, 71);"></div>
+                            </div>
+                            <div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="space-y-3">
+                                        <span class="facility-about-title ko-body" style="color: rgb(96, 83, 71);" data-facility-description></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 추가 안내사항 -->
+                            <div class="bg-stone-50 rounded-lg p-6 border" style="border-color: rgb(96, 83, 71);">
+                                <div class="flex items-start space-x-3" style="color: rgb(96, 83, 71);">
+                                    <div class="facility-usage-guide ko-body" data-facility-usage-guide></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <section class="facility-info-section">
-                <div class="facility-info-container">
-                    <div class="facility-info-content">
-                        <div class="facility-info-left">
-                          <!-- 시설 이미지 슬라이더랑 안겹치게 매핑 -->
-                            <div class="facility-info-image">
-                                <img src="" alt="">
-                                <!-- 하드코딩 fix! -->
-                                <h2 class="facility-info-title">Usage Guide</h2>
-                            </div>
-                        </div>
-                        <div class="facility-info-right">
-                            <div class="facility-info-text-content">
+        </section>
 
-                                <div class="facility-info-details">
-                                    <!-- CUSTOM FIELD 시설설명 1순위 > 숙소설정 시설설명 2순위 -->
-                                    <div class="facility-detail-section">
-                                        <h3 class="facility-detail-title">이용안내</h3>
-                                        <div class="facility-content-text" data-facility-usage-guide></div>
-                                    </div>
+        <!-- Section: Facility Experience - 추가정보, 특별기능, 특별혜택 -->
+        <section class="experience-section relative w-full pt-8 md:pt-0">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                                </div>
-                            </div>
+                    <!-- 주요특징 -->
+                    <div class="bg-stone-50 rounded-lg p-6 border hidden" style="border-color: rgb(96, 83, 71);" data-features-section>
+                        <h3 class="text-xl font-bold mb-4 ko-title" style="color: rgb(96, 83, 71);">주요특징</h3>
+                        <div data-facility-experience-features class="space-y-3 ko-body">
+                            <!-- 내용이 동적으로 로드됩니다 -->
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <!-- CUSTOM FIELD : 이용안내 섹션 / 내용 없을 시 Display: none -->
-            <section class="facility-info-section facility-info-section-reversed">
-                <div class="facility-info-container">
-                    <div class="facility-info-content">
-                       <!-- 시설 이미지 슬라이더랑 안겹치게 매핑 : 이용안내 섹션 내용 있을때만 보여야 함 -->
-                        <div class="facility-info-left">
-                            <div class="facility-info-image">
-                                <img src="" alt="">
-                                <h2 class="facility-info-title">Additional Info</h2>
-                            </div>
-                        </div>
-                        <div class="facility-info-right">
-                            <div class="facility-info-text-content">
-                                <div class="facility-info-details">
-                                    <!-- 주요특징 섹션 -->
-                                    <div class="facility-detail-section">
-                                        <h3 class="facility-detail-title">주요특징</h3>
-                                        <div class="facility-features-list" data-facility-features></div>
-                                    </div>
-
-                                    <!-- 추가정보 섹션 -->
-                                    <div class="facility-detail-section">
-                                        <h3 class="facility-detail-title">추가정보</h3>
-                                        <div class="facility-additional-info-list" data-facility-additional-info></div>
-                                    </div>
-
-                                    <!-- 이용혜택 섹션 -->
-                                    <div class="facility-detail-section">
-                                        <h3 class="facility-detail-title">이용혜택</h3>
-                                        <div class="facility-benefits-list" data-facility-benefits></div>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- 추가정보 -->
+                    <div class="bg-stone-50 rounded-lg p-6 border hidden" style="border-color: rgb(96, 83, 71);" data-additional-info-section>
+                        <h3 class="text-xl font-bold mb-4 ko-title" style="color: rgb(96, 83, 71);">추가정보</h3>
+                        <div data-facility-experience-additional-info class="space-y-3 ko-body">
+                            <!-- 내용이 동적으로 로드됩니다 -->
                         </div>
                     </div>
+
+                    <!-- 이용혜택 -->
+                    <div class="bg-stone-50 rounded-lg p-6 border hidden" style="border-color: rgb(96, 83, 71);" data-benefits-section>
+                        <h3 class="text-xl font-bold mb-4 ko-title" style="color: rgb(96, 83, 71);">이용혜택</h3>
+                        <div data-facility-experience-benefits class="space-y-3 ko-body">
+                            <!-- 내용이 동적으로 로드됩니다 -->
+                        </div>
+                    </div>
+
                 </div>
-            </section>
+            </div>
+        </section>
+
+        <!-- Section: Facility Gallery -->
+        <section class="gallery-section relative w-full py-32 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Gallery Container - Will be dynamically filled -->
+                <div id="facility-gallery-container" class="relative">
+                    <!-- Content will be generated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Wave Background Section -->
+        <section class="wave-bg-section relative overflow-hidden">
+            <div class="wave-bg relative w-full">
+                <!-- SVG Clipping Path -->
+                <svg width="0" height="0" style="position: absolute;">
+                    <defs>
+                        <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
+                            <path d="M0,0.08 Q0.25,0.02 0.5,0.08 T1,0.08 L1,1 L0,1 Z"/>
+                        </clipPath>
+                        <clipPath id="wave-clip-mobile" clipPathUnits="objectBoundingBox">
+                            <path d="M0,0.12 Q0.25,0.06 0.5,0.12 T1,0.12 L1,1 L0,1 Z"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+
+                <!-- Background Image -->
+                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed empty-image-placeholder"
+                     style="background-image: url(''); background-attachment: fixed; clip-path: url(#wave-clip);"
+                     data-facility-wave-background>
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center" style="z-index: 10001;">
+        <div class="relative max-w-4xl max-h-[90vh] w-full mx-4">
+            <!-- Close Button -->
+            <button id="modal-close" class="absolute top-4 right-4 text-white text-3xl z-10 hover:text-gray-300">
+                ×
+            </button>
+
+            <!-- Previous Button -->
+            <button id="modal-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl z-10 hover:text-gray-300">
+                ‹
+            </button>
+
+            <!-- Next Button -->
+            <button id="modal-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl z-10 hover:text-gray-300">
+                ›
+            </button>
+
+            <!-- Modal Image -->
+            <img id="modal-image" src="" alt="" class="w-full h-auto max-h-[90vh] object-contain rounded-lg">
         </div>
+    </div>
 
-        <!-- 숙소 영문명 매핑-->
-            <div class="marquee-section">
-                <div class="marquee-container">
-                <div class="marquee-text"></div>
-                </div>
-            </div>
-        <!-- 숙소 외경 이미지 1번쨰 매핑 -->
-      <section class="full-banner"></section>
-
-      <div class="content-wrap">
-        <!-- 시설 이미지 갤러리형 : 4장 fix , 이미지, 이미지설명 매핑 -->
-        <section class="facility-gallery-section">
-          <div class="facility-gallery-container">
-            <div class="gallery-column">
-              <div class="gallery-item">
-                <div class="gallery-item-image">
-                  <img src="" alt="">
-                </div>
-                <div class="gallery-item-content">
-                  <h3 class="gallery-item-title"></h3>
-                </div>
-              </div>
-
-              <div class="gallery-item">
-                <div class="gallery-item-image">
-                  <img src="" alt="">
-                </div>
-                <div class="gallery-item-content">
-                  <h3 class="gallery-item-title"></h3>
-                </div>
-              </div>
-            </div>
-
-            <div class="gallery-column">
-              <div class="gallery-item">
-                <div class="gallery-item-image">
-                  <img src="" alt="">
-                </div>
-                <div class="gallery-item-content">
-                  <h3 class="gallery-item-title"></h3>
-                </div>
-              </div>
-
-              <div class="gallery-item">
-                <div class="gallery-item-image">
-                  <img src="" alt="">
-                </div>
-                <div class="gallery-item-content">
-                  <h3 class="gallery-item-title"></h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-
-    <!-- Include ImageWithFallback script -->
-    <script src="js/image-with-fallback.js"></script>
-
-
-    <!-- Image Helpers -->
+    <!-- Page Specific Scripts -->
     <script src="js/image-helpers.js"></script>
-
-    <!-- Base Data Mapper -->
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-
-    <!-- Facility Page Mapper -->
-    <script src="js/data-mapper/pages/facility-mapper.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
-
-    <!-- Header Footer Mapper -->
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
-    <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
-
-    <!-- Fullscreen Slider Component -->
-    <script src="js/components/fullscreen-slider.js"></script>
-
-    <!-- Page-specific script -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/facility-mapper.js"></script>
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/preview-handler.js"></script>
+    <script src="js/common/scroll-animation.js"></script>
     <script src="js/pages/facility.js"></script>
 
 </body>

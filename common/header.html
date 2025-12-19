@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header Component</title>
-    <link rel="stylesheet" href="styles/header.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="../styles/header.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션" />
@@ -19,111 +27,49 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 
     <!-- Font CDN -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/bruno-ace-2">
     <!-- Font Face -->
     <style>
   @font-face {
-    font-family: 'OngleipParkDahyeon';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-family: 'JeongseonArirangHon';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'JejuStoneWall';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
     font-weight: 400;
     font-display: swap;
   }
   </style>
   </head>
 <body>
-    <!-- Top Header -->
-    <header class="top-header">
-        <div class="top-header-content">
-            <div class="hamburger-button" id="hamburger-button">
-        <div class="toggle-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-            <div class="logo-container" onclick="navigateTo('home')">
-                <!-- <img data-logo src="images/mutenlol_logo.png" alt="로고" class="logo-image"> -->
-                <span class="logo-text" data-logo-text></span>
-            </div>
-            <div class="booking-buttons">
-                <button class="ybs-btn" data-ybs-booking>
-                    YBS
-                </button>
-                <button class="book-now-btn" data-booking-engine>
-                    BOOK NOW
+    <header id="main-header" class="fixed top-0 left-0 right-0 w-full bg-transparent border-0 z-40 transition-all duration-300">
+        <div class="flex items-center justify-between p-6 md:p-8">
+            <!-- Brand Logo -->
+            <div class="brand-logo">
+                <button id="pension-logo" class="hover:opacity-80 transition-opacity flex items-center gap-3">
+                    <div>
+                        <div class="logo-text hero-logo-text text-white text-xl md:text-2xl lg:text-3xl ko-title" data-property-name></div>
+                    </div>
                 </button>
             </div>
+
+            <!-- Menu Button -->
+            <button id="hamburger-menu" 
+                    class="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
+                    aria-label="메뉴">
+                <div class="w-6 h-6 flex flex-col justify-center items-center space-y-1">
+                    <div id="line1" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
+                    <div id="line2" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
+                    <div id="line3" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
+                </div>
+            </button>
         </div>
     </header>
 
-    <!-- Side Header -->
-    <div class="side-header" id="side-header">
-        <button class="close-button" onclick="toggleSideHeader()" aria-label="메뉴 닫기"></button>
-        <div class="side-header-content">
-            <div class="side-content-top">
-                <!-- Side Header Top with Logo and Close Button -->
-                <div class="side-header-top">
-                    <div class="side-logo-container" onclick="navigateTo('home')">
-                        <span class="side-logo-text" data-logo-text></span>
-                    </div>
-                </div>
-                <div class="side-menu-grid">
-                    <!-- About Section -->
-                    <div class="menu-section">
-                        <h3 class="menu-section-title">About</h3>
-                        <ul class="menu-section-list">
-                            <li><a onclick="navigateTo('main')">메인</a></li>
-                            <li><a onclick="navigateTo('directions')">오시는길</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Spaces Section -->
-                    <div class="menu-section">
-                        <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Spaces</h3>
-                        <ul class="menu-section-list accordion-content active" data-rooms-list>
-                            <li><a onclick="navigateTo('room')">객실명</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Specials Section -->
-                    <div class="menu-section">
-                        <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Specials</h3>
-                        <ul class="menu-section-list accordion-content active" data-facilities-list>
-                            <li><a onclick="navigateTo('facility')">편의시설</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Reservation Section -->
-                    <div class="menu-section">
-                        <h3 class="menu-section-title">Reservation</h3>
-                        <ul class="menu-section-list">
-                            <li><a onclick="navigateTo('reservation')">예약안내</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Image Banner -->
-            <div class="side-content-bottom">
-                <!-- 숙소 외경이미지 ? 썸네일 이미지 ?  -->
-                <div class="side-image-banner" id="side-image-banner" data-side-banner-img></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Side Header Overlay for all pages -->
-    <div class="side-header-overlay" id="side-header-overlay"></div>
-
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
-
-    <!-- Header Footer Mapper -->
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
-    <!-- Header and Footer Loader -->
-    <script src="js/header-footer-loader.js"></script>
-
-    <!-- Header script -->
-    <script src="js/common/header.js"></script>
+    <div id="fullscreen-menu-container"></div>
 </body>
 </html>

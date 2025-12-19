@@ -107,13 +107,8 @@ const ImageHelpers = {
 
         for (const imageItem of imagesArray) {
             if (imageItem.logo && Array.isArray(imageItem.logo) && imageItem.logo.length > 0) {
-                const selectedLogo = imageItem.logo
-                    .filter(img => img.isSelected === true)
-                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))[0];
-
-                if (selectedLogo && selectedLogo.url) {
-                    return selectedLogo.url;
-                }
+                const sortedLogos = imageItem.logo.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+                return sortedLogos[0].url;
             }
         }
         return null;

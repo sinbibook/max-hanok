@@ -1,68 +1,51 @@
-// Directions Page with Slider and Animation
-document.addEventListener('DOMContentLoaded', function() {
-    // Note: Slider는 directions-mapper.js의 reinitializeSlider()에서 초기화됨
+/**
+ * Directions Page Functionality
+ * 오시는길 페이지 기능 (헤더/푸터 로딩 포함)
+ */
 
-    // Initialize location notes with icons
-    initializeLocationNotes();
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
 
-    // Initialize scroll animations
-    setupScrollAnimations();
+    // Load data mapper for content mapping
+    setTimeout(() => {
+        loadDataMapper();
+    }, 100);
 });
 
-// 위치 안내 사항을 아이콘과 함께 동적으로 생성
-window.initializeLocationNotes = function initializeLocationNotes() {
-    const noteElement = document.querySelector('[data-directions-notes]');
-    if (!noteElement) return;
 
-    // 텍스트 내용을 가져와서 줄바꿈으로 분할
-    const noteText = noteElement.textContent.trim();
-    if (!noteText) {
-        noteElement.style.display = 'none';
+/**
+ * Data mapper loader and initializer
+ */
+async function loadDataMapper() {
+    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
+    if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
         return;
     }
 
-    const noteLines = noteText.split('\n').filter(line => line.trim() !== '');
+    try {
+        const dataPath = window.APP_CONFIG
+            ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
+            : './standard-template-data.json';
+        const response = await fetch(dataPath);
+        const data = await response.json();
 
-    // 새로운 HTML 구조 생성 (각 아이템에 애니메이션 지연 시간 추가)
-    const noteItemsHTML = noteLines.map((line, index) => {
-        const delay = 1.0 + (index * 0.15); // 1.0s, 1.15s, 1.3s 순차 지연
-        return `
-            <div class="note-item animate-element" style="transition-delay: ${delay}s;">
-                ${line.trim()}
-            </div>
-        `;
-    }).join('');
+        window.dogFriendlyDataMapper = {
+            data: data,
+            isDataLoaded: true
+        };
 
-    // 기존 내용을 새로운 구조로 교체
-    noteElement.innerHTML = noteItemsHTML;
-
-    // 새로 생성된 요소들을 애니메이션 시스템에 다시 등록
-    setTimeout(() => {
-        setupScrollAnimations();
-    }, 100);
-}
-
-// 스크롤 애니메이션 설정
-window.setupScrollAnimations = function setupScrollAnimations() {
-    const animateElements = document.querySelectorAll('.animate-element');
-
-    function checkScroll() {
-        animateElements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-
-            if (elementTop < window.innerHeight - elementVisible) {
-                element.classList.add('animate');
+        const initMapper = () => {
+            if (window.DirectionsMapper) {
+                const mapper = new DirectionsMapper(data);
+                mapper.mapPage();
             }
-        });
+        };
+
+        if (window.DirectionsMapper) {
+            initMapper();
+        } else {
+            setTimeout(initMapper, 1000);
+        }
+    } catch (error) {
     }
-
-    // 초기 실행
-    checkScroll();
-
-    // 스크롤 이벤트
-    window.addEventListener('scroll', checkScroll);
-
-    // 리사이즈 이벤트
-    window.addEventListener('resize', checkScroll);
 }
