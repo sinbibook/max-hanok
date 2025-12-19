@@ -109,7 +109,7 @@
 
 /* Heading and body font classes */
 .heading-font {
-    font-family: 'Cafe24SsurroundAir', 'Pretendard', sans-serif;
+    font-family: var(--font-ko-main);
     font-weight: 400;
     letter-spacing: -0.5px;
 }

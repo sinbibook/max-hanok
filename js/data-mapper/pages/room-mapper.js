@@ -338,7 +338,7 @@ class RoomMapper extends BaseDataMapper {
 
                 const h4 = document.createElement('h4');
                 h4.className = 'text-2xl font-semibold';
-                h4.style.color = 'rgb(96, 83, 71)';
+                h4.style.color = 'var(--color-secondary)';
                 h4.setAttribute('data-room-exterior-description-' + i, '');
                 h4.innerHTML = renderedDescription;
 
@@ -353,7 +353,7 @@ class RoomMapper extends BaseDataMapper {
 
                 const h4 = document.createElement('h4');
                 h4.className = 'text-2xl font-semibold';
-                h4.style.color = 'rgb(96, 83, 71)';
+                h4.style.color = 'var(--color-secondary)';
                 h4.setAttribute('data-room-exterior-description-' + i, '');
                 h4.innerHTML = renderedDescription;
 
@@ -393,7 +393,7 @@ class RoomMapper extends BaseDataMapper {
 
             const h4_1 = document.createElement('h4');
             h4_1.className = 'text-2xl font-semibold ko-title';
-            h4_1.style.color = 'rgb(96, 83, 71)';
+            h4_1.style.color = 'var(--color-secondary)';
             h4_1.setAttribute('data-room-exterior-description-0', '');
             h4_1.textContent = '이미지 설명';
 
@@ -448,7 +448,7 @@ class RoomMapper extends BaseDataMapper {
 
             const h4_2 = document.createElement('h4');
             h4_2.className = 'text-2xl font-semibold ko-title';
-            h4_2.style.color = 'rgb(96, 83, 71)';
+            h4_2.style.color = 'var(--color-secondary)';
             h4_2.setAttribute('data-room-exterior-description-1', '');
             h4_2.textContent = 'Image Description';
 
@@ -634,7 +634,7 @@ class RoomMapper extends BaseDataMapper {
 
                     const checkIcon = document.createElement('span');
                     checkIcon.className = 'text-sm font-medium flex-shrink-0';
-                    checkIcon.style.color = 'rgb(96, 83, 71)';
+                    checkIcon.style.color = 'var(--color-secondary)';
                     checkIcon.textContent = '✓';
 
                     const nameSpan = document.createElement('span');

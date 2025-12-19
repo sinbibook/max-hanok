@@ -9,7 +9,7 @@
 }
 
 .ko-title {
-    font-family: 'Cafe24SsurroundAir', 'Pretendard', sans-serif;
+    font-family: var(--font-ko-main);
     font-weight: 400;
 }
 
@@ -104,7 +104,7 @@
 }
 
 .mobile-menu-title {
-  font-family: 'GowoonDodum', sans-serif;
+  font-family: var(--font-ko-sub);
   font-size: 1.1rem;
   letter-spacing: 0.05em;
   color: #333;
@@ -158,7 +158,7 @@
   background: rgba(0,0,0,0.06);
   color: #666;
   font-size: 0.95rem;
-  font-family: 'GowoonDodum', sans-serif;
+  font-family: var(--font-ko-sub);
   cursor: pointer;
   transition: background 0.2s ease, padding-left 0.2s ease;
   border-radius: 8px;
@@ -256,15 +256,13 @@ body.mobile-menu-open {
   backdrop-filter: blur(0px);
 }
 
-/* 모든 가능한 헤더 셀렉터 */
 #main-header.scrolled,
 #header-container #main-header.scrolled,
 header#main-header.scrolled,
 header.scrolled {
-  background: rgba(96, 83, 71, 0.92) !important;
+  background: color-mix(in srgb, var(--color-secondary) 92%, transparent) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
   backdrop-filter: blur(20px) !important;
-  /* border 제거하여 더 자연스러운 느낌 */
 }
 
 
@@ -305,7 +303,7 @@ header.scrolled {
   float: left; width: 114px
 }
 .header .mainMenu > li > a {
-  line-height: 40px; text-align: center; color: #666; font-size: 16px; font-weight: 100; font-family: "GowoonDodum", sans-serif; transition: 0.8s
+  line-height: 40px; text-align: center; color: #666; font-size: 16px; font-weight: 100; font-family: var(--font-ko-sub); transition: 0.8s
 }
 .header .mainMenu > li::after {
   display: table; content: ""; clear: both
@@ -414,7 +412,7 @@ header.scrolled {
   margin-right: 3px; font-size: 15px
 }
 .header .sns li a {
-  font-family: "GowoonDodum", sans-serif ; color: #666; font-size: 14px
+  font-family: var(--font-ko-sub); color: #666; font-size: 14px
 }
 .header .sns li:nth-child(2) a img {
   width: 14px; margin-right: 3px; float: left
@@ -437,10 +435,9 @@ header.scrolled {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .mHd.scrolled {
-  background: rgba(247, 240, 229, 0.9);
+  background: color-mix(in srgb, var(--color-primary) 90%, transparent);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(20px);
-  /* border 제거 */
 }
 .mHd .logo {
   position: static;
@@ -477,7 +474,7 @@ header.scrolled {
   text-align: left;
   color: #2c2c2c;
   font-size: 1rem;
-  font-family: "GowoonDodum", sans-serif;
+  font-family: var(--font-ko-sub);
   transition: color 0.3s ease;
 }
 .mHd .mainMenu > li::after {

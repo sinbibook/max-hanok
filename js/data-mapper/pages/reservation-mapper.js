@@ -223,8 +223,8 @@ class ReservationMapper extends BaseDataMapper {
                 // 헤더 추가
                 const header = `
                     <div class="grid grid-cols-2 gap-4 pb-3 mb-3 border-b border-gray-300">
-                        <div class="ko-title font-semibold text-center" style="color: rgb(96, 83, 71);">취소 시점</div>
-                        <div class="ko-title font-semibold text-center" style="color: rgb(96, 83, 71);">환불율</div>
+                        <div class="ko-title font-semibold text-center" style="color: var(--color-secondary);">취소 시점</div>
+                        <div class="ko-title font-semibold text-center" style="color: var(--color-secondary);">환불율</div>
                     </div>
                 `;
 
