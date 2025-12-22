@@ -1,103 +1,188 @@
-// Directions page JavaScript
-(function() {
-    'use strict';
+/**
+ * Directions Page Script
+ */
 
-    // 수동 스크롤 애니메이션 함수
-    function setupManualScrollAnimations() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+document.addEventListener('DOMContentLoaded', function() {
+    // Hero Slider는 DirectionsMapper에서 데이터 매핑 후 초기화됨
+    // (슬라이드가 동적으로 생성되므로 여기서 호출하면 빈 슬라이더)
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // common.css의 애니메이션 클래스 사용
-                    if (entry.target.classList.contains('hero-content')) {
-                        entry.target.classList.add('animate-fade-in');
-                    } else if (entry.target.classList.contains('logo-line-container')) {
-                        entry.target.classList.add('animate-slide-up');
-                    } else if (entry.target.classList.contains('map-section')) {
-                        entry.target.classList.add('animate-fade-in');
-                    } else if (entry.target.classList.contains('location-details')) {
-                        entry.target.classList.add('animate-slide-left');
-                    } else if (entry.target.classList.contains('location-note-section')) {
-                        entry.target.classList.add('animate-slide-up');
-                    } else {
-                        entry.target.classList.add('animate-fade-in');
-                    }
+    // Initialize animations (정적 요소들에 대해)
+    window.initDirectionsAnimations();
+});
 
-                    // .visible 클래스도 추가 (full-banner 등을 위해)
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+// 전역 변수로 interval 관리 (중복 호출 방지)
+window._directionsSliderInterval = null;
 
-        // 모든 애니메이션 요소 관찰
-        const animateElements = document.querySelectorAll('.animate-element, .animate-hero, .hero-content, .logo-line-container');
+/**
+ * Initialize Hero Slider
+ * window에 노출하여 mapper에서 재초기화 가능
+ */
+window.initDirectionsHeroSlider = function initHeroSlider() {
+    const slider = document.querySelector('[data-hero-slider]');
+    if (!slider) return;
 
-        animateElements.forEach(element => {
-            observer.observe(element);
-        });
-
-        return observer;
+    // 기존 interval 클리어 (중복 호출 방지)
+    if (window._directionsSliderInterval) {
+        clearInterval(window._directionsSliderInterval);
+        window._directionsSliderInterval = null;
     }
 
-    // DOM ready event
-    document.addEventListener('DOMContentLoaded', function() {
+    const slides = slider.querySelectorAll('.hero-slide');
+    const currentSlideEl = document.querySelector('[data-current-slide]');
+    const totalSlidesEl = document.querySelector('[data-total-slides]');
+    const progressBar = document.querySelector('[data-hero-progress]');
+    const prevBtn = document.querySelector('.hero-nav-prev');
+    const nextBtn = document.querySelector('.hero-nav-next');
 
-        // DirectionsMapper가 데이터를 로드한 후에 애니메이션 초기화
-        setTimeout(function() {
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    const slideInterval = 5000; // 5 seconds per slide
 
-            // Full-banner fade 애니메이션
-            const fullBannerObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
+    // 슬라이드가 1개 이하면 자동 재생 불필요
+    if (totalSlides <= 1) {
+        if (totalSlidesEl) {
+            totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
+        }
+        if (currentSlideEl) {
+            currentSlideEl.textContent = '01';
+        }
+        return;
+    }
 
-            const fullBanner = document.querySelector('.full-banner');
-            if (fullBanner) {
-                fullBannerObserver.observe(fullBanner);
-            } else {
-            }
+    // Auto-play slider (전역 변수 사용)
+    let isTransitioning = false;
 
-            // 수동으로 스크롤 애니메이션 설정
-            setupManualScrollAnimations();
+    // Update total slides count
+    if (totalSlidesEl) {
+        totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
+    }
 
-            // Handle typing animation
-            const typingText = document.querySelector('.typing-text');
-            if (typingText) {
+    // Function to show specific slide
+    function showSlide(index, immediate = false) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+
+        // Update current slide number
+        if (currentSlideEl) {
+            currentSlideEl.textContent = (index + 1).toString().padStart(2, '0');
+        }
+
+        // Update progress bar - always fill to 100% for current slide
+        if (progressBar) {
+            // Reset to 0 then animate to 100%
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+
+            // Start animation immediately or with minimal delay
+            if (immediate) {
+                // For first slide, start immediately
                 setTimeout(() => {
-                    typingText.classList.add('typed');
-                }, 2700);
+                    progressBar.style.transition = `width ${slideInterval}ms linear`;
+                    progressBar.style.width = '100%';
+                }, 10);
+            } else {
+                // For subsequent slides
+                progressBar.offsetHeight; // Force reflow
+                progressBar.style.transition = `width ${slideInterval}ms linear`;
+                progressBar.style.width = '100%';
             }
+        }
+    }
 
-            // Location note section 애니메이션
-            const locationNoteObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
+    // Function to go to next slide
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+    }
 
-            const locationNote = document.querySelector('.location-note-section');
-            if (locationNote) {
-                locationNoteObserver.observe(locationNote);
+    // Function to go to previous slide
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+    }
+
+    // Start auto-play
+    function startAutoPlay() {
+        window._directionsSliderInterval = setInterval(() => {
+            if (!isTransitioning) {
+                nextSlide();
             }
+        }, slideInterval);
+    }
 
-        }, 1000); // 더 긴 지연으로 DirectionsMapper가 완전히 로드될 때까지 기다림
+    // Function to reset auto-play
+    function resetAutoPlay() {
+        clearInterval(window._directionsSliderInterval);
+        startAutoPlay();
+    }
+
+    // Navigation button handlers
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (!isTransitioning) {
+                isTransitioning = true;
+                clearInterval(window._directionsSliderInterval);
+                nextSlide();
+                setTimeout(() => {
+                    isTransitioning = false;
+                    resetAutoPlay();
+                }, 100);
+            }
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (!isTransitioning) {
+                isTransitioning = true;
+                clearInterval(window._directionsSliderInterval);
+                prevSlide();
+                setTimeout(() => {
+                    isTransitioning = false;
+                    resetAutoPlay();
+                }, 100);
+            }
+        });
+    }
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => {
+        clearInterval(window._directionsSliderInterval);
     });
 
-    // Global function for reinitializing scroll animations (called by DirectionsMapper)
-    window.setupScrollAnimations = function() {
-        setupManualScrollAnimations();
-    };
+    slider.addEventListener('mouseleave', () => {
+        if (!isTransitioning) {
+            startAutoPlay();
+        }
+    });
 
-    // Global function for initializing location notes (called by DirectionsMapper)
-    window.initializeLocationNotes = function() {
-    };
-})();
+    // Initialize first slide with immediate animation and start auto-play
+    showSlide(0, true);
+    startAutoPlay();
+}
+
+/**
+ * Initialize animations
+ * window에 노출하여 mapper에서 재초기화 가능
+ */
+window.initDirectionsAnimations = function initAnimations() {
+    const animatedElements = document.querySelectorAll('.animate-element:not(.animate)');
+
+    if (!animatedElements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+}

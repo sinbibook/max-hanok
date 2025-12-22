@@ -1,126 +1,226 @@
-footer {
-    background-color: var(--color-secondary, #658399);
-    color: #fff;
+/* Footer Styles */
+.footer {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
     padding: 40px 0;
 }
 
-.footer-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+/* Footer stays in place - overlay mode */
+
+.footer-divider {
+    max-width: 1400px;
+    margin: 0 auto 40px;
+    height: 1px;
+    background-color: #d4d1cd;
 }
 
 .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.footer-left-section {
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+}
+
+.footer-left-content {
+    display: flex;
     gap: 60px;
-    position: relative;
+    width: 100%;
+    flex-direction: row;
 }
 
-.footer-content::before {
-    content: '';
-    position: absolute;
-    left: 30%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 80px;
-    background-color: rgba(255, 255, 255, 0.3);
+.footer-menu-groups {
+    display: flex;
+    gap: 50px;
+    flex: 1;
 }
 
-.footer-left {
-    flex: 0 0 30%;
+.footer-menu-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-menu-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.footer-menu-items {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.footer-logo-text {
-    font-family: 'Roustel', sans-serif;
-    font-size: 28px;
-    font-weight: normal;
-    line-height: 1.2;
-    margin: 0;
+.footer-menu-items a {
+    font-size: 12px;
+    color: var(--color-secondary);
+    opacity: 0.7;
+    text-decoration: none;
+    transition: opacity 0.3s;
 }
 
-.footer-phone {
-    margin-top: 12px;
+.footer-menu-items a:hover {
+    opacity: 1;
 }
 
-.footer-phone-text {
-    font-size: 24px;
-    font-weight: 400;
+.footer-info-section {
+    flex: 1;
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.footer-phone-text::before {
-    content: '📞';
-    font-size: 20px;
-    filter: brightness(0) invert(1);
+.footer-right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
 }
 
-.footer-right {
-    flex: 0 0 65%;
-    min-width: 0;
-    padding-left: 40px;
+.footer-logo {
+    width: 140px;
 }
 
-.footer-contact-info {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto auto;
-    gap: 35px 20px;
-    grid-template-areas:
-        "business social"
-        "business copyright";
+.footer-logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 5px;
+}
+
+.footer-sub-text {
+    font-size: 14px;
+    color: var(--color-secondary);
+    opacity: 0.8;
+}
+
+.footer-bottom {
+    padding-top: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.footer-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1400px;
+    height: 1px;
+    background-color: #d4d1cd;
+}
+
+.footer-logo-image {
+    width: 100%;
+    max-width: 150px;
+}
+
+.footer-logo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: brightness(0) sepia(1) saturate(100%) hue-rotate(120deg) brightness(0.3) contrast(1.2);
+}
+
+.footer-logo-text {
+    font-family: var(--font-ko-main), serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-secondary);
 }
 
 .footer-business-info {
-    grid-area: business;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--color-secondary);
+    opacity: 0.7;
 }
 
-.footer-info-line {
-    font-size: 13px;
-    opacity: 0.9;
-    line-height: 1.8;
-    margin: 0;
+.footer-business-info span {
+    display: block;
 }
 
-.social-section {
-    grid-area: social;
+.footer-phone {
     text-align: right;
 }
+
+.footer-phone-text {
+    font-family: var(--font-ko-main), serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    letter-spacing: 0.02em;
+}
+
 
 .footer-copyright {
-    grid-area: copyright;
-    font-size: 12px;
-    opacity: 0.8;
-    margin: 0;
-    text-align: right;
+    text-align: center;
 }
 
+.footer-copyright p {
+    font-size: 11px;
+    color: var(--color-secondary);
+    margin: 0;
+    opacity: 0.6;
+}
+
+/* Social Section */
+.social-section {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.social-divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-secondary);
+    opacity: 0.3;
+    margin-bottom: 15px;
+}
+
+/* Social Links */
 .social-links {
     display: flex;
-    gap: 8px;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 15px;
 }
 
 .social-icon {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.15);
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--color-secondary);
     border-radius: 50%;
-    text-decoration: none;
-    color: #fff;
-    font-size: 10px;
+    color: var(--color-secondary);
     transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: var(--color-secondary);
+    color: var(--color-primary);
 }
 
 .social-icon svg {
@@ -128,110 +228,154 @@ footer {
     height: 20px;
 }
 
-.social-icon:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
+    .footer {
+        margin-left: 0;
+        padding: 40px 0;
+    }
+
     .footer-content {
+        padding: 0 20px;
         flex-direction: column;
-        align-items: center;
         gap: 30px;
         text-align: center;
     }
 
-    .footer-content::before {
-        display: none;
+    /* 모바일 푸터 새로운 구조 */
+    .footer-top {
+        flex-direction: column;
+        gap: 30px;
+        order: 1;
     }
 
-    .footer-left {
-        flex: none;
-        align-self: center;
-        text-align: center;
+    .footer-left-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* 1. 로고와 전화번호 맨 위에 */
+    .footer-right-section {
+        order: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .footer-logo {
+        order: 1;
+    }
+
+    .footer-logo-img {
+        width: 120px;
+        height: auto;
+    }
+
+    .footer-phone {
+        order: 2;
     }
 
     .footer-phone-text {
-        font-size: 20px;
-        justify-content: center;
+        font-size: 18px;
+        font-weight: 500;
     }
 
-    .footer-right {
-        flex: none;
-        padding-left: 0;
-        align-self: stretch;
+    /* 2. 주소와 사업자번호, 통신판매 */
+    .footer-left-section {
+        order: 2;
         width: 100%;
     }
 
-    .footer-contact-info {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 20px;
-        grid-template-areas:
-            "business"
-            "social"
-            "copyright";
-        text-align: center;
+    .footer-info-section {
+        order: 1;
+        margin-bottom: 30px;
+        width: 100%;
     }
 
-    .social-section {
-        text-align: center;
-        margin-top: 15px;
+    .footer-business-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
+    .footer-business-info span {
+        font-size: 12px;
+        color: #999;
+        line-height: 1.4;
+    }
+
+    /* 3. 메뉴들 */
+    .footer-menu-groups {
+        order: 2;
+        display: flex;
+        flex-direction: row;
+        gap: 25px;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .footer-menu-group {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-menu-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #333;
+    }
+
+    .footer-menu-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .footer-menu-items a {
+        font-size: 12px;
+        color: #666;
+        text-decoration: none;
+        line-height: 1.3;
+    }
+
+    .footer-menu-items a:hover {
+        color: var(--color-secondary);
+    }
+
+    /* 4. 마지막에 copyright */
     .footer-copyright {
+        order: 3;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .footer-copyright p {
+        font-size: 10px;
+        color: #999;
         text-align: center;
-        margin-top: 10px;
+        margin: 0;
+    }
+
+    /* 기존 스타일 재정의 */
+    .footer-left {
+        flex: none;
+        align-items: center;
+        width: 100%;
+    }
+
+    .footer-right {
+        width: 100%;
     }
 
     .social-links {
         justify-content: center;
     }
-}
 
-/* Top Button Styles */
-.top-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: var(--color-secondary, #658399);
-    opacity: 0.8;
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.top-button:hover {
-    background-color: var(--color-secondary, #658399);
-    opacity: 0.7;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.top-button.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.top-button svg {
-    width: 24px;
-    height: 24px;
-}
-
-/* Hide on mobile devices */
-@media (max-width: 768px) {
-    .top-button {
-        display: none;
+    /* footer-bottom 모바일에서 숨기기 */
+    .footer-bottom {
+        display: none !important;
     }
 }
