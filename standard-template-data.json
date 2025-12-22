@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.58.0",
-    "generatedAt": "2025-12-19T09:23:28.971Z",
-    "templateType": "full_banner_image",
+    "version": "1.59.0",
+    "generatedAt": "2025-12-22T07:53:28.322Z",
+    "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -368,29 +368,29 @@
               "id": "eb7bfc78-4248-45fb-821f-7bd033a881ec",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-etjfnqhkmt7.jpg",
               "sortOrder": 0,
-              "description": "7.jpg",
+              "description": "찜질방",
               "isSelected": true
             },
             {
               "id": "c5ec047c-7e7a-49f2-a4a1-ba14876a6144",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-5gxa406cun9.jpg",
               "sortOrder": 1,
-              "description": "8.jpg",
+              "description": "영화시청",
               "isSelected": true
             },
             {
               "id": "3549262d-282f-4e8e-b4fd-fe89c33157c1",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-6fv9t0c2ebd.jpg",
               "sortOrder": 2,
-              "description": "9.jpg",
-              "isSelected": false
+              "description": "주방",
+              "isSelected": true
             },
             {
               "id": "aeedc56e-6ae5-40cc-8ecf-51a6ea6d616f",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-yyaua96qp4.jpg",
               "sortOrder": 3,
-              "description": "10.jpg",
-              "isSelected": false
+              "description": "주방2",
+              "isSelected": true
             },
             {
               "id": "c1af3f67-7173-4653-ae69-656bc36228d0",
@@ -967,7 +967,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "full_banner_image",
+    "templateType": "full_banner_wipe",
     "images": [
       {
         "logo": [
@@ -1067,6 +1067,20 @@
                     "id": "248feeac-3629-4f29-929a-bee4058d4edb",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1759229421988-vbkoo87rmda.jpg",
                     "sortOrder": 1,
+                    "description": "",
+                    "isSelected": true
+                  },
+                  {
+                    "id": "d727e893-053f-4596-bdcb-f0b943746b7e",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1766389986260-zipndqtjxwk.jpg",
+                    "sortOrder": 2,
+                    "description": "",
+                    "isSelected": true
+                  },
+                  {
+                    "id": "c4538519-d73f-4aed-b074-f4d114013d6f",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1766389986261-q3vzxdt1tgi.jpg",
+                    "sortOrder": 3,
                     "description": "",
                     "isSelected": true
                   }
