@@ -1,560 +1,864 @@
-/* Utility Classes */
-.hidden {
-    display: none !important;
+/* Prevent body scroll when menu is open */
+body.menu-open-body {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
 }
 
-/* Header Component Styles */
-.header {
-    width: 100%;
-    background: transparent;
-    border: 0;
+html.menu-open {
+    overflow: hidden;
+}
+
+/* Top Header Styles */
+.top-header {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    transition: all 0.3s ease;
-    padding: 0 1rem;
-    z-index: 1000;
-    min-height: auto;
-    overflow: visible; /* mobile-menu가 header 밖으로 나갈 수 있도록 */
-}
-
-/* Scrolled header state */
-.header.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Color adjustments for scrolled state */
-.header.scrolled .logo-text {
-    color: var(--color-secondary);
-}
-
-.header.scrolled .menu-item {
-    color: #374151;
-}
-
-.header.scrolled .menu-item:hover {
-    color: var(--color-primary);
-}
-
-.header.scrolled .sub-menu-item {
-    color: #374151;
-}
-
-.header.scrolled .sub-menu-item:hover {
-    color: var(--color-primary);
-}
-
-.header.scrolled .mobile-toggle {
-    color: #374151;
-}
-
-.header.scrolled .reservation-btn {
-    background: var(--color-secondary);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.header.scrolled .reservation-btn:hover {
-    background: var(--color-secondary);
-    filter: brightness(0.95);
-}
-
-.header-content {
     width: 100%;
-    padding: 1rem 0;
+    height: 80px;
+    background: transparent;
+    backdrop-filter: none;
+    z-index: 2001;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0 20px;
 }
 
-.header-inner {
+.top-header.menu-open {
+    background: var(--color-secondary, #658399);
+    opacity: 0.9;
+}
+
+
+
+.top-header.menu-open .logo-text {
+    color: white;
+}
+
+/* 모바일에서만 reservation-btn 숨기기 (circular-reservation-btn은 데스크탑에서 계속 표시) */
+@media (max-width: 768px) {
+    .top-header.menu-open .reservation-btn {
+        display: none;
+    }
+}
+
+.top-header.menu-open .toggle-icon span {
+    background-color: white;
+}
+
+.top-header.menu-open .menu-label {
+    color: white;
+}
+
+.top-header.scrolled {
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom: none;
+    height: 80px;
+}
+
+.top-header.scrolled .logo-container {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.top-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Logo Component Styles - 제주 포레스트 */
+/* Logo Styles */
 .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
     cursor: pointer;
-    z-index: 1002;
-    position: relative;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-}
-
-.logo-image {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-.logo-text {
-    color: white;
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-family: var(--font-ko-main);
-}
-
-/* Logo responsive adjustments */
-@media (max-width: 768px) {
-    .logo-icon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .logo-text {
-        font-size: 1.125rem;
-    }
-}
-
-/* Dark theme variant */
-.logo-container.dark .logo-text {
-    color: var(--color-primary);
-}
-
-/* Light theme variant (for headers with white/light backgrounds) */
-.logo-container.light .logo-text {
-    color: var(--color-primary);
-}
-
-/* Logo hover effects */
-.logo-container:hover {
-    opacity: 0.9;
     transition: opacity 0.3s ease;
 }
 
-/* Logo for navigation bars */
-.navbar-logo .logo-container {
-    gap: 0.5rem;
+.logo-container:hover {
+    opacity: 0.8;
 }
 
-.navbar-logo .logo-icon {
-    width: 36px;
-    height: 36px;
-}
-
-.navbar-logo .logo-text {
-    font-size: 1.125rem;
-}
-
-/* Logo for footer */
-.footer-logo .logo-container {
-    gap: 0.5rem;
-}
-
-.footer-logo .logo-text {
-    font-size: 1rem;
-}
-
-/* Logo animation */
-@keyframes logoFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.logo-container.animate {
-    animation: logoFadeIn 0.5s ease-out;
-}
-
-/* Desktop Navigation */
-.desktop-nav {
-    display: none;
-    align-items: center;
-}
-
-.nav-container {
-    position: relative;
-    z-index: 1001; /* Ensure submenus appear above other content */
-    transition: height 0.3s ease;
-}
-
-.main-menu {
-    position: relative;
-    width: 448px;
-    height: 60px;
-    padding: 0;
-    margin: 0 10px;
-}
-
-.menu-item {
-    position: absolute;
-    top: 23px;
+.logo-text {
+    font-family: 'Roustel', sans-serif;
+    font-size: 28px;
+    font-weight: normal;
     color: white;
-    font-family: var(--font-en-main);
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    z-index: 1002; /* Ensure menu items are clickable */
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
 }
 
-.menu-item:hover {
-    color: rgba(255, 255, 255, 0.8);
+.top-header.scrolled .logo-text {
+    color: var(--color-secondary, #658399);
 }
 
-.menu-about { left: 25px; }
-.menu-spaces { left: 131px; }
-.menu-specials { left: 238px; }
-.menu-reservation { left: 342px; }
-
-/* Sub Menus */
-.sub-menus {
-    position: absolute;
-    top: 55px;
-    left: 10px;
-    width: 423px;
-    height: 174px;
-    padding: 20px 0 15px 0;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-out;
-    z-index: 1003;
-}
-
-.sub-menus::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 20px);
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
-}
-
-.header.scrolled .sub-menus {
-    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.1);
-}
-
-.header.scrolled .sub-menus::before {
-    background: rgba(255,255,255, 0.75);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
-.sub-menus.show {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.sub-menu-item {
-    position: absolute;
-    color: white;
-    font-family: var(--font-ko-sub);
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    transition: all 0.2s ease;
-    opacity: 0;
-    transform: translateY(-5px);
-    max-width: 128px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.sub-menus.show .sub-menu-item {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.sub-menu-item.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.sub-menu-item:hover {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* Sub menu positions - 동적으로 생성되는 메뉴는 JavaScript에서 관리 */
-/* 고정 메뉴만 CSS로 정의 */
-.sub-about-1 { left: 15px; top: 29px; }
-.sub-about-2 { left: 15px; top: 63px; }
-
-.sub-reservation-1 { left: 332px; top: 29px; }
-
-/* Desktop Reservation Buttons - Common Styles */
-.header-btn {
+/* Header Buttons Container */
+.header-buttons {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 0.5rem;
-    font-family: var(--font-ko-sub);
+    gap: 20px;
 }
 
-.header-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+/* Hamburger Button */
+.hamburger-button {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 5px;
+    padding: 5px 3px 3px 3px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.top-header.scrolled .header-buttons .hamburger-button {
+    background-color: var(--color-secondary, #658399);
+    border-radius: 50%;
+    border: 1px solid var(--color-secondary, #658399);
+}
+
+/* Mobile only - white border for hamburger when scrolled */
+@media (max-width: 768px) {
+    .top-header.scrolled .header-buttons .hamburger-button {
+        border: 2px solid white;
+    }
+}
+
+.hamburger-button:hover {
     transform: scale(1.05);
 }
 
-.header-btn:active {
-    transform: scale(0.95);
-}
-
-.header.scrolled .header-btn {
-    background: var(--color-secondary);
-    border: 1px solid var(--color-primary);
-}
-
-.header.scrolled .header-btn:hover {
-    background: var(--color-secondary);
-    filter: brightness(0.95);
-}
-
-/* YBS Button - Unique Styles */
-.ybs-btn {
-    margin-right: 0.5rem;
-}
-
-/* Mobile Menu Toggle */
-.mobile-toggle {
-    display: block;
-    color: white;
-    padding: 0.5rem;
-    z-index: 1002;
+.toggle-icon {
+    width: 24px;
+    height: 12px;
     position: relative;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-}
-
-.mobile-toggle:active {
-    transform: scale(0.95);
-}
-
-.mobile-toggle .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-/* Mobile Menu */
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--color-primary);
-    backdrop-filter: blur(12px);
-    z-index: 1001;
     display: flex;
     flex-direction: column;
-    padding: 0;
+    justify-content: space-between;
+}
+
+.toggle-icon span {
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    transition: all 0.3s ease;
+    border-radius: 1px;
+}
+
+.menu-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.top-header.scrolled .toggle-icon span {
+    background-color: white;
+}
+
+.top-header.scrolled .menu-label {
+    color: white;
+}
+
+.top-header.scrolled .hamburger-button {
+    background-color: var(--color-secondary, #658399);
+    border-radius: 50%;
+    border: 1px solid var(--color-secondary, #658399);
+}
+
+/* Hamburger active state */
+.hamburger-button.active .toggle-icon {
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.hamburger-button.active .toggle-icon span:first-child {
+    transform: rotate(45deg);
+    position: absolute;
+}
+
+.hamburger-button.active .toggle-icon span:nth-child(2) {
     opacity: 0;
-    visibility: hidden;
+}
+
+.hamburger-button.active .toggle-icon span:last-child {
+    transform: rotate(-45deg);
+    position: absolute;
+}
+
+/* Circular Button Base Styles */
+.circular-reservation-btn,
+.circular-ybs-btn {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+/* Desktop button ordering */
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.circular-ybs-btn {
+    order: 1;
+    display: none; /* 기본 숨김 - ybsId 있을 때만 JS로 표시 */
+}
+
+.circular-reservation-btn {
+    order: 2;
+}
+
+.hamburger-button {
+    order: 3;
+}
+
+.circular-reservation-btn:hover,
+.circular-ybs-btn:hover {
+    transform: scale(1.05);
+}
+
+.circular-reservation-btn .rotating-text,
+.circular-ybs-btn .rotating-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotate 10s linear infinite;
+}
+
+.circular-reservation-btn text,
+.circular-ybs-btn text {
+    fill: white;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+}
+
+.circular-reservation-btn .btn-center,
+.circular-ybs-btn .btn-center {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
     transition: all 0.3s ease;
 }
 
-/* Mobile Menu Header */
-.mobile-menu-header {
-    position: sticky;
-    top: 0;
+.circular-reservation-btn .btn-center svg {
+    width: 24px;
+    height: 24px;
+}
+
+.circular-reservation-btn:hover .btn-center,
+.circular-ybs-btn:hover .btn-center {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Old Reservation Button (for mobile menu) */
+.reservation-btn {
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.reservation-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.top-header.scrolled .circular-reservation-btn text,
+.top-header.scrolled .circular-ybs-btn text {
+    fill: var(--color-secondary, #658399);
+    opacity: 0.8;
+}
+
+.top-header.scrolled .circular-reservation-btn .btn-center,
+.top-header.scrolled .circular-ybs-btn .btn-center {
+    background: var(--color-secondary, #658399);
+    color: white;
+    border-color: var(--color-secondary, #658399);
+}
+
+.top-header.scrolled .circular-reservation-btn:hover .btn-center,
+.top-header.scrolled .circular-ybs-btn:hover .btn-center {
+    background: var(--color-secondary, #658399);
+    opacity: 0.8;
+    border-color: var(--color-secondary, #658399);
+}
+
+.top-header.scrolled .header-buttons .reservation-btn {
+    background: var(--color-secondary, #658399);
+    color: white;
+    border-color: var(--color-secondary, #658399);
+}
+
+.top-header.scrolled .reservation-btn:hover {
+    background: var(--color-secondary, #658399);
+    opacity: 0.8;
+    border-color: var(--color-secondary, #658399);
+}
+
+/* Header Opened Styles */
+.header-opened {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--color-secondary, #658399);
+    opacity: 0.9;
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    transition: height 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), top 0.3s ease;
+    z-index: 2000;
+}
+
+.top-header.scrolled ~ .header-opened {
+    top: 80px;
+}
+
+/* 명시도를 높여서 !important 제거 */
+body .header-opened.expanded {
+    height: calc(100vh - 80px);
+}
+
+.header-opened-content {
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    padding: 40px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease 0.2s;
+}
+
+.header-opened.expanded .header-opened-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Side Header Top */
+.side-header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.side-logo-container {
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.side-logo-text {
+    font-family: 'Roustel', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    color: white;
+    letter-spacing: 2px;
+}
+
+/* Dropdown Menu Grid */
+.dropdown-menu-grid {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    background: var(--color-secondary);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 10;
+    padding: 0;
+    flex: 1;
+    width: 100%;
+    gap: 20px;
 }
 
-.mobile-property-name {
+/* Menu Section */
+.dropdown-section {
+    border-bottom: none;
+    padding-bottom: 0;
+    min-width: 200px;
+    flex: 1;
+}
+
+.dropdown-section-title {
+    font-family: 'Roustel', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
     color: white;
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: 0.025em;
-}
-
-/* Mobile Menu Close Button */
-.mobile-menu-close {
-    color: #374151;
-    padding: 0.5rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: transform 0.1s ease;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 8px;
+    width: 100%;
 }
 
-.mobile-menu-close:active {
-    transform: scale(0.95);
+.dropdown-section-title:hover {
+    color: #ccc;
 }
 
-.mobile-menu-close .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+.dropdown-section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.mobile-menu.show {
+.dropdown-section-list li {
+    width: 100%;
+    overflow: hidden;
+}
+
+.dropdown-section-list li a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    display: block;
+    padding: 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dropdown-section-list li a:hover {
+    color: white;
+    transform: translateX(10px);
+    text-decoration: none;
+}
+
+/* Side Content Bottom */
+.side-content-bottom {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.side-image-banner {
+    width: 200px;
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    background-image: url('../images/hero2.jpg');
+}
+
+/* Side Header Overlay */
+.header-opened-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1500;
+}
+
+.header-opened-overlay.active {
     opacity: 1;
     visibility: visible;
 }
 
-/* Scrollable Menu Content */
-.mobile-menu-content {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1.5rem;
-    -webkit-overflow-scrolling: touch;
+/* Mobile Menu Reservation Button - 데스크탑에서는 숨김 */
+.mobile-menu-reservation {
+    display: none;
 }
 
-.mobile-menu-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 32rem;
-    margin: 0 auto;
-    padding-bottom: 2rem;
-}
-
-.mobile-menu-section {
-    text-align: center;
-}
-
-.mobile-menu-title {
-    color: #374151;
-    font-size: 1.125rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 0.5rem;
-}
-
-.mobile-sub-items {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.mobile-sub-item {
-    color: #6b7280;
-    font-size: 0.875rem;
-    font-family: var(--font-ko-sub);
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: color 0.2s ease;
-    background: transparent;
-    border: none;
-}
-
-.mobile-sub-item:hover {
-    color: #374151;
-}
-
-/* Mobile Reservation Buttons Container */
-.mobile-reservation-buttons {
-    position: sticky;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1.5rem;
-    background: var(--color-secondary);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 10;
-}
-
-/* Mobile Reservation Buttons - Common Styles */
-.mobile-header-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 1rem;
-    flex: 0 0 auto;
-    font-family: var(--font-ko-sub);
-}
-
-.mobile-header-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* Icon styles */
-.icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-}
-
-/* Responsive design */
-@media (min-width: 640px) {
-    .header {
-        padding: 0 2rem;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .top-header-content {
+        padding: 0 15px;
     }
-    .mobile-menu-grid {
-        gap: 3rem;
-    }
-    .mobile-menu-title {
-        font-size: 1.25rem;
-    }
-    .mobile-sub-item {
-        font-size: 1rem;
-        padding: 0.75rem;
-    }
-    .mobile-header-btn {
-        padding: 0.75rem 2rem;
-        font-size: 1.125rem;
-    }
-}
 
-@media (min-width: 768px) {
-    .header {
-        padding: 0 5rem;
+    .logo-text {
+        font-size: 24px;
     }
-}
 
-@media (min-width: 1024px) {
-    .header {
-        padding: 0 10rem;
+    .reservation-btn {
+        padding: 10px 20px;
+        font-size: 12px;
     }
-    .desktop-nav {
+
+    /* 모바일에서는 헤더에 메뉴 버튼만 표시 */
+    .header-buttons {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .header-opened {
+        top: 0;
+        height: 0;
+        max-height: none;
+    }
+
+    .header-opened.expanded {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden;
+    }
+
+    .header-opened-content {
+        padding: 0;
+        flex-direction: column;
+        gap: 0;
+        height: 100%;
+        max-height: 100vh;
+        position: relative;
         display: flex;
+        flex-direction: column;
+        overflow: hidden;
     }
-    .mobile-toggle {
+
+    .dropdown-menu-grid {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 40px 20px 80px 20px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        flex: 1 1 auto;
+        min-height: 0;
+        box-sizing: border-box;
+        height: 100%;
+        position: relative;
+    }
+
+    .dropdown-section {
+        width: 100%;
+        flex: none;
+    }
+
+    .dropdown-section-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 8px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    /* 모바일에서 아코디언 제거 - 항상 열려있음 */
+    .dropdown-section-title.expandable::after {
+        display: none !important; /* 아코디언 버튼 숨김 */
+    }
+
+    .dropdown-section-title {
+        cursor: default !important; /* 클릭 불가능 */
+        pointer-events: none !important; /* 클릭 이벤트 비활성화 */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important; /* 구분선 유지 */
+    }
+
+    .dropdown-section-list {
+        align-items: flex-start;
+        text-align: left;
+        margin-bottom: 20px;
+        max-height: none !important; /* 항상 열림 */
+        overflow: visible !important;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .dropdown-section-list li {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .dropdown-section-list li a {
+        font-size: 16px;
+        padding: 8px 0;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        width: 100%;
+    }
+
+    .side-content-bottom {
+        margin-left: 0;
+        margin-top: 30px;
+        align-self: center;
+    }
+
+    .side-image-banner {
+        width: 100%;
+        max-width: 300px;
+        height: 160px;
+    }
+
+    /* Mobile Menu Reservation Button - 모바일에서만 표시 */
+    .mobile-menu-reservation {
+        display: block;
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background: var(--color-secondary, #658399);
+        opacity: 0.95;
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: auto;
+        z-index: 10;
+    }
+
+    .mobile-menu-reservation .reservation-btn {
+        display: block !important;
+        width: 100%;
+        padding: 15px 20px;
+        background: white;
+        color: var(--color-secondary, #658399);
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-menu-reservation .reservation-btn:hover {
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* 모바일에서 메뉴가 열렸을 때 reservation 버튼 표시 */
+    .top-header.menu-open .reservation-btn {
         display: none;
     }
-    .mobile-menu {
+}
+
+/* Fixed Mobile Reservation Button */
+/* Old mobile reservation button removed - now using circular buttons */
+
+@media (max-width: 480px) {
+    .top-header {
+        padding: 0 15px;
+    }
+
+    .top-header-content {
+        padding: 0;
+    }
+
+    .header-buttons {
+        gap: 10px;
+        margin-right: 5px;
+    }
+
+    .header-buttons .reservation-btn {
+        display: none;
+    }
+
+    .hamburger-button {
+        width: 55px;
+        height: 55px;
+        padding: 5px 3px 3px 3px;
+        flex-shrink: 0;
+    }
+
+    .toggle-icon {
+        width: 24px;
+        height: 12px;
+    }
+
+    .menu-label {
+        font-size: 10px;
+    }
+}
+
+/* Mobile Fixed Buttons Container */
+.mobile-fixed-buttons {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    z-index: 9999;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Mobile Circular Buttons */
+.mobile-circular-reservation-btn,
+.mobile-circular-ybs-btn {
+    width: 65px;
+    height: 65px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+.mobile-circular-ybs-btn {
+    display: none; /* 기본 숨김 - ybsId 있을 때만 JS로 표시 */
+}
+
+.mobile-circular-reservation-btn .rotating-text,
+.mobile-circular-ybs-btn .rotating-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotate 10s linear infinite;
+}
+
+.mobile-circular-reservation-btn text,
+.mobile-circular-ybs-btn text {
+    fill: white;
+    font-size: 7px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.mobile-circular-reservation-btn .btn-center,
+.mobile-circular-ybs-btn .btn-center {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    background: var(--color-secondary, #658399);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-secondary, #658399);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.mobile-circular-reservation-btn .btn-center svg {
+    width: 20px;
+    height: 20px;
+}
+
+.mobile-circular-reservation-btn:hover,
+.mobile-circular-ybs-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Hide desktop buttons on mobile */
+.desktop-only {
+    display: flex;
+}
+
+/* Show/hide buttons based on screen size */
+@media (max-width: 768px) {
+    .desktop-only {
         display: none !important;
+    }
+
+    .mobile-fixed-buttons {
+        display: flex !important;
+    }
+
+    /* Hide original mobile buttons in header */
+    .header-buttons .circular-reservation-btn,
+    .header-buttons .circular-ybs-btn {
+        display: none !important;
+    }
+
+
+    /* 모바일에서 rotating text 숨기기 */
+    .mobile-circular-reservation-btn .rotating-text,
+    .mobile-circular-ybs-btn .rotating-text {
+        display: none !important;
+    }
+
+    /* 모바일 버튼 크기 조정 */
+    .mobile-circular-reservation-btn,
+    .mobile-circular-ybs-btn {
+        width: 55px;
+        height: 55px;
+        background: var(--color-secondary, #658399);
+        border: 2px solid white;
+    }
+
+    .mobile-circular-reservation-btn .btn-center,
+    .mobile-circular-ybs-btn .btn-center {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+    }
+
+    .mobile-circular-reservation-btn .btn-center svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .mobile-circular-ybs-btn .btn-center {
+        font-size: 16px;
+        font-weight: 700;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-fixed-buttons {
+        display: flex !important;
+        bottom: 20px;
+        right: 15px;
+    }
+
+    /* 480px 이하에서도 동일한 스타일 적용 */
+    .mobile-circular-reservation-btn,
+    .mobile-circular-ybs-btn {
+        width: 55px;
+        height: 55px;
     }
 }
