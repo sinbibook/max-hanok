@@ -1,5 +1,5 @@
 /* CDN Fonts */
-@import url('https://fonts.cdnfonts.com/css/bruno-ace-2');
+@import url('https://fonts.cdnfonts.com/css/marhey');
 
 /* Font Faces */
 @font-face {
@@ -10,8 +10,8 @@
 }
 
 @font-face {
-  font-family: 'JeongseonArirangHon';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff') format('woff');
+  font-family: 'KccDodamdodam';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-DodamdodamR.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
@@ -19,8 +19,8 @@
 /* CSS Variables */
 :root {
   --font-ko-main: 'JejuStoneWall', sans-serif;
-  --font-ko-sub: 'JeongseonArirangHon', sans-serif;
-  --font-en-main: 'Bruno Ace', sans-serif;
-  --color-primary: #F3F4F6;
-  --color-secondary: #0F766E;
+  --font-ko-sub: 'KccDodamdodam', sans-serif;
+  --font-en-main: 'Marhey', sans-serif;
+  --color-primary: #FFF9F1;
+  --color-secondary: #B66E41;
 }

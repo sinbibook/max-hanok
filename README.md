@@ -1,1 +1,2 @@
-# template-full-banner-wipe
+# template-full-banner-image
+
