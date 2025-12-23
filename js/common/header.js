@@ -1,191 +1,259 @@
-// Header JavaScript
-(function() {
-    'use strict';
+/**
+ * Header interactions used across modern pages.
+ * Handles navigation, mobile menu toggling, and scroll styling.
+ */
+(function () {
+    const PAGE_MAP = {
+        home: 'index.html',
+        main: 'main.html',
+        directions: 'directions.html',
+        'reservation-info': 'reservation.html',
+        room: 'room.html',
+    };
 
-    // Scroll Effect for Transparent Header
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('.transparent-header');
-        const body = document.body;
+    // Initialize variables - will be populated after DOM is ready
+    let body;
+    let headers;
+    let mobileMenu;
+    let mobileToggleButtons;
+    let desktopMenuItems;
+    let mobileHeaderItems;
+    let allMenuGroups;
 
-        if (header) {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-                body.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-                body.classList.remove('scrolled');
+    function syncAriaExpanded(collection) {
+        collection.forEach((item) => {
+            const trigger = item.querySelector('a');
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', item.classList.contains('is-open') ? 'true' : 'false');
             }
-        }
-    });
+        });
+    }
 
-    // Toggle Menu Overlay
-    window.toggleMenuOverlay = function() {
-        const menuOverlay = document.getElementById('menu-overlay');
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuText = menuToggle ? menuToggle.querySelector('.menu-text') : null;
-        const overlayBg = document.getElementById('menu-overlay-bg');
-        const body = document.body;
+    let isMobileMenuOpen = false;
 
-        if (!menuOverlay || !menuToggle) return;
+    function updateHeaderAppearance() {
+        const shouldActivate = window.scrollY > 40;
+        headers.forEach((headerEl) => {
+            if (!headerEl) return;
+            headerEl.classList.toggle('scrolled', shouldActivate);
+        });
+    }
 
-        const isActive = menuOverlay.classList.contains('active');
+    function setBodyScrollLock(locked) {
+        body.style.overflow = locked ? 'hidden' : '';
+    }
 
-        if (isActive) {
-            // Close menu
-            menuOverlay.classList.remove('active');
-            menuToggle.classList.remove('active');
-            body.classList.remove('menu-open');
-            if (overlayBg) overlayBg.classList.remove('active');
+    function closeMobileMenu() {
+        if (!isMobileMenuOpen) return;
+        isMobileMenuOpen = false;
 
-            // Change text back to MENU
-            if (menuText) {
-                menuText.textContent = 'MENU';
-            }
+        // Re-query DOM elements to ensure we have the latest references
+        const currentMobileMenu = document.getElementById('mobile-menu');
+        const currentMobileToggleButtons = document.querySelectorAll('.mobile-toggle');
 
-            // No need to restore scroll since we didn't prevent it
+        currentMobileMenu?.classList.remove('is-open');
+        currentMobileMenu?.setAttribute('aria-hidden', 'true');
+        currentMobileToggleButtons.forEach((btn) => {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-expanded', 'false');
+        });
+
+        if (body) {
+            body.style.overflow = '';
+            body.classList.remove('mobile-menu-open');
         } else {
-            // Open menu
-            // Change text to CLOSE
-            if (menuText) {
-                menuText.textContent = 'CLOSE';
-            }
-
-
-            menuOverlay.classList.add('active');
-            menuToggle.classList.add('active');
-            body.classList.add('menu-open');
-            if (overlayBg) overlayBg.classList.add('active');
-
-            // Keep scroll visible - don't prevent scrolling
-        }
-    };
-
-    // Keep the old function name for compatibility
-    window.toggleSideHeader = window.toggleMenuOverlay;
-
-    // Navigation function
-    window.navigateTo = function(page) {
-        // Close menu overlay if open
-        const menuOverlay = document.getElementById('menu-overlay');
-        if (menuOverlay && menuOverlay.classList.contains('active')) {
-            toggleMenuOverlay();
+            document.body.style.overflow = '';
+            document.body.classList.remove('mobile-menu-open');
         }
 
-        // Navigate to page
-        let url = '';
-        switch(page) {
-            case 'home':
-                url = 'index.html';
-                break;
-            case 'main':
-                url = 'main.html';
-                break;
-            case 'directions':
-                url = 'directions.html';
-                break;
-            case 'reservation-info':
-                url = 'reservation.html';
-                break;
-            case 'room':
-                url = 'room.html';
-                break;
-            case 'facility':
-                url = 'facility.html';
-                break;
-            case 'reservation':
-                url = 'reservation.html';
-                break;
-            default:
-                url = page + '.html';
-        }
-
-        // Navigate to URL (preserve preview query string)
-        if (url) {
-            const currentParams = new URLSearchParams(window.location.search);
-            const isPreview = currentParams.get('preview');
-            if (isPreview) {
-                url += '?preview=' + isPreview;
-            }
-            window.location.href = url;
-        }
-    };
-
-    // Menu Accordion Toggle
-    window.toggleMenuAccordion = function(element) {
-        const content = element.nextElementSibling;
-        if (!content || !content.classList.contains('accordion-content')) return;
-
-        element.classList.toggle('active');
-        content.classList.toggle('active');
-    };
-
-    // Check and set header state based on scroll position
-    function checkInitialScroll() {
-        const header = document.querySelector('.transparent-header');
-
-        if (header) {
-            if (window.scrollY > 50 || window.pageYOffset > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+        if (allMenuGroups && allMenuGroups.length > 0) {
+            allMenuGroups.forEach(closeAllMenuItems);
         }
     }
 
+    function openMobileMenu() {
+        if (isMobileMenuOpen) return;
+        isMobileMenuOpen = true;
 
+        // Re-query DOM elements to ensure we have the latest references
+        const currentMobileMenu = document.getElementById('mobile-menu');
+        const currentMobileToggleButtons = document.querySelectorAll('.mobile-toggle');
 
-    // Initialize header immediately (since this script is loaded dynamically)
-    function initializeHeader() {
-        // Initialize header functions
+        currentMobileMenu?.classList.add('is-open');
+        currentMobileMenu?.setAttribute('aria-hidden', 'false');
+        currentMobileToggleButtons.forEach((btn) => {
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-expanded', 'true');
+        });
 
-        // Check initial scroll position
-        checkInitialScroll();
+        if (body) {
+            body.style.overflow = 'hidden';
+            body.classList.add('mobile-menu-open');
+        } else {
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('mobile-menu-open');
+        }
+    }
 
-        // Initialize menu toggle button
-        const menuToggle = document.getElementById('menu-toggle');
-        if (menuToggle) {
-            menuToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleMenuOverlay();
-            });
+    function toggleMobileMenu() {
+        // Check if HeaderComponent is available (highest priority)
+        if (window.headerComponent) {
+            window.headerComponent.toggleMenu();
+            return;
         }
 
+        // Fallback to old mobile menu logic
+        if (isMobileMenuOpen) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    }
 
-        // Initialize overlay click event
-        const overlayBg = document.getElementById('menu-overlay-bg');
-        if (overlayBg) {
-            overlayBg.addEventListener('click', function() {
-                toggleMenuOverlay();
-            });
+    function navigateTo(page) {
+        if (!page) return;
+
+        // 현재 페이지가 루트에 있는지 pages 폴더에 있는지 확인
+        const isInRoot = !window.location.pathname.includes('/pages/');
+        const pathPrefix = isInRoot ? 'pages/' : '';
+
+        const targetPath = PAGE_MAP[page];
+        if (targetPath) {
+            window.location.href = `${pathPrefix}${targetPath}`;
+            closeMobileMenu();
+            return;
         }
 
-        // Initialize YBS booking button
-        const ybsBookingBtn = document.querySelector('[data-ybs-booking]');
-        if (ybsBookingBtn) {
-            ybsBookingBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Add YBS booking functionality here
-                console.log('YBS Booking clicked');
-            });
+        if (page === 'home') {
+            window.location.href = isInRoot ? 'index.html' : '../index.html';
+            closeMobileMenu();
         }
+    }
 
-        // Initialize mobile booking buttons
-        const mobileBookingBtns = document.querySelectorAll('.mobile-booking-btn');
-        mobileBookingBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Add mobile booking functionality here
-                console.log('Mobile booking clicked:', this.textContent);
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.navigateTo = navigateTo;
+    function closeAllMenuItems(collection) {
+        collection.forEach((item) => item.classList.remove('is-open'));
+        syncAriaExpanded(collection);
+    }
+
+    function toggleMenuItem(item, collection) {
+        const alreadyOpen = item.classList.contains('is-open');
+        closeAllMenuItems(collection);
+        if (!alreadyOpen) {
+            item.classList.add('is-open');
+        }
+        syncAriaExpanded(collection);
+    }
+
+    function attachMenuToggleHandlers(menuItems, options = {}) {
+        menuItems.forEach((item) => {
+            const trigger = item.querySelector('a');
+            if (!trigger) return;
+
+            trigger.addEventListener('click', (event) => {
+                const shouldHandle = options.shouldHandle ? options.shouldHandle() : true;
+                if (!shouldHandle) return;
+
+                if (trigger.getAttribute('href') === 'javascript:void(0)') {
+                    event.preventDefault();
+                }
+
+                toggleMenuItem(item, menuItems);
+            });
+
+            trigger.addEventListener('keydown', (event) => {
+                if ((event.key === 'Enter' || event.key === ' ') && (!options.shouldHandle || options.shouldHandle())) {
+                    event.preventDefault();
+                    toggleMenuItem(item, menuItems);
+                }
             });
         });
     }
 
-    // Call initialization immediately
-    initializeHeader();
+    // Initialize DOM elements and event listeners
+    function initializeHeader() {
+        // Populate DOM element references
+        body = document.body;
+        headers = Array.from(document.querySelectorAll('.header, .mHd'));
+        mobileMenu = document.getElementById('mobile-menu');
+        mobileToggleButtons = Array.from(document.querySelectorAll('.mobile-toggle'));
+        desktopMenuItems = Array.from(document.querySelectorAll('.header .mainMenu > li'));
+        mobileHeaderItems = Array.from(document.querySelectorAll('.mHd .mainMenu > li'));
+        allMenuGroups = [desktopMenuItems, mobileHeaderItems];
 
-    // Also check when window loads (for refresh scenarios)
-    window.addEventListener('load', function() {
-        checkInitialScroll();
-    });
 
+        // Setup menu toggle handlers
+        attachMenuToggleHandlers(desktopMenuItems, {
+            shouldHandle: () => window.innerWidth >= 1024
+        });
+
+        attachMenuToggleHandlers(mobileHeaderItems, {
+            shouldHandle: () => window.innerWidth < 1024
+        });
+
+        allMenuGroups.forEach(syncAriaExpanded);
+
+        // Setup mobile toggle buttons
+        mobileToggleButtons.forEach((btn) => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                toggleMobileMenu();
+            });
+        });
+
+        // Global click handler
+        document.addEventListener('click', (event) => {
+            const target = event.target;
+
+            if (isMobileMenuOpen) {
+                const clickInsideMenu = mobileMenu?.contains(target);
+                const clickOnToggle = mobileToggleButtons.some((btn) => btn.contains(target));
+                if (!clickInsideMenu && !clickOnToggle) {
+                    closeMobileMenu();
+                }
+            }
+
+            if (window.innerWidth >= 1024) {
+                const insideMenu = target.closest('.header .mainMenu');
+                if (!insideMenu) {
+                    closeAllMenuItems(desktopMenuItems);
+                }
+            }
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                closeMobileMenu();
+            }
+            allMenuGroups.forEach(closeAllMenuItems);
+            allMenuGroups.forEach(syncAriaExpanded);
+        });
+
+        // Scroll handler
+        window.addEventListener('scroll', updateHeaderAppearance, { passive: true });
+        updateHeaderAppearance();
+    }
+
+    // Expose global functions
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.navigateTo = navigateTo;
+    window.showSubMenus = () => {
+        if (window.innerWidth >= 1024) {
+            desktopMenuItems.forEach((item) => item.classList.add('is-open'));
+        }
+    };
+    window.hideSubMenus = () => {
+        allMenuGroups.forEach(closeAllMenuItems);
+    };
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeHeader);
+    } else {
+        // DOM already loaded, initialize immediately
+        initializeHeader();
+    }
 })();

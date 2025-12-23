@@ -1,599 +1,190 @@
 /* Room Page Styles */
 
-/* Hero section height override for room page - desktop default */
 .hero-section {
-    height: 100vh;
-    min-height: 100vh;
+    background: #FFF4E1;
     position: relative;
 }
 
-/* Hero slider positioning - contains all hero elements */
-.hero-slider {
-    position: relative;
-    height: 100vh;
-}
-
-/* Desktop styles - Use default common.css styles */
-/* Remove desktop overrides that break the layout */
-
-/* Hero slide images height adjustment */
-.hero-slide {
-    height: 100vh !important;
-}
-
-.hero-slide img {
-    height: 100vh !important;
-    object-fit: cover;
-}
-
-/* Mobile specific - contain zoom within hero area */
-@media (max-width: 768px) {
-    .hero-section {
-        height: 65vh !important;
-        min-height: 65vh !important;
-        overflow: hidden !important;
-        position: relative;
-    }
-
-    .hero-slider {
-        overflow: hidden !important;
-        height: 65vh !important;
-        position: relative;
-    }
-
-    .hero-slide {
-        overflow: hidden !important;
-        height: 65vh !important;
-        position: relative;
-    }
-
-    .hero-slide img {
-        height: 65vh !important;
-    }
-
-    /* Ensure zoom animation stays within bounds */
-    .hero-slide img {
-        transform-origin: center center;
-        will-change: transform;
-    }
-
-    /* Mobile hero-property-title positioning */
-    .hero-property-title {
-        position: absolute !important;
-        bottom: 40% !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-    }
-
-    /* Mobile hero-progress-container positioning */
-    .hero-progress-container {
-        left: 50% !important;
-        right: auto !important;
-        /* transform: translateX(-50%) !important; */
-        width: 200px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    /* Ensure progress bar is visible on mobile */
-    .hero-progress-bar {
-        display: block !important;
-        width: 100px !important;
-        height: 2px !important;
-        background: rgba(255, 255, 255, 0.3) !important;
-    }
-
-    .hero-progress-fill {
-        display: block !important;
-        height: 2px !important;
-        background: #fff !important;
-    }
-}
-
-
-/* Page name position adjustment */
-.page-name {
-    top: 30px;
-}
-
-.room-about-section {
-    padding: 80px 20px 15px;
-    background: var(--color-primary);
-    position: relative;
-}
-
-.room-about-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 70%;
-    height: 36%;
-    background-image: url('../images/shadow3.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 3;
-}
-
-.room-intro-section {
-    background: var(--color-primary);
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-
-.room-intro-content {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-/* Small Hexagon Thumbnail */
-.room-thumbnail {
-    margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-}
-
-.room-thumbnail.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-thumbnail-hexagon {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 0 auto;
-}
-
-/* Green border for thumbnail */
-.room-thumbnail-hexagon::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background: var(--color-secondary);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    z-index: 1;
-}
-
-/* White padding for thumbnail */
-.room-thumbnail-hexagon::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    background: var(--color-primary);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    z-index: 2;
-}
-
-.room-thumbnail-hexagon img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
-    object-fit: cover;
-    object-position: center;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    z-index: 3;
-}
-
-.room-label {
-    margin-bottom: 30px;
-}
-
-.room-number {
-    display: block;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-secondary);
-    line-height: 1.4;
-    letter-spacing: 0.02em;
-    margin: 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-}
-
-.room-number.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-description {
-    font-size: 1.125rem;
-    font-weight: 400;
-    color: #666;
-    line-height: 1.8;
-    letter-spacing: 0.01em;
-    margin: 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-    transition-delay: 0.2s;
-}
-
-.room-description.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Room Details Container */
-.room-details-container {
-    padding: 80px 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-}
-
-.room-details-container.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-section-title {
-    font-family: var(--font-en-main), serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-    margin-bottom: 50px;
-    text-align: left;
-    max-width: 1200px;
-    margin: 30px auto;
+.swiper-slide {
     display: flex;
     align-items: center;
-    gap: 20px;
-}
-
-.room-section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--color-secondary);
-    opacity: 0.3;
-}
-
-/* Room Info Content */
-.room-info-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Left side - Image slider */
-.room-info-left {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.room-slider {
-    width: 100%;
-    height: 400px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0;
-}
-
-.room-slider-wrapper {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.room-slide {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-.room-slide.active {
-    opacity: 1;
-}
-
-.room-slider-indicators {
-    display: none;
-}
-
-/* Room thumbnails */
-.room-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.thumb-img {
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.thumb-img.active,
-.thumb-img:hover {
-    opacity: 1;
-    border-color: var(--color-secondary);
-}
-
-/* Right side - Room details */
-.room-info-right {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-.room-details-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    border-left : 1px solid var(--color-secondary);
-    padding-left: 30px;
-}
-
-.room-detail-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.detail-label {
-    font-size: 0.9rem;
-    color: #999;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.detail-value {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-}
-
-/* Room Usage Guide Section */
-.room-usage-guide-section {
-    padding: 80px 0 100px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-    transition-delay: 0.3s;
-}
-
-.room-usage-guide-section.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-usage-guide-section .room-section-title {
-    max-width: 1200px;
-    margin: 0 auto 50px auto;
-}
-
-.room-usage-guide-section .usage-guide-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    font-size: 1rem;
-    line-height: 2;
-    color: #666;
-}
-
-.room-usage-guide-section .usage-guide-content p {
-    margin: 0;
-}
-
-/* Room Amenities Section */
-.room-amenities-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-    transition-delay: 0.2s;
-}
-
-.room-amenities-section.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-amenities-section .room-section-title {
-    max-width: 1200px;
-    margin: 0 auto 50px auto;
-}
-
-.amenities-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.amenity-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 20px 0 0;
-}
-
-.amenity-icon {
-    font-size: 1.2rem;
-    color: var(--color-secondary);
-}
-
-.amenity-name {
-    font-size: 0.95rem;
-    color: #333;
-    font-weight: 500;
-}
-
-/* Animation Classes */
-.animate-element {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-}
-
-.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Responsive Design */
-
-@media (max-width: 768px) {
-    .room-about-section {
-        padding: 60px 20px;
-    }
-
-    .room-intro-section {
-        padding: 0 20px;
-    }
-
-    .room-info-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .room-details-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .amenities-grid {
-        gap: 10px;
-    }
-
-    .room-section-title {
-        font-size: 1.5rem;
-        margin: 0 auto 20px auto !important;
-    }
-
-    .room-number {
-        font-size: 1.6rem;
-    }
-}
-
-@media (max-width: 480px) {
-
-    .room-slider {
-        height: 300px;
-    }
-
-    .amenity-item {
-        padding: 8px;
-    }
-}
-
-/* ================================
-   Room Gallery Section
-   ================================ */
-.room-gallery-section {
-    background: var(--color-secondary);
-    min-height: 600px;
-    padding-top: 200px;
-    padding-bottom: 15px;
-    position: relative;
-}
-
-/* Room Gallery Label */
-.room-gallery-label {
-    position: absolute;
-    top: 60px;
-    left: 60px;
-    opacity: 0;
-    transform: translateX(-100px);
-    transition: all 1s ease;
-    z-index: 3;
-}
-
-.room-gallery-label.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.room-gallery-label span {
-    font-family: var(--font-en-main), serif;
-    font-size: 4rem;
-    font-style: italic;
-    color: #fff;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    position: relative;
-    display: inline-block;
-}
-
-/* Room Gallery Description */
-.room-gallery-description {
-    font-size: 1.125rem;
-    font-weight: 400;
-    color: #fff;
-    line-height: 1.8;
-    text-align: left;
-}
-
-/* Room Gallery Container */
-.room-gallery-container {
-    display: flex;
     justify-content: center;
-    gap: 15px;
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 1400px;
-    padding: 0 20px;
 }
 
-/* Mobile Responsive */
+.fade-slide-enter {
+    opacity: 0;
+    transition: opacity 1000ms ease-in-out;
+}
+
+.fade-slide-active {
+    opacity: 1;
+}
+
+.modal-backdrop {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-zoom-in {
+    animation: zoomIn 0.5s ease-in-out;
+}
+
+/* Hero 섹션에서 공통 header 활성화 */
+#main-header {
+    display: block;
+}
+
+/* Fix border-radius mismatch between dashed border and image container */
+.border-2.border-dashed.rounded-t-full > div {
+    border-radius: 258px 258px 8px 8px !important;
+}
+
+/* Tablet responsive border-radius */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .border-2.border-dashed.rounded-t-full {
+        border-radius: 200px 200px 10px 10px !important;
+    }
+
+    .border-2.border-dashed.rounded-t-full > div {
+        border-radius: 198px 198px 8px 8px !important;
+    }
+}
+
+/* Mobile Responsive - Room Layout */
+/* Gallery Item Styles */
+.gallery-item {
+    border-bottom: 1px solid var(--brand-color-primary);
+}
+
+.gallery-item-first {
+    border-top: 1px solid var(--brand-color-primary);
+}
+
+.gallery-item-text-container {
+    border-right: 1px solid var(--brand-color-primary);
+}
+
+.gallery-placeholder {
+    border-top: 1px solid var(--brand-color-primary);
+    border-bottom: 1px solid var(--brand-color-primary);
+}
+
+/* Gallery 영역에서만 영어 폰트 사이즈 조정 및 중앙정렬 */
+#room-gallery-container .en-title {
+    font-size: 1.1em; /* 기본 크기의 110% */
+}
+
+#room-gallery-container h4 {
+    text-align: center;
+}
+
 @media (max-width: 768px) {
-    .room-gallery-section {
-        min-height: 800px;
-        padding-top: 150px;
+    /* Change main container to column layout */
+    .max-w-7xl.mx-auto.px-6 .flex.flex-row {
+        flex-direction: column !important;
+        gap: 2rem !important;
     }
 
-    .room-gallery-label {
-        top: 40px;
-        left: 20px;
+    /* Make both left and right sections 100% width */
+    .max-w-7xl.mx-auto.px-6 .flex.flex-row > div {
+        width: 100% !important;
     }
 
-    .room-gallery-label span {
-        font-size: 2.5rem;
+    /* Remove sticky positioning on mobile */
+    .sticky {
+        position: static !important;
     }
 
-    .room-gallery-container {
-        flex-direction: column;
-        position: relative;
-        bottom: auto;
-        transform: none;
-        left: auto;
-        padding-bottom: 20px;
+    /* Adjust image container for mobile */
+    .max-w-7xl.mx-auto.px-6 .w-full.px-8 {
+        padding: 0 !important;
     }
 
+    /* Reduce image height significantly on mobile */
+    .h-\\[650px\\] {
+        height: 300px !important;
+    }
+
+    /* Adjust image border radius for mobile - rounded top, straight bottom */
+    .border-2.border-dashed.rounded-t-full {
+        border-radius: 250px 250px 0 0 !important;
+    }
+
+    /* Make inner image container match the dashed border radius */
+    .border-2.border-dashed.rounded-t-full > div {
+        border-radius: 248px 248px 0 0 !important;
+    }
+
+    /* Reduce section padding */
+    .py-16.lg\\:py-24 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    /* Adjust accordion button padding */
+    .py-6.flex.items-center {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    /* Reduce accordion margins */
+    .border-b.mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Make section title smaller on mobile */
+    .text-2xl.md\\:text-3xl {
+        font-size: 1.5rem !important;
+    }
+
+    /* Hide gallery borders on mobile */
+    .gallery-item,
+    .gallery-item-first,
+    .gallery-item-text-container,
+    .gallery-placeholder {
+        border: none !important;
+    }
+
+    /* Modal navigation buttons on mobile */
+    #modal-prev,
+    #modal-next {
+        width: 40px !important;
+        height: 40px !important;
+        padding: 8px !important;
+        left: 8px !important;
+        top: 35% !important;
+    }
+
+    #modal-next {
+        right: 8px !important;
+        left: auto !important;
+        top: 35% !important;
+    }
+
+    #modal-prev svg,
+    #modal-next svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
 }
+
