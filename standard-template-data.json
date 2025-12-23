@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.68.0",
-    "generatedAt": "2025-12-23T07:20:10.094Z",
-    "templateType": "full_banner_wipe",
+    "version": "1.69.0",
+    "generatedAt": "2025-12-23T07:56:18.238Z",
+    "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -967,7 +967,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "full_banner_wipe",
+    "templateType": "full_banner_image",
     "images": [
       {
         "logo": [
@@ -1498,15 +1498,15 @@
         "font": {
           "koSub": {
             "cdn": null,
-            "key": "jeongseonariranghon",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff",
-            "family": "JeongseonArirangHon"
+            "key": "kccdodamdodam",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-DodamdodamR.woff2",
+            "family": "KccDodamdodam"
           },
           "enMain": {
-            "cdn": "https://fonts.cdnfonts.com/css/bruno-ace-2",
-            "key": "brunoace",
+            "cdn": "https://fonts.cdnfonts.com/css/marhey",
+            "key": "marhey",
             "woff2": null,
-            "family": "Bruno Ace"
+            "family": "Marhey"
           },
           "koMain": {
             "cdn": null,
@@ -1516,8 +1516,8 @@
           }
         },
         "color": {
-          "primary": "#F3F4F6",
-          "secondary": "#0F766E"
+          "primary": "#FFF9F1",
+          "secondary": "#B66E41"
         }
       }
     }
