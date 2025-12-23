@@ -1,14 +1,7 @@
 /* CDN Fonts */
-@import url('https://fonts.cdnfonts.com/css/marhey');
+@import url('https://fonts.cdnfonts.com/css/bruno-ace-2');
 
 /* Font Faces */
-@font-face {
-  font-family: 'JejuStoneWall';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-
 @font-face {
   font-family: 'KccDodamdodam';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-DodamdodamR.woff2') format('woff2');
@@ -16,11 +9,18 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'ReperepointSpecialItalic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-SpecialItalicA.woff') format('woff');
+  font-weight: 400;
+  font-display: swap;
+}
+
 /* CSS Variables */
 :root {
-  --font-ko-main: 'JejuStoneWall', sans-serif;
-  --font-ko-sub: 'KccDodamdodam', sans-serif;
-  --font-en-main: 'Marhey', sans-serif;
+  --font-ko-main: 'KccDodamdodam', sans-serif;
+  --font-ko-sub: 'ReperepointSpecialItalic', sans-serif;
+  --font-en-main: 'Bruno Ace', sans-serif;
   --color-primary: #FFF9F1;
   --color-secondary: #B66E41;
 }
