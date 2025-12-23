@@ -10,8 +10,8 @@
 }
 
 @font-face {
-  font-family: 'KccSign';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2') format('woff2');
+  font-family: 'SokchoSeaDotum';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
@@ -19,7 +19,7 @@
 /* CSS Variables */
 :root {
   --font-ko-main: 'JeongseonArirangHon', sans-serif;
-  --font-ko-sub: 'KccSign', sans-serif;
+  --font-ko-sub: 'SokchoSeaDotum', sans-serif;
   --font-en-main: 'Bruno Ace', sans-serif;
   --color-primary: #F5F4F1;
   --color-secondary: #C36355;
