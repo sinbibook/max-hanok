@@ -1,1 +1,1 @@
-# template-full-banner-slider-flat Template
+# template-full-banner-wipe

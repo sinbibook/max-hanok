@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.66.0",
-    "generatedAt": "2025-12-23T04:46:59.569Z",
-    "templateType": "full_banner_slider_flat",
+    "version": "1.67.0",
+    "generatedAt": "2025-12-23T07:16:44.587Z",
+    "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -369,28 +369,28 @@
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-etjfnqhkmt7.jpg",
               "sortOrder": 0,
               "description": "찜질방",
-              "isSelected": true
+              "isSelected": false
             },
             {
               "id": "c5ec047c-7e7a-49f2-a4a1-ba14876a6144",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-5gxa406cun9.jpg",
               "sortOrder": 1,
               "description": "영화시청",
-              "isSelected": true
+              "isSelected": false
             },
             {
               "id": "3549262d-282f-4e8e-b4fd-fe89c33157c1",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-6fv9t0c2ebd.jpg",
               "sortOrder": 2,
               "description": "주방",
-              "isSelected": true
+              "isSelected": false
             },
             {
               "id": "aeedc56e-6ae5-40cc-8ecf-51a6ea6d616f",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/c20a834f-87a0-458c-a75f-bc81df58ab98/exterior/1761648257752-yyaua96qp4.jpg",
               "sortOrder": 3,
               "description": "주방2",
-              "isSelected": true
+              "isSelected": false
             },
             {
               "id": "c1af3f67-7173-4653-ae69-656bc36228d0",
@@ -967,7 +967,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "full_banner_slider_flat",
+    "templateType": "full_banner_wipe",
     "images": [
       {
         "logo": [
@@ -1496,28 +1496,18 @@
       },
       "theme": {
         "font": {
-          "koSub": {
-            "cdn": null,
-            "key": "sokchoseadotum",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
-            "family": "SokchoSeaDotum"
-          },
+          "koSub": null,
           "enMain": {
-            "cdn": "https://fonts.cdnfonts.com/css/bruno-ace-2",
-            "key": "brunoace",
+            "cdn": "https://fonts.cdnfonts.com/css/azonix",
+            "key": "azonix",
             "woff2": null,
-            "family": "Bruno Ace"
+            "family": "Azonix"
           },
-          "koMain": {
-            "cdn": null,
-            "key": "jeongseonariranghon",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff",
-            "family": "JeongseonArirangHon"
-          }
+          "koMain": null
         },
         "color": {
-          "primary": "#F5F4F1",
-          "secondary": "#C36355"
+          "primary": "#F3F4F6",
+          "secondary": "#0F766E"
         }
       }
     }
