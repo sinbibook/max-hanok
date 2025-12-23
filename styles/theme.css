@@ -1,22 +1,24 @@
-/* Theme CSS - 테마 변수 정의 (폰트, 색상) */
-/* 배포 시 이 파일만 덮어쓰면 됨 */
-
 /* CDN Fonts */
-@import url('https://use.typekit.net/vll4umt.css');
+@import url('https://fonts.cdnfonts.com/css/bruno-ace-2');
 
 /* Font Faces */
 @font-face {
-  font-family: 'Aritaburi';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff') format('woff');
+  font-family: 'JeongseonArirangHon';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff') format('woff');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'YeongjuSeonbi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/YEONGJUSeonbiTTF.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'Aritaburi', sans-serif;
-  --font-ko-sub: 'Aritaburi', sans-serif;
-  --font-en-main: 'Amandine', serif;
-  --color-primary: #fdfcf4;
-  --color-secondary: #31423d;
+  --font-ko-main: 'JeongseonArirangHon', sans-serif;
+  --font-ko-sub: 'YeongjuSeonbi', sans-serif;
+  --font-en-main: 'Bruno Ace', sans-serif;
 }
