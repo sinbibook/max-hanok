@@ -1,560 +1,835 @@
-/* Utility Classes */
-.hidden {
-    display: none !important;
-}
-
-/* Header Component Styles */
-.header {
-    width: 100%;
-    background: transparent;
-    border: 0;
+/* Top Header Styles */
+.top-header {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    transition: all 0.3s ease;
-    padding: 0 1rem;
-    z-index: 1000;
-    min-height: auto;
-    overflow: visible; /* mobile-menu가 header 밖으로 나갈 수 있도록 */
-}
-
-/* Scrolled header state */
-.header.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Color adjustments for scrolled state */
-.header.scrolled .logo-text {
-    color: var(--color-secondary);
-}
-
-.header.scrolled .menu-item {
-    color: #374151;
-}
-
-.header.scrolled .menu-item:hover {
-    color: var(--color-primary);
-}
-
-.header.scrolled .sub-menu-item {
-    color: #374151;
-}
-
-.header.scrolled .sub-menu-item:hover {
-    color: var(--color-primary);
-}
-
-.header.scrolled .mobile-toggle {
-    color: #374151;
-}
-
-.header.scrolled .reservation-btn {
-    background: var(--color-secondary);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.header.scrolled .reservation-btn:hover {
-    background: var(--color-secondary);
-    filter: brightness(0.95);
-}
-
-.header-content {
     width: 100%;
-    padding: 1rem 0;
-}
-
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Logo Component Styles - 제주 포레스트 */
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    z-index: 1002;
-    position: relative;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-}
-
-.logo-image {
-    height: 100%;
-    width: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-.logo-text {
-    color: white;
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    height: 80px;
+    z-index: 999;
+    transition: all 0.3s ease;
     font-family: var(--font-ko-main);
 }
 
-/* Logo responsive adjustments */
-@media (max-width: 768px) {
-    .logo-icon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .logo-text {
-        font-size: 1.125rem;
-    }
+.top-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 20px 0 10px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-/* Dark theme variant */
-.logo-container.dark .logo-text {
-    color: var(--color-primary);
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    flex: 1;
+    justify-content: center;
+    z-index: 999;
 }
 
-/* Light theme variant (for headers with white/light backgrounds) */
-.logo-container.light .logo-text {
-    color: var(--color-primary);
+.logo-image {
+    height: 40px;
+    width: auto;
+    display: block;
 }
 
-/* Logo hover effects */
-.logo-container:hover {
-    opacity: 0.9;
+.logo-text {
+    font-family: var(--font-ko-main);
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--color-secondary);
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
 
-/* Logo for navigation bars */
-.navbar-logo .logo-container {
-    gap: 0.5rem;
+/* 스크롤 시 로고 텍스트 숨김 */
+.top-header.scrolled .logo-text {
+   visibility: hidden;
 }
 
-.navbar-logo .logo-icon {
-    width: 36px;
-    height: 36px;
+/* Booking Buttons Container */
+.booking-buttons {
+    display: flex;
+    gap: 10px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
-.navbar-logo .logo-text {
-    font-size: 1.125rem;
-}
-
-/* Logo for footer */
-.footer-logo .logo-container {
-    gap: 0.5rem;
-}
-
-.footer-logo .logo-text {
-    font-size: 1rem;
-}
-
-/* Logo animation */
-@keyframes logoFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.logo-container.animate {
-    animation: logoFadeIn 0.5s ease-out;
-}
-
-/* Desktop Navigation */
-.desktop-nav {
-    display: none;
-    align-items: center;
-}
-
-.nav-container {
-    position: relative;
-    z-index: 1001; /* Ensure submenus appear above other content */
-    transition: height 0.3s ease;
-}
-
-.main-menu {
-    position: relative;
-    width: 448px;
-    height: 60px;
-    padding: 0;
-    margin: 0 10px;
-}
-
-.menu-item {
-    position: absolute;
-    top: 23px;
-    color: white;
-    font-family: var(--font-en-main);
+/* YBS Button Styles */
+.ybs-btn {
+    padding: 10px 15px;
+    background: transparent;
+    color: var(--color-secondary) !important;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    font-family: var(--font-ko-main);
     font-weight: 600;
-    font-size: 14px;
     cursor: pointer;
-    transition: color 0.2s ease;
-    z-index: 1002; /* Ensure menu items are clickable */
+    transition: all 0.3s ease;
+    font-size: 16px;
+    text-decoration: none;
+    display: none; /* 기본적으로 숨김 */
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    position: relative;
 }
 
-.menu-item:hover {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.menu-about { left: 25px; }
-.menu-spaces { left: 131px; }
-.menu-specials { left: 238px; }
-.menu-reservation { left: 342px; }
-
-/* Sub Menus */
-.sub-menus {
-    position: absolute;
-    top: 55px;
-    left: 10px;
-    width: 423px;
-    height: 174px;
-    padding: 20px 0 15px 0;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-out;
-    z-index: 1003;
-}
-
-.sub-menus::before {
+.ybs-btn::before {
     content: '';
     position: absolute;
-    top: 20px;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 20px);
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    transition: border-color 0.3s ease;
 }
 
-.header.scrolled .sub-menus {
-    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.1);
+.ybs-btn::after {
+    content: '→';
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-weight: 300;
 }
 
-.header.scrolled .sub-menus::before {
-    background: rgba(255,255,255, 0.75);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+.ybs-btn:hover {
+    background: var(--color-secondary) !important;
+    color: white !important;
+    border-color: var(--color-secondary);
+    transform: translateX(2px) translateY(-1px);
 }
 
-.sub-menus.show {
-    opacity: 1;
-    pointer-events: all;
+.ybs-btn:hover::before {
+    border-color: var(--color-secondary);
 }
 
-.sub-menu-item {
-    position: absolute;
-    color: white;
-    font-family: var(--font-ko-sub);
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    transition: all 0.2s ease;
-    opacity: 0;
-    transform: translateY(-5px);
-    max-width: 128px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.ybs-btn:hover::after {
+    transform: translateX(3px);
 }
 
-.sub-menus.show .sub-menu-item {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.sub-menu-item.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.sub-menu-item:hover {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* Sub menu positions - 동적으로 생성되는 메뉴는 JavaScript에서 관리 */
-/* 고정 메뉴만 CSS로 정의 */
-.sub-about-1 { left: 15px; top: 29px; }
-.sub-about-2 { left: 15px; top: 63px; }
-
-.sub-reservation-1 { left: 332px; top: 29px; }
-
-/* Desktop Reservation Buttons - Common Styles */
-.header-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 0.5rem;
-    font-family: var(--font-ko-sub);
-}
-
-.header-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-}
-
-.header-btn:active {
-    transform: scale(0.95);
-}
-
-.header.scrolled .header-btn {
+.ybs-btn.scrolled {
     background: var(--color-secondary);
-    border: 1px solid var(--color-primary);
+    color: white !important;
+    border: 1px solid var(--color-secondary);
 }
 
-.header.scrolled .header-btn:hover {
-    background: var(--color-secondary);
-    filter: brightness(0.95);
-}
-
-/* YBS Button - Unique Styles */
-.ybs-btn {
-    margin-right: 0.5rem;
-}
-
-/* Mobile Menu Toggle */
-.mobile-toggle {
-    display: block;
-    color: white;
-    padding: 0.5rem;
-    z-index: 1002;
+.book-now-btn {
     position: relative;
+    padding: 10px 15px;
+    z-index: 1000;
+    padding: 10px 15px;
+    background: transparent;
+    color: var(--color-secondary) !important;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    font-family: var(--font-ko-main);
+    font-weight: 600;
     cursor: pointer;
-    transition: transform 0.1s ease;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
 }
 
-.mobile-toggle:active {
-    transform: scale(0.95);
+.book-now-btn.scrolled {
+    background: var(--color-secondary);
+    color: white !important;
+    border: 1px solid var(--color-secondary);
 }
 
-.mobile-toggle .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+.book-now-btn::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    transition: border-color 0.3s ease;
 }
 
-/* Mobile Menu */
-.mobile-menu {
+.book-now-btn::after {
+    content: '→';
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-weight: 300;
+}
+
+.book-now-btn:hover {
+    background: var(--color-secondary) !important;
+    color: white !important;
+    border-color: var(--color-secondary);
+    transform: translateX(2px) translateY(-1px);
+}
+
+.book-now-btn:hover::before {
+    border-color: var(--color-secondary);
+}
+
+.book-now-btn:hover::after {
+    transform: translateX(3px);
+}
+
+/* Side Header Styles */
+.side-header {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 60vw;
+    height: 100vh;
+    background: #f5f5f5;
+    box-shadow: 2px 0 30px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: left 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    font-family: var(--font-ko-main);
+    display: flex;
+    overflow: hidden;
+}
+
+.side-header.expanded {
+    left: 0;
+}
+
+/* Overlay for when side header is open */
+.side-header-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--color-primary);
-    backdrop-filter: blur(12px);
-    z-index: 1001;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
 }
 
-/* Mobile Menu Header */
-.mobile-menu-header {
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    background: var(--color-secondary);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 10;
-}
-
-.mobile-property-name {
-    color: white;
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: 0.025em;
-}
-
-/* Mobile Menu Close Button */
-.mobile-menu-close {
-    color: #374151;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-}
-
-.mobile-menu-close:active {
-    transform: scale(0.95);
-}
-
-.mobile-menu-close .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.mobile-menu.show {
+.side-header-overlay.active {
     opacity: 1;
     visibility: visible;
 }
 
-/* Scrollable Menu Content */
-.mobile-menu-content {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1.5rem;
-    -webkit-overflow-scrolling: touch;
-}
-
-.mobile-menu-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 32rem;
-    margin: 0 auto;
-    padding-bottom: 2rem;
-}
-
-.mobile-menu-section {
-    text-align: center;
-}
-
-.mobile-menu-title {
-    color: #374151;
-    font-size: 1.125rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 0.5rem;
-}
-
-.mobile-sub-items {
+.side-header-content {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-}
-
-.mobile-sub-item {
-    color: #6b7280;
-    font-size: 0.875rem;
-    font-family: var(--font-ko-sub);
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: color 0.2s ease;
+    justify-content: space-between;
+    width: 100%;
     background: transparent;
-    border: none;
+    padding: 20px 40px 40px 40px;
+    overflow: hidden auto;
 }
 
-.mobile-sub-item:hover {
-    color: #374151;
+.side-content-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Mobile Reservation Buttons Container */
-.mobile-reservation-buttons {
-    position: sticky;
-    bottom: 0;
+.side-content-bottom {
+    margin-top: auto;
+}
+
+/* Side Header Top */
+.side-header-top {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    padding: 1.5rem;
-    background: var(--color-secondary);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 10;
+    padding-bottom: 20px;
+    padding-top: 5px;
+    border-bottom: 1px solid rgba(106, 98, 71, 0.2);
+    position: relative;
 }
 
-/* Mobile Reservation Buttons - Common Styles */
-.mobile-header-btn {
+.side-logo-container {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.side-logo-container:hover {
+    opacity: 0.8;
+}
+
+.side-logo-text {
+    font-family: var(--font-ko-main);
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--color-secondary);
+    white-space: normal;
+    line-height: 1.3;
+    text-align: center;
+    word-break: keep-all;
+}
+
+
+.side-menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.menu-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.menu-section-title {
+    font-family: var(--font-en-main);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-secondary);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--color-secondary);
+}
+
+.menu-section-title.expandable {
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.menu-section-title.expandable::after {
+    content: '▼';
+    position: absolute;
+    right: 0;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.menu-section-title.expandable.active::after {
+    transform: rotate(180deg);
+}
+
+.menu-section-title.expandable:hover {
+    color: var(--color-secondary);
+}
+
+.menu-section-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menu-section-list li {
+    width: 50%;
+    margin-bottom: 8px;
+}
+
+/* Multi-column layout for more than 4 items */
+.menu-section-list.multi-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: calc(4 * 32px); /* 고정 높이 */
+    align-content: flex-start;
+}
+
+.menu-section-list.multi-column li {
+    width: calc(50% - 10px);
+    height: 32px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
+}
+
+.menu-section-list a {
+    color: var(--color-secondary);
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.3s ease;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 1rem;
-    flex: 0 0 auto;
-    font-family: var(--font-ko-sub);
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
-.mobile-header-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+.menu-section-list a:hover {
+    color: var(--color-secondary);
 }
 
-/* Icon styles */
-.icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
+.side-image-banner {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-/* Responsive design */
-@media (min-width: 640px) {
-    .header {
-        padding: 0 2rem;
-    }
-    .mobile-menu-grid {
-        gap: 3rem;
-    }
-    .mobile-menu-title {
-        font-size: 1.25rem;
-    }
-    .mobile-sub-item {
-        font-size: 1rem;
-        padding: 0.75rem;
-    }
-    .mobile-header-btn {
-        padding: 0.75rem 2rem;
-        font-size: 1.125rem;
-    }
+.side-image-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
 }
 
-@media (min-width: 768px) {
-    .header {
-        padding: 0 5rem;
-    }
+/* Close Button - 데스크탑과 모바일 공통 */
+.side-header .close-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    width: 45px;
+    height: 45px;
+    color: var(--color-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    transition: all 0.3s ease;
 }
 
-@media (min-width: 1024px) {
-    .header {
-        padding: 0 10rem;
+.side-header .close-button::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.side-header .close-button::after {
+    content: '×';
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--color-secondary);
+    transition: color 0.3s ease;
+}
+
+.side-header .close-button:hover {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.side-header .close-button:hover::before {
+    border-color: var(--color-secondary);
+}
+
+.side-header .close-button:hover::after {
+    color: white;
+}
+
+
+/* Hamburger Button - Independent of side header */
+.hamburger-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    z-index: 1001;
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.hamburger-button::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.hamburger-button:hover {
+    background: var(--color-secondary);
+}
+
+.hamburger-button:hover::before {
+    border-color: var(--color-secondary);
+}
+
+.hamburger-button:hover .toggle-icon span {
+    background: white;
+}
+
+.hamburger-button .toggle-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hamburger-button .toggle-icon span {
+    position: absolute;
+    width: 18px;
+    height: 2px;
+    background: var(--color-secondary);
+    transition: all 0.3s ease;
+    left: 0;
+}
+
+.hamburger-button .toggle-icon span:first-child {
+    top: 3px;
+}
+
+.hamburger-button .toggle-icon span:nth-child(2) {
+    top: 8px;
+}
+
+.hamburger-button .toggle-icon span:last-child {
+    top: 13px;
+}
+
+/* Hamburger button scroll state */
+.hamburger-button.scrolled {
+    background: var(--color-secondary);
+}
+
+.hamburger-button.scrolled .toggle-icon span {
+    background: white;
+}
+
+
+
+/* Accordion Content Animation */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.accordion-content.active {
+  max-height: none;
+}
+
+.accordion-content.active.multi-column {
+   max-height: none;
+}
+
+/* Scrollable 클래스가 있어도 스크롤 없이 전체 표시 */
+.accordion-content.active.scrollable {
+    max-height: none;
+    overflow-y: visible;
+}
+
+/* Hide hamburger button when side header is expanded - 데스크탑과 모바일 공통 */
+.side-header.expanded + .hamburger-button {
+    display: none;
+}
+
+.hamburger-button.active {
+    display: none;
+}
+
+/* X shape when side header is expanded - Fixed (불필요해진 코드) */
+.side-header.expanded + .hamburger-button .toggle-icon span:first-child,
+.hamburger-button.active .toggle-icon span:first-child {
+    transform: rotate(45deg);
+    top: 8px;
+}
+
+.side-header.expanded + .hamburger-button .toggle-icon span:nth-child(2),
+.hamburger-button.active .toggle-icon span:nth-child(2) {
+    opacity: 0;
+}
+
+.side-header.expanded + .hamburger-button .toggle-icon span:last-child,
+.hamburger-button.active .toggle-icon span:last-child {
+    transform: rotate(-45deg);
+    top: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .side-header {
+        left: -100%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
     }
-    .desktop-nav {
+
+    .side-header.expanded {
+        left: 0;
+        width: 100%;
+    }
+
+    .side-nav {
+        padding: 100px 40px 40px 40px;
+        text-align: center;
+    }
+
+    .nav-list {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .nav-item-header {
+        font-size: 18px;
+        padding: 20px;
+        border-left: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-main-item > a {
+        font-size: 18px;
+        padding: 20px;
+        border-left: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-sub-list a {
+        font-size: 16px;
+        padding: 15px 20px;
+    }
+
+    /* Top Header Mobile */
+    .top-header {
+        height: 85px;
+    }
+
+    .top-header-content {
+        padding: 0 20px;
+        height: 85px;
+    }
+
+    .logo-text {
+        display: none; /* 모바일에서 숨김 */
+    }
+
+    /* YBS Button - Mobile */
+    .ybs-btn {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        font-size: 0;
+        display: none; /* 기본적으로 숨김 */
+        align-items: center;
+        justify-content: center;
+        position: fixed !important;
+        top: 20px !important;
+        right: 75px !important;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .ybs-btn::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: 1px solid var(--color-secondary);
+        border-radius: 0;
+        transition: border-color 0.3s ease;
+    }
+
+    .ybs-btn::after {
+        content: 'Y';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--color-secondary);
+        pointer-events: none;
+    }
+
+    .ybs-btn:hover::before,
+    .ybs-btn:active::before {
+        border-color: var(--color-secondary) !important;
+    }
+
+    .ybs-btn:hover,
+    .ybs-btn:active {
+        background: var(--color-secondary) !important;
+        border-color: var(--color-secondary) !important;
+        transform: none !important;
+        position: fixed !important;
+        top: 20px !important;
+        right: 75px !important;
+    }
+
+    .ybs-btn:hover::after,
+    .ybs-btn:active::after {
+        color: white !important;
+    }
+
+    .ybs-btn.scrolled {
+        background: var(--color-secondary) !important;
+        border-color: var(--color-secondary) !important;
+    }
+
+    .ybs-btn.scrolled::before {
+        border-color: var(--color-secondary) !important;
+    }
+
+    .ybs-btn.scrolled::after {
+        color: white !important;
+    }
+
+    .book-now-btn {
+        width: 45px;
+        height: 45px;
+        padding: 0;
+        font-size: 0;
         display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed !important;
+        top: 20px !important;
+        right: 20px !important;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        transform: none !important;
+        transition: none !important;
     }
-    .mobile-toggle {
-        display: none;
+
+    .book-now-btn:hover,
+    .book-now-btn:active {
+        background: var(--color-secondary) !important;
+        border-color: var(--color-secondary) !important;
+        transform: none !important;
+        position: fixed !important;
+        top: 20px !important;
+        right: 20px !important;
     }
-    .mobile-menu {
-        display: none !important;
+
+    .book-now-btn:hover::before,
+    .book-now-btn:active::before {
+        border-color: var(--color-secondary) !important;
     }
+
+    .book-now-btn:hover::after,
+    .book-now-btn:active::after {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') !important;
+        transform: translate(-50%, -50%) !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+    }
+
+    .book-now-btn::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: 1px solid var(--color-secondary);
+        border-radius: 0;
+        transition: border-color 0.3s ease;
+    }
+
+    .book-now-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%237a8471" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        pointer-events: none;
+    }
+
+    .book-now-btn:active::after {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+    }
+
+    .book-now-btn.scrolled::before {
+        border-color: var(--color-secondary);
+    }
+
+    .book-now-btn.scrolled::after {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
+    }
+
+    /* Mobile menu section - overflow 처리 */
+    .menu-section {
+        overflow: auto;
+    }
+
+    /* Mobile menu section list - one item per line */
+    .menu-section-list li {
+        width: 100%;
+    }
+
+    .menu-section-list.multi-column li {
+        width: 100%;
+    }
+
+    /* Add margin-bottom to side image banner on mobile */
+    .side-image-banner {
+        margin-bottom: 60px;
+    }
+
+    /* Side logo mobile optimization */
+    .side-logo-text {
+        font-size: clamp(20px, 5vw, 28px);
+        padding: 0 10px;
+        max-width: 100%;
+    }
+
+    /* Mobile optimizations for close button */
+    .side-header .close-button {
+        font-size: 24px;
+    }
+
+    /* Hide hamburger button when sidebar is open - 데스크탑과 모바일 공통 */
+}
+
+/* FOUC Prevention */
+.top-header.fouc-hidden,
+.side-header.fouc-hidden {
+    opacity: 0 !important;
 }
