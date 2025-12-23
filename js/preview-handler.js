@@ -217,7 +217,7 @@ class PreviewHandler {
         return {
             koMain: "'Cafe24SsurroundAir', sans-serif",
             koSub: "'Cafe24SsurroundAir', sans-serif",
-            enMain: "'Miamo', 'Lato', sans-serif"
+            enMain: "'Miamo', sans-serif"
         };
     }
 
