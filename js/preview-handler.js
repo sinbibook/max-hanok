@@ -130,7 +130,7 @@ class PreviewHandler {
     /**
      * 초기 데이터 처리 (숙소 선택 + 템플릿 초기 설정)
      */
-    async handleInitialData(data) {
+    handleInitialData(data) {
         this.currentData = data;
         this.isInitialized = true;
         this.adminDataReceived = true;  // 어드민 데이터 수신됨
@@ -141,17 +141,25 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
-        // 전체 템플릿 렌더링 (await로 완료 보장)
-        await this.renderTemplate(data);
+        // 디버그 정보 업데이트
 
-        // 렌더링 완료 후 부모 창에 알림
+        // 테마 데이터가 있으면 CSS 변수 적용
+        const theme = this._getThemeFromData(data);
+        if (theme) {
+            this.applyThemeVariables(theme);
+        }
+
+        // 전체 템플릿 렌더링
+        this.renderTemplate(data);
+
+        // 부모 창에 렌더링 완료 신호
         this.notifyRenderComplete('INITIAL_RENDER_COMPLETE');
     }
 
     /**
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
-    async handleTemplateUpdate(data) {
+    handleTemplateUpdate(data) {
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -161,15 +169,9 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
-        // theme 데이터가 있으면 CSS 변수 즉시 업데이트
-        const theme = data?.homepage?.customFields?.theme || data?.theme;
-        if (theme) {
-            this.applyThemeVariables(theme);
-        }
-
         // 초기화되지 않은 경우 초기 데이터로 처리
         if (!this.isInitialized) {
-            await this.handleInitialData(data);
+            this.handleInitialData(data);
             return;
         }
 
@@ -191,8 +193,14 @@ class PreviewHandler {
             this.currentData = this.mergeData(this.currentData, data);
         }
 
-        // 전체 페이지 다시 렌더링 (await로 완료 보장)
-        await this.renderTemplate(this.currentData);
+        // 테마 데이터가 있으면 CSS 변수 적용
+        const theme = this._getThemeFromData(this.currentData);
+        if (theme) {
+            this.applyThemeVariables(theme);
+        }
+
+        // 전체 페이지 다시 렌더링 (폴백)
+        this.renderTemplate(this.currentData);
 
         // 부모 창에 업데이트 완료 신호
         this.notifyRenderComplete('UPDATE_COMPLETE');
@@ -201,107 +209,22 @@ class PreviewHandler {
     /**
      * 숙소 변경 처리 (다른 숙소 선택)
      */
-    async handlePropertyChange(data) {
+    handlePropertyChange(data) {
         this.currentData = data;
         this.isInitialized = true;
 
+        // 테마 데이터가 있으면 CSS 변수 적용
+        const theme = this._getThemeFromData(data);
+        if (theme) {
+            this.applyThemeVariables(theme);
+        }
+
         // 디버그 정보 업데이트
 
-        // 전체 다시 렌더링 (await로 완료 보장)
-        await this.renderTemplate(data);
+        // 전체 다시 렌더링
+        this.renderTemplate(data);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
-    }
-
-    getDefaultFonts() {
-        return {
-            koMain: "'Cafe24SsurroundAir', sans-serif",
-            koSub: "'Cafe24SsurroundAir', sans-serif",
-            enMain: "'Miamo', sans-serif"
-        };
-    }
-
-    getDefaultColors() {
-        return {
-            primary: '#f7f0e5',
-            secondary: '#605347'
-        };
-    }
-
-    loadFontFromCdn(key, cdnUrl) {
-        if (!cdnUrl || !key) return;
-        const linkId = `font-cdn-${key}`;
-        if (document.getElementById(linkId)) return;
-
-        const link = document.createElement('link');
-        link.id = linkId;
-        link.rel = 'stylesheet';
-        link.href = cdnUrl;
-        document.head.appendChild(link);
-    }
-
-    loadFontFromWoff2(key, family, woff2Url) {
-        if (!woff2Url || !family) return;
-        const styleId = `font-woff2-${key}`;
-        if (document.getElementById(styleId)) return;
-
-        const style = document.createElement('style');
-        style.id = styleId;
-        style.textContent = `
-@font-face {
-    font-family: '${family}';
-    src: url('${woff2Url}') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}`;
-        document.head.appendChild(style);
-    }
-
-    applyFont(fontValue, cssVar, defaultValue) {
-        const root = document.documentElement;
-        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
-            if (fontValue.cdn) {
-                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
-            } else if (fontValue.woff2) {
-                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
-            }
-            root.style.setProperty(cssVar, `'${fontValue.family}', sans-serif`);
-            return;
-        }
-        root.style.setProperty(cssVar, defaultValue);
-    }
-
-    applyColor(colorValue, cssVar, defaultValue) {
-        const root = document.documentElement;
-        root.style.setProperty(cssVar, colorValue || defaultValue);
-    }
-
-    applyThemeVariables(theme) {
-        const defaultFonts = this.getDefaultFonts();
-        const defaultColors = this.getDefaultColors();
-        const fontData = theme.font || theme;
-
-        if (fontData) {
-            if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
-            if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
-            if ('enMain' in fontData) this.applyFont(fontData.enMain, '--font-en-main', defaultFonts.enMain);
-        }
-
-        if ('color' in theme) {
-            if (!theme.color) {
-                this.applyColor(null, '--color-primary', defaultColors.primary);
-                this.applyColor(null, '--color-secondary', defaultColors.secondary);
-            } else {
-                if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
-                if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
-            }
-        }
-    }
-
-    handleThemeUpdate(data) {
-        if (!data) return;
-        this.applyThemeVariables(data);
-        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
     }
 
     /**
@@ -375,7 +298,7 @@ class PreviewHandler {
     /**
      * 전체 템플릿 렌더링 (초기 로드 또는 숙소 변경 시)
      */
-    async renderTemplate(data) {
+    renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
         let mapper = null;
 
@@ -411,6 +334,11 @@ class PreviewHandler {
                     mapper = new DirectionsMapper();
                 }
                 break;
+            case 'room-list':
+                if (window.RoomListMapper) {
+                    mapper = new RoomListMapper();
+                }
+                break;
             default:
                 return;
         }
@@ -420,9 +348,9 @@ class PreviewHandler {
             mapper.data = data;
             mapper.isDataLoaded = true;
 
-            // 기존 매핑 로직 실행 (await로 완료 보장)
-            await mapper.mapPage();
-            // mapPage 완료 후 슬라이더는 이미 초기화됨 (setTimeout 불필요!)
+            // 기존 매핑 로직 실행
+            mapper.mapPage();
+
         }
 
         // Header & Footer 매핑 (모든 페이지에서 공통 실행)
@@ -448,12 +376,48 @@ class PreviewHandler {
 
 
     /**
+     * 데이터에서 테마 정보 추출
+     * @private
+     */
+    _getThemeFromData(data) {
+        return data?.homepage?.customFields?.theme || data?.theme;
+    }
+
+    /**
      * 데이터 구조 초기화 헬퍼 함수
      */
     ensureDataStructure() {
         if (!this.currentData.homepage) this.currentData.homepage = {};
         if (!this.currentData.homepage.customFields) this.currentData.homepage.customFields = {};
         if (!this.currentData.homepage.customFields.pages) this.currentData.homepage.customFields.pages = {};
+    }
+
+    /**
+     * Footer DOM 로드 대기 후 소셜 링크 매핑
+     */
+    waitForFooterAndMapSocialLinks(retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100; // 100ms
+
+        // Footer DOM 확인
+        const footerElement = document.querySelector('footer.footer') ||
+                            document.querySelector('.footer') ||
+                            document.getElementById('footer-container');
+
+        if (footerElement) {
+            // Footer DOM이 로드됨 → 소셜 링크 매핑 실행
+            if (window.HeaderFooterMapper) {
+                const mapper = this.createMapper(HeaderFooterMapper);
+                mapper.mapSocialLinks();
+            }
+        } else if (retryCount < maxRetries) {
+            // Footer DOM이 아직 없음 → 재시도
+            setTimeout(() => {
+                this.waitForFooterAndMapSocialLinks(retryCount + 1);
+            }, retryDelay);
+        } else {
+            console.warn('⚠️ Footer DOM 로드 실패: 소셜 링크 업데이트 불가');
+        }
     }
 
     /**
@@ -521,6 +485,15 @@ class PreviewHandler {
             return;
         }
 
+        // socialLinks 섹션 특별 처리 (모든 페이지 공통)
+        if (section === 'socialLinks') {
+            if (!this.currentData.homepage) this.currentData.homepage = {};
+            this.currentData.homepage.socialLinks = data || {};
+            this.updateSpecificSection(page, section);
+            this.notifyRenderComplete('SECTION_UPDATE_COMPLETE');
+            return;
+        }
+
         // 지원하는 페이지 확인
         const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions'];
         if (!supportedPages.includes(page)) {
@@ -560,6 +533,13 @@ class PreviewHandler {
             return;
         }
 
+        // socialLinks 섹션 업데이트 (모든 페이지 공통)
+        if (section === 'socialLinks' && window.HeaderFooterMapper) {
+            // Footer DOM 로드 대기 후 실행
+            this.waitForFooterAndMapSocialLinks();
+            return;
+        }
+
         if (page === 'index' && window.IndexMapper) {
             const mapper = this.createMapper(IndexMapper);
 
@@ -579,6 +559,11 @@ class PreviewHandler {
                 case 'closing':
                     mapper.mapClosingSection();
                     break;
+                case 'room-list':
+                case 'roomList':
+                case 'room-preview':
+                    mapper.mapRoomPreviewSection();
+                    break;
             }
         } else if (page === 'main') {
             if (window.MainMapper) {
@@ -586,7 +571,7 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroImage();
+                        mapper.mapMainHeroSection();
                         break;
                     case 'about':
                         mapper.mapMainContentSections();
@@ -596,22 +581,22 @@ class PreviewHandler {
         } else if (page === 'room') {
             if (window.RoomMapper) {
                 const mapper = this.createMapper(RoomMapper);
+                const currentRoom = mapper.getCurrentRoom();
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapRoomBasicInfo();
-                        mapper.mapSliderImages();
+                        mapper.mapHeroText(currentRoom);
+                        mapper.initializeHeroSlider(currentRoom);
+                        break;
+                    case 'gallery':
+                        mapper.mapRoomGalleryText();
                         break;
                 }
             }
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapFacilityBasicInfo();
-                mapper.mapAdditionalInfos();
-                mapper.mapFeatures();
-                mapper.mapBenefits();
-                mapper.adjustExperienceGridLayout();
+                mapper.mapFacilityText();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -621,7 +606,18 @@ class PreviewHandler {
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
                 const mapper = this.createMapper(DirectionsMapper);
-                mapper.mapPage();
+
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroSection();
+                        break;
+                    case 'notice':
+                        mapper.mapNoticeSection();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
             }
         }
     }
@@ -650,6 +646,7 @@ class PreviewHandler {
 
         if (path.includes('index.html') || path.endsWith('/') || path === '') return 'index';
         if (path.includes('main.html')) return 'main';
+        if (path.includes('room-list.html')) return 'room-list';
         if (path.includes('room.html')) return 'room';
         if (path.includes('facility.html')) return 'facility';
         if (path.includes('reservation.html')) return 'reservation';
@@ -712,6 +709,181 @@ class PreviewHandler {
 
 
     /**
+     * 테마 업데이트 처리
+     */
+    handleThemeUpdate(data) {
+        const theme = this._getThemeFromData(data);
+        if (theme) {
+            this.applyThemeVariables(theme);
+        }
+    }
+
+    /**
+     * 테마 변수들을 CSS에 적용
+     */
+    applyThemeVariables(theme) {
+        const defaultFonts = this.getDefaultFonts();
+        const defaultColors = this.getDefaultColors();
+
+        // 폰트 변수 매핑
+        const fontMappings = {
+            koMain: '--font-ko-main',
+            koSub: '--font-ko-sub',
+            enMain: '--font-en-main'
+        };
+
+        // 색상 변수 매핑
+        const colorMappings = {
+            primary: '--color-primary',
+            secondary: '--color-secondary'
+        };
+
+        // 폰트 변수 업데이트
+        const fontData = theme.font || theme;
+        if (fontData) {
+            for (const [key, cssVar] of Object.entries(fontMappings)) {
+                if (key in fontData) {
+                    this.applyFont(fontData[key], cssVar, defaultFonts[key]);
+                }
+            }
+        }
+
+        // 색상 변수 업데이트
+        const colorData = theme.color || theme;
+        if (colorData) {
+            for (const [key, cssVar] of Object.entries(colorMappings)) {
+                if (key in colorData) {
+                    this.applyColor(colorData[key], cssVar, defaultColors[key]);
+                }
+            }
+        }
+    }
+
+    /**
+     * 기본 폰트 fallback 값 (CSS에서 동적으로 읽어옴)
+     */
+    getDefaultFonts() {
+        // 캐시된 값이 있으면 반환
+        if (this._cachedDefaultFonts) {
+            return this._cachedDefaultFonts;
+        }
+
+        const root = document.documentElement;
+        const computedStyle = getComputedStyle(root);
+
+        // CSS 변수에서 현재 값 읽기
+        this._cachedDefaultFonts = {
+            koMain: computedStyle.getPropertyValue('--font-ko-main').trim() || "'Maruburi', sans-serif",
+            koSub: computedStyle.getPropertyValue('--font-ko-sub').trim() || "'Noto Serif KR', serif",
+            enMain: computedStyle.getPropertyValue('--font-en-main').trim() || "'Chonburi', serif"
+        };
+
+        return this._cachedDefaultFonts;
+    }
+
+    /**
+     * 기본 색상 fallback 값 (CSS에서 동적으로 읽어옴)
+     */
+    getDefaultColors() {
+        // 캐시된 값이 있으면 반환
+        if (this._cachedDefaultColors) {
+            return this._cachedDefaultColors;
+        }
+
+        const root = document.documentElement;
+        const computedStyle = getComputedStyle(root);
+
+        // CSS 변수에서 현재 값 읽기
+        this._cachedDefaultColors = {
+            primary: computedStyle.getPropertyValue('--color-primary').trim() || '#f8f8f8',
+            secondary: computedStyle.getPropertyValue('--color-secondary').trim() || '#1a1a1a'
+        };
+
+        return this._cachedDefaultColors;
+    }
+
+    /**
+     * 단일 폰트 CSS 변수 적용
+     */
+    applyFont(fontValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+
+        // fontValue가 유효한 객체인 경우
+        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
+            // cdn이 있으면 link 태그, woff2만 있으면 style 태그
+            if (fontValue.cdn) {
+                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
+            } else if (fontValue.woff2) {
+                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
+            }
+
+            // defaultValue에서 generic family 추출 (e.g., serif, sans-serif)
+            const genericFamily = defaultValue.split(',').pop().trim() || 'sans-serif';
+            root.style.setProperty(cssVar, `'${fontValue.family}', ${genericFamily}`);
+            return;
+        }
+
+        // null/undefined인 경우 기본값으로 리셋
+        root.style.setProperty(cssVar, defaultValue);
+    }
+
+    /**
+     * 단일 색상 CSS 변수 적용
+     */
+    applyColor(colorValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+
+        if (colorValue && typeof colorValue === 'string' && colorValue.trim()) {
+            root.style.setProperty(cssVar, colorValue);
+        } else {
+            // null/undefined인 경우 기본값으로 리셋
+            root.style.setProperty(cssVar, defaultValue);
+        }
+    }
+
+    /**
+     * CDN에서 폰트 로드
+     */
+    loadFontFromCdn(fontKey, cdnUrl) {
+        const linkId = `font-${fontKey}`;
+
+        // 이미 로드된 폰트인지 확인
+        if (document.getElementById(linkId)) {
+            return;
+        }
+
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = cdnUrl;
+        link.media = 'all';
+        document.head.appendChild(link);
+    }
+
+    /**
+     * WOFF2 폰트를 @font-face로 로드
+     */
+    loadFontFromWoff2(fontKey, fontFamily, woff2Url) {
+        const styleId = `font-face-${fontKey}`;
+
+        // 이미 정의된 @font-face인지 확인
+        if (document.getElementById(styleId)) {
+            return;
+        }
+
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+            @font-face {
+                font-family: '${fontFamily}';
+                src: url('${woff2Url}') format('woff2');
+                font-display: swap;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    /**
      * 현재 데이터 반환 (디버깅용)
      */
     getCurrentData() {
@@ -728,6 +900,7 @@ class PreviewHandler {
             'index': 'IndexMapper',
             'main': 'MainMapper',
             'room': 'RoomMapper',
+            'room-list': 'RoomListMapper',
             'facility': 'FacilityMapper',
             'reservation': 'ReservationMapper',
             'directions': 'DirectionsMapper'

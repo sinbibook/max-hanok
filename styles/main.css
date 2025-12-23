@@ -1,202 +1,378 @@
-/* Main Page Styles */
+/* ===================================
+   Main Page Styles
+   =================================== */
 
-/* Full Page Scroll Container */
-.scroll-container {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Individual scroll sections */
-.scroll-section {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-}
-
-/* Hero section base styles */
+/* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, #a8d5d8 0%, #d4e6f1 50%, #f9f9f9 100%);
+    height: 100vh;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-/* Hero 섹션에서 공통 header 활성화 */
-#main-header {
+/* Hero Background */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
-/* Main Hero Section */
-.main-hero-swiper {
-    width: 100%;
-    height: 100vh;
+
+.hero-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
 }
 
-.main-hero-swiper .swiper-slide {
+/* Main Title Section */
+
+.main-content {
+    padding: 0 20px;
+}
+
+.main-title-section {
+    padding: 150px 0 0 0;
+}
+
+/* Facility Introduction Section */
+.facility-intro-section {
+    text-align: center;
+    margin: 80px 0;
+    padding: 0 40px;
+}
+
+.facility-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.facility-label {
+    margin-bottom: 20px;
+}
+
+
+.facility-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Hero Bottom Section - Image 50% + Text 50% */
+.hero-bottom-section {
+    margin: 70px auto;
+    display: flex;
+    max-width: 80%;
     width: 100%;
-    height: 100vh;
+}
+
+.hero-image-half {
+    flex: 1;
+    min-height: 600px;
     position: relative;
 }
 
-/* Navigation Dots */
-.section-dot {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.section-dot:hover {
-    transform: scale(1.2);
-}
-
-.section-dot.active {
-    background-color: white !important;
-    transform: scale(1.3);
-}
-
-/* Scroll Down Indicator */
-@keyframes scrollIndicator {
-    0%, 20% {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    80%, 100% {
-        transform: translateY(10px);
-        opacity: 0;
-    }
-}
-
-.scroll-indicator-dot {
-    animation: scrollIndicator 2s infinite;
-}
-
-/* Section content animations */
-.section-content {
+/* Animation classes for scroll effects */
+.hero-image-half.scroll-animate {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateX(-50px);
     transition: all 0.8s ease;
-    transition-delay: 0.3s;
 }
 
-.section-active .section-content {
+.hero-image-half.scroll-animate.animate {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
-/* Button improvements for main page */
-.service-button {
+.hero-image-half img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
     position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    transition: border-radius 0.8s ease;
 }
 
-.service-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
+/* 모든 hero-image-half 이미지에 12px border-radius */
+.hero-image-half img {
+    border-radius: 12px;
+}
+
+
+.hero-text-half {
+    flex: 1;
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    opacity: 1;
+}
+
+/* Animation classes for scroll effects */
+.hero-text-half.scroll-animate {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease;
+}
+
+.hero-text-half.scroll-animate.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hero-text-content {
+    max-width: 400px;
+}
+
+.hero-sub-title {
+    font-family: var(--font-ko-main);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0 0 1.5rem 0;
+    line-height: 1.3;
+}
+
+.hero-sub-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+}
+
+
+/* Full Width Images - 배너 이미지에 12px border-radius */
+.hero-bottom-section > img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+/* Animation classes for scroll effects - 가운데에서 양옆으로 펼쳐지는 효과 */
+.hero-bottom-section > img.scroll-animate {
+    opacity: 0;
+    transform: scaleX(0) translateY(30px);
+    transform-origin: center center;
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-bottom-section > img.scroll-animate.animate {
+    opacity: 1;
+    transform: scaleX(1) translateY(0);
+}
+
+/* Content Sections */
+.content-section {
+    padding: 80px 0;
+    background: var(--color-primary);
+}
+
+.section-container {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.section-container.reverse {
+    direction: rtl;
+}
+
+.section-container.reverse > * {
+    direction: ltr;
+}
+
+.text-content {
+    padding: 40px 0;
+}
+
+.text-content h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0 0 2rem 0;
+    line-height: 1.3;
+}
+
+.text-description {
+    font-family: var(--font-ko-sub);
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    color: #666;
+    line-height: 1.7;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.image-item {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.image-item img {
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.service-button:hover::before {
-    left: 100%;
+.image-item:hover img {
+    transform: scale(1.05);
 }
 
-/* Heading and body font classes */
-.heading-font {
-    font-family: var(--font-ko-main);
-    font-weight: 400;
-    letter-spacing: -0.5px;
-}
-
-.body-font {
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    letter-spacing: 0.3px;
-}
-
-/* Responsive typography */
-@media (max-width: 768px) {
-    .scroll-section {
-        padding: 0 1rem;
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-content {
+        padding: 60px 30px 30px;
     }
 
-    .heading-font {
-        font-size: 1.8rem !important;
-        line-height: 1.3;
+    .hero-text-half {
+        padding: 40px 30px;
     }
 
-    .body-font {
-        font-size: 1rem !important;
-        line-height: 1.5;
+    .main-title-section {
+        padding: 130px 0 0 0;
     }
 
-    /* Mobile button adjustments */
-    .service-button {
-        min-width: 140px !important;
-        padding: 1rem 2rem !important;
-        font-size: 1rem !important;
+    .facility-intro-section {
+        margin-bottom: 60px;
+        padding: 0 30px;
     }
 
-    /* Mobile navigation dots */
-    .section-dot {
-        width: 12px !important;
-        height: 12px !important;
+    .facility-description {
+        font-size: 1rem;
     }
 
-    /* Hide scroll indicator on mobile */
-    .scroll-indicator {
-        display: none;
+    .section-container {
+        padding: 0 30px;
+        gap: 60px;
     }
 }
 
-/* Floating button styles */
-.fixed.bottom-8.right-8 button {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.fixed.bottom-8.right-8 button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Smooth scroll behavior */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Allow normal scrolling */
-body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin: 0;
+/* Main Content Wrapper - default no padding for desktop */
+.main-content-wrapper {
     padding: 0;
 }
 
+@media (max-width: 768px) {
+    /* Add padding only on mobile */
+    .main-content-wrapper {
+        padding: 0 20px;
+    }
+    .section-container {
+        max-width: 100%;
+    }
+    .hero-section {
+        height: 100vh;
+        min-height: 100vh;
+    }
 
-/* Content fade-in animations */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
+    .hero-bottom-section {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    .hero-image-half {
+        min-height: 300px;
+    }
+
+    .hero-image-half img {
+        height: 300px;
+    }
+
+    .hero-content {
+        padding: 40px 20px 20px;
+    }
+
+    .hero-text-half {
+        padding: 40px 20px;
+    }
+
+    .facility-intro-section {
+        margin-bottom: 60px;
+        padding: 0 20px;
+    }
+
+    .section-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .section-container.reverse {
+        direction: ltr;
+    }
+
+    .image-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .content-section {
+        padding: 60px 0;
+    }
+
+    /* Full width images - inherit margin from parent */
+    .hero-bottom-section > img {
+        margin: 0;
+        width: 100%;
+    }
 }
 
-.fade-in-up.active {
-    opacity: 1;
-    transform: translateY(0);
-}
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 30px 15px 15px;
+    }
 
-/* About section styles moved back to index.css since main page no longer uses it */
+    .hero-text-half {
+        padding: 30px 15px;
+    }
 
-/* Banner Section Empty Placeholder - 배너 영역 placeholder 스타일 */
-.wave-bg-section .empty-image-placeholder::after {
-    width: 96px !important;
-    height: 96px !important;
-    z-index: 20 !important;
+    .facility-intro-section {
+        padding: 0 15px;
+    }
+
+    .section-container {
+        padding: 0 15px;
+        gap: 30px;
+    }
+
+    .content-section {
+        padding: 40px 0;
+    }
+
+    /* Fix gallery-property-english-name mobile font size */
+    .gallery-property-english-name {
+        font-size: 2rem;
+    }
 }
