@@ -1,77 +1,103 @@
-/**
- * Directions Page JavaScript
- */
-
+// Directions page JavaScript
 (function() {
     'use strict';
 
-
-    // Scroll to next section function (no parallax)
-    function scrollToNextSection() {
-        const mapSection = document.querySelector('.map-section');
-
-        if (mapSection) {
-            const targetPosition = mapSection.offsetTop;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-    // Make function globally available
-    window.scrollToNextSection = scrollToNextSection;
-
-    // Dynamic notice section visibility
-    function toggleNoticeSection() {
-        const noticeSection = document.getElementById('directions-notice-section');
-
-        // noticeSection이 없으면 함수 종료
-        if (!noticeSection) return;
-
-        const noticeContent = noticeSection.querySelector('[data-customfield-directions-notice-content]');
-
-        // Check if data exists (not empty or default content)
-        const hasContent = noticeContent && noticeContent.textContent.trim() &&
-                          !noticeContent.textContent.includes('안내사항이 표시됩니다.');
-
-        if (hasContent) {
-            noticeSection.style.display = 'block';
-        } else {
-            noticeSection.style.display = 'none';
-        }
-    }
-
-    // Image animation using IntersectionObserver
-    function initImageAnimation() {
-        const bannerImage = document.querySelector('.directions-banner-image');
-
-        if (!bannerImage) return;
+    // 수동 스크롤 애니메이션 함수
+    function setupManualScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // 뷰포트에 들어오면 'animate' 클래스를 추가하고, 나가면 제거합니다.
-                entry.target.classList.toggle('animate', entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    // common.css의 애니메이션 클래스 사용
+                    if (entry.target.classList.contains('hero-content')) {
+                        entry.target.classList.add('animate-fade-in');
+                    } else if (entry.target.classList.contains('logo-line-container')) {
+                        entry.target.classList.add('animate-slide-up');
+                    } else if (entry.target.classList.contains('map-section')) {
+                        entry.target.classList.add('animate-fade-in');
+                    } else if (entry.target.classList.contains('location-details')) {
+                        entry.target.classList.add('animate-slide-left');
+                    } else if (entry.target.classList.contains('location-note-section')) {
+                        entry.target.classList.add('animate-slide-up');
+                    } else {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+
+                    // .visible 클래스도 추가 (full-banner 등을 위해)
+                    entry.target.classList.add('visible');
+                }
             });
-        }, {
-            threshold: 0.1 // 10% 이상 보일 때 트리거
+        }, observerOptions);
+
+        // 모든 애니메이션 요소 관찰
+        const animateElements = document.querySelectorAll('.animate-element, .animate-hero, .hero-content, .logo-line-container');
+
+        animateElements.forEach(element => {
+            observer.observe(element);
         });
 
-        observer.observe(bannerImage);
+        return observer;
     }
 
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', async function() {
-        // Initialize DirectionsMapper for data mapping
-        if (typeof DirectionsMapper !== 'undefined') {
-            const directionsMapper = new DirectionsMapper();
-            await directionsMapper.initialize(); // initialize()가 자동으로 mapPage() 호출
-        }
+    // DOM ready event
+    document.addEventListener('DOMContentLoaded', function() {
 
-        // Simple initialization - no parallax effects
-        toggleNoticeSection();
-        initImageAnimation();
-        console.log('Directions page loaded');
+        // DirectionsMapper가 데이터를 로드한 후에 애니메이션 초기화
+        setTimeout(function() {
+
+            // Full-banner fade 애니메이션
+            const fullBannerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const fullBanner = document.querySelector('.full-banner');
+            if (fullBanner) {
+                fullBannerObserver.observe(fullBanner);
+            } else {
+            }
+
+            // 수동으로 스크롤 애니메이션 설정
+            setupManualScrollAnimations();
+
+            // Handle typing animation
+            const typingText = document.querySelector('.typing-text');
+            if (typingText) {
+                setTimeout(() => {
+                    typingText.classList.add('typed');
+                }, 2700);
+            }
+
+            // Location note section 애니메이션
+            const locationNoteObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const locationNote = document.querySelector('.location-note-section');
+            if (locationNote) {
+                locationNoteObserver.observe(locationNote);
+            }
+
+        }, 1000); // 더 긴 지연으로 DirectionsMapper가 완전히 로드될 때까지 기다림
     });
 
+    // Global function for reinitializing scroll animations (called by DirectionsMapper)
+    window.setupScrollAnimations = function() {
+        setupManualScrollAnimations();
+    };
+
+    // Global function for initializing location notes (called by DirectionsMapper)
+    window.initializeLocationNotes = function() {
+    };
 })();

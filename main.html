@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="숙소 설명">
   <meta name="keywords" content="SEO 키워드">
-  <title>숙소명 - 소개</title>
+  <title>Main - 템플릿</title>
 
+  <!-- Preload critical resources -->
+  <link rel="preload" href="styles/common.css" as="style">
+  <link rel="preload" href="styles/main.css" as="style">
+
+  <!-- Theme CSS -->
   <link rel="stylesheet" href="styles/theme.css">
   <link rel="stylesheet" href="styles/common.css">
   <link rel="stylesheet" href="styles/main.css">
-
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 숙소소개" />
@@ -23,63 +27,72 @@
   <meta name="twitter:title" content="맥스 한옥 펜션 - 숙소소개" />
   <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
-</head>
+
+    <!-- Font CDN -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/azonix">
+  </head>
 <body>
-  <!-- Include Header -->
-  <div id="header-placeholder"></div>
 
-  <!-- 메인 소개 섹션 히어로 0번째 이미지-->
-  <section class="hero-section">
-    <div class="hero-background">
-      <img src="" alt="메인 배경" data-customfield-main-hero-image-0>
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="hero-content">
-      <div class="hero-text-center">
-        <h1 class="hero-title">ABOUT</h1>
+  <main>
+      <section class="page-hero-section">
+        <!-- CUSTOM FIELD : 메인 소개 섹션 이미지 매핑 1장 -->
+          <div class="hero-background">
+              <img data-main-hero-img>
+          </div>
+          <!-- 페이지 제목 하드코딩 fixed -->
+          <div class="page-title">
+              <span class="property-name-kr" data-main-property-name-kr></span>
+              <h1 class="typing-text" data-text="Prologue" style="--text-length: 8;">Prologue</h1>
+          </div>
+          <!-- Scroll Down Icon -->
+          <div class="scroll-down-icon" onclick="scrollToContent()">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+          </div>
+      </section>
+      <div class="content-wrap scroll-target">
+          <div class="main-container">
+              <div class="text-content">
+                  <div class="logo-line-container">
+                      <!-- 숙소 영문명 매핑 fixed -->
+                      <span class="logo-text-line" data-main-property-name-en></span>
+                      <div class="horizontal-line"></div>
+                  </div>
+                  <!-- custom field : 메인 소개 섹션 타이틀/설명 매핑 -->
+                  <div class="hero-content">
+                      <h2 class="hero-title" data-main-about-title></h2>
+                      <p class="hero-description" data-main-about-description></p>
+                  </div>
+              </div>
+              <!-- custom field : 소개 블록 동적 생성 - 이미지1, 제목, 설명이 한블록-->
+              <div class="about-content" data-main-introduction>
+                  <!-- 동적으로 about-block들이 생성됩니다 -->
+              </div>
+          </div>
+
+          <!-- 숙소 외경이미지 0번째 fixed -->
+          <section class="full-banner" data-main-banner>
+              <!-- 숙소 영문명 매핑 fixed -->
+              <div class="closing-property-name" data-closing-property-name></div>
+          </section>
       </div>
-    </div>
-
-    <!-- Scroll Down Indicator -->
-    <div class="hero-scroll-down" onclick="scrollToNextSection()">
-      <svg class="scroll-arrow" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-      </svg>
-    </div>
-  </section>
-
-  <!-- Main Info Section -->
-  <section class="location-info-section">
-    <!-- Facility Introduction Section -->
-    <div class="facility-intro-section">
-      <div class="facility-intro-content">
-        <div class="facility-label">
-          <span class="facility-number" data-main-title>ABOUT</span>
-        </div>
-        <p class="facility-description" data-main-description>메인 페이지 안내입니다.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 소개섹션 custom-field (동적으로 생성됨) -->
-  <div class="main-content-wrapper">
-    <!-- JavaScript로 동적 생성됨 -->
-  </div>
-
-  <!-- Include ImageWithFallback script -->
-  <script src="js/image-with-fallback.js"></script>
+  </main>
 
   <!-- Common JavaScript -->
   <script src="js/common.js"></script>
 
-  <!-- Preview Handler for Admin Integration -->
-  <script src="js/preview-handler.js"></script>
+  <!-- Include ImageWithFallback script -->
+  <script src="js/image-with-fallback.js"></script>
 
   <!-- Image Helpers -->
   <script src="js/image-helpers.js"></script>
 
-  <!-- Base Data Mapper -->
+  <!-- Base Data Mapper (must load before preview-handler) -->
   <script src="js/data-mapper/core/base-mapper.js"></script>
+
+  <!-- Preview Handler for Admin Integration -->
+  <script src="js/preview-handler.js"></script>
 
   <!-- Main Page Mapper -->
   <script src="js/data-mapper/pages/main-mapper.js"></script>
@@ -90,8 +103,15 @@
   <!-- Header and Footer Loader -->
   <script src="js/header-footer-loader.js"></script>
 
+  <!-- Fullscreen Slider Component (나중에 추가) -->
+  <!-- <script src="js/components/fullscreen-slider.js"></script> -->
+
+  <!-- Scroll Animations -->
+  <script src="js/common/scroll-animations.js"></script>
+
   <!-- Page-specific script -->
   <script type="module" src="js/pages/main.js"></script>
+
 
 </body>
 </html>
