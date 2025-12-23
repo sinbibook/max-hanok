@@ -10,10 +10,8 @@ class HeaderFooterLoader {
         if (this.headerLoaded) return;
 
         try {
-            // GitHub Pages 지원: config.js의 경로 헬퍼 사용
-            const headerPath = window.APP_CONFIG
-                ? window.APP_CONFIG.getResourcePath('common/header.html')
-                : './common/header.html';
+            // 헤더 파일 경로
+            const headerPath = './common/header.html';
             const response = await fetch(headerPath);
             const html = await response.text();
 
@@ -59,15 +57,11 @@ class HeaderFooterLoader {
                 linkElements.forEach(link => {
                     const newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    // GitHub Pages 지원: 상대 경로 변환
-                    const originalHref = link.getAttribute('href');
-                    newLink.href = window.APP_CONFIG && !originalHref.startsWith('http')
-                        ? window.APP_CONFIG.getResourcePath(originalHref)
-                        : originalHref;
+                    newLink.href = link.href;
                     document.head.appendChild(newLink);
                 });
 
-                // Execute HeaderComponent scripts from header.html (dog-friendly specific)
+                // HeaderComponent 스크립트 실행 (dog-friendly 전용)
                 const scripts = doc.querySelectorAll('script');
                 scripts.forEach((script) => {
                     if (script.textContent.trim()) {
@@ -77,21 +71,18 @@ class HeaderFooterLoader {
                     }
                 });
 
-                // Load header-component.js manually AFTER HeaderComponent initialization
-                if (!window.headerComponentLoaded) {
-                    window.headerComponentLoaded = true;
-                    const basePath = './';
+                // Load header.js manually AFTER DOM insertion (only once)
+                if (!window.headerJsLoaded) {
+                    window.headerJsLoaded = true;
                     const headerScript = document.createElement('script');
-                    headerScript.src = basePath + 'js/components/header-component.js';
+                    headerScript.src = './js/common/header.js';
                     headerScript.onload = () => {
-                        // Setup event listeners after header-component.js loads
+                        // Setup event listeners after header.js loads
                         this.setupHeaderEventListeners();
-                        // HeaderComponent already handles mobile menu functionality
-                        // No need to load separate mobile-menu.js
+                        // Load mobile menu script after header is ready
+                        this.loadMobileMenuScript();
                         // Header 매핑을 event listener 설정 후에 실행
-                        setTimeout(() => {
-                            this.applyHeaderFooterMapping();
-                        }, 200);
+                        this.applyHeaderFooterMapping();
                     };
                     document.body.appendChild(headerScript);
                 }
@@ -110,10 +101,8 @@ class HeaderFooterLoader {
         if (this.footerLoaded) return;
 
         try {
-            // GitHub Pages 지원: config.js의 경로 헬퍼 사용
-            const footerPath = window.APP_CONFIG
-                ? window.APP_CONFIG.getResourcePath('common/footer.html')
-                : './common/footer.html';
+            // 푸터 파일 경로
+            const footerPath = './common/footer.html';
             const response = await fetch(footerPath);
             
             if (!response.ok) {
@@ -126,7 +115,6 @@ class HeaderFooterLoader {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             const parsedFooterElement = doc.querySelector('footer');
-            const floatingBookingBtn = doc.querySelector('.fixed'); // Get floating button
             const scrollToTopButton = doc.querySelector('.scroll-to-top');
             const styleElements = doc.querySelectorAll('head style');
             const linkElements = doc.querySelectorAll('head link[rel="stylesheet"]');
@@ -136,11 +124,6 @@ class HeaderFooterLoader {
                 const footerContainer = document.createElement('div');
                 footerContainer.id = 'footer-container';
                 footerContainer.innerHTML = parsedFooterElement.outerHTML;
-
-                // Add floating booking button if it exists
-                if (floatingBookingBtn) {
-                    document.body.appendChild(floatingBookingBtn.cloneNode(true));
-                }
 
                 // Add scroll to top button if it exists
                 if (scrollToTopButton) {
@@ -169,37 +152,25 @@ class HeaderFooterLoader {
                 linkElements.forEach(link => {
                     const newLink = document.createElement('link');
                     newLink.rel = 'stylesheet';
-                    // GitHub Pages 지원: 상대 경로 변환
-                    const originalHref = link.getAttribute('href');
-                    newLink.href = window.APP_CONFIG && !originalHref.startsWith('http')
-                        ? window.APP_CONFIG.getResourcePath(originalHref)
-                        : originalHref;
+                    newLink.href = link.href;
                     document.head.appendChild(newLink);
                 });
-
+                
                 // Ensure proper footer positioning
                 this.ensureFooterPositioning();
 
                 // Load footer.js for scroll to top functionality
                 if (!window.footerJsLoaded) {
                     window.footerJsLoaded = true;
-                    const basePath = './';
                     const footerScript = document.createElement('script');
-                    footerScript.src = basePath + 'js/common/footer.js';
+                    footerScript.src = './js/common/footer.js';
                     footerScript.onload = () => {
-                        // FooterComponent와 매핑이 footer.js에서 자동으로 초기화됨
-
-                        // Footer 로딩 완료 후 매핑 실행
-                        setTimeout(() => {
-                            this.applyHeaderFooterMapping();
-                        }, 300);
+                        // Initialize scroll to top if function exists
+                        if (typeof initScrollToTop === 'function') {
+                            initScrollToTop();
+                        }
                     };
                     document.body.appendChild(footerScript);
-                } else {
-                    // Footer.js가 이미 로드된 경우에도 매핑 실행
-                    setTimeout(() => {
-                        this.applyHeaderFooterMapping();
-                    }, 300);
                 }
 
                 this.footerLoaded = true;
@@ -357,48 +328,13 @@ class HeaderFooterLoader {
     async applyHeaderFooterMapping() {
         // HeaderFooterMapper가 로드되어 있는지 확인
         if (typeof HeaderFooterMapper === 'undefined') {
-            // 잠시 기다린 후 재시도
-            setTimeout(() => this.applyHeaderFooterMapping(), 500);
-            return;
-        }
-
-        // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 매핑 담당
-        if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
             return;
         }
 
         try {
-
-            // JSON 데이터 로드
-            let templateData = null;
-
-            // 1. 페이지별 mapper에서 데이터 가져오기 시도
-            if (window.IndexMapper && window.indexMapper && window.indexMapper.data) {
-                templateData = window.indexMapper.data;
-            } else if (window.MainMapper && window.mainMapper && window.mainMapper.data) {
-                templateData = window.mainMapper.data;
-            } else if (window.RoomMapper && window.roomMapper && window.roomMapper.data) {
-                templateData = window.roomMapper.data;
-            } else {
-                // 2. JSON 파일 직접 로드 (GitHub Pages 경로 지원)
-                const dataPath = window.APP_CONFIG
-                    ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
-                    : './standard-template-data.json';
-                const response = await fetch(dataPath);
-                templateData = await response.json();
-            }
-
-            if (!templateData) {
-                setTimeout(() => this.applyHeaderFooterMapping(), 500);
-                return;
-            }
-
-            // HeaderFooterMapper 인스턴스 생성
+            // HeaderFooterMapper 인스턴스 생성 및 초기화
             const headerFooterMapper = new HeaderFooterMapper();
-
-            // 데이터 설정
-            headerFooterMapper.data = templateData;
-            headerFooterMapper.isDataLoaded = true;
+            await headerFooterMapper.initialize();
 
             // Header와 Footer 매핑 실행
             await headerFooterMapper.mapHeaderFooter();
@@ -410,10 +346,9 @@ class HeaderFooterLoader {
     loadMobileMenuScript() {
         if (!window.mobileMenuJsLoaded) {
             window.mobileMenuJsLoaded = true;
-            const basePath = './';
             const mobileMenuScript = document.createElement('script');
             // Add timestamp to bypass cache
-            mobileMenuScript.src = basePath + 'js/common/mobile-menu.js?v=' + Date.now();
+            mobileMenuScript.src = './js/common/mobile-menu.js?v=' + Date.now();
             mobileMenuScript.onload = () => {
                 if (typeof initMobileMenu === 'function') {
                     initMobileMenu();

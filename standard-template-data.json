@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.63.0",
-    "generatedAt": "2025-12-23T03:12:16.496Z",
-    "templateType": "fullpage_scroll",
+    "version": "1.64.0",
+    "generatedAt": "2025-12-23T03:30:26.609Z",
+    "templateType": "full_banner_slider",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -967,7 +967,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "fullpage_scroll",
+    "templateType": "full_banner_slider",
     "images": [
       {
         "logo": [
@@ -1498,9 +1498,9 @@
         "font": {
           "koSub": {
             "cdn": null,
-            "key": "yeongjuseonbi",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/YEONGJUSeonbiTTF.woff2",
-            "family": "YeongjuSeonbi"
+            "key": "kccsign",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2",
+            "family": "KccSign"
           },
           "enMain": {
             "cdn": "https://fonts.cdnfonts.com/css/bruno-ace-2",
@@ -1515,7 +1515,10 @@
             "family": "JeongseonArirangHon"
           }
         },
-        "color": null
+        "color": {
+          "primary": "#F5F4F1",
+          "secondary": "#C36355"
+        }
       }
     }
   }

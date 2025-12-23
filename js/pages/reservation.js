@@ -1,240 +1,175 @@
 /**
- * Reservation Page Script
+ * Reservation Page Functionality
+ * 예약 페이지 기능 (헤더/푸터 로딩 포함)
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Hero Slider는 ReservationMapper에서 데이터 매핑 후 초기화됨
-    // (슬라이드가 동적으로 생성되므로 여기서 호출하면 빈 슬라이더)
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Load data mapper for content mapping
+    setTimeout(() => {
+        loadDataMapper();
+    }, 100);
 
-    // Initialize animations (정적 요소들에 대해)
-    window.initReservationAnimations();
-
-    // Initialize accordion if needed
-    initAccordion();
-
-    // Initialize scroll control for reservation content
-    initScrollControl();
+    // Initialize realtime reservation button
+    initRealtimeReservationButton();
 });
 
-// 전역 변수로 interval 관리 (중복 호출 방지)
-window._reservationHeroSliderInterval = null;
-
 /**
- * Initialize Hero Slider
- * window에 노출하여 mapper에서 재초기화 가능
+ * Data mapper loader and initializer
  */
-window.initReservationHeroSlider = function initHeroSlider() {
-    const slider = document.querySelector('[data-hero-slider]');
-    if (!slider) return;
-
-    // 기존 interval 클리어 (중복 호출 방지)
-    if (window._reservationHeroSliderInterval) {
-        clearInterval(window._reservationHeroSliderInterval);
-        window._reservationHeroSliderInterval = null;
-    }
-
-    const slides = slider.querySelectorAll('.hero-slide');
-    const currentSlideEl = document.querySelector('[data-current-slide]');
-    const totalSlidesEl = document.querySelector('[data-total-slides]');
-    const progressBar = document.querySelector('[data-hero-progress]');
-    const prevBtn = document.querySelector('.hero-nav-prev');
-    const nextBtn = document.querySelector('.hero-nav-next');
-
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    const slideInterval = 5000; // 5 seconds per slide
-
-    // 슬라이드가 1개 이하면 자동 재생 불필요
-    if (totalSlides <= 1) {
-        if (totalSlidesEl) {
-            totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-        }
-        if (currentSlideEl) {
-            currentSlideEl.textContent = '01';
-        }
+async function loadDataMapper() {
+    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
+    if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
         return;
     }
 
-    // Auto-play slider (전역 변수 사용)
-    let isTransitioning = false;
+    try {
+        const dataPath = window.APP_CONFIG
+            ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
+            : './standard-template-data.json';
+        const response = await fetch(dataPath);
+        const data = await response.json();
 
-    // Update total slides count
-    if (totalSlidesEl) {
-        totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-    }
+        window.dogFriendlyDataMapper = {
+            data: data,
+            isDataLoaded: true
+        };
 
-    // Function to show specific slide
-    function showSlide(index, immediate = false) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
+        // Initialize ReservationMapper
+        if (window.ReservationMapper) {
+            const mapper = new ReservationMapper(data);
+            mapper.mapPage();
 
-        // Update current slide number
-        if (currentSlideEl) {
-            currentSlideEl.textContent = (index + 1).toString().padStart(2, '0');
+            // Open first accordion after data mapping
+            setTimeout(() => {
+                openFirstAccordion();
+            }, 500);
+        } else {
+            // Wait for ReservationMapper to load
+            setTimeout(() => {
+                if (window.ReservationMapper) {
+                    const mapper = new ReservationMapper(data);
+                    mapper.mapPage();
+
+                    // Open first accordion after data mapping
+                    setTimeout(() => {
+                        openFirstAccordion();
+                    }, 500);
+                }
+            }, 1000);
         }
 
-        // Update progress bar - always fill to 100% for current slide
-        if (progressBar) {
-            // Reset to 0 then animate to 100%
-            progressBar.style.transition = 'none';
-            progressBar.style.width = '0%';
-
-            // Start animation immediately or with minimal delay
-            if (immediate) {
-                // For first slide, start immediately
-                setTimeout(() => {
-                    progressBar.style.transition = `width ${slideInterval}ms linear`;
-                    progressBar.style.width = '100%';
-                }, 10);
-            } else {
-                // For subsequent slides
-                progressBar.offsetHeight; // Force reflow
-                progressBar.style.transition = `width ${slideInterval}ms linear`;
-                progressBar.style.width = '100%';
+        // Initialize HeaderFooterMapper after header is loaded
+        setTimeout(() => {
+            if (window.HeaderFooterMapper) {
+                const headerFooterMapper = new window.HeaderFooterMapper();
+                headerFooterMapper.data = data;
+                headerFooterMapper.isDataLoaded = true;
+                headerFooterMapper.mapHeaderFooter();
             }
-        }
+        }, 1500); // Wait for header/footer to be loaded first
+    } catch (error) {
     }
-
-    // Function to go to next slide
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Function to go to previous slide
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Start auto-play
-    function startAutoPlay() {
-        window._reservationHeroSliderInterval = setInterval(() => {
-            if (!isTransitioning) {
-                nextSlide();
-            }
-        }, slideInterval);
-    }
-
-    // Function to reset auto-play
-    function resetAutoPlay() {
-        clearInterval(window._reservationHeroSliderInterval);
-        startAutoPlay();
-    }
-
-    // Navigation button handlers
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._reservationHeroSliderInterval);
-                nextSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._reservationHeroSliderInterval);
-                prevSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    // Pause on hover
-    slider.addEventListener('mouseenter', () => {
-        clearInterval(window._reservationHeroSliderInterval);
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        if (!isTransitioning) {
-            startAutoPlay();
-        }
-    });
-
-    // Initialize first slide with immediate animation and start auto-play
-    showSlide(0, true);
-    startAutoPlay();
 }
 
 /**
- * Initialize animations
- * window에 노출하여 mapper에서 재초기화 가능
+ * Accordion toggle functionality
  */
-window.initReservationAnimations = function initAnimations() {
-    const animatedElements = document.querySelectorAll('.animate-element:not(.animate)');
+function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('.accordion-icon');
+    const isOpen = content.classList.contains('accordion-open');
 
-    if (!animatedElements.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    }, {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
+    // Close all other accordions first
+    const allAccordions = document.querySelectorAll('.accordion-btn');
+    allAccordions.forEach(accordion => {
+        if (accordion !== button) {
+            const otherContent = accordion.nextElementSibling;
+            const otherIcon = accordion.querySelector('.accordion-icon');
+            otherContent.classList.remove('accordion-open');
+            otherContent.style.maxHeight = '0';
+            otherIcon.style.transform = 'rotate(0deg)';
+        }
     });
 
-    animatedElements.forEach(element => {
-        observer.observe(element);
-    });
-}
-
-/**
- * Initialize accordion for reservation info
- */
-function initAccordion() {
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const item = header.parentElement;
-            const isActive = item.classList.contains('active');
-
-            // Close all accordion items
-            document.querySelectorAll('.accordion-item').forEach(accItem => {
-                accItem.classList.remove('active');
-            });
-
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                item.classList.add('active');
-            }
-        });
-    });
-}
-
-/**
- * Initialize scroll control for reservation content area
- */
-function initScrollControl() {
-    // Sticky positioning으로 자연스러운 스크롤 구현
-    // CSS의 sticky가 자연스러운 스크롤을 처리하므로
-    // JavaScript로 복잡한 스크롤 제어는 제거
-
-    // 애니메이션 효과만 추가
-    const imageSection = document.querySelector('.reservation-image-section img');
-    if (imageSection) {
-        // 이미지에 hover 효과와 유사한 스크롤 애니메이션
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.05;
-            if (imageSection) {
-                imageSection.style.transform = `translateY(${rate}px)`;
-            }
-        });
+    // Toggle current accordion
+    if (isOpen) {
+        content.classList.remove('accordion-open');
+        content.style.maxHeight = '0';
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        content.classList.add('accordion-open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        icon.style.transform = 'rotate(45deg)';
     }
+}
+
+/**
+ * Open first accordion after data mapping is complete
+ */
+function openFirstAccordion() {
+    const firstAccordion = document.querySelector('.accordion-btn');
+    if (firstAccordion && typeof toggleAccordion === 'function') {
+        toggleAccordion(firstAccordion);
+    }
+}
+
+/**
+ * Property 데이터 조회 (mapper 또는 JSON에서)
+ * NOTE: 유사한 로직이 js/common/footer.js에도 존재
+ * 수정 시 양쪽 모두 확인 필요
+ */
+async function getPropertyData(fieldName) {
+    try {
+        // 1. 페이지별 mapper에서 데이터 가져오기
+        const mappers = [
+            window.reservationMapper,
+            window.dogFriendlyDataMapper
+        ];
+
+        for (const mapper of mappers) {
+            if (mapper?.data?.property?.[fieldName]) {
+                return mapper.data.property[fieldName];
+            }
+        }
+
+        // 2. JSON 파일 직접 로드
+        const dataPath = window.APP_CONFIG
+            ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
+            : './standard-template-data.json';
+        const response = await fetch(dataPath);
+        const data = await response.json();
+        return data.property?.[fieldName];
+    } catch (error) {
+        console.error(`Error fetching ${fieldName}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Initialize realtime reservation button
+ */
+async function initRealtimeReservationButton() {
+    const realtimeBtn = document.getElementById('realtime-reservation-btn');
+    if (realtimeBtn) {
+        const realtimeBookingId = await getPropertyData('realtimeBookingId');
+        if (realtimeBookingId) {
+            realtimeBtn.addEventListener('click', handleGpensionReservation);
+        } else {
+            // Hide button if no realtimeBookingId exists
+            realtimeBtn.style.display = 'none';
+        }
+    }
+}
+
+/**
+ * Handle Gpension reservation link
+ */
+async function handleGpensionReservation() {
+    const realtimeBookingId = await getPropertyData('realtimeBookingId');
+    if (realtimeBookingId) {
+        const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}`;
+        window.open(reservationUrl, '_blank');
+    }
+    // Note: Button is hidden during initialization if realtimeBookingId doesn't exist
 }
