@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.67.0",
-    "generatedAt": "2025-12-23T07:16:44.587Z",
+    "version": "1.68.0",
+    "generatedAt": "2025-12-23T07:20:10.094Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1496,14 +1496,24 @@
       },
       "theme": {
         "font": {
-          "koSub": null,
-          "enMain": {
-            "cdn": "https://fonts.cdnfonts.com/css/azonix",
-            "key": "azonix",
-            "woff2": null,
-            "family": "Azonix"
+          "koSub": {
+            "cdn": null,
+            "key": "jeongseonariranghon",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/JSArirangHON-RegularA1.woff",
+            "family": "JeongseonArirangHon"
           },
-          "koMain": null
+          "enMain": {
+            "cdn": "https://fonts.cdnfonts.com/css/bruno-ace-2",
+            "key": "brunoace",
+            "woff2": null,
+            "family": "Bruno Ace"
+          },
+          "koMain": {
+            "cdn": null,
+            "key": "jejustonewall",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2",
+            "family": "JejuStoneWall"
+          }
         },
         "color": {
           "primary": "#F3F4F6",
