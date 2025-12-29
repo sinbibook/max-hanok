@@ -228,9 +228,9 @@ class PreviewHandler {
      */
     getDefaultFonts() {
         return {
-            koMain: "'Chosunilbo', sans-serif",
-            koSub: "'Chosunilbo', sans-serif",
-            enMain: "'Continuous', sans-serif"
+            koMain: "'Aritaburi', sans-serif",
+            koSub: "'Aritaburi', sans-serif",
+            enMain: "'Amandine', serif"
         };
     }
 
@@ -239,8 +239,8 @@ class PreviewHandler {
      */
     getDefaultColors() {
         return {
-            primary: '#fff8ef',
-            secondary: '#6c5f51'
+            primary: '#fdfcf4',
+            secondary: '#31423d'
         };
     }
 
@@ -317,9 +317,9 @@ class PreviewHandler {
     applyThemeVariables(theme) {
         const defaultFonts = this.getDefaultFonts();
         const defaultColors = this.getDefaultColors();
+        const fontData = theme.font || theme;
 
         // 폰트 변수 업데이트
-        const fontData = theme.font || theme;
         if (fontData) {
             if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
             if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
@@ -340,6 +340,15 @@ class PreviewHandler {
     }
 
     /**
+     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
+     */
+    handleThemeUpdate(data) {
+        if (!data) return;
+        this.applyThemeVariables(data);
+        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
+    }
+
+    /**
      * 숙소 변경 처리 (다른 숙소 선택)
      */
     async handlePropertyChange(data) {
@@ -351,15 +360,6 @@ class PreviewHandler {
         await this.renderTemplate(this.currentData);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
-    }
-
-    /**
-     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
-     */
-    handleThemeUpdate(data) {
-        if (!data) return;
-        this.applyThemeVariables(data);
-        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
     }
 
     /**
@@ -405,11 +405,19 @@ class PreviewHandler {
         const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
         let newPath = `${basePath}${targetPage}`;
 
+        // 현재 URL의 preview 파라미터 확인
+        const currentParams = new URLSearchParams(window.location.search);
+        const isPreview = currentParams.get('preview');
+
         // room 또는 facility 페이지인 경우 id 쿼리 파라미터 추가
         if (messageData.page === 'room' && messageData.roomId) {
             newPath += `?id=${encodeURIComponent(messageData.roomId)}`;
+            if (isPreview) newPath += `&preview=${isPreview}`;
         } else if (messageData.page === 'facility' && messageData.facilityId) {
             newPath += `?id=${encodeURIComponent(messageData.facilityId)}`;
+            if (isPreview) newPath += `&preview=${isPreview}`;
+        } else if (isPreview) {
+            newPath += `?preview=${isPreview}`;
         }
 
         window.location.href = newPath;
@@ -700,14 +708,14 @@ class PreviewHandler {
                         mapper.mapBasicInfo();
                         break;
                     case 'gallery':
-                        mapper.mapExteriorGallery();
+                        mapper.mapGallerySection();
                         break;
                 }
             }
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapFacilityBasicInfo();
+                mapper.mapBasicInfo();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {

@@ -1,835 +1,485 @@
-/* Top Header Styles */
-.top-header {
+/* ================================
+   Transparent Header
+   ================================ */
+.transparent-header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 80px;
-    z-index: 999;
+    z-index: 10000; /* Higher than menu overlay */
+    background: transparent;
     transition: all 0.3s ease;
-    font-family: var(--font-ko-main);
 }
 
-.top-header-content {
+.transparent-header.scrolled {
+    background: transparent;
+    backdrop-filter: none;
+}
+
+.header-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0 40px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 100%;
-    padding: 20px 0 10px 0;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
 }
 
-.logo-container {
+/* ================================
+   Menu Button (Right)
+   ================================ */
+.menu-toggle {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #fff;
+    border-radius: 0;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
+    transition: all 0.3s ease;
+    z-index: 10001;
+}
+
+.menu-text {
+    color: #fff;
+    font-family: var(--font-ko-main), sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+}
+
+/* When scrolled */
+.transparent-header.scrolled .menu-toggle {
+    background: var(--color-secondary);
+    border-color: var(--color-primary);
+}
+
+.transparent-header.scrolled .menu-text {
+    color: var(--color-primary);
+}
+
+.menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: #fff;
+}
+
+.transparent-header.scrolled .menu-toggle:hover {
+    background: var(--color-secondary);
+    opacity: 0.8;
+    border-color: var(--color-primary);
+}
+
+.menu-toggle.active .menu-text,
+body.menu-open .menu-toggle .menu-text {
+    color: var(--color-primary);
+}
+
+body.menu-open .menu-toggle {
+    background: transparent;
+    border-color: var(--color-primary);
+}
+
+.menu-dynamic-image {
+    border-radius: 20px;
+}
+
+/* ================================
+   Left Logo
+   ================================ */
+.header-logo {
     cursor: pointer;
-    flex: 1;
-    justify-content: center;
-    z-index: 999;
-}
-
-.logo-image {
-    height: 40px;
-    width: auto;
-    display: block;
-}
-
-.logo-text {
-    font-family: var(--font-ko-main);
-    font-size: 30px;
-    font-weight: bold;
-    color: var(--color-secondary);
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-/* 스크롤 시 로고 텍스트 숨김 */
-.top-header.scrolled .logo-text {
-   visibility: hidden;
-}
-
-/* Booking Buttons Container */
-.booking-buttons {
     display: flex;
-    gap: 10px;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
+    align-items: center;
+    padding: 12px;
 }
 
-/* YBS Button Styles */
-.ybs-btn {
-    padding: 10px 15px;
-    background: transparent;
-    color: var(--color-secondary) !important;
-    border: 1px solid var(--color-secondary);
-    border-radius: 0;
-    font-family: var(--font-ko-main);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 16px;
-    text-decoration: none;
-    display: none; /* 기본적으로 숨김 */
+.logo-img {
+    width: 150px;
+    height: auto;
+    /* No filter at top, dark green when scrolled */
+    filter: none;
+    transition: filter 0.3s ease;
+}
+
+/* Logo image changes to dark green when scrolled */
+.transparent-header.scrolled .logo-img {
+    filter: brightness(0) sepia(1) saturate(100%) hue-rotate(120deg) brightness(0.3) contrast(1.2);
+}
+
+/* Logo image changes to rgb(99, 89, 85) when menu is active */
+body.menu-open .transparent-header .logo-img {
+    filter: brightness(0) sepia(1) saturate(100%) hue-rotate(10deg) brightness(0.5) contrast(0.9);
+}
+
+/* YBS button changes when menu is active */
+body.menu-open .ybs-booking-btn {
+    border-color: #333;
+    color: #333;
+}
+
+/* Dark Sections (Gallery & Closing) - Light Header Styles */
+body.dark-section-active .transparent-header .logo-img {
+    filter: brightness(0) invert(1);
+}
+
+body.dark-section-active .menu-toggle .menu-text {
+    color: var(--color-primary);
+}
+
+body.dark-section-active .menu-toggle .hamburger span {
+    background-color: var(--color-primary);
+}
+
+body.dark-section-active .ybs-booking-btn {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* ================================
+   YBS Booking Button
+   ================================ */
+.ybs-booking-btn {
+    display: flex;
     align-items: center;
     gap: 8px;
-    white-space: nowrap;
-    position: relative;
-}
-
-.ybs-btn::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px solid var(--color-secondary);
-    border-radius: 0;
-    transition: border-color 0.3s ease;
-}
-
-.ybs-btn::after {
-    content: '→';
-    font-size: 16px;
-    transition: all 0.3s ease;
-    font-weight: 300;
-}
-
-.ybs-btn:hover {
-    background: var(--color-secondary) !important;
-    color: white !important;
-    border-color: var(--color-secondary);
-    transform: translateX(2px) translateY(-1px);
-}
-
-.ybs-btn:hover::before {
-    border-color: var(--color-secondary);
-}
-
-.ybs-btn:hover::after {
-    transform: translateX(3px);
-}
-
-.ybs-btn.scrolled {
-    background: var(--color-secondary);
-    color: white !important;
-    border: 1px solid var(--color-secondary);
-}
-
-.book-now-btn {
-    position: relative;
-    padding: 10px 15px;
-    z-index: 1000;
-    padding: 10px 15px;
+    padding: 10px 20px;
     background: transparent;
-    color: var(--color-secondary) !important;
-    border: 1px solid var(--color-secondary);
+    border: 1px solid #fff;
     border-radius: 0;
-    font-family: var(--font-ko-main);
-    font-weight: 600;
+    color: #fff;
+    font-family: var(--font-ko-main), sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 16px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
 }
 
-.book-now-btn.scrolled {
-    background: var(--color-secondary);
-    color: white !important;
-    border: 1px solid var(--color-secondary);
+.ybs-booking-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.book-now-btn::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px solid var(--color-secondary);
-    border-radius: 0;
-    transition: border-color 0.3s ease;
+.booking-icon {
+    width: 20px;
+    height: 20px;
 }
 
-.book-now-btn::after {
-    content: '→';
-    font-size: 16px;
-    transition: all 0.3s ease;
-    font-weight: 300;
+.ybs-text {
+    text-transform: uppercase;
 }
 
-.book-now-btn:hover {
-    background: var(--color-secondary) !important;
-    color: white !important;
-    border-color: var(--color-secondary);
-    transform: translateX(2px) translateY(-1px);
-}
-
-.book-now-btn:hover::before {
-    border-color: var(--color-secondary);
-}
-
-.book-now-btn:hover::after {
-    transform: translateX(3px);
-}
-
-/* Side Header Styles */
-.side-header {
+/* ================================
+   Full Screen Menu Overlay
+   ================================ */
+.menu-overlay {
     position: fixed;
     top: 0;
-    left: -100%;
-    width: 60vw;
-    height: 100vh;
-    background: #f5f5f5;
-    box-shadow: 2px 0 30px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    transition: left 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-    font-family: var(--font-ko-main);
-    display: flex;
-    overflow: hidden;
-}
-
-.side-header.expanded {
     left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--color-primary);
+    clip-path: circle(0px at calc(100% - 60px) 40px);
+    transition: clip-path 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 9999;
+    overflow-y: auto;
 }
 
-/* Overlay for when side header is open */
-.side-header-overlay {
+.menu-overlay.active {
+    clip-path: circle(150vmax at calc(100% - 60px) 40px);
+    transition: clip-path 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.menu-overlay-bg {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    z-index: 998;
 }
 
-.side-header-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.side-header-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    background: transparent;
-    padding: 20px 40px 40px 40px;
-    overflow: hidden auto;
-}
-
-.side-content-top {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.side-content-bottom {
-    margin-top: auto;
-}
-
-/* Side Header Top */
-.side-header-top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
-    padding-top: 5px;
-    border-bottom: 1px solid rgba(106, 98, 71, 0.2);
-    position: relative;
-}
-
-.side-logo-container {
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-}
-
-.side-logo-container:hover {
-    opacity: 0.8;
-}
-
-.side-logo-text {
-    font-family: var(--font-ko-main);
-    font-size: 28px;
-    font-weight: bold;
-    color: var(--color-secondary);
-    white-space: normal;
-    line-height: 1.3;
-    text-align: center;
-    word-break: keep-all;
-}
-
-
-.side-menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    margin: 40px 0;
-}
-
-.menu-section {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 0;
-}
-
-.menu-section-title {
-    font-family: var(--font-en-main);
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--color-secondary);
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--color-secondary);
-}
-
-.menu-section-title.expandable {
-    cursor: pointer;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.menu-section-title.expandable::after {
-    content: '▼';
-    position: absolute;
-    right: 0;
-    font-size: 12px;
-    transition: transform 0.3s ease;
-}
-
-.menu-section-title.expandable.active::after {
-    transform: rotate(180deg);
-}
-
-.menu-section-title.expandable:hover {
-    color: var(--color-secondary);
-}
-
-.menu-section-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.menu-section-list li {
-    width: 50%;
-    margin-bottom: 8px;
-}
-
-/* Multi-column layout for more than 4 items */
-.menu-section-list.multi-column {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: calc(4 * 32px); /* 고정 높이 */
-    align-content: flex-start;
-}
-
-.menu-section-list.multi-column li {
-    width: calc(50% - 10px);
-    height: 32px;
-    display: flex;
-    align-items: center;
-}
-
-.menu-section-list a {
-    color: var(--color-secondary);
-    font-size: 16px;
-    font-weight: 400;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    cursor: pointer;
+.menu-overlay-bg.active {
     display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
 }
 
-.menu-section-list a:hover {
-    color: var(--color-secondary);
+/* ================================
+   Menu Close Button
+   ================================ */
+.menu-close-btn {
+    display: none; /* Hide the custom close button */
 }
 
-.side-image-banner {
+/* ================================
+   Menu Content
+   ================================ */
+.menu-overlay-content {
     width: 100%;
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: all 0.3s ease;
+    height: 100%;
     position: relative;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
-.side-image-banner::before {
+/* Split Container */
+.menu-split-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Left Section - Menu */
+.menu-left-section {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+}
+
+/* Right Section - Image */
+.menu-right-section {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 40px 40px 0;
+}
+
+
+/* ================================
+   Menu Grid 2x2
+   ================================ */
+.menu-grid-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 60px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Menu Item */
+.menu-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-item-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.menu-item-title::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-/* Close Button - 데스크탑과 모바일 공통 */
-.side-header .close-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: transparent;
-    border: 1px solid var(--color-secondary);
-    border-radius: 0;
-    width: 45px;
-    height: 45px;
-    color: var(--color-secondary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1002;
-    transition: all 0.3s ease;
-}
-
-.side-header .close-button::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px solid var(--color-secondary);
-    border-radius: 0;
-    transition: border-color 0.3s ease;
-}
-
-.side-header .close-button::after {
-    content: '×';
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 1;
-    color: var(--color-secondary);
-    transition: color 0.3s ease;
-}
-
-.side-header .close-button:hover {
-    background: var(--color-secondary);
-    border-color: var(--color-secondary);
-}
-
-.side-header .close-button:hover::before {
-    border-color: var(--color-secondary);
-}
-
-.side-header .close-button:hover::after {
-    color: white;
-}
-
-
-/* Hamburger Button - Independent of side header */
-.hamburger-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-    background: transparent;
-    border: 1px solid var(--color-secondary);
-    border-radius: 0;
-    z-index: 1001;
-    width: 45px;
-    height: 45px;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.hamburger-button::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px solid var(--color-secondary);
-    border-radius: 0;
-    transition: border-color 0.3s ease;
-}
-
-.hamburger-button:hover {
-    background: var(--color-secondary);
-}
-
-.hamburger-button:hover::before {
-    border-color: var(--color-secondary);
-}
-
-.hamburger-button:hover .toggle-icon span {
-    background: white;
-}
-
-.hamburger-button .toggle-icon {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.hamburger-button .toggle-icon span {
-    position: absolute;
-    width: 18px;
-    height: 2px;
-    background: var(--color-secondary);
-    transition: all 0.3s ease;
     left: 0;
-}
-
-.hamburger-button .toggle-icon span:first-child {
-    top: 3px;
-}
-
-.hamburger-button .toggle-icon span:nth-child(2) {
-    top: 8px;
-}
-
-.hamburger-button .toggle-icon span:last-child {
-    top: 13px;
-}
-
-/* Hamburger button scroll state */
-.hamburger-button.scrolled {
-    background: var(--color-secondary);
-}
-
-.hamburger-button.scrolled .toggle-icon span {
-    background: white;
+    width: 100%;
+    height: 1px;
+    background: #333;
 }
 
 
-
-/* Accordion Content Animation */
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
+.menu-item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.accordion-content.active {
-  max-height: none;
+.menu-item-list li {
+    margin-bottom: 12px;
 }
 
-.accordion-content.active.multi-column {
-   max-height: none;
+.menu-item-list a {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    pointer-events: auto;
+    z-index: 10;
 }
 
-/* Scrollable 클래스가 있어도 스크롤 없이 전체 표시 */
-.accordion-content.active.scrollable {
-    max-height: none;
-    overflow-y: visible;
+.menu-item:hover .menu-item-list a {
+    color: #333;
 }
 
-/* Hide hamburger button when side header is expanded - 데스크탑과 모바일 공통 */
-.side-header.expanded + .hamburger-button {
-    display: none;
+.menu-item-list a:hover {
+    color: #000;
+    transform: translateX(5px);
 }
 
-.hamburger-button.active {
-    display: none;
+
+/* ================================
+   Menu Image Container
+   ================================ */
+.menu-image-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-/* X shape when side header is expanded - Fixed (불필요해진 코드) */
-.side-header.expanded + .hamburger-button .toggle-icon span:first-child,
-.hamburger-button.active .toggle-icon span:first-child {
-    transform: rotate(45deg);
-    top: 8px;
+.menu-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.side-header.expanded + .hamburger-button .toggle-icon span:nth-child(2),
-.hamburger-button.active .toggle-icon span:nth-child(2) {
-    opacity: 0;
+.menu-item:hover ~ .menu-right-section .menu-image-container img {
+    transform: scale(1.05);
 }
 
-.side-header.expanded + .hamburger-button .toggle-icon span:last-child,
-.hamburger-button.active .toggle-icon span:last-child {
-    transform: rotate(-45deg);
-    top: 8px;
-}
-
-/* Responsive Design */
+/* ================================
+   Mobile Responsive
+   ================================ */
+/* ================================
+   Mobile Responsive
+   ================================ */
 @media (max-width: 768px) {
-    .side-header {
-        left: -100%;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
+    /* 모바일에서도 헤더 표시 */
+    .transparent-header {
+        background: transparent !important;
+        display: block !important;
     }
 
-    .side-header.expanded {
-        left: 0;
-        width: 100%;
-    }
-
-    .side-nav {
-        padding: 100px 40px 40px 40px;
-        text-align: center;
-    }
-
-    .nav-list {
-        max-width: 300px;
-        margin: 0 auto;
-    }
-
-    .nav-item-header {
-        font-size: 18px;
-        padding: 20px;
-        border-left: none;
-        border-bottom: 1px solid #eee;
-    }
-
-    .nav-main-item > a {
-        font-size: 18px;
-        padding: 20px;
-        border-left: none;
-        border-bottom: 1px solid #eee;
-    }
-
-    .nav-sub-list a {
-        font-size: 16px;
-        padding: 15px 20px;
-    }
-
-    /* Top Header Mobile */
-    .top-header {
-        height: 85px;
-    }
-
-    .top-header-content {
+    .header-container {
         padding: 0 20px;
-        height: 85px;
+        justify-content: space-between;
+        display: flex !important;
     }
 
-    .logo-text {
-        display: none; /* 모바일에서 숨김 */
-    }
-
-    /* YBS Button - Mobile */
-    .ybs-btn {
-        width: 45px;
-        height: 45px;
-        padding: 0;
-        font-size: 0;
-        display: none; /* 기본적으로 숨김 */
+    .header-logo {
+        display: flex !important;
         align-items: center;
-        justify-content: center;
-        position: fixed !important;
-        top: 20px !important;
-        right: 75px !important;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        user-select: none;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
-        transform: none !important;
-        transition: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
-    .ybs-btn::before {
-        content: '';
-        position: absolute;
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        border: 1px solid var(--color-secondary);
-        border-radius: 0;
-        transition: border-color 0.3s ease;
+    .logo-img {
+        display: block !important;
+        width: 120px !important;
+        height: auto !important;
     }
 
-    .ybs-btn::after {
-        content: 'Y';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--color-secondary);
-        pointer-events: none;
+    .menu-toggle {
+        display: flex !important;
+        width: auto;
+        height: auto;
+        padding: 8px 16px;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
-    .ybs-btn:hover::before,
-    .ybs-btn:active::before {
-        border-color: var(--color-secondary) !important;
+    .menu-text {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
-    .ybs-btn:hover,
-    .ybs-btn:active {
-        background: var(--color-secondary) !important;
-        border-color: var(--color-secondary) !important;
-        transform: none !important;
-        position: fixed !important;
-        top: 20px !important;
-        right: 75px !important;
+    .ybs-booking-btn {
+        padding: 8px 16px;
+        font-size: 0.75rem;
     }
 
-    .ybs-btn:hover::after,
-    .ybs-btn:active::after {
-        color: white !important;
+    .booking-icon {
+        width: 16px;
+        height: 16px;
     }
 
-    .ybs-btn.scrolled {
-        background: var(--color-secondary) !important;
-        border-color: var(--color-secondary) !important;
+    /* 메뉴 오버레이 모바일에서 정상 작동 */
+    .menu-overlay {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
-    .ybs-btn.scrolled::before {
-        border-color: var(--color-secondary) !important;
+    .menu-overlay.active {
+        clip-path: circle(150vmax at calc(100% - 60px) 40px) !important;
     }
 
-    .ybs-btn.scrolled::after {
-        color: white !important;
+    /* Mobile menu layout */
+    .menu-split-container {
+        flex-direction: column;
     }
 
-    .book-now-btn {
-        width: 45px;
-        height: 45px;
-        padding: 0;
-        font-size: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: fixed !important;
-        top: 20px !important;
-        right: 20px !important;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        user-select: none;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
-        transform: none !important;
-        transition: none !important;
-    }
-
-    .book-now-btn:hover,
-    .book-now-btn:active {
-        background: var(--color-secondary) !important;
-        border-color: var(--color-secondary) !important;
-        transform: none !important;
-        position: fixed !important;
-        top: 20px !important;
-        right: 20px !important;
-    }
-
-    .book-now-btn:hover::before,
-    .book-now-btn:active::before {
-        border-color: var(--color-secondary) !important;
-    }
-
-    .book-now-btn:hover::after,
-    .book-now-btn:active::after {
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') !important;
-        transform: translate(-50%, -50%) !important;
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-    }
-
-    .book-now-btn::before {
-        content: '';
-        position: absolute;
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        border: 1px solid var(--color-secondary);
-        border-radius: 0;
-        transition: border-color 0.3s ease;
-    }
-
-    .book-now-btn::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 20px;
-        height: 20px;
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%237a8471" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        pointer-events: none;
-    }
-
-    .book-now-btn:active::after {
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
-    }
-
-    .book-now-btn.scrolled::before {
-        border-color: var(--color-secondary);
-    }
-
-    .book-now-btn.scrolled::after {
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="0" ry="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>');
-    }
-
-    /* Mobile menu section - overflow 처리 */
-    .menu-section {
-        overflow: auto;
-    }
-
-    /* Mobile menu section list - one item per line */
-    .menu-section-list li {
+    .menu-left-section {
         width: 100%;
+        padding: 130px 30px 0 20px;
+    }
+    
+    .menu-right-section {
+        display: none; /* Hide image on mobile */
     }
 
-    .menu-section-list.multi-column li {
-        width: 100%;
-    }
-
-    /* Add margin-bottom to side image banner on mobile */
-    .side-image-banner {
-        margin-bottom: 60px;
-    }
-
-    /* Side logo mobile optimization */
-    .side-logo-text {
-        font-size: clamp(20px, 5vw, 28px);
-        padding: 0 10px;
+    .menu-grid-2x2 {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 30px;
         max-width: 100%;
     }
 
-    /* Mobile optimizations for close button */
-    .side-header .close-button {
-        font-size: 24px;
+    .menu-close-btn {
+        top: 20px;
+        left: 20px;
     }
 
-    /* Hide hamburger button when sidebar is open - 데스크탑과 모바일 공통 */
+    .menu-item-title {
+        font-size: 1.25rem;
+    }
+
+    .menu-item-list a {
+        font-size: 0.9375rem;
+    }
+
+    /* Mobile Bottom Booking Buttons */
+    .mobile-booking-buttons {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        z-index: 1002;
+        display: none;
+    }
+
+    .menu-overlay.active .mobile-booking-buttons {
+        display: flex;
+    }
+
+    .mobile-booking-btn {
+        flex: 1;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid #fff;
+        border-radius: 0;
+        color: #fff;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-booking-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
 }
 
-/* FOUC Prevention */
-.top-header.fouc-hidden,
-.side-header.fouc-hidden {
-    opacity: 0 !important;
+@media (max-width: 480px) {
+    .menu-content-bottom {
+        display: none;
+    }
 }

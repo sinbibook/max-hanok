@@ -49,32 +49,30 @@
             const temp = document.createElement('div');
             temp.innerHTML = html;
 
-            // Find side header and top header directly from temp
-            const sideHeader = temp.querySelector('.side-header');
-            const topHeader = temp.querySelector('.top-header');
+            // Find transparent header and menu overlay from temp
+            const transparentHeader = temp.querySelector('.transparent-header');
+            const menuOverlay = temp.querySelector('.menu-overlay');
+            const menuOverlayBg = temp.querySelector('.menu-overlay-bg');
 
-            // Insert side header first (so it appears before top-header in DOM)
-            if (sideHeader) {
-                document.body.insertBefore(sideHeader, document.body.firstChild);
+            // Insert overlay background first
+            if (menuOverlayBg) {
+                document.body.insertBefore(menuOverlayBg, document.body.firstChild);
             }
 
-            // Insert top header (hamburger-button is already inside)
-            if (topHeader) {
-                document.body.insertBefore(topHeader, document.body.firstChild);
+            // Insert menu overlay
+            if (menuOverlay) {
+                document.body.insertBefore(menuOverlay, document.body.firstChild);
+            }
+
+            // Insert transparent header
+            if (transparentHeader) {
+                document.body.insertBefore(transparentHeader, document.body.firstChild);
             }
 
             // Load header JavaScript
             const script = document.createElement('script');
             script.src = 'js/common/header.js';
             script.onload = function() {
-                // Re-initialize hamburger button after script loads
-                setTimeout(() => {
-                    const hamburgerButton = document.getElementById('hamburger-button');
-                    if (hamburgerButton && window.toggleSideHeader) {
-                        hamburgerButton.addEventListener('click', window.toggleSideHeader);
-                    }
-                }, 100);
-
                 // Mark header as loaded after script is fully loaded
                 headerLoaded = true;
                 tryInitializeMapper();
@@ -83,7 +81,7 @@
 
             // Immediately check scroll position after header is loaded
             if (window.scrollY > 50 || window.pageYOffset > 50) {
-                const header = document.querySelector('.header');
+                const header = document.querySelector('.transparent-header');
                 if (header) {
                     header.classList.add('scrolled');
                 }
@@ -92,6 +90,7 @@
             console.error('Error loading header:', error);
         }
     }
+
 
     // Load Footer
     async function loadFooter() {
@@ -111,6 +110,19 @@
                 const footer = temp.querySelector('.footer');
                 if (footer) {
                     document.body.appendChild(footer);
+
+                    // Update copyright year dynamically
+                    const copyrightElement = footer.querySelector('.footer-copyright p');
+                    if (copyrightElement) {
+                        const currentYear = new Date().getFullYear();
+                        copyrightElement.textContent = `© ${currentYear} All rights reserved.`;
+                    }
+                }
+
+                // Also append floating buttons if they exist
+                const floatingButtons = temp.querySelector('.floating-buttons');
+                if (floatingButtons) {
+                    document.body.appendChild(floatingButtons);
                 }
 
                 // Load footer JavaScript if exists
@@ -127,10 +139,60 @@
         }
     }
 
+    // Load Scroll to Top Button
+    async function loadScrollToTop() {
+        try {
+            const response = await fetch('common/scroll-to-top.html', { cache: 'no-cache' });
+            if (response.ok) {
+                const html = await response.text();
+                const temp = document.createElement('div');
+                temp.innerHTML = html;
+
+                const scrollBtn = temp.querySelector('.scroll-to-top');
+                if (scrollBtn) {
+                    document.body.appendChild(scrollBtn);
+                    initScrollToTop();
+                }
+            }
+        } catch (error) {
+            console.error('Error loading scroll to top button:', error);
+        }
+    }
+
+    // Initialize scroll to top functionality
+    function initScrollToTop() {
+        const scrollBtn = document.getElementById('scrollToTop');
+        if (!scrollBtn) return;
+
+        // Show/hide button based on scroll position
+        function toggleScrollButton() {
+            if (window.scrollY > 100) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        }
+
+        // Initial check
+        toggleScrollButton();
+
+        // Listen for scroll events
+        window.addEventListener('scroll', toggleScrollButton);
+
+        // Scroll to top on click
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
         loadHeader();
         loadFooter();
+        loadScrollToTop();
     });
 
 })();
