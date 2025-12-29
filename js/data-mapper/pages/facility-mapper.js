@@ -61,26 +61,24 @@ class FacilityMapper extends BaseDataMapper {
     }
 
     /**
-     * Fullscreen Slider 매핑 (facility.images 전체 순서대로)
+     * Hero Slider 매핑 (facility.images 전체 순서대로)
      */
-    mapFullscreenSlider() {
+    mapHeroSlider() {
         const facility = this.getCurrentFacility();
         if (!facility) return;
 
-        const sliderInner = this.safeSelect('.fullscreen-slider-inner');
+        const sliderInner = this.safeSelect('[data-hero-slider]');
         if (!sliderInner) return;
 
-        const facilityImages = facility.images || [];
-        const sortedImages = facilityImages
-            .filter(img => img.isSelected)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+        // ImageHelpers로 선택된 이미지 가져오기
+        const selectedImages = ImageHelpers.getSelectedImages(facility.images);
 
         sliderInner.innerHTML = '';
 
-        if (sortedImages.length === 0) {
+        if (selectedImages.length === 0) {
             // 이미지 없을 때 placeholder
             const slide = document.createElement('div');
-            slide.className = 'fullscreen-slide active';
+            slide.className = 'hero-slide active';
             const img = document.createElement('img');
             ImageHelpers.applyPlaceholder(img);
             slide.appendChild(img);
@@ -89,42 +87,83 @@ class FacilityMapper extends BaseDataMapper {
         }
 
         // 슬라이드 생성
-        sortedImages.forEach((image, index) => {
+        selectedImages.forEach((image, index) => {
             const slide = document.createElement('div');
-            slide.className = `fullscreen-slide${index === 0 ? ' active' : ''}`;
+            slide.className = `hero-slide${index === 0 ? ' active' : ''}`;
             const img = document.createElement('img');
             img.src = image.url;
             img.alt = image.description || facility.name;
             img.loading = index === 0 ? 'eager' : 'lazy';
-            img.setAttribute('data-image-fallback', '');
             slide.appendChild(img);
             sliderInner.appendChild(slide);
         });
 
+        // 슬라이더 인디케이터 매핑
+        const totalSlidesEl = this.safeSelect('[data-total-slides]');
+        if (totalSlidesEl) {
+            totalSlidesEl.textContent = selectedImages.length.toString().padStart(2, '0');
+        }
+
         // 슬라이더 재초기화
-        this.reinitializeSlider();
+        if (typeof window.initFacilityHeroSlider === 'function') {
+            window.initFacilityHeroSlider();
+        }
     }
 
     /**
-     * FullscreenSlider 재초기화
+     * 썸네일 이미지 매핑
      */
-    reinitializeSlider() {
-        const sliderContainer = this.safeSelect('.fullscreen-slider-container');
-        if (!sliderContainer || typeof FullscreenSlider !== 'function') {
-            return;
-        }
+    mapThumbnail() {
+        const facility = this.getCurrentFacility();
+        if (!facility) return;
 
-        // 기존 슬라이더 인스턴스 제거
-        if (window.fullscreenSlider) {
-            window.fullscreenSlider = null;
-        }
+        const thumbnailContainer = this.safeSelect('[data-facility-thumbnail]');
+        if (!thumbnailContainer) return;
 
-        // 새로운 슬라이더 인스턴스 생성 (selector string 전달)
-        window.fullscreenSlider = new FullscreenSlider('.fullscreen-slider-container');
+        const img = thumbnailContainer.querySelector('img');
+        if (!img) return;
+
+        const selectedImages = ImageHelpers.getSelectedImages(facility.images);
+        // 첫 번째 이미지를 썸네일로 사용
+        const thumbnailImage = selectedImages[0];
+
+        if (thumbnailImage && thumbnailImage.url) {
+            img.src = thumbnailImage.url;
+            img.alt = thumbnailImage.description || facility.name;
+            img.classList.remove('empty-image-placeholder');
+        } else {
+            ImageHelpers.applyPlaceholder(img);
+        }
     }
 
     /**
-     * 기본 정보 매핑 (시설명, 시설 설명)
+     * 메인 이미지 매핑
+     */
+    mapMainImage() {
+        const facility = this.getCurrentFacility();
+        if (!facility) return;
+
+        const mainImageContainer = this.safeSelect('[data-facility-main-image]');
+        if (!mainImageContainer) return;
+
+        const img = mainImageContainer.querySelector('img');
+        if (!img) return;
+
+        const selectedImages = ImageHelpers.getSelectedImages(facility.images);
+        // 두 번째 이미지를 메인 이미지로 사용 (없으면 첫 번째)
+        const mainImage = selectedImages[1] || selectedImages[0];
+
+        if (mainImage && mainImage.url) {
+            img.src = mainImage.url;
+            img.alt = mainImage.description || facility.name;
+            img.classList.remove('empty-image-placeholder');
+        } else {
+            ImageHelpers.applyPlaceholder(img);
+        }
+    }
+
+    /**
+     * 기본 정보 매핑 (시설명, 시설 설명, 시설 번호)
      */
     mapBasicInfo() {
         const facility = this.getCurrentFacility();
@@ -133,7 +172,7 @@ class FacilityMapper extends BaseDataMapper {
         // 시설명 매핑 (시스템 데이터)
         const facilityTitle = this.safeSelect('[data-facility-title]');
         if (facilityTitle) {
-            facilityTitle.textContent = facility.name;
+            facilityTitle.textContent = facility.name || '시설명';
         }
 
         // 시설 설명 매핑 (CUSTOM FIELD: hero.title)
@@ -141,130 +180,36 @@ class FacilityMapper extends BaseDataMapper {
         if (facilityDescription) {
             const facilityPageData = this.getCurrentFacilityPageData();
             const heroTitle = facilityPageData?.sections?.[0]?.hero?.title;
-            facilityDescription.innerHTML = this._formatTextWithLineBreaks(heroTitle, '시설 히어로 타이틀');
+            facilityDescription.innerHTML = this._formatTextWithLineBreaks(heroTitle, '메인 소개 타이틀');
+        }
+
+        // 시설 번호 매핑 (인덱스 기반)
+        const facilityNumber = this.safeSelect('[data-facility-number]');
+        if (facilityNumber) {
+            const index = this.currentFacilityIndex !== null ? this.currentFacilityIndex + 1 : 1;
+            facilityNumber.textContent = index.toString().padStart(2, '0');
         }
     }
 
     /**
-     * 첫 번째 섹션 이미지 매핑 (슬라이더와 안겹치게)
+     * 시설 상세 설명 매핑
      */
-    mapFirstSectionImage() {
+    mapDetailDescription() {
         const facility = this.getCurrentFacility();
         if (!facility) return;
 
-        const infoImage = this.safeSelect('.facility-info-section .facility-info-left .facility-info-image img');
-        if (!infoImage) return;
+        const descriptionContainer = this.safeSelect('[data-facility-detail-description]');
+        if (!descriptionContainer) return;
 
-        const facilityImages = facility.images || [];
-        const sortedImages = facilityImages
-            .filter(img => img.isSelected)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-        // 슬라이더 첫 두 장과 중복 방지 (3번째 이미지 사용, 없으면 마지막)
-        const nextImage = sortedImages[2] || sortedImages[sortedImages.length - 1];
-
-        if (nextImage) {
-            infoImage.src = nextImage.url;
-            infoImage.alt = nextImage.description || facility.name;
-            infoImage.setAttribute('data-image-fallback', '');
-        } else {
-            ImageHelpers.applyPlaceholder(infoImage);
-        }
-    }
-
-    /**
-     * 이용안내 매핑 (facility.usageGuide만 사용)
-     */
-    mapUsageGuide() {
-        const facility = this.getCurrentFacility();
-        if (!facility) return;
-
-        const usageGuideContainer = this.safeSelect('[data-facility-usage-guide]');
-        if (!usageGuideContainer) return;
-
-        if (facility.usageGuide) {
-            // 시스템 데이터 (facility.usageGuide) - 간단한 개행 처리
-            usageGuideContainer.innerHTML = this._formatTextWithLineBreaks(facility.usageGuide);
-        } else {
-            usageGuideContainer.innerHTML = `<div class="facility-line">${facility.name} 이용 안내가 준비 중입니다.</div>`;
-        }
-    }
-
-    /**
-     * 두 번째 섹션 매핑 (CUSTOM FIELD - 주요특징, 추가정보, 이용혜택)
-     */
-    mapSecondSection() {
-        const facility = this.getCurrentFacility();
-        if (!facility) return;
-
-        const secondSection = this.safeSelect('.facility-info-section-reversed');
-        if (!secondSection) return;
-
+        // CUSTOM FIELD 우선, 없으면 시스템 데이터
         const facilityPageData = this.getCurrentFacilityPageData();
-        const experience = facilityPageData?.sections?.[0]?.experience;
+        const heroDescription = facilityPageData?.sections?.[0]?.hero?.description;
+        const description = heroDescription || facility.description;
 
-        // 섹션 데이터가 없으면 숨김
-        if (!experience || (!experience.features && !experience.additionalInfos && !experience.benefits)) {
-            secondSection.style.display = 'none';
-            return;
-        }
-
-        // 모든 섹션이 디폴트 값인지 체크
-        const isFeaturesDefault = experience.features?.every(f =>
-            f.title === '특징 타이틀' && f.description === '특징 설명'
-        ) ?? true;
-        const isAdditionalInfoDefault = experience.additionalInfos?.every(i =>
-            i.title === '추가정보 타이틀' && i.description === '추가정보 설명'
-        ) ?? true;
-        const isBenefitsDefault = experience.benefits?.every(b =>
-            b.title === '혜택 타이틀' && b.description === '혜택 설명'
-        ) ?? true;
-
-        // 모든 섹션이 디폴트 값이면 전체 섹션 숨김
-        if (isFeaturesDefault && isAdditionalInfoDefault && isBenefitsDefault) {
-            secondSection.style.display = 'none';
-            return;
-        }
-
-        secondSection.style.display = '';
-
-        // 두 번째 섹션 이미지 매핑
-        this.mapSecondSectionImage();
-
-        // 주요특징 매핑
-        this.mapFeatures(experience.features);
-
-        // 추가정보 매핑
-        this.mapAdditionalInfo(experience.additionalInfos);
-
-        // 이용혜택 매핑
-        this.mapBenefits(experience.benefits);
-    }
-
-    /**
-     * 두 번째 섹션 이미지 매핑
-     */
-    mapSecondSectionImage() {
-        const facility = this.getCurrentFacility();
-        if (!facility) return;
-
-        const secondInfoImage = this.safeSelect('.facility-info-section-reversed .facility-info-left .facility-info-image img');
-        if (!secondInfoImage) return;
-
-        const facilityImages = facility.images || [];
-        const sortedImages = facilityImages
-            .filter(img => img.isSelected)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-        // 다른 이미지 (슬라이더 + 1번째 다음 이미지)
-        const secondImage = sortedImages[sortedImages.length >= 2 ? sortedImages.length - 1 : 0];
-
-        if (secondImage) {
-            secondInfoImage.src = secondImage.url;
-            secondInfoImage.alt = secondImage.description || facility.name;
-            secondInfoImage.setAttribute('data-image-fallback', '');
+        if (description) {
+            descriptionContainer.innerHTML = this._formatTextWithLineBreaks(description);
         } else {
-            ImageHelpers.applyPlaceholder(secondInfoImage);
+            descriptionContainer.innerHTML = `<p>${facility.name} 상세 설명이 준비 중입니다.</p>`;
         }
     }
 
@@ -275,8 +220,10 @@ class FacilityMapper extends BaseDataMapper {
         const featuresContainer = this.safeSelect('[data-facility-features]');
         if (!featuresContainer) return;
 
+        const cardElement = featuresContainer.closest('.facility-info-card');
+
         if (!features || !Array.isArray(features) || features.length === 0) {
-            featuresContainer.closest('.facility-detail-section')?.remove();
+            if (cardElement) cardElement.style.display = 'none';
             return;
         }
 
@@ -286,28 +233,22 @@ class FacilityMapper extends BaseDataMapper {
         );
 
         if (isAllDefault) {
-            featuresContainer.closest('.facility-detail-section')?.remove();
+            if (cardElement) cardElement.style.display = 'none';
             return;
         }
 
-        featuresContainer.innerHTML = '';
+        if (cardElement) cardElement.style.display = '';
 
+        // ul 리스트로 생성
+        const ul = document.createElement('ul');
         features.forEach(feature => {
-            const featureItem = document.createElement('div');
-            featureItem.className = 'facility-feature-item';
-
-            const titleDiv = document.createElement('div');
-            titleDiv.className = 'feature-title';
-            titleDiv.innerHTML = this._formatTextWithLineBreaks(feature.title || '');
-
-            const descDiv = document.createElement('div');
-            descDiv.className = 'feature-description';
-            descDiv.innerHTML = this._formatTextWithLineBreaks(feature.description || '');
-
-            featureItem.appendChild(titleDiv);
-            featureItem.appendChild(descDiv);
-            featuresContainer.appendChild(featureItem);
+            const li = document.createElement('li');
+            li.textContent = feature.title || feature.description || '';
+            ul.appendChild(li);
         });
+
+        featuresContainer.innerHTML = '';
+        featuresContainer.appendChild(ul);
     }
 
     /**
@@ -317,8 +258,10 @@ class FacilityMapper extends BaseDataMapper {
         const additionalInfoContainer = this.safeSelect('[data-facility-additional-info]');
         if (!additionalInfoContainer) return;
 
+        const cardElement = additionalInfoContainer.closest('.facility-info-card');
+
         if (!additionalInfo || !Array.isArray(additionalInfo) || additionalInfo.length === 0) {
-            additionalInfoContainer.closest('.facility-detail-section')?.remove();
+            if (cardElement) cardElement.style.display = 'none';
             return;
         }
 
@@ -328,28 +271,22 @@ class FacilityMapper extends BaseDataMapper {
         );
 
         if (isAllDefault) {
-            additionalInfoContainer.closest('.facility-detail-section')?.remove();
+            if (cardElement) cardElement.style.display = 'none';
             return;
         }
 
-        additionalInfoContainer.innerHTML = '';
+        if (cardElement) cardElement.style.display = '';
 
+        // ul 리스트로 생성
+        const ul = document.createElement('ul');
         additionalInfo.forEach(info => {
-            const infoItem = document.createElement('div');
-            infoItem.className = 'facility-additional-info-item';
-
-            const titleDiv = document.createElement('div');
-            titleDiv.className = 'additional-info-title';
-            titleDiv.innerHTML = this._formatTextWithLineBreaks(info.title || '');
-
-            const descDiv = document.createElement('div');
-            descDiv.className = 'additional-info-description';
-            descDiv.innerHTML = this._formatTextWithLineBreaks(info.description || '');
-
-            infoItem.appendChild(titleDiv);
-            infoItem.appendChild(descDiv);
-            additionalInfoContainer.appendChild(infoItem);
+            const li = document.createElement('li');
+            li.textContent = info.title || info.description || '';
+            ul.appendChild(li);
         });
+
+        additionalInfoContainer.innerHTML = '';
+        additionalInfoContainer.appendChild(ul);
     }
 
     /**
@@ -359,8 +296,10 @@ class FacilityMapper extends BaseDataMapper {
         const benefitsContainer = this.safeSelect('[data-facility-benefits]');
         if (!benefitsContainer) return;
 
+        const cardElement = benefitsContainer.closest('.facility-info-card');
+
         if (!benefits || !Array.isArray(benefits) || benefits.length === 0) {
-            benefitsContainer.closest('.facility-detail-section')?.remove();
+            if (cardElement) cardElement.style.display = 'none';
             return;
         }
 
@@ -370,35 +309,29 @@ class FacilityMapper extends BaseDataMapper {
         );
 
         if (isAllDefault) {
-            benefitsContainer.closest('.facility-detail-section')?.remove();
+            if (cardElement) cardElement.style.display = 'none';
             return;
         }
 
-        benefitsContainer.innerHTML = '';
+        if (cardElement) cardElement.style.display = '';
 
+        // ul 리스트로 생성
+        const ul = document.createElement('ul');
         benefits.forEach(benefit => {
-            const benefitItem = document.createElement('div');
-            benefitItem.className = 'facility-benefit-item';
-
-            const titleDiv = document.createElement('div');
-            titleDiv.className = 'benefit-title';
-            titleDiv.innerHTML = this._formatTextWithLineBreaks(benefit.title || '');
-
-            const descDiv = document.createElement('div');
-            descDiv.className = 'benefit-description';
-            descDiv.innerHTML = this._formatTextWithLineBreaks(benefit.description || '');
-
-            benefitItem.appendChild(titleDiv);
-            benefitItem.appendChild(descDiv);
-            benefitsContainer.appendChild(benefitItem);
+            const li = document.createElement('li');
+            li.textContent = benefit.title || benefit.description || '';
+            ul.appendChild(li);
         });
+
+        benefitsContainer.innerHTML = '';
+        benefitsContainer.appendChild(ul);
     }
 
     /**
      * Marquee 매핑 (property.nameEn)
      */
     mapMarquee() {
-        const marqueeContainer = this.safeSelect('.marquee-text');
+        const marqueeContainer = this.safeSelect('[data-marquee-property-name]');
         if (!marqueeContainer) return;
 
         const propertyNameEn = this.data.property?.nameEn || 'Property Name';
@@ -412,111 +345,70 @@ class FacilityMapper extends BaseDataMapper {
     }
 
     /**
-     * Banner 매핑 (property exterior 이미지 1번째)
-     */
-    mapBanner() {
-        const bannerSection = this.safeSelect('.full-banner');
-        if (!bannerSection) return;
-
-        const propertyImages = this.data.property?.images;
-        if (!Array.isArray(propertyImages) || propertyImages.length === 0) {
-            bannerSection.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
-            bannerSection.style.backgroundSize = 'cover';
-            bannerSection.style.backgroundPosition = 'center';
-            bannerSection.style.backgroundRepeat = 'no-repeat';
-            return;
-        }
-
-        // exterior 이미지 찾기
-        let exteriorImages = [];
-        for (const imageGroup of propertyImages) {
-            if (imageGroup.exterior && Array.isArray(imageGroup.exterior)) {
-                exteriorImages = imageGroup.exterior;
-                break;
-            }
-        }
-
-        const sortedExterior = exteriorImages
-            .filter(img => img.isSelected)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-        const firstExterior = sortedExterior[0];
-
-        if (firstExterior) {
-            bannerSection.style.backgroundImage = `url('${firstExterior.url}')`;
-            bannerSection.style.backgroundSize = 'cover';
-            bannerSection.style.backgroundPosition = 'center';
-            bannerSection.style.backgroundRepeat = 'no-repeat';
-        } else {
-            bannerSection.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
-            bannerSection.style.backgroundSize = 'cover';
-            bannerSection.style.backgroundPosition = 'center';
-            bannerSection.style.backgroundRepeat = 'no-repeat';
-        }
-    }
-
-    /**
-     * 갤러리 매핑 (facility.images 4장 fix)
+     * 갤러리 매핑 (facility.images 4장 동적 생성)
      */
     mapGallery() {
         const facility = this.getCurrentFacility();
         if (!facility) return;
 
-        const galleryContainer = this.safeSelect('.facility-gallery-container');
+        const galleryContainer = this.safeSelect('[data-facility-gallery]');
         if (!galleryContainer) return;
 
-        const facilityImages = facility.images || [];
-        const sortedImages = facilityImages
-            .filter(img => img.isSelected)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+        // ImageHelpers로 선택된 이미지 가져오기
+        const selectedImages = ImageHelpers.getSelectedImages(facility.images);
 
-        // 기존 gallery-item들을 찾아서 사용 (HTML 구조 유지)
-        const galleryItems = galleryContainer.querySelectorAll('.gallery-item');
+        // 갤러리 컨테이너 초기화
+        galleryContainer.innerHTML = '';
 
-        if (sortedImages.length === 0) {
-            // 이미지가 없으면 모든 gallery-item에 placeholder 적용
-            galleryItems.forEach(item => {
-                const img = item.querySelector('.gallery-item-image img');
-                const title = item.querySelector('.gallery-item-title');
+        // 갤러리용 이미지 (2번째 인덱스부터 4장, Hero/Thumbnail/Main에서 사용하므로)
+        const galleryImages = selectedImages.slice(2, 6);
 
-                if (img) {
-                    ImageHelpers.applyPlaceholder(img);
-                }
-                if (title) {
-                    title.textContent = '이미지 설명';
-                }
-            });
+        if (galleryImages.length === 0) {
+            // 이미지가 없으면 placeholder 4개 생성
+            for (let i = 0; i < 4; i++) {
+                const item = this._createGalleryItem(null, facility.name);
+                galleryContainer.appendChild(item);
+            }
             return;
         }
 
-        // 이미지가 있으면 각 gallery-item에 매핑
-        const galleryImages = sortedImages.slice(0, 4);
-
-        galleryItems.forEach((item, index) => {
-            const img = item.querySelector('.gallery-item-image img');
-            const title = item.querySelector('.gallery-item-title');
-
-            if (galleryImages[index]) {
-                const image = galleryImages[index];
-                if (img) {
-                    img.src = image.url;
-                    img.alt = image.description || facility.name;
-                    img.setAttribute('data-image-fallback', '');
-                    img.classList.remove('empty-image-placeholder');
-                }
-                if (title) {
-                    title.textContent = this.sanitizeText(image.description, '이미지 설명');
-                }
-            } else {
-                // 이미지가 부족하면 placeholder
-                if (img) {
-                    ImageHelpers.applyPlaceholder(img);
-                }
-                if (title) {
-                    title.textContent = '이미지 설명';
-                }
-            }
+        // 갤러리 아이템 생성
+        galleryImages.forEach(image => {
+            const item = this._createGalleryItem(image, facility.name);
+            galleryContainer.appendChild(item);
         });
+
+        // 이미지가 4장 미만이면 placeholder로 채움
+        for (let i = galleryImages.length; i < 4; i++) {
+            const item = this._createGalleryItem(null, facility.name);
+            galleryContainer.appendChild(item);
+        }
+    }
+
+    /**
+     * 갤러리 아이템 생성 헬퍼
+     */
+    _createGalleryItem(image, facilityName) {
+        const item = document.createElement('div');
+        item.className = 'gallery-item animate-element';
+
+        const title = document.createElement('h3');
+        title.className = 'gallery-item-title';
+        title.textContent = image ? this.sanitizeText(image.description, '이미지 설명') : '이미지 설명';
+
+        const img = document.createElement('img');
+        if (image && image.url) {
+            img.src = image.url;
+            img.alt = image.description || facilityName;
+            img.classList.remove('empty-image-placeholder');
+        } else {
+            ImageHelpers.applyPlaceholder(img);
+        }
+
+        item.appendChild(title);
+        item.appendChild(img);
+
+        return item;
     }
 
     // ============================================================================
@@ -539,14 +431,14 @@ class FacilityMapper extends BaseDataMapper {
         }
 
         // 순차적으로 각 섹션 매핑
-        this.mapFullscreenSlider();     // Fullscreen slider
+        this.mapHeroSlider();           // Hero slider
+        this.mapThumbnail();            // 썸네일 이미지
         this.mapBasicInfo();            // 시설명, 시설 설명
-        this.mapFirstSectionImage();    // 첫 번째 섹션 이미지
-        this.mapUsageGuide();           // 이용안내
-        this.mapSecondSection();        // 두 번째 섹션 (CUSTOM FIELD)
-        this.mapMarquee();              // Marquee
-        this.mapBanner();               // Banner
+        this.mapMainImage();            // 메인 이미지
+        this.mapDetailDescription();    // 시설 상세 설명
+        this.mapInfoCards();            // 주요특징, 추가정보, 이용혜택
         this.mapGallery();              // Gallery
+        this.mapMarquee();              // Marquee
 
         // 메타 태그 업데이트 (페이지별 SEO 적용)
         const property = this.data.property;
@@ -558,6 +450,31 @@ class FacilityMapper extends BaseDataMapper {
 
         // E-commerce registration 매핑
         this.mapEcommerceRegistration();
+
+        // 애니메이션 재초기화
+        if (typeof window.initFacilityAnimations === 'function') {
+            window.initFacilityAnimations();
+        }
+    }
+
+    /**
+     * 정보 카드 매핑 (주요특징, 추가정보, 이용혜택)
+     */
+    mapInfoCards() {
+        const facility = this.getCurrentFacility();
+        if (!facility) return;
+
+        const facilityPageData = this.getCurrentFacilityPageData();
+        const experience = facilityPageData?.sections?.[0]?.experience;
+
+        // 주요특징 매핑
+        this.mapFeatures(experience?.features);
+
+        // 추가정보 매핑
+        this.mapAdditionalInfo(experience?.additionalInfos);
+
+        // 이용혜택 매핑
+        this.mapBenefits(experience?.benefits);
     }
 }
 

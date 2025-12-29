@@ -80,7 +80,7 @@
 }
 
 .fullscreen-slider-title {
-    font-family: var(--font-en-main);
+    font-family: 'Continuous', serif;
     font-size: 4rem;
     font-weight: 300;
     margin-bottom: 20px;
@@ -95,7 +95,7 @@
 }
 
 .fullscreen-slider-description {
-    font-family: var(--font-ko-sub);
+    font-family: var(--font-ko-main), serif;
     font-size: 1.2rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.9);
@@ -117,7 +117,7 @@
     padding: 10px 20px;
     border-radius: 25px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    font-family: var(--font-ko-main);
+    font-family: var(--font-ko-main), serif;
     font-size: 14px;
     font-weight: 500;
 }

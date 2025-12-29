@@ -1,189 +1,175 @@
-/* Directions Page Styles */
+/* ================================
+   Directions Page Styles
+   ================================ */
 
-/* Location Details in About Section */
-.location-details {
-    margin: 40px 0;
+/* Location Section */
+.location-section {
+    padding: 80px 20px 150px 20px;
+    background: var(--color-primary);
     text-align: center;
+    position: relative;
 }
 
-.location-title {
-    font-family: var(--font-ko-main);
-    font-size: 1.3rem;
-    font-weight: bold;
+.location-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:70%;
+    height: 50%;
+    background-image: url('../images/shadow3.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.location-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-title {
+    font-size: 2rem;
+    font-weight: 700;
     color: var(--color-secondary);
-    margin: 0 0 15px 0;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+}
+
+.about-title.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 숙소명 span 스타일 - 동일한 스타일 유지 */
+.about-title span[data-property-name] {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+.location-details {
+    margin: 70px 0 30px;
 }
 
 .location-address-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
 }
 
 .location-icon {
-    width: 20px;
-    height: 20px;
-    stroke: var(--color-secondary);
-    fill: none;
-    stroke-width: 2;
-    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    fill: var(--color-secondary);
 }
 
 .location-address {
-    font-family: var(--font-ko-main);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333;
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--color-secondary);
     margin: 0;
-    line-height: 1.4;
 }
 
 .location-note {
-    margin: 0 auto;
-    padding: 25px;
-    background: rgba(106, 98, 71, 0.05);
-    border: 1px solid var(--color-secondary);
+    margin-top: 30px;
+    padding: 30px;
+    background: rgba(49, 66, 61, 0.05);
     border-radius: 8px;
-    display: block;
-    text-align: left;
-    width: 100%;
-    max-width: 700px;
 }
 
-.note-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 15px;
-    font-family: var(--font-ko-sub);
+.location-note p {
     font-size: 1rem;
     color: #666;
-    line-height: 1.4;
+    line-height: 1.8;
+    margin: 10px 0;
 }
 
-.note-item:last-child {
+.location-note p:first-child {
+    margin-top: 0;
+}
+
+.location-note p:last-child {
     margin-bottom: 0;
 }
 
-.note-icon {
-    width: 18px;
-    height: 18px;
-    stroke: var(--color-secondary);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-/* Animation for Location Details */
-.location-details.animate-element {
-    transform: translateY(30px);
-    transition-delay: 0.4s;
-}
-
-.location-details.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.location-address-wrapper.animate-element {
-    transform: translateX(-30px);
-    transition-delay: 0.6s;
-}
-
-.location-address-wrapper.animate-element.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.location-note.animate-element {
-    transform: translateY(30px);
-    transition-delay: 0.8s;
-}
-
-.location-note.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.note-item.animate-element {
-    transform: translateX(30px);
-}
-
-.note-item.animate-element.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
 /* Map Section */
-.map-section {
-    padding: 0 0 80px 0;
+.map-wrapper {
+    margin-top: 60px;
+    padding: 40px 0;
 }
 
-
-/* Map Container */
 .map-container {
     width: 100%;
     height: 500px;
-    border-radius: 15px;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e8e6e0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #kakao-map {
     width: 100%;
     height: 100%;
+    background: #f5f5f5;
 }
 
-/* Animation Styles for Directions */
-.map-section.animate-element {
-    transform: translateY(50px);
+/* Animation Classes */
+.location-details,
+.location-note,
+.map-wrapper {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+}
+
+.location-details.animate {
+    opacity: 1;
+    transform: translateY(0);
     transition-delay: 0.2s;
 }
 
-.map-section.animate-element.animate {
+.location-note.animate {
     opacity: 1;
     transform: translateY(0);
+    transition-delay: 0.4s;
 }
 
-
-.map-container.animate-element {
-    transform: translateY(30px);
+.map-wrapper.animate {
+    opacity: 1;
+    transform: translateY(0);
     transition-delay: 0.6s;
 }
 
-.map-container.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Responsive Design */
+/* Mobile Responsive */
 @media (max-width: 768px) {
-    .map-section {
-        padding: 0 0 50px 0;
+    .location-section {
+        padding: 60px 20px;
     }
 
-    .location-details {
-        margin-top: 30px;
+    .location-section::before {
+        width: 100%;
+        height: 28%;
+    }
+
+    .about-title {
+        font-size: 1.7rem;
+        margin-bottom: 30px;
     }
 
     .location-address-wrapper {
-        gap: 8px;
-        margin-bottom: 15px;
-    }
-
-    .location-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    .location-title {
-        font-size: 1.2rem;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .location-address {
@@ -192,71 +178,25 @@
 
     .location-note {
         padding: 20px;
-        max-width: 90%;
-        margin: 0 auto;
     }
 
-    .note-item {
-        font-size: 0.95rem;
-        gap: 10px;
-        margin-bottom: 12px;
+    .location-note p {
+        font-size: 0.9rem;
     }
 
-    .note-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .map-container {
-        height: 400px;
-        border-radius: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .map-section {
-        padding: 0 0 40px 0;
-    }
-
-    .location-details {
-        margin-top: 25px;
-    }
-
-    .location-address-wrapper {
-        gap: 6px;
-        margin-bottom: 12px;
-    }
-
-    .location-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .location-title {
-        font-size: 1.1rem;
-    }
-
-    .location-address {
-        font-size: 0.95rem;
-    }
-
-    .location-note {
-        padding: 15px;
-    }
-
-    .note-item {
-        font-size: 0.85rem;
-        gap: 8px;
-        margin-bottom: 10px;
-    }
-
-    .note-icon {
-        width: 14px;
-        height: 14px;
+    .map-wrapper {
+        margin-top: 40px;
+        padding: 20px 0;
     }
 
     .map-container {
         height: 350px;
-        border-radius: 10px;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1600px) {
+    .location-content {
+        max-width: 1400px;
     }
 }
