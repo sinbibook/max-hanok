@@ -1,1 +1,2 @@
-# template-gallery-sidebar-beige Template
+# template-full-banner-image
+

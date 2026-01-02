@@ -13,30 +13,7 @@ class PreviewHandler {
         this.adminDataReceived = false;  // 어드민 데이터 수신 여부
         this.fallbackTimeout = null;     // 백업 타이머
         this.parentOrigin = null;         // 신뢰할 수 있는 부모 창 origin
-        this._baseMapper = null;          // Lazy initialization
         this.init();
-    }
-
-    /**
-     * BaseDataMapper 인스턴스 가져오기 (Lazy initialization)
-     */
-    get baseMapper() {
-        if (!this._baseMapper && window.BaseDataMapper) {
-            this._baseMapper = new BaseDataMapper();
-        }
-        return this._baseMapper;
-    }
-
-    /**
-     * API 데이터를 카멜 케이스로 변환 (중복 변환 방지)
-     */
-    convertData(data) {
-        // BaseDataMapper가 없으면 원본 그대로 반환 (fallback)
-        if (!this.baseMapper) {
-            console.warn('BaseDataMapper not loaded, returning original data');
-            return data;
-        }
-        return this.baseMapper.convertToCamelCase(data);
     }
 
     init() {
@@ -48,12 +25,12 @@ class PreviewHandler {
         // 부모 창에 준비 완료 신호 전송
         this.notifyReady();
 
-        // 어드민 데이터 대기 (1초 후 fallback)
+        // 어드민 데이터 대기 (2초 후 fallback)
         this.fallbackTimeout = setTimeout(() => {
             if (!this.adminDataReceived) {
                 this.loadFallbackData();
             }
-        }, 1000);
+        }, 2000);
 
     }
 
@@ -156,9 +133,8 @@ class PreviewHandler {
     /**
      * 초기 데이터 처리 (숙소 선택 + 템플릿 초기 설정)
      */
-    async handleInitialData(data) {
-        // API 데이터를 카멜 케이스로 변환해서 저장
-        this.currentData = this.convertData(data);
+    handleInitialData(data) {
+        this.currentData = data;
         this.isInitialized = true;
         this.adminDataReceived = true;  // 어드민 데이터 수신됨
 
@@ -168,8 +144,10 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
-        // 전체 템플릿 렌더링 (완료 대기) - 이미 변환된 데이터 사용
-        await this.renderTemplate(this.currentData);
+        // 디버그 정보 업데이트
+
+        // 전체 템플릿 렌더링
+        this.renderTemplate(data);
 
         // 부모 창에 렌더링 완료 신호
         this.notifyRenderComplete('INITIAL_RENDER_COMPLETE');
@@ -178,7 +156,7 @@ class PreviewHandler {
     /**
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
-    async handleTemplateUpdate(data) {
+    handleTemplateUpdate(data) {
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -196,31 +174,30 @@ class PreviewHandler {
 
         // 초기화되지 않은 경우 초기 데이터로 처리
         if (!this.isInitialized) {
-            await this.handleInitialData(data);
+            this.handleInitialData(data);
             return;
         }
 
-        // 새로 들어온 데이터를 카멜 케이스로 변환
-        const convertedData = this.convertData(data);
+        // 디버그 정보 업데이트
 
         // 기존 데이터와 병합
-        if (convertedData.rooms && Array.isArray(convertedData.rooms)) {
+        if (data.rooms && Array.isArray(data.rooms)) {
             this.currentData = {
                 ...this.currentData,
-                rooms: [...convertedData.rooms]  // 완전히 새로운 배열로 교체
+                rooms: [...data.rooms]  // 완전히 새로운 배열로 교체
             };
 
             // 나머지 데이터는 병합
-            const dataWithoutRooms = { ...convertedData };
+            const dataWithoutRooms = { ...data };
             delete dataWithoutRooms.rooms;
             this.currentData = this.mergeData(this.currentData, dataWithoutRooms);
         } else {
             // 기존 데이터와 병합
-            this.currentData = this.mergeData(this.currentData, convertedData);
+            this.currentData = this.mergeData(this.currentData, data);
         }
 
-        // 전체 페이지 다시 렌더링 (완료 대기)
-        await this.renderTemplate(this.currentData);
+        // 전체 페이지 다시 렌더링 (폴백)
+        this.renderTemplate(this.currentData);
 
         // 팝업 데이터가 있으면 팝업도 업데이트
         const popupData = data?.homepage?.customFields?.popup;
@@ -233,13 +210,28 @@ class PreviewHandler {
     }
 
     /**
+     * 숙소 변경 처리 (다른 숙소 선택)
+     */
+    handlePropertyChange(data) {
+        this.currentData = data;
+        this.isInitialized = true;
+
+        // 디버그 정보 업데이트
+
+        // 전체 다시 렌더링
+        this.renderTemplate(data);
+
+        this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
+    }
+
+    /**
      * 기본 폰트 fallback 값 (theme.css 기본값과 동일)
      */
     getDefaultFonts() {
         return {
-            koMain: "'Chosunilbo', sans-serif",
-            koSub: "'Chosunilbo', sans-serif",
-            enMain: "'Continuous', sans-serif"
+            koMain: "'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif",
+            koSub: "'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif",
+            enMain: "'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif"
         };
     }
 
@@ -248,8 +240,8 @@ class PreviewHandler {
      */
     getDefaultColors() {
         return {
-            primary: '#fff8ef',
-            secondary: '#6c5f51'
+            primary: '#fafaf9',
+            secondary: '#78716c'
         };
     }
 
@@ -270,20 +262,23 @@ class PreviewHandler {
     }
 
     /**
-     * woff2 URL로 폰트 로드 (@font-face)
+     * woff/woff2 URL로 폰트 로드 (@font-face)
      */
-    loadFontFromWoff2(key, family, woff2Url) {
-        if (!woff2Url || !family) return;
+    loadFontFromWoff2(key, family, fontUrl) {
+        if (!fontUrl || !family) return;
 
         const styleId = `font-woff2-${key}`;
         if (document.getElementById(styleId)) return;
+
+        // URL에서 format 자동 감지
+        const format = fontUrl.endsWith('.woff2') ? 'woff2' : 'woff';
 
         const style = document.createElement('style');
         style.id = styleId;
         style.textContent = `
 @font-face {
     font-family: '${family}';
-    src: url('${woff2Url}') format('woff2');
+    src: url('${fontUrl}') format('${format}');
     font-weight: 400;
     font-display: swap;
 }`;
@@ -317,7 +312,8 @@ class PreviewHandler {
      */
     applyColor(colorValue, cssVar, defaultValue) {
         const root = document.documentElement;
-        root.style.setProperty(cssVar, colorValue || defaultValue);
+        const value = colorValue || defaultValue;
+        root.style.setProperty(cssVar, value);
     }
 
     /**
@@ -326,9 +322,9 @@ class PreviewHandler {
     applyThemeVariables(theme) {
         const defaultFonts = this.getDefaultFonts();
         const defaultColors = this.getDefaultColors();
+        const fontData = theme.font || theme;
 
         // 폰트 변수 업데이트
-        const fontData = theme.font || theme;
         if (fontData) {
             if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
             if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
@@ -349,20 +345,6 @@ class PreviewHandler {
     }
 
     /**
-     * 숙소 변경 처리 (다른 숙소 선택)
-     */
-    async handlePropertyChange(data) {
-        // API 데이터를 카멜 케이스로 변환해서 저장
-        this.currentData = this.convertData(data);
-        this.isInitialized = true;
-
-        // 전체 다시 렌더링 (완료 대기) - 이미 변환된 데이터 사용
-        await this.renderTemplate(this.currentData);
-
-        this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
-    }
-
-    /**
      * 테마 업데이트 처리 (폰트/색상 실시간 변경)
      */
     handleThemeUpdate(data) {
@@ -372,12 +354,16 @@ class PreviewHandler {
     }
 
     /**
-     * 팝업 업데이트 처리
+     * 팝업 업데이트 처리 (미리보기 실시간 변경)
      */
     handlePopupUpdate(data) {
+        if (!data) return;
+
+        // PopupManager가 로드되어 있으면 팝업 업데이트
         if (window.popupManager) {
             window.popupManager.updateFromPreview(data);
         } else if (window.PopupManager) {
+            // PopupManager 클래스는 있지만 인스턴스가 없는 경우
             window.popupManager = new PopupManager();
             window.popupManager.init().then(() => {
                 window.popupManager.updateFromPreview(data);
@@ -458,7 +444,7 @@ class PreviewHandler {
     /**
      * 전체 템플릿 렌더링 (초기 로드 또는 숙소 변경 시)
      */
-    async renderTemplate(data) {
+    renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
         let mapper = null;
 
@@ -499,74 +485,106 @@ class PreviewHandler {
         }
 
         if (mapper) {
-            // 이미 변환된 데이터 주입 (handleInitialData/handlePropertyChange에서 변환됨)
+            // 기존 매퍼에 새 데이터 주입
             mapper.data = data;
             mapper.isDataLoaded = true;
 
-            // 기존 매핑 로직 실행 (완료 대기)
-            await mapper.mapPage();
+            // 기존 매핑 로직 실행
+            mapper.mapPage();
 
-            // mapPage 완료 후 슬라이더는 이미 초기화되어 있음
-            // (IndexMapper.mapPage 내부에서 _reinitializeHeroSlider 호출)
         }
 
-        // Header & Footer 매핑 (모든 페이지에서 공통 실행)
-        // 헤더 DOM이 로드될 때까지 대기
-        await this.waitForHeaderDOM();
-
-        if (window.HeaderFooterMapper) {
-            const headerFooterMapper = new window.HeaderFooterMapper();
-            // 이미 변환된 데이터 사용
-            headerFooterMapper.data = data;
-            headerFooterMapper.isDataLoaded = true;
-            await headerFooterMapper.mapHeaderFooter();
-
-            // 매핑 완료 후 헤더 표시 (FOUC 방지)
-            if (window.showHeaders) window.showHeaders();
-        }
-
-        // Logo 매핑 (모든 페이지에서 공통 실행)
-        const logoElement = document.querySelector('[data-logo]');
-        const logoTextElement = document.querySelector('[data-logo-text]');
-
-        if (logoElement && data?.template?.logo) {
-            logoElement.src = data.template.logo;
-        }
-
-        if (logoTextElement && data?.template?.logoText) {
-            logoTextElement.textContent = data.template.logoText;
-        }
+        // Header & Footer 매핑 (header DOM 로드 대기 후 실행)
+        this.waitForHeaderAndMap(data);
     }
-
 
     /**
-     * 헤더 DOM이 로드될 때까지 대기
+     * Header DOM 로드 대기 후 Header/Footer 매핑
      */
-    async waitForHeaderDOM() {
-        const maxWaitTime = 5000; // 최대 5초 대기
-        const checkInterval = 50; // 50ms마다 체크
-        let waitedTime = 0;
+    waitForHeaderAndMap(data, retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100; // 100ms
 
-        return new Promise((resolve) => {
-            const checkHeader = () => {
-                const headerContainer = document.getElementById('header-container');
+        // Header DOM 확인
+        const headerElement = document.querySelector('header#header') ||
+                            document.querySelector('.header') ||
+                            document.getElementById('header-container');
 
-                if (headerContainer) {
-                    // 헤더 컨테이너 존재
-                    resolve();
-                } else if (waitedTime >= maxWaitTime) {
-                    // 타임아웃 - 헤더 없이 진행
-                    resolve();
-                } else {
-                    // 계속 대기
-                    waitedTime += checkInterval;
-                    setTimeout(checkHeader, checkInterval);
-                }
-            };
-
-            checkHeader();
-        });
+        if (headerElement) {
+            // Header DOM이 로드됨 → 매핑 실행
+            if (window.HeaderFooterMapper) {
+                const headerFooterMapper = new window.HeaderFooterMapper();
+                headerFooterMapper.data = data;
+                headerFooterMapper.isDataLoaded = true;
+                headerFooterMapper.mapHeaderFooter();
+            }
+        } else if (retryCount < maxRetries) {
+            // Header DOM이 아직 없음 → 재시도
+            setTimeout(() => {
+                this.waitForHeaderAndMap(data, retryCount + 1);
+            }, retryDelay);
+        } else {
+            console.warn('⚠️ Header DOM 로드 실패: 최대 재시도 횟수 초과');
+        }
     }
+
+    /**
+     * Header DOM 로드 대기 후 특정 섹션 매핑
+     */
+    waitForHeaderAndMapSection(section, retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100; // 100ms
+
+        // Header DOM 확인
+        const headerElement = document.querySelector('header#header') ||
+                            document.querySelector('.header') ||
+                            document.getElementById('header-container');
+
+        if (headerElement) {
+            // Header DOM이 로드됨 → 특정 섹션 매핑 실행
+            if (section === 'logo' && window.HeaderFooterMapper) {
+                const mapper = this.createMapper(HeaderFooterMapper);
+                mapper.mapHeaderLogo();
+                mapper.mapFooterLogo();
+            }
+        } else if (retryCount < maxRetries) {
+            // Header DOM이 아직 없음 → 재시도
+            setTimeout(() => {
+                this.waitForHeaderAndMapSection(section, retryCount + 1);
+            }, retryDelay);
+        } else {
+            console.warn('⚠️ Header DOM 로드 실패: 최정 섹션 업데이트 불가');
+        }
+    }
+
+    /**
+     * Footer DOM 로드 대기 후 소셜 링크 매핑
+     */
+    waitForFooterAndMapSocialLinks(retryCount = 0) {
+        const maxRetries = 10;
+        const retryDelay = 100; // 100ms
+
+        // Footer DOM 확인
+        const footerElement = document.querySelector('footer.footer') ||
+                            document.querySelector('.footer') ||
+                            document.getElementById('footer-container');
+
+        if (footerElement) {
+            // Footer DOM이 로드됨 → 소셜 링크 매핑 실행
+            if (window.HeaderFooterMapper) {
+                const mapper = this.createMapper(HeaderFooterMapper);
+                mapper.mapSocialLinks();
+            }
+        } else if (retryCount < maxRetries) {
+            // Footer DOM이 아직 없음 → 재시도
+            setTimeout(() => {
+                this.waitForFooterAndMapSocialLinks(retryCount + 1);
+            }, retryDelay);
+        } else {
+            console.warn('⚠️ Footer DOM 로드 실패: 소셜 링크 업데이트 불가');
+        }
+    }
+
 
     /**
      * 데이터 구조 초기화 헬퍼 함수
@@ -642,6 +660,17 @@ class PreviewHandler {
             return;
         }
 
+        // socialLinks 섹션 특별 처리 (모든 페이지 공통)
+        if (section === 'socialLinks') {
+            if (!this.currentData.homepage) this.currentData.homepage = {};
+
+            this.currentData.homepage.socialLinks = data || {};
+
+            this.updateSpecificSection(page, section);
+            this.notifyRenderComplete('SECTION_UPDATE_COMPLETE');
+            return;
+        }
+
         // 지원하는 페이지 확인
         const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions'];
         if (!supportedPages.includes(page)) {
@@ -675,9 +704,15 @@ class PreviewHandler {
     updateSpecificSection(page, section) {
         // Header/Footer 관련 섹션 (모든 페이지 공통)
         if (section === 'logo' && window.HeaderFooterMapper) {
-            const mapper = this.createMapper(HeaderFooterMapper);
-            mapper.mapHeaderLogo();
-            mapper.mapFooterInfo();
+            // Header DOM 로드 대기 후 실행
+            this.waitForHeaderAndMapSection('logo');
+            return;
+        }
+
+        // socialLinks 섹션 업데이트 (모든 페이지 공통)
+        if (section === 'socialLinks' && window.HeaderFooterMapper) {
+            // Footer DOM 로드 대기 후 실행
+            this.waitForFooterAndMapSocialLinks();
             return;
         }
 
@@ -707,32 +742,32 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroSlider();
+                        mapper.mapMainHeroSection();
                         break;
                     case 'about':
-                        mapper.mapAboutSection();
-                        mapper.mapMarqueeSection();
-                        mapper.mapIntroductionSection();
+                        mapper.mapMainContentSections();
                         break;
                 }
             }
         } else if (page === 'room') {
             if (window.RoomMapper) {
                 const mapper = this.createMapper(RoomMapper);
+                const currentRoom = mapper.getCurrentRoom();
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapBasicInfo();
+                        mapper.mapHeroText(currentRoom);
+                        mapper.initializeHeroSlider(currentRoom);
                         break;
                     case 'gallery':
-                        mapper.mapExteriorGallery();
+                        mapper.mapRoomGalleryText();
                         break;
                 }
             }
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapFacilityBasicInfo();
+                mapper.mapFacilityText();
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -745,8 +780,10 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapSliderSection();
-                        mapper.mapLocationInfo();
+                        mapper.mapHeroSection();
+                        break;
+                    case 'notice':
+                        mapper.mapNoticeSection();
                         break;
                     default:
                         mapper.mapPage();
@@ -765,7 +802,6 @@ class PreviewHandler {
      */
     createMapper(MapperClass) {
         const mapper = new MapperClass();
-        // currentData는 이미 변환된 상태 (handleInitialData/handlePropertyChange에서 변환)
         mapper.data = this.currentData;
         mapper.isDataLoaded = true;
         return mapper;
@@ -874,9 +910,6 @@ class PreviewHandler {
         if (window.HeaderFooterMapper) {
             const headerFooterMapper = new HeaderFooterMapper();
             await headerFooterMapper.initialize(); // 데이터 로드 후 매핑
-
-            // 매핑 완료 후 헤더 표시 (FOUC 방지)
-            if (window.showHeaders) window.showHeaders();
         }
     }
 }
