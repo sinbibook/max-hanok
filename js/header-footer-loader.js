@@ -39,11 +39,8 @@
     // Load Header
     async function loadHeader() {
         try {
-            // Load header CSS first and ensure it loads before continuing
-            const headerCSS = document.createElement('link');
-            headerCSS.rel = 'stylesheet';
-            headerCSS.href = 'styles/header.css';
-            document.head.appendChild(headerCSS);
+            // Load header CSS first
+            loadCSS('styles/header.css');
 
             const response = await fetch('common/header.html', { cache: 'no-cache' });
             const html = await response.text();
@@ -52,55 +49,29 @@
             const temp = document.createElement('div');
             temp.innerHTML = html;
 
-            // Find header opened and top header directly from temp
-            const headerOpened = temp.querySelector('.header-opened');
-            const headerOpenedOverlay = temp.querySelector('.header-opened-overlay');
+            // Find side header and top header directly from temp
+            const sideHeader = temp.querySelector('.side-header');
             const topHeader = temp.querySelector('.top-header');
-            const mobileFixedButtons = temp.querySelector('.mobile-fixed-buttons');
 
-            // Insert top header directly to body
+            // Insert side header first (so it appears before top-header in DOM)
+            if (sideHeader) {
+                document.body.insertBefore(sideHeader, document.body.firstChild);
+            }
+
+            // Insert top header (hamburger-button is already inside)
             if (topHeader) {
                 document.body.insertBefore(topHeader, document.body.firstChild);
-            }
-
-            // Insert header-opened right after top-header
-            if (headerOpened) {
-                document.body.insertBefore(headerOpened, topHeader.nextSibling);
-            }
-
-            // Insert overlay
-            if (headerOpenedOverlay) {
-                document.body.appendChild(headerOpenedOverlay);
-            }
-
-            // Insert mobile buttons
-            if (mobileFixedButtons) {
-                document.body.appendChild(mobileFixedButtons);
             }
 
             // Load header JavaScript
             const script = document.createElement('script');
             script.src = 'js/common/header.js';
             script.onload = function() {
-                // Remove any inline onclick handlers and set up proper event listener
+                // Re-initialize hamburger button after script loads
                 setTimeout(() => {
                     const hamburgerButton = document.getElementById('hamburger-button');
-                    if (hamburgerButton) {
-                        // Remove inline onclick if it exists
-                        hamburgerButton.removeAttribute('onclick');
-
-                        // Remove any existing listeners by cloning
-                        const newButton = hamburgerButton.cloneNode(true);
-                        hamburgerButton.parentNode.replaceChild(newButton, hamburgerButton);
-
-                        // Add clean event listener
-                        newButton.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (window.toggleHeaderMenu) {
-                                window.toggleHeaderMenu();
-                            }
-                        });
+                    if (hamburgerButton && window.toggleSideHeader) {
+                        hamburgerButton.addEventListener('click', window.toggleSideHeader);
                     }
                 }, 100);
 
@@ -111,14 +82,12 @@
             document.body.appendChild(script);
 
             // Immediately check scroll position after header is loaded
-            setTimeout(() => {
-                if (window.scrollY > 50 || window.pageYOffset > 50) {
-                    const header = document.querySelector('.top-header');
-                    if (header) {
-                        header.classList.add('scrolled');
-                    }
+            if (window.scrollY > 50 || window.pageYOffset > 50) {
+                const header = document.querySelector('.header');
+                if (header) {
+                    header.classList.add('scrolled');
                 }
-            }, 100);
+            }
         } catch (error) {
             console.error('Error loading header:', error);
         }
@@ -142,12 +111,6 @@
                 const footer = temp.querySelector('.footer');
                 if (footer) {
                     document.body.appendChild(footer);
-                }
-
-                // Also append top button if exists
-                const topButton = temp.querySelector('#topButton');
-                if (topButton) {
-                    document.body.appendChild(topButton);
                 }
 
                 // Load footer JavaScript if exists
