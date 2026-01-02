@@ -1,283 +1,125 @@
 /**
- * Main Page Script
+ * Main Page Slider Functionality
+ * Hero 슬라이더 관련 함수들
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Hero Slider는 MainMapper에서 데이터 매핑 후 초기화됨
-    // (슬라이드가 동적으로 생성되므로 여기서 호출하면 빈 슬라이더)
+import { initSwipeHandler } from '../utils/swipe-handler.js';
 
-    // Scroll animations (정적 요소들에 대해)
-    window.initScrollAnimations();
+// 동적으로 생성된 슬라이드를 사용 (MainMapper에서 생성)
+let currentSlide = 0;
+let autoSlideTimer;
 
-    // Marquee animation
-    initMarquee();
+function updateSlider() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const indicatorCurrent = document.querySelector('.indicator-current');
+  const indicatorProgress = document.querySelector('.indicator-progress');
+
+  // 슬라이드가 없으면 리턴
+  if (slides.length === 0) return;
+
+  // currentSlide가 범위를 벗어나면 수정
+  if (currentSlide >= slides.length) {
+    currentSlide = 0;
+  } else if (currentSlide < 0) {
+    currentSlide = slides.length - 1;
+  }
+
+  slides.forEach((slide, index) => {
+    slide.classList.toggle('active', index === currentSlide);
+  });
+
+  const totalSlides = slides.length;
+  if (indicatorCurrent) {
+    indicatorCurrent.textContent = String(currentSlide + 1).padStart(2, '0');
+  }
+  if (indicatorProgress) {
+    indicatorProgress.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+  }
+}
+
+function nextSlide() {
+  const totalSlides = document.querySelectorAll('.hero-slide').length;
+  if (totalSlides === 0) return;
+
+  currentSlide = (currentSlide + 1) % totalSlides;
+  updateSlider();
+  resetAutoSlide();
+}
+
+function prevSlide() {
+  const totalSlides = document.querySelectorAll('.hero-slide').length;
+  currentSlide = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+  updateSlider();
+  resetAutoSlide();
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  updateSlider();
+  resetAutoSlide();
+}
+
+function startAutoSlide() {
+  // 기존 타이머가 있다면 먼저 정리
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer);
+  }
+
+  autoSlideTimer = setInterval(() => {
+    nextSlide();
+  }, 5000);
+}
+
+function resetAutoSlide() {
+  clearInterval(autoSlideTimer);
+  autoSlideTimer = null;
+  startAutoSlide();
+}
+
+// 슬라이더 초기화 함수 (hero 슬라이드 생성 후 호출)
+function initializeSlider() {
+  // 기존 타이머 정리
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = null;
+  }
+
+  // currentSlide 리셋
+  currentSlide = 0;
+
+  // 슬라이더 업데이트 및 자동 재생 시작
+  updateSlider();
+  startAutoSlide();
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  // Navigation 버튼에 이벤트 리스너 등록
+  const prevButton = document.querySelector('.nav-button.prev');
+  const nextButton = document.querySelector('.nav-button.next');
+
+  if (prevButton) {
+    prevButton.addEventListener('click', prevSlide);
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener('click', nextSlide);
+  }
+
+  // Initialize touch swipe for hero section
+  const heroSection = document.querySelector('.hero-section');
+  if (heroSection) {
+    initSwipeHandler(heroSection, nextSlide, prevSlide);
+  }
+
+  // Initialize MainMapper (PreviewHandler가 없을 때만)
+  if (!window.previewHandler) {
+    const mainMapper = new MainMapper();
+    mainMapper.initialize().then(() => {
+      // 슬라이더 초기화는 MainMapper 초기화 후에
+      setTimeout(initializeSlider, 100);
+    }).catch(error => {
+      console.error('❌ MainMapper initialization failed:', error);
+    });
+  }
 });
-
-/**
- * Initialize Hero Slider
- * window에 노출하여 mapper에서 재초기화 가능
- */
-// 전역 변수로 interval 관리 (중복 호출 방지)
-window._heroSliderInterval = null;
-
-window.initHeroSlider = function initHeroSlider() {
-    const slider = document.querySelector('[data-hero-slider]');
-    if (!slider) return;
-
-    // 기존 interval 클리어 (중복 호출 방지)
-    if (window._heroSliderInterval) {
-        clearInterval(window._heroSliderInterval);
-        window._heroSliderInterval = null;
-    }
-
-    const slides = slider.querySelectorAll('.hero-slide');
-    const currentSlideEl = document.querySelector('[data-current-slide]');
-    const totalSlidesEl = document.querySelector('[data-total-slides]');
-    const progressBar = document.querySelector('[data-hero-progress]');
-    const prevBtn = document.querySelector('.hero-nav-prev');
-    const nextBtn = document.querySelector('.hero-nav-next');
-
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    const slideInterval = 5000; // 5 seconds per slide
-
-    // 슬라이드가 1개 이하면 자동 재생 불필요
-    if (totalSlides <= 1) {
-        if (totalSlidesEl) {
-            totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-        }
-        if (currentSlideEl) {
-            currentSlideEl.textContent = '01';
-        }
-        return;
-    }
-
-    // Update total slides count
-    if (totalSlidesEl) {
-        totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-    }
-
-    // Function to show specific slide
-    function showSlide(index, immediate = false) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-
-        // Update current slide number
-        if (currentSlideEl) {
-            currentSlideEl.textContent = (index + 1).toString().padStart(2, '0');
-        }
-
-        // Update progress bar - always fill to 100% for current slide
-        if (progressBar) {
-            // Reset to 0 then animate to 100%
-            progressBar.style.transition = 'none';
-            progressBar.style.width = '0%';
-
-            // Start animation immediately or with minimal delay
-            if (immediate) {
-                // For first slide, start immediately
-                setTimeout(() => {
-                    progressBar.style.transition = `width ${slideInterval}ms linear`;
-                    progressBar.style.width = '100%';
-                }, 10);
-            } else {
-                // For subsequent slides
-                progressBar.offsetHeight; // Force reflow
-                progressBar.style.transition = `width ${slideInterval}ms linear`;
-                progressBar.style.width = '100%';
-            }
-        }
-    }
-
-    // Function to go to next slide
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Function to go to previous slide
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Auto-play slider (전역 변수 사용)
-    let isTransitioning = false;
-
-    // Start auto-play
-    function startAutoPlay() {
-        window._heroSliderInterval = setInterval(() => {
-            if (!isTransitioning) {
-                nextSlide();
-            }
-        }, slideInterval);
-    }
-
-    // Function to reset auto-play
-    function resetAutoPlay() {
-        clearInterval(window._heroSliderInterval);
-        startAutoPlay();
-    }
-
-    // Navigation button handlers
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._heroSliderInterval);
-                nextSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._heroSliderInterval);
-                prevSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    // Pause on hover
-    slider.addEventListener('mouseenter', () => {
-        clearInterval(window._heroSliderInterval);
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        if (!isTransitioning) {
-            startAutoPlay();
-        }
-    });
-
-    // Initialize first slide with immediate animation and start auto-play
-    showSlide(0, true);
-    startAutoPlay();
-}
-
-/**
- * Initialize scroll animations
- * window에 노출하여 동적 콘텐츠 생성 후 재초기화 가능
- */
-window.initScrollAnimations = function initScrollAnimations() {
-    const animatedElements = document.querySelectorAll('.animate-element:not(.animate)');
-
-    if (!animatedElements.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    }, {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    animatedElements.forEach(element => {
-        observer.observe(element);
-    });
-
-    // Parallax effect for shadow background - horizontal movement
-    const mainAboutSection = document.querySelector('.main-about-section');
-    if (mainAboutSection) {
-        let ticking = false;
-
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            const rect = mainAboutSection.getBoundingClientRect();
-
-            // Only apply effect when section is in viewport
-            if (rect.bottom >= 0 && rect.top <= window.innerHeight) {
-                // Calculate progress through viewport (0 to 1)
-                const viewportHeight = window.innerHeight;
-                const elementTop = rect.top + scrolled;
-                const scrollProgress = (scrolled - elementTop + viewportHeight) / (viewportHeight + rect.height);
-
-                // Move horizontally based on scroll progress
-                const maxMove = 50; // Maximum pixels to move
-                const xPos = Math.sin(scrollProgress * Math.PI) * maxMove; // Smooth sine wave movement
-
-                mainAboutSection.style.setProperty('--parallax-x', `${xPos}px`);
-            }
-
-            ticking = false;
-        }
-
-        function requestTick() {
-            if (!ticking) {
-                window.requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', requestTick);
-        // Initial call
-        updateParallax();
-    }
-}
-
-/**
- * Initialize marquee animation
- */
-function initMarquee() {
-    const marqueeEl = document.querySelector('[data-marquee-property-name]');
-    if (!marqueeEl) return;
-
-    const text = "POOLVILLA GLAMPING";
-    const repeatCount = 10;
-
-    // Create repeated text
-    let content = '';
-    for (let i = 0; i < repeatCount; i++) {
-        content += `<span>${text}</span>`;
-    }
-
-    marqueeEl.innerHTML = content;
-
-    // Add animation class
-    marqueeEl.classList.add('marquee-animated');
-}
-
-/**
- * Initialize section observer for header color changes
- */
-function initSectionObserver() {
-    const header = document.querySelector('.transparent-header');
-    if (!header) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const isDarkSection = entry.target.classList.contains('dark-section');
-
-                if (isDarkSection) {
-                    document.body.classList.add('dark-section-active');
-                } else {
-                    document.body.classList.remove('dark-section-active');
-                }
-            }
-        });
-    }, {
-        threshold: 0.5
-    });
-
-    // Observe all sections
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
-    });
-}
-
-// Initialize section observer
-document.addEventListener('DOMContentLoaded', initSectionObserver);

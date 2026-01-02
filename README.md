@@ -1,1 +1,2 @@
-# template-fullpage-scroll Template
+# template-full-banner-image
+
