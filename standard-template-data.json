@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.72.0",
-    "generatedAt": "2026-01-02T03:46:50.633Z",
+    "version": "1.73.0",
+    "generatedAt": "2026-01-02T04:01:52.588Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1519,6 +1519,92 @@
           "primary": "#FFF9F1",
           "secondary": "#B66E41"
         }
+      },
+      "popup": {
+        "popups": [
+          {
+            "id": "9725f685-71bf-43fb-a586-101499abe857",
+            "link": "",
+            "title": "",
+            "images": [
+              {
+                "id": "16f03d1c-284a-45fe-bbf4-01cec8a4a55d",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1767005936476-1sdpblufr7b.jpg",
+                "sortOrder": 0,
+                "description": "",
+                "isSelected": false,
+                "blockId": "9725f685-71bf-43fb-a586-101499abe857"
+              },
+              {
+                "id": "4981214b-dbb3-4036-b8a3-e48aad68031a",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1766993611152-z16h2xmkbwo.jpg",
+                "sortOrder": 1,
+                "description": "",
+                "isSelected": true,
+                "blockId": "9725f685-71bf-43fb-a586-101499abe857"
+              },
+              {
+                "id": "76eb0cec-6f99-40ed-9b00-6e1dbc12534b",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1766993611152-7e6svj82644.jpg",
+                "sortOrder": 2,
+                "description": "",
+                "isSelected": true,
+                "blockId": "9725f685-71bf-43fb-a586-101499abe857"
+              },
+              {
+                "id": "0c8852e0-9199-47d9-970e-ce524972f99a",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1766993611152-5qhsz2kqj5c.jpg",
+                "sortOrder": 3,
+                "description": "",
+                "isSelected": true,
+                "blockId": "9725f685-71bf-43fb-a586-101499abe857"
+              }
+            ],
+            "slider": true,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 0,
+            "startDate": null,
+            "description": ""
+          },
+          {
+            "id": "a586a246-3200-4135-aea9-c2d3589d1222",
+            "link": "",
+            "title": "팝업2",
+            "images": [
+              {
+                "id": "2a455fd5-7184-4150-a9d0-d7ba80ccb2df",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1766993652827-fe27oe326yc.jpg",
+                "sortOrder": 4,
+                "description": "",
+                "isSelected": true,
+                "blockId": "a586a246-3200-4135-aea9-c2d3589d1222"
+              },
+              {
+                "id": "ebaf8892-b664-4a87-b252-08df32a3abd3",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1766993652828-53oebpyyo6p.jpg",
+                "sortOrder": 5,
+                "description": "",
+                "isSelected": false,
+                "blockId": "a586a246-3200-4135-aea9-c2d3589d1222"
+              },
+              {
+                "id": "95fdfa2b-6abe-4190-b423-e0d47537ba2b",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1766993652828-urs5siuwcr.jpg",
+                "sortOrder": 6,
+                "description": "",
+                "isSelected": false,
+                "blockId": "a586a246-3200-4135-aea9-c2d3589d1222"
+              }
+            ],
+            "slider": false,
+            "enabled": true,
+            "endDate": "2026-01-06",
+            "sortOrder": 1,
+            "startDate": "2026-01-05",
+            "description": "팝업2 설명"
+          }
+        ]
       }
     }
   }
