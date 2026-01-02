@@ -1,57 +1,68 @@
-/**
- * Footer Component Functionality
- * 푸터 컴포넌트 기능
- */
+// Footer JavaScript
+(function() {
+    'use strict';
 
-// Function to initialize scroll to top button
-function initScrollToTop() {
-    // Scroll to top button functionality
-    const scrollToTopButton = document.getElementById('scrollToTop');
+    // Footer functionality can be added here if needed
+    // For example: dynamic year update, form submissions, etc.
 
-    if (scrollToTopButton) {
-        // Show/hide button based on scroll position
-        function toggleScrollButton() {
-            const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    // Update copyright year dynamically
+    function updateCopyrightYear() {
+        const yearElements = document.querySelectorAll('.copyright');
+        const currentYear = new Date().getFullYear();
 
-            if (scrollPosition > 300) {
-                scrollToTopButton.classList.add('visible');
-            } else {
-                scrollToTopButton.classList.remove('visible');
-            }
-        }
+        yearElements.forEach(element => {
+            element.innerHTML = element.innerHTML.replace(/\d{4}/, currentYear);
+        });
+    }
 
-        // Throttle scroll event for better performance
+    // Top Button functionality
+    function initTopButton() {
+        const topButton = document.getElementById('topButton');
+        if (!topButton) return;
+
         let isScrolling = false;
-        window.addEventListener('scroll', function() {
+
+        // Show/hide button based on scroll position
+        function handleScroll() {
             if (!isScrolling) {
-                window.requestAnimationFrame(function() {
-                    toggleScrollButton();
+                window.requestAnimationFrame(() => {
+                    if (window.pageYOffset > 300) {
+                        topButton.classList.add('show');
+                    } else {
+                        topButton.classList.remove('show');
+                    }
                     isScrolling = false;
                 });
                 isScrolling = true;
             }
-        });
+        }
 
-        // Scroll to top when button is clicked
-        scrollToTopButton.addEventListener('click', function(e) {
-            e.preventDefault();
+        // Smooth scroll to top
+        topButton.addEventListener('click', function() {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         });
 
-        // Initial check
-        toggleScrollButton();
-    }
-}
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
 
-// Initialize immediately if DOM is already loaded, otherwise wait
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(initScrollToTop, 500);
-    });
-} else {
-    // DOM is already loaded, initialize after a short delay
-    setTimeout(initScrollToTop, 500);
-}
+        // Check initial scroll position
+        handleScroll();
+    }
+
+    // Initialize footer
+    const runInitializers = () => {
+        updateCopyrightYear();
+        initTopButton();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runInitializers);
+    } else {
+        // DOM is already loaded
+        runInitializers();
+    }
+
+})();
