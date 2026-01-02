@@ -66,7 +66,7 @@ class PopupManager {
      */
     async loadPopupData() {
         try {
-            const response = await fetch('../standard-template-data.json');
+            const response = await fetch('./standard-template-data.json');
             if (!response.ok) {
                 return;
             }
