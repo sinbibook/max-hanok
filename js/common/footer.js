@@ -1,15 +1,23 @@
-/**
- * Footer Component Functionality
- * 푸터 컴포넌트 기능
- */
+// Footer JavaScript
+(function() {
+    'use strict';
 
-// Footer functionality - for future footer interactions
-document.addEventListener('DOMContentLoaded', function() {
-    // Footer initialization code can be added here
-    // Future footer functions can be added here:
-    // - Contact form handling
-    // - Newsletter subscription
-    // - Social media links
-    // - Copyright year update
-    // - etc.
-});
+    // Footer functionality can be added here if needed
+    // For example: dynamic year update, form submissions, etc.
+
+    // Update copyright year dynamically
+    function updateCopyrightYear() {
+        const yearElements = document.querySelectorAll('.copyright');
+        const currentYear = new Date().getFullYear();
+
+        yearElements.forEach(element => {
+            element.innerHTML = element.innerHTML.replace(/\d{4}/, currentYear);
+        });
+    }
+
+    // Initialize footer
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCopyrightYear();
+    });
+
+})();
