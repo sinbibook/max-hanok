@@ -13,7 +13,30 @@ class PreviewHandler {
         this.adminDataReceived = false;  // 어드민 데이터 수신 여부
         this.fallbackTimeout = null;     // 백업 타이머
         this.parentOrigin = null;         // 신뢰할 수 있는 부모 창 origin
+        this._baseMapper = null;          // Lazy initialization
         this.init();
+    }
+
+    /**
+     * BaseDataMapper 인스턴스 가져오기 (Lazy initialization)
+     */
+    get baseMapper() {
+        if (!this._baseMapper && window.BaseDataMapper) {
+            this._baseMapper = new BaseDataMapper();
+        }
+        return this._baseMapper;
+    }
+
+    /**
+     * API 데이터를 카멜 케이스로 변환 (중복 변환 방지)
+     */
+    convertData(data) {
+        // BaseDataMapper가 없으면 원본 그대로 반환 (fallback)
+        if (!this.baseMapper) {
+            console.warn('BaseDataMapper not loaded, returning original data');
+            return data;
+        }
+        return this.baseMapper.convertToCamelCase(data);
     }
 
     /**
@@ -21,9 +44,9 @@ class PreviewHandler {
      */
     getDefaultFonts() {
         return {
-            koMain: "'GowunDodum', sans-serif",
-            koSub: "'GowunDodum', sans-serif",
-            enMain: "'Azonix', sans-serif"
+            koMain: "'Aritaburi', sans-serif",
+            koSub: "'Aritaburi', sans-serif",
+            enMain: "'Amandine', serif"
         };
     }
 
@@ -32,8 +55,8 @@ class PreviewHandler {
      */
     getDefaultColors() {
         return {
-            primary: '#F5F5F5',
-            secondary: '#453D37'
+            primary: '#e6f3ff',
+            secondary: '#658399'
         };
     }
 
@@ -108,26 +131,24 @@ class PreviewHandler {
      * 테마 CSS 변수 적용 (font/color)
      */
     applyThemeVariables(theme) {
-        if (!theme) return;
-
         const defaultFonts = this.getDefaultFonts();
         const defaultColors = this.getDefaultColors();
+        const fontData = theme.font || theme;
 
-        // 폰트 변수 업데이트 - 명확한 구조 체크
-        if (theme.font && typeof theme.font === 'object') {
-            const fontData = theme.font;
+        // 폰트 변수 업데이트
+        if (fontData) {
             if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
             if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
             if ('enMain' in fontData) this.applyFont(fontData.enMain, '--font-en-main', defaultFonts.enMain);
         }
 
-        // 색상 변수 업데이트 - 명확한 구조 체크
+        // 색상 변수 업데이트
         if ('color' in theme) {
             if (!theme.color) {
                 // color가 null이면 전체 기본값으로 리셋
                 this.applyColor(null, '--color-primary', defaultColors.primary);
                 this.applyColor(null, '--color-secondary', defaultColors.secondary);
-            } else if (typeof theme.color === 'object') {
+            } else {
                 if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
                 if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
             }
@@ -143,12 +164,12 @@ class PreviewHandler {
         // 부모 창에 준비 완료 신호 전송
         this.notifyReady();
 
-        // 어드민 데이터 대기 (3초 후 fallback) - 타이밍 여유 증가
+        // 어드민 데이터 대기 (1초 후 fallback)
         this.fallbackTimeout = setTimeout(() => {
             if (!this.adminDataReceived) {
                 this.loadFallbackData();
             }
-        }, 3000);
+        }, 1000);
 
     }
 
@@ -240,9 +261,6 @@ class PreviewHandler {
             case 'THEME_UPDATE':
                 this.handleThemeUpdate(data);
                 break;
-            case 'THEME_RESET':
-                this.handleThemeReset();
-                break;
             case 'POPUP_UPDATE':
                 this.handlePopupUpdate(data);
                 break;
@@ -252,35 +270,11 @@ class PreviewHandler {
     }
 
     /**
-     * snake_case를 camelCase로 변환
-     */
-    convertToCamelCase(data) {
-        if (!data || typeof data !== 'object') return data;
-        if (Array.isArray(data)) {
-            return data.map(item => this.convertToCamelCase(item));
-        }
-
-        const converted = {};
-        for (const key in data) {
-            // snake_case를 camelCase로 변환
-            const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-
-            // 재귀적으로 변환
-            if (data[key] && typeof data[key] === 'object') {
-                converted[camelKey] = this.convertToCamelCase(data[key]);
-            } else {
-                converted[camelKey] = data[key];
-            }
-        }
-        return converted;
-    }
-
-    /**
      * 초기 데이터 처리 (숙소 선택 + 템플릿 초기 설정)
      */
     async handleInitialData(data) {
-        // snake_case를 camelCase로 변환 (어드민 호환성)
-        this.currentData = this.convertToCamelCase(data);
+        // API 데이터를 카멜 케이스로 변환해서 저장
+        this.currentData = this.convertData(data);
         this.isInitialized = true;
         this.adminDataReceived = true;  // 어드민 데이터 수신됨
 
@@ -291,13 +285,13 @@ class PreviewHandler {
         }
 
         // 테마 CSS 변수 적용 (페이지 이동 후에도 테마 유지)
-        const theme = data.homepage?.customFields?.theme || data.homepage?.custom_fields?.theme;
+        const theme = data.homepage?.customFields?.theme;
         if (theme) {
             this.applyThemeVariables(theme);
         }
 
-        // 전체 템플릿 렌더링 (완료 대기)
-        await this.renderTemplate(data);
+        // 전체 템플릿 렌더링 (완료 대기) - 이미 변환된 데이터 사용
+        await this.renderTemplate(this.currentData);
 
         // 부모 창에 렌더링 완료 신호
         this.notifyRenderComplete('INITIAL_RENDER_COMPLETE');
@@ -307,9 +301,6 @@ class PreviewHandler {
      * 템플릿 설정 변경 처리 (실시간 업데이트)
      */
     async handleTemplateUpdate(data) {
-        // snake_case를 camelCase로 변환
-        data = this.convertToCamelCase(data);
-
         // 어드민 데이터 수신됨 표시
         this.adminDataReceived = true;
 
@@ -331,20 +322,23 @@ class PreviewHandler {
             this.applyThemeVariables(theme);
         }
 
+        // 새로 들어온 데이터를 카멜 케이스로 변환
+        const convertedData = this.convertData(data);
+
         // 기존 데이터와 병합
-        if (data.rooms && Array.isArray(data.rooms)) {
+        if (convertedData.rooms && Array.isArray(convertedData.rooms)) {
             this.currentData = {
                 ...this.currentData,
-                rooms: [...data.rooms]  // 완전히 새로운 배열로 교체
+                rooms: [...convertedData.rooms]  // 완전히 새로운 배열로 교체
             };
 
             // 나머지 데이터는 병합
-            const dataWithoutRooms = { ...data };
+            const dataWithoutRooms = { ...convertedData };
             delete dataWithoutRooms.rooms;
             this.currentData = this.mergeData(this.currentData, dataWithoutRooms);
         } else {
             // 기존 데이터와 병합
-            this.currentData = this.mergeData(this.currentData, data);
+            this.currentData = this.mergeData(this.currentData, convertedData);
         }
 
         // 전체 페이지 다시 렌더링 (완료 대기)
@@ -364,12 +358,12 @@ class PreviewHandler {
      * 숙소 변경 처리 (다른 숙소 선택)
      */
     async handlePropertyChange(data) {
-        // snake_case를 camelCase로 변환
-        this.currentData = this.convertToCamelCase(data);
+        // API 데이터를 카멜 케이스로 변환해서 저장
+        this.currentData = this.convertData(data);
         this.isInitialized = true;
 
-        // 전체 다시 렌더링 (완료 대기)
-        await this.renderTemplate(data);
+        // 전체 다시 렌더링 (완료 대기) - 이미 변환된 데이터 사용
+        await this.renderTemplate(this.currentData);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
     }
@@ -425,31 +419,6 @@ class PreviewHandler {
         }
 
         window.location.href = newPath;
-    }
-
-    /**
-     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
-     */
-    handleThemeUpdate(data) {
-        if (!data) return;
-        this.applyThemeVariables(data);
-        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
-    }
-
-    /**
-     * 팝업 업데이트 처리
-     */
-    handlePopupUpdate(data) {
-        if (window.popupManager) {
-            window.popupManager.updateFromPreview(data);
-        } else if (window.PopupManager) {
-            window.popupManager = new PopupManager();
-            window.popupManager.init().then(() => {
-                window.popupManager.updateFromPreview(data);
-            });
-        }
-
-        this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
     }
 
     /**
@@ -511,7 +480,7 @@ class PreviewHandler {
         }
 
         if (mapper) {
-            // 기존 매퍼에 새 데이터 주입
+            // 이미 변환된 데이터 주입 (handleInitialData/handlePropertyChange에서 변환됨)
             mapper.data = data;
             mapper.isDataLoaded = true;
 
@@ -520,6 +489,16 @@ class PreviewHandler {
 
             // mapPage 완료 후 슬라이더는 이미 초기화되어 있음
             // (IndexMapper.mapPage 내부에서 _reinitializeHeroSlider 호출)
+
+            // index 페이지: 동적 생성된 요소에 애니메이션 클래스 직접 추가
+            if (currentPage === 'index') {
+                document.querySelectorAll('.room-item').forEach(item => {
+                    item.classList.add('animate-fade-in');
+                });
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.classList.add('animate-fade-in');
+                });
+            }
         }
 
         // Header & Footer 매핑 (모든 페이지에서 공통 실행)
@@ -528,9 +507,13 @@ class PreviewHandler {
 
         if (window.HeaderFooterMapper) {
             const headerFooterMapper = new window.HeaderFooterMapper();
+            // 이미 변환된 데이터 사용
             headerFooterMapper.data = data;
             headerFooterMapper.isDataLoaded = true;
             await headerFooterMapper.mapHeaderFooter();
+
+            // 매핑 완료 후 헤더 표시 (FOUC 방지)
+            if (window.showHeaders) window.showHeaders();
         }
 
         // Logo 매핑 (모든 페이지에서 공통 실행)
@@ -580,6 +563,7 @@ class PreviewHandler {
      * 데이터 구조 초기화 헬퍼 함수
      */
     ensureDataStructure() {
+        if (!this.currentData) this.currentData = {};
         if (!this.currentData.homepage) this.currentData.homepage = {};
         if (!this.currentData.homepage.customFields) this.currentData.homepage.customFields = {};
         if (!this.currentData.homepage.customFields.pages) this.currentData.homepage.customFields.pages = {};
@@ -699,11 +683,19 @@ class PreviewHandler {
                 case 'essence':
                     mapper.mapEssenceSection();
                     break;
+                case 'rooms':
+                    mapper.mapRoomsSection();
+                    // 동적 생성된 room-item에 애니메이션 클래스 직접 추가
+                    document.querySelectorAll('.room-item').forEach(item => {
+                        item.classList.add('animate-fade-in');
+                    });
+                    break;
                 case 'gallery':
                     mapper.mapGallerySection();
-                    break;
-                case 'signature':
-                    mapper.mapSignatureSection();
+                    // 동적 생성된 gallery-item에 애니메이션 클래스 직접 추가
+                    document.querySelectorAll('.gallery-item').forEach(item => {
+                        item.classList.add('animate-fade-in');
+                    });
                     break;
                 case 'closing':
                     mapper.mapClosingSection();
@@ -715,32 +707,45 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapMainHeroSection();
+                        mapper.mapHeroSlider();
                         break;
                     case 'about':
-                        mapper.mapMainContentSections();
+                        mapper.mapAboutSection();
+                        mapper.mapIntroductionSection();
                         break;
                 }
             }
         } else if (page === 'room') {
             if (window.RoomMapper) {
                 const mapper = this.createMapper(RoomMapper);
-                const currentRoom = mapper.getCurrentRoom();
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroText(currentRoom);
-                        mapper.initializeHeroSlider(currentRoom);
+                        mapper.mapBasicInfo();
                         break;
                     case 'gallery':
-                        mapper.mapRoomGalleryText();
+                        mapper.mapExteriorGallery();
                         break;
                 }
             }
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapFacilityBasicInfo();
+                switch (section) {
+                    case 'hero':
+                        mapper.mapFacilityHeroSlider();
+                        break;
+                    case 'about':
+                        mapper.mapFacilityTopIntro();
+                        mapper.mapFacilitySpecialSection();
+                        break;
+                    case 'experience':
+                        mapper.mapUsageGuideSection();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
@@ -753,7 +758,8 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroImages();
+                        mapper.mapHeroImage();
+                        mapper.mapLocationInfo();
                         break;
                     default:
                         mapper.mapPage();
@@ -772,6 +778,7 @@ class PreviewHandler {
      */
     createMapper(MapperClass) {
         const mapper = new MapperClass();
+        // currentData는 이미 변환된 상태 (handleInitialData/handlePropertyChange에서 변환)
         mapper.data = this.currentData;
         mapper.isDataLoaded = true;
         return mapper;
@@ -785,12 +792,12 @@ class PreviewHandler {
     getCurrentPageType() {
         const path = window.location.pathname;
 
-        if (path.includes('index.html') || path.endsWith('/') || path === '') return 'index';
-        if (path.includes('main.html')) return 'main';
-        if (path.includes('room.html')) return 'room';
-        if (path.includes('facility.html')) return 'facility';
-        if (path.includes('reservation.html')) return 'reservation';
-        if (path.includes('directions.html')) return 'directions';
+        if (path.endsWith('/index.html') || path.endsWith('/') || path === '') return 'index';
+        if (path.endsWith('/main.html')) return 'main';
+        if (path.endsWith('/room.html')) return 'room';
+        if (path.endsWith('/facility.html')) return 'facility';
+        if (path.endsWith('/reservation.html')) return 'reservation';
+        if (path.endsWith('/directions.html')) return 'directions';
 
         // 루트 경로 또는 기본값으로 index 처리
         return 'index';
@@ -855,7 +862,6 @@ class PreviewHandler {
         return this.currentData;
     }
 
-
     /**
      * 어드민 데이터 수신 실패 시 기본 JSON 데이터 로드
      */
@@ -881,7 +887,67 @@ class PreviewHandler {
         if (window.HeaderFooterMapper) {
             const headerFooterMapper = new HeaderFooterMapper();
             await headerFooterMapper.initialize(); // 데이터 로드 후 매핑
+
+            // 매핑 완료 후 헤더 표시 (FOUC 방지)
+            if (window.showHeaders) window.showHeaders();
         }
+    }
+
+    /**
+     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
+     */
+    handleThemeUpdate(data) {
+        if (!data) return;
+        this.applyThemeVariables(data);
+        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
+    }
+
+    /**
+     * 팝업 업데이트 처리
+     */
+    handlePopupUpdate(data) {
+        if (window.popupManager) {
+            window.popupManager.updateFromPreview(data);
+        } else if (window.PopupManager) {
+            window.popupManager = new PopupManager();
+            window.popupManager.init().then(() => {
+                window.popupManager.updateFromPreview(data);
+            });
+        }
+
+        this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
+    }
+
+    /**
+     * 렌더링 완료 신호 전송
+     */
+    notifyRenderComplete(type) {
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: type,
+                data: {
+                    timestamp: Date.now(),
+                    page: this.getCurrentPageType()
+                }
+            }, this.parentOrigin || '*');
+        }
+    }
+
+    /**
+     * 현재 페이지 타입 감지
+     */
+    getCurrentPageType() {
+        const path = window.location.pathname;
+
+        if (path.endsWith('/index.html') || path.endsWith('/') || path === '') return 'index';
+        if (path.endsWith('/main.html')) return 'main';
+        if (path.endsWith('/room.html')) return 'room';
+        if (path.endsWith('/facility.html')) return 'facility';
+        if (path.endsWith('/reservation.html')) return 'reservation';
+        if (path.endsWith('/directions.html')) return 'directions';
+
+        // 루트 경로 또는 기본값으로 index 처리
+        return 'index';
     }
 }
 
