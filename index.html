@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=./pages/index.html">
+<html lang="en">
+  <head>
+    <script src="js/config.js"></script>    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script>
-        window.location.replace('./pages/index.html');
-    </script>
-  <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="icon" type="image/png" data-homepage-images-0-logo-0-url>
+    <title data-homepage-seo-title>Document</title>
+    <meta name="description" data-homepage-seo-description content="">
+    <meta name="keywords" data-homepage-seo-keywords content="">
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/theme.css" />
+    <link rel="stylesheet" href="styles/popup.css" />
+    <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 홈" />
   <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
@@ -21,7 +24,124 @@
   <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 </head>
-<body>
-    <p>Redirecting to homepage...</p>
-</body>
+  <body>
+    <div class="wrapper mainWrap IndexWrap">
+    <!-- Hero Section -->
+      <main>
+        <section class="mainTitleGrp">
+          <div class="heroImgWrap sliderContainer heroSlider" data-visible-count="1">
+            <button class="prev" type="button" aria-label="Previous hero slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="slider index-hero-slider-wrapper">
+              <!-- Hero slides will be dynamically generated here -->
+            </div>
+            <button class="next" type="button" aria-label="Next hero slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="heroOverlay">
+              <h1 data-property-name class="heroHeading">
+              </h1>
+              <p data-hero-title class="heroHeadingSub"></p>
+            </div>
+          </div>
+          <div class="heroDescription">
+            <p data-homepage-customFields-pages-index-sections-0-essence-title>
+            </p>
+            <p data-homepage-customFields-pages-index-sections-0-essence-description>
+            </p>
+          </div>
+        </section>
+        <section class="con2 mobilemt">
+          <div class="titWrap">
+            <h1 class="conTit">
+              ROOMS
+            </h1>
+            <p>
+              <span data-property-name>제주 포레스트</span>의 아늑한 객실입니다.
+            </p>
+          </div>
+          <div class="rooms">
+            <!-- Rooms will be dynamically generated here -->
+          </div>
+        </section>
+        <section class="con3 specialsSection">
+          <div class="titWrap">
+            <h1 class="conTit">
+              SPECIALS
+            </h1>
+            <p>
+              <span data-property-name>제주 포레스트</span>의 특별한 부가서비스입니다.
+            </p>
+          </div>
+          <aside class="gallery">
+            <div class="sliderContainer specialSlider" data-visible-count="3">
+              <button class="prev" type="button" aria-label="Previous specials slide">
+                ❮
+              </button>
+              <div class="slider">
+              </div>
+              <button class="next" type="button" aria-label="Next specials slide">
+                ❯
+              </button>
+            </div>
+          </aside>
+        </section>
+        <section class="con4">
+          <div class="titWrap">
+            <h1 class="conTit">RESERVATION</h1>
+            <p>
+              지금 예약하세요.
+            </p>
+          </div>
+          <p class="resTxt">
+            <a data-property-realtime-booking-id target="_blank" href="https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}" class="goRes mt5 btnBorder">
+              지금 예약하기
+            </a>
+          </p>
+        </section>
+        <div class="fBanner" data-homepage-customFields-pages-index-sections-0-closing-images-0>
+        </div>
+      </main>
+    </div>
+    <!-- Popup System -->
+    <div id="popup-container"></div>
+
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
+
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Index Page Mapper -->
+    <script src="js/data-mapper/pages/index-mapper.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header/Footer loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <script src="js/common/scroll-animation.js"></script>
+
+    <!-- Header interactions -->
+    <script src="js/common/header.js"></script>
+
+    <!-- iOS Parallax Fix -->
+
+    <!-- Page script -->
+    <script src="js/pages/index.js"></script>
+
+    <!-- Preview Handler (어드민 연동) -->
+    <script src="js/preview-handler.js"></script>
+    <script src="js/popup.js"></script>
+
+  </body>
 </html>
