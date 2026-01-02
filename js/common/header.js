@@ -1,362 +1,254 @@
-// Header JavaScript
-(function() {
-    'use strict';
+/**
+ * Header Component Functionality
+ * 헤더 컴포넌트 기능
+ */
 
-    // Update submenu position based on header height
-    function updateSubmenuPosition() {
-        const header = document.querySelector('.top-header');
-        const unifiedSubmenu = document.querySelector('.unified-submenu');
+// Constants
+const YBS_BOOKING_URL_BASE = 'https://rev.yapen.co.kr/external?ypIdx=';
 
-        if (header && unifiedSubmenu) {
-            const headerHeight = header.offsetHeight;
-            unifiedSubmenu.style.top = `${headerHeight}px`;
-        }
+// Header functionality - Make functions global for dynamic loading
+let mobileMenuOpen = false;
+let subMenusVisible = false;
+
+// Global navigation function
+window.navigateTo = function(page) {
+    // Validate page parameter
+    if (!page || page === 'undefined' || page === 'null' || typeof page !== 'string') {
+        return false;
     }
 
-    // Scroll Effect for Header
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('.top-header');
-        const bookNowBtn = document.querySelector('.book-now-btn');
-        const hamburgerBtn = document.querySelector('.hamburger-button');
+    // Handle special cases
+    if (page === 'home') {
+        window.location.href = '../pages/index.html';
+        return;
+    }
+    if (page === 'reservation-info') {
+        window.location.href = '../pages/reservation.html';
+        return;
+    }
 
-        if (header) {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        }
+    // Use URL router if available, otherwise direct navigation
+    if (window.navigateToPage) {
+        window.navigateToPage(page);
+    } else {
+        // Direct navigation fallback
+        window.location.href = `../pages/${page}.html`;
+    }
 
-        // Book Now Button scroll effect
-        if (bookNowBtn) {
-            if (window.scrollY > 50) {
-                bookNowBtn.classList.add('scrolled');
-            } else {
-                bookNowBtn.classList.remove('scrolled');
-            }
-        }
+    closeMobileMenu();
+    window.hideSubMenus();
+};
 
-        // YBS Button scroll effect
-        const ybsBtn = document.querySelector('.ybs-btn');
-        if (ybsBtn) {
-            if (window.scrollY > 50) {
-                ybsBtn.classList.add('scrolled');
-            } else {
-                ybsBtn.classList.remove('scrolled');
-            }
-        }
+// Room navigation is now handled by PropertyDataMapper.navigateToRoom
 
-        // Hamburger Button scroll effect
-        if (hamburgerBtn) {
-            if (window.scrollY > 50) {
-                hamburgerBtn.classList.add('scrolled');
-            } else {
-                hamburgerBtn.classList.remove('scrolled');
-            }
-        }
+// Make mobile menu functions global
+window.toggleMobileMenu = function() {
+    mobileMenuOpen = !mobileMenuOpen;
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+    const body = document.body;
 
-        // Update submenu position after header state change
-        // setTimeout(updateSubmenuPosition, 100);
-    });
+    if (mobileMenuOpen) {
+        if (mobileMenu) mobileMenu.classList.add('show');
+        if (menuIcon) menuIcon.style.display = 'none';
+        if (closeIcon) closeIcon.style.display = 'block';
 
-    // Toggle Mobile Menu
-    window.toggleMobileMenu = function() {
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        const closeIcon = document.getElementById('close-icon');
-        const body = document.body;
-        const html = document.documentElement;
+        // body 스크롤 막기
+        body.style.overflow = 'hidden';
+    } else {
+        if (mobileMenu) mobileMenu.classList.remove('show');
+        if (menuIcon) menuIcon.style.display = 'block';
+        if (closeIcon) closeIcon.style.display = 'none';
 
-        if (mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            menuIcon.style.display = 'block';
-            closeIcon.style.display = 'none';
+        // body 스크롤 복원
+        body.style.overflow = '';
+    }
+};
 
-            // 현재 스크롤 위치 저장
-            const scrollY = body.style.top ? -parseInt(body.style.top) : 0;
+function closeMobileMenu() {
+    if (mobileMenuOpen) {
+        window.toggleMobileMenu();
+    }
+}
 
-            // 모든 스타일 완전히 리셋
-            body.classList.remove('mobile-menu-open');
-            body.style.overflow = '';
-            body.style.position = '';
-            body.style.width = '';
-            body.style.height = '';
-            body.style.top = '';
-            body.style.left = '';
+// Make submenu functions global
+window.showSubMenus = function() {
+    if (window.innerWidth >= 1024) {
+        subMenusVisible = true;
+        const subMenus = document.getElementById('sub-menus');
+        const subMenuItems = document.querySelectorAll('.sub-menu-item');
 
-            html.style.overflow = '';
+        if (subMenus) subMenus.classList.add('show');
 
-            // 원래 스크롤 위치로 복원
-            if (scrollY > 0) {
-                window.scrollTo(0, scrollY);
-            }
+        // Animate sub menu items
+        subMenuItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('animate');
+            }, index * 50);
+        });
+    }
+};
+
+window.hideSubMenus = function() {
+    if (window.innerWidth >= 1024) {
+        subMenusVisible = false;
+        const subMenus = document.getElementById('sub-menus');
+        const subMenuItems = document.querySelectorAll('.sub-menu-item');
+
+        if (subMenus) subMenus.classList.remove('show');
+        subMenuItems.forEach(item => {
+            item.classList.remove('animate');
+        });
+    }
+};
+
+// Close mobile menu when clicking outside or resizing
+window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024 && mobileMenuOpen) {
+        closeMobileMenu();
+    }
+    if (window.innerWidth < 1024 && subMenusVisible) {
+        window.hideSubMenus();
+    }
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    const header = document.getElementById('header');
+    if (mobileMenuOpen && !header.contains(e.target)) {
+        closeMobileMenu();
+    }
+});
+
+// Header scroll effect
+let lastScrollY = 0;
+let ticking = false;
+
+function updateHeader() {
+    const header = document.getElementById('header');
+    const scrollY = window.scrollY;
+
+    if (scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+
+    lastScrollY = scrollY;
+    ticking = false;
+}
+
+function requestTick() {
+    if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+    }
+}
+
+// Listen for scroll events
+window.addEventListener('scroll', requestTick);
+
+// 전역 예약 함수 (어디서든 호출 가능)
+window.openReservation = function() {
+    const isPreviewMode = window.parent !== window;
+    const buttons = document.querySelectorAll('[data-booking-engine]');
+    const realtimeBookingId = buttons.length > 0 ? buttons[0].getAttribute('data-realtime-booking-id') : null;
+
+    if (realtimeBookingId) {
+        const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}`;
+
+        if (isPreviewMode) {
+            // 미리보기 환경: 부모 창(어드민)에 메시지 전송
+            window.parent.postMessage({
+                type: 'OPEN_RESERVATION',
+                url: reservationUrl,
+                realtimeBookingId: realtimeBookingId
+            }, window.previewHandler?.parentOrigin || '*');
         } else {
-            // 현재 스크롤 위치 저장
-            const scrollY = window.pageYOffset;
-
-            mobileMenu.classList.add('active');
-            menuIcon.style.display = 'none';
-            closeIcon.style.display = 'block';
-
-            // body 고정하되 현재 스크롤 위치 유지
-            body.classList.add('mobile-menu-open');
-            body.style.overflow = 'hidden';
-            body.style.position = 'fixed';
-            body.style.width = '100%';
-            body.style.height = '100%';
-            body.style.top = `-${scrollY}px`;
-            body.style.left = '0';
-
-            html.style.overflow = 'hidden';
+            // 일반 환경: 새 창으로 열기
+            window.open(reservationUrl, '_blank', 'noopener,noreferrer');
         }
-    };
-
-    // Navigation function
-    window.navigateTo = function(page) {
-        // Close mobile menu if open
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            toggleMobileMenu();
-        }
-
-        // Navigate to page
-        let url = '';
-        switch(page) {
-            case 'home':
-                url = 'index.html';
-                break;
-            case 'main':
-                url = 'main.html';
-                break;
-            case 'directions':
-                url = 'directions.html';
-                break;
-            case 'reservation-info':
-                url = 'reservation.html';
-                break;
-            default:
-                url = page + '.html';
-        }
-
-        if (url) {
-            window.location.href = url;
-        }
-    };
-
-    // Submenu hover effect
-    function initSubmenuHover() {
-        const menuItems = document.querySelectorAll('.menu-item-wrapper');
-
-        menuItems.forEach(item => {
-            let hoverTimeout;
-
-            item.addEventListener('mouseenter', function() {
-                clearTimeout(hoverTimeout);
-            });
-
-            item.addEventListener('mouseleave', function() {
-                hoverTimeout = setTimeout(() => {
-                    // Optional: Add any cleanup code here
-                }, 100);
-            });
-        });
-    }
-
-    // Check if logo image exists and hide text
-    function checkLogoImage() {
-        const logoImage = document.querySelector('.logo-image');
-        const logoText = document.querySelector('.logo-text');
-
-        if (logoImage && logoText) {
-            // Check if logo image src exists and is not empty
-            if (logoImage.src && !logoImage.src.includes('undefined') && !logoImage.src.endsWith('/')) {
-                logoText.style.display = 'none';
-            }
+    } else {
+        if (!isPreviewMode) {
+            window.location.href = '../pages/reservation.html';
         }
     }
+};
 
+/**
+ * YBS 예약 버튼 초기화
+ * ybsId를 사용하여 YBS 예약 페이지를 새 창으로 열기
+ */
+window.initializeYBSButtons = function() {
+    const ybsButtons = document.querySelectorAll('[data-ybs-booking]');
 
-    // Check and set header state based on scroll position
-    function checkInitialScroll() {
-        const header = document.querySelector('.top-header');
-
-        if (header) {
-            if (window.scrollY > 50 || window.pageYOffset > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        }
+    if (ybsButtons.length === 0) {
+        return;
     }
 
-    // Side Header Toggle
-    window.toggleSideHeader = function() {
-        const sideHeader = document.getElementById('side-header');
-        const hamburgerButton = document.getElementById('hamburger-button');
-        const overlay = document.getElementById('side-header-overlay');
-        const body = document.body;
-        const html = document.documentElement;
+    ybsButtons.forEach((button) => {
+        const ybsId = button.getAttribute('data-ybs-id');
 
-        if (sideHeader && hamburgerButton) {
-            const isExpanded = sideHeader.classList.contains('expanded');
+        // ybsId가 있을 때만 버튼 표시
+        if (ybsId && ybsId.trim() !== '') {
+            button.classList.remove('hidden');
 
-            if (isExpanded) {
-                // 닫기
-                sideHeader.classList.remove('expanded');
-                hamburgerButton.classList.remove('active');
-                if (overlay) overlay.classList.remove('active');
-
-                // 스크롤 복원
-                body.style.overflow = '';
-                body.style.position = '';
-                body.style.top = '';
-                body.style.width = '';
-                html.style.overflow = '';
-
-                const scrollY = body.style.top || '0';
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            } else {
-                // 열기
-                sideHeader.classList.add('expanded');
-                hamburgerButton.classList.add('active');
-                if (overlay) overlay.classList.add('active');
-
-                // 스크롤 막기
-                const scrollY = window.scrollY;
-                body.style.position = 'fixed';
-                body.style.overflow = 'hidden';
-                body.style.width = '100%';
-                body.style.top = `-${scrollY}px`;
-                html.style.overflow = 'hidden';
-            }
-        }
-    };
-
-    // Change Side Image when menu section is hovered
-    function initMenuHoverEffects() {
-        const menuSections = document.querySelectorAll('.menu-section');
-
-        menuSections.forEach(section => {
-            const title = section.querySelector('.menu-section-title').textContent.toLowerCase();
-
-            section.addEventListener('mouseenter', function() {
-                changeSideImage(title);
-            });
-        });
-    }
-
-    // Change Side Image
-    function changeSideImage(menuText) {
-        const imageBanner = document.getElementById('side-image-banner');
-        if (!imageBanner) return;
-
-        let imageUrl = '';
-
-        switch(menuText.toLowerCase()) {
-            case 'about':
-                imageUrl = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80';
-                break;
-            case 'spaces':
-                imageUrl = 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80';
-                break;
-            case 'specials':
-                imageUrl = 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80';
-                break;
-            case 'reservation':
-                imageUrl = 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80';
-                break;
-            default:
-                imageUrl = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=400&q=80';
-        }
-
-        imageBanner.style.backgroundImage = `url('${imageUrl}')`;
-    }
-
-    // Initialize header on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check initial scroll position
-        checkInitialScroll();
-
-        // Initialize submenu hover
-        initSubmenuHover();
-
-        // Check logo image
-        checkLogoImage();
-
-        // Update submenu position initially
-        updateSubmenuPosition();
-
-        // Update submenu position on window resize
-        window.addEventListener('resize', updateSubmenuPosition);
-
-
-        // Initialize hamburger button toggle
-        const hamburgerButton = document.getElementById('hamburger-button');
-        if (hamburgerButton) {
-            hamburgerButton.addEventListener('click', toggleSideHeader);
-        }
-
-        // Initialize overlay click event
-        const overlay = document.getElementById('side-header-overlay');
-        if (overlay) {
-            overlay.addEventListener('click', function() {
-                toggleSideHeader();
-            });
-        }
-
-        // Initialize menu hover effects
-        setTimeout(initMenuHoverEffects, 500);
-
-        // Check for multi-column layout
-        // initMultiColumnLayout(); // 주석 처리 - 단일 항목으로 변경
-
-        // For mobile - use side header instead of mobile menu
-        const mobileToggle = document.querySelector('.mobile-toggle');
-        if (mobileToggle && window.innerWidth <= 768) {
-            mobileToggle.addEventListener('click', function(e) {
+            button.onclick = function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                toggleSideHeader();
-            });
+
+                const isPreviewMode = window.parent !== window;
+                const ybsUrl = `${YBS_BOOKING_URL_BASE}${ybsId}`;
+
+                if (isPreviewMode) {
+                    // 미리보기 환경: 부모 창(어드민)에 메시지 전송
+                    window.parent.postMessage({
+                        type: 'OPEN_YBS_RESERVATION',
+                        url: ybsUrl,
+                        ybsId: ybsId
+                    }, window.previewHandler?.parentOrigin || '*');
+                } else {
+                    // 일반 환경: 새 창으로 열기
+                    window.open(ybsUrl, '_blank', 'noopener,noreferrer');
+                }
+            };
         }
     });
+};
 
-    // Menu Accordion Toggle for Side Header
-    window.toggleMenuAccordion = function(header) {
-        const content = header.nextElementSibling;
+/**
+ * 예약 버튼 초기화
+ * realtime_booking_id를 사용하여 예약 페이지를 새 창으로 열기
+ */
+window.initializeReservationButtons = function() {
+    const reservationButtons = document.querySelectorAll('[data-booking-engine]');
 
-        // Toggle current accordion
-        header.classList.toggle('active');
-        content.classList.toggle('active');
-    };
-
-    // Mobile Accordion Toggle
-    window.toggleMobileAccordion = function(header) {
-        const content = header.nextElementSibling;
-
-        // Toggle current accordion
-        header.classList.toggle('active');
-        content.classList.toggle('active');
-    };
-
-    // Also check when window loads (for refresh scenarios)
-    window.addEventListener('load', function() {
-        checkInitialScroll();
-    });
-
-    // Check for multi-column layout based on item count
-    function initMultiColumnLayout() {
-        const menuLists = document.querySelectorAll('.menu-section-list');
-
-        menuLists.forEach(list => {
-            const items = list.querySelectorAll('li');
-            if (items.length > 4) {
-                list.classList.add('multi-column');
-            }
-        });
+    if (reservationButtons.length === 0) {
+        return;
     }
 
-    // Immediate check for page refresh scenarios
-    checkInitialScroll();
+    reservationButtons.forEach((button) => {
+        button.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.openReservation();
+        };
+    });
+};
 
-})();
+/**
+ * 페이지 버튼 초기화 통합 함수
+ */
+function initializePageButtons() {
+    updateHeader();
+    initializeReservationButtons();
+    initializeYBSButtons();
+}
+
+// DOM이 준비되면 버튼 초기화 실행
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePageButtons);
+} else {
+    initializePageButtons();
+}

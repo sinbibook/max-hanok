@@ -1,56 +1,226 @@
-/* Reset & Base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Main CSS - 모든 스타일을 통합하는 메인 파일 */
+
+/* Import global styles first (highest priority) */
+@import url('./globals.css');
+
+/* Import all common styles */
+@import url('./base.css');
+/* theme.css는 HTML에서 직접 로드 (동적 테마 적용 위해) */
+@import url('./layout.css');
+@import url('./components.css');
+@import url('./animated-fade-gallery.css');
+@import url('./animated-masonry-slider.css');
+@import url('./image-with-fallback.css');
+
+/* ==============================================
+   CSS Variables (Design Tokens)
+   ============================================== */
+:root {
+    /* Neutral Colors */
+    --color-white: #ffffff;
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+
+    /* Status Colors */
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+
+    /* Background Colors */
+    --bg-body: #ffffff;
+    --bg-surface: #ffffff;
+    --bg-overlay: rgba(0, 0, 0, 0.4);
+    --bg-overlay-light: rgba(255, 255, 255, 0.9);
+
+    /* Text Colors */
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --text-inverse: #ffffff;
+
+    /* Border Colors */
+    --border-color: #e6e6e6;
+    --border-light: #f3f4f6;
+    --border-dark: #d1d5db;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Breakpoints (for reference) */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+
+    /* Typography */
+    --font-family-sans: 'GowunDodum-Regular', 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-family-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-family-mono: 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', 'Source Code Pro', monospace;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+
+    --line-height-tight: 1.25;
+    --line-height-snug: 1.375;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.625;
+    --line-height-loose: 2;
+
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-top: 9999;
 }
 
-html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-body: #1f2937;
+    --bg-surface: #374151;
+    --bg-overlay: rgba(0, 0, 0, 0.8);
+    --bg-overlay-light: rgba(0, 0, 0, 0.9);
+
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-inverse: #1f2937;
+
+    --border-color: #4b5563;
+    --border-light: #374151;
+    --border-dark: #6b7280;
 }
 
-body {
-    font-family: var(--font-ko-sub);
-    font-weight: 400;
-    line-height: 1.6;
-    color: #333;
-    overflow-x: hidden;
-    background: var(--color-primary);
-    position: relative;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+/* ==============================================
+   Color Utility Classes
+   ============================================== */
+.text-primary {
+    color: var(--color-primary);
 }
 
-/* Mobile viewport fix */
-@supports (-webkit-touch-callout: none) {
-    html {
-        height: -webkit-fill-available;
-    }
+.text-secondary {
+    color: var(--text-secondary);
 }
 
-/* Ensure no extra space from line-height */
-.hero-section,
-.main-section {
-    line-height: 1;
+.text-muted {
+    color: var(--text-muted);
 }
 
-/* Hero Fade In Effect for all pages */
-.hero-section,
-.main-section.fullscreen-slider,
-.fullscreen-slider-container,
-.hero-slider-section {
-    opacity: 0;
-    animation: heroFadeIn 1.8s ease-out forwards;
-    animation-delay: 0.2s;
+.text-white {
+    color: var(--color-white);
 }
 
-@keyframes heroFadeIn {
+.text-success {
+    color: var(--color-success);
+}
+
+.text-warning {
+    color: var(--color-warning);
+}
+
+.text-danger {
+    color: var(--color-danger);
+}
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-secondary {
+    background-color: var(--color-secondary);
+}
+
+.bg-white {
+    background-color: var(--color-white);
+}
+
+.bg-gray-50 {
+    background-color: var(--color-gray-50);
+}
+
+.bg-gray-100 {
+    background-color: var(--color-gray-100);
+}
+
+.bg-gray-200 {
+    background-color: var(--color-gray-200);
+}
+
+.bg-success {
+    background-color: var(--color-success);
+}
+
+.bg-warning {
+    background-color: var(--color-warning);
+}
+
+.bg-danger {
+    background-color: var(--color-danger);
+}
+
+.border-primary {
+    border-color: var(--color-primary);
+}
+
+.border-secondary {
+    border-color: var(--border-color);
+}
+
+.border-light {
+    border-color: var(--border-light);
+}
+
+.border-dark {
+    border-color: var(--border-dark);
+}
+
+/* ==============================================
+   Animation Classes
+   ============================================== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(30px);
@@ -61,231 +231,233 @@ body {
     }
 }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--color-secondary);
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-    transition: opacity 0.3s ease;
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-a:hover {
-    opacity: 0.8;
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
 }
 
-/* Common Layout Classes */
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    :root {
+        --color-primary: #000080;
+        --border-color: #000000;
+        --text-secondary: #000000;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ==============================================
+   Global Custom Styles
+   ============================================== */
+
+/* Global Custom Styles - Override with higher specificity */
+body {
+    font-family: var(--font-family-sans) !important;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection Colors */
+::selection {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+::-moz-selection {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-gray-400);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-500);
+}
+
+/* Focus Ring */
+.focus-ring:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .print-block {
+        display: block !important;
+    }
+
+    @page {
+        margin: 2cm;
+    }
+}
+
+/* High DPI Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Add high DPI specific styles if needed */
+}
+
+/* Container Queries Support */
+@supports (container-type: inline-size) {
+    .container-query {
+        container-type: inline-size;
+    }
+
+    @container (min-width: 400px) {
+        .container-responsive {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+    }
+}
+
+/* CSS Grid Fallback for older browsers */
+@supports not (display: grid) {
+    .grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .grid > * {
+        flex: 1 1 300px;
+        margin: 0.5rem;
+    }
+}
+
+/* Empty Image Placeholder - 모든 페이지 공통 */
+.empty-image-placeholder {
+    border: 2px dashed #9ca3af !important;
+    border-radius: 0.75rem !important;
+    background: #d1d5db !important;
+}
+
+/* 페이지 콘텐츠 여백 설정 - 모든 페이지 공통 */
 .page-content {
-    width: 100%;
-    overflow: hidden;
-}
-
-.section-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Main Content */
-.main-content {
-    margin-left: 0;
-    transition: margin-left 0.3s ease;
-}
-
-/* Main Section */
-.main-section {
-    height: 100vh;
+    background: var(--color-primary);
     position: relative;
-    overflow: hidden;
-    z-index: 990; /* 헤더(z-index: 999) 아래 - 헤더가 슬라이더 위에 오버레이됨 */
 }
 
-.content-wrap {
-    width: 90%;
-    margin: 0 auto;
-    padding: 0 20px;
+/* 전체 너비 배경색 적용을 위한 pseudo-element */
+.page-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    background: inherit;
+    z-index: -1;
 }
 
-/* Scroll Animation Styles */
-.animate-element {
-    opacity: 0;
-    transition: all 0.8s ease;
+/* Large screens (1280px and up) */
+@media (min-width: 1280px) {
+    .page-content {
+        padding-left: 10rem;
+        padding-right: 10rem;
+    }
 }
 
-.about-title.animate-element {
-    transform: translateY(30px);
-    transition-delay: 0.1s;
+/* Extra large screens (1536px and up) */
+@media (min-width: 1536px) {
+    .page-content {
+        padding-left: 12rem;
+        padding-right: 12rem;
+    }
 }
 
-.about-title.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* About Title */
-.about-title {
-    font-family: var(--font-ko-main);
-    font-size: 2rem;
-    line-height: 1.6;
-    color: var(--color-secondary);
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-/* About Description */
-.about-description-wrap {
-    text-align: center;
-    padding: 120px 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* 27인치 모니터급 큰 화면에서만 80% */
+/* Ultra wide screens (1920px and up) */
 @media (min-width: 1920px) {
-    .content-wrap {
-        width: 80%;
-    }
-}
-
-/* 모바일에서 content-wrap 패딩 제거 및 main-section 조정 */
-@media (max-width: 768px) {
-    .main-section {
-        margin-top: -85px;
-    }
-
-    .content-wrap {
-        padding: 0;
-    }
-
-    .about-description-wrap {
-        padding: 80px 0;
-        margin: 0 -20px;
-    }
-}
-
-/* Utility Classes */
-.text-center {
-    text-align: center;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.visible {
-    display: block !important;
-}
-
-/* Scrolling Marquee */
-.marquee-section {
-    padding: 0;
-    overflow: hidden;
-}
-
-.marquee-container {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.marquee-text {
-    display: inline-block;
-    animation: marquee 60s linear infinite;
-    font-family: var(--font-en-main);
-    font-size: 3rem;
-    font-weight: 300;
-    color: var(--color-secondary);
-    letter-spacing: 8px;
-    font-style: italic;
-}
-
-.marquee-text span {
-    padding-right: 80px;
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
-
-/* Full Banner Section */
-.full-banner {
-    height: 70vh;
-    background-image: url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-/* Desktop only - parallax effect */
-@media (min-width: 1024px) {
-    .full-banner {
-        background-attachment: fixed;
-    }
-}
-
-/* Responsive Marquee */
-@media (max-width: 768px) {
-    .marquee-text {
-        font-size: 2rem;
-        letter-spacing: 4px;
-    }
-
-    .marquee-text span {
-        padding-right: 50px;
-    }
-
-    .full-banner {
-        height: 60vh;
-        background-attachment: scroll;
-    }
-}
-
-@media (max-width: 480px) {
-    .marquee-section {
-        padding: 10px 0;
-    }
-
-    .marquee-text {
-        font-size: 2rem;
-        letter-spacing: 2px;
-        font-weight: bold;
-        animation: marquee 40s linear infinite;
-    }
-
-    .marquee-text span {
-        padding-right: 30px;
-    }
-
-    .full-banner {
-        height: 50vh;
+    .page-content {
+        padding-left: 14rem;
+        padding-right: 14rem;
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
