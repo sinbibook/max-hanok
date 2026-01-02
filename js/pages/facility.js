@@ -1,188 +1,129 @@
 /**
- * Facility Page Script
+ * Facility Page Functionality
+ * 시설 페이지 슬라이더 기능
  */
 
+// Navigation function
+function navigateToHome() {
+    window.location.href = './index.html';
+}
+
+// Facility Slider Functions
+window.facilityCurrentSlide = 0;
+window.facilityTotalSlides = 1;
+
+function updateFacilitySlider() {
+    const slides = document.querySelectorAll('.facility-slide');
+    const indicators = document.querySelectorAll('.facility-indicator');
+
+    slides.forEach((slide, index) => {
+        slide.style.opacity = index === window.facilityCurrentSlide ? '1' : '0';
+    });
+
+    indicators.forEach((indicator, index) => {
+        indicator.style.background = index === window.facilityCurrentSlide ? 'white' : 'rgba(255,255,255,0.5)';
+    });
+}
+
+function nextFacilitySlide() {
+    if (window.facilityTotalSlides <= 1) return;
+
+    window.facilityCurrentSlide = (window.facilityCurrentSlide + 1) % window.facilityTotalSlides;
+    updateFacilitySlider();
+}
+
+function prevFacilitySlide() {
+    if (window.facilityTotalSlides <= 1) return;
+
+    window.facilityCurrentSlide = window.facilityCurrentSlide === 0
+        ? window.facilityTotalSlides - 1
+        : window.facilityCurrentSlide - 1;
+    updateFacilitySlider();
+}
+
+function goToFacilitySlide(index) {
+    if (index >= 0 && index < window.facilityTotalSlides) {
+        window.facilityCurrentSlide = index;
+        updateFacilitySlider();
+    }
+}
+
+// Auto-play functionality (optional)
+let facilityAutoSlideTimer;
+function startFacilityAutoSlide() {
+    if (window.facilityTotalSlides <= 1) return;
+
+    facilityAutoSlideTimer = setInterval(() => {
+        nextFacilitySlide();
+    }, 4000); // 4초마다 자동 슬라이드
+}
+
+function stopFacilityAutoSlide() {
+    if (facilityAutoSlideTimer) {
+        clearInterval(facilityAutoSlideTimer);
+    }
+}
+
+// Touch 슬라이드 변수
+let facilityTouchStartX = 0;
+let facilityTouchEndX = 0;
+let facilityIsTouchMove = false;
+
+// Touch 이벤트 핸들러
+function handleFacilityTouchStart(e) {
+    facilityTouchStartX = e.changedTouches[0].screenX;
+    facilityIsTouchMove = false;
+}
+
+function handleFacilityTouchMove(e) {
+    facilityIsTouchMove = true;
+}
+
+function handleFacilityTouchEnd(e) {
+    facilityTouchEndX = e.changedTouches[0].screenX;
+
+    if (!facilityIsTouchMove) return;
+
+    const threshold = 50; // 최소 스와이프 거리
+    const swipeDistance = facilityTouchStartX - facilityTouchEndX;
+
+    if (Math.abs(swipeDistance) > threshold) {
+        if (swipeDistance > 0) {
+            // 왼쪽으로 스와이프 = 다음 슬라이드
+            nextFacilitySlide();
+        } else {
+            // 오른쪽으로 스와이프 = 이전 슬라이드
+            prevFacilitySlide();
+        }
+    }
+}
+
+// Mouse hover와 Touch 이벤트 설정
 document.addEventListener('DOMContentLoaded', function() {
-    // Hero Slider는 FacilityMapper에서 데이터 매핑 후 초기화됨
-    // (슬라이드가 동적으로 생성되므로 여기서 호출하면 빈 슬라이더)
+    // Initialize FacilityMapper (PreviewHandler가 없을 때만)
+    if (!window.previewHandler) {
+        const facilityMapper = new FacilityMapper();
+        facilityMapper.initialize().then(() => {
+            facilityMapper.setupNavigation();
+        }).catch(error => {
+            console.error('❌ FacilityMapper initialization failed:', error);
+        });
+    }
 
-    // Initialize animations (정적 요소들에 대해)
-    window.initFacilityAnimations();
+    setTimeout(() => {
+        const sliderWrapper = document.querySelector('.facility-slider-wrapper');
+        if (sliderWrapper) {
+            // Mouse 이벤트
+            sliderWrapper.addEventListener('mouseenter', stopFacilityAutoSlide);
+            sliderWrapper.addEventListener('mouseleave', startFacilityAutoSlide);
+
+            // Touch 이벤트
+            sliderWrapper.addEventListener('touchstart', handleFacilityTouchStart, { passive: true });
+            sliderWrapper.addEventListener('touchmove', handleFacilityTouchMove, { passive: true });
+            sliderWrapper.addEventListener('touchend', handleFacilityTouchEnd, { passive: true });
+
+            // 초기 auto-play 시작
+            startFacilityAutoSlide();
+        }
+    }, 1000);
 });
-
-// 전역 변수로 interval 관리 (중복 호출 방지)
-window._facilityHeroSliderInterval = null;
-
-/**
- * Initialize Hero Slider
- * window에 노출하여 mapper에서 재초기화 가능
- */
-window.initFacilityHeroSlider = function initHeroSlider() {
-    const slider = document.querySelector('[data-hero-slider]');
-    if (!slider) return;
-
-    // 기존 interval 클리어 (중복 호출 방지)
-    if (window._facilityHeroSliderInterval) {
-        clearInterval(window._facilityHeroSliderInterval);
-        window._facilityHeroSliderInterval = null;
-    }
-
-    const slides = slider.querySelectorAll('.hero-slide');
-    const currentSlideEl = document.querySelector('[data-current-slide]');
-    const totalSlidesEl = document.querySelector('[data-total-slides]');
-    const progressBar = document.querySelector('[data-hero-progress]');
-    const prevBtn = document.querySelector('.hero-nav-prev');
-    const nextBtn = document.querySelector('.hero-nav-next');
-
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    const slideInterval = 5000; // 5 seconds per slide
-
-    // 슬라이드가 1개 이하면 자동 재생 불필요
-    if (totalSlides <= 1) {
-        if (totalSlidesEl) {
-            totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-        }
-        if (currentSlideEl) {
-            currentSlideEl.textContent = '01';
-        }
-        return;
-    }
-
-    // Auto-play slider (전역 변수 사용)
-    let isTransitioning = false;
-
-    // Update total slides count
-    if (totalSlidesEl) {
-        totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-    }
-
-    // Function to show specific slide
-    function showSlide(index, immediate = false) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-
-        // Update current slide number
-        if (currentSlideEl) {
-            currentSlideEl.textContent = (index + 1).toString().padStart(2, '0');
-        }
-
-        // Update progress bar - always fill to 100% for current slide
-        if (progressBar) {
-            // Reset to 0 then animate to 100%
-            progressBar.style.transition = 'none';
-            progressBar.style.width = '0%';
-
-            // Start animation immediately or with minimal delay
-            if (immediate) {
-                // For first slide, start immediately
-                setTimeout(() => {
-                    progressBar.style.transition = `width ${slideInterval}ms linear`;
-                    progressBar.style.width = '100%';
-                }, 10);
-            } else {
-                // For subsequent slides
-                progressBar.offsetHeight; // Force reflow
-                progressBar.style.transition = `width ${slideInterval}ms linear`;
-                progressBar.style.width = '100%';
-            }
-        }
-    }
-
-    // Function to go to next slide
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Function to go to previous slide
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Start auto-play
-    function startAutoPlay() {
-        window._facilityHeroSliderInterval = setInterval(() => {
-            if (!isTransitioning) {
-                nextSlide();
-            }
-        }, slideInterval);
-    }
-
-    // Function to reset auto-play
-    function resetAutoPlay() {
-        clearInterval(window._facilityHeroSliderInterval);
-        startAutoPlay();
-    }
-
-    // Navigation button handlers
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._facilityHeroSliderInterval);
-                nextSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._facilityHeroSliderInterval);
-                prevSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    // Pause on hover
-    slider.addEventListener('mouseenter', () => {
-        clearInterval(window._facilityHeroSliderInterval);
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        if (!isTransitioning) {
-            startAutoPlay();
-        }
-    });
-
-    // Initialize first slide with immediate animation and start auto-play
-    showSlide(0, true);
-    startAutoPlay();
-}
-
-/**
- * Initialize animations
- * window에 노출하여 mapper에서 재초기화 가능
- */
-window.initFacilityAnimations = function initAnimations() {
-    const animatedElements = document.querySelectorAll('.animate-element:not(.animate)');
-
-    if (!animatedElements.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    }, {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    animatedElements.forEach(element => {
-        observer.observe(element);
-    });
-}

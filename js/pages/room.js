@@ -1,287 +1,173 @@
 /**
- * Room Page Script
+ * Room Page Functionality
+ * 객실 페이지 슬라이더 및 갤러리 기능
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Hero Slider와 Room Detail Slider는 RoomMapper에서 데이터 매핑 후 초기화됨
-    // (슬라이드가 동적으로 생성되므로 여기서 호출하면 빈 슬라이더)
+import { initSwipeHandler } from '../utils/swipe-handler.js';
 
-    // Initialize animations (정적 요소들에 대해)
-    window.initRoomAnimations();
+// Global variables
+let currentSlide = 0;
+let autoSlideTimer;
+
+// Mobile gallery drag functionality
+let isDragging = false;
+let startX = 0;
+let scrollLeft = 0;
+const mobileGallery = document.getElementById('mobile-gallery');
+
+// Navigation function
+function navigateToHome() {
+    window.location.href = './index.html';
+}
+
+function updateSlider() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const indicatorCurrent = document.querySelector('.indicator-current');
+  const indicatorProgress = document.querySelector('.indicator-progress');
+
+  // 슬라이드가 없으면 리턴
+  if (slides.length === 0) return;
+
+  // currentSlide가 범위를 벗어나면 수정
+  if (currentSlide >= slides.length) {
+    currentSlide = 0;
+  } else if (currentSlide < 0) {
+    currentSlide = slides.length - 1;
+  }
+
+  slides.forEach((slide, index) => {
+    slide.classList.toggle('active', index === currentSlide);
+  });
+
+  const totalSlides = slides.length;
+  if (indicatorCurrent) {
+    indicatorCurrent.textContent = String(currentSlide + 1).padStart(2, '0');
+  }
+  if (indicatorProgress) {
+    indicatorProgress.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+  }
+}
+
+function nextSlide() {
+  const totalSlides = document.querySelectorAll('.hero-slide').length;
+  if (totalSlides === 0) return;
+
+  currentSlide = (currentSlide + 1) % totalSlides;
+  updateSlider();
+  resetAutoSlide();
+}
+
+function prevSlide() {
+  const totalSlides = document.querySelectorAll('.hero-slide').length;
+  currentSlide = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+  updateSlider();
+  resetAutoSlide();
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  updateSlider();
+  resetAutoSlide();
+}
+
+function startAutoSlide() {
+  // 기존 타이머가 있다면 먼저 정리
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer);
+  }
+
+  autoSlideTimer = setInterval(() => {
+    nextSlide();
+  }, 5000);
+}
+
+function resetAutoSlide() {
+  clearInterval(autoSlideTimer);
+  autoSlideTimer = null;
+  startAutoSlide();
+}
+
+// 슬라이더 초기화 함수 (hero 슬라이드 생성 후 호출)
+function initializeSlider() {
+  // 기존 타이머 정리
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = null;
+  }
+
+  // currentSlide 리셋
+  currentSlide = 0;
+
+  // 슬라이더 업데이트 및 자동 재생 시작
+  updateSlider();
+  startAutoSlide();
+}
+
+// 전역으로 노출
+window.initializeSlider = initializeSlider;
+
+// Mobile gallery drag handlers
+function initializeMobileGallery() {
+    if (!mobileGallery) return;
+
+    mobileGallery.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        mobileGallery.classList.add('dragging');
+        startX = e.pageX - mobileGallery.offsetLeft;
+        scrollLeft = mobileGallery.scrollLeft;
+        e.preventDefault();
+    });
+
+    mobileGallery.addEventListener('mouseleave', () => {
+        isDragging = false;
+        mobileGallery.classList.remove('dragging');
+    });
+
+    mobileGallery.addEventListener('mouseup', () => {
+        isDragging = false;
+        mobileGallery.classList.remove('dragging');
+    });
+
+    mobileGallery.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - mobileGallery.offsetLeft;
+        const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
+        mobileGallery.scrollLeft = scrollLeft - walk;
+    });
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize mobile gallery
+  initializeMobileGallery();
+
+  // Initialize hero slider navigation buttons
+  const prevButton = document.querySelector('.nav-button.prev');
+  const nextButton = document.querySelector('.nav-button.next');
+
+  if (prevButton) {
+    prevButton.addEventListener('click', prevSlide);
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener('click', nextSlide);
+  }
+
+  // Initialize touch swipe for hero section
+  const heroSection = document.querySelector('.hero-section');
+  if (heroSection) {
+    initSwipeHandler(heroSection, nextSlide, prevSlide);
+  }
+
+  // Initialize RoomMapper (PreviewHandler가 없을 때만)
+  if (!window.previewHandler) {
+    const roomMapper = new RoomMapper();
+    roomMapper.initialize().then(() => {
+      roomMapper.setupNavigation();
+      // 슬라이더 초기화는 RoomMapper의 initializeHeroSlider에서 호출됨
+    }).catch(error => {
+      console.error('❌ RoomMapper initialization failed:', error);
+    });
+  }
 });
-
-// 전역 변수로 interval 관리 (중복 호출 방지)
-window._roomHeroSliderInterval = null;
-window._roomDetailSliderInterval = null;
-
-/**
- * Initialize Hero Slider
- * window에 노출하여 mapper에서 재초기화 가능
- */
-window.initRoomHeroSlider = function initHeroSlider() {
-    const slider = document.querySelector('[data-hero-slider]');
-    if (!slider) return;
-
-    // 기존 interval 클리어 (중복 호출 방지)
-    if (window._roomHeroSliderInterval) {
-        clearInterval(window._roomHeroSliderInterval);
-        window._roomHeroSliderInterval = null;
-    }
-
-    const slides = slider.querySelectorAll('.hero-slide');
-    const currentSlideEl = document.querySelector('[data-current-slide]');
-    const totalSlidesEl = document.querySelector('[data-total-slides]');
-    const progressBar = document.querySelector('[data-hero-progress]');
-    const prevBtn = document.querySelector('.hero-nav-prev');
-    const nextBtn = document.querySelector('.hero-nav-next');
-
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    const slideInterval = 5000; // 5 seconds per slide
-
-    // 슬라이드가 1개 이하면 자동 재생 불필요
-    if (totalSlides <= 1) {
-        if (totalSlidesEl) {
-            totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-        }
-        if (currentSlideEl) {
-            currentSlideEl.textContent = '01';
-        }
-        return;
-    }
-
-    // Auto-play slider (전역 변수 사용)
-    let isTransitioning = false;
-
-    // Update total slides count
-    if (totalSlidesEl) {
-        totalSlidesEl.textContent = totalSlides.toString().padStart(2, '0');
-    }
-
-    // Function to show specific slide
-    function showSlide(index, immediate = false) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-
-        // Update current slide number
-        if (currentSlideEl) {
-            currentSlideEl.textContent = (index + 1).toString().padStart(2, '0');
-        }
-
-        // Update progress bar - always fill to 100% for current slide
-        if (progressBar) {
-            // Reset to 0 then animate to 100%
-            progressBar.style.transition = 'none';
-            progressBar.style.width = '0%';
-
-            // Start animation immediately or with minimal delay
-            if (immediate) {
-                // For first slide, start immediately
-                setTimeout(() => {
-                    progressBar.style.transition = `width ${slideInterval}ms linear`;
-                    progressBar.style.width = '100%';
-                }, 10);
-            } else {
-                // For subsequent slides
-                progressBar.offsetHeight; // Force reflow
-                progressBar.style.transition = `width ${slideInterval}ms linear`;
-                progressBar.style.width = '100%';
-            }
-        }
-    }
-
-    // Function to go to next slide
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Function to go to previous slide
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Start auto-play
-    function startAutoPlay() {
-        window._roomHeroSliderInterval = setInterval(() => {
-            if (!isTransitioning) {
-                nextSlide();
-            }
-        }, slideInterval);
-    }
-
-    // Function to reset auto-play
-    function resetAutoPlay() {
-        clearInterval(window._roomHeroSliderInterval);
-        startAutoPlay();
-    }
-
-    // Navigation button handlers
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._roomHeroSliderInterval);
-                nextSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                isTransitioning = true;
-                clearInterval(window._roomHeroSliderInterval);
-                prevSlide();
-                setTimeout(() => {
-                    isTransitioning = false;
-                    resetAutoPlay();
-                }, 100);
-            }
-        });
-    }
-
-    // Pause on hover
-    slider.addEventListener('mouseenter', () => {
-        clearInterval(window._roomHeroSliderInterval);
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        if (!isTransitioning) {
-            startAutoPlay();
-        }
-    });
-
-    // Initialize first slide with immediate animation and start auto-play
-    showSlide(0, true);
-    startAutoPlay();
-}
-
-/**
- * Initialize Room Detail Slider
- * window에 노출하여 mapper에서 재초기화 가능
- */
-window.initRoomDetailSlider = function initRoomDetailSlider() {
-    // 기존 interval 클리어 (중복 호출 방지)
-    if (window._roomDetailSliderInterval) {
-        clearInterval(window._roomDetailSliderInterval);
-        window._roomDetailSliderInterval = null;
-    }
-
-    const slides = document.querySelectorAll('.room-slide');
-    const indicators = document.querySelectorAll('.indicator');
-
-    if (!slides.length) return;
-
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    const slideInterval = 4000; // 4 seconds per slide
-
-    // 슬라이드가 1개 이하면 자동 재생 불필요
-    if (totalSlides <= 1) {
-        return;
-    }
-
-    // Function to show specific slide
-    function showSlide(index) {
-        // Remove active class from all slides and indicators
-        slides.forEach(slide => slide.classList.remove('active'));
-        indicators.forEach(ind => ind.classList.remove('active'));
-
-        // Add active class to current slide and indicator
-        slides[index].classList.add('active');
-        if (indicators[index]) {
-            indicators[index].classList.add('active');
-        }
-
-        // Update thumbnails
-        const thumbs = document.querySelectorAll('.thumb-img');
-        thumbs.forEach(t => t.classList.remove('active'));
-        if (thumbs[index]) {
-            thumbs[index].classList.add('active');
-        }
-    }
-
-    // Function to go to next slide
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    }
-
-    // Start auto-play
-    function startAutoPlay() {
-        window._roomDetailSliderInterval = setInterval(nextSlide, slideInterval);
-    }
-
-    // Click handlers for indicators
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            clearInterval(window._roomDetailSliderInterval);
-            currentSlide = index;
-            showSlide(currentSlide);
-            // Restart auto-play
-            startAutoPlay();
-        });
-    });
-
-    // Click handlers for thumbnails
-    const thumbs = document.querySelectorAll('.thumb-img');
-    thumbs.forEach((thumb, index) => {
-        thumb.addEventListener('click', () => {
-            clearInterval(window._roomDetailSliderInterval);
-            currentSlide = index;
-            showSlide(currentSlide);
-            // Update thumbnail active state
-            thumbs.forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-            // Restart auto-play
-            startAutoPlay();
-        });
-    });
-
-    // Pause on hover
-    const sliderContainer = document.querySelector('.room-slider');
-    if (sliderContainer) {
-        sliderContainer.addEventListener('mouseenter', () => {
-            clearInterval(window._roomDetailSliderInterval);
-        });
-
-        sliderContainer.addEventListener('mouseleave', () => {
-            startAutoPlay();
-        });
-    }
-
-    // Start auto-play
-    startAutoPlay();
-}
-
-/**
- * Initialize animations
- * window에 노출하여 mapper에서 재초기화 가능
- */
-window.initRoomAnimations = function initAnimations() {
-    const animatedElements = document.querySelectorAll('.animate-element:not(.animate)');
-
-    if (!animatedElements.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    }, {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    animatedElements.forEach(element => {
-        observer.observe(element);
-    });
-}
