@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="주변 관광지 안내">
+    <meta name="keywords" content="주변관광, 맛집, 관광지">
+    <title id="page-title">주변 관광 - 숙소명</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/theme.css" as="style">
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/common.css">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="맥스 한옥 펜션 - 주변관광" />
+    <meta property="og:description" content="맥스 한옥 펜션 주변의 관광명소와 맛집을 소개합니다" />
+    <meta property="og:url" content="https://max-hanok.com/nearby.html" />
+
+    <style>
+        .nearby-hero {
+            height: 60vh;
+            min-height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url('images/nearby-hero.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        .nearby-hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+        }
+
+        .nearby-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .nearby-section {
+            padding: 80px 0;
+        }
+
+        .nearby-section:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .nearby-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--primary-color, #333);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .nearby-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .nearby-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nearby-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .nearby-card-image {
+            height: 200px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .nearby-card-content {
+            padding: 25px;
+        }
+
+        .nearby-card-content h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .nearby-card-content p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .nearby-card-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .nearby-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .nearby-hero h1 {
+                font-size: 2rem;
+                letter-spacing: 0.15em;
+            }
+
+            .nearby-section {
+                padding: 50px 0;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Hero Section -->
+        <section class="nearby-hero">
+            <div>
+                <h1>NEARBY</h1>
+                <p>주변 관광명소와 맛집을 소개합니다</p>
+            </div>
+        </section>
+
+        <!-- 관광명소 Section -->
+        <section class="nearby-section">
+            <div class="nearby-container">
+                <div class="section-title">
+                    <h2>관광명소</h2>
+                    <p>숙소 주변의 아름다운 관광지를 만나보세요</p>
+                </div>
+
+                <div class="nearby-grid">
+                    <div class="nearby-card">
+                        <div class="nearby-card-image">이미지 영역</div>
+                        <div class="nearby-card-content">
+                            <h3>관광지 1</h3>
+                            <p>관광지에 대한 간단한 설명이 들어갑니다. 방문객들에게 유용한 정보를 제공합니다.</p>
+                            <div class="nearby-card-meta">
+                                <span>차량 10분</span>
+                                <span>도보 30분</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nearby-card">
+                        <div class="nearby-card-image">이미지 영역</div>
+                        <div class="nearby-card-content">
+                            <h3>관광지 2</h3>
+                            <p>관광지에 대한 간단한 설명이 들어갑니다. 방문객들에게 유용한 정보를 제공합니다.</p>
+                            <div class="nearby-card-meta">
+                                <span>차량 15분</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nearby-card">
+                        <div class="nearby-card-image">이미지 영역</div>
+                        <div class="nearby-card-content">
+                            <h3>관광지 3</h3>
+                            <p>관광지에 대한 간단한 설명이 들어갑니다. 방문객들에게 유용한 정보를 제공합니다.</p>
+                            <div class="nearby-card-meta">
+                                <span>차량 20분</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 맛집 Section -->
+        <section class="nearby-section">
+            <div class="nearby-container">
+                <div class="section-title">
+                    <h2>맛집</h2>
+                    <p>현지인이 추천하는 맛집 리스트</p>
+                </div>
+
+                <div class="nearby-grid">
+                    <div class="nearby-card">
+                        <div class="nearby-card-image">이미지 영역</div>
+                        <div class="nearby-card-content">
+                            <h3>맛집 1</h3>
+                            <p>대표 메뉴와 맛집 소개가 들어갑니다.</p>
+                            <div class="nearby-card-meta">
+                                <span>한식</span>
+                                <span>차량 5분</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nearby-card">
+                        <div class="nearby-card-image">이미지 영역</div>
+                        <div class="nearby-card-content">
+                            <h3>맛집 2</h3>
+                            <p>대표 메뉴와 맛집 소개가 들어갑니다.</p>
+                            <div class="nearby-card-meta">
+                                <span>카페</span>
+                                <span>도보 10분</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nearby-card">
+                        <div class="nearby-card-image">이미지 영역</div>
+                        <div class="nearby-card-content">
+                            <h3>맛집 3</h3>
+                            <p>대표 메뉴와 맛집 소개가 들어갑니다.</p>
+                            <div class="nearby-card-meta">
+                                <span>양식</span>
+                                <span>차량 10분</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+</body>
+</html>
