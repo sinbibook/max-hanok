@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.84.0",
-    "generatedAt": "2026-01-06T09:22:37.828Z",
+    "version": "1.85.0",
+    "generatedAt": "2026-01-06T09:33:01.829Z",
     "templateType": "gallery_sidebar",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1014,7 +1014,7 @@
           "sections": [
             {
               "hero": {
-                "title": "전통 한옥의 느낌으로,",
+                "title": "전통 한옥의 느낌으로!!",
                 "images": [
                   {
                     "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
@@ -1516,8 +1516,8 @@
           }
         },
         "color": {
-          "primary": "#FFF9F1",
-          "secondary": "#B66E41"
+          "primary": "#e8ebe6",
+          "secondary": "#7a8471"
         }
       },
       "popup": {
