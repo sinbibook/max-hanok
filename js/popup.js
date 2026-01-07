@@ -206,8 +206,7 @@ class PopupManager {
         this.container.innerHTML = this.render(popup);
 
         // body 스크롤 막기
-        document.body.classList.add('popup-open');
-        document.documentElement.classList.add('popup-open');
+        document.body.style.overflow = 'hidden';
 
         // 약간의 딜레이 후 active 클래스 추가 (애니메이션 효과)
         requestAnimationFrame(() => {
@@ -232,14 +231,12 @@ class PopupManager {
             setTimeout(() => {
                 this.container.innerHTML = '';
                 // body 스크롤 복원
-                document.body.classList.remove('popup-open');
-                document.documentElement.classList.remove('popup-open');
+                document.body.style.overflow = '';
             }, 300);
         } else {
             this.container.innerHTML = '';
             // body 스크롤 복원
-            document.body.classList.remove('popup-open');
-                document.documentElement.classList.remove('popup-open');
+            document.body.style.overflow = '';
         }
     }
 

@@ -1,48 +1,17 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
+<html lang="en">
+  <head>
+    <script src="js/config.js"></script>    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="숙소 설명">
-    <meta name="keywords" content="SEO 키워드">
-    <title>숙소명 - 템플릿</title>
-
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/theme.css" as="style">
-    <link rel="preload" href="styles/common.css" as="style">
-    <link rel="preload" href="styles/index.css" as="style">
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="styles/popup.css">
-
-  <!-- Open Graph Meta Tags for Social Media -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="맥스 한옥 펜션 - 홈" />
-  <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
-  <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
-  <meta property="og:url" content="https://max-hanok.com" />
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="맥스 한옥 펜션 - 홈" />
-  <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
-  <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
-  <!-- Open Graph Meta Tags for Social Media -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="맥스 한옥 펜션 - 홈" />
-  <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
-  <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
-  <meta property="og:url" content="https://max-hanok.com" />
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="맥스 한옥 펜션 - 홈" />
-  <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
-  <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
-  <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="icon" type="image/png" data-homepage-images-0-logo-0-url>
+    <title data-homepage-seo-title>Document</title>
+    <meta name="description" data-homepage-seo-description content="">
+    <meta name="keywords" data-homepage-seo-keywords content="">
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/theme.css" />
+    <link rel="stylesheet" href="styles/popup.css" />
+    <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="맥스 한옥 펜션 - 홈" />
   <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
@@ -55,119 +24,90 @@
   <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 </head>
-<body>
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="content-wrap">
-            <!-- CUSTOM FIELD : 메인 소개 섹션 -->
-            <section class="hero-section">
-                <div class="hero-content">
-                <div class="hero-left">
-                    <div class="hero-subtitle">
-                        <span class="subtitle-text" data-hero-subtitle></span>
-                        <div class="subtitle-line"></div>
-                    </div>
-                    <!-- 숙소 영문명 매핑 -->
-                    <h1 class="hero-title-property-name">
-                        <span class="hero-title-line" data-delay="0" data-hero-property-name-en></span>
-                    </h1>
-                    <!-- 메인 소개 타이틀 -->
-                    <p class="hero-title" data-hero-title></p>
-                    <!-- 메인 소개 설명 -->
-                    <p class="hero-description" data-hero-description></p>
-                </div>
-                <div class="hero-right">
-                    <div class="hero-slider-container">
-                        <div class="hero-slider" data-hero-slider>
-                            <!-- 동적으로 슬라이드가 생성됩니다 -->
-                        </div>
-                        <div class="hero-slider-nav">
-                            <button class="slider-btn prev">‹</button>
-                            <button class="slider-btn next">›</button>
-                        </div>
-                    </div>
-                </div>
+  <body>
+    <div class="wrapper mainWrap IndexWrap">
+    <!-- Hero Section -->
+      <main>
+        <section class="mainTitleGrp">
+          <div class="heroImgWrap sliderContainer heroSlider" data-visible-count="1">
+            <button class="prev" type="button" aria-label="Previous hero slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="slider index-hero-slider-wrapper">
+              <!-- Hero slides will be dynamically generated here -->
             </div>
-            </section>
-
-            <!-- CUSTOM FIELD : 핵심 메시지 섹션 / 이미지 x -->
-            <section class="essence-section">
-                <div class="essence-content">
-                    <h4 class="essence-title" data-essence-title></h4>
-                    <p class="essence-description" data-essence-description></p>
-                </div>
-            </section>
-
-            <!-- CUSTOM FIELD : 특색 섹션 / 이미지 4장 fix -->
-            <section class="signature-section">
-            <div class="signature-container">
-                <div class="signature-content">
-                    <div class="signature-left">
-                        <div class="signature-main-image">
-                            <img id="signature-main-img" data-signature-main-img src="" alt="">
-                        </div>
-                    </div>
-                    <div class="signature-right">
-                        <div class="signature-text-content">
-                            <!-- 특색 섹션 타이틀 / 특색 섹션 설명 사용 x -->
-                            <h2 class="signature-title" id="signature-title" data-signature-title></h2>
-
-                            <!-- 특색 섹션 업로드 이미지 설명 -->
-                            <p class="signature-description" id="signature-description" data-signature-description></p>
-                        </div>
-                        <!-- 특색 섹션 업로드 이미지들 -->
-                        <div class="signature-thumbnails">
-                            <div class="signature-thumb" data-index="0">
-                                <img src="" alt="">
-                            </div>
-                            <div class="signature-thumb" data-index="1">
-                                <img src="" alt="">
-                            </div>
-                            <div class="signature-thumb" data-index="2">
-                                <img src="" alt="">
-                            </div>
-                            <div class="signature-thumb" data-index="3">
-                                <img src="" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <button class="next" type="button" aria-label="Next hero slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="heroOverlay">
+              <h1 data-property-name class="heroHeading">
+              </h1>
+              <p data-hero-title class="heroHeadingSub"></p>
             </div>
-            </section>
-
-            <!-- CUSTOM FIELD : 갤러리 섹션 -->
-            <section class="gallery-section">
-            <div class="gallery-container">
-                <div class="gallery-header">
-                    <h2 class="gallery-title" data-gallery-title></h2>
-                    <p class="gallery-description" data-gallery-description></p>
-                </div>
-                <div class="gallery-slider" data-gallery-slider>
-                    <!-- 동적으로 갤러리 아이템이 생성됩니다 -->
-                </div>
-            </div>
+          </div>
+          <div class="heroDescription">
+            <p data-homepage-customFields-pages-index-sections-0-essence-title>
+            </p>
+            <p data-homepage-customFields-pages-index-sections-0-essence-description>
+            </p>
+          </div>
         </section>
-
-            <!-- CUSTOM FIELD : 마무리 섹션 -->
-            <section class="closing-section">
-                <!-- 마무리 섹션 이미지 -->
-                <div class="closing-background">
-                    <img data-closing-bg-img src="" alt="Closing Background">
-                </div>
-                <div class="closing-content">
-                    <div class="closing-border-top"></div>
-                    <div class="closing-text-content">
-                        <!-- 마무리 섹션 설명 -->
-                        <div class="closing-description" data-closing-description></div>
-                        <!-- 숙소 영문명 매핑 -->
-                        <div class="closing-title" data-closing-title></div>
-                    </div>
-                    <div class="closing-border-bottom"></div>
-                </div>
-            </section>
+        <section class="con2 mobilemt">
+          <div class="titWrap">
+            <h1 class="conTit">
+              ROOMS
+            </h1>
+            <p>
+              <span data-property-name>제주 포레스트</span>의 아늑한 객실입니다.
+            </p>
+          </div>
+          <div class="rooms">
+            <!-- Rooms will be dynamically generated here -->
+          </div>
+        </section>
+        <section class="con3 specialsSection">
+          <div class="titWrap">
+            <h1 class="conTit">
+              SPECIALS
+            </h1>
+            <p>
+              <span data-property-name>제주 포레스트</span>의 특별한 부가서비스입니다.
+            </p>
+          </div>
+          <aside class="gallery">
+            <div class="sliderContainer specialSlider" data-visible-count="3">
+              <button class="prev" type="button" aria-label="Previous specials slide">
+                ❮
+              </button>
+              <div class="slider">
+              </div>
+              <button class="next" type="button" aria-label="Next specials slide">
+                ❯
+              </button>
+            </div>
+          </aside>
+        </section>
+        <section class="con4">
+          <div class="titWrap">
+            <h1 class="conTit">RESERVATION</h1>
+            <p>
+              지금 예약하세요.
+            </p>
+          </div>
+          <p class="resTxt">
+            <a data-property-realtime-booking-id target="_blank" href="https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}" class="goRes mt5 btnBorder">
+              지금 예약하기
+            </a>
+          </p>
+        </section>
+        <div class="fBanner" data-homepage-customFields-pages-index-sections-0-closing-images-0>
         </div>
-    </main>
-
+      </main>
+    </div>
     <!-- Popup System -->
     <div id="popup-container"></div>
 
@@ -177,11 +117,8 @@
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
 
-    <!-- Base Data Mapper (must load before preview-handler) -->
+    <!-- Base Data Mapper -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
 
     <!-- Index Page Mapper -->
     <script src="js/data-mapper/pages/index-mapper.js"></script>
@@ -189,12 +126,22 @@
     <!-- Header Footer Mapper -->
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
 
-    <!-- Header and Footer Loader -->
+    <!-- Header/Footer loader -->
     <script src="js/header-footer-loader.js"></script>
 
-    <!-- Page-specific script -->
+    <script src="js/common/scroll-animation.js"></script>
+
+    <!-- Header interactions -->
+    <script src="js/common/header.js"></script>
+
+    <!-- iOS Parallax Fix -->
+
+    <!-- Page script -->
     <script src="js/pages/index.js"></script>
+
+    <!-- Preview Handler (어드민 연동) -->
+    <script src="js/preview-handler.js"></script>
     <script src="js/popup.js"></script>
 
-</body>
+  </body>
 </html>
