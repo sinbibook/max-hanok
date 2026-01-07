@@ -10,8 +10,8 @@
 }
 
 @font-face {
-  font-family: 'ReperepointSpecialItalic';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-SpecialItalicA.woff') format('woff');
+  font-family: 'Euljiro';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff') format('woff');
   font-weight: 400;
   font-display: swap;
 }
@@ -19,8 +19,6 @@
 /* CSS Variables */
 :root {
   --font-ko-main: 'KccDodamdodam', sans-serif;
-  --font-ko-sub: 'ReperepointSpecialItalic', sans-serif;
+  --font-ko-sub: 'Euljiro', sans-serif;
   --font-en-main: 'Bruno Ace', sans-serif;
-  --color-primary: #e8ebe6;
-  --color-secondary: #7a8471;
 }
