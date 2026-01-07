@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.85.0",
-    "generatedAt": "2026-01-06T09:33:01.829Z",
+    "version": "1.86.0",
+    "generatedAt": "2026-01-07T01:54:30.353Z",
     "templateType": "gallery_sidebar",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1627,7 +1627,7 @@
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1767689749407-k2hrz6tqx8.jpg",
               "sortOrder": 2,
               "description": "",
-              "isSelected": true,
+              "isSelected": false,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_interior"
             },
@@ -1636,7 +1636,7 @@
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1767689749407-s0b8s11op0o.jpg",
               "sortOrder": 3,
               "description": "",
-              "isSelected": true,
+              "isSelected": false,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_interior"
             },
