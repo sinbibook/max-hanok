@@ -3,11 +3,7 @@
  * 모든 페이지 mapper에서 공통으로 사용하는 이미지 관련 헬퍼 함수
  */
 const ImageHelpers = {
-    // 단순 회색 배경 (아이콘 없음 - 기본)
-    EMPTY_IMAGE_SVG: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"%3E%3Crect fill="%23d1d5db" width="800" height="600"/%3E%3C/svg%3E',
-
-    // 아이콘 포함된 버전 (필요시 사용)
-    EMPTY_IMAGE_WITH_ICON: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"%3E%3Crect fill="%23d1d5db" width="800" height="600"/%3E%3Cg transform="translate(400, 300)"%3E%3Crect x="-48" y="-48" width="96" height="96" rx="8" ry="8" fill="none" stroke="%23374151" stroke-width="3"/%3E%3Ccircle cx="-20" cy="-20" r="6" fill="%23374151"/%3E%3Cpolyline points="48,-12 20,-40 -48,28" fill="none" stroke="%23374151" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/g%3E%3C/svg%3E',
+    EMPTY_IMAGE_SVG: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"%3E%3Crect fill="%23d1d5db" width="800" height="600"/%3E%3Cg transform="translate(400, 300)"%3E%3Crect x="-48" y="-48" width="96" height="96" rx="8" ry="8" fill="none" stroke="%23374151" stroke-width="3"/%3E%3Ccircle cx="-20" cy="-20" r="6" fill="%23374151"/%3E%3Cpolyline points="48,-12 20,-40 -48,28" fill="none" stroke="%23374151" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/g%3E%3C/svg%3E',
 
     /**
      * 공통 이미지 처리 헬퍼 함수 (에러 처리 포함)
@@ -24,9 +20,7 @@ const ImageHelpers = {
         }
 
         try {
-            const selectedImages = imagesData
-                .filter(img => img.isSelected)
-                .sort((a, b) => a.sortOrder - b.sortOrder);
+            const selectedImages = this.filterSelectedImages(imagesData);
 
             if (selectedImages.length > 0 && selectedImages[0].url) {
                 const firstImage = selectedImages[0];
@@ -64,7 +58,21 @@ const ImageHelpers = {
     },
 
     /**
+     * 선택된 이미지만 필터링하고 sortOrder로 정렬
+     * @param {Array} images - 이미지 배열
+     * @returns {Array} isSelected가 true인 이미지들을 sortOrder로 정렬한 배열
+     */
+    filterSelectedImages(images) {
+        if (!images || !Array.isArray(images)) return [];
+
+        return images
+            .filter(img => img.isSelected)
+            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    },
+
+    /**
      * 로고 URL 추출 헬퍼 (header-footer-mapper에서 이동)
+     * isSelected가 true인 로고를 우선 선택, 없으면 sortOrder 0번째 선택
      */
     extractLogoUrl(data) {
         if (!data) return null;
@@ -74,45 +82,18 @@ const ImageHelpers = {
 
         for (const imageItem of imagesArray) {
             if (imageItem.logo && Array.isArray(imageItem.logo) && imageItem.logo.length > 0) {
+                // 1. isSelected가 true인 로고 찾기
+                const selectedLogo = imageItem.logo.find(logo => logo.isSelected === true);
+                if (selectedLogo && selectedLogo.url) {
+                    return selectedLogo.url;
+                }
+
+                // 2. 없으면 sortOrder 기준으로 정렬해서 0번째 선택 (fallback)
                 const sortedLogos = imageItem.logo.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
                 return sortedLogos[0].url;
             }
         }
         return null;
-    },
-
-    /**
-     * isSelected가 true인 이미지만 필터링하고 sortOrder로 정렬
-     * @param {Array} images - 이미지 배열
-     * @returns {Array} 필터링되고 정렬된 이미지 배열
-     */
-    filterSelectedImages(images) {
-        if (!images || !Array.isArray(images)) return [];
-
-        return images
-            .filter(img => img && img.isSelected === true)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-    },
-
-    /**
-     * 선택된 이미지 중 첫 번째 이미지 가져오기
-     * @param {Array} images - 이미지 배열
-     * @returns {Object|null} 첫 번째 선택된 이미지 또는 null
-     */
-    getFirstSelectedImage(images) {
-        const selected = this.filterSelectedImages(images);
-        return selected.length > 0 ? selected[0] : null;
-    },
-
-    /**
-     * 선택된 이미지들 중 특정 인덱스의 이미지 가져오기
-     * @param {Array} images - 이미지 배열
-     * @param {number} index - 원하는 인덱스
-     * @returns {Object|null} 해당 인덱스의 선택된 이미지 또는 null
-     */
-    getSelectedImageByIndex(images, index = 0) {
-        const selected = this.filterSelectedImages(images);
-        return selected[index] || null;
     }
 };
 

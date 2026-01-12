@@ -1,790 +1,627 @@
-/*header and navigation styles*/
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
 
+/* Header Component Styles */
 .header {
-  height: 110px;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    transition: all 0.3s ease;
+    padding: 0 1rem;
+    z-index: 1000;
+    min-height: auto;
+    overflow: visible; /* mobile-menu가 header 밖으로 나갈 수 있도록 */
 }
 
-.mobile-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-  color: var(--color-secondary);
-  z-index: 5000;
-  position: relative;
+/* Scrolled header state */
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
-@media all and (max-width: 1024px) {
-  .mobile-toggle {
-    display: inline-flex;
-  }
+/* Color adjustments for scrolled state */
+.header.scrolled .logo-text {
+    color: var(--color-secondary);
+}
 
-  .header .logo {
-    display: inline-block;
+.header.scrolled .menu-item {
+    color: #374151;
+}
+
+.header.scrolled .menu-item:hover {
+    color: var(--color-primary);
+}
+
+.header.scrolled .sub-menu-item {
+    color: #374151;
+}
+
+.header.scrolled .sub-menu-item:hover {
+    color: var(--color-primary);
+}
+
+.header.scrolled .mobile-toggle {
+    color: var(--color-secondary);
+}
+
+.header.scrolled .fixed-mobile-booking-btn {
+    color: var(--color-secondary);
+}
+
+.header.scrolled .reservation-btn {
+    background: var(--color-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header.scrolled .reservation-btn:hover {
+    background: var(--color-secondary);
+    filter: brightness(0.95);
+}
+
+.header-content {
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo Component Styles - 제주 포레스트 */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    z-index: 1002;
+    position: relative;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.logo-image {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.logo-text {
+    color: white;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-family: var(--font-ko-main);
+}
+
+/* Logo responsive adjustments */
+@media (max-width: 768px) {
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .logo-text {
+        font-size: 1.125rem;
+    }
+}
+
+/* Dark theme variant */
+.logo-container.dark .logo-text {
+    color: var(--color-primary);
+}
+
+/* Light theme variant (for headers with white/light backgrounds) */
+.logo-container.light .logo-text {
+    color: var(--color-primary);
+}
+
+/* Logo hover effects */
+.logo-container:hover {
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+/* Logo for navigation bars */
+.navbar-logo .logo-container {
+    gap: 0.5rem;
+}
+
+.navbar-logo .logo-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.navbar-logo .logo-text {
+    font-size: 1.125rem;
+}
+
+/* Logo for footer */
+.footer-logo .logo-container {
+    gap: 0.5rem;
+}
+
+.footer-logo .logo-text {
+    font-size: 1rem;
+}
+
+/* Logo animation */
+@keyframes logoFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.logo-container.animate {
+    animation: logoFadeIn 0.5s ease-out;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+    display: none;
+    align-items: center;
+}
+
+.nav-container {
+    position: relative;
+    z-index: 1001; /* Ensure submenus appear above other content */
+    transition: height 0.3s ease;
+}
+
+.main-menu {
+    position: relative;
+    width: 448px;
+    height: 60px;
+    padding: 0;
+    margin: 0 10px;
+}
+
+.menu-item {
+    position: absolute;
+    top: 23px;
+    color: white;
+    font-family: var(--font-en-main);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    z-index: 1002; /* Ensure menu items are clickable */
+}
+
+.menu-item:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.menu-about { left: 25px; }
+.menu-spaces { left: 131px; }
+.menu-specials { left: 238px; }
+.menu-reservation { left: 342px; }
+
+/* Sub Menus */
+.sub-menus {
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    width: 423px;
+    height: 174px;
+    padding: 20px 0 15px 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+    z-index: 1003;
+}
+
+.sub-menus::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 20px);
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.header.scrolled .sub-menus {
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.1);
+}
+
+.header.scrolled .sub-menus::before {
+    background: rgba(255,255,255, 0.75);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.sub-menus.show {
     opacity: 1;
-  }
-
+    pointer-events: all;
 }
 
-.mobile-toggle:focus-visible {
-  outline: 2px solid var(--color-secondary);
-  outline-offset: 3px;
+.sub-menu-item {
+    position: absolute;
+    color: white;
+    font-family: var(--font-ko-sub);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    opacity: 0;
+    transform: translateY(-5px);
+    max-width: 128px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sub-menus.show .sub-menu-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sub-menu-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sub-menu-item:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Sub menu positions - 동적으로 생성되는 메뉴는 JavaScript에서 관리 */
+/* 고정 메뉴만 CSS로 정의 */
+.sub-about-1 { left: 15px; top: 29px; }
+.sub-about-2 { left: 15px; top: 63px; }
+
+.sub-reservation-1 { left: 332px; top: 29px; }
+
+/* Desktop Reservation Buttons - Common Styles */
+.header-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+    font-family: var(--font-ko-sub);
+}
+
+.header-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.header-btn:active {
+    transform: scale(0.95);
+}
+
+.header.scrolled .header-btn {
+    background: var(--color-secondary);
+    border: 1px solid var(--color-primary);
+}
+
+.header.scrolled .header-btn:hover {
+    background: var(--color-secondary);
+    filter: brightness(0.95);
+}
+
+/* YBS Button - Unique Styles */
+.ybs-btn {
+    margin-right: 0.5rem;
+}
+
+/* Mobile Controls Container */
+.mobile-controls {
+    display: flex;
+    align-items: center;
+}
+
+/* Mobile Menu Toggle */
+.mobile-toggle {
+    display: block;
+    color: white;
+    padding: 0.5rem;
+    z-index: 1002;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.mobile-toggle:active {
+    transform: scale(0.95);
 }
 
 .mobile-toggle .icon {
-  width: 24px;
-  height: 24px;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  fill: none;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
-#close-icon {
-  display: none;
-}
-
-.mobile-toggle.is-active #menu-icon {
-  display: none;
-}
-
-.mobile-toggle.is-active #close-icon {
-  display: block;
-}
-
-/* Close button inside mobile menu */
-.mobile-toggle--close {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  color: var(--color-secondary);
-  background: transparent;
-  border: none;
-  z-index: 10001;
-  pointer-events: all !important;
-}
-
-.mobile-toggle--close #close-icon {
-  display: block !important;
-}
-
-.mobile-toggle--close:hover {
-  opacity: 0.7;
-}
-
+/* Mobile Menu */
 .mobile-menu {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0;
-  background: var(--color-primary);
-  backdrop-filter: blur(14px);
-  color: var(--color-secondary);
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 4500;
-  overflow: hidden;
-}
-
-
-.mobile-menu.is-open {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  display: flex !important;
-}
-
-.mobile-menu:not(.is-open) {
-  display: none;
-}
-
-
-.mobile-menu.is-open a {
-  pointer-events: auto;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-.mobile-menu.is-open .mobile-menu-title {
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  touch-action: manipulation !important;
-}
-
-.mobile-menu-scrollable {
-  flex: 1;
-  overflow-y: auto;
-  padding-top: 1rem;
-}
-
-.mobile-menu-grid {
-  width: 100%;
-  max-width: 680px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-bottom: clamp(2rem, 8vw, 3.5rem);
-}
-
-.mobile-menu-section {
-  border-bottom: 1px solid var(--color-secondary);
-}
-
-.mobile-menu-section:last-child {
-  border-bottom: none;
-}
-
-.mobile-menu-title {
-  font-family: var(--font-ko-main);
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  color: var(--color-secondary);
-  padding: 1rem 1.2rem;
-  margin: 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background 0.2s ease;
-}
-
-
-.mobile-menu-title::after {
-  content: '+';
-  font-size: 1.3rem;
-  font-weight: 300;
-  color: #444;
-  transition: transform 0.3s ease;
-}
-
-.mobile-menu-section.is-open .mobile-menu-title::after {
-  transform: rotate(45deg);
-}
-
-
-.mobile-menu .mobile-sub-items {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  padding: 0 1.2rem;
-  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-}
-
-/* Show sub-items when parent section is open OR when active class is present */
-.mobile-menu .mobile-menu-section.is-open .mobile-sub-items,
-.mobile-menu .mobile-sub-items.active {
-  max-height: 500px;
-  opacity: 1;
-  padding: 0 1.2rem 1rem;
-}
-
-.mobile-sub-item {
-  display: block;
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: none;
-  background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
-  color: #444;
-  font-size: 0.95rem;
-  font-family: var(--font-ko-main);
-  cursor: pointer;
-  transition: background 0.2s ease, padding-left 0.2s ease;
-  border-radius: 8px;
-  margin-bottom: 0.4rem;
-  text-align: left;
-}
-
-.mobile-sub-item:hover,
-.mobile-sub-item:focus-visible {
-  background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
-  padding-left: 1.3rem;
-}
-
-/* Highlight current page */
-.mobile-sub-item.current-page {
-  background: rgba(139, 158, 189, 0.1);
-  color: var(--color-secondary);
-  font-weight: 600;
-}
-
-.mobile-sub-empty {
-  font-size: 0.95rem;
-  color: #444;
-}
-
-.mobile-menu-footer {
-  position: sticky;
-  bottom: 0;
-  background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
-  box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-  padding: 1rem;
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
-}
-
-.mobile-reservation-btn {
-  flex: 1;
-  max-width: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  padding: 1rem 1.5rem;
-  border: none;
-  border-radius: 999px;
-  background: var(--color-secondary);
-  color: #fff;
-  font-size: 1.05rem;
-  font-weight: 600;
-  font-family: var(--font-ko-sub);
-  box-shadow: 0 22px 48px rgba(163, 168, 177, 0.32);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* YBS 버튼이 있을 때: 두 버튼 모두 같은 크기로 표시 */
-.mobile-menu-footer:has(.ybs-btn-container:not([style*="display: none"])) .mobile-reservation-btn,
-.mobile-menu-footer:has(.ybs-btn-container.visible) .mobile-reservation-btn {
-  max-width: none;
-}
-
-.mobile-reservation-btn .icon {
-  width: 24px;
-  height: 24px;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  fill: none;
-}
-
-.mobile-reservation-btn:hover,
-.mobile-reservation-btn:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 26px 56px rgba(77,121,89,0.4);
-}
-
-body.mobile-menu-open {
-  overflow: hidden;
-}
-
-@media all and (min-width: 1025px) {
-  .mobile-toggle {
-    display: none !important;
-  }
-  .mobile-menu {
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-}
-
-/*desktop header*/
-.header {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3000;
-  padding: 20px 0;
-  margin-top: 0 !important;
-  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
-  background: transparent;
-  box-shadow: none;
-}
-
-.header.scrolled {
-  background: var(--color-primary);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(12px);
-}
-
-.header .logo {
-  position: static; width: auto; min-width: 100px; transition: 0.8s; white-space: nowrap; text-align: center; display: block;
-}
-.header .logo img {
-  width: 100%
-}
-.header>div>h1 {
-  position: fixed; left: 50%; transform: translateX(-50%); top: 20px; z-index: 3001; margin: 0;
-}
-.header.on {
-  background: var(--color-primary)
-}
-.headerSub.on {
-  top: 0px
-}
-.header.on>div>h1 {
-  position: fixed; left: 50%; transform: translateX(-50%); top: 20px; z-index: 3001; margin: 0;
-}
-.mainWrap .header.on>div>h1 {
-  top: 0px
-}
-.header.on .logoSub {
-  opacity: 0
-}
-.header .gnb {
-  position: relative; top: 45px; left: 80px
-}
-.header .mainMenu {
-  width: 1260px
-}
-.header .mainMenu:hover li > a {
-  color: #444
-}
-.header .mainMenu > li {
-  float: left; width: 114px
-}
-.header .mainMenu > li > a {
-  line-height: 40px; text-align: center; color: var(--color-secondary); font-size: 16px; font-weight: 100; transition: 0.8s
-}
-.header .mainMenu > li::after {
-  display: table; content: ""; clear: both
-}
-.header .mainMenu a {
-  display: block
-}
-
-.header .mainMenu > li {
-  position: relative;
-}
-.header .mainMenu .gnbSub {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  transform: translate(-50%, -6px);
-  min-width: 180px;
-  padding: 16px 22px;
-  background: var(--color-primary);
-  border-radius: 14px;
-  box-shadow: 0 18px 44px rgba(0,0,0,0.12);
-  backdrop-filter: blur(6px);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-.header .mainMenu > li.is-open .gnbSub {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, 0);
-}
-.header .mainMenu .subMenu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.header .mainMenu > li.is-open > a {
-  color: var(--color-secondary);
-}
-.header .mainMenu .subMenu a {
-  line-height: 30px; font-size: 13px; color: #444; transition: 0.5s
-}
-.header .mainMenu .subMenu a:hover {
-  font-weight: 600
-}
-.header .mainMenu>li>a i {
-  font-size: 10px; margin-left: 8px
-}
-.header.on .logo {
-  font-family: var(--font-en-main); color: var(--color-secondary); font-weight: 400; font-size: 26px;text-align: center; margin-top: 10px; opacity: 1
-}
-.header .logo {
-  font-family: var(--font-ko-main) !important;
-  color: var(--color-secondary);
-  font-weight: 400;
-  font-size: 26px;
-  text-align: center;
-  width: 100%;
-  margin-top: 5px;
-}
-.logoSub {
-  text-align: left; position: relative; transition: 0.5s;top: -80px; left: 20px
-}
-.logoSub a {
-  position: absolute; font-family: var(--font-en-main); color: var(--color-secondary); font-weight: 400; font-size: 28px
-}
-.logoSub img {
-  width: 140px; margin-top: -10px
-}
-
-.mainWrap .logoSub {
-  display: none
-}
-.mainWrap .headerSub {
-  top: 0
-}
-
-.header.on .logo {
-  font-family: var(--font-en-main); color: var(--color-secondary); font-weight: 400; font-size: 26px;text-align: center; opacity: 1; display: block
-}
-.header.on .logo img {
-  width: 140px; margin-top: -15px;margin-left: 14px
-}
-.header .sns {
-  position: relative;
-  float: right;
-  margin-right: 80px;
-  top: 50px;
-}
-.header .sns li {
-  margin: 0px 10px; float: left
-}
-.header .sns li i {
-  margin-right: 3px; font-size: 15px
-}
-.header .sns li a {
-  color: var(--color-secondary); font-size: 14px
-}
-.header .sns li:nth-child(2) a img {
-  width: 14px; margin-right: 3px; float: left
-}
-.header .sns li:last-child a img {
-  width: 41px;margin-top: 2px
-}
-
-/* YBS 버튼 깜빡임 방지 - 헤더 표시 전 데이터 매핑 완료 */
-.ybs-btn-container {
-  display: none;
-}
-
-.header .sns .ybs-btn-container.visible {
-  display: block;
-}
-
-.mobile-menu-footer .ybs-btn-container.visible {
-  display: flex;
-}
-
-/*mobile header*/
-.mHd {
-  display: none;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3000;
-  padding: 16px 0;
-  background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
-  backdrop-filter: blur(0);
-  border-bottom: 1px solid transparent;
-  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
-}
-.mHd.scrolled {
-  background: var(--color-primary);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(12px);
-  border-bottom-color: var(--color-secondary);
-}
-.mHd .logo {
-  position: static;
-  width: auto;
-  transition: transform 0.3s ease;
-}
-.mHd .logo img {
-  width: clamp(70px, 24vw, 110px);
-}
-.mHd h1 {
-  position: static;
-  margin: 0;
-  text-align: left;
-}
-.mHd.on {
-  background: var(--color-primary);
-}
-.mHd .gnb {
-  position: static;
-}
-.mHd .mainMenu {
-  width: 100%;
-}
-.mHd .mainMenu > li {
-  width: 100%;
-  float: none;
-  position: relative;
-}
-.mHd .mainMenu > li > a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  line-height: 1.4;
-  text-align: left;
-  color: var(--color-secondary);
-  font-size: 1rem;
-    transition: color 0.3s ease;
-}
-.mHd .mainMenu > li::after {
-  display: none;
-}
-.mHd .mainMenu a {
-  display: block;
-}
-.mHd .mainMenu .gnbSub {
-  position: static;
-  transform: none;
-  margin-top: 0.5rem;
-  padding: 0.35rem 0 0.75rem;
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-  pointer-events: auto;
-  opacity: 1;
-  max-height: none;
-  overflow: visible;
-  display: none;
-}
-.mHd .mainMenu > li.is-open .gnbSub {
-  display: block;
-}
-.mHd .mainMenu .subMenu {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.mHd .mainMenu > li.is-open > a {
-  color: var(--color-secondary);
-}
-.mHd .mainMenu .subMenu a {
-  line-height: 1.6; font-size: 0.95rem; color: #444
-}
-.mHd .mainMenu>li>a i {
-  font-size: 12px; margin-left: 8px; transition: transform 0.3s ease
-}
-.mHd .mainMenu > li.is-open > a i {
-  transform: rotate(180deg);
-}
-
-.mHd .logo {
-  font-family: var(--font-ko-sub); color: var(--color-secondary); font-weight: 400; font-size: 26px; text-align: center; display: block; width: 100%; margin-top: 10px; opacity: 1;
-}
-.mMainTitleGrp {
-  display: none
-}
-
-/*header media queries*/
-@media all and (max-width:1024px) {
-  .header {
-    padding: 50px 0 40px 0;background: var(--color-primary)
-  }
-  .header .mainMenu {
-    width: 100%
-  }
-  .header .mainMenu > li {
-    float: left;  width: 20%
-  }
-  .header .mainMenu > li > a {
-    text-align: left; line-height: 50px; font-weight: 500; margin-left: 30px
-  }
-  .header .mainMenu > li > a i {
-    display: none
-  }
-  .header .logo {
-    opacity: 1; top: -30px; font-size: 28px
-  }
-  .header h1 {
-    left: 50%; transform: translateX(-50%);
-  }
-  .mHd {
-    padding: 50px 0 40px 0;background: var(--color-primary);
-  }
-  .mHd .mainMenu {
-    width: 100%
-  }
-  .mHd .mainMenu > li {
-    float: left;  width: 20%
-  }
-  .mHd .mainMenu > li > a {
-    text-align: left; line-height: 50px; font-weight: 500; margin-left: 30px
-  }
-  .mHd .mainMenu > li > a i {
-    display: none
-  }
-  .mHd .logo {
-    opacity: 1; top: -30px; font-size: 28px
-  }
-  .mHd h1 {
-    left: 50%; transform: translateX(-50%);
-  }
-  .mainTitleGrp {
-    display: block;
-    padding: 0 clamp(0.5rem, 5vw, 1.25rem);
-  }
-  .mMainTitleGrp {
-    display: block
-  }
-  .header.on h1 {
-    position: none
-  }
-  .mHd.on h1 {
-    position: none
-  }
-  .mHd .logo img {
-    width: 70px; margin-top: -7px
-  }
-  .header .mainMenu:hover .subMenu {
-    height: unset; padding-top: unset; transition: unset
-  }
-}
-
-@media all and (max-width:1024px) {
-  .mobile-toggle {
-    display: flex;
-  }
-  .mobile-menu {
-    padding-top: clamp(6rem, 20vw, 8.5rem);
-  }
-  .mobile-toggle {
     position: fixed;
-    top: 23px;
-    right: clamp(16px, 5vw, 28px);
-  }
-  .mHd {
-    display: block;
-    padding: clamp(14px, 4vw, 24px) 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: var(--color-primary);
-    backdrop-filter: blur(14px);
-  }
-  .mHd .logo,
-  .mHd .logo.mMainLogo {
-    position: static !important;
-    width: auto !important;
-    display: inline-block !important;
-    opacity: 1 !important;
-    transform: none !important;
-    text-align: left !important;
-    left: auto !important;
-    font-size: 1.3rem !important;
-    color: var(--color-secondary) !important;
-    font-family: var(--font-ko-sub) !important;
-  }
-  .mHd .logo img {
-    width: clamp(70px, 24vw, 110px);
-  }
-  .mHd h1 {
-    position: static;
-    margin: 0;
-    transform: none !important;
-    left: auto !important;
-    text-align: left !important;
-    text-align: left;
-  }
-  .mHd h1 .logo {
-    display: inline-block;
-    width: auto;
-  }
-  .mHd .gnb {
-    display: none;
-    position: static;
-    width: 100%;
-    margin-top: clamp(52px, 14vw, 72px);
-    background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
-    border-radius: 18px;
-    padding: clamp(1rem, 4vw, 2rem);
-    box-shadow: 0 16px 44px rgba(0,0,0,0.12);
-    max-height: min(70vh, 520px);
-    overflow-y: auto;
-  }
-  .mHd.is-open .gnb {
-    display: block;
-  }
-  .mHd .mainMenu {
-    width: 100%;
-    margin: 0;
+    backdrop-filter: blur(12px);
+    z-index: 10000;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
-  }
-  .mHd .mainMenu > li {
-    width: 100%;
-    float: none;
-  }
-  .mHd .mainMenu > li > a {
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Menu Header */
+.mobile-menu-header {
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1rem;
-    line-height: 1.4;
-    color: var(--color-secondary);
-  }
-  .mHd .mainMenu .gnbSub {
-    position: static;
-    margin-top: 0.35rem;
-    padding: 0.35rem 0 0.75rem;
-    background: transparent;
-    border-radius: 0;
-    box-shadow: none;
-    pointer-events: auto;
-    opacity: 1;
-    max-height: none;
-    display: none;
-    transition: none;
-  }
-  .mHd .mainMenu > li.is-open .gnbSub {
-    display: block;
-  }
-  .mHd .mainMenu .subMenu {
-    gap: 0.45rem;
-  }
-  .mHd .mainMenu .subMenu a {
-    line-height: 1.6;
-    font-size: 0.95rem;
-    color: #505050;
-  }
-  .mHd .mainMenu > li > a i {
-    transition: transform 0.3s ease;
-  }
-  .mHd .mainMenu > li.is-open > a i {
-    transform: rotate(180deg);
-  }
-  .mHd .logo img {
-    width: 70px; margin-top: -20px
-  }
-  .header {
-    display: none;
-  }
-  .header.on .logo {
-    width: 60px; top: 10px; left: 50%; transform: translateX(-50%);
-  }
+    padding: 1rem 1rem;  /* 헤더와 동일한 padding */
+    height: 72px;  /* 헤더와 동일한 높이 */
+    background: var(--color-secondary);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
 }
 
-@media all and (max-width:700px) {
-  .header {
-    padding: 30px 0
-  }
-  .header .mainMenu {
-    width: 90vw; margin: 0 auto
-  }
-  .header .mainMenu > li > a {
-    text-align: center; margin-left: 0px; font-size: 12px
-  }
-  .mHd {
-    padding: 25px 0
-  }
-  .mHd h1 {
-    width: 100%
-  }
-  .mHd .mainMenu {
-    width: 100%; margin: 0 auto;margin-right: 5px
-  }
-  .mHd .mainMenu > li {
-    width: 25%
-  }
-  .mHd .mainMenu > li > a {
-    text-align: center; margin-left: 0px; font-size: 12px
-  }
-  .mHd .logo img {
-    width: 100px
-  }
-  .header .logo {
-    left: 50%; transform: translateX(-50%); top: -10px; font-size: 22px
-  }
+.mobile-property-name {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+}
+
+/* Mobile Menu Close Button */
+.mobile-menu-close {
+    color: white;  /* 흰색으로 변경 */
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    position: relative;  /* 햄버거 버튼과 동일한 위치 */
+}
+
+.mobile-menu-close:active {
+    transform: scale(0.95);
+}
+
+.mobile-menu-close .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.mobile-menu.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Scrollable Menu Content */
+.mobile-menu-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 32rem;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+}
+
+.mobile-menu-section {
+    text-align: center;
+}
+
+.mobile-menu-title {
+    color: #374151;
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.mobile-sub-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mobile-sub-item {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-family: var(--font-ko-sub);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+    background: transparent;
+    border: none;
+}
+
+.mobile-sub-item:hover {
+    color: #374151;
+}
+
+/* Mobile Reservation Buttons Container */
+.mobile-reservation-buttons {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: var(--color-secondary);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
+}
+
+/* Mobile Reservation Buttons - Common Styles */
+.mobile-header-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    flex: 0 0 auto;
+    font-family: var(--font-ko-sub);
+}
+
+.mobile-header-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Icon styles */
+.icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+/* Responsive design */
+@media (min-width: 640px) {
+    .header {
+        padding: 0 2rem;
+    }
+    .mobile-menu-grid {
+        gap: 3rem;
+    }
+    .mobile-menu-title {
+        font-size: 1.25rem;
+    }
+    .mobile-sub-item {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+    .mobile-header-btn {
+        padding: 0.75rem 2rem;
+        font-size: 1.125rem;
+    }
+}
+
+/* Fixed Mobile Booking Button */
+.fixed-mobile-booking-btn {
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+    font-family: var(--font-ko-sub);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.fixed-mobile-booking-btn:hover {
+    opacity: 0.8;
+}
+
+.fixed-mobile-booking-btn:active {
+    transform: scale(0.95);
+}
+
+.fixed-mobile-booking-btn .icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+/* Fixed Mobile Button text */
+.fixed-mobile-booking-btn .btn-text {
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+/* Scrolled state for fixed mobile button - 삭제 (이미 위에서 처리) */
+
+/* Show only on mobile */
+@media (max-width: 1023px) {
+    .fixed-mobile-booking-btn {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .header {
+        padding: 0 5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header {
+        padding: 0 10rem;
+    }
+    .desktop-nav {
+        display: flex;
+    }
+    .mobile-controls {
+        display: none;
+    }
+    .mobile-toggle {
+        display: none;
+    }
+    .mobile-menu {
+        display: none !important;
+    }
+    .fixed-mobile-booking-btn {
+        display: none !important;
+    }
 }

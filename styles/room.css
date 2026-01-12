@@ -1,720 +1,794 @@
-/*room.html page specific styles*/
-.con1Room {
-  margin-top: 30px
-}
-.roomWrap .con2::after {
-  content: ""; display: table; clear: both
-}
-.roomWrap .con2 aside {
-  float: left
-}
-.roomWrap .con2 .left {
-  width: 50%
-}
-.roomWrap .con2 .right {
-  width: 50%; margin-top: -45px;    margin-bottom: 100px
-}
-.roomWrap .con2 .goRes {
-  width: 235px; height: 45px; text-align: center; line-height: 45px; margin: 30px auto; display: block; border: 1px solid var(--color-secondary); color: var(--color-secondary); font-size: 14px; position: relative
-}
-.roomWrap .con2 .goRes .fal {
-  color: var(--color-secondary); font-size: 16px;margin-right: 20px; margin-left: -20px
-}
-.roomWrap .con2 .goRes span {
-  width: 40px; height: 1px; background-color: var(--color-secondary); top: 22px; right: 10px; position: absolute; transform-origin: left
-}
-.roomWrap .con2 .goRes:hover span {
-  animation: line_res 1s linear
-}
-.roomWrap .con3 {
-  margin-top: 100px
-}
-.roomWrap .con3::after {
-  content: ""; display: table; clear: both
-}
-.roomWrap .con3 aside {
-  width: 50%; float: left
-}
-.roomWrap .con3 .left {
-  margin-top: 30px
-}
-.roomWrap .con3 .right {
-  padding-left: 75px
-}
-.roomWrap .con3 .right h2 {
-  font-size: 18px; margin-bottom: 45px
-}
-.roomWrap .con3 .right p {
-  font-size: 15px; line-height: 1.8; margin-top: 40px
-}
-.roomWrap .con3 .right span {
-  display: block; position: relative
-}
-.roomWrap .con3 {
-  margin-bottom: 70px;
-  width: 100%;
-  max-width: var(--layout-max);
-  margin: 0 auto;
+/* Room Page Specific Styles */
+
+/* Hero Section */
+#room-hero-name {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.con3Room .subListTt {
-  color: #444; margin: 75px 0 20px 0; padding: 15px 10px
+/* Reset and Base */
+.min-h-screen {
+    min-height: 100vh;
 }
 
-/*room hero image and slider*/
-.sliderContainer.roomHeroImgWrap {
-  margin-top: 50px;
+/* 모바일에서 여백 제거 */
+@media (max-width: 639px) {
+    .min-h-screen {
+        min-height: auto;
+    }
+
+    /* 모바일에서 hero 텍스트 크기 축소 */
+    #room-hero-name {
+        font-size: 1.8rem;
+    }
+
+    #room-hero-description {
+        font-size: 0.875rem;
+    }
+
+    /* 모바일에서 슬라이드 인디케이터 축소 */
+    .slide-indicators {
+        padding: 0.5rem 1rem;
+        bottom: 1rem;
+    }
+
+    .indicator-line {
+        width: 64px;
+        margin: 0 0.75rem;
+    }
+
+    .indicator-current,
+    .indicator-total {
+        font-size: 0.75rem;
+    }
 }
 
-.roomHeroImgWrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;  /* 16:9 비율로 설정 - 일반적인 룸 사진 비율 */
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: var(--color-primary);
+.bg-white {
+    background-color: white;
 }
 
-.roomHeroImgWrap.sliderContainer {
-  display: block !important;
-  overflow: hidden;
-  align-items: unset;
-  justify-content: unset;
+.overflow-x-hidden {
+    overflow-x: hidden;
 }
 
-.roomHeroImgWrap .slider.room-slide-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: block !important;
-  transform: none !important;
-  transition: none !important;
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
-.roomHeroImgWrap .slide {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  flex: none !important;
-  display: block !important;
-  align-items: unset;
-  justify-content: unset;
-  box-sizing: border-box;
+/* Mobile hero height */
+@media (max-width: 767px) {
+    .hero-section {
+        height: 45vh;
+        min-height: 45vh;
+    }
 }
 
-.roomHeroImgWrap .slide.active {
-  opacity: 1;
-}
-
-.roomHeroImgWrap .slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  /* 16:9 영역을 꽉 채우도록 */
-  display: block;
-  border-radius: 16px;
-}
-
-.roomWrap .con1.fullPage {
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1.5rem, 4vw, 2.5rem);
-  padding: 0;
-}
-
-.roomWrap .roomGallery {
-  width: 100%;
-  margin-bottom: clamp(2rem, 6vw, 3.5rem);
-  position: relative;
-  height: auto;
-  overflow: hidden;
-}
-
-/* Gallery navigation buttons */
-.roomGalleryNav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(17, 24, 39, 0.7);
-  color: #fff;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: background 0.25s ease, opacity 0.25s ease;
-  z-index: 10;
-  font-size: 16px;
-}
-
-.roomGalleryNav:hover {
-  background: rgba(17, 24, 39, 0.9);
-}
-
-.roomGalleryNav:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.roomGalleryNav--prev {
-  left: -20px;
-}
-
-.roomGalleryNav--next {
-  right: -20px;
-}
-
-.roomGalleryNav--prev::before {
-  content: "‹";
-}
-
-.roomGalleryNav--next::before {
-  content: "›";
-}
-
-/* Thumbnail navigation buttons */
-.thumbnailNav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  color: var(--color-secondary);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: background 0.25s ease, box-shadow 0.25s ease;
-  z-index: 10;
-  font-size: 18px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.thumbnailNav:hover {
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.thumbnailNav--prev {
-  left: 5px;
-}
-
-.thumbnailNav--next {
-  right: 5px;
-}
-
-.thumbnailNav--prev::before {
-  content: "‹";
-}
-
-.thumbnailNav--next::before {
-  content: "›";
-}
-
-.roomGalleryList,
-.room-thumbnail-wrapper {
-  list-style: none;
-  margin: 0;
-  padding: 20px 20px 15px 20px;
-  display: flex;
-  gap: clamp(0.75rem, 2vw, 1rem);
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  width: 100%;
-  box-sizing: border-box;
-  height: auto;
-  max-height: calc(20vw + 40px);
-  min-height: 80px;
-}
-
-.roomGalleryList::-webkit-scrollbar,
-.room-thumbnail-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-.roomGalleryList img {
-  border-radius: 12px;
-}
-
-/* room.html specific styles - horizontal scrolling thumbnails */
-.roomWrap .roomGalleryList {
-  flex-wrap: nowrap;
-}
-
-/* roomGalleryItem and roomGalleryThumb styles moved from common.css */
-.roomGalleryItem {
-  position: relative;
-  flex: 0 0 auto;
-  width: calc((100% - 4 * clamp(0.75rem, 2vw, 1rem)) / 5);
-  max-width: 20vw;
-  min-width: 60px;
-}
-
-.roomGalleryThumb {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  padding: 0;
-  border: none;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  background: transparent;
-  transition: transform 0.25s ease;
-  position: relative;
-}
-
-/* room.html specific thumbnails - fixed square size */
-.roomWrap .roomGalleryThumb {
-  border-radius: 12px;
-}
-
-.roomGalleryThumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* 썸네일 개수에 따른 그리드 조정 */
-/* 4개일 때 */
-.room-thumbnail-wrapper[data-thumbnail-count="4"] .roomGalleryItem {
-  width: calc((100% - 3 * clamp(0.75rem, 2vw, 1rem)) / 4);
-}
-
-/* 3개 이하일 때 */
-.room-thumbnail-wrapper[data-thumbnail-count="1"] .roomGalleryItem,
-.room-thumbnail-wrapper[data-thumbnail-count="2"] .roomGalleryItem,
-.room-thumbnail-wrapper[data-thumbnail-count="3"] .roomGalleryItem {
-  width: calc((100% - 2 * clamp(0.75rem, 2vw, 1rem)) / 3);
-}
-
-/* Moved from common.css - room specific hover and active states */
-.roomGalleryItem:hover .roomGalleryThumb {
-  transform: translateY(-4px);
-}
-
-.roomGalleryItem.is-active .roomGalleryThumb {
-  outline: 3px solid var(--color-secondary);
-  outline-offset: 3px;
-}
-
-/*room highlights section*/
-.roomHighlights {
-  margin: clamp(2.5rem, 6vw, 2rem) 0;
-}
-.roomHighlightsTitle {
-  font-family: var(--font-ko-main);
-  font-size: clamp(1.45rem, 2.4vw, 1.9rem);
-  color: var(--color-secondary);
-  margin-bottom: clamp(1.4rem, 2.8vw, 2.2rem);
-}
-.roomHighlightsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-auto-rows: minmax(140px, auto);
-  gap: clamp(1rem, 2.5vw, 1.8rem);
-}
-.roomHighlight {
-  position: relative;
-  background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
-  border-radius: 10px;
-  padding: clamp(1.2rem, 2.8vw, 1.8rem);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  justify-content: flex-start;
-}
-.roomHighlight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0) 40%, rgba(241, 245, 249, 0.35) 100%);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.roomHighlight:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 42px rgba(15, 23, 42, 0.16);
-}
-.roomHighlight:hover::after {
-  opacity: 1;
-}
-.roomHighlightLabel,
-.roomGuideSection h4 {
-  font-family: var(--font-ko-main);
-  font-size: 1.1rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-secondary);
-  font-weight: 600;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(107, 122, 143, 0.3);
-  margin-bottom: 5px;
-}
-
-.roomHighlightValue {
-  font-size: clamp(0.9rem, 2.2vw, 1rem);
-  line-height: 1.55;
-}
-
-.roomGuideSection {
-  background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
-  border-radius: 10px;
-  padding: clamp(1.2rem, 2.8vw, 1.8rem);
-  margin-bottom: 30px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.roomDetailsContent {
-  padding: 30px; border-radius: 10px
-}
-
-/*room gallery slider*/
-.roomGallerySlider {
-  margin: clamp(2rem, 6vw, 4rem) 0;
-}
-.roomSlider {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  --room-slider-gap: clamp(12px, 2vw, 18px);
-}
-.roomSliderTrack {
-  display: flex;
-  gap: var(--room-slider-gap);
-  will-change: transform;
-  transition: transform 0.55s ease;
-}
-.roomSlide {
-  flex: 0 0 auto; width: auto;
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 18px 36px rgba(17, 24, 39, 0.18);
-}
-.roomSlide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.roomSliderNav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(17, 24, 39, 0.45);
-  color: #fff;
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: background 0.25s ease, opacity 0.25s ease;
-}
-.roomSliderNav:hover {
-  background: rgba(17, 24, 39, 0.65);
-}
-.roomSliderNav:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-.roomSliderNav--prev {
-  left: clamp(0.5rem, 2vw, 1.5rem);
-}
-.roomSliderNav--next {
-  right: clamp(0.5rem, 2vw, 1.5rem);
-}
-
-.roomSlider::before,
-.roomSlider::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: clamp(30px, 5vw, 60px);
-  pointer-events: none;
-  z-index: 2;
-}
-.roomSlider::before {
-  left: 0;
-  background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0));
-}
-.roomSlider::after {
-  right: 0;
-  background: linear-gradient(to left, rgba(255,255,255,0.95), rgba(255,255,255,0));
-}
-
-@supports not (aspect-ratio: 1) {
-  /* Moved from common.css - fallback for browsers without aspect-ratio support */
-  .roomGalleryThumb::before {
-    content: '';
-    display: block;
-    padding-top: 100%;
-  }
-
-  .roomGalleryThumb img {
+.hero-slide {
     position: absolute;
     inset: 0;
-  }
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
 
-  /* 16:9 aspect ratio fallback for room hero image */
-  .roomHeroImgWrap {
-    height: 0;
-    padding-top: 56.25%; /* 16:9 aspect ratio fallback */
-  }
+.hero-slide.active {
+    opacity: 1;
+}
 
-  .roomHeroImgWrap .slider.room-slide-wrapper {
+.hero-image,
+.hero-slide .image-container,
+.hero-slide .fallback-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Navigation Buttons */
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex; /* 모바일에서도 표시 */
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.nav-button.prev {
+    left: 16px;
+}
+
+.nav-button.next {
+    right: 16px;
+}
+
+
+/* Premium Navigation Buttons */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.nav-btn.prev {
+    left: 2rem;
+}
+
+.nav-btn.next {
+    right: 2rem;
+}
+
+.nav-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke-width: 1.5;
+    transition: transform 0.2s;
+}
+
+.nav-btn.prev:hover svg {
+    transform: translateX(-2px);
+}
+
+.nav-btn.next:hover svg {
+    transform: translateX(2px);
+}
+
+/* Hero Content */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+}
+
+.hero-text {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.hero-text h1 {
+    color: white;
+}
+
+/* Back Button Position */
+.back-button {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+}
+
+/* Custom Slide Indicators */
+.slide-indicators {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    border-radius: 9999px;
+}
+
+.indicator-number {
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    min-width: 20px;
+    text-align: right;
+}
+
+.indicator-line {
+    position: relative;
+    margin: 0 1rem;
+    width: 96px;
+    height: 2px;
+}
+
+.indicator-bg {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-  }
+    background: rgba(255, 255, 255, 0.3);
 }
 
-/*room page responsive styles*/
-@media (max-width: 960px) {
-  .roomGalleryNav {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
-  }
-
-  .roomHighlightsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-  }
+.indicator-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: white;
+    transition: width 0.5s ease-out;
 }
 
-@media (max-width: 640px) {
-  .roomGalleryList {
-    gap: clamp(0.4rem, 3vw, 0.6rem);
-  }
-
-  .roomGalleryItem {
-    width: calc((100% - 4 * clamp(0.4rem, 3vw, 0.6rem)) / 5);
-  }
-
-  /* Moved from common.css */
-  .roomGalleryItem.is-active .roomGalleryThumb {
-    outline-offset: 2px;
-  }
-
-  .roomGalleryNav {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
-  }
-
-  .roomGalleryNav--prev {
-    left: -16px;
-  }
-
-  .roomGalleryNav--next {
-    right: -16px;
-  }
+.indicator-total {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    font-weight: 500;
+    min-width: 20px;
+    text-align: left;
 }
 
-@media all and (max-width:700px) {
-  .roomHighlights {
-    padding: 0;
-    border-radius: 22px;
-  }
-  .roomHighlightsGrid {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, auto);
-    gap: 1rem;
-  }
-  .roomHighlight {
-    padding: 1rem 1.3rem;
-  }
-
-  .roomDetailsContent {
-    padding: 0 !important;
-  }
-
-  .roomHeroImgWrap {
-    margin-top: 30px;
-    aspect-ratio: 4 / 3;  /* 모바일에서는 4:3 비율이 더 적합 */
-  }
-
-  .roomGalleryList,
-  .room-thumbnail-wrapper {
-    max-height: calc(25vw + 30px);
-    min-height: 70px;
-    padding: 15px 15px 10px 15px;
-  }
-
-  .roomGalleryItem {
-    max-width: 25vw;
-    min-width: 50px;
-  }
-
-  .roomWrap .con1 {
-    height: auto !important;
-  }
-  .con1Room {
-    margin-top: 0px;width: 100%
-  }
-  .roomWrap .con3 {
-    width: 85%
-  }
-  .con3Room h4 {
-    width: 100%
-  }
-  .roomWrap .con2 aside {
-    float: unset
-  }
-  .roomWrap .con2 .left {
-    width: 100%
-  }
-  .roomWrap .con2 .right {
-    width: 100%
-  }
-  .roomWrap .con3 aside {
-    width: 100%; float: unset
-  }
-  .roomWrap .con3 .right {
-    padding-left: 0px
-  }
-  .roomWrap .con3 .right p {
-    font-size: 12px; margin-top: 25px; letter-spacing: -1px
-  }
-  .con3Room .subListTt {
-    margin: 75px 0 15px 0; padding: 15px 5px
-  }
+/* Room Info Section */
+.room-info {
+    min-height: 800px;
+    padding: 4rem 2rem;
 }
 
-@media all and (max-width:1024px) {
-  .roomWrap .con3 {
-    width: 95%
-  }
-  .roomSliderTrack {
-    gap: clamp(10px, 3vw, 16px);
-  }
-}
-
-@media all and (max-width:720px) {
-  .roomSliderTrack {
-    gap: 12px;
-  }
-  .roomSliderNav {
-    width: 38px;
-    height: 38px;
-  }
-}
-
-.roomSubWrap {
-  width: 100%; margin: 0 auto; text-align: center
-}
-.roomSubWrap .subMenu {
-  display: flex; align-items: flex-start; flex-wrap: wrap
-}
-.roomTap  .roomSubWrap li {
-  width: 33.3%;  float: left
-}
-
-/* Room Exterior Section */
-.roomExteriorSection {
-  margin-top: 60px;
-}
-
-.roomExteriorSection h4 {
-  margin-bottom: 30px;
-}
-
-/* Image Accordion */
-.exteriorAccordion {
-  display: flex;
-  height: 500px;
-  gap: 20px;
-}
-
-.accordionItem {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  border-radius: 16px;
-  transition: flex 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.accordionItem img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.5s ease, object-position 0.5s ease;
-}
-
-/* 호버 시 이미지 포지션 조정 - 더 많은 부분 보이게 */
-.accordionItem:hover img {
-  object-position: center center;
-}
-
-/* 호버되지 않은 이미지들은 일부만 보이게 */
-.accordionItem:not(:hover) img {
-  transform: scale(1.2);
-  object-position: center center;
-}
-
-/* 이미지 개수에 따른 호버 확대 비율 조정 */
-.exteriorAccordion[data-image-count="1"] .accordionItem:hover {
-  flex: 1; /* 1개일 때는 변화 없음 */
-}
-
-.exteriorAccordion[data-image-count="2"] .accordionItem:hover {
-  flex: 3.5;
-}
-
-.exteriorAccordion[data-image-count="3"] .accordionItem:hover {
-  flex: 3;
-}
-
-.exteriorAccordion[data-image-count="4"] .accordionItem:hover {
-  flex: 2.5;
-}
-
-.accordionItem:hover img {
-  transform: scale(1);
-}
-
-
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .exteriorAccordion {
+.room-grid {
+    display: flex;
     flex-direction: column;
-    height: auto;
-    gap: 15px;
-  }
+    gap: 2rem;
+    align-items: start;
+}
 
-  .accordionItem {
-    flex: 1;
-    height: 150px;
-    min-height: 150px;
-    border-radius: 12px;
-  }
+.room-details {
+    width: 100%;
+    order: 1;
+    animation: slideInLeft 0.8s ease-out;
+}
 
-  .accordionItem:hover {
+.room-gallery {
+    width: 100%;
+    order: 2;
+    animation: slideInRight 0.8s ease-out;
+}
+
+.room-details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.room-title {
+    font-size: 1.875rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-ko-main);
+}
+
+.room-description {
+    color: #6b7280;
+    line-height: 1.625;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    font-family: var(--font-ko-sub);
+}
+
+.room-features {
+    margin-bottom: 1.5rem;
+}
+
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-ko-sub);
+}
+
+.feature-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    color: #6b7280;
+}
+
+.amenities-section h4 {
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    font-family: var(--font-ko-main);
+}
+
+.amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+/* Room Guide Section */
+.room-guide-section {
+    margin-top: 2rem;
+}
+
+.room-guide-section h4 {
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-ko-main);
+}
+
+#room-additional-info {
+    white-space: pre-line;
+    color: #6b7280;
+    line-height: 1.625;
+    font-size: 1rem;
+    font-family: var(--font-ko-sub);
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    height: 400px;
+}
+
+.gallery-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.gallery-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.room-gallery .gallery-item {
+    overflow: hidden;
+    border-radius: 0.5rem;
+    aspect-ratio: 4/3;
+    opacity: 1;
+}
+
+.room-gallery .gallery-right .gallery-item {
+    aspect-ratio: 4/3;
     flex: 1;
-    height: 300px;
-  }
+    opacity: 1;
+}
+
+.gallery-right {
+    height: 100%;
+}
+
+.gallery-item img,
+.gallery-item .fallback-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.room-gallery .gallery-item:hover img,
+.room-gallery .gallery-item:hover .fallback-image {
+    transform: scale(1.05);
+}
+
+/* Exterior Area Section */
+.exterior-area {
+    padding: 2rem 2rem 4rem;
+}
+
+.exterior-area-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.exterior-area-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.main-exterior-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: start;
+    animation: scaleIn 0.8s ease-out;
+}
+
+.exterior-image {
+    width: 100%;
+    order: 1;
+}
+
+.exterior-image-container {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+.exterior-image-container img,
+.exterior-image-container .image-container,
+.exterior-image-container .fallback-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.exterior-text {
+    width: 100%;
+    order: 2;
+}
+
+.exterior-text p {
+    color: #6b7280;
+    line-height: 1.625;
+    margin-bottom: 1rem;
+    font-family: var(--font-ko-sub);
+}
+
+.exterior-text p:first-child {
+    font-size: 1.125rem;
+}
+
+/* Gallery Thumbnails */
+.gallery-thumbnails {
+    order: 3;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Mobile Gallery */
+.mobile-gallery {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    cursor: grab;
+}
+
+.mobile-gallery::-webkit-scrollbar {
+    display: none;
+}
+
+.mobile-gallery.dragging {
+    cursor: grabbing;
+}
+
+.mobile-gallery-item {
+    flex-shrink: 0;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    width: calc(60vw - 16px);
+    scroll-snap-align: start;
+    pointer-events: none;
+}
+
+.mobile-gallery-item img,
+.mobile-gallery-item .image-container,
+.mobile-gallery-item .fallback-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.mobile-gallery-item:hover img,
+.mobile-gallery-item:hover .fallback-image {
+    transform: scale(1.05);
+}
+
+/* Desktop Gallery */
+.desktop-gallery {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.desktop-gallery-item {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.desktop-gallery-item img,
+.desktop-gallery-item .image-container,
+.desktop-gallery-item .fallback-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.desktop-gallery-item:hover img,
+.desktop-gallery-item:hover .fallback-image {
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    /* 데스크톱에서 hero content padding 복원 */
+    .hero-content {
+        padding: 2rem;
+    }
+
+    /* 데스크톱에서 버튼 크기 및 위치 조정 */
+    .nav-button {
+        width: 56px;
+        height: 56px;
+    }
+
+    .nav-button svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .nav-button.prev {
+        left: 32px;
+    }
+
+    .nav-button.next {
+        right: 32px;
+    }
+
+    .nav-btn {
+        display: flex;
+    }
+
+
+    .room-info {
+        min-height: auto;
+        padding: 14rem 8.75rem 8rem;
+        margin-bottom: 0;
+    }
+
+    .room-grid {
+        flex-direction: row;
+        gap: 4rem;
+    }
+
+    .room-details {
+        width: 40%;
+    }
+
+    .room-gallery {
+        width: 60%;
+    }
+
+    .room-details-content {
+        gap: 2rem;
+    }
+
+    .room-title {
+        font-size: 2.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .room-description {
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+    }
+
+    #room-additional-info {
+        font-size: 1.125rem;
+    }
+
+
+    .gallery-grid {
+        height: 450px;
+        gap: 1rem;
+    }
+
+    .gallery-left {
+        gap: 1rem;
+    }
+
+    .exterior-area {
+        padding: 4rem 8.75rem 14rem;
+    }
+
+    .exterior-area-header {
+        margin-bottom: 8rem;
+    }
+
+    .exterior-area-content {
+        gap: 8rem;
+    }
+
+    .main-exterior-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .exterior-image {
+        width: 66.666667%;
+    }
+
+    .exterior-text {
+        width: 33.333333%;
+        padding-left: 2rem;
+    }
+
+    .exterior-text p:first-child {
+        font-size: 1.25rem;
+    }
+
+    .exterior-text p {
+        font-size: 1.125rem;
+    }
+
+    .mobile-gallery {
+        display: none;
+    }
+
+    .desktop-gallery {
+        display: grid;
+    }
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+
+.text-white {
+    color: white;
+}
+
+.text-gray-600 {
+    color: #6b7280;
+}
+
+.text-gray-800 {
+    color: #1f2937;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-base {
+    font-size: 1rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+}
+
+.text-3xl {
+    font-size: 1.875rem;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+}
+
+.text-6xl {
+    font-size: 3.75rem;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mb-6 {
+    margin-bottom: 1.5rem;
+}
+
+.max-w-2xl {
+    max-width: 42rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.leading-relaxed {
+    line-height: 1.625;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Missing utility classes */
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.object-cover {
+    object-fit: cover;
+}
+
+.transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.duration-500 {
+    transition-duration: 500ms;
+}
+
+.hover\:scale-105:hover {
+    transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+    .md\:text-lg {
+        font-size: 1.125rem;
+    }
+
+    .md\:text-xl {
+        font-size: 1.25rem;
+    }
+
+    .md\:text-6xl {
+        font-size: 3.75rem;
+    }
 }
