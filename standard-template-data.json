@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.99.0",
-    "generatedAt": "2026-01-12T10:28:36.062Z",
+    "version": "1.100.0",
+    "generatedAt": "2026-01-12T10:32:04.731Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1503,12 +1503,7 @@
             "family": "YeongjuSeonbi"
           },
           "enMain": null,
-          "koMain": {
-            "cdn": null,
-            "key": "cafe24surround",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff",
-            "family": "Cafe24Surround"
-          }
+          "koMain": null
         },
         "color": null
       },
