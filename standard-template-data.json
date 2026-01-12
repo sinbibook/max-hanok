@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.102.0",
-    "generatedAt": "2026-01-12T10:41:55.895Z",
+    "version": "1.103.0",
+    "generatedAt": "2026-01-12T10:43:40.454Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1497,20 +1497,13 @@
       "theme": {
         "font": {
           "koSub": null,
-          "enMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=BBH+Bartle&display=swap",
-            "key": "bbhbartle",
-            "woff2": null,
-            "family": "BBH Bartle"
-          },
-          "koMain": {
-            "cdn": null,
-            "key": "cafe24surround",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff",
-            "family": "Cafe24Surround"
-          }
+          "enMain": null,
+          "koMain": null
         },
-        "color": null
+        "color": {
+          "primary": "#e8ebe6",
+          "secondary": "#7a8471"
+        }
       },
       "popup": {
         "popups": [
