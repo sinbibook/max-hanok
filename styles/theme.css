@@ -1,26 +1,16 @@
-/* CDN Fonts */
-@import url('https://fonts.cdnfonts.com/css/bruno-ace-2');
-
 /* Font Faces */
 @font-face {
-  font-family: 'KccDodamdodam';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-DodamdodamR.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Euljiro';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff') format('woff');
+  font-family: 'GowunDodum-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
   font-weight: 400;
   font-display: swap;
 }
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'KccDodamdodam', sans-serif;
-  --font-ko-sub: 'Euljiro', sans-serif;
-  --font-en-main: 'Bruno Ace', sans-serif;
-  --color-primary: #F8E9DB;
-  --color-secondary: #274946;
+  --font-ko-main: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
+  --font-ko-sub: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
+  --font-en-main: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
+  --color-primary: #fafaf9;
+  --color-secondary: #78716c;
 }
