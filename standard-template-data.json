@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.92.0",
-    "generatedAt": "2026-01-12T05:20:36.766Z",
+    "version": "1.93.0",
+    "generatedAt": "2026-01-12T09:56:45.362Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1516,8 +1516,8 @@
           }
         },
         "color": {
-          "primary": "#e6f3ff",
-          "secondary": "#658399"
+          "primary": "#FDFCF4",
+          "secondary": "#31423D"
         }
       },
       "popup": {
@@ -1785,7 +1785,7 @@
         },
         {
           "id": "43387b98-deb4-4271-a3ee-dd2045ae75e6",
-          "name": "다온방",
+          "name": "다온방 테스트",
           "images": [],
           "nameEn": "다온방"
         },
