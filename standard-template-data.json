@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.90.0",
-    "generatedAt": "2026-01-12T05:03:34.937Z",
+    "version": "1.91.0",
+    "generatedAt": "2026-01-12T05:09:18.122Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1515,7 +1515,10 @@
             "family": "KccDodamdodam"
           }
         },
-        "color": null
+        "color": {
+          "primary": "#e6f3ff",
+          "secondary": "#658399"
+        }
       },
       "popup": {
         "popups": [
@@ -1665,7 +1668,7 @@
             {
               "id": "ea2cc51e-e025-4ce1-ab5e-89fee5150524",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1768194186272-goru9qdeorl.jpg",
-              "sortOrder": 4,
+              "sortOrder": 1,
               "description": "",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
@@ -1674,7 +1677,7 @@
             {
               "id": "0899aee1-94f6-4c7b-9006-39709658ea74",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1768194186273-vptewq1rxol.jpg",
-              "sortOrder": 5,
+              "sortOrder": 2,
               "description": "",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
@@ -1683,7 +1686,7 @@
             {
               "id": "26ffd7d7-ee5b-4458-9c79-7a8b09d25e4e",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1768194186273-ycva1l1zb1l.jpg",
-              "sortOrder": 6,
+              "sortOrder": 3,
               "description": "",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
@@ -1744,7 +1747,7 @@
             {
               "id": "86582b62-0234-4e0b-9962-5d4560a077a1",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1767765850372-4na3mfhx3nf.jpg",
-              "sortOrder": 1,
+              "sortOrder": 4,
               "description": "",
               "isSelected": true,
               "blockId": "33d68482-d69e-4989-aafc-b0ab144cea7e",
@@ -1753,7 +1756,7 @@
             {
               "id": "d734eaa1-8dab-4a59-9ef8-63a17ee7dcf3",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1767765850372-6uajucqh52.jpg",
-              "sortOrder": 2,
+              "sortOrder": 5,
               "description": "",
               "isSelected": true,
               "blockId": "33d68482-d69e-4989-aafc-b0ab144cea7e",
@@ -1762,7 +1765,7 @@
             {
               "id": "af113259-da10-47b1-971e-9c5a21b5f758",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1767765850372-exjs8xdbawj.jpg",
-              "sortOrder": 3,
+              "sortOrder": 6,
               "description": "",
               "isSelected": true,
               "blockId": "33d68482-d69e-4989-aafc-b0ab144cea7e",
@@ -1805,6 +1808,7 @@
           "nameEn": "시네마"
         }
       ]
-    }
+    },
+    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   }
 }
