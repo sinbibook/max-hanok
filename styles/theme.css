@@ -17,4 +17,7 @@
 :root {
   --font-ko-main: 'Cafe24Surround', sans-serif;
   --font-ko-sub: 'YeongjuSeonbi', sans-serif;
+  --font-en-main: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
+  --color-primary: #fafaf9;
+  --color-secondary: #78716c;
 }
