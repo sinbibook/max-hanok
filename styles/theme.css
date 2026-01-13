@@ -1,5 +1,12 @@
 /* Font Faces */
 @font-face {
+  font-family: 'SokchoSeaDotum';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'GowunDodum-Regular';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
   font-weight: 400;
@@ -9,8 +16,8 @@
 /* CSS Variables */
 :root {
   --font-ko-main: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
-  --font-ko-sub: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
+  --font-ko-sub: 'SokchoSeaDotum', sans-serif;
   --font-en-main: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
-  --color-primary: #e8ebe6;
-  --color-secondary: #7a8471;
+  --color-primary: #f7f9fb;
+  --color-secondary: #85bfc1;
 }
