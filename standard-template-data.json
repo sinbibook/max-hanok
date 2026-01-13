@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.103.0",
-    "generatedAt": "2026-01-12T10:43:40.454Z",
+    "version": "1.104.0",
+    "generatedAt": "2026-01-13T01:38:49.717Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1496,13 +1496,18 @@
       },
       "theme": {
         "font": {
-          "koSub": null,
+          "koSub": {
+            "cdn": null,
+            "key": "sokchoseadotum",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
+            "family": "SokchoSeaDotum"
+          },
           "enMain": null,
           "koMain": null
         },
         "color": {
-          "primary": "#e8ebe6",
-          "secondary": "#7a8471"
+          "primary": "#f7f9fb",
+          "secondary": "#85bfc1"
         }
       },
       "popup": {
