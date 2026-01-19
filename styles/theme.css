@@ -1,7 +1,7 @@
 /* Font Faces */
 @font-face {
-  font-family: 'SokchoSeaDotum';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
+  font-family: 'CoolGuy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/CoolGuy-Medium.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
@@ -15,8 +15,8 @@
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
-  --font-ko-sub: 'SokchoSeaDotum', sans-serif;
+  --font-ko-main: 'CoolGuy', sans-serif;
+  --font-ko-sub: 'CoolGuy', sans-serif;
   --font-en-main: 'GowunDodum-Regular', 'Apple SD Gothic Neo', sans-serif;
   --color-primary: #f7f9fb;
   --color-secondary: #85bfc1;
