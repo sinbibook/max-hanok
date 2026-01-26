@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.107.0",
-    "generatedAt": "2026-01-26T09:13:20.385Z",
+    "version": "1.108.0",
+    "generatedAt": "2026-01-26T09:35:44.684Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -214,7 +214,7 @@
     ],
     "nameEn": "Max Hanok Pension",
     "domain": "max-hanok.com",
-    "realtimeBookingId": "GMHP012",
+    "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
     "ybsId": ""
   },
   "rooms": [
