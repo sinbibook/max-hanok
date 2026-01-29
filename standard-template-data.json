@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.108.0",
-    "generatedAt": "2026-01-26T09:35:44.684Z",
+    "version": "1.109.0",
+    "generatedAt": "2026-01-29T07:23:09.990Z",
     "templateType": "full_banner_image",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -58,14 +58,14 @@
     ],
     "businessInfo": {
       "businessName": "맥스펜션",
-      "businessNumber": "123-44-5535335",
+      "businessNumber": "123-44-55353",
       "representativeName": "맥스",
       "businessAddress": "테헤란로 맥스펜션",
-      "businessPhone": "",
-      "businessEmail": "",
-      "businessType": "",
+      "businessPhone": "010-0000-0000",
+      "businessEmail": "ma@f.com",
+      "businessType": "individual",
       "businessCategory": "",
-      "eCommerceRegistrationNumber": ""
+      "eCommerceRegistrationNumber": "제2024-강남-231"
     },
     "contractInfo": {
       "contractStartDate": "2025-09-10T00:00:00.000Z",
@@ -987,7 +987,7 @@
     },
     {
       "id": "46d60b1b-c1fa-497f-9f96-2bfb357929aa",
-      "name": "정산객실2",
+      "name": " 정산객실2",
       "description": "12",
       "roomInfo": "12",
       "group": null,
@@ -1031,7 +1031,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "full_banner_image",
+    "templateType": "full_banner_slider_group",
     "images": [
       {
         "logo": [
@@ -1766,8 +1766,8 @@
           "name": "한별당 테스트",
           "images": [
             {
-              "id": "54fd34f2-15eb-4692-8b97-58479e229cd8",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_thumbnail/1767765850372-i34h52bx5j.jpg",
+              "id": "465dea57-f88c-4fae-b8df-d94711a6896c",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_thumbnail/1769503134982-ejwv4c68zs5.jpg",
               "sortOrder": 1,
               "description": "",
               "isSelected": true,
@@ -1852,13 +1852,32 @@
         {
           "id": "43387b98-deb4-4271-a3ee-dd2045ae75e6",
           "name": "다온방 테스트",
-          "images": [],
+          "images": [
+            {
+              "id": "14ce42d6-f558-48f2-84ea-4c16607bbbce",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_thumbnail/1769503134983-ecjiri2xddu.jpg",
+              "sortOrder": 2,
+              "description": "",
+              "isSelected": true,
+              "blockId": "43387b98-deb4-4271-a3ee-dd2045ae75e6",
+              "category": "roomtype_thumbnail"
+            }
+          ],
           "nameEn": "다온방"
         },
         {
           "id": "b4b7a37b-2bf9-46ca-859c-55031677bf63",
           "name": "사랑방",
           "images": [
+            {
+              "id": "be2d0c84-84ef-41e2-b293-11f200f6e269",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_thumbnail/1769503134983-40iq2m2556g.jpg",
+              "sortOrder": 3,
+              "description": "",
+              "isSelected": true,
+              "blockId": "b4b7a37b-2bf9-46ca-859c-55031677bf63",
+              "category": "roomtype_thumbnail"
+            },
             {
               "id": "18910558-a5e2-4d82-888e-2a4b290ded6f",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1768810389954-magsjckl4k.jpg",
@@ -1874,7 +1893,17 @@
         {
           "id": "2e5a7cc2-cb44-4cac-81c7-9bf3f8b200ea",
           "name": "난이당",
-          "images": [],
+          "images": [
+            {
+              "id": "b0ddf70b-e488-4b63-a6b0-add1b6f6a6d1",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_thumbnail/1769503134983-5seu3v1qcwm.jpg",
+              "sortOrder": 4,
+              "description": "",
+              "isSelected": true,
+              "blockId": "2e5a7cc2-cb44-4cac-81c7-9bf3f8b200ea",
+              "category": "roomtype_thumbnail"
+            }
+          ],
           "nameEn": "난이당"
         },
         {
