@@ -1,173 +1,329 @@
-/**
- * Room Page Functionality
- * 객실 페이지 슬라이더 및 갤러리 기능
- */
+// Room 페이지 JavaScript
+(function() {
+    'use strict';
 
-import { initSwipeHandler } from '../utils/swipe-handler.js';
+    document.addEventListener('DOMContentLoaded', function() {
+        // 썸네일 상호작용 설정
+        setupRoomThumbnailInteraction();
 
-// Global variables
-let currentSlide = 0;
-let autoSlideTimer;
+        // Hero 슬라이더 초기화
+        setTimeout(() => {
+            initRoomHeroSlider();
+        }, 100);
 
-// Mobile gallery drag functionality
-let isDragging = false;
-let startX = 0;
-let scrollLeft = 0;
-const mobileGallery = document.getElementById('mobile-gallery');
+        // Gallery 초기화 (index.html 스타일)
+        setTimeout(() => {
+            initInfiniteGallery(); // 무한 갤러리 복제
+            setTimeout(() => {
+                initGalleryAutoSlider(); // 자동 슬라이딩 갤러리
+            }, 100);
+        }, 200);
 
-// Navigation function
-function navigateToHome() {
-    window.location.href = './index.html';
-}
-
-function updateSlider() {
-  const slides = document.querySelectorAll('.hero-slide');
-  const indicatorCurrent = document.querySelector('.indicator-current');
-  const indicatorProgress = document.querySelector('.indicator-progress');
-
-  // 슬라이드가 없으면 리턴
-  if (slides.length === 0) return;
-
-  // currentSlide가 범위를 벗어나면 수정
-  if (currentSlide >= slides.length) {
-    currentSlide = 0;
-  } else if (currentSlide < 0) {
-    currentSlide = slides.length - 1;
-  }
-
-  slides.forEach((slide, index) => {
-    slide.classList.toggle('active', index === currentSlide);
-  });
-
-  const totalSlides = slides.length;
-  if (indicatorCurrent) {
-    indicatorCurrent.textContent = String(currentSlide + 1).padStart(2, '0');
-  }
-  if (indicatorProgress) {
-    indicatorProgress.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
-  }
-}
-
-function nextSlide() {
-  const totalSlides = document.querySelectorAll('.hero-slide').length;
-  if (totalSlides === 0) return;
-
-  currentSlide = (currentSlide + 1) % totalSlides;
-  updateSlider();
-  resetAutoSlide();
-}
-
-function prevSlide() {
-  const totalSlides = document.querySelectorAll('.hero-slide').length;
-  currentSlide = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
-  updateSlider();
-  resetAutoSlide();
-}
-
-function goToSlide(index) {
-  currentSlide = index;
-  updateSlider();
-  resetAutoSlide();
-}
-
-function startAutoSlide() {
-  // 기존 타이머가 있다면 먼저 정리
-  if (autoSlideTimer) {
-    clearInterval(autoSlideTimer);
-  }
-
-  autoSlideTimer = setInterval(() => {
-    nextSlide();
-  }, 5000);
-}
-
-function resetAutoSlide() {
-  clearInterval(autoSlideTimer);
-  autoSlideTimer = null;
-  startAutoSlide();
-}
-
-// 슬라이더 초기화 함수 (hero 슬라이드 생성 후 호출)
-function initializeSlider() {
-  // 기존 타이머 정리
-  if (autoSlideTimer) {
-    clearInterval(autoSlideTimer);
-    autoSlideTimer = null;
-  }
-
-  // currentSlide 리셋
-  currentSlide = 0;
-
-  // 슬라이더 업데이트 및 자동 재생 시작
-  updateSlider();
-  startAutoSlide();
-}
-
-// 전역으로 노출
-window.initializeSlider = initializeSlider;
-
-// Mobile gallery drag handlers
-function initializeMobileGallery() {
-    if (!mobileGallery) return;
-
-    mobileGallery.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        mobileGallery.classList.add('dragging');
-        startX = e.pageX - mobileGallery.offsetLeft;
-        scrollLeft = mobileGallery.scrollLeft;
-        e.preventDefault();
+        // 스크롤 애니메이션 초기화 (데이터 로드 후 실행)
+        setTimeout(() => {
+            initRoomScrollAnimations();
+            initParallaxEffect();
+            setupSectionToggles();
+        }, 500);
     });
 
-    mobileGallery.addEventListener('mouseleave', () => {
-        isDragging = false;
-        mobileGallery.classList.remove('dragging');
-    });
+    function initRoomHeroSlider() {
+        const slider = document.querySelector('[data-room-slider]');
+        if (!slider) {
+            return;
+        }
 
-    mobileGallery.addEventListener('mouseup', () => {
-        isDragging = false;
-        mobileGallery.classList.remove('dragging');
-    });
+        // 이미 초기화되었는지 확인 (중복 방지)
+        if (slider.dataset.sliderInitialized === 'true') {
+            return;
+        }
 
-    mobileGallery.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - mobileGallery.offsetLeft;
-        const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
-        mobileGallery.scrollLeft = scrollLeft - walk;
-    });
-}
+        const slides = slider.querySelectorAll('.room-slide');
+        const prevBtn = document.querySelector('.slider-btn.prev');
+        const nextBtn = document.querySelector('.slider-btn.next');
+        const progressBar = document.querySelector('.progress-bar');
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize mobile gallery
-  initializeMobileGallery();
+        if (!slides.length) {
+            return;
+        }
 
-  // Initialize hero slider navigation buttons
-  const prevButton = document.querySelector('.nav-button.prev');
-  const nextButton = document.querySelector('.nav-button.next');
+        let currentSlideIndex = 0;
+        let autoSlideTimer;
+        const slideInterval = 4000; // 4초
 
-  if (prevButton) {
-    prevButton.addEventListener('click', prevSlide);
-  }
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'next', 'prev');
+                if (i === index) {
+                    slide.classList.add('active');
+                } else if (i === (index + 1) % slides.length) {
+                    slide.classList.add('next');
+                } else if (i === (index - 1 + slides.length) % slides.length) {
+                    slide.classList.add('prev');
+                }
+            });
 
-  if (nextButton) {
-    nextButton.addEventListener('click', nextSlide);
-  }
+            // Progress bar 업데이트
+            if (progressBar) {
+                const progress = ((index + 1) / slides.length) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+        }
 
-  // Initialize touch swipe for hero section
-  const heroSection = document.querySelector('.hero-section');
-  if (heroSection) {
-    initSwipeHandler(heroSection, nextSlide, prevSlide);
-  }
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+            showSlide(currentSlideIndex);
+        }
 
-  // Initialize RoomMapper (PreviewHandler가 없을 때만)
-  if (!window.previewHandler) {
-    const roomMapper = new RoomMapper();
-    roomMapper.initialize().then(() => {
-      roomMapper.setupNavigation();
-      // 슬라이더 초기화는 RoomMapper의 initializeHeroSlider에서 호출됨
-    }).catch(error => {
-      console.error('❌ RoomMapper initialization failed:', error);
-    });
-  }
-});
+        function prevSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+            showSlide(currentSlideIndex);
+        }
+
+        function startAutoSlide() {
+            autoSlideTimer = setInterval(nextSlide, slideInterval);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideTimer) {
+                clearInterval(autoSlideTimer);
+            }
+        }
+
+        // Event listeners
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                stopAutoSlide();
+                nextSlide();
+                startAutoSlide();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                stopAutoSlide();
+                prevSlide();
+                startAutoSlide();
+            });
+        }
+
+        // Touch support
+        let touchStartX = 0;
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            stopAutoSlide();
+        });
+
+        slider.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+            startAutoSlide();
+        });
+
+        // Initialize
+        showSlide(0);
+        startAutoSlide();
+
+        // Mark as initialized
+        slider.dataset.sliderInitialized = 'true';
+    }
+
+    // Gallery Auto Slider (index.html 스타일)
+    // index.html과 동일한 무한 갤러리 기능
+    function initInfiniteGallery() {
+        const galleryGrid = document.querySelector('[data-room-gallery]');
+        if (!galleryGrid) return;
+
+        const originalItems = galleryGrid.querySelectorAll('.gallery-item');
+        if (originalItems.length === 0) return;
+
+        // Clone items to create infinite effect - 3배로 복제해서 부드러운 전환
+        const totalClones = originalItems.length * 3;
+
+        for (let i = 0; i < totalClones; i++) {
+            const itemToClone = originalItems[i % originalItems.length];
+            const clonedItem = itemToClone.cloneNode(true);
+            galleryGrid.appendChild(clonedItem);
+        }
+    }
+
+    function initGalleryAutoSlider() {
+        const galleryGrid = document.querySelector('[data-room-gallery]');
+        if (!galleryGrid) return;
+
+        // 매핑된 갤러리 아이템들 확인
+        const galleryItems = galleryGrid.querySelectorAll('.gallery-item');
+        if (galleryItems.length <= 1) return;
+
+        let currentIndex = 0;
+        let autoSlideInterval;
+        const slideInterval = 4000; // 4초마다 자동 슬라이드
+
+        function scrollToItem(index) {
+            if (!galleryItems[index]) return;
+
+            const itemWidth = galleryItems[index].offsetWidth + 20; // gap 포함
+            const scrollPosition = index * itemWidth;
+
+            galleryGrid.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            scrollToItem(currentIndex);
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, slideInterval);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideInterval) {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = null;
+            }
+        }
+
+        // 마우스 오버 시 자동 슬라이드 정지 (index.html과 동일)
+        galleryGrid.addEventListener('mouseenter', stopAutoSlide);
+        galleryGrid.addEventListener('mouseleave', startAutoSlide);
+
+        // 터치 시작 시 자동 슬라이드 정지 (index.html과 동일)
+        galleryGrid.addEventListener('touchstart', stopAutoSlide);
+        galleryGrid.addEventListener('touchend', () => {
+            // 터치 후 3초 뒤 다시 시작
+            setTimeout(startAutoSlide, 3000);
+        });
+
+        // 자동 슬라이드 시작
+        startAutoSlide();
+
+        // 화면 크기 변경 시 재조정
+        window.addEventListener('resize', () => {
+            scrollToItem(currentIndex);
+        });
+
+    }
+
+    /**
+     * 객실 썸네일 상호작용 설정
+     */
+    function setupRoomThumbnailInteraction() {
+        const thumbnails = document.querySelectorAll('.room-thumb');
+        const mainImg = document.getElementById('room-main-img');
+
+        if (!mainImg || thumbnails.length === 0) return;
+
+        thumbnails.forEach((thumb) => {
+            thumb.addEventListener('click', function() {
+                // 모든 썸네일의 active 클래스 제거
+                thumbnails.forEach(t => t.classList.remove('active'));
+
+                // 현재 썸네일에 active 클래스 추가
+                this.classList.add('active');
+
+                // 메인 이미지 업데이트
+                const thumbImg = this.querySelector('img');
+                if (thumbImg && thumbImg.src) {
+                    mainImg.src = thumbImg.src;
+                    mainImg.alt = thumbImg.alt;
+                }
+            });
+        });
+    }
+
+    /**
+     * 섹션 토글 기능 설정
+     */
+    function setupSectionToggles() {
+        const toggleBtns = document.querySelectorAll('.section-toggle-btn');
+
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetName = this.getAttribute('data-toggle');
+                const content = document.querySelector(`[data-content="${targetName}"]`);
+                const minusIcon = this.querySelector('.toggle-minus');
+                const plusIcon = this.querySelector('.toggle-plus');
+
+                if (content) {
+                    const isHidden = content.style.display === 'none' || !content.style.display;
+
+                    if (isHidden) {
+                        // Show content
+                        content.style.display = 'block';
+                        if (minusIcon) minusIcon.style.display = 'inline';
+                        if (plusIcon) plusIcon.style.display = 'none';
+                    } else {
+                        // Hide content
+                        content.style.display = 'none';
+                        if (minusIcon) minusIcon.style.display = 'none';
+                        if (plusIcon) plusIcon.style.display = 'inline';
+                    }
+                }
+            });
+        });
+    }
+
+    /**
+     * 스크롤 애니메이션 초기화
+     */
+    function initRoomScrollAnimations() {
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    /**
+     * 패럴랙스 효과
+     */
+    function initParallaxEffect() {
+        const parallaxElements = document.querySelectorAll('[data-parallax]');
+
+        if (parallaxElements.length === 0) return;
+
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+
+            parallaxElements.forEach(element => {
+                const rate = scrolled * -0.5;
+                element.style.transform = `translateY(${rate}px)`;
+            });
+        }
+
+        window.addEventListener('scroll', updateParallax);
+    }
+
+    // 전역 노출 (필요시)
+    window.initRoomHeroSlider = initRoomHeroSlider;
+    window.setupRoomThumbnailInteraction = setupRoomThumbnailInteraction;
+    window.initRoomScrollAnimations = initRoomScrollAnimations;
+    window.initParallaxEffect = initParallaxEffect;
+    window.setupSectionToggles = setupSectionToggles;
+
+})();
