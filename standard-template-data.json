@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.109.0",
-    "generatedAt": "2026-01-29T07:23:09.990Z",
-    "templateType": "full_banner_image",
+    "version": "1.110.0",
+    "generatedAt": "2026-01-30T03:43:52.547Z",
+    "templateType": "full_banner_conveyer",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -212,7 +212,7 @@
         ]
       }
     ],
-    "nameEn": "Max Hanok Pension",
+    "nameEn": "Max Hanok Pensio",
     "domain": "max-hanok.com",
     "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
     "ybsId": ""
@@ -1027,11 +1027,67 @@
         }
       ],
       "displayOrder": 8
+    },
+    {
+      "id": "c6138983-98d1-4073-8036-ff497d0b5911",
+      "name": "테스트1",
+      "description": "",
+      "roomInfo": "",
+      "group": null,
+      "size": 36.36,
+      "baseOccupancy": 1,
+      "maxOccupancy": 1,
+      "totalRoomCount": {
+        "bedroom": 0,
+        "bathroom": 0,
+        "livingRoom": 0
+      },
+      "bedTypes": [],
+      "amenities": [],
+      "roomViews": [],
+      "roomStructures": [],
+      "status": "active",
+      "images": [
+        {
+          "thumbnail": [],
+          "interior": [],
+          "exterior": []
+        }
+      ],
+      "displayOrder": 9
+    },
+    {
+      "id": "6d4f8a99-0b25-46b6-be94-42e42f4a5fd9",
+      "name": "테스트22",
+      "description": "",
+      "roomInfo": "",
+      "group": null,
+      "size": 72.73,
+      "baseOccupancy": 1,
+      "maxOccupancy": 1,
+      "totalRoomCount": {
+        "bedroom": 0,
+        "bathroom": 0,
+        "livingRoom": 0
+      },
+      "bedTypes": [],
+      "amenities": [],
+      "roomViews": [],
+      "roomStructures": [],
+      "status": "active",
+      "images": [
+        {
+          "thumbnail": [],
+          "interior": [],
+          "exterior": []
+        }
+      ],
+      "displayOrder": 10
     }
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "full_banner_slider_group",
+    "templateType": "full_banner_conveyer",
     "images": [
       {
         "logo": [
@@ -1919,9 +1975,16 @@
         {
           "id": "46d60b1b-c1fa-497f-9f96-2bfb357929aa",
           "images": []
+        },
+        {
+          "id": "c6138983-98d1-4073-8036-ff497d0b5911",
+          "images": []
+        },
+        {
+          "id": "6d4f8a99-0b25-46b6-be94-42e42f4a5fd9",
+          "images": []
         }
       ]
-    },
-    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
+    }
   }
 }

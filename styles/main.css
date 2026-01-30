@@ -1,380 +1,506 @@
-/* Main Page Specific Styles */
+/* Main �t� � ��| */
 
-/* Dynamic Content Sections */
-#dynamic-content-sections {
-  background-color: var(--color-primary);
+/* �t� ��\ 9X */
+.page-hero-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 
-/* Hero Section */
-.hero-section {
-  position: relative;
-  height: 100vh;
-  min-height: 100vh;
-  overflow: hidden;
+/* ��l� 0� t�� */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
 }
 
-.hero-slide {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
-.hero-slide.active {
-  opacity: 1;
+/* 애니메이션 키프레임 */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
-.hero-image,
-.hero-slide .image-container,
-.hero-slide .fallback-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+@keyframes fadeInCenter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blinkCursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* �t� � (Prologue) */
+
+/* page-title h1 스타일은 common.css에서 관리 */
+
+
+/* �t�� $� �Lt (index.html ��|�  �) */
+/* main-container 스타일은 common.css로 이동 */
+
+.text-content {
+    position: relative;
+    margin-bottom: 80px;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 
-/* Navigation Buttons */
-.nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 20;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  display: flex; /* 모바일에서도 표시 */
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+/* logo-line-container 스타일은 common.css로 이동됨 */
 
-.nav-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-50%) scale(1.05);
-}
-
-.nav-button.prev {
-  left: 16px;
-}
-
-.nav-button.next {
-  right: 16px;
-}
-
-/* Hero Content */
 .hero-content {
-  position: relative;
-  z-index: 10;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 32px;
-  padding-bottom: 64px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Back Button Position */
-.back-button {
-    margin-bottom: 32px;
-    width: fit-content;
+.text-content .hero-title {
+    font-family: var(--font-ko-main);
+    font-size: 28px;  /* essence-title과 동일 */
+    font-weight: 700;
+    color: var(--color-secondary, #658399);
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+    display: block;
+    width: 100%;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+
+.text-content .hero-description {
+    font-family: var(--font-ko-sub);
+    font-size: 17px;  /* essence-description과 동일 */
+    color: #666;
+    line-height: 1.8;
+    text-align: right;
+    max-width: 600px;
+    margin-left: auto;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+
+.hero-text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 60px;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 180px;
+    padding: 0;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    /* 전체 컨테이너에 단색 배경 적용 */
+    background: var(--color-primary);
+}
+
+/* 소개 블록 - 배경 제거 */
+.about-block {
+    position: relative;
+    width: 100vw;
+    margin: 0;
+    min-height: 600px;
+    opacity: 1;
+    /* 개별 블록 배경 제거 */
+    background: transparent;
+}
+
+
+/* 개별 블록 배경 스타일 제거 - 컨테이너 레벨에서 그라데이션 적용 */
+
+.about-block:last-child {
+    margin-bottom: 0;
+}
+
+.about-content {
+    position: relative;
+}
+
+
+/* 짝수 번째 about-block - 반대 레이아웃 */
+.about-block:nth-child(even) .about-image {
+    left: auto;
+    right: 20px;
+    transform: translateX(100px);
+}
+
+/* 짝수 블록 이미지 - 오른쪽에서 나타남 */
+.about-block:nth-child(even) .about-image.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.about-block:nth-child(even) .about-text {
+    right: auto;
+    left: 20px;
+    text-align: left;
+    transform: translateY(-50%) translateX(-100px);
+}
+
+/* 짝수 블록 텍스트 - 왼쪽에서 나타남 */
+.about-block:nth-child(even) .about-text.visible {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* 짝수 번째 about-text 세로줄 위치 조정 */
+.about-block:nth-child(even) .about-text::after {
+    right: auto;
+    left: 0;
+}
+
+/* 내부 컨테이너 - 최대 너비 제한 */
+.about-block-inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 600px;
+    padding: 80px 20px 100px;
+}
+
+/* 세로 이미지 컨테이너 - 왼쪽에 위치 */
+.about-image {
+    width: 500px;
+    height: 600px;
+    position: absolute;
+    left: 20px;
+    top: -50px;
+    border-radius: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    z-index: 2;
+}
+
+/* 홀수 블록 이미지 - 왼쪽에서 나타남 */
+.about-block:nth-child(odd) .about-image.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 텍스트 영역 - 우측에 위치 */
+.about-text {
+    position: absolute;
+    right: 20px;
+    top: 60%;
+    transform: translateY(-50%) translateX(100px);
+    width: 50%;
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* 홀수 블록 텍스트 - 오른쪽에서 나타남 */
+.about-block:nth-child(odd) .about-text.visible {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* about-text 영역 우측 세로줄 */
+.about-text::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 1px;
+    height: calc(100% + 100px);
+    background: rgba(51, 51, 51, 0.3);
+}
+
+.about-title {
+    font-family: var(--font-ko-main);
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+}
+
+.about-description {
+    font-family: var(--font-ko-sub);
+    font-size: 16px;
+    color: #333;
+    line-height: 1.8;
+    margin: 0;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+}
+
+/* 모든 블록 어두운 색상 텍스트로 통일 */
+.about-block .about-title {
+    color: #333;
+}
+
+.about-block .about-description {
+    color: #333;
 }
 
 .hero-title {
-  margin-bottom: 64px;
+    font-size: 48px;
+    font-weight: normal;
+    color: white;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
+    letter-spacing: 2px;
 }
 
-.hero-title h1 {
-  font-size: 4rem;
-  color: white;
-  margin-bottom: 24px;
-  line-height: 1.1;
-  font-weight: 300;
+.hero-description {
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 600px;
 }
 
-.hero-title p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 18px;
-  max-width: 512px;
-  line-height: 1.5;
+
+/* Q ��| */
+@media (max-width: 1024px) {
+    /* page-title h1은 common.css에서 관리 */
+
+    .hero-title {
+        font-size: 42px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    /* About block tablet styles */
+    .about-block-inner {
+        padding: 60px 20px 80px;
+        height: 500px;
+    }
+
+    .about-image {
+        width: 400px;
+        height: 500px;
+        left: 20px;
+        top: -30px;
+    }
+
+    .about-text {
+        width: 50%;
+        padding: 30px 40px;
+    }
+
+    .about-block:nth-child(even) .about-image {
+        right: 20px;
+    }
+
+    .about-block:nth-child(even) .about-text {
+        left: 20px;
+    }
 }
 
-/* Slide Indicators */
-.slide-indicators {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(4px);
-  border-radius: 24px;
-}
+@media (max-width: 768px) {
+    /* page-title h1은 common.css에서 관리 */
 
-.indicator-current {
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  min-width: 20px;
-  text-align: right;
-}
+    /* main-container 스타일은 common.css로 이동 */
 
-.indicator-bar {
-  position: relative;
-  margin: 0 16px;
-  width: 96px;
-  height: 2px;
-}
+    .hero-text-content {
+        align-items: center;
+        text-align: center;
+    }
 
-.indicator-track {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.3);
-}
+    .hero-title {
+        font-size: 36px;
+        letter-spacing: 1px;
+    }
 
-.indicator-progress {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background: white;
-  transition: width 0.5s ease-out;
-}
+    .hero-description {
+        font-size: 16px;
+        max-width: 90%;
+    }
 
-.indicator-total {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  font-weight: 500;
-  min-width: 20px;
-  text-align: left;
-}
+    /* About 블록 모바일 - 새로운 디자인 */
+    .about-content {
+        gap: 0;
+        margin-top: 100px;
+    }
 
-/* Content Sections */
-.content-section {
-  position: relative;
-  padding: 40px 32px;
-}
+    .about-block {
+        min-height: auto;
+        padding: 80px 0;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
 
-.section-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 64px;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-}
+    .about-block-inner {
+        height: auto;
+        padding: 0;
+    }
 
-.text-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
+    .about-block .about-image {
+        position: relative;
+        width: 90%;
+        height: 350px;
+        left: auto;
+        right: auto;
+        transform: none;
+        top: 0;
+        border-radius: 0;
+        margin: 0 auto 40px;
+        display: block;
+        opacity: 1 !important;
+    }
 
-.text-content h2 {
-  font-size: 2rem;
-  color: #1a1a1a;
-  margin-bottom: 24px;
-  line-height: 1.4;
-  font-weight: 400;
-}
+    .about-text {
+        position: relative;
+        width: 90%;
+        max-width: none;
+        padding: 0;
+        margin: 0 auto;
+        text-align: center;
+        top: 0;
+        right: auto;
+        left: auto;
+        transform: none !important;
+        opacity: 1 !important;
+    }
 
-.text-description {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  color: #666;
-  font-size: 14px;
-  line-height: 1.6;
-}
+    /* visible 클래스가 추가되어도 transform 제거 */
+    .about-block:nth-child(even) .about-text.visible,
+    .about-block:nth-child(odd) .about-text.visible {
+        transform: none !important;
+        opacity: 1;
+    }
 
-.image-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
+    /* 모바일에서 세로줄 숨김 */
+    .about-text::after {
+        display: none;
+    }
 
-.image-item {
-  aspect-ratio: 3/4;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+    /* 짝수 번째 블록도 동일하게 중앙정렬 */
+    .about-block:nth-child(even) .about-image {
+        left: auto;
+        right: auto;
+        transform: none;
+        margin: 0 auto 40px;
+    }
 
-.image-item img,
-.image-item .image-container,
-.image-item .fallback-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .about-block:nth-child(even) .about-text {
+        text-align: center;
+        left: auto;
+        right: auto;
+        margin: 0 auto;
+    }
 
-/* Full Width Image Section */
-.full-width-section {
-  position: relative;
-}
+    .about-title {
+        font-size: 24px;
+        text-align: center;
+    }
 
-.full-width-image {
-  width: 100%;
-  height: 353px;
-  padding-top: 48px;
-  overflow: hidden;
-}
-
-.full-width-image img,
-.full-width-image .image-container,
-.full-width-image .fallback-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Loading placeholder styles for image-with-fallback */
-.loading-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #f3f4f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.loading-placeholder.hidden {
-  display: none;
-}
-
-.loading-spinner {
-  width: 32px;
-  height: 32px;
-  border: 2px solid #e5e7eb;
-  border-top: 2px solid #6b7280;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: .5;
-  }
-}
-
-/* Image container positioning */
-.hero-slide .image-container,
-.image-item .image-container,
-.full-width-image .image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-/* Ensure loaded images are visible */
-.fallback-image.loaded {
-  opacity: 1;
-  z-index: 2;
-  position: relative;
-}
-
-/* Responsive Design */
-@media (min-width: 768px) {
-  .hero-content {
-    padding: 32px 140px 64px 140px;
-  }
-
-  .hero-title h1 {
-    font-size: 6rem;
-  }
-
-  .hero-title p {
-    font-size: 20px;
-  }
-
-  .nav-button {
-    width: 56px;
-    height: 56px;
-  }
-  .nav-button.prev {
-    left: 32px;
-  }
-  .nav-button.next {
-    right: 32px;
-  }
-
-
-  .content-section {
-    padding: 60px 140px;
-  }
-
-  .section-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-  }
-
-  /* Reverse class for alternating layout */
-  .section-container.reverse {
-    direction: rtl;
-  }
-
-  .section-container.reverse > * {
-    direction: ltr;
-  }
-
-  .text-content h2 {
-    font-size: 3rem;
-  }
-
-  .text-description {
-    font-size: 16px;
-  }
-
-  .image-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero-section {
-    height: 70vh;
-    min-height: 70vh;
-  }
+    .about-description {
+        font-size: 14px;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
-  .hero-title h1 {
-    font-size: 3rem;
-  }
+    /* page-title h1은 common.css에서 관리 */
 
-  .hero-title p {
-    font-size: 16px;
-  }
+    /* main-container 스타일은 common.css로 이동 */
 
-  .text-content h2 {
-    font-size: 1.5rem;
-  }
+    .hero-title {
+        font-size: 22px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    /* About 블록 480px - 새로운 디자인 */
+    .about-content {
+        gap: 0;
+        margin-top: 80px;
+    }
+
+    .about-block {
+        min-height: auto;
+        padding: 60px 0;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    .about-block-inner {
+        height: auto;
+        padding: 0;
+    }
+
+    .about-block .about-image {
+        width: 90%;
+        height: 250px;
+        left: auto;
+        right: auto;
+        transform: none;
+        border-radius: 0;
+        margin: 0 auto 25px;
+        display: block;
+    }
+
+    .about-text {
+        padding: 0 20px;
+    }
+
+    .about-title {
+        font-size: 20px;
+    }
+
+    .about-description {
+        font-size: 13px;
+    }
 }
