@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.110.0",
-    "generatedAt": "2026-01-30T03:43:52.547Z",
+    "version": "1.111.0",
+    "generatedAt": "2026-02-02T00:56:15.058Z",
     "templateType": "full_banner_conveyer",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1215,7 +1215,7 @@
                 "description": "TEST"
               },
               "gallery": {
-                "title": "Gallery",
+                "title": "특별한 순간",
                 "images": [
                   {
                     "id": "8e2a45bb-8d8b-4f58-8543-22d94174ea97",
@@ -1623,24 +1623,11 @@
       },
       "theme": {
         "font": {
-          "koSub": {
-            "cdn": null,
-            "key": "coolguy",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/CoolGuy-Medium.woff2",
-            "family": "CoolGuy"
-          },
+          "koSub": null,
           "enMain": null,
-          "koMain": {
-            "cdn": null,
-            "key": "coolguy",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/CoolGuy-Medium.woff2",
-            "family": "CoolGuy"
-          }
+          "koMain": null
         },
-        "color": {
-          "primary": "#f7f9fb",
-          "secondary": "#85bfc1"
-        }
+        "color": null
       },
       "popup": {
         "popups": [
