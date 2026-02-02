@@ -1,126 +1,269 @@
-footer {
-    background-color: var(--color-secondary, #658399);
-    color: #fff;
+/* Footer Styles */
+.footer {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
     padding: 40px 0;
 }
 
-.footer-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+/* Footer stays in place - overlay mode */
+
+.footer-divider {
+    max-width: 1600px;
+    margin: 0 auto 40px;
+    height: 1px;
+    background-color: #d4d1cd;
 }
 
 .footer-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.footer-top {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 60px;
-    position: relative;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    gap: 40px;
 }
 
-.footer-content::before {
-    content: '';
-    position: absolute;
-    left: 32%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 80px;
-    background-color: rgba(255, 255, 255, 0.3);
+.footer-left-section {
+    flex: 0 0 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    text-align: left;
 }
 
-.footer-left {
-    flex: 0 0 30%;
+.footer-contact-info {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.footer-logo-text {
-    font-family: var(--font-en-main);
-    font-size: 28px;
-    font-weight: normal;
-    line-height: 1.2;
+.footer-menu-groups {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+.footer-menu-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+
+/* 프롤로그 - 표준 영역 */
+.footer-menu-prologue {
+    flex: 1;
+}
+
+/* 공간소개 - 넓은 영역 */
+.footer-menu-rooms {
+    flex: 1.6;
+}
+
+/* 시설소개 - 표준 영역 */
+.footer-menu-facilities {
+    flex: 1;
+}
+
+/* 예약안내 - 표준 영역 */
+.footer-menu-reservation {
+    flex: 1;
+}
+
+.footer-menu-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    letter-spacing: 0.05em;
     margin: 0;
 }
 
-.footer-phone {
-    margin-top: 12px;
-}
-
-.footer-phone-text {
-    font-size: 24px;
-    font-weight: 400;
+.footer-menu-items {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 8px;
 }
 
-.footer-phone-text::before {
-    content: '📞';
-    font-size: 20px;
-    filter: brightness(0) invert(1);
+.footer-menu-items a {
+    font-size: 12px;
+    color: #333;
+    opacity: 0.7;
+    text-decoration: none;
+    transition: opacity 0.3s;
 }
 
-.footer-right {
-    flex: 0 0 65%;
-    min-width: 0;
-    padding-left: 60px;
+.footer-menu-items a:hover {
+    opacity: 1;
 }
 
-.footer-contact-info {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto auto;
-    gap: 35px 20px;
-    grid-template-areas:
-        "business social"
-        "business copyright";
+.footer-info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 중앙 정렬 추가 */
+    gap: 15px;
+}
+
+.footer-right-section {
+    flex: 0 0 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.footer-logo {
+    width: 140px;
+    max-width: 100%;
+}
+
+.footer-logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 5px;
+}
+
+.footer-sub-text {
+    font-size: 14px;
+    color: var(--color-secondary);
+    opacity: 0.8;
+}
+
+.footer-bottom {
+    padding-top: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.footer-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1600px;
+    height: 1px;
+    background-color: #d4d1cd;
+}
+
+.footer-logo-image {
+    width: 100%;
+    max-width: 150px;
+}
+
+.footer-logo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* filter removed for PNG logo */
+}
+
+.footer-logo-text {
+    font-family: var(--font-ko-main), serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-secondary);
 }
 
 .footer-business-info {
-    grid-area: business;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    color: #333;
+    opacity: 0.7;
+    text-align: left;
 }
 
-.footer-info-line {
-    font-size: 13px;
-    opacity: 0.9;
-    line-height: 1.8;
-    margin: 0;
+.footer-business-info span {
+    display: block;
 }
 
-.social-section {
-    grid-area: social;
-    text-align: right;
+.footer-phone {
+    text-align: left;
+    color: var(--color-secondary);
 }
+
+.footer-phone-text {
+    font-family: var(--font-ko-main), serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    letter-spacing: 0.02em;
+}
+
+.footer-email {
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+}
+
+/* Utility class for hiding elements */
+.is-hidden {
+    display: none !important;
+}
+
 
 .footer-copyright {
-    grid-area: copyright;
-    font-size: 12px;
-    opacity: 0.8;
-    margin: 0;
-    text-align: right;
+    text-align: center;
 }
 
+.footer-copyright p {
+    font-size: 11px;
+    color: var(--color-secondary);
+    margin: 0;
+    opacity: 0.6;
+}
+
+/* Social Section */
+.social-section {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.social-divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-secondary);
+    opacity: 0.3;
+    margin-bottom: 15px;
+}
+
+/* Social Links */
 .social-links {
     display: flex;
-    gap: 8px;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 15px;
 }
 
 .social-icon {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.15);
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--color-secondary);
     border-radius: 50%;
-    text-decoration: none;
-    color: #fff;
-    font-size: 10px;
+    color: var(--color-secondary);
     transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: var(--color-secondary);
+    color: var(--color-primary);
 }
 
 .social-icon svg {
@@ -128,114 +271,246 @@ footer {
     height: 20px;
 }
 
-.social-icon:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-1px);
+/* Footer Social Links Styles */
+.footer-social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    justify-content: center;
 }
 
+.footer-social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid var(--color-secondary);
+    border-radius: 50%;
+    color: var(--color-secondary);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.footer-social-links a:hover {
+    opacity: 1;
+    background: var(--color-secondary);
+    color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.footer-social-links svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+    .footer {
+        margin-left: 0;
+        padding: 40px 0;
+    }
+
     .footer-content {
+        padding: 0 20px;
         flex-direction: column;
-        align-items: center;
         gap: 30px;
         text-align: center;
     }
 
-    .footer-content::before {
-        display: none;
+    /* 모바일 푸터 새로운 구조 */
+    .footer-top {
+        flex-direction: column;
+        gap: 30px;
+        order: 1;
     }
 
-    .footer-logo-text {
+    .footer-left-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* 1. 로고를 footer-left-section으로 이동 */
+    .footer-left-section .footer-logo {
+        order: 1;
+        width: 120px;
+        margin-bottom: 15px;
+    }
+
+    .footer-left-section .footer-contact-info {
+        order: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .footer-left-section .footer-phone {
+        text-align: center;
+        color: var(--color-secondary);
+    }
+
+    .footer-left-section .footer-phone-text {
         font-size: 18px;
+        font-weight: 500;
     }
 
-    .footer-left {
-        flex: none;
-        align-self: center;
+    .footer-left-section .footer-email {
+        text-align: center;
+        font-size: 13px;
+        color: #333;
+    }
+
+    .footer-left-section .footer-business-info {
+        order: 3;
         text-align: center;
     }
 
-    .footer-phone-text {
-        font-size: 20px;
+    .footer-left-section .footer-social-links {
+        order: 4;
         justify-content: center;
-    }
-
-    .footer-right {
-        flex: none;
-        padding-left: 0;
-        align-self: stretch;
-        width: 100%;
-    }
-
-    .footer-contact-info {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 20px;
-        grid-template-areas:
-            "business"
-            "social"
-            "copyright";
-        text-align: center;
-    }
-
-    .social-section {
-        text-align: center;
         margin-top: 15px;
     }
 
-    .footer-copyright {
+    /* footer-right-section 모바일에서 메뉴만 표시 */
+    .footer-right-section {
+        order: 2;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* 1. 로고, 연락처, 주소와 사업자번호 - 맨 위에 위치 */
+    .footer-left-section {
+        order: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
-        margin-top: 10px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+
+    .footer-info-section {
+        order: 1;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+
+    .footer-business-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .footer-business-info span {
+        font-size: 12px;
+        color: #333;
+        line-height: 1.4;
+        text-align: center;
+    }
+
+    /* 모바일 소셜 링크 스타일 */
+    .footer-social-links {
+        justify-content: center;
+        margin-top: 15px;
+        gap: 6px;
+    }
+
+    .footer-social-links a {
+        width: 30px;
+        height: 30px;
+    }
+
+    .footer-social-links svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* 2. 메뉴들 - 2x2 그리드로 변경 */
+    .footer-menu-groups {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px 15px;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .footer-menu-group {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-menu-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--color-secondary);
+        border-bottom: 1px solid;
+        padding-bottom: 10px;
+    }
+
+    .footer-menu-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 110px;
+        overflow-y: auto;
+    }
+
+    .footer-menu-items a {
+        font-size: 12px;
+        color: #333;
+        opacity: 0.7;
+        text-decoration: none;
+        line-height: 1.3;
+    }
+
+    .footer-menu-items a:hover {
+        color: var(--color-secondary);
+    }
+
+    /* 3. 마지막에 copyright */
+    .footer-copyright {
+        order: 3;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .footer-copyright p {
+        font-size: 10px;
+        color: #999;
+        text-align: center;
+        margin: 0;
+    }
+
+    /* 기존 스타일 재정의 */
+    .footer-left {
+        flex: none;
+        align-items: center;
+        width: 100%;
+    }
+
+    .footer-right {
+        width: 100%;
     }
 
     .social-links {
         justify-content: center;
     }
-}
 
-/* Top Button Styles */
-.top-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: var(--color-secondary, #658399);
-    opacity: 0.8;
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.top-button:hover {
-    background-color: var(--color-secondary, #658399);
-    opacity: 0.7;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.top-button.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.top-button svg {
-    width: 24px;
-    height: 24px;
-}
-
-/* Hide on mobile devices */
-@media (max-width: 768px) {
-    .top-button {
-        display: none;
+    /* footer-bottom 모바일에서 숨기기 */
+    .footer-bottom {
+        display: none !important;
     }
 }
