@@ -1,51 +1,77 @@
 /**
- * Directions Page Functionality
- * 오시는길 페이지 기능 (헤더/푸터 로딩 포함)
+ * Directions Page JavaScript
  */
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-
-    // Load data mapper for content mapping
-    setTimeout(() => {
-        loadDataMapper();
-    }, 100);
-});
+(function() {
+    'use strict';
 
 
-/**
- * Data mapper loader and initializer
- */
-async function loadDataMapper() {
-    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
-    if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
-        return;
-    }
+    // Scroll to next section function (no parallax)
+    function scrollToNextSection() {
+        const mapSection = document.querySelector('.map-section');
 
-    try {
-        const dataPath = window.APP_CONFIG
-            ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
-            : './standard-template-data.json';
-        const response = await fetch(dataPath);
-        const data = await response.json();
-
-        window.dogFriendlyDataMapper = {
-            data: data,
-            isDataLoaded: true
-        };
-
-        const initMapper = () => {
-            if (window.DirectionsMapper) {
-                const mapper = new DirectionsMapper(data);
-                mapper.mapPage();
-            }
-        };
-
-        if (window.DirectionsMapper) {
-            initMapper();
-        } else {
-            setTimeout(initMapper, 1000);
+        if (mapSection) {
+            const targetPosition = mapSection.offsetTop;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
         }
-    } catch (error) {
     }
-}
+
+    // Make function globally available
+    window.scrollToNextSection = scrollToNextSection;
+
+    // Dynamic notice section visibility
+    function toggleNoticeSection() {
+        const noticeSection = document.getElementById('directions-notice-section');
+
+        // noticeSection이 없으면 함수 종료
+        if (!noticeSection) return;
+
+        const noticeContent = noticeSection.querySelector('[data-customfield-directions-notice-content]');
+
+        // Check if data exists (not empty or default content)
+        const hasContent = noticeContent && noticeContent.textContent.trim() &&
+                          !noticeContent.textContent.includes('안내사항이 표시됩니다.');
+
+        if (hasContent) {
+            noticeSection.style.display = 'block';
+        } else {
+            noticeSection.style.display = 'none';
+        }
+    }
+
+    // Image animation using IntersectionObserver
+    function initImageAnimation() {
+        const bannerImage = document.querySelector('.directions-banner-image');
+
+        if (!bannerImage) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // 뷰포트에 들어오면 'animate' 클래스를 추가하고, 나가면 제거합니다.
+                entry.target.classList.toggle('animate', entry.isIntersecting);
+            });
+        }, {
+            threshold: 0.1 // 10% 이상 보일 때 트리거
+        });
+
+        observer.observe(bannerImage);
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Initialize DirectionsMapper for data mapping
+        if (typeof DirectionsMapper !== 'undefined') {
+            const directionsMapper = new DirectionsMapper();
+            await directionsMapper.initialize(); // initialize()가 자동으로 mapPage() 호출
+        }
+
+        // Simple initialization - no parallax effects
+        toggleNoticeSection();
+        initImageAnimation();
+        console.log('Directions page loaded');
+    });
+
+})();
