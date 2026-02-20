@@ -1,48 +1,75 @@
 /**
- * Main Page Functionality
- * 메인 페이지 기능 (header-footer-loader.js 사용)
+ * Main Page JavaScript - Scroll Animations
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        loadDataMapper();
-    }, 100);
-});
+(function() {
+    'use strict';
 
-/**
- * Data mapper loader and initializer
- */
-async function loadDataMapper() {
-    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
-    if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
-        return;
+    // Initialize scroll animations
+    function initScrollAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        // Get all sections except the first one
+        const sections = document.querySelectorAll('section.main-content-fade-in');
+
+        sections.forEach((section, index) => {
+            // Add scroll-animate class to elements that need animation
+            const imageHalves = section.querySelectorAll('.hero-image-half');
+            const textHalves = section.querySelectorAll('.hero-text-half');
+            const fullImages = section.querySelectorAll('.hero-bottom-section > img');
+
+            imageHalves.forEach(element => {
+                element.classList.add('scroll-animate');
+                observer.observe(element);
+            });
+
+            textHalves.forEach(element => {
+                element.classList.add('scroll-animate');
+                observer.observe(element);
+            });
+
+            fullImages.forEach(element => {
+                element.classList.add('scroll-animate');
+                observer.observe(element);
+            });
+        });
     }
 
-    try {
-        const dataPath = window.APP_CONFIG
-            ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
-            : './standard-template-data.json';
-        const response = await fetch(dataPath);
-        const data = await response.json();
+    // Scroll to next section function
+    function scrollToNextSection() {
+        const nextSection = document.querySelector('.location-info-section');
 
-        window.dogFriendlyDataMapper = {
-            data: data,
-            isDataLoaded: true
-        };
-
-        const initMapper = () => {
-            if (window.MainMapper) {
-                const mapper = new MainMapper(data);
-                mapper.mapPage();
-            }
-        };
-
-        if (window.MainMapper) {
-            initMapper();
-        } else {
-            setTimeout(initMapper, 1000);
+        if (nextSection) {
+            const targetPosition = nextSection.offsetTop;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
         }
-    } catch (error) {
     }
-}
 
+    // Make functions globally available
+    window.scrollToNextSection = scrollToNextSection;
+    window.initScrollAnimations = initScrollAnimations;
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', async function() {
+        initScrollAnimations();
+
+        // Initialize MainMapper for data mapping
+        if (typeof MainMapper !== 'undefined') {
+            const mainMapper = new MainMapper();
+            await mainMapper.initialize(); // initialize()가 자동으로 mapPage() 호출
+        }
+    });
+
+})();
