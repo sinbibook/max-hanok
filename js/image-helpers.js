@@ -49,26 +49,15 @@ const ImageHelpers = {
     },
 
     /**
-     * 플레이스홀더 적용 (img 태그용)
+     * 플레이스홀더 적용
      */
     applyPlaceholder(imageElement, overlayElement = null) {
         if (!imageElement) return;
-
-        // img 태그인 경우
-        if (imageElement.tagName === 'IMG') {
-            imageElement.src = this.EMPTY_IMAGE_WITH_ICON;
-            imageElement.alt = '이미지 없음';
-            imageElement.classList.add('empty-image-placeholder');
-            imageElement.style.opacity = '1';
-            if (overlayElement) overlayElement.style.display = 'none';
-        } else {
-            // background-image용 (div, section 등)
-            imageElement.style.backgroundImage = `url('${this.EMPTY_IMAGE_WITH_ICON}')`;
-            imageElement.style.backgroundSize = 'cover';
-            imageElement.style.backgroundPosition = 'center';
-            imageElement.style.backgroundRepeat = 'no-repeat';
-            imageElement.classList.add('empty-background-placeholder');
-        }
+        imageElement.src = this.EMPTY_IMAGE_WITH_ICON;
+        imageElement.alt = '이미지 없음';
+        imageElement.classList.add('empty-image-placeholder');
+        imageElement.style.opacity = '1';
+        if (overlayElement) overlayElement.style.display = 'none';
     },
 
     /**
@@ -118,13 +107,8 @@ const ImageHelpers = {
 
         for (const imageItem of imagesArray) {
             if (imageItem.logo && Array.isArray(imageItem.logo) && imageItem.logo.length > 0) {
-                const selectedLogo = imageItem.logo
-                    .filter(img => img.isSelected === true)
-                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))[0];
-
-                if (selectedLogo && selectedLogo.url) {
-                    return selectedLogo.url;
-                }
+                const sortedLogos = imageItem.logo.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+                return sortedLogos[0].url;
             }
         }
         return null;
