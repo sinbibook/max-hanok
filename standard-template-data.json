@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.118.0",
-    "generatedAt": "2026-02-23T12:26:31.640Z",
+    "version": "1.119.0",
+    "generatedAt": "2026-02-23T12:30:25.360Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1497,6 +1497,33 @@
               "isSelected": true,
               "blockId": "b4b7a37b-2bf9-46ca-859c-55031677bf63",
               "category": "roomtype_interior"
+            },
+            {
+              "id": "eafbd697-0083-465c-a192-51a8b3ac87bc",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1771849816436-dgq8aw5ube.jpg",
+              "sortOrder": 0,
+              "description": "",
+              "isSelected": true,
+              "blockId": "b4b7a37b-2bf9-46ca-859c-55031677bf63",
+              "category": "roomtype_exterior"
+            },
+            {
+              "id": "bcdd8fdb-b8a3-4dd9-8c82-559104ecc48a",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1771849816436-642dec8kkek.jpg",
+              "sortOrder": 1,
+              "description": "",
+              "isSelected": true,
+              "blockId": "b4b7a37b-2bf9-46ca-859c-55031677bf63",
+              "category": "roomtype_exterior"
+            },
+            {
+              "id": "97942748-8b2f-4577-91ba-2d590f3004f8",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1771849816437-3no7yfiq0y8.jpg",
+              "sortOrder": 2,
+              "description": "",
+              "isSelected": true,
+              "blockId": "b4b7a37b-2bf9-46ca-859c-55031677bf63",
+              "category": "roomtype_exterior"
             }
           ],
           "nameEn": "사랑방"
@@ -1554,6 +1581,7 @@
           "images": []
         }
       ]
-    }
+    },
+    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   }
 }
