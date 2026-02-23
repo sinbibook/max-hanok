@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.117.0",
-    "generatedAt": "2026-02-20T03:18:08.815Z",
-    "templateType": "full_banner_slider_flat",
+    "version": "1.118.0",
+    "generatedAt": "2026-02-23T12:26:31.640Z",
+    "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -223,6 +223,7 @@
       "name": "다온방",
       "description": "맥스펜션 다온방 객실입니다.",
       "roomInfo": "체크인,체크아웃 시간 준수\n객실 내 흡연 금지\n나오실 때 분리수거 필수",
+      "usageGuide": "",
       "group": "A동(미디어아트)",
       "size": 25,
       "baseOccupancy": 2,
@@ -337,6 +338,7 @@
       "name": "사랑방",
       "description": "편안하고 분위기 좋은 사랑방입니다.",
       "roomInfo": "",
+      "usageGuide": "",
       "group": "B동(반려견동반)",
       "size": 18,
       "baseOccupancy": 1,
@@ -435,6 +437,7 @@
       "name": "난이당",
       "description": "",
       "roomInfo": "객실 이용안내입니다.",
+      "usageGuide": "",
       "group": "B동(반려견동반)",
       "size": 43,
       "baseOccupancy": 1,
@@ -568,6 +571,7 @@
       "name": "시네마",
       "description": "",
       "roomInfo": "",
+      "usageGuide": "",
       "group": "B동(반려견동반)",
       "size": 19,
       "baseOccupancy": 2,
@@ -669,6 +673,7 @@
       "name": "테스트방",
       "description": "",
       "roomInfo": "",
+      "usageGuide": "",
       "group": null,
       "size": 2,
       "baseOccupancy": 1,
@@ -697,6 +702,7 @@
       "name": "정산객실",
       "description": "",
       "roomInfo": "",
+      "usageGuide": "",
       "group": null,
       "size": 39.67,
       "baseOccupancy": 1,
@@ -725,6 +731,7 @@
       "name": " 정산객실2",
       "description": "12",
       "roomInfo": "12",
+      "usageGuide": "12",
       "group": null,
       "size": 33.06,
       "baseOccupancy": 1,
@@ -768,6 +775,7 @@
       "name": "테스트1",
       "description": "",
       "roomInfo": "",
+      "usageGuide": "",
       "group": null,
       "size": 36.36,
       "baseOccupancy": 1,
@@ -796,6 +804,7 @@
       "name": "테스트22",
       "description": "",
       "roomInfo": "",
+      "usageGuide": "",
       "group": null,
       "size": 72.73,
       "baseOccupancy": 1,
@@ -822,7 +831,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "full_banner_slider_flat",
+    "templateType": "fullpage_visual",
     "images": [
       {
         "logo": [

@@ -1,113 +1,121 @@
 /**
  * Header and Footer Loader
- * Dynamically loads header and footer templates into pages
+ * header.html / footer.html을 페이지에 동적으로 로드하고
+ * header.html에 포함된 스크립트를 추출하여 실행 후
+ * HeaderFooterMapper를 초기화
  */
 
 (function() {
     'use strict';
 
-    // Load CSS
-    function loadCSS(href) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        document.head.appendChild(link);
+    let headerLoaded = false;
+    let footerLoaded = false;
+
+    // 이미 로드된 스크립트 추적 (중복 로드 방지)
+    const loadedScripts = new Set();
+
+    // 스크립트 동적 로드 (Promise)
+    function loadScript(src) {
+        // 이미 로드됐거나 페이지에 존재하면 스킵
+        if (loadedScripts.has(src)) return Promise.resolve();
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+            loadedScripts.add(src);
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => {
+                loadedScripts.add(src);
+                resolve();
+            };
+            script.onerror = () => {
+                console.error('Script load error:', src);
+                resolve(); // 에러여도 계속 진행
+            };
+            document.body.appendChild(script);
+        });
     }
 
-    // Load Header
-    async function loadHeader() {
-        try {
-            // Load header CSS first
-            loadCSS('styles/header.css');
+    // 헤더/푸터 모두 로드 완료 후 mapper 초기화
+    async function tryInitializeMapper() {
+        if (!headerLoaded || !footerLoaded) return;
+        if (!window.HeaderFooterMapper) return;
 
-            const response = await fetch('common/header.html');
+        // 프리뷰 환경(iframe)이면 PreviewHandler가 처리하므로 스킵
+        const isPreview = window.parent !== window;
+        if (isPreview) return;
+
+        const mapper = new window.HeaderFooterMapper();
+        await mapper.initialize();
+    }
+
+    // Header 로드
+    async function loadHeader() {
+        const headerContainer = document.getElementById('header-container');
+        if (!headerContainer) {
+            headerLoaded = true;
+            await tryInitializeMapper();
+            return;
+        }
+
+        try {
+            const response = await fetch('./common/header.html', { cache: 'no-cache' });
             const html = await response.text();
 
-            // Create a temporary container
+            // 임시 DOM에서 script 태그 추출
             const temp = document.createElement('div');
             temp.innerHTML = html;
 
-            // Extract body content from the loaded HTML
-            const bodyContent = temp.querySelector('body');
-            if (bodyContent) {
-                // Insert header at the beginning of body
-                const header = bodyContent.querySelector('.header');
-                if (header) {
-                    document.body.insertBefore(header, document.body.firstChild);
-                }
+            const scriptEls = temp.querySelectorAll('script[src]');
+            const scriptSrcs = Array.from(scriptEls).map(s => s.getAttribute('src'));
+            scriptEls.forEach(s => s.remove());
 
-                // Insert mobile menu after header
-                const mobileMenu = bodyContent.querySelector('.mobile-menu');
-                if (mobileMenu) {
-                    document.body.insertBefore(mobileMenu, document.body.firstChild.nextSibling);
-                }
-            } else {
-                // Fallback: try to get header directly
-                const header = temp.querySelector('.header');
-                if (header) {
-                    document.body.insertBefore(header, document.body.firstChild);
-                }
+            // HTML 주입 (스크립트 제외)
+            headerContainer.innerHTML = temp.innerHTML;
 
-                const mobileMenu = temp.querySelector('.mobile-menu');
-                if (mobileMenu) {
-                    document.body.insertBefore(mobileMenu, document.body.firstChild.nextSibling);
-                }
+            // 스크립트 순차 로드
+            for (const src of scriptSrcs) {
+                await loadScript(src);
             }
 
-            // Load header JavaScript
-            const script = document.createElement('script');
-            script.src = 'js/common/header.js';
-            document.body.appendChild(script);
-
-            // Immediately check scroll position after header is loaded
-            if (window.scrollY > 50 || window.pageYOffset > 50) {
-                const header = document.querySelector('.header');
-                if (header) {
-                    header.classList.add('scrolled');
-                }
-            }
+            headerLoaded = true;
+            await tryInitializeMapper();
         } catch (error) {
             console.error('Error loading header:', error);
+            headerLoaded = true;
+            await tryInitializeMapper();
         }
     }
 
-    // Load Footer
+    // Footer 로드
     async function loadFooter() {
+        const footerContainer = document.getElementById('footer-container');
+        if (!footerContainer) {
+            footerLoaded = true;
+            await tryInitializeMapper();
+            return;
+        }
+
         try {
-            const response = await fetch('common/footer.html');
-            if (response.ok) {
-                // Load footer CSS
-                loadCSS('styles/footer.css');
+            const response = await fetch('./common/footer.html', { cache: 'no-cache' });
+            const html = await response.text();
+            footerContainer.innerHTML = html;
 
-                const html = await response.text();
-
-                // Create a temporary container
-                const temp = document.createElement('div');
-                temp.innerHTML = html;
-
-                // Append footer at the end of body
-                const footer = temp.querySelector('.footer');
-                if (footer) {
-                    document.body.appendChild(footer);
-                }
-
-                // Load footer JavaScript if exists
-                const script = document.createElement('script');
-                script.src = 'js/common/footer.js';
-                document.body.appendChild(script);
-            }
+            footerLoaded = true;
+            await tryInitializeMapper();
         } catch (error) {
             console.error('Error loading footer:', error);
+            footerLoaded = true;
+            await tryInitializeMapper();
         }
     }
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', async function() {
-        // header와 footer 둘 다 로드 완료될 때까지 대기
-        await Promise.all([loadHeader(), loadFooter()]);
-
-        // 둘 다 로드 완료 후 초기화 이벤트 발생
-        document.dispatchEvent(new Event('headerFooterLoaded'));
+    document.addEventListener('DOMContentLoaded', function() {
+        loadHeader();
+        loadFooter();
     });
 
 })();

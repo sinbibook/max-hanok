@@ -1,377 +1,435 @@
-/* ===================================
-   Directions Page Styles
-   =================================== */
+/* Directions Page Styles */
 
-/* Hero Section */
-.hero-section {
-    height: 100vh;
+/* =========================================
+   PAGE LAYOUT
+   ========================================= */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.page-wrapper {
+    width: 100%;
+    background: white;
+    overflow-x: hidden;
+}
+
+#footer-container {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    font-size: 0;
+    background: var(--color-primary);
+}
+
+/* =========================================
+   NAVIGATION (HEADER)
+   ========================================= */
+.navigation-off {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+    z-index: 999;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.navigation-off .site-header,
+.navigation-off .header-dropdown {
+    pointer-events: auto;
+}
+
+/* =========================================
+   MAIN HERO SECTION (슬라이드쇼)
+   ========================================= */
+.main-section {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    max-height: 960px;
     overflow: hidden;
 }
 
-.hero-background {
+.main-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    inset: 0;
+    transition: transform 0.1s linear;
 }
 
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.main-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
 }
 
-/* Container */
-.container {
-    margin: 0 auto;
-    padding: 0 40px;
-}
-
-/* Location Info Section */
-.location-info-section {
-    padding: 100px 0 0 0;
-}
-
-/* Directions Content Container */
-.directions-content-container {
-    max-width: 80%;
-    margin: 0 auto;
-}
-
-/* Facility Introduction Section */
-.facility-intro-section {
-    text-align: center;
-    margin-bottom: 80px;
-    padding: 0 40px;
-}
-
-.facility-intro-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.facility-label {
-    margin-bottom: 20px;
-}
-
-
-.facility-description {
-    font-family: var(--font-ko-sub);
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #666;
-    margin: 0;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Banner Image Section */
-.directions-banner-section {
-    margin: 60px 0;
-}
-
-/* 배너 섹션은 동일한 container 스타일 사용 */
-
-.directions-banner-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    display: block;
-    border-radius: 12px;
+.main-slide.active {
     opacity: 1;
-    transform: translateY(0);
 }
 
-/* Info Section */
-.info-section {
-    padding: 100px 0;
-}
-
-.section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin: 0 0 60px 0;
-    color: var(--color-secondary);
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    margin-bottom: 60px;
-}
-
-.info-card {
-    background: white;
-    padding: 40px 30px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 8%, transparent);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.info-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px color-mix(in srgb, var(--color-secondary) 12%, transparent);
-}
-
-.info-icon {
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 20px;
-    color: var(--color-secondary);
-}
-
-.info-icon svg {
+.main-slide img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    transform: scale(1);
 }
 
-.info-card h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin: 0 0 15px 0;
-    color: var(--color-secondary);
+.main-slide.zoom-in img {
+    transition: transform 4s ease;
+    transform: scale(1.1);
 }
 
-.info-card p {
-    font-size: 1rem;
+.main-content {
+    position: absolute;
+    left: 150px;
+    top: 0;
+    z-index: 1;
+    padding-top: 180px;
+    max-width: 1600px;
+    opacity: 0;
+    animation: heroFadeIn 1.2s ease forwards 0.3s;
+}
+
+.main-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3vw, 40px);
     line-height: 1.6;
-    color: #666;
+    color: white;
+    letter-spacing: -0.6px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     margin: 0;
 }
 
-/* Notice Box */
-.notice-box {
+.title-divider {
+    width: 658px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.title-divider .bar-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
     background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 8%, transparent);
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: progressFill 4s linear infinite;
 }
 
-.notice-box h4 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 0 0 20px 0;
-    color: var(--color-secondary);
-    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 10%, var(--color-primary));
-    padding-bottom: 10px;
-}
-
-.notice-content p {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #666;
-    margin: 0 0 8px 0;
-}
-
-.notice-content p:last-child {
-    margin-bottom: 0;
-}
-
-/* Notice Section */
-.notice-section {
-    text-align: center;
-    padding-bottom: 20px;
-}
-
-.notice-section p {
+.main-subtitle {
     font-family: var(--font-ko-main);
-    font-size: 1rem;
-    color: var(--color-secondary);
-    margin: 0;
+    font-weight: 700;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.5;
+    color: white;
+    letter-spacing: -0.36px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    margin: 24px 0 0;
 }
 
-/* Map Section */
-.map-section {
-    padding: 0 0 100px 0;
-}
-
-/* Address Section */
-.address-section {
-    text-align: center;
-    margin-bottom: 85px;
-}
-
-.address-section p {
+.main-arrow {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: var(--font-ko-sub);
-    font-size: 1rem;
-    color: var(--color-secondary);
+    gap: 24px;
+    z-index: 1;
+    opacity: 0;
+    animation: heroFadeIn 1s ease forwards 1s;
+}
+
+.arrow-left,
+.arrow-right {
+    width: 9px;
+    height: 9px;
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.arrow-left {
+    transform: rotate(45deg);
+}
+
+.arrow-right {
+    transform: rotate(-135deg);
+}
+
+.arrow-number {
+    font-family: var(--font-en-main);
+    font-size: 26px;
+    line-height: 36px;
+    color: white;
+    letter-spacing: -0.39px;
     margin: 0;
-    padding: 20px 0;
 }
 
-.address-section .notice-wrap {
+.arrow-divider {
+    width: 10px;
+    height: 1px;
+    background: white;
+    transform: rotate(90deg);
+}
+
+/* =========================================
+   CONTENT SECTION 4: UNDER THE MOONLIGHT
+   ========================================= */
+.content-4 {
+    position: relative;
     width: 100%;
-    border: 1px dashed color-mix(in srgb, var(--color-secondary) 30%, transparent);
-    padding: 30px 40px;
-    margin: 20px 0 0;
-    border-radius: 8px;
-    background: color-mix(in srgb, var(--color-secondary) 8%, var(--color-primary));
+    min-height: 400px;
+    height: 50vh;
+    max-height: 620px;
+    overflow: hidden;
+    margin-bottom: 0;
+    background-color: #1a1a1a;
 }
 
-.address-section .notice-wrap p {
-   margin-bottom: 0;
-   padding: 20px 0 0 0;
+.content-4-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&q=80');
+    background-size: cover;
+    background-position: center;
 }
 
+.content-4-text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 0 8%;
+}
 
-.location-icon {
-    width: 20px;
-    height: 20px;
-    stroke: color-mix(in srgb, var(--color-secondary) 60%, transparent);
-    stroke-width: 2;
-    fill: none;
+.content-4-text h2 {
+    font-family: var(--font-en-main);
+    font-weight: 700;
+    font-size: clamp(30px, 3.5vw, 46px);
+    line-height: 1.3;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+.content-4-text p {
+    font-family: var(--font-ko-main);
+    font-weight: 700;
+    font-size: clamp(16px, 1.6vw, 22px);
+    line-height: 1.5;
+    color: white;
+    margin: 0;
+}
+
+/* =========================================
+   Con Section (오시는 길 - Directions 고유)
+   ========================================= */
+.section-con {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-primary);
+    padding: 100px 0 160px;
+}
+
+.directions-info {
+    width: 1600px;
+    max-width: none;
+    margin: 0 auto 22px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.page-title {
+    font-family: var(--font-en-main);
+    font-weight: 700;
+    font-size: 54px;
+    color: black;
+    letter-spacing: -0.81px;
+    line-height: 1.3;
+}
+
+.address-text {
+    font-family: var(--font-ko-sub);
+    font-size: 22px;
+    color: rgba(0,0,0,0.8);
+    letter-spacing: -0.42px;
+    line-height: 1.8;
+}
+
+.address-text .bold {
+    font-weight: 700;
+}
+
+.address-text .medium {
+    font-weight: 500;
 }
 
 .map-container {
-    width: 100%;
-    height: 500px;
-    border-radius: 12px;
+    width: 1600px;
+    max-width: none;
+    margin: 0 auto;
+    height: 800px;
+    border: 1px solid #d3d3d3;
     overflow: hidden;
-    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 10%, transparent);
-    margin-bottom: 30px;
 }
 
-#kakao-map {
+.map-img-wrapper {
     width: 100%;
     height: 100%;
 }
 
-.map-info {
-    text-align: center;
+.map-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.map-info p {
-    font-size: 1rem;
-    color: #666;
-    margin: 0;
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+@keyframes progressFill {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
 }
 
-/* Responsive Design */
+@keyframes heroFadeIn {
+    to { opacity: 1; }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE (max-width: 768px)
+   ========================================= */
 @media (max-width: 768px) {
-    .directions-content-container {
-        max-width: 100%;
+
+    /* --- NAVIGATION GRADIENT --- */
+    .navigation-off {
+        height: 100px;
     }
 
-    .container {
+    /* --- HERO SECTION --- */
+    .main-section {
+        height: 500px;
+        min-height: auto;
+        max-height: none;
+    }
+
+    .main-bg {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .main-bg::-webkit-scrollbar {
+        display: none;
+    }
+
+    .main-slide {
+        position: relative;
+        inset: auto;
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        scroll-snap-align: start;
+    }
+
+    .main-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .main-content {
+        left: 0;
+        right: 0;
+        padding-top: 100px;
+        max-width: none;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    .main-title,
+    .main-subtitle {
+        text-align: center;
         padding: 0 20px;
+        white-space: normal;
+        word-break: keep-all;
     }
 
-    .hero-content {
-        padding: 0 20px;
+    .main-title br,
+    .main-subtitle br {
+        display: none;
     }
 
-    .location-info-section {
-        padding: 0;
+    .title-divider {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    .facility-intro-section {
-        margin-bottom: 60px;
-        padding: 60px 20px 0 20px;
+    .main-arrow {
+        gap: 16px;
     }
 
-    .facility-description {
-        font-size: 1rem;
-    }
-
-    .directions-banner-section {
-        margin: 40px 0;
-    }
-
-    .directions-banner-section .container {
-        padding: 0 20px;
-    }
-
-    .address-section .notice-wrap {
-        padding: 30px 20px;
-    }
-
-    .directions-banner-image {
+    /* --- CONTENT 4: MOONLIGHT --- */
+    .content-4 {
         height: 250px;
+        min-height: auto;
+        max-height: none;
     }
 
-    .info-section {
-        padding: 60px 0;
+    .content-4-text {
+        padding: 0 20px;
     }
 
-    .info-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+    /* --- SECTION-CON (오시는 길) --- */
+    .section-con {
+        padding: 60px 0 80px;
+    }
+
+    .directions-info {
+        width: 100%;
+        max-width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
         margin-bottom: 40px;
+        padding: 0 20px;
     }
 
-    .info-card {
-        padding: 30px 20px;
+    .page-title {
+        font-size: 36px;
     }
 
-    .notice-box {
-        padding: 30px 20px;
-    }
-
-
-    .map-section {
-        padding: 0;
+    .address-text {
+        font-size: 18px;
+        line-height: 1.6;
     }
 
     .map-container {
-        height: 400px;
-    }
-
-    .section-title {
-        margin-bottom: 40px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 0 15px;
-    }
-
-    .hero-content {
-        padding: 0 15px;
-    }
-
-    .facility-intro-section {
-        padding: 60px 15px 0 15px;
-    }
-
-    .directions-banner-section .container {
-        padding: 0 15px;
-    }
-
-    .address-section .notice-wrap {
-        padding: 30px 15px;
-    }
-
-    .info-section {
-        padding: 40px 0;
-    }
-
-    .map-section {
-        padding: 0;
-    }
-
-    .info-card {
-        padding: 25px 15px;
-    }
-
-    .notice-box {
-        padding: 25px 15px;
-    }
-
-    .map-container {
+        width: calc(100% - 40px);
+        max-width: calc(100% - 40px);
+        margin: 0 20px;
         height: 300px;
     }
 }
