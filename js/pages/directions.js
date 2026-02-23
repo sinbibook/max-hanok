@@ -1,77 +1,222 @@
-/**
- * Directions Page JavaScript
- */
-
+// Directions page JavaScript
 (function() {
     'use strict';
 
+    // ==========================================
+    // Main Hero Slideshow (index.html과 동일)
+    // ==========================================
+    function initMainSlideshow() {
+        var slides = document.querySelectorAll('.main-slide');
+        if (slides.length === 0) return;
 
-    // Scroll to next section function (no parallax)
-    function scrollToNextSection() {
-        const mapSection = document.querySelector('.map-section');
+        // 슬라이드 1개: active만 붙이고 화살표 숨김 후 종료
+        if (slides.length === 1) {
+            slides[0].classList.add('active');
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    slides[0].classList.add('zoom-in');
+                });
+            });
+            var arrow = document.querySelector('.main-arrow');
+            if (arrow) arrow.style.display = 'none';
+            return;
+        }
 
-        if (mapSection) {
-            const targetPosition = mapSection.offsetTop;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
+        var bg = document.querySelector('.main-bg');
+        var progress = document.querySelector('.title-divider .bar-progress');
+        var arrowNums = document.querySelectorAll('.main-arrow .arrow-number');
+        var arrowLeft = document.querySelector('.main-arrow .arrow-left');
+        var arrowRight = document.querySelector('.main-arrow .arrow-right');
+        var current = 0;
+        var total = slides.length;
+
+        function padNum(n) {
+            return n < 10 ? '0' + n : '' + n;
+        }
+
+        function updateNumbers() {
+            if (arrowNums.length >= 2) {
+                arrowNums[0].textContent = padNum(current + 1);
+                arrowNums[1].textContent = padNum(total);
+            }
+        }
+
+        function isMobileScroll() {
+            return bg && bg.scrollWidth > bg.clientWidth;
+        }
+
+        function goTo(index) {
+            slides[current].classList.remove('active');
+            slides[current].classList.remove('zoom-in');
+            current = (index + total) % total;
+            slides[current].classList.add('active');
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    slides[current].classList.add('zoom-in');
+                });
+            });
+            updateNumbers();
+            if (isMobileScroll()) {
+                bg.scrollTo({ left: current * bg.offsetWidth, behavior: 'smooth' });
+            }
+        }
+
+        function restartProgress() {
+            if (!progress) return;
+            progress.style.animation = 'none';
+            progress.offsetHeight;
+            progress.style.animation = '';
+        }
+
+        updateNumbers();
+
+        slides[0].classList.add('active');
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+                slides[0].classList.add('zoom-in');
+            });
+        });
+
+        if (progress) {
+            progress.addEventListener('animationiteration', function() {
+                goTo(current + 1);
+            });
+        }
+
+        if (bg) {
+            var scrollTimer;
+            bg.addEventListener('scroll', function() {
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(function() {
+                    var snapped = Math.round(bg.scrollLeft / bg.offsetWidth);
+                    if (snapped !== current && snapped >= 0 && snapped < total) {
+                        slides[current].classList.remove('active', 'zoom-in');
+                        current = snapped;
+                        slides[current].classList.add('active', 'zoom-in');
+                        updateNumbers();
+                        restartProgress();
+                    }
+                }, 150);
+            });
+        }
+
+        if (arrowLeft) {
+            arrowLeft.style.cursor = 'pointer';
+            arrowLeft.addEventListener('click', function() {
+                goTo(current - 1);
+                restartProgress();
+            });
+        }
+
+        if (arrowRight) {
+            arrowRight.style.cursor = 'pointer';
+            arrowRight.addEventListener('click', function() {
+                goTo(current + 1);
+                restartProgress();
             });
         }
     }
 
-    // Make function globally available
-    window.scrollToNextSection = scrollToNextSection;
-
-    // Dynamic notice section visibility
-    function toggleNoticeSection() {
-        const noticeSection = document.getElementById('directions-notice-section');
-
-        // noticeSection이 없으면 함수 종료
-        if (!noticeSection) return;
-
-        const noticeContent = noticeSection.querySelector('[data-customfield-directions-notice-content]');
-
-        // Check if data exists (not empty or default content)
-        const hasContent = noticeContent && noticeContent.textContent.trim() &&
-                          !noticeContent.textContent.includes('안내사항이 표시됩니다.');
-
-        if (hasContent) {
-            noticeSection.style.display = 'block';
-        } else {
-            noticeSection.style.display = 'none';
-        }
-    }
-
-    // Image animation using IntersectionObserver
-    function initImageAnimation() {
-        const bannerImage = document.querySelector('.directions-banner-image');
-
-        if (!bannerImage) return;
+    // ==========================================
+    // 수동 스크롤 애니메이션 함수
+    // ==========================================
+    function setupManualScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // 뷰포트에 들어오면 'animate' 클래스를 추가하고, 나가면 제거합니다.
-                entry.target.classList.toggle('animate', entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('hero-content')) {
+                        entry.target.classList.add('animate-fade-in');
+                    } else if (entry.target.classList.contains('logo-line-container')) {
+                        entry.target.classList.add('animate-slide-up');
+                    } else if (entry.target.classList.contains('map-section')) {
+                        entry.target.classList.add('animate-fade-in');
+                    } else if (entry.target.classList.contains('location-details')) {
+                        entry.target.classList.add('animate-slide-left');
+                    } else if (entry.target.classList.contains('location-note-section')) {
+                        entry.target.classList.add('animate-slide-up');
+                    } else {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+
+                    entry.target.classList.add('visible');
+                }
             });
-        }, {
-            threshold: 0.1 // 10% 이상 보일 때 트리거
+        }, observerOptions);
+
+        const animateElements = document.querySelectorAll('.animate-element, .animate-hero, .hero-content, .logo-line-container');
+
+        animateElements.forEach(element => {
+            observer.observe(element);
         });
 
-        observer.observe(bannerImage);
+        return observer;
     }
 
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', async function() {
-        // Initialize DirectionsMapper for data mapping
-        if (typeof DirectionsMapper !== 'undefined') {
-            const directionsMapper = new DirectionsMapper();
-            await directionsMapper.initialize(); // initialize()가 자동으로 mapPage() 호출
-        }
+    // DOM ready event
+    document.addEventListener('DOMContentLoaded', function() {
 
-        // Simple initialization - no parallax effects
-        toggleNoticeSection();
-        initImageAnimation();
-        console.log('Directions page loaded');
+        // 메인 슬라이드쇼 초기화
+        initMainSlideshow();
+
+        // DirectionsMapper가 데이터를 로드한 후에 애니메이션 초기화
+        setTimeout(function() {
+
+            // Full-banner fade 애니메이션
+            const fullBannerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const fullBanner = document.querySelector('.full-banner');
+            if (fullBanner) {
+                fullBannerObserver.observe(fullBanner);
+            }
+
+            // 수동으로 스크롤 애니메이션 설정
+            setupManualScrollAnimations();
+
+            // Handle typing animation
+            const typingText = document.querySelector('.typing-text');
+            if (typingText) {
+                setTimeout(() => {
+                    typingText.classList.add('typed');
+                }, 2700);
+            }
+
+            // Location note section 애니메이션
+            const locationNoteObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const locationNote = document.querySelector('.location-note-section');
+            if (locationNote) {
+                locationNoteObserver.observe(locationNote);
+            }
+
+        }, 1000);
     });
 
+    // 매퍼에서 재초기화 시 사용
+    window.initHeroSlider = initMainSlideshow;
+
+    // Global function for reinitializing scroll animations (called by DirectionsMapper)
+    window.setupScrollAnimations = function() {
+        setupManualScrollAnimations();
+    };
+
+    // Global function for initializing location notes (called by DirectionsMapper)
+    window.initializeLocationNotes = function() {
+    };
 })();

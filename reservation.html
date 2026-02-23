@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="숙소 설명">
-    <meta name="keywords" content="SEO 키워드">
-    <title>예약안내 - 숙소명</title>
+    <title>DALTO GLAMPING - Reservation</title>
 
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/common.css" as="style">
-    <link rel="preload" href="styles/reservation.css" as="style">
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/reservation.css">
-
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션 - 예약안내" />
@@ -28,157 +23,158 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 </head>
 <body>
-    <!-- Header will be loaded here -->
-    <div id="header-placeholder"></div>
 
-    <div class="reservation-page">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-background">
-                <img src="" alt="예약안내 배경" data-reservation-hero-image-0>
-                <div class="hero-overlay"></div>
-            </div>
-            <div class="hero-content">
-                <div class="hero-text-center">
-                    <h1 class="hero-title" data-reservation-hero-title></h1>
-                </div>
-            </div>
-
-            <!-- Scroll Down Indicator -->
-            <div class="hero-scroll-down" onclick="scrollToNextSection()">
-                <svg class="scroll-arrow" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                </svg>
-            </div>
-        </section>
-
-        <!-- Reservation Info Section -->
-        <section class="reservation-info-section main-content-fade-in">
-            <div class="reservation-content-container">
-            <!-- Facility Introduction Section -->
-            <div class="facility-intro-section">
-                <div class="facility-intro-content">
-                    <div class="facility-label">
-                        <span class="facility-number" data-customfield-reservation-about-title></span>
-                    </div>
-                    <p class="facility-description" data-customfield-reservation-about-description></p>
-                </div>
-            </div>
-
-            <!-- Banner Image Section -->
-            <div class="reservation-banner-section">
-                <div class="container">
-                    <img src="" alt="예약안내 배너" class="reservation-banner-image" data-reservation-hero-image-1>
-                </div>
-            </div>
-
-            <!-- 이용안내 섹션 -->
-            <div class="reservation-content-layout">
-                <!-- Reservation Info Content -->
-                <div class="reservation-info-content">
-                    <!-- Reservation Details Accordion Section -->
-                    <div class="reservation-details-section">
-                        <!-- 이용안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">이용안내</h3>
-                                <button class="accordion-close active" data-target="usage-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="accordion-content active" id="usage-content" data-reservation-usage-content>
-                            </div>
-                        </div>
-
-                        <!-- 예약안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">예약안내</h3>
-                                <button class="accordion-close active" data-target="reservation-guide-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="accordion-content active" id="reservation-guide-content" data-reservation-guide-content>
-                            </div>
-                        </div>
-
-                        <!-- 입/퇴실 안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">입/퇴실 안내</h3>
-                                <button class="accordion-close active" data-target="checkin-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="accordion-content active" id="checkin-content" data-reservation-checkin-content>
-                            </div>
-                        </div>
-
-                        <!-- 환불규정 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">환불규정</h3>
-                                <button class="accordion-close active" data-target="refund-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="accordion-content active" id="refund-content">
-                                <p class="accordion-text">취소 시점에 따른 환불 규정은 다음과 같습니다:</p>
-                                <div class="table-section">
-                                    <div class="table-wrapper">
-                                        <table class="refund-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>취소 시점</th>
-                                                    <th>환불율</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="refund-table-body">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div> <!-- reservation-content-container -->
-
-        </section>
+    <!-- Navigation (Header) -->
+    <div class="navigation-off">
+        <div id="header-container"></div>
     </div>
 
-    <!-- Footer will be loaded here -->
-    <div id="footer-placeholder"></div>
+    <div id="app" class="reservation-container">
 
+        <!-- custom field: 예약안내 Section -->
+        <div class="main-section">
+            <!-- custom field: 예약안내 이미지 매핑 (슬라이드) — mapper가 동적 생성 -->
+            <div class="main-bg" data-hero-slider></div>
+            <div class="main-content">
+                <!-- custom field: 예약안내 타이틀 매핑-->
+                <h1 class="main-title" data-reservation-hero-title></h1>
+                <div class="title-divider"><div class="bar-progress"></div></div>
+                <!-- custom field: 예약안내 이미지1 설명 매핑-->
+                <p class="main-subtitle" data-reservation-hero-description></p>
+            </div>
+            <div class="main-arrow">
+                <div class="arrow-left"></div>
+                <p class="arrow-number">01</p>
+                <div class="arrow-divider"></div>
+                <p class="arrow-number">05</p>
+                <div class="arrow-right"></div>
+            </div>
+        </div>
 
-    <!-- Include ImageWithFallback script -->
-    <script src="js/image-with-fallback.js"></script>
+        <div class="section-con">
+            <!-- custom field: 예약안내 이용안내 섹션 이미지 매핑-->
+            <div class="side-img-wrapper">
+                <div class="img-inner">
+                    <img src="" alt="" data-reservation-side-image>
+                </div>
+            </div>
 
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
+            <!-- 하드코딩, 매핑 x -->
+            <p class="page-title">Reservation</p>
 
-    <!-- Image Helpers -->
-    <script src="js/image-helpers.js"></script>
+            <div class="tabs-group">
+                <!-- 하드코딩 ,매핑 필요 없음 -->
+                <a href="#guide-util" class="tab-btn active">
+                    <div class="tab-bg"></div>
+                    <span class="tab-text">이용 안내</span>
+                </a>
+                <a href="#guide-resv" class="tab-btn">
+                    <div class="tab-bg"></div>
+                    <span class="tab-text">예약 안내</span>
+                </a>
+                <a href="#guide-io" class="tab-btn">
+                    <div class="tab-bg"></div>
+                    <span class="tab-text">입/퇴실 안내</span>
+                </a>
+                <a href="#guide-refund" class="tab-btn">
+                    <div class="tab-bg"></div>
+                    <span class="tab-text">환불 규정</span>
+                </a>
+                <a href="#guide-fee" class="tab-btn">
+                    <div class="tab-bg"></div>
+                    <span class="tab-text">취소 수수료</span>
+                </a>
+            </div>
 
-    <!-- Property Data Mapper -->
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/reservation-mapper.js"></script>
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+            <!-- Text Content Area -->
+            <div class="text-content-area">
 
-    <!-- Header and Footer Loader -->
-    <script src="js/header-footer-loader.js"></script>
+                <!-- 1. 이용 안내 -->
+                <div id="guide-util" class="info-section">
+                    <div class="section-header">
+                         <!-- 하드코딩 ,매핑 필요 없음 -->
+                        <p class="section-title">이용 안내</p>
+                        <div class="section-line"></div>
+                    </div>
+                    <!-- 숙소 설정 이용안내 매핑-->
+                    <p class="info-list" data-usage-guide></p>
+                </div>
 
-    <!-- Page-specific script -->
+                <!-- 2. 예약 안내 -->
+                <div id="guide-resv" class="info-section">
+                    <div class="section-header">
+                         <!-- 하드코딩 ,매핑 필요 없음 -->
+                        <p class="section-title">예약 안내</p>
+                        <div class="section-line"></div>
+                    </div>
+                    <!-- 숙소 설정 예약안내 매핑-->
+                    <p class="info-list" data-reservation-guide></p>
+                </div>
+
+                <!-- 3. 입/퇴실 안내 -->
+                <div id="guide-io" class="info-section">
+                    <div class="section-header">
+                         <!-- 하드코딩 ,매핑 필요 없음 -->
+                        <p class="section-title">입/퇴실 안내</p>
+                        <div class="section-line"></div>
+                    </div>
+                    <!-- 숙소 설정 입/퇴실 안내 매핑-->
+                    <p class="info-list" data-operation-info></p>
+                </div>
+
+                <!-- 4. 환불 규정 -->
+                <div id="guide-refund" class="info-section">
+                    <div class="section-header">
+                         <!-- 하드코딩 ,매핑 필요 없음 -->
+                        <p class="section-title">환불 규정</p>
+                        <div class="section-line"></div>
+                    </div>
+                    <!-- 숙소설정 환불 정책 안내문 매핑-->
+                    <p class="info-list" data-refund-notes></p>
+                </div>
+
+                <!-- 5. 취소 수수료 -->
+                <div id="guide-fee" class="info-section">
+                    <div class="section-header">
+                         <!-- 하드코딩 ,매핑 필요 없음 -->
+                        <p class="section-title">취소 수수료</p>
+                        <div class="section-line"></div>
+                    </div>
+
+                    <div class="fee-table-container">
+                        <!-- 숙소설정 환불 정책관리 매핑-->
+                        <table class="fee-table" data-refund-table></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 홈/마무리 섹션 그대로 가져옴-->
+        <div class="content-4 closing-section">
+            <div class="content-4-bg" data-closing-image></div>
+            <div class="content-4-text">
+                <h2 data-closing-title></h2>
+                <p data-closing-description></p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div id="footer-container" class="section-footer"></div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/common.js"></script>
     <script src="js/pages/reservation.js"></script>
 
+    <!-- Data Mapper -->
+    <script src="js/image-helpers.js"></script>
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/reservation-mapper.js"></script>
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header / Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
 </body>
 </html>
