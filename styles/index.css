@@ -1,1283 +1,1027 @@
-/* ==========================================
-   INDEX PAGE - 반응형 리팩토링
-   ========================================== */
+/* ================================
+   Fullpage Scroll Styles
+   ================================ */
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.page-wrapper {
+/* Fullpage Container */
+#fullpage {
+    position: relative;
     width: 100%;
-    background: white;
-    overflow-x: hidden;
+    /* height removed to allow natural flow */
 }
 
-#footer-container {
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    font-size: 0;
-    background: var(--color-primary);
-}
-
-/* ==========================================
-   NAVIGATION (HEADER)
-   ========================================== */
-
-.navigation-off {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    max-width: none;
-    height: 160px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
-    z-index: 999;
-    pointer-events: none;
-    overflow: visible;
-}
-
-.navigation-off .site-header,
-.navigation-off .header-dropdown {
-    pointer-events: auto;
-}
-
-/* ==========================================
-   MAIN HERO SECTION
-   ========================================== */
-
-.main-section {
+/* Fullpage Sections */
+.fp-section {
     position: relative;
     width: 100%;
     height: 100vh;
-    min-height: 600px;
-    max-height: 960px;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.main-bg {
+/* 스크롤 허용 - 푸터까지 보이도록 */
+body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* ================================
+   Section 1: Hero Section - Index Specific
+   ================================ */
+
+/* Index page specific hero bottom info position */
+.hero-bottom-info {
     position: absolute;
-    inset: 0;
-}
-
-.main-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-.main-slide.active {
-    opacity: 1;
-}
-
-.main-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1);
-}
-
-.main-slide.zoom-in img {
-    transition: transform 4s ease;
-    transform: scale(1.1);
-}
-
-.main-content {
-    position: absolute;
-    left: 150px;
-    top: 0;
-    z-index: 1;
-    padding-top: 180px;
-    max-width: 1600px;
-}
-
-.main-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.6;
-    color: white;
-    letter-spacing: -0.6px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    margin: 0;
-}
-
-.title-divider {
-    width: 658px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    margin-top: 12px;
-    position: relative;
-    overflow: hidden;
-}
-
-.title-divider .bar-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background: white;
-    transform-origin: left;
-    transform: scaleX(0);
-    animation: progressFill 4s linear infinite;
-}
-
-.main-subtitle {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 24px);
-    line-height: 1.5;
-    color: white;
-    letter-spacing: -0.36px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-    margin: 24px 0 0;
-}
-
-.main-arrow {
-    position: absolute;
-    left: 50%;
     bottom: 40px;
-    transform: translateX(-50%);
+    left: 40px;
+    right: 40px;
+    z-index: 100;
     display: flex;
     align-items: center;
-    gap: 24px;
-    z-index: 1;
-}
-
-.arrow-left,
-.arrow-right {
-    width: 9px;
-    height: 9px;
-    border-left: 1px solid white;
-    border-bottom: 1px solid white;
-}
-
-.arrow-left {
-    transform: rotate(45deg);
-}
-
-.arrow-right {
-    transform: rotate(-135deg);
-}
-
-.arrow-number {
-    font-family: var(--font-en-main);
-    font-size: 26px;
-    line-height: 36px;
-    color: white;
-    letter-spacing: -0.39px;
-    margin: 0;
-}
-
-.arrow-divider {
-    width: 10px;
-    height: 1px;
-    background: white;
-    transform: rotate(90deg);
-}
-
-/* ==========================================
-   CONTENT SECTION 1
-   ========================================== */
-
-.content-1 {
-    position: relative;
-    width: 100%;
-    background: var(--color-primary);
-    overflow: visible;
-    padding-bottom: 120px;
-}
-
-.content-1-inner {
-    position: relative;
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 163px 0 0;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 100px;
-}
-
-.gradient-circle {
-    position: absolute;
-    left: 150px;
-    top: 14px;
-    width: 450px;
-    height: 450px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(231, 176, 148, 0.9) 0%, rgba(231, 176, 148, 0.6) 25%, rgba(231, 176, 148, 0.3) 45%, rgba(231, 176, 148, 0.05) 65%, rgba(231, 176, 148, 0) 75%);
-}
-
-.content-group {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 100px;
-    width: 100%;
-}
-
-.title-text {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: 70px;
-    line-height: 1.2;
-    color: var(--color-secondary);
-    letter-spacing: -1.05px;
-    text-align: right;
-    min-width: 0;
-}
-
-.title-text p {
-    margin: 0;
-}
-
-.content-group .content-image.large {
-    flex-shrink: 0;
-    width: 900px;
-    height: 350px;
-}
-
-.con1-item {
-    width: 100%;
-}
-
-.con1-1 {
-    display: flex;
-    gap: 100px;
-    align-items: center;
-}
-
-.con1-3 {
-    display: contents;
-}
-
-.con1-4 {
-    display: contents;
-}
-
-/* con1-3 텍스트 + con1-4 wide 이미지가 왼쪽 열,
-   con1-3 tall 이미지가 오른쪽 열 전체를 span하는 2열 grid */
-.con1-34 {
-    display: grid;
-    grid-template-columns: 1fr 600px;
-    grid-template-rows: minmax(350px, auto) 400px;
-    column-gap: 100px;
-    width: 100%;
-}
-
-.con1-34 .content-text.right {
-    grid-column: 1;
-    grid-row: 1;
-    width: auto;
-    align-self: start;
-}
-
-.con1-34 .content-image.tall {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    align-self: stretch;
-}
-
-.con1-34 .content-image.wide {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: stretch;
-}
-
-.content-image {
-    overflow: hidden;
-}
-
-.content-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.con1-1 .content-image {
-    width: 650px;
-    height: 350px;
-}
-
-.con1-2 .content-image.large {
-    width: 900px;
-    height: 350px;
-}
-
-.con1-3 .content-image.tall {
-    width: 100%;
-    height: 100%;
-}
-
-.con1-4 .content-image.wide {
-    width: 100%;
-    height: 100%;
-}
-
-.content-text {
-    flex: 1;
-}
-
-.content-text.right {
-    text-align: right;
-    width: 892px;
-    padding: 60px 0;
-}
-
-.chapter-tag {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 36px;
-    color: var(--color-secondary);
-    letter-spacing: -0.42px;
-    margin: 0 0 24px 0;
-}
-
-.chapter-content {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 1.5;
-    color: rgba(0, 0, 0, 0.8);
-    margin: 0;
-}
-
-/* ==========================================
-   CONTENT SECTION 2: ROOM PREVIEW
-   ========================================== */
-
-.content-2 {
-    position: relative;
-    width: 100%;
-    padding: 100px 0 120px;
-}
-
-.content-2-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1655409735952-cb5220efca54?w=2000&q=80');
-    background-size: cover;
-    background-position: center;
-}
-
-.content-2-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.content-2 > .section-header {
-    position: relative;
-    z-index: 2;
-    margin-bottom: 40px;
-}
-
-.section-header-outer {
-    width: 100%;
-}
-
-.section-header-inner {
-    width: 100%;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 150px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: flex-end;
     justify-content: space-between;
 }
 
-.section-header-inner .text-block {
-    flex: 1;
+/* Hero property name - 왼쪽 고정 */
+.hero-property-name {
+    flex: 0 0 auto;
+    font-family: var(--font-en-main), serif;
+    font-size: 1.125rem;
+    color: #fff;
+    letter-spacing: 0.05em;
 }
 
-.section-header-inner .arrow-block {
-    flex-shrink: 0;
-    display: flex;
-    gap: 12px;
-}
-
-.nav-btn {
-    width: 48px;
-    height: 48px;
-    border: 1px solid white;
-    border-radius: 50%;
-    color: white;
-    background: transparent;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-.nav-btn:hover {
-    background: white;
-    color: black;
-}
-
-.section-title {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: clamp(36px, 4vw, 54px);
-    line-height: 1.3;
-    color: white;
-    letter-spacing: -0.81px;
-    margin: 0 0 6px 0;
-}
-
-.section-subtitle {
-    font-family: var(--font-ko-main);
-    font-weight: 500;
-    font-size: clamp(18px, 1.8vw, 24px);
-    line-height: 1.3;
-    color: white;
-    letter-spacing: -0.36px;
-    margin: 0;
-}
-
-.room-grid {
-    position: relative;
-    z-index: 2;
-    overflow: hidden;
-    margin-top: 100px;
-}
-
-.room-scroll-track {
-    display: flex;
-    gap: 40px;
-    width: max-content;
-    will-change: transform;
-}
-
-.room-card {
-    flex-shrink: 0;
-    width: min(450px, 80vw);
-    display: flex;
-    flex-direction: column;
-    gap: 33px;
-}
-
-.room-card:nth-child(odd) {
-    margin-top: 0;
-}
-
-.room-card:nth-child(even) {
-    margin-top: 100px;
-}
-
-.room-image {
-    width: 100%;
-    aspect-ratio: 450 / 700;
-    border-radius: 300px 300px 0 0;
-    overflow: hidden;
-    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.3);
-}
-
-.room-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.room-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 24px;
-}
-
-.room-info h3 {
-    font-family: var(--font-ko-sub);
-    font-weight: 700;
-    font-size: clamp(22px, 2vw, 28px);
-    line-height: 36px;
-    color: white;
-    letter-spacing: -0.42px;
-    margin: 0;
-}
-
-.room-info p {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: clamp(15px, 1.2vw, 18px);
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 435px;
-    margin: 0;
-}
-
-.btn-more {
-    position: relative;
-    font-family: var(--font-ko-main);
-    font-size: 18px;
-    color: white;
-    letter-spacing: -0.27px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding-bottom: 10px;
-}
-
-.btn-more::after {
-    content: '';
-    display: block;
-    width: 120px;
-    height: 1px;
-    background: white;
-    margin: 10px auto 0;
-}
-
-/* ==========================================
-   CONTENT SECTION 3: SPECIAL HERE
-   ========================================== */
-
-.content-3 {
-    position: relative;
-    width: 100%;
-    background: var(--color-primary);
-    overflow: visible;
-    display: flex;
-}
-
-.special-left {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-    padding: 100px 60px 100px 8%;
-    z-index: 10;
-    display: grid;
-    grid-template-areas:
-        "header header"
-        "image  info"
-        "script script";
-    grid-template-columns: 400px 1fr;
-    column-gap: 60px;
-    row-gap: 60px;
-    align-content: start;
-}
-
-.special-header {
-    grid-area: header;
-    margin-bottom: 0;
-}
-
-.special-header h2 {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: clamp(36px, 4vw, 54px);
-    line-height: 1.3;
-    color: black;
-    letter-spacing: -0.81px;
-    margin: 0 0 6px 0;
-}
-
-.special-header p {
-    font-family: var(--font-ko-main);
-    font-weight: 500;
-    font-size: clamp(18px, 1.8vw, 24px);
-    line-height: 1.3;
-    color: black;
-    letter-spacing: -0.36px;
-    margin: 0;
-}
-
-.meditation-image {
-    grid-area: image;
-    display: grid;
-    width: 400px;
-    height: 480px;
-    border-radius: 300px;
-    overflow: hidden;
-    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.25);
-}
-
-.meditation-image img {
-    grid-area: 1 / 1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-.meditation-image img.active {
-    opacity: 1;
-}
-
-.meditation-info {
-    grid-area: info;
-    display: grid;
-    position: relative;
-    z-index: 1;
-}
-
-.meditation-info .facility-slide {
-    grid-area: 1 / 1;
-    transition: opacity 1.2s ease;
-    pointer-events: none;
-    opacity: 0;
-}
-
-.meditation-info .facility-slide.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.meditation-title {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(30px, 3vw, 42px);
-    line-height: 1.2;
-    color: black;
-    letter-spacing: -0.63px;
-    margin: 0 0 40px 0;
-}
-
-.meditation-text {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: clamp(16px, 1.3vw, 20px);
-    line-height: 1.3;
-    color: black;
-    max-width: 371px;
-    margin: 0 0 70px 0;
-}
-
-.btn-outline {
-    border: 1px solid black;
-    border-radius: 100px;
-    padding: 14px 40px;
-    font-family: var(--font-ko-main);
-    font-size: 18px;
-    color: black;
-    background: transparent;
-    letter-spacing: -0.27px;
-    cursor: pointer;
-}
-
-.special-script {
-    grid-area: script;
-    font-family: 'Alex Brush', cursive;
-    font-size: 200px;
-    line-height: 1.3;
-    color: #c1a677;
-    letter-spacing: -3px;
-    margin: 0;
-}
-
-.arrow-decoration {
+/* Index page progress container - 중앙 위치 */
+.hero-progress-container {
     position: absolute;
-    right: 0;
-    top: 310px;
-    z-index: 0;
-    overflow: visible;
-    pointer-events: none;
-}
-
-.arrow-decoration svg {
-    width: 856px;
-    height: 250px;
-    overflow: visible;
-}
-
-.special-right {
-    width: 45%;
-    flex-shrink: 0;
-    display: grid;
-    z-index: 1;
-}
-
-.special-right-image {
-    grid-area: 1 / 1;
-    display: grid;
-    min-height: 800px;
-    border-radius: 300px 0 0 0;
-    overflow: hidden;
-}
-
-.special-right-image img {
-    grid-area: 1 / 1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-.special-right-image img.active {
-    opacity: 1;
-}
-
-.image-overlay {
-    grid-area: 1 / 1;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
-    z-index: 1;
-    pointer-events: none;
-}
-
-.special-bar {
-    grid-area: 1 / 1;
-    align-self: end;
-    justify-self: start;
-    width: 80%;
-    margin: 0 0 60px 10%;
-    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    align-items: center;
-}
-
-.bar-line {
-    width: 40%;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.13));
-    position: relative;
-    overflow: hidden;
-}
-
-.bar-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background: white;
-    transform-origin: left;
-    transform: scaleX(0);
-    animation: progressFill 4s linear infinite;
-}
-
-@keyframes progressFill {
-    0% { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
-}
-
-.bar-controls {
-    margin-left: auto;
-    display: flex;
-    gap: 12px;
-}
-
-.bar-controls button {
-    width: 48px;
-    height: 48px;
-    border: 1px solid white;
-    border-radius: 50%;
-    color: white;
-    background: transparent;
-    font-size: 20px;
-    cursor: pointer;
-    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.13));
-}
-
-/* ==========================================
-   CONTENT SECTION 4: UNDER THE MOONLIGHT
-   ========================================== */
-
-.content-4 {
-    position: relative;
-    width: 100%;
-    min-height: 400px;
-    height: 50vh;
-    max-height: 620px;
-    overflow: hidden;
-    margin-bottom: 0;
-    background-color: #1a1a1a;
-}
-
-.content-4-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-}
-
-.content-4-text {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    text-align: center;
-    padding: 0 8%;
+    gap: 15px;
+}
+.hero-section .section-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
 }
 
-.content-4-text h2 {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: clamp(30px, 3.5vw, 46px);
-    line-height: 1.3;
-    color: white;
-    margin: 0 0 20px 0;
+/* Animations for text on load */
+.hero-section .hero-title {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease 0.5s forwards;
 }
 
-.content-4-text p {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(16px, 1.6vw, 22px);
-    line-height: 1.5;
-    color: white;
+.hero-section .hero-description {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease 0.7s forwards;
+}
+
+.hero-section .hero-bottom-info {
+    opacity: 0;
+    animation: fadeIn 1s ease 1s forwards;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    /* 모바일에서 일반 스크롤 강제 활성화 */
+    html, body {
+        overflow: auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        height: auto !important;
+        position: relative !important;
+    }
+
+    /* 모바일에서는 fp-nav 보정 제거 */
+    .hero-progress-container {
+        position: relative;
+        left: auto;
+        transform: none;
+        margin-left: 0;
+        flex: 1;
+    }
+
+    .hero-property-name {
+        font-size: 1rem;
+    }
+
+    #fullpage {
+        height: auto !important;
+        overflow: visible !important;
+        position: relative !important;
+        transform: none !important;
+    }
+
+    .fp-section,
+    .section {
+        height: auto !important;
+        min-height: 100vh !important;
+        position: relative !important;
+        transform: none !important;
+        top: auto !important;
+        left: auto !important;
+    }
+
+    /* Signature Section 모바일 조정 */
+    .signature-section {
+        min-height: 50vh !important;
+        height: auto !important;
+        padding: 80px 20px !important;
+    }
+
+    .signature-container {
+        flex-direction: column;
+        height: auto !important;
+    }
+
+    .signature-left {
+        width: 100%;
+        padding: 40px 20px;
+        height: auto;
+    }
+
+    .signature-content {
+        text-align: center;
+    }
+
+    .signature-section .signature-thumbnails {
+        display: none;
+    }
+
+    .signature-right {
+        display: none;
+    }
+
+    /* Navigation dots 완전히 숨기기 */
+    .fp-nav {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+    .hero-bottom-info {
+        left: 20px;
+        right: 20px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .hero-property-name {
+        text-align: center;
+    }
+
+    .hero-progress-container {
+        padding: 0;
+    }
+
+    .hero-indicators {
+        justify-content: center;
+    }
+
+    .hero-content {
+        padding: 0 40px;
+    }
+
+    /* 모바일에서 히어로 섹션 텍스트만 즉시 표시 */
+    .hero-title,
+    .hero-description {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: fadeInUp 1s ease forwards !important;
+    }
+
+    /* 모바일에서 스크롤 애니메이션을 위한 초기 상태 */
+    .animate-element {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+    }
+
+    /* 모바일에서 애니메이션 활성화 상태 */
+    .animate-element.animate {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    /* 모바일 갤러리 스타일 수정 */
+    .gallery-section {
+        min-height: 100vh !important;
+        height: auto !important;
+        background: linear-gradient(to bottom, var(--color-secondary) 0%, var(--color-secondary) 50%, var(--color-primary) 50%, var(--color-primary) 100%) !important;
+    }
+
+    .gallery-container {
+        height: auto !important;
+        min-height: 100vh !important;
+        padding: 40px 0 !important;
+    }
+
+    .gallery-slider-wrapper {
+        height: 300px !important;
+        min-height: 300px !important;
+        overflow: visible !important;
+        transform: translateY(-50px) !important;
+    }
+
+    .gallery-slider {
+        height: 300px !important;
+        min-height: 300px !important;
+        padding: 0 20px !important;
+    }
+
+    .gallery-item {
+        width: 250px !important;
+        height: 280px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .gallery-header {
+        padding: 40px 20px !important;
+        text-align: center !important;
+    }
+}
+
+/* Navigation Dots */
+.fp-nav {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.fp-nav ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
 }
 
-/* ==========================================
-   SCROLL ANIMATIONS
-   ========================================== */
-
-/* Hero entrance */
-.main-content {
-    opacity: 0;
-    animation: heroFadeIn 1.2s ease forwards 0.3s;
+.fp-nav li {
+    margin: 15px 0;
 }
 
-.main-arrow {
-    opacity: 0;
-    animation: heroFadeIn 1s ease forwards 1s;
+.fp-nav a {
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: relative;
 }
 
-@keyframes heroFadeIn {
-    to {
+.fp-nav a span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    border: 1px solid rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.fp-nav a:hover span,
+.fp-nav a.active span {
+    background: #fff;
+    transform: scale(1.3);
+    border: 1px solid rgba(0,0,0,0.4);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeInUp 1s ease 2s forwards;
+}
+
+.scroll-indicator span {
+    display: block;
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+}
+
+.scroll-indicator::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 30px;
+    background: #666;
+    margin: 0 auto;
+    animation: scrollDown 1.5s ease infinite;
+}
+
+@keyframes scrollDown {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    50% {
         opacity: 1;
+    }
+    100% {
+        transform: translateY(15px);
+        opacity: 0;
     }
 }
 
-/* Base hidden state for scroll-triggered elements */
-.anim-fade-up {
+/* ================================
+   Section 2: Essence Section - Split Layout
+   ================================ */
+.essence-section {
+    background: #f5f5f5;
+    position: relative;
+    height: 100vh;
+}
+
+/* Property Name EN Styling */
+.property-name-en {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-en-main), serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    font-style: italic;
+    background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) 50%, var(--color-secondary) 50%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    z-index: 10;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(99, 89, 85, 0.1);
+}
+
+.essence-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+/* 왼쪽: 이미지 영역 */
+.essence-left {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.essence-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 오른쪽: 텍스트 영역 */
+.essence-right {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    background: var(--color-primary);
+    overflow: hidden;
+}
+
+.essence-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/shadow1.png') no-repeat right top;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: 0;
+    animation: floatingShadow 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes floatingShadow {
+    0%, 100% {
+        transform: rotate(0deg) scale(1) translate(0, 0);
+    }
+    20% {
+        transform: rotate(-1deg) scale(1.02) translate(2px, -3px);
+    }
+    40% {
+        transform: rotate(1deg) scale(1.01) translate(-3px, 2px);
+    }
+    60% {
+        transform: rotate(-0.5deg) scale(1.03) translate(4px, -2px);
+    }
+    80% {
+        transform: rotate(0.5deg) scale(1.01) translate(-2px, 3px);
+    }
+}
+
+.essence-content {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+}
+
+.essence-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+}
+
+.essence-divider {
+    width: 1px;
+    height: 60px;
+    background: #333;
+    margin: 0 auto 30px auto;
+}
+
+.essence-description {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+}
+
+/* ================================
+   Section 3: Signature Section (Like Essence Section)
+   ================================ */
+.signature-section {
+    background: var(--color-primary);
+    position: relative;
+    height: 100vh;
+}
+
+.signature-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+/* 왼쪽: 텍스트 영역 */
+.signature-left {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.signature-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/shadow2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    pointer-events: none;
+    animation: leafFloat 15s ease-in-out infinite;
+    transform-origin: center center;
+}
+
+@keyframes leafFloat {
+    0%, 100% {
+        transform: rotate(0deg) scale(1) translate(0, 0);
+    }
+    15% {
+        transform: rotate(2deg) scale(1.02) translate(3px, -5px);
+    }
+    30% {
+        transform: rotate(-1deg) scale(1.01) translate(-2px, 2px);
+    }
+    45% {
+        transform: rotate(1.5deg) scale(1.03) translate(5px, -3px);
+    }
+    60% {
+        transform: rotate(-2deg) scale(1.01) translate(-4px, 4px);
+    }
+    75% {
+        transform: rotate(0.5deg) scale(1.02) translate(2px, -6px);
+    }
+    85% {
+        transform: rotate(-1.5deg) scale(1.01) translate(-3px, 3px);
+    }
+}
+
+.signature-content {
+    max-width: 500px;
+}
+
+.signature-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 30px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.signature-description {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Signature Thumbnails */
+.signature-thumbnails {
+    display: flex;
+    gap: 25px;
+    margin-top: 80px;
+    justify-content: center;
+}
+
+.signature-thumb {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hexagon border (only visible when active or hover) */
+.signature-thumb::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    transition: background 0.3s ease;
+    z-index: 1;
+}
+
+/* White padding inner layer */
+.signature-thumb::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    background: var(--color-primary);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 2;
+}
+
+.signature-thumb img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    object-fit: cover;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    transition: transform 0.3s ease;
+    z-index: 3;
+}
+
+.signature-thumb:hover img {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Active state - show border */
+.signature-thumb.active::before {
+    background: var(--color-secondary);
+}
+
+/* Hover state - show semi-transparent border */
+.signature-thumb:hover:not(.active)::before {
+    background: rgba(99, 89, 85, 0.3);
+}
+
+/* 오른쪽: 이미지 영역 */
+.signature-right {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.signature-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+}
+
+/* ================================
+   Section 4: Gallery Section
+   ================================ */
+/* Gallery styles are now in common.css */
+
+/* ================================
+   Section 5: Closing Section
+   ================================ */
+.closing-section {
+    position: relative;
+    height: 100vh; /* Full viewport height for last fullpage section */
+}
+
+.closing-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.closing-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 배경 위 그라데이션 오버레이 */
+.closing-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.closing-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    color: #fff;
+}
+
+/* 중앙 콘텐츠 컨테이너 */
+.closing-center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    z-index: 2;
+}
+
+/* 타이틀 */
+.closing-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-primary);
     opacity: 0;
-    transform: translateY(60px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(30px);
+    transition: all 1s ease;
 }
 
-.anim-fade-up.is-visible {
+.closing-title.animate {
     opacity: 1;
-    transform: none;
+    transform: translateY(0);
+    transition-delay: 0.2s;
 }
 
-.anim-fade-left {
+/* 설명 */
+.closing-description {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-primary);
+    margin-bottom: 20px;
     opacity: 0;
-    transform: translateX(-80px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(30px);
+    transition: all 1s ease;
 }
 
-.anim-fade-left.is-visible {
+.closing-description.animate {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
+    transition-delay: 0.6s;
 }
 
-.anim-fade-right {
+
+/* Closing Section CTA Buttons */
+.closing-cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
     opacity: 0;
-    transform: translateX(80px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(30px);
+    transition: all 1s ease;
 }
 
-.anim-fade-right.is-visible {
+.closing-cta-buttons.animate {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
+    transition-delay: 1s;
 }
 
-.anim-scale-in {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 0.9s ease, transform 0.9s ease;
+
+.closing-btn {
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid var(--color-primary);
+    border-radius: 0;
+    color: var(--color-primary);
+    font-family: var(--font-ko-main), sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
 }
 
-.anim-scale-in.is-visible {
-    opacity: 1;
-    transform: scale(1);
+.closing-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--color-primary);
+    transition: left 0.3s ease;
+    z-index: -1;
 }
 
-/* Staggered delays */
-.anim-delay-1 { transition-delay: 0.1s; }
-.anim-delay-2 { transition-delay: 0.2s; }
-.anim-delay-3 { transition-delay: 0.3s; }
-.anim-delay-4 { transition-delay: 0.4s; }
-
-/* Room scroll track */
-.room-scroll-track {
-    opacity: 1;
+.closing-btn:hover {
+    color: #333;
 }
 
-/* Image hover zoom */
-.content-image img,
-.room-image img {
-    transition: transform 0.6s ease;
+.closing-btn:hover::before {
+    left: 0;
 }
 
-.meditation-image img,
-.special-right-image img {
-    transition: transform 0.6s ease, opacity 1.2s ease;
+.closing-btn span {
+    display: inline-block;
 }
 
-.content-image:hover img,
-.room-image:hover img,
-.meditation-image:hover img,
-.special-right-image:hover img {
-    transform: scale(1.05);
+
+/* ================================
+   Responsive Styles
+   ================================ */
+@media (max-width: 1200px) {
+    /* Signature section responsive */
 }
-
-/* Button hover effects */
-.btn-more,
-.btn-outline,
-.btn-book {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.btn-more:hover,
-.btn-outline:hover,
-.btn-book:hover {
-    opacity: 0.8;
-    transform: translateY(-2px);
-}
-
-/* Parallax background */
-.main-bg {
-    transition: transform 0.1s linear;
-}
-
-.content-4-bg {
-    transition: none;
-}
-
-.content-2-bg {
-    transition: none;
-}
-
-/* Title text line-by-line animation */
-.title-text p {
-    opacity: 0;
-    transform: translateX(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.title-text.is-visible p:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.1s; }
-.title-text.is-visible p:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.3s; }
-.title-text.is-visible p:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.5s; }
-
-/* ==========================================
-   MOBILE RESPONSIVE (max-width: 768px)
-   ========================================== */
 
 @media (max-width: 768px) {
-
-    /* --- NAVIGATION GRADIENT --- */
-    .navigation-off {
-        height: 100px;
+    /* Hide desktop navigation */
+    .fp-nav {
+        display: none !important;
     }
 
-    /* --- HERO SECTION --- */
-    .main-section {
-        height: 500px;
-        min-height: auto;
-        max-height: none;
+
+    /* Disable fullpage scroll on mobile */
+    #fullpage {
+        overflow: visible !important;
     }
 
-    .main-bg {
-        display: flex;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
+    .section {
+        height: auto !important;
+        min-height: 100vh;
     }
 
-    .main-bg::-webkit-scrollbar {
-        display: none;
+    .fp-nav a {
+        width: 10px;
+        height: 10px;
     }
 
-    .main-slide {
-        position: relative;
-        inset: auto;
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100%;
-        opacity: 1;
-        scroll-snap-align: start;
+    .fp-nav a span {
+        width: 10px;
+        height: 10px;
     }
 
-    .main-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .main-content {
-        left: 0;
-        right: 0;
-        padding-top: 100px;
-        max-width: none;
-        text-align: center;
-    }
-
-    .main-title,
-    .main-subtitle {
-        text-align: center;
-        padding: 0 20px;
-        white-space: normal;
-        word-break: keep-all;
-    }
-
-    .main-title br,
-    .main-subtitle br {
-        display: none;
-    }
-
-    .title-divider {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .main-arrow {
-        gap: 16px;
-    }
-
-    /* --- CONTENT 1: PROLOGUE --- */
-    .content-1 {
-        height: auto;
-        padding-bottom: 60px;
-    }
-
-    .content-1-inner {
-        padding: 60px 20px 0;
-        gap: 40px;
-    }
-
-    .gradient-circle {
-        display: none;
-    }
-
-    .content-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 30px;
-    }
-
-    .title-text {
-        font-size: 36px;
-        text-align: left;
-    }
-
-    .content-group .content-image.large {
-        width: 360px;
-        height: 194px;
-        aspect-ratio: auto;
-    }
-
-    .con1-item {
-        width: 100%;
-    }
-
-    .con1-1 {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-    }
-
-    .con1-1 .content-image {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 650 / 350;
-    }
-
-    /* con1-34: 그리드 → 세로 스택 */
-    .con1-34 {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-    }
-
-    .con1-34 .content-text.right {
-        grid-column: auto;
-        grid-row: auto;
-        width: 100%;
-        text-align: left;
-        padding: 0;
-        order: 3;
-    }
-
-    .con1-34 .content-image.tall {
-        grid-column: auto;
-        grid-row: auto;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 650 / 350;
-        align-self: auto;
-        order: 1;
-    }
-
-    .con1-34 .content-image.wide {
-        grid-column: auto;
-        grid-row: auto;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 650 / 350;
-        align-self: auto;
-        order: 2;
-    }
-
-    .content-text.right {
-        width: 100%;
-        text-align: left;
-        padding: 24px 0;
-    }
-
-    .chapter-tag {
-        font-size: 22px;
-        margin-bottom: 16px;
-    }
-
-    .chapter-content {
-        font-size: 15px;
-    }
-
-    /* --- CONTENT 2: ROOM PREVIEW --- */
-    .content-2 {
-        padding: 60px 0 80px;
-    }
-
-    .section-header-inner {
-        padding: 0 20px;
-    }
-
-    .section-subtitle {
-        line-height: 1.5;
-    }
-
-    .section-header-inner .arrow-block {
-        display: none;
-    }
-
-    .room-grid {
-        margin-top: 40px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 20px;
-    }
-
-    .room-scroll-track {
-        gap: 20px;
-        padding: 0 20px;
-    }
-
-    .room-card {
-        scroll-snap-align: start;
-    }
-
-    .room-image {
-        aspect-ratio: auto;
-        height: 420px;
-    }
-
-    .room-card:nth-child(even) {
-        margin-top: 0;
-    }
-
-    /* --- CONTENT 3: SPECIAL HERE --- */
-    .content-3 {
-        height: auto;
-        flex-direction: column;
-    }
-
-    .special-left {
+    .section-wrapper {
         padding: 60px 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
     }
 
-    .special-header {
-        order: 1;
-        margin-bottom: 0;
+    /* Essence section mobile */
+    .essence-container {
+        flex-direction: column-reverse;
     }
 
-    .special-header p {
-        line-height: 1.5;
-    }
-
-    .meditation-image {
-        width: 260px;
-        height: 320px;
-        margin: 0 auto;
-        order: 2;
-    }
-
-    .meditation-info {
-        text-align: center;
-        order: 4;
-    }
-
-    .meditation-info .slide-b {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        text-align: center;
-    }
-
-    .meditation-title {
-        margin-bottom: 20px;
-    }
-
-    .meditation-text {
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .special-script {
-        font-size: 80px;
-        margin-top: -30px;
-        order: 3;
-        text-align: center;
-        z-index: 1;
-    }
-
-    .meditation-info {
-        order: 4;
-    }
-
-    .arrow-decoration {
-        display: none;
-    }
-
-    .special-right {
+    .essence-left,
+    .essence-right {
         width: 100%;
+        height: 50vh;
     }
 
-    .special-right-image {
-        min-height: 400px;
-        border-radius: 0;
+    .essence-right {
+        padding: 40px 20px;
     }
 
-    .special-bar {
-        left: 5%;
-        bottom: 30px;
-        width: 90%;
+    /* Signature section mobile */
+    .signature-container {
+        flex-direction: column;
     }
 
-    .bar-controls button {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
+    .signature-left,
+    .signature-right {
+        width: 100%;
+        height: 50vh;
+        padding: 0;
     }
 
-    /* --- CONTENT 4: MOONLIGHT --- */
-    .content-4 {
-        height: 250px;
-        min-height: auto;
-        max-height: none;
+    .signature-left {
+        padding: 40px 20px;
     }
 
-    .content-4-text {
+    .essence-title {
+        font-size: 1.5rem;
+    }
+
+    .essence-description {
+        font-size: 0.9rem;
+    }
+
+    .gallery-container,
+    .closing-content {
         padding: 0 20px;
+    }
+
+    .signature-title,
+    .gallery-title {
+        font-size: 2rem;
+    }
+
+    .closing-title {
+        font-size: 2rem;
+    }
+
+    .closing-description {
+        font-size: 1.25rem;
+    }
+
+    .closing-title {
+        top: 60px;
+        left: 20px;
+        font-size: 1.5rem;
+    }
+
+    .closing-description {
+        bottom: 60px;
+        left: 20px;
+        font-size: 1rem;
+    }
+
+    .closing-cta-buttons {
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 20px;
+    }
+
+    .closing-btn {
+        width: 100%;
+        padding: 14px 24px;
+    }
+
+    .gallery-slider {
+        grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 480px) {
+    .essence-title {
+        font-size: 1.25rem;
+    }
+
+    .essence-divider {
+        height: 40px;
+    }
+
+    .essence-description {
+        font-size: 0.875rem;
+    }
+
+    .signature-section {
+        padding: 3rem 0 0 0 !important;
+    }
+
+    .signature-title,
+    .gallery-title {
+        font-size: 1.5rem;
+    }
+
+    .signature-description,
+    .gallery-description {
+        font-size: 1rem;
+    }
+
+
+    .closing-title {
+        font-size: 1.5rem;
+    }
+
+    .closing-description {
+        font-size: 1rem;
+    }
+}
+
+/* ================================
+   Scroll Animations for FullPage
+   ================================ */
+.animate-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+}
+
+.animate-element.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Stagger animations within the same section */
+.essence-title.animate-element {
+    transition-delay: 0.1s;
+}
+
+.essence-divider.animate-element {
+    transition-delay: 0.3s;
+}
+
+.essence-description.animate-element {
+    transition-delay: 0.5s;
+}
+
+.signature-title.animate-element {
+    transition-delay: 0.1s;
+}
+
+.signature-description.animate-element {
+    transition-delay: 0.3s;
+}
+
+.signature-thumbnails.animate-element {
+    transition-delay: 0.5s;
+}
+
+.signature-thumb.animate-element:nth-child(1) {
+    transition-delay: 0.6s;
+}
+
+.signature-thumb.animate-element:nth-child(2) {
+    transition-delay: 0.7s;
+}
+
+.signature-thumb.animate-element:nth-child(3) {
+    transition-delay: 0.8s;
+}
+
+.gallery-title.animate-element {
+    transition-delay: 0.1s;
+}
+
+.gallery-description.animate-element {
+    transition-delay: 0.3s;
+}
+
