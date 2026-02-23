@@ -1,644 +1,1134 @@
-/* Room Page Styles */
+/* Room Page Specific Styles */
 
-/* Ensure header is always on top - REMOVED to avoid conflicts */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
 
-/* Hero section height override for room page - desktop default */
-.hero-section {
-    height: 100vh;
-    min-height: 100vh;
+.room-container {
     position: relative;
+    width: 100%;
+    height: 4488px; /* Footer top 4190 + height 298 = 4488 */
+    background-color: white;
 }
 
-/* Hero slider positioning - contains all hero elements */
-.hero-slider {
-    position: relative;
-    height: 100vh;
+/* =========================================
+   NAVIGATION (HEADER) — from index.css
+   ========================================= */
+.navigation-off {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+    z-index: 999;
+    pointer-events: none;
+    overflow: visible;
 }
 
-/* Desktop styles - Use default common.css styles */
-/* Remove desktop overrides that break the layout */
-
-/* Hero slide images height adjustment */
-.hero-slide {
-    height: 100vh !important;
+.navigation-off .site-header,
+.navigation-off .header-dropdown {
+    pointer-events: auto;
 }
 
-.hero-slide img {
-    height: 100vh !important;
-    object-fit: cover;
-}
+/* 데스크톱: 다른 페이지와 동일한 헤더 위치 유지 */
 
-/* Mobile specific - contain zoom within hero area */
-@media (max-width: 768px) {
-    /* Ensure sections don't block fixed elements */
-    .room-about-section,
-    .room-gallery-section {
-        z-index: 1 !important;
-        position: relative;
-    }
-
-    .room-about-section::before {
-        z-index: 1 !important;
-    }
-
-    .hero-section {
-        height: 65vh !important;
-        min-height: 65vh !important;
-        overflow: hidden !important;
-        position: relative;
-        z-index: 1 !important;
-    }
-
-    .hero-slider {
-        overflow: hidden !important;
-        height: 65vh !important;
-        position: relative;
-    }
-
-    .hero-slide {
-        overflow: hidden !important;
-        height: 65vh !important;
-        position: absolute !important;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-
-    .hero-slide img {
-        height: 65vh !important;
-    }
-
-    /* Ensure zoom animation stays within bounds */
-    .hero-slide img {
-        transform-origin: center center;
-    }
-
-    /* Mobile hero-property-title positioning */
-    .hero-property-title {
-        position: absolute !important;
-        bottom: 40% !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-    }
-
-    /* Mobile hero-progress-container positioning */
-    .hero-progress-container {
-        left: 50% !important;
-        right: auto !important;
-        /* transform: translateX(-50%) !important; */
-        width: 200px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    /* Ensure progress bar is visible on mobile */
-    .hero-progress-bar {
-        display: block !important;
-        width: 100px !important;
-        height: 2px !important;
-        background: rgba(255, 255, 255, 0.3) !important;
-    }
-
-    .hero-progress-fill {
-        display: block !important;
-        height: 2px !important;
-        background: #fff !important;
-    }
-}
-
-
-/* Page name position adjustment */
-.page-name {
-    top: 30px;
-}
-
-.room-about-section {
-    padding: 80px 20px 15px;
-    background: var(--color-primary);
-    position: relative;
-}
-
-.room-about-section::before {
-    content: '';
+/* =========================================
+   MAIN HERO SECTION — from index.css
+   Top: 0px, Height: 960px
+   ========================================= */
+.main-section {
     position: absolute;
     top: 0;
     left: 0;
-    width: 70%;
-    height: 36%;
-    background-image: url('../images/shadow3.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 3;
+    width: 100%;
+    height: 960px;
+    overflow: hidden;
 }
 
-.room-intro-section {
-    background: var(--color-primary);
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-
-.room-intro-content {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-/* Small Hexagon Thumbnail */
-.room-thumbnail {
-    margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-}
-
-.room-thumbnail.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-thumbnail-hexagon {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 0 auto;
-}
-
-/* Green border for thumbnail */
-.room-thumbnail-hexagon::before {
-    content: '';
+.main-bg {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    inset: 0;
+    transition: transform 0.1s linear;
+}
+
+.main-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.main-slide.active {
+    opacity: 1;
+}
+
+.main-slide img {
     width: 100%;
     height: 100%;
-    background: var(--color-secondary);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    z-index: 1;
-}
-
-/* White padding for thumbnail */
-.room-thumbnail-hexagon::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    background: var(--color-primary);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    z-index: 2;
-}
-
-.room-thumbnail-hexagon img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
     object-fit: cover;
-    object-position: center;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    z-index: 3;
+    transform: scale(1);
 }
 
-.room-label {
-    margin-bottom: 30px;
+.main-slide.zoom-in img {
+    transition: transform 4s ease;
+    transform: scale(1.1);
 }
 
-.room-number {
-    display: block;
-    font-size: 2rem;
+.main-content {
+    position: absolute;
+    left: 150px;
+    top: 0;
+    z-index: 1;
+    padding-top: 180px;
+    max-width: 1600px;
+    opacity: 0;
+    animation: heroFadeIn 1.2s ease forwards 0.3s;
+}
+
+.main-title {
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    color: var(--color-secondary);
-    line-height: 1.4;
-    letter-spacing: 0.02em;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.6;
+    color: white;
+    letter-spacing: -0.6px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     margin: 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
 }
 
-.room-number.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-description {
-    font-size: 1.125rem;
-    font-weight: 400;
-    color: #666;
-    line-height: 1.8;
-    letter-spacing: 0.01em;
-    margin: 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-    transition-delay: 0.2s;
-}
-
-.room-description.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Room Details Container */
-.room-details-container {
-    padding: 80px 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-}
-
-.room-details-container.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-section-title {
-    font-family: var(--font-en-main), serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-    margin-bottom: 50px;
-    text-align: left;
-    max-width: 1200px;
-    margin: 30px auto;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.room-section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--color-secondary);
-    opacity: 0.3;
-}
-
-/* Room Info Content */
-.room-info-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Left side - Image slider */
-.room-info-left {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.room-slider {
-    width: 100%;
-    height: 400px;
+.title-divider {
+    width: 658px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-top: 12px;
     position: relative;
     overflow: hidden;
-    border-radius: 0;
 }
 
-.room-slider-wrapper {
-    width: 100%;
+.title-divider .bar-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
     height: 100%;
-    position: relative;
+    width: 100%;
+    background: white;
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: progressFill 7s linear infinite;
 }
 
-.room-slide {
+.main-subtitle {
+    font-family: var(--font-ko-main);
+    font-weight: 700;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.5;
+    color: white;
+    letter-spacing: -0.36px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    margin: 24px 0 0;
+}
+
+.main-arrow {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 1;
+    opacity: 0;
+    animation: heroFadeIn 1s ease forwards 1s;
+}
+
+.arrow-left,
+.arrow-right {
+    width: 9px;
+    height: 9px;
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+}
+
+.arrow-left {
+    transform: rotate(45deg);
+}
+
+.arrow-right {
+    transform: rotate(-135deg);
+}
+
+.arrow-number {
+    font-family: var(--font-en-main);
+    font-size: 26px;
+    line-height: 36px;
+    color: white;
+    letter-spacing: -0.39px;
+    margin: 0;
+}
+
+.arrow-divider {
+    width: 10px;
+    height: 1px;
+    background: white;
+    transform: rotate(90deg);
+}
+
+/* =========================================
+   CONTENT-2: ROOM PREVIEW — from index.css
+   Top: 2660px, Height: 1410px
+   ========================================= */
+.content-2 {
+    position: absolute;
+    top: 2780px;
+    left: 0;
+    width: 100%;
+    height: 1410px;
+    padding: 100px 0 120px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.content-2-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1655409735952-cb5220efca54?w=2000&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.content-2-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.content-2 > .section-header {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 40px;
+}
+
+.section-header-outer {
+    width: 100%;
+}
+
+.section-header-inner {
+    width: 1600px;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.section-header-inner .text-block {
+    flex: 1;
+}
+
+.section-header-inner .arrow-block {
+    flex-shrink: 0;
+    display: flex;
+    gap: 12px;
+}
+
+.nav-btn {
+    width: 48px;
+    height: 48px;
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: white;
+    color: black;
+}
+
+.section-title {
+    font-family: var(--font-en-main);
+    font-weight: 700;
+    font-size: clamp(36px, 4vw, 54px);
+    line-height: 1.3;
+    color: white;
+    letter-spacing: -0.81px;
+    margin: 0 0 6px 0;
+}
+
+.section-subtitle {
+    font-family: var(--font-ko-main);
+    font-weight: 500;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.3;
+    color: white;
+    letter-spacing: -0.36px;
+    margin: 0;
+}
+
+.room-grid {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    margin-top: 100px;
+}
+
+.room-scroll-track {
+    display: flex;
+    gap: 40px;
+    width: max-content;
+    will-change: transform;
+}
+
+.room-card {
+    flex-shrink: 0;
+    width: min(450px, 80vw);
+    display: flex;
+    flex-direction: column;
+    gap: 33px;
+}
+
+.room-card:nth-child(odd) {
+    margin-top: 0;
+}
+
+.room-card:nth-child(even) {
+    margin-top: 100px;
+}
+
+.room-image {
+    width: 100%;
+    aspect-ratio: 450 / 700;
+    border-radius: 300px 300px 0 0;
+    overflow: hidden;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.room-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.room-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+}
+
+.room-info h3 {
+    font-family: var(--font-ko-sub);
+    font-weight: 700;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 36px;
+    color: white;
+    letter-spacing: -0.42px;
+    margin: 0;
+}
+
+.room-info p {
+    font-family: var(--font-ko-sub);
+    font-weight: 500;
+    font-size: clamp(15px, 1.2vw, 18px);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 435px;
+    margin: 0;
+}
+
+.room-info .btn-more {
+    position: relative;
+    font-family: var(--font-ko-main);
+    font-size: 18px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding-bottom: 10px;
+}
+
+.room-info .btn-more::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 1px;
+    background: white;
     position: absolute;
-    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* =========================================
+   Footer Section — from index.css
+   Top: 4070px
+   ========================================= */
+.section-footer {
+    position: absolute;
+    top: 4190px;
     left: 0;
+    width: 100%;
+    height: 298px;
+    background-color: var(--color-primary);
+    overflow: hidden;
+}
+
+#footer-container {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    font-size: 0;
+    background: var(--color-primary);
+}
+
+/* =========================================
+   ANIMATIONS — from index.css
+   ========================================= */
+@keyframes progressFill {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+}
+
+@keyframes heroFadeIn {
+    to { opacity: 1; }
+}
+
+/* =========================================
+   Con6 (Dalto's Info) Section
+   Top: 1960px, Height: 700px
+   ========================================= */
+.section-info {
+    position: absolute;
+    top: 1880px;
+    left: 0;
+    width: 100%;
+    height: 950px;
+    background-color: var(--color-primary);
+}
+
+.section-info > * {
+    margin-left: calc(50% - 950px);
+}
+
+.info-title {
+    position: absolute;
+    top: 91px;
+    left: 150px;
+    font-family: var(--font-en-main);
+    font-weight: 700;
+    font-size: 54px;
+    color: black;
+    letter-spacing: -0.81px;
+}
+
+.info-left {
+    position: absolute;
+    top: 199px;
+    left: 157px;
+    width: 698px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.info-right {
+    position: absolute;
+    top: 199px;
+    left: 972px;
+    width: 779px;
+}
+
+.info-row {
+    display: flex;
+    gap: 50px;
+}
+
+.info-row .info-block {
+    flex: 1;
+}
+
+.info-block {
+    width: 100%;
+}
+
+.block-title {
+    font-family: var(--font-ko-sub);
+    font-weight: 700;
+    font-size: 24px;
+    color: rgba(0,0,0,0.8);
+    letter-spacing: -0.36px;
+    margin-bottom: 20px;
+}
+
+.divider {
+    width: 100%;
+    height: 0;
+    border: none;
+    border-top: 1px solid #000000;
+    margin-bottom: 20px;
+}
+
+.block-desc {
+    font-family: var(--font-ko-sub);
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(0,0,0,0.8);
+    line-height: 1.8;
+}
+
+
+/* Info List */
+.info-list {
+    list-style-type: disc;
+    padding-left: 27px;
+}
+
+.info-list li {
+    font-family: var(--font-ko-sub);
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(0,0,0,0.8);
+    letter-spacing: -0.27px;
+    line-height: 2;
+    margin-bottom: 0;
+}
+
+/* =========================================
+   Con7 (Dalto's Room Slider) Section
+   Top: 960px, Height: 1000px
+   ========================================= */
+.section-room {
+    position: absolute;
+    top: 960px;
+    left: 0;
+    width: 100%;
+    height: 1000px;
+    background-color: var(--color-primary);
+    overflow: hidden;
+}
+
+.section-room > * {
+    margin-left: calc(50% - 950px);
+}
+
+.room-title-group {
+    position: absolute;
+    top: 182px;
+    left: 150px;
+    z-index: 10;
+}
+
+.room-main-title {
+    font-family: var(--font-en-main);
+    font-weight: 700;
+    font-size: 54px;
+    color: black;
+    letter-spacing: -0.81px;
+    margin-bottom: 10px;
+}
+
+.room-sub-title {
+    font-family: var(--font-ko-main);
+    font-weight: 500;
+    font-size: 24px;
+    color: rgba(0,0,0,0.8);
+    line-height: 1.3;
+}
+
+.room-slider-area {
+    position: absolute;
+    top: 182px;
+    left: 0;
+    width: 100%;
+    height: 700px;
+}
+
+.slider-image {
+    position: absolute;
+    top: 20px;
+    left: 550px;
+    width: 1200px;
+    height: 700px;
+}
+
+.img-frame {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Room Slide Images (5장 롤링) */
+.room-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1.2s ease;
 }
 
 .room-slide.active {
     opacity: 1;
 }
 
-.room-slider-indicators {
-    display: none;
+.img-frame .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.4));
+    pointer-events: none;
 }
 
-/* Room thumbnails */
-.room-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 10px;
+/* Slider Bar (from index.css special-bar) */
+.section-room .special-bar {
+    position: absolute;
+    left: 10%;
+    bottom: 60px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    z-index: 5;
 }
 
-.thumb-img {
+.section-room .bar-line {
+    width: 40%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.13));
+    position: relative;
+    overflow: hidden;
+}
+
+.section-room .bar-line .bar-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
     width: 100%;
-    height: 80px;
-    object-fit: cover;
+    background: white;
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: roomProgressFill 7s linear infinite;
+}
+
+@keyframes roomProgressFill {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+}
+
+.section-room .bar-controls {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+}
+
+.section-room .bar-controls button {
+    width: 48px;
+    height: 48px;
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+    background: transparent;
+    font-size: 20px;
     cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.thumb-img.active,
-.thumb-img:hover {
-    opacity: 1;
-    border-color: var(--color-secondary);
-}
-
-/* Right side - Room details */
-.room-info-right {
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.13));
     display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-.room-details-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    border-left : 1px solid var(--color-secondary);
-    padding-left: 30px;
-}
-
-.room-detail-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.detail-label {
-    font-size: 0.9rem;
-    color: #999;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.detail-value {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-}
-
-/* Room Usage Guide Section */
-.room-usage-guide-section {
-    padding: 80px 0 100px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-    transition-delay: 0.3s;
-}
-
-.room-usage-guide-section.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-usage-guide-section .room-section-title {
-    max-width: 1200px;
-    margin: 0 auto 50px auto;
-}
-
-.room-usage-guide-section .usage-guide-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    font-size: 1rem;
-    line-height: 2;
-    color: #666;
-}
-
-.room-usage-guide-section .usage-guide-content p {
-    margin: 0;
-}
-
-/* Room Amenities Section */
-.room-amenities-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-    transition-delay: 0.2s;
-}
-
-.room-amenities-section.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.room-amenities-section .room-section-title {
-    max-width: 1200px;
-    margin: 0 auto 50px auto;
-}
-
-.amenities-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.amenity-item {
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 20px 0 0;
+    justify-content: center;
 }
 
-.amenity-icon {
-    display: inline-flex;
+.section-room .bar-controls button:hover {
+    background: white;
+    color: black;
+}
+
+.slider-tabs {
+    position: absolute;
+    top: 222px;
+    left: 0;
+    width: 580px;
+    height: 520px;
+    z-index: 20;
+}
+
+/* Tab OFF state (검정) */
+.tab-item {
+    position: absolute;
+    left: calc(-50vw + 950px);
+    width: calc(580px + 50vw - 950px);
+    height: 80px;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    display: flex;
     align-items: center;
-    color: var(--color-secondary);
+    padding-left: calc(150px + 50vw - 950px);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: rgba(0, 0, 0, 0.85);
 }
 
-.amenity-icon svg {
-    width: 16px;
-    height: 16px;
+.tab-item span {
+    color: white;
 }
 
-.amenity-name {
-    font-size: 0.95rem;
-    color: #333;
+/* Tab ON state (활성 컬러) */
+.tab-item.active {
+    background-color: #c1a677;
+}
+
+.tab-item.active span {
+    color: white;
+}
+
+.tab-item span {
+    font-family: var(--font-ko-sub);
     font-weight: 500;
+    font-size: 24px;
+    letter-spacing: -0.42px;
 }
 
-/* Animation Classes */
-.animate-element {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-}
-
-.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Responsive Design */
-
+/* =========================================
+   MOBILE RESPONSIVE (max-width: 768px)
+   ========================================= */
 @media (max-width: 768px) {
-    .room-about-section {
-        padding: 60px 20px;
+
+    /* --- 레이아웃: 절대 배치 → flex 상대 배치 전환 --- */
+    .room-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden !important;
     }
 
-    .room-intro-section {
+    /* --- NAVIGATION / HEADER --- */
+    .navigation-off {
+        height: 100px;
+        width: 100% !important;
+    }
+
+    .site-header {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .header-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 1 1 auto !important;
+    }
+
+    .header-inner {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* absolute 제거 → flex 편입: padding 영역 침범 방지 */
+    .header-logo {
+        position: relative !important;
+        left: auto !important;
+        flex-shrink: 0;
+    }
+
+    .header-nav {
+        position: relative !important;
+        right: auto !important;
+        bottom: auto !important;
+        flex-shrink: 0;
+    }
+
+    /* --- HERO SECTION (from index.css) --- */
+    .main-section {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 500px;
+        min-height: auto;
+        max-height: none;
+        order: 1;
+    }
+
+    .main-bg {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .main-bg::-webkit-scrollbar {
+        display: none;
+    }
+
+    .main-slide {
+        position: relative;
+        inset: auto;
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        scroll-snap-align: start;
+    }
+
+    .main-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .main-content {
+        left: 0;
+        right: 0;
+        padding: 100px 20px 0;
+        max-width: none;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .main-title,
+    .main-subtitle {
+        text-align: center;
         padding: 0 20px;
+        white-space: normal;
     }
 
-    .room-info-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
+    .main-title br,
+    .main-subtitle br {
+        display: none;
     }
 
-    .room-details-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .title-divider {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    .amenities-grid {
-        gap: 10px;
+    .main-arrow {
+        gap: 16px;
     }
 
-    .room-section-title {
-        font-size: 1.5rem;
-        margin: 0 auto 20px auto !important;
+    /* --- SECTION-ROOM (Dalto's Room Slider) --- */
+    .section-room {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+        min-height: 600px;
+        order: 2;
+        padding: 60px 20px !important;
+        box-sizing: border-box !important;
+        overflow: visible;
     }
 
-    .room-number {
-        font-size: 1.6rem;
+    .section-room > * {
+        margin-left: 0;
     }
-}
 
-@media (max-width: 480px) {
+    .room-title-group {
+        position: relative;
+        top: auto;
+        left: auto;
+        padding: 0;
+        margin-bottom: 30px;
+    }
 
-    .room-slider {
+    .room-main-title {
+        font-size: 36px;
+    }
+
+    .room-sub-title {
+        font-size: 18px;
+        width: 360px;
+        max-width: 100%;
+    }
+
+    .room-sub-title br {
+        display: none;
+    }
+
+    .room-slider-area {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .slider-image {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: calc(100% + 40px) !important;
+        max-width: none !important;
+        margin-left: -20px !important;
+        margin-right: -20px !important;
         height: 300px;
     }
 
-    .amenity-item {
-        padding: 8px;
-    }
-}
-
-/* ================================
-   Room Gallery Section
-   ================================ */
-.room-gallery-section {
-    background: var(--color-secondary);
-    min-height: 600px;
-    padding-top: 200px;
-    padding-bottom: 15px;
-    position: relative;
-    overflow: visible; /* Fixed header를 위해 추가 */
-}
-
-/* Room Gallery Label */
-.room-gallery-label {
-    position: absolute;
-    top: 60px;
-    left: 60px;
-    opacity: 0;
-    transform: translateX(-100px);
-    transition: all 1s ease;
-    z-index: 3;
-}
-
-.room-gallery-label.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.room-gallery-label span {
-    font-family: var(--font-en-main), serif;
-    font-size: 4rem;
-    font-style: italic;
-    color: #fff;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    position: relative;
-    display: inline-block;
-}
-
-/* Room Gallery Description */
-.room-gallery-description {
-    font-size: 1.125rem;
-    font-weight: 400;
-    color: #fff;
-    line-height: 1.8;
-    text-align: left;
-}
-
-/* Room Gallery Container */
-.room-gallery-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    position: relative;
-    margin: 100px auto 0;
-    width: 100%;
-    max-width: 1600px;  /* 컨테이너 너비 증가 */
-    padding: 0 20px;
-}
-
-/* Room Gallery Item Override - 3개만 표시하므로 더 크게 */
-.room-gallery-container .gallery-item {
-    width: 450px;  /* 기본 너비 증가 */
-    height: 450px;  /* 정사각형에 가깝게 조정 */
-    max-width: none;
-    flex: 0 0 auto;
-}
-
-.room-gallery-container .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .room-gallery-section {
-        min-height: 800px;
-        padding-top: 150px;
+    .img-frame {
+        border-top-left-radius: 0;
     }
 
-    .room-gallery-label {
-        top: 40px;
-        left: 20px;
+    .section-room .special-bar {
+        left: 5%;
+        bottom: 30px;
+        width: 90%;
     }
 
-    .room-gallery-label span {
-        font-size: 2.5rem;
+    .section-room .bar-controls button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
 
-    .room-gallery-container {
-        max-width: 100%;
+    .slider-tabs {
         position: relative;
-        bottom: auto;
-        transform: none;
+        top: auto;
         left: auto;
-        padding: 0 20px 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .room-gallery-container .gallery-item {
         width: 100%;
-        max-width: 350px;
-        height: 350px;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 20px 0;
+        order: -1;
+        justify-content: center;
     }
 
+    .tab-item {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: auto !important;
+        max-width: none !important;
+        height: 44px;
+        border-radius: 50px;
+        padding: 0 20px !important;
+        border: 1px solid rgba(0,0,0,0.2);
+    }
+
+    .tab-item span {
+        font-size: 16px;
+    }
+
+    /* --- SECTION-INFO (Dalto's Info) --- */
+    .section-info {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+        order: 3;
+        padding: 20px 20px 60px !important;
+        box-sizing: border-box !important;
+        overflow: visible;
+    }
+
+    .section-info > * {
+        margin-left: 0;
+    }
+
+    .info-title {
+        position: relative;
+        top: auto;
+        left: auto;
+        font-size: 36px;
+        margin-bottom: 30px;
+    }
+
+    .info-left {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 40px;
+        gap: 40px;
+    }
+
+    .info-right {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    /* --- 아코디언 토글 --- */
+    .block-title {
+        margin-bottom: 0;
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding-bottom: 14px;
+    }
+
+    .block-title::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid rgba(0,0,0,0.6);
+        border-bottom: 2px solid rgba(0,0,0,0.6);
+        transform: rotate(-135deg);
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+        margin-left: 10px;
+    }
+
+    .info-block.active .block-title::after {
+        transform: rotate(45deg);
+    }
+
+    .info-block .block-desc,
+    .info-block .info-list {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.4s ease, opacity 0.3s ease;
+        margin-bottom: 0;
+    }
+
+    .info-block.active .block-desc {
+        max-height: 500px;
+        opacity: 1;
+    }
+
+    .info-block.active .info-list {
+        max-height: 1000px;
+        opacity: 1;
+    }
+
+    .divider {
+        margin-bottom: 0;
+    }
+
+    .block-desc {
+        font-size: 15px;
+    }
+
+    .info-right .info-list {
+        margin-top: 10px;
+    }
+
+    .info-list li {
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+    /* --- CONTENT-2: ROOM PREVIEW (from index.css) --- */
+    .content-2 {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+        padding: 60px 0 80px !important;
+        box-sizing: border-box !important;
+        overflow: hidden;
+        order: 4;
+    }
+
+    .content-2 > .section-header {
+        padding-top: 0;
+    }
+
+    .section-header-inner {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .section-header-inner .text-block {
+        padding: 0 20px;
+    }
+
+    .section-subtitle {
+        line-height: 1.5;
+    }
+
+    .section-header-inner .arrow-block {
+        display: none;
+    }
+
+    .room-grid {
+        margin-top: 40px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 20px;
+        scrollbar-width: none;
+    }
+
+    .room-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .room-scroll-track {
+        width: max-content;
+        gap: 20px;
+        padding: 0;
+    }
+
+    .room-card {
+        width: 80vw !important;
+        min-width: 0 !important;
+        flex-shrink: 0;
+        scroll-snap-align: start;
+    }
+
+    .room-image {
+        aspect-ratio: auto;
+        height: 420px;
+    }
+
+    .room-card:nth-child(even) {
+        margin-top: 0;
+    }
+
+    /* --- FOOTER --- */
+    .section-footer {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+        order: 5;
+    }
 }
