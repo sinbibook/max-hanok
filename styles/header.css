@@ -371,6 +371,31 @@ html.menu-open {
 /* 명시도를 높여서 !important 제거 */
 body .header-opened.expanded {
     height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for header-opened */
+.header-opened.expanded::-webkit-scrollbar {
+    width: 5px;
+}
+
+.header-opened.expanded::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.header-opened.expanded::-webkit-scrollbar-thumb {
+    background: #999999;
+    border-radius: 2.5px;
+}
+
+.header-opened.expanded::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+}
+
+/* Firefox scrollbar */
+.header-opened.expanded {
+    scrollbar-width: thin;
+    scrollbar-color: #999999 transparent;
 }
 
 .header-opened-content {
@@ -553,7 +578,7 @@ body .header-opened.expanded {
     .header-opened.expanded {
         height: 100vh !important;
         max-height: 100vh !important;
-        overflow: hidden;
+        overflow-y: auto;
     }
 
     .header-opened-content {

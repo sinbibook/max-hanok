@@ -44,9 +44,9 @@ class PreviewHandler {
      */
     getDefaultFonts() {
         return {
-            koMain: "'Noto Serif KR', serif",
-            koSub: "'Pretendard', sans-serif",
-            enMain: "'Cormorant', serif"
+            koMain: "'Aritaburi', sans-serif",
+            koSub: "'Aritaburi', sans-serif",
+            enMain: "'Amandine', serif"
         };
     }
 
@@ -55,8 +55,8 @@ class PreviewHandler {
      */
     getDefaultColors() {
         return {
-            primary: '#ecebe8',
-            secondary: '#683c3c'
+            primary: '#e6f3ff',
+            secondary: '#658399'
         };
     }
 
@@ -483,6 +483,18 @@ class PreviewHandler {
             // 기존 매핑 로직 실행 (완료 대기)
             await mapper.mapPage();
 
+            // mapPage 완료 후 슬라이더는 이미 초기화되어 있음
+            // (IndexMapper.mapPage 내부에서 _reinitializeHeroSlider 호출)
+
+            // index 페이지: 동적 생성된 요소에 애니메이션 클래스 직접 추가
+            if (currentPage === 'index') {
+                document.querySelectorAll('.room-item').forEach(item => {
+                    item.classList.add('animate-fade-in');
+                });
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.classList.add('animate-fade-in');
+                });
+            }
         }
 
         // Header & Footer 매핑 (모든 페이지에서 공통 실행)
@@ -669,11 +681,17 @@ class PreviewHandler {
                     break;
                 case 'rooms':
                     mapper.mapRoomsSection();
-                    if (typeof window.initRoomCarousel === 'function') window.initRoomCarousel();
+                    // 동적 생성된 room-item에 애니메이션 클래스 직접 추가
+                    document.querySelectorAll('.room-item').forEach(item => {
+                        item.classList.add('animate-fade-in');
+                    });
                     break;
-                case 'facility':
-                    mapper.mapFacilitySection();
-                    if (typeof window.initFacilitySlideshow === 'function') window.initFacilitySlideshow();
+                case 'gallery':
+                    mapper.mapGallerySection();
+                    // 동적 생성된 gallery-item에 애니메이션 클래스 직접 추가
+                    document.querySelectorAll('.gallery-item').forEach(item => {
+                        item.classList.add('animate-fade-in');
+                    });
                     break;
                 case 'closing':
                     mapper.mapClosingSection();
@@ -686,16 +704,10 @@ class PreviewHandler {
                 switch (section) {
                     case 'hero':
                         mapper.mapHeroSlider();
-                        mapper.mapAboutSection();
-                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
                         break;
                     case 'about':
                         mapper.mapAboutSection();
                         mapper.mapIntroductionSection();
-                        if (typeof window.initGallery === 'function') window.initGallery();
-                        break;
-                    case 'closing':
-                        mapper.mapClosingSection();
                         break;
                 }
             }
@@ -705,23 +717,10 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapHeroContent();
-                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
+                        mapper.mapBasicInfo();
                         break;
-                    case 'exterior':
-                        mapper.mapExteriorSlider();
-                        if (typeof window.initRoomSlider === 'function') window.initRoomSlider();
-                        break;
-                    case 'details':
-                        mapper.mapRoomDetails();
-                        break;
-                    case 'preview':
-                        mapper.mapRoomPreview();
-                        if (typeof window.initRoomPreviewCarousel === 'function') window.initRoomPreviewCarousel();
-                        break;
-                    default:
-                        mapper.mapPage();
+                    case 'gallery':
+                        mapper.mapExteriorGallery();
                         break;
                 }
             }
@@ -730,22 +729,14 @@ class PreviewHandler {
                 const mapper = this.createMapper(FacilityMapper);
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroSlider();
-                        if (typeof window.initFacilityMainSlider === 'function') window.initFacilityMainSlider();
+                        mapper.mapFacilityHeroSlider();
                         break;
-                    case 'con1':
-                        mapper.mapCon1Slider();
-                        if (typeof window.initFacilityCon1Slider === 'function') window.initFacilityCon1Slider();
+                    case 'about':
+                        mapper.mapFacilityTopIntro();
+                        mapper.mapFacilitySpecialSection();
                         break;
-                    case 'con2':
-                        mapper.mapCon2Gallery();
-                        break;
-                    case 'special':
-                        mapper.mapSpecialSection();
-                        if (typeof window.initSpecialSlideshow === 'function') window.initSpecialSlideshow();
-                        break;
-                    case 'closing':
-                        mapper.mapClosingSection();
+                    case 'experience':
+                        mapper.mapUsageGuideSection();
                         break;
                     default:
                         mapper.mapPage();
@@ -755,34 +746,7 @@ class PreviewHandler {
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
                 const mapper = this.createMapper(ReservationMapper);
-                switch (section) {
-                    case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapHeroContent();
-                        if (typeof window.initMainSlideshow === 'function') window.initMainSlideshow();
-                        break;
-                    case 'about':
-                        mapper.mapSideImage();
-                        break;
-                    case 'usageGuide':
-                        mapper.mapUsageSection();
-                        break;
-                    case 'reservationGuide':
-                        mapper.mapReservationGuideSection();
-                        break;
-                    case 'checkInOut':
-                        mapper.mapCheckInOutSection();
-                        break;
-                    case 'refund':
-                        mapper.mapRefundSection();
-                        break;
-                    case 'closing':
-                        mapper.mapClosingSection();
-                        break;
-                    default:
-                        mapper.mapPage();
-                        break;
-                }
+                mapper.mapPage();
             }
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
@@ -790,10 +754,8 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapHeroContent();
+                        mapper.mapHeroImage();
                         mapper.mapLocationInfo();
-                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
                         break;
                     default:
                         mapper.mapPage();
@@ -952,6 +914,37 @@ class PreviewHandler {
         this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
     }
 
+    /**
+     * 렌더링 완료 신호 전송
+     */
+    notifyRenderComplete(type) {
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: type,
+                data: {
+                    timestamp: Date.now(),
+                    page: this.getCurrentPageType()
+                }
+            }, this.parentOrigin || '*');
+        }
+    }
+
+    /**
+     * 현재 페이지 타입 감지
+     */
+    getCurrentPageType() {
+        const path = window.location.pathname;
+
+        if (path.endsWith('/index.html') || path.endsWith('/') || path === '') return 'index';
+        if (path.endsWith('/main.html')) return 'main';
+        if (path.endsWith('/room.html')) return 'room';
+        if (path.endsWith('/facility.html')) return 'facility';
+        if (path.endsWith('/reservation.html')) return 'reservation';
+        if (path.endsWith('/directions.html')) return 'directions';
+
+        // 루트 경로 또는 기본값으로 index 처리
+        return 'index';
+    }
 }
 
 // 전역 인스턴스 생성 (iframe 내부일 때만 - 어드민 미리보기)
