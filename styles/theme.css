@@ -12,12 +12,9 @@
 
 /* CSS Variables */
 :root {
-    /* 폰트 */
-    --font-ko-main: 'Noto Serif KR', serif;
-    --font-ko-sub: 'Pretendard', sans-serif;
-    --font-en-main: 'Cormorant', serif;
-
-    /* 색상 */
-    --color-primary: #ecebe8;
-    --color-secondary: #683c3c;
+  --font-ko-main: 'Noto Serif KR', serif;
+  --font-ko-sub: 'Pretendard', sans-serif;
+  --font-en-main: 'Cormorant', serif;
+  --color-primary: #ecebe8;
+  --color-secondary: #683c3c;
 }
