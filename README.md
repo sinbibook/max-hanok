@@ -1,1 +1,1 @@
-# template-full-banner-wipe
+# template-gallery-sidebar-beige Template
