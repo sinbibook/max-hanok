@@ -1,768 +1,585 @@
-/* Reservation Page Specific Styles */
+/* Reservation Page Styles */
 
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    width: 100%;
-    max-width: 100%;
-}
-
-.reservation-container {
-    position: relative;
-    width: 100%;
-    height: auto;
-    background-color: white;
+/* Reservation Intro Section */
+.reservation-intro-section {
+    text-align: center;
+    padding: 120px 20px 0 20px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
-/* =========================================
-   NAVIGATION (HEADER) — from index.css
-   ========================================= */
-.navigation-off {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    max-width: none;
-    height: 160px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
-    z-index: 999;
-    pointer-events: none;
-    overflow: visible;
-}
-
-.navigation-off .site-header,
-.navigation-off .header-dropdown {
-    pointer-events: auto;
-}
-
-/* =========================================
-   MAIN HERO SECTION — from index.css
-   Top: 0px, Height: 960px
-   ========================================= */
-.main-section {
-    position: relative;
-    width: 100%;
-    height: 960px;
-    overflow: hidden;
-}
-
-.main-bg {
-    position: absolute;
-    inset: 0;
-}
-
-.main-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-.main-slide.active {
-    opacity: 1;
-}
-
-.main-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1);
-}
-
-.main-slide.zoom-in img {
-    transition: transform 4s ease;
-    transform: scale(1.1);
-}
-
-.main-content {
-    position: absolute;
-    left: 150px;
-    top: 0;
-    z-index: 1;
-    padding-top: 180px;
-    max-width: 1600px;
-    opacity: 0;
-    animation: heroFadeIn 1.2s ease forwards 0.3s;
-}
-
-.main-section .main-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 3vw, 40px);
+.reservation-number {
+    font-family: var(--font-ko-main);
+    font-size: 2rem;
     line-height: 1.6;
-    color: white;
-    letter-spacing: -0.6px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    margin: 0;
-    position: static;
-    transform: none;
-    white-space: normal;
+    color: var(--color-secondary);
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
-.title-divider {
-    width: 658px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    margin-top: 12px;
-    position: relative;
-    overflow: hidden;
+.reservation-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    font-weight: bold;
+    margin-top: 20px;
 }
 
-.title-divider .bar-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background: white;
-    transform-origin: left;
-    transform: scaleX(0);
-    animation: progressFill 4s linear infinite;
-}
-
-.main-subtitle {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 24px);
-    line-height: 1.5;
-    color: white;
-    letter-spacing: -0.36px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-    margin: 24px 0 0;
-}
-
-.main-arrow {
-    position: absolute;
-    left: 50%;
-    bottom: 40px;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    z-index: 1;
-    opacity: 0;
-    animation: heroFadeIn 1s ease forwards 1s;
-}
-
-.arrow-left,
-.arrow-right {
-    width: 9px;
-    height: 9px;
-    border-left: 1px solid white;
-    border-bottom: 1px solid white;
-    cursor: pointer;
-}
-
-.arrow-left {
-    transform: rotate(45deg);
-}
-
-.arrow-right {
-    transform: rotate(-135deg);
-}
-
-.arrow-number {
-    font-family: var(--font-en-main);
-    font-size: 26px;
-    line-height: 36px;
-    color: white;
-    letter-spacing: -0.39px;
-    margin: 0;
-}
-
-.arrow-divider {
-    width: 10px;
-    height: 1px;
-    background: white;
-    transform: rotate(90deg);
-}
-
-/* =========================================
-   Con Section (Main Content)
-   Top: 960px, Height: 2000px
-   ========================================= */
-.section-con {
-    position: relative;
+/* Reservation Details Section */
+.reservation-details-section {
     display: grid;
-    grid-template-columns: 1fr 700px;
-    align-items: start;
-    width: 100%;
-    background-color: var(--color-primary);
-    overflow: visible;
-    padding-top: 0;
-    padding-bottom: 80px;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 80px 0;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.section-con > * {
-    margin-left: 0;
-}
-
-/* Side Image (Right) */
-.side-img-wrapper {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: start;
-    position: sticky;
-    top: 96px;
-    width: 700px;
-    height: 1200px;
-    border-top-left-radius: 100px;
+/* Reservation Box */
+.reservation-box {
+    background: white;
+    position: relative;
     overflow: hidden;
-    z-index: 5;
-    margin-top: 234px;
-    margin-left: 0;
-    margin-right: 0;
+    padding: 50px 40px;
+    box-shadow: -8px 8px 5px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
 }
 
-.img-inner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 700px;
-    height: 1200px;
-    border-top-left-radius: 250px;
+/* Reservation Box Image */
+.reservation-box-image {
+    margin: -50px -40px 30px -40px;
+    height: 280px;
     overflow: hidden;
 }
 
-.img-inner img {
+.reservation-box-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* Page Title */
-.page-title {
+.reservation-box.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Sequential animation delays */
+.reservation-box:nth-child(1).animate {
+    transition-delay: 0s;
+}
+
+.reservation-box:nth-child(2).animate {
+    transition-delay: 0.2s;
+}
+
+.reservation-box:nth-child(3).animate {
+    transition-delay: 0.4s;
+}
+
+/* Paper fold effect */
+.reservation-box::before {
+    content: "";
     position: absolute;
-    top: 120px;
-    left: 150px;
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: 54px;
-    color: black;
-    letter-spacing: -0.81px;
-    z-index: 10;
+    top: -1px;
+    right: -1px;
+    border-style: solid;
+    border-width: 0 0 0 0;
+    border-color: #ffffff var(--color-primary);
+    z-index: 200;
+    transition: border-width 0.6s ease;
 }
 
-/* Tabs */
-.tabs-group {
+.reservation-box.fold-animate::before {
+    border-width: 0 60px 60px 0;
+}
+
+/* Paper fold shadow layer for more realistic effect */
+.reservation-box::after {
+    content: "";
     position: absolute;
-    top: 217px;
-    left: 150px;
-    display: flex;
-    gap: 20px;
-    z-index: 10;
+    top: -1px;
+    right: -1px;
+    border-style: solid;
+    border-width: 0 0 0 0;
+    border-color: transparent;
+    border-right-color: rgba(0, 0, 0, 0.1);
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+    z-index: 199;
+    transition: border-width 0.6s ease;
 }
 
-.tab-btn {
-    position: relative;
-    width: 180px;
-    height: 60px;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    border: 1px solid black;
-    transition: all 0.3s;
-    background-color: transparent;
+.reservation-box.fold-animate::after {
+    border-width: 0 58px 58px 0;
 }
 
-.tab-btn.active {
-    background-color: black;
-}
-
-.tab-btn .tab-text {
-    font-family: var(--font-ko-sub);
-    font-weight: 700;
-    font-size: 24px;
-    letter-spacing: -0.36px;
-    color: black;
-    z-index: 2;
-}
-
-.tab-btn.active .tab-text {
-    color: white;
-}
-
-/* Text Content Area */
-.text-content-area {
-    grid-column: 1;
-    grid-row: 1;
-    padding-top: 342px;
-    padding-left: 150px;
-    padding-right: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    z-index: 1;
-}
-
-.info-section {
-    width: 100%;
-}
-
-.section-con .section-header {
-    position: relative;
-    width: 969px;
-    height: 35px;
-    margin-bottom: 25px;
-}
-
-.section-con .section-title {
-    font-family: var(--font-ko-sub);
-    font-weight: 700;
-    font-size: 24px;
-    color: black;
-    letter-spacing: -0.36px;
-    margin-bottom: 10px;
-}
-
-.section-line {
-    width: 969px;
-    height: 1px;
-    background-color: black;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-/* Info List */
-.info-list {
-    width: 969px;
-    padding-left: 27px;
-}
-
-.info-list li {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: 18px;
-    color: rgba(0,0,0,0.8);
-    line-height: 1.4;
-    margin-bottom: 0;
-}
-
-/* Extra info paragraphs */
-.extra-info {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: 18px;
-    color: rgba(0,0,0,0.8);
-    line-height: 1.4;
-    margin-top: 10px;
-    width: 1126px;
-}
-
-/* Fee Table */
-.fee-table-container {
-    margin-top: 15px;
-    position: relative;
-}
-
-.fee-table {
-    border-collapse: collapse;
-    width: 954px;
-    font-family: var(--font-ko-sub);
-    text-align: center;
-    border: 1px solid black;
-    background-color: transparent;
-}
-
-.fee-table td {
-    padding: 17px 0;
-    font-size: 18px;
-    color: rgba(0,0,0,0.8);
-    border-right: 1px solid black;
-}
-
-.fee-table td:last-child {
-    border-right: none;
-}
-
-.fee-table tr.header-row {
-    background-color: #dad3bd;
-    height: 74px;
-    font-weight: 400;
-}
-
-.fee-table tr.data-row {
-    background-color: transparent;
-    height: 74px;
-    font-weight: 700;
-}
-
-.fee-table .first-col {
-    font-weight: 700;
-    width: 100px;
-    line-height: 1.3;
-}
-
-/* =========================================
-   CONTENT-4: UNDER THE MOONLIGHT — from index.css
-   Top: 2960px
-   ========================================= */
-.content-4 {
-    position: relative;
-    left: 0;
-    width: 100%;
-    min-height: 400px;
-    height: 50vh;
-    max-height: 620px;
-    overflow: hidden;
-    background-color: #1a1a1a;
-}
-
-.content-4-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&q=80');
-    background-size: cover;
-    background-position: center;
-}
-
-.content-4-text {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-    padding: 0 8%;
-}
-
-.content-4-text h2 {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: clamp(30px, 3.5vw, 46px);
-    line-height: 1.3;
-    color: white;
-    margin: 0 0 20px 0;
-}
-
-.content-4-text p {
+/* Box Title */
+.reservation-box-title {
     font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(16px, 1.6vw, 22px);
-    line-height: 1.5;
-    color: white;
-    margin: 0;
-}
-
-/* =========================================
-   Footer Section
-   ========================================= */
-.section-footer {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--color-secondary);
+    margin: 0 0 40px 0;
     position: relative;
-    left: 0;
-    width: 100%;
-    height: 298px;
-    background-color: var(--color-primary);
-    overflow: hidden;
+    z-index: 100;
+    background: transparent;
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s ease;
+    text-align: center;
+    padding: 0 40px;
 }
 
-#footer-container {
-    margin: 0;
+.reservation-box-title::before,
+.reservation-box-title::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    height: 1px;
+    background-color: var(--color-secondary);
+    width: calc(50% - 80px);
+}
+
+.reservation-box-title::before {
+    left: 5px;
+}
+
+.reservation-box-title::after {
+    right: 5px;
+}
+
+/* 환불/취소수수료만 특별히 더 넓은 여백 */
+.refund-box .reservation-box-title::before,
+.refund-box .reservation-box-title::after {
+    width: calc(50% - 100px);
+}
+
+.reservation-box.animate .reservation-box-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 박스 내 두 번째 타이틀 (예약안내 등) 상단 간격 */
+.reservation-box-content + .reservation-box-title {
+    margin-top: 40px;
+}
+
+/* Box Content */
+.reservation-box-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.8s ease;
+    transition-delay: 0.3s;
+}
+
+.reservation-box.animate .reservation-box-content {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Text Content Style for user-input mapping */
+.reservation-text-content {
+    font-family: var(--font-ko-sub);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #666;
+    display: block !important;
+    flex-direction: column !important;
+    margin-top: 20px;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    border: 1px solid rgba(122, 132, 113, 0.1);
+    white-space: pre-line; /* 사용자 입력 줄바꿈(\n) 처리 */
+    position: relative;
+}
+
+/* 화살표는 JavaScript에서 동적으로 처리 */
+
+
+/* 체크인/체크아웃 시간 영역 */
+.checkin-checkout-times {
+}
+
+.checkin-checkout-times .detail-item {
+    background-color: transparent;
+    margin-bottom: 5px;
+    border-radius: 0;
+}
+
+/* 운영정보 섹션 */
+.operation-info-section {
+    margin-top: 20px;
+}
+
+.operation-info-title {
+    font-family: var(--font-ko-main);
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--color-secondary);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* 운영정보 텍스트는 환불 안내와 동일한 스타일 */
+.operation-info-text {
+    margin-top: 0 !important;
+}
+
+/* 운영정보 타이틀은 배경 없이 */
+.operation-info-title {
+    background: none;
     padding: 0;
-    line-height: 0;
-    font-size: 0;
-    background: var(--color-primary);
+    border: none;
+    border-radius: 0;
 }
 
-/* =========================================
-   ANIMATIONS — from index.css
-   ========================================= */
-@keyframes progressFill {
-    0% { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
+/* Detail Items */
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(106, 98, 71, 0.2);
 }
 
-@keyframes heroFadeIn {
-    to { opacity: 1; }
+.detail-label {
+    font-family: var(--font-ko-main);
+    font-size: 1rem;
+    color: var(--color-secondary);
+    font-weight: 600;
+    min-width: 120px;
 }
 
-/* =========================================
-   MOBILE RESPONSIVE (max-width: 768px)
-   ========================================= */
-@media (max-width: 768px) {
+.detail-value {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: #666;
+    text-align: right;
+    flex: 1;
+    margin-left: 20px;
+    line-height: 1.4;
+}
 
-    /* --- 레이아웃: 절대 배치 → flex 상대 배치 전환 --- */
-    .reservation-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        overflow-x: hidden !important;
+.detail-value.no-refund {
+    color: #c5282f;
+    font-weight: 600;
+}
+
+/* Refund Box Specific Styles */
+.refund-box {
+    grid-column: 1 / -1; /* 전체 폭 사용 */
+}
+
+
+.refund-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.refund-table-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.refund-text-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.refund-section-title {
+    font-family: var(--font-ko-main);
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(106, 98, 71, 0.3);
+}
+
+/* Refund Table */
+.refund-table-wrapper {
+    overflow-x: auto;
+}
+
+.refund-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgba(106, 98, 71, 0.3);
+    background: white;
+}
+
+.refund-table th,
+.refund-table td {
+    padding: 12px 16px;
+    text-align: center;
+    border: 1px solid rgba(106, 98, 71, 0.2);
+    font-family: var(--font-ko-main);
+}
+
+.refund-table th {
+    background: rgba(106, 98, 71, 0.1);
+    font-weight: 600;
+    color: var(--color-secondary);
+    font-size: 0.95rem;
+}
+
+.refund-table td {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.refund-table td.no-refund {
+    color: #c5282f;
+    font-weight: 600;
+}
+
+/* Refund Notes - 통일된 스타일 사용 */
+.refund-notes {
+    /* reservation-text-content 스타일 상속 */
+}
+
+/* Book Now Button */
+.reservation-book-now {
+    margin-top: 60px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+}
+
+.reservation-book-now.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reservation-book-btn {
+    position: relative;
+    padding: 10px 15px;
+    background: transparent;
+    color: #333 !important;
+    border: 1px solid #333;
+    border-radius: 0;
+    font-family: var(--font-ko-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.reservation-book-btn::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid #333;
+    border-radius: 0;
+    transition: border-color 0.3s ease;
+}
+
+.reservation-book-btn::after {
+    content: '→';
+    font-size: 16px;
+    transition: all 0.3s ease;
+    font-weight: 300;
+}
+
+.reservation-book-btn:hover {
+    background: var(--color-secondary) !important;
+    color: white !important;
+    border-color: var(--color-secondary);
+    transform: translateX(2px) translateY(-1px);
+}
+
+.reservation-book-btn:hover::before {
+    border-color: var(--color-secondary);
+}
+
+.reservation-book-btn:hover::after {
+    transform: translateX(3px);
+}
+
+/* Large screens - wider containers */
+@media (min-width: 1920px) {
+    .reservation-details-section {
+        max-width: 1400px;
     }
+}
 
-    /* --- NAVIGATION --- */
-    .navigation-off {
-        height: 100px;
-        width: 100% !important;
-    }
-
-    /* --- HERO SECTION --- */
-    .main-section {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 500px;
-        min-height: auto;
-        max-height: none;
-        overflow: hidden;
-        order: 1;
-    }
-
-    .main-bg {
-        display: flex;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-    }
-
-    .main-bg::-webkit-scrollbar {
-        display: none;
-    }
-
-    .main-slide {
-        position: relative;
-        inset: auto;
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100%;
-        opacity: 1;
-        scroll-snap-align: start;
-    }
-
-    .main-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .main-content {
-        left: 0;
-        right: 0;
-        padding: 100px 20px 0;
-        max-width: none;
-        text-align: center;
-        box-sizing: border-box;
-    }
-
-    .main-section .main-title {
-        text-align: center;
-        padding: 0 20px;
-        white-space: normal;
-        word-break: keep-all;
-    }
-
-    .main-subtitle {
-        text-align: center;
-        padding: 0 20px;
-        white-space: normal;
-        word-break: keep-all;
-    }
-
-    .main-section .main-title br,
-    .main-subtitle br {
-        display: none;
-    }
-
-    .title-divider {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .main-arrow {
-        gap: 16px;
-    }
-
-    /* --- SECTION-CON (Main Content) --- */
-    .section-con {
-        display: block;
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto;
-        min-height: auto;
-        order: 2;
+/* Tablet responsive */
+@media (max-width: 1024px) {
+    .reservation-details-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
         padding: 60px 20px;
-        box-sizing: border-box;
-        overflow: visible;
     }
 
-    .section-con > * {
-        margin-left: 0;
+    .reservation-box {
+        padding: 40px 30px;
     }
 
-    .page-title {
-        position: relative;
-        top: auto;
-        left: auto;
-        font-size: 36px;
-        margin-bottom: 20px;
+    .reservation-box-image {
+        margin: -40px -30px 25px -30px;
+        height: 180px;
     }
 
-    .tabs-group {
-        position: relative;
-        top: auto;
-        left: auto;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 30px;
-        justify-content: center;
+    .reservation-box-title {
+        font-size: 1.1rem;
+        padding-left: 20px;
     }
+}
 
-    .tab-btn {
-        width: auto;
-        height: 44px;
+.reservation-content-layout {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    /* 초기에는 보이도록 설정 */
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s ease;
+}
+
+.reservation-content-layout.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Refund Section Animations */
+.refund-section {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s ease;
+}
+
+.refund-section.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.refund-table-section,
+.refund-text-section {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.8s ease;
+}
+
+.refund-table-section.animate,
+.refund-text-section.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.refund-text-section {
+    transform: translateX(0);
+}
+
+.refund-text-section.animate {
+    transform: translateX(0);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .reservation-content-layout {
+        margin-top: 70px;
         padding: 0 20px;
     }
-
-    .tab-btn .tab-text {
-        font-size: 16px;
+    .reservation-number {
+        font-size: 1.5rem;
     }
 
-    .text-content-area {
-        padding-top: 0;
-        padding-left: 0;
-        padding-right: 0;
-        width: 100%;
-        gap: 10px;
+    .reservation-details-section {
+        gap: 25px;
+        padding: 40px 0px;
     }
 
-    .section-con .section-header {
-        width: 100% !important;
+    .reservation-box {
+        padding: 30px 20px;
+        position: relative;
     }
 
-    .section-line {
-        width: 100% !important;
+    .reservation-box-image {
+        margin: -30px -20px 20px -20px;
+        height: 150px;
     }
 
-    /* --- 아코디언 토글 --- */
-    .section-con .section-title {
-        display: flex;
+    .reservation-box-title {
+        font-size: 1.5rem;
+        margin: 30px 0;
+        padding-left: 22px;
+    }
+
+    .reservation-box-title::before,
+    .reservation-box-title::after {
+        display: none;
+    }
+
+    .detail-item {
+        flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        cursor: pointer;
-        margin-bottom: 0;
-        padding-bottom: 14px;
-        font-size: 20px;
+        padding: 15px 0;
+        gap: 8px;
     }
 
-    .section-con .section-title::after {
-        content: '';
-        width: 8px;
-        height: 8px;
-        border-right: 2px solid rgba(0,0,0,0.6);
-        border-bottom: 2px solid rgba(0,0,0,0.6);
-        transform: rotate(-135deg);
-        transition: transform 0.3s ease;
-        flex-shrink: 0;
-        margin-left: 10px;
+    .detail-label {
+        min-width: auto;
+        font-size: 1rem;
     }
 
-    .info-section.is-open .section-title::after {
-        transform: rotate(45deg);
+    .detail-value {
+        text-align: right;
+        margin-left: 20px;
+        font-size: 0.9rem;
+        flex: 1;
     }
 
-    .info-section .info-list,
-    .info-section .extra-info,
-    .info-section .fee-table-container {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transition: max-height 0.4s ease, opacity 0.3s ease;
+    /* Mobile fold effect */
+    .reservation-box::before {
+        border-width: 0 0 0 0;
     }
 
-    .info-section.is-open .info-list,
-    .info-section.is-open .extra-info {
-        max-height: 2000px;
-        opacity: 1;
+    .reservation-box.fold-animate::before {
+        border-width: 0 30px 30px 0;
     }
 
-    .info-section.is-open .fee-table-container {
-        max-height: 500px;
-        opacity: 1;
-        overflow-x: auto;
+    .reservation-box::after {
+        border-width: 0 0 0 0;
     }
 
-    .info-list {
-        width: 100% !important;
-        padding-left: 0;
+    .reservation-box.fold-animate::after {
+        border-width: 0 28px 28px 0;
     }
 
-    .info-list li {
-        font-size: 15px;
-        line-height: 1.8;
+    /* Refund box mobile layout */
+    .refund-content {
+        flex-direction: column;
+        gap: 30px;
     }
 
-    .info-list li br {
-        display: none;
-    }
-
-    .extra-info {
-        width: 100% !important;
-        font-size: 15px;
-    }
-
-    .extra-info br {
-        display: none;
-    }
-
-    .side-img-wrapper {
-        display: none;
-    }
-
-    .fee-table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .fee-table {
+    .refund-table-section,
+    .refund-text-section {
+        min-width: auto;
         width: 100%;
-        min-width: 600px;
-        font-size: 14px;
     }
 
-    .fee-table td {
-        font-size: 14px;
-        padding: 12px 4px;
+    .refund-table th,
+    .refund-table td {
+        padding: 8px 12px;
+        font-size: 0.85rem;
     }
 
-    /* --- CONTENT-4: MOONLIGHT --- */
-    .content-4 {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
-        height: 250px;
-        min-height: auto;
-        max-height: none;
-        order: 3;
-    }
-
-    .content-4-text {
-        padding: 0 20px;
-    }
-
-    /* --- FOOTER --- */
-    .section-footer {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto;
-        order: 4;
-    }
 }

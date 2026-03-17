@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.128.0",
-    "generatedAt": "2026-02-24T09:34:02.515Z",
-    "templateType": "fullpage_visual",
+    "version": "1.129.0",
+    "generatedAt": "2026-03-17T03:22:53.879Z",
+    "templateType": "gallery_sidebar",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -148,7 +148,7 @@
     ],
     "refundSettings": {
       "customerRefundNotice": "",
-      "immediateRefundEnabled": false,
+      "immediateRefundEnabled": true,
       "immediateRefundTimeLimit": "60"
     },
     "images": [
@@ -215,7 +215,7 @@
     "nameEn": "Max Hanok Pensio",
     "domain": "max-hanok.com",
     "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
-    "ybsId": ""
+    "ybsId": "abc"
   },
   "rooms": [
     {
@@ -831,7 +831,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "fullpage_visual",
+    "templateType": "gallery_sidebar",
     "images": [
       {
         "logo": [
@@ -1367,11 +1367,29 @@
       },
       "theme": {
         "font": {
-          "koSub": null,
-          "enMain": null,
-          "koMain": null
+          "koSub": {
+            "cdn": null,
+            "key": "aritaburi",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff",
+            "family": "Aritaburi"
+          },
+          "enMain": {
+            "cdn": "https://fonts.googleapis.com/css2?family=Chonburi&display=swap",
+            "key": "chonburi",
+            "woff2": null,
+            "family": "Chonburi"
+          },
+          "koMain": {
+            "cdn": null,
+            "key": "sokchoseadotum",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
+            "family": "SokchoSeaDotum"
+          }
         },
-        "color": null
+        "color": {
+          "primary": "#F5F0E8",
+          "secondary": "#3E5B45"
+        }
       },
       "popup": {
         "popups": [
@@ -1581,7 +1599,6 @@
           "images": []
         }
       ]
-    },
-    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
+    }
   }
 }
