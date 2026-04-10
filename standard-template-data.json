@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.131.0",
-    "generatedAt": "2026-04-10T04:58:49.697Z",
-    "templateType": "gallery_sidebar",
+    "version": "1.132.0",
+    "generatedAt": "2026-04-10T08:44:21.698Z",
+    "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1175,7 +1175,7 @@
   ],
   "homepage": {
     "domain": "max-hanok.com",
-    "templateType": "gallery_sidebar",
+    "templateType": "fullpage_visual",
     "images": [
       {
         "logo": [
@@ -1276,8 +1276,16 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
-                "mediaType": "image",
+                "videos": [
+                  {
+                    "id": "857a5e45-7b52-435c-a9eb-a7a04f0e8a45",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_closing/1775806733436-1mm1fzo8gi8.MP4",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  }
+                ],
+                "mediaType": "video",
                 "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
               },
               "essence": {
@@ -1312,9 +1320,9 @@
                     "isSelected": true
                   }
                 ],
+                "videos": [],
                 "mediaType": "video",
-                "description": "TEST",
-                "videos": []
+                "description": "TEST"
               },
               "gallery": {
                 "title": "특별한 순간",
@@ -1735,32 +1743,6 @@
           ]
         }
       },
-      "theme": {
-        "font": {
-          "koSub": {
-            "cdn": null,
-            "key": "aritaburi",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff",
-            "family": "Aritaburi"
-          },
-          "enMain": {
-            "cdn": "https://fonts.googleapis.com/css2?family=Chonburi&display=swap",
-            "key": "chonburi",
-            "woff2": null,
-            "family": "Chonburi"
-          },
-          "koMain": {
-            "cdn": null,
-            "key": "sokchoseadotum",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
-            "family": "SokchoSeaDotum"
-          }
-        },
-        "color": {
-          "primary": "#F5F0E8",
-          "secondary": "#3E5B45"
-        }
-      },
       "popup": {
         "popups": [
           {
@@ -1793,6 +1775,32 @@
             "description": ""
           }
         ]
+      },
+      "theme": {
+        "font": {
+          "koSub": {
+            "cdn": null,
+            "key": "aritaburi",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff",
+            "family": "Aritaburi"
+          },
+          "enMain": {
+            "cdn": "https://fonts.googleapis.com/css2?family=Chonburi&display=swap",
+            "key": "chonburi",
+            "woff2": null,
+            "family": "Chonburi"
+          },
+          "koMain": {
+            "cdn": null,
+            "key": "sokchoseadotum",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
+            "family": "SokchoSeaDotum"
+          }
+        },
+        "color": {
+          "primary": "#F5F0E8",
+          "secondary": "#3E5B45"
+        }
       },
       "property": {
         "name": "숙소명 변경",
@@ -2004,26 +2012,6 @@
         }
       ]
     },
-    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
-    "videos": {
-      "index_hero": [
-        {
-          "id": "c9ded161-60ae-4e73-86d0-390a222f1ab2",
-          "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1775731318664-vznsxcsennn.MP4",
-          "videoCategory": "index_hero",
-          "sortOrder": 0,
-          "isSelected": true
-        }
-      ],
-      "index_essence": [
-        {
-          "id": "9d32b140-f70d-4470-b252-f7a36a31c24d",
-          "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1775788014810-wq10wn8tmw.MP4",
-          "videoCategory": "index_essence",
-          "sortOrder": 0,
-          "isSelected": true
-        }
-      ]
-    }
+    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   }
 }

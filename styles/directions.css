@@ -1,262 +1,464 @@
 /* Directions Page Styles */
 
-/* Location Details in About Section */
-.location-details {
-    margin: 40px 0;
-    text-align: center;
+/* =========================================
+   PAGE LAYOUT
+   ========================================= */
+body {
+    margin: 0;
+    padding: 0;
 }
 
-.location-title {
+.page-wrapper {
+    width: 100%;
+    background: white;
+    overflow-x: hidden;
+}
+
+#footer-container {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    font-size: 0;
+    background: var(--color-primary);
+}
+
+/* =========================================
+   NAVIGATION (HEADER)
+   ========================================= */
+.navigation-off {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+    z-index: 999;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.navigation-off .site-header,
+.navigation-off .header-dropdown {
+    pointer-events: auto;
+}
+
+/* =========================================
+   MAIN HERO SECTION (슬라이드쇼)
+   ========================================= */
+.main-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    max-height: 960px;
+    overflow: hidden;
+}
+
+.main-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.1s linear;
+}
+
+.main-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.main-slide.active {
+    opacity: 1;
+}
+
+.main-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+}
+
+.main-content {
+    position: absolute;
+    left: 150px;
+    top: 0;
+    z-index: 1;
+    padding-top: 180px;
+    max-width: 1600px;
+    opacity: 0;
+    animation: heroFadeIn 1.2s ease forwards 0.3s;
+}
+
+.main-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.6;
+    color: white;
+    letter-spacing: -0.6px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    margin: 0;
+}
+
+.title-divider {
+    width: 658px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.title-divider .bar-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: white;
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: progressFill 4s linear infinite;
+}
+
+.main-subtitle {
     font-family: var(--font-ko-main);
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: var(--color-secondary);
-    margin: 0 0 15px 0;
+    font-weight: 700;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1.5;
+    color: white;
+    letter-spacing: -0.36px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    margin: 24px 0 0;
 }
 
-.location-address-wrapper {
+.main-arrow {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 24px;
+    z-index: 1;
+    opacity: 0;
+    animation: heroFadeIn 1s ease forwards 1s;
 }
 
-.location-icon {
-    width: 20px;
-    height: 20px;
-    stroke: var(--color-secondary);
-    fill: none;
-    stroke-width: 2;
-    flex-shrink: 0;
+.arrow-left,
+.arrow-right {
+    width: 9px;
+    height: 9px;
+    border-left: 1px solid white;
+    border-bottom: 1px solid white;
 }
 
-.location-address {
-    font-family: var(--font-ko-main);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333;
+.arrow-left {
+    transform: rotate(45deg);
+}
+
+.arrow-right {
+    transform: rotate(-135deg);
+}
+
+.arrow-number {
+    font-family: var(--font-en-main);
+    font-size: 26px;
+    line-height: 36px;
+    color: white;
+    letter-spacing: -0.39px;
     margin: 0;
-    line-height: 1.4;
 }
 
-.location-note {
-    margin: 0 auto;
-    padding: 25px;
-    background: rgba(106, 98, 71, 0.05);
-    border: 1px solid var(--color-secondary);
-    border-radius: 8px;
-    display: block;
-    text-align: left;
+.arrow-divider {
+    width: 10px;
+    height: 1px;
+    background: white;
+    transform: rotate(90deg);
+}
+
+/* =========================================
+   CONTENT SECTION 4: UNDER THE MOONLIGHT
+   ========================================= */
+.content-4 {
+    position: relative;
     width: 100%;
-    max-width: 700px;
-}
-
-.note-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 15px;
-    font-family: var(--font-ko-sub);
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.4;
-}
-
-.note-item:last-child {
-    margin-bottom: 0;
-}
-
-.note-icon {
-    width: 18px;
-    height: 18px;
-    stroke: var(--color-secondary);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-/* Animation for Location Details */
-.location-details.animate-element {
-    transform: translateY(30px);
-    transition-delay: 0.4s;
-}
-
-.location-details.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.location-address-wrapper.animate-element {
-    transform: translateX(-30px);
-    transition-delay: 0.6s;
-}
-
-.location-address-wrapper.animate-element.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.location-note.animate-element {
-    transform: translateY(30px);
-    transition-delay: 0.8s;
-}
-
-.location-note.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.note-item.animate-element {
-    transform: translateX(30px);
-}
-
-.note-item.animate-element.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Map Section */
-.map-section {
-    padding: 0 0 80px 0;
-}
-
-
-/* Map Container */
-.map-container {
-    width: 100%;
-    height: 500px;
-    border-radius: 15px;
+    min-height: 400px;
+    height: 50vh;
+    max-height: 620px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e8e6e0;
+    margin-bottom: 0;
+    background-color: #1a1a1a;
 }
 
-#kakao-map {
+.content-4-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.content-4-text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 0 8%;
+}
+
+.content-4-text h2 {
+    font-family: var(--font-en-main);
+    font-weight: 700;
+    font-size: clamp(30px, 3.5vw, 46px);
+    line-height: 1.3;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+.content-4-text p {
+    font-family: var(--font-ko-main);
+    font-weight: 700;
+    font-size: clamp(16px, 1.6vw, 22px);
+    line-height: 1.5;
+    color: white;
+    margin: 0;
+}
+
+/* =========================================
+   Con Section (오시는 길 - Directions 고유)
+   ========================================= */
+.section-con {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-primary);
+    padding: 100px 0 160px;
+}
+
+.directions-info {
+    width: 1600px;
+    max-width: none;
+    margin: 0 auto 22px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.page-title {
+    font-family: var(--font-en-main);
+    font-weight: 700;
+    font-size: 54px;
+    color: black;
+    letter-spacing: -0.81px;
+    line-height: 1.3;
+}
+
+.address-text {
+    font-family: var(--font-ko-sub);
+    font-size: 22px;
+    color: rgba(0,0,0,0.8);
+    letter-spacing: -0.42px;
+    line-height: 1.8;
+}
+
+.address-text .bold {
+    font-weight: 700;
+}
+
+.address-text .medium {
+    font-weight: 500;
+}
+
+.map-container {
+    width: 1600px;
+    max-width: none;
+    margin: 0 auto;
+    height: 800px;
+    border: 1px solid #d3d3d3;
+    overflow: hidden;
+}
+
+.map-img-wrapper {
     width: 100%;
     height: 100%;
 }
 
-/* Animation Styles for Directions */
-.map-section.animate-element {
-    transform: translateY(50px);
-    transition-delay: 0.2s;
+.map-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.map-section.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+@keyframes progressFill {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
 }
 
-
-.map-container.animate-element {
-    transform: translateY(30px);
-    transition-delay: 0.6s;
+@keyframes heroFadeIn {
+    to { opacity: 1; }
 }
 
-.map-container.animate-element.animate {
-    opacity: 1;
-    transform: translateY(0);
+/* =========================================
+   TABLET RESPONSIVE (max-width: 1400px)
+   ========================================= */
+@media (max-width: 1400px) {
+    .main-content {
+        left: 5vw;
+    }
+
+    .directions-info {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 5vw;
+    }
+
+    .page-title {
+        font-size: clamp(36px, 3.5vw, 54px);
+    }
+
+    .address-text {
+        font-size: clamp(16px, 1.4vw, 22px);
+    }
+
+    .map-container {
+        width: calc(100% - 10vw);
+        max-width: 100%;
+        margin: 0 5vw;
+        height: clamp(400px, 45vw, 800px);
+    }
 }
 
-/* Responsive Design */
+/* =========================================
+   MOBILE RESPONSIVE (max-width: 768px)
+   ========================================= */
 @media (max-width: 768px) {
-    .map-section {
-        padding: 0 0 50px 0;
+
+    /* --- NAVIGATION GRADIENT --- */
+    .navigation-off {
+        height: 100px;
     }
 
-    .location-details {
-        margin-top: 30px;
+    /* --- HERO SECTION --- */
+    .main-section {
+        height: 500px;
+        min-height: auto;
+        max-height: none;
     }
 
-    .location-address-wrapper {
-        gap: 8px;
-        margin-bottom: 15px;
+    .main-bg {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
     }
 
-    .location-icon {
-        width: 18px;
-        height: 18px;
+    .main-bg::-webkit-scrollbar {
+        display: none;
     }
 
-    .location-title {
-        font-size: 1.2rem;
+    .main-slide {
+        position: relative;
+        inset: auto;
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        scroll-snap-align: start;
     }
 
-    .location-address {
-        font-size: 1rem;
+    .main-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
-    .location-note {
-        padding: 20px;
-        max-width: 90%;
-        margin: 0 auto;
+    .main-content {
+        left: 0;
+        right: 0;
+        padding-top: 100px;
+        max-width: none;
+        text-align: center;
+        pointer-events: none;
     }
 
-    .note-item {
-        font-size: 0.95rem;
-        gap: 10px;
-        margin-bottom: 12px;
+    .main-title,
+    .main-subtitle {
+        text-align: center;
+        padding: 0 20px;
+        white-space: normal;
+        word-break: keep-all;
     }
 
-    .note-icon {
-        width: 16px;
-        height: 16px;
+    .main-title br,
+    .main-subtitle br {
+        display: none;
+    }
+
+    .title-divider {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .main-arrow {
+        gap: 16px;
+    }
+
+    /* --- CONTENT 4: MOONLIGHT --- */
+    .content-4 {
+        height: 250px;
+        min-height: auto;
+        max-height: none;
+    }
+
+    .content-4-text {
+        padding: 0 20px;
+    }
+
+    /* --- SECTION-CON (오시는 길) --- */
+    .section-con {
+        padding: 60px 0 80px;
+    }
+
+    .directions-info {
+        width: 100%;
+        max-width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+
+    .page-title {
+        font-size: 36px;
+    }
+
+    .address-text {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .address-row {
+        display: block;
     }
 
     .map-container {
-        height: 400px;
-        border-radius: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .map-section {
-        padding: 0 0 40px 0;
-    }
-
-    .location-details {
-        margin-top: 25px;
-    }
-
-    .location-address-wrapper {
-        gap: 6px;
-        margin-bottom: 12px;
-    }
-
-    .location-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .location-title {
-        font-size: 1.1rem;
-    }
-
-    .location-address {
-        font-size: 0.95rem;
-    }
-
-    .location-note {
-        padding: 15px;
-    }
-
-    .note-item {
-        font-size: 0.85rem;
-        gap: 8px;
-        margin-bottom: 10px;
-    }
-
-    .note-icon {
-        width: 14px;
-        height: 14px;
-    }
-
-    .map-container {
-        height: 350px;
-        border-radius: 10px;
+        width: calc(100% - 40px);
+        max-width: calc(100% - 40px);
+        margin: 0 20px;
+        height: 300px;
     }
 }
