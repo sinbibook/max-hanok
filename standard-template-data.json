@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.130.0",
-    "generatedAt": "2026-04-10T03:20:41.841Z",
+    "version": "1.131.0",
+    "generatedAt": "2026-04-10T04:58:49.697Z",
     "templateType": "gallery_sidebar",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1312,17 +1312,9 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [
-                  {
-                    "id": "9d32b140-f70d-4470-b252-f7a36a31c24d",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1775788014810-wq10wn8tmw.MP4",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true
-                  }
-                ],
                 "mediaType": "video",
-                "description": "TEST"
+                "description": "TEST",
+                "videos": []
               },
               "gallery": {
                 "title": "특별한 순간",
