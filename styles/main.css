@@ -1,662 +1,375 @@
-/* Main Page Styles */
+/* ===================================
+   Main Page Styles
+   =================================== */
 
-
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    background-color: #ffffff;
-}
-
-/* Reset basics */
-p { margin: 0; padding: 0; }
-a { text-decoration: none; color: inherit; }
-img { display: block; width: 100%; height: 100%; object-fit: cover; }
-
-.main-page {
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    min-height: 100vh;
     position: relative;
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    background-color: white;
-    margin: 0 auto;
-    overflow-x: hidden;
-}
-
-/* =========================================
-   Footer (from index.css - 동적 로드)
-   ========================================= */
-#footer-container {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    font-size: 0;
-    background: var(--color-primary);
-}
-
-/* =========================================
-   CONTENT SECTION 4: UNDER THE MOONLIGHT (from index.css)
-   ========================================= */
-.content-4 {
-    position: relative;
-    width: 100%;
-    min-height: 400px;
-    height: 50vh;
-    max-height: 620px;
-    overflow: hidden;
-    background-color: #1a1a1a;
-}
-
-.content-4-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&q=80');
-    background-size: cover;
-    background-position: center;
-}
-
-.content-4-text {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    text-align: center;
-    padding: 0 8%;
-}
-
-.content-4-text h2 {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: clamp(30px, 3.5vw, 46px);
-    line-height: 1.3;
-    color: white;
-    margin: 0 0 20px 0;
-}
-
-.content-4-text p {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(16px, 1.6vw, 22px);
-    line-height: 1.5;
-    color: white;
-    margin: 0;
-}
-
-/* =========================================
-   Con Section (Content)
-   Top: 960px, Height: 1730px
-   ========================================= */
-.section-con {
-    position: relative;
-    width: 100%;
-    height: auto;
-    background-color: var(--color-primary);
     overflow: hidden;
-    padding: 182px 0 174px;
-    box-sizing: border-box;
 }
 
-
-.con-block {
-    position: relative;
-    width: 100%;
-    padding: 0 8vw;
-    display: flex;
-    gap: 5vw;
-    align-items: center;
-    box-sizing: border-box;
-}
-
-.block-2 {
-    margin-top: 114px; /* top:876 - top:182 - height:580 = 114px */
-}
-
-.txt-content {
-    flex: 0 1 450px;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: flex-end;
-    text-align: right;
-    position: relative;
-}
-
-.txt-content.align-start {
-    align-items: flex-start;
-    text-align: left;
-}
-
-.prologue-title {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: 54px;
-    color: black;
-    letter-spacing: -0.81px;
-    line-height: 1.3;
-    text-align: left;
+/* Hero Background */
+.hero-background {
     position: absolute;
-    top: 182px;
-    left: 150px;
-    max-width: 1600px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
-.chapter-title {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: 28px;
-    color: var(--color-secondary);
-    letter-spacing: -0.42px;
-}
-
-.desc-text {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: 18px;
-    color: rgba(0,0,0,0.8);
-    line-height: 1.5;
-}
-
-/* ---- img-grid: 계단식(스태거) 아코디언 갤러리 ---- */
-.img-grid {
-    display: flex;
-    flex: 1 1 0;
-    min-width: 0;
-    height: 580px;
-    gap: 5px;
-    overflow: hidden;
-    align-items: flex-start;
-}
-
-.img-grid.reverse {
-    flex-direction: row-reverse;
-}
-
-/* ---- 아코디언 아이템 (레이아웃 전환) ----
-   컨테이너 1350px, gap 10px×4 = 40px → 아이템 공간 1310px
-   비활성 4개 × 60px = 240px → 활성 = 1070px
-   flex-basis px→px 전환만 사용 (flex-grow 전환은 브라우저 보간 불가) */
-.img-item {
-    flex: 0 0 3vw;
-    overflow: hidden;
-    cursor: pointer;
-    transition-property: flex-basis !important;
-    transition-duration: 1600ms !important;
-    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-/* 단조 증가: 0 → 20 → 40 → 60 → 80 (한 방향 계단) */
-.img-item.i1 { margin-top: 0;     height: 500px; }
-.img-item.i2 { margin-top: 20px;  height: 500px; }
-.img-item.i3 { margin-top: 40px;  height: 500px; }
-.img-item.i4 { margin-top: 60px;  height: 500px; }
-.img-item.i5 { margin-top: 80px;  height: 500px; }
-
-/* 활성 상태: 컨테이너 너비에서 비활성(4×4vw) + gap(4×10px) 제외한 나머지 */
-.img-item.is-active {
-    flex-basis: calc(100% - 12vw - 20px) !important;
-}
-
-/* ---- 이미지 내부 효과 (딜레이 분리) ---- */
-.img-item img {
+.hero-background img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition-property: transform, opacity !important;
-    transition-duration: 1100ms, 1100ms !important;
-    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
-    transition-delay: 120ms, 120ms !important;
-    will-change: transform;
+    display: block;
 }
 
-.img-item.is-active img {
-    transform: scale(1.03);
+
+.hero-description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
 }
 
-/* =========================================
-   MAIN HERO SECTION (from index.css)
-   ========================================= */
-.main-section {
-    position: relative;
+/* Main Title Section */
+
+.main-content {
+    padding: 0 20px;
+}
+
+.main-title-section {
+    padding: 150px 0 0 0;
+}
+
+/* Facility Introduction Section */
+.facility-intro-section {
+    text-align: center;
+    margin: 80px 0;
+    padding: 0 40px;
+}
+
+.facility-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.facility-label {
+    margin-bottom: 20px;
+}
+
+
+.facility-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Hero Bottom Section - Image 50% + Text 50% */
+.hero-bottom-section {
+    margin: 70px auto;
+    display: flex;
+    max-width: 80%;
     width: 100%;
-    height: 960px;
-    overflow: hidden;
 }
 
-.main-bg {
-    position: absolute;
-    inset: 0;
-    transition: transform 0.1s linear;
+.hero-image-half {
+    flex: 1;
+    min-height: 600px;
+    position: relative;
 }
 
-.main-slide {
-    position: absolute;
-    inset: 0;
+/* Animation classes for scroll effects */
+.hero-image-half.scroll-animate {
     opacity: 0;
-    transition: opacity 1.2s ease;
+    transform: translateX(-50px);
+    transition: all 0.8s ease;
 }
 
-.main-slide.active {
+.hero-image-half.scroll-animate.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hero-image-half img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    transition: border-radius 0.8s ease;
+}
+
+/* 모든 hero-image-half 이미지에 12px border-radius */
+.hero-image-half img {
+    border-radius: 12px;
+}
+
+
+.hero-text-half {
+    flex: 1;
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
     opacity: 1;
 }
 
-.main-slide img {
+/* Animation classes for scroll effects */
+.hero-text-half.scroll-animate {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease;
+}
+
+.hero-text-half.scroll-animate.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hero-text-content {
+    max-width: 400px;
+}
+
+.hero-sub-title {
+    font-family: var(--font-ko-main);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0 0 1.5rem 0;
+    line-height: 1.3;
+}
+
+.hero-sub-description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+}
+
+
+/* Full Width Images - 배너 이미지에 12px border-radius */
+.hero-bottom-section > img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+/* Animation classes for scroll effects - 가운데에서 양옆으로 펼쳐지는 효과 */
+.hero-bottom-section > img.scroll-animate {
+    opacity: 0;
+    transform: scaleX(0) translateY(30px);
+    transform-origin: center center;
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-bottom-section > img.scroll-animate.animate {
+    opacity: 1;
+    transform: scaleX(1) translateY(0);
+}
+
+/* Content Sections */
+.content-section {
+    padding: 80px 0;
+    background: var(--color-primary);
+}
+
+.section-container {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.section-container.reverse {
+    direction: rtl;
+}
+
+.section-container.reverse > * {
+    direction: ltr;
+}
+
+.text-content {
+    padding: 40px 0;
+}
+
+.text-content h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0 0 2rem 0;
+    line-height: 1.3;
+}
+
+.text-description {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    color: #666;
+    line-height: 1.7;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.image-item {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.image-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1);
+    transition: transform 0.3s ease;
 }
 
-.main-content {
-    position: absolute;
-    left: 150px;
-    top: 0;
-    z-index: 1;
-    padding-top: 180px;
-    max-width: 1600px;
-    opacity: 0;
-    animation: heroFadeIn 1.2s ease forwards 0.3s;
+.image-item:hover img {
+    transform: scale(1.05);
 }
 
-.main-section .main-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.6;
-    color: white;
-    letter-spacing: -0.6px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    margin: 0;
-    position: static;
-    transform: none;
-    white-space: normal;
-}
-
-.title-divider {
-    width: 658px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    margin-top: 12px;
-    position: relative;
-    overflow: hidden;
-}
-
-.title-divider .bar-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background: white;
-    transform-origin: left;
-    transform: scaleX(0);
-    animation: progressFill 4s linear infinite;
-}
-
-.main-subtitle {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 24px);
-    line-height: 1.5;
-    color: white;
-    letter-spacing: -0.36px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-    margin: 24px 0 0;
-}
-
-.main-arrow {
-    position: absolute;
-    left: 50%;
-    bottom: 40px;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    z-index: 1;
-    opacity: 0;
-    animation: heroFadeIn 1s ease forwards 1s;
-}
-
-.arrow-left,
-.arrow-right {
-    width: 9px;
-    height: 9px;
-    border-left: 1px solid white;
-    border-bottom: 1px solid white;
-}
-
-.arrow-left {
-    transform: rotate(45deg);
-}
-
-.arrow-right {
-    transform: rotate(-135deg);
-}
-
-.arrow-number {
-    font-family: var(--font-en-main);
-    font-size: 26px;
-    line-height: 36px;
-    color: white;
-    letter-spacing: -0.39px;
-    margin: 0;
-}
-
-.arrow-divider {
-    width: 10px;
-    height: 1px;
-    background: white;
-    transform: rotate(90deg);
-}
-
-@keyframes progressFill {
-    0% { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
-}
-
-@keyframes heroFadeIn {
-    to { opacity: 1; }
-}
-
-/* =========================================
-   NAVIGATION (HEADER) - from index.css
-   ========================================= */
-.index-page {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    max-width: none;
-    height: 160px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
-    z-index: 999;
-    pointer-events: none;
-    overflow: visible;
-}
-
-.index-page .site-header,
-.index-page .header-dropdown {
-    pointer-events: auto;
-}
-
-/* =========================================
-   TABLET RESPONSIVE (max-width: 1100px)
-   ========================================= */
-@media (max-width: 1400px) {
-    .section-con {
-        padding-top: 80px;
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-content {
+        padding: 60px 30px 30px;
     }
 
-    .prologue-title {
-        margin-top: 0;
+    .hero-text-half {
+        padding: 40px 30px;
     }
 
-    .con-block {
-        flex-direction: column;
-        align-items: center;
-        gap: 30px;
-        padding: 30px 20px;
+    .main-title-section {
+        padding: 130px 0 0 0;
     }
 
-    .block-1 .img-grid {
-        order: -1;
+    .facility-intro-section {
+        margin-bottom: 60px;
+        padding: 0 30px;
     }
 
-    .block-2 {
-        margin-top: 60px;
+    .facility-description {
+        font-size: 1rem;
     }
 
-    .txt-content,
-    .txt-content.align-start {
-        flex: none;
-        width: 100%;
-        align-items: center;
-        text-align: center;
-    }
-
-    .chapter-title {
-        text-align: center;
-        font-size: 26px;
-    }
-
-    .desc-text {
-        text-align: center;
-    }
-
-    .img-grid,
-    .img-grid.reverse {
-        flex: none;
-        width: 90%;
-        height: 400px;
-    }
-
-    .img-item {
-        flex: 0 0 30px;
-        transition-property: flex-basis !important;
-        transition-duration: 1600ms !important;
-        transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-
-    .img-item.is-active {
-        flex-basis: calc(100% - 120px - 40px) !important;
-    }
-
-    .img-item.i1,
-    .img-item.i2,
-    .img-item.i3,
-    .img-item.i4,
-    .img-item.i5 {
-        height: 380px;
-        margin-top: 0;
-    }
-
-    .prologue-title {
-        position: relative;
-        top: auto;
-        left: auto;
-        font-size: 36px;
-        text-align: center;
-        width: 100%;
-        padding: 0 20px;
-        margin-top: 100px;
+    .section-container {
+        padding: 0 30px;
+        gap: 60px;
     }
 }
 
-@media (max-width: 900px) {
-    .img-item:not(.is-active) {
-        display: none;
-    }
-
-    .img-item.is-active {
-        flex-basis: 100% !important;
-    }
+/* Main Content Wrapper - default no padding for desktop */
+.main-content-wrapper {
+    padding: 0;
 }
 
-/* =========================================
-   MOBILE RESPONSIVE (max-width: 768px)
-   ========================================= */
 @media (max-width: 768px) {
-
-    /* --- NAVIGATION GRADIENT --- */
-    .index-page {
-        height: 100px;
-    }
-
-    /* --- HERO SECTION --- */
-    .main-section {
-        height: 500px;
-        min-height: auto;
-        max-height: none;
-    }
-
-    .main-bg {
-        display: flex;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-    }
-
-    .main-bg::-webkit-scrollbar {
-        display: none;
-    }
-
-    .main-slide {
-        position: relative;
-        inset: auto;
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100%;
-        opacity: 1;
-        scroll-snap-align: start;
-    }
-
-    .main-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .main-content {
-        left: 0;
-        right: 0;
-        padding-top: 100px;
-        max-width: none;
-        text-align: center;
-        pointer-events: none;
-    }
-
-    .main-title,
-    .main-subtitle {
-        text-align: center;
-        padding: 0 20px;
-        white-space: normal;
-        word-break: keep-all;
-    }
-
-    .main-title br,
-    .main-subtitle br {
-        display: none;
-    }
-
-    .title-divider {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .main-arrow {
-        gap: 16px;
-    }
-
-    /* --- 모바일 레이아웃 --- */
-    .content-4 {
-        height: 250px;
-        min-height: auto;
-        max-height: none;
-    }
-
-    .content-4-text {
+    /* Add padding only on mobile */
+    .main-content-wrapper {
         padding: 0 20px;
     }
+    .section-container {
+        max-width: 100%;
+    }
+    .hero-section {
+        height: 60vh;
+        min-height: 60vh;
+    }
 
-    /* --- 갤러리: 1열 세로 스택 --- */
-    .section-con .con-block {
-        position: relative;
-        width: 100%;
+    .hero-bottom-section {
         flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 30px;
-        padding: 30px 0;
-        margin-left: 0 !important;
-        margin-top: 0 !important;
-        box-sizing: border-box;
+        max-width: 100%;
     }
 
-    .section-con .con-block .txt-content {
-        display: contents;
+    .hero-image-half {
+        min-height: 300px;
     }
 
-    .section-con .con-block .prologue-title,
-    .section-con .con-block .chapter-title {
-        order: -2;
-        text-align: center;
-        padding-left: 20px;
-        padding-right: 20px;
+    .hero-image-half img {
+        height: 300px;
     }
 
-    .section-con .con-block .chapter-title {
-        font-size: 22px;
+    .hero-content {
+        padding: 40px 20px 20px;
     }
 
-    .section-con .con-block .desc-text {
-        padding-left: 20px;
-        padding-right: 20px;
-        text-align: center;
+    .hero-text-half {
+        padding: 40px 20px;
     }
 
-    .section-con .con-block .img-grid {
-        order: -1;
+    .facility-intro-section {
+        margin-bottom: 60px;
+        padding: 0 20px;
     }
 
-    .section-con .con-block .desc-text {
-        order: 0;
+    .section-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 20px;
     }
 
-    .section-con {
-        padding: 0;
+    .section-container.reverse {
+        direction: ltr;
     }
 
-    /* --- 갤러리: 가로 롤링 슬라이드 --- */
-    .img-grid,
-    .img-grid.reverse {
-        flex: none;
+    .image-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .content-section {
+        padding: 60px 0;
+    }
+
+    /* Full width images - inherit margin from parent */
+    .hero-bottom-section > img {
+        margin: 0;
         width: 100%;
-        height: 250px;
-        flex-direction: row;
-        gap: 0;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
     }
-
-    .img-grid::-webkit-scrollbar {
-        display: none;
-    }
-
-    .img-item,
-    .img-item.i1,
-    .img-item.i2,
-    .img-item.i3,
-    .img-item.i4,
-    .img-item.i5 {
-        flex: 0 0 100% !important;
-        width: 100%;
-        height: 100%;
-        margin-top: 0;
-        scroll-snap-align: start;
-        transition: none !important;
-    }
-
-    .img-item.is-active {
-        flex-basis: 100% !important;
-        height: 100%;
-    }
-
-    .txt-content {
-        flex: none;
-        width: 100%;
-        text-align: center;
-        align-items: center;
-    }
-
 }
 
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 30px 15px 15px;
+    }
+
+    .hero-text-half {
+        padding: 30px 15px;
+    }
+
+    .facility-intro-section {
+        padding: 0 15px;
+    }
+
+    .section-container {
+        padding: 0 15px;
+        gap: 30px;
+    }
+
+    .content-section {
+        padding: 40px 0;
+    }
+
+    /* Fix gallery-property-english-name mobile font size */
+    .gallery-property-english-name {
+        font-size: 2rem;
+    }
+}

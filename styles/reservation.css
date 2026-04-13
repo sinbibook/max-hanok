@@ -1,801 +1,554 @@
-/* Reservation Page Specific Styles */
+/* ===================================
+   Reservation Page Styles
+   =================================== */
 
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    width: 100%;
-    max-width: 100%;
-}
-
-.reservation-container {
+/* Hero Section */
+.hero-section {
+    height: 100vh;
     position: relative;
-    width: 100%;
-    height: auto;
-    background-color: white;
-    margin: 0 auto;
-}
-
-/* =========================================
-   NAVIGATION (HEADER) — from index.css
-   ========================================= */
-.navigation-off {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    max-width: none;
-    height: 160px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
-    z-index: 999;
-    pointer-events: none;
-    overflow: visible;
-}
-
-.navigation-off .site-header,
-.navigation-off .header-dropdown {
-    pointer-events: auto;
-}
-
-/* =========================================
-   MAIN HERO SECTION — from index.css
-   Top: 0px, Height: 960px
-   ========================================= */
-.main-section {
-    position: relative;
-    width: 100%;
-    height: 960px;
-    overflow: hidden;
-}
-
-.main-bg {
-    position: absolute;
-    inset: 0;
-}
-
-.main-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-.main-slide.active {
-    opacity: 1;
-}
-
-.main-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1);
-}
-
-.main-content {
-    position: absolute;
-    left: 5vw;
-    top: 0;
-    z-index: 1;
-    padding-top: 180px;
-    max-width: 1600px;
-    opacity: 0;
-    animation: heroFadeIn 1.2s ease forwards 0.3s;
-}
-
-.main-section .main-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.6;
-    color: white;
-    letter-spacing: -0.6px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    margin: 0;
-    position: static;
-    transform: none;
-    white-space: normal;
-}
-
-.title-divider {
-    width: 658px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    margin-top: 12px;
-    position: relative;
-    overflow: hidden;
-}
-
-.title-divider .bar-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background: white;
-    transform-origin: left;
-    transform: scaleX(0);
-    animation: progressFill 4s linear infinite;
-}
-
-.main-subtitle {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 24px);
-    line-height: 1.5;
-    color: white;
-    letter-spacing: -0.36px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-    margin: 24px 0 0;
-}
-
-.main-arrow {
-    position: absolute;
-    left: 50%;
-    bottom: 40px;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 24px;
-    z-index: 1;
-    opacity: 0;
-    animation: heroFadeIn 1s ease forwards 1s;
-}
-
-.arrow-left,
-.arrow-right {
-    width: 9px;
-    height: 9px;
-    border-left: 1px solid white;
-    border-bottom: 1px solid white;
-    cursor: pointer;
-}
-
-.arrow-left {
-    transform: rotate(45deg);
-}
-
-.arrow-right {
-    transform: rotate(-135deg);
-}
-
-.arrow-number {
-    font-family: var(--font-en-main);
-    font-size: 26px;
-    line-height: 36px;
-    color: white;
-    letter-spacing: -0.39px;
-    margin: 0;
-}
-
-.arrow-divider {
-    width: 10px;
-    height: 1px;
-    background: white;
-    transform: rotate(90deg);
-}
-
-/* =========================================
-   Con Section (Main Content)
-   Top: 960px, Height: 2000px
-   ========================================= */
-.section-con {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr minmax(0, 700px);
-    align-items: start;
-    width: 100%;
-    background-color: var(--color-primary);
-    overflow: visible;
-    padding-top: 0;
-    padding-bottom: 80px;
-}
-
-.section-con > * {
-    margin-left: 0;
-}
-
-/* Side Image (Right) */
-.side-img-wrapper {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: start;
-    position: sticky;
-    top: 96px;
-    width: 100%;
-    height: 1200px;
-    border-top-left-radius: 100px;
+    justify-content: center;
     overflow: hidden;
-    z-index: 5;
-    margin-top: 234px;
-    margin-left: 0;
-    margin-right: 0;
 }
 
-.img-inner {
+.hero-background {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     width: 100%;
-    height: 1200px;
-    border-top-left-radius: 250px;
-    overflow: hidden;
+    height: 100%;
+    z-index: 1;
 }
 
-.img-inner img {
+.hero-background img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* Page Title */
-.page-title {
-    position: absolute;
-    top: 120px;
-    left: 5vw;
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: 54px;
-    color: black;
-    letter-spacing: -0.81px;
-    z-index: 10;
-}
-
-/* Tabs */
-.tabs-group {
-    position: absolute;
-    top: 217px;
-    left: 5vw;
-    display: flex;
-    gap: 20px;
-    z-index: 10;
-}
-
-.tab-btn {
-    position: relative;
-    width: 180px;
-    height: 60px;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    border: 1px solid black;
-    transition: all 0.3s;
-    background-color: transparent;
-}
-
-.tab-btn.active {
-    background-color: black;
-}
-
-.tab-btn .tab-text {
-    font-family: var(--font-ko-sub);
-    font-weight: 700;
-    font-size: 24px;
-    letter-spacing: -0.36px;
-    color: black;
-    z-index: 2;
-}
-
-.tab-btn.active .tab-text {
-    color: white;
-}
-
-/* Text Content Area */
-.text-content-area {
-    grid-column: 1;
-    grid-row: 1;
-    padding-top: 342px;
-    padding-left: 5vw;
-    padding-right: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    z-index: 1;
-}
-
-.info-section {
-    width: 100%;
-}
-
-.section-con .section-header {
-    position: relative;
-    width: 100%;
-    height: 35px;
-    margin-bottom: 25px;
-}
-
-.section-con .section-title {
-    font-family: var(--font-ko-sub);
-    font-weight: 700;
-    font-size: 24px;
-    color: black;
-    letter-spacing: -0.36px;
-    margin-bottom: 10px;
-}
-
-.section-line {
-    width: 100%;
-    height: 1px;
-    background-color: black;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-/* Info List */
-.info-list {
-    width: 100%;
-    line-height: 1.6;
-}
-
-.info-list li {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: 18px;
-    color: rgba(0,0,0,0.8);
-    line-height: 1.4;
-    margin-bottom: 0;
-}
-
-/* Extra info paragraphs */
-.extra-info {
-    font-family: var(--font-ko-sub);
-    font-weight: 500;
-    font-size: 18px;
-    color: rgba(0,0,0,0.8);
-    line-height: 1.4;
-    margin-top: 10px;
-    width: 100%;
-}
-
-/* Fee Table */
-.fee-table-container {
-    margin-top: 15px;
-    position: relative;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-.fee-table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 700px;
-    font-family: var(--font-ko-sub);
-    text-align: center;
-    border: 1px solid black;
-    background-color: transparent;
-}
-
-.fee-table td {
-    padding: 17px 0;
-    font-size: 18px;
-    color: rgba(0,0,0,0.8);
-    border-right: 1px solid black;
-}
-
-.fee-table td:last-child {
-    border-right: none;
-}
-
-.fee-table tr.header-row {
-    background-color: #dad3bd;
-    height: 74px;
-    font-weight: 400;
-}
-
-.fee-table tr.data-row {
-    background-color: transparent;
-    height: 74px;
-    font-weight: 700;
-}
-
-.fee-table .first-col {
-    font-weight: 700;
-    width: 100px;
-    line-height: 1.3;
-}
-
-/* =========================================
-   CONTENT-4: UNDER THE MOONLIGHT — from index.css
-   Top: 2960px
-   ========================================= */
-.content-4 {
-    position: relative;
-    left: 0;
-    width: 100%;
-    min-height: 400px;
-    height: 50vh;
-    max-height: 620px;
-    overflow: hidden;
-    background-color: #1a1a1a;
-}
-
-.content-4-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&q=80');
-    background-size: cover;
-    background-position: center;
-}
-
-.content-4-text {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-    padding: 0 8%;
-}
-
-.content-4-text h2 {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: clamp(30px, 3.5vw, 46px);
-    line-height: 1.3;
-    color: white;
-    margin: 0 0 20px 0;
-}
-
-.content-4-text p {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(16px, 1.6vw, 22px);
-    line-height: 1.5;
-    color: white;
-    margin: 0;
-}
-
-/* =========================================
-   Footer Section
-   ========================================= */
-.section-footer {
-    position: relative;
-    left: 0;
-    width: 100%;
-    height: 298px;
-    background-color: var(--color-primary);
-    overflow: hidden;
-}
-
-#footer-container {
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    font-size: 0;
+/* Reservation Info Section */
+.reservation-info-section {
+    padding: 100px 0;
     background: var(--color-primary);
 }
 
-/* =========================================
-   ANIMATIONS — from index.css
-   ========================================= */
-@keyframes progressFill {
-    0% { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
+/* Reservation Content Container */
+.reservation-content-container {
+    max-width: 80%;
+    margin: 0 auto;
 }
 
-@keyframes heroFadeIn {
-    to { opacity: 1; }
+/* Facility Introduction Section */
+.facility-intro-section {
+    text-align: center;
+    margin-bottom: 80px;
+    padding: 0 40px;
 }
 
-/* =========================================
-   TABLET RESPONSIVE (max-width: 1400px)
-   ========================================= */
-@media (max-width: 1400px) {
-    .section-con {
-        grid-template-columns: 1fr;
-    }
-
-    .side-img-wrapper {
-        display: none;
-    }
-
-    .page-title {
-        font-size: clamp(36px, 3.5vw, 54px);
-    }
-
-    .tab-btn {
-        width: auto;
-        padding: 0 30px;
-    }
-
-    .tab-btn .tab-text {
-        font-size: 20px;
-    }
-
-    .section-con {
-        padding-bottom: 0;
-    }
+.facility-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-/* =========================================
-   MOBILE RESPONSIVE (max-width: 768px)
-   ========================================= */
+.facility-label {
+    margin-bottom: 20px;
+}
+
+
+.facility-title {
+    font-family: var(--font-en-main);
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 400;
+    color: var(--color-secondary);
+    margin: 0 0 30px 0;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.facility-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Banner Image Section */
+.reservation-banner-section {
+    margin: 60px 0;
+}
+
+.reservation-banner-section .container {
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.reservation-banner-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+/* Content Layout */
+.reservation-content-layout {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Info Content */
+.reservation-info-content {
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Reservation Details Accordion Section */
+.reservation-details-section {
+    width: 100%;
+}
+
+.accordion-item {
+    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    margin-bottom: 0;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.accordion-title {
+    font-family: var(--font-ko-main);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0;
+    text-transform: none;
+    padding-left: 20px;
+}
+
+.accordion-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.accordion-close.active {
+    transform: rotate(45deg);
+}
+
+.close-icon {
+    width: 20px;
+    height: 20px;
+    stroke: color-mix(in srgb, var(--color-secondary) 70%, transparent);
+    stroke-width: 2;
+    fill: none;
+}
+
+.accordion-content {
+    padding: 0 20px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    white-space: pre-line;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+}
+
+.accordion-content.active {
+    padding: 30px 20px;
+    opacity: 1;
+    max-height: 100%;
+    overflow: visible;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding-left: 20px;
+}
+
+.info-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: color-mix(in srgb, var(--color-secondary) 70%, transparent);
+}
+
+.accordion-text {
+    font-family: var(--font-ko-sub);
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0 0 12px 0;
+}
+
+.accordion-text:last-child {
+    margin-bottom: 0;
+}
+
+/* Table Section within Accordion */
+/* .table-section {
+    margin: 20px 0 0 20px;
+} */
+
 @media (max-width: 768px) {
+    .hero-section {
+        height: 60vh;
+        min-height: 60vh;
+    }
+    /* .table-section {
+        margin: 20px 0 0 0;
+    } */
+}
 
-    /* --- 레이아웃: 절대 배치 → flex 상대 배치 전환 --- */
-    .reservation-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        overflow-x: hidden !important;
+.table-wrapper {
+    overflow-x: auto;
+    background: transparent;
+    box-shadow: none;
+}
+
+.refund-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-ko-sub);
+    background: transparent;
+    border: none;
+}
+
+.refund-table th,
+.refund-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: none;
+}
+
+.refund-table th {
+    background: transparent;
+    font-weight: 600;
+    color: var(--color-secondary);
+    font-size: 0.9rem;
+}
+
+.refund-table td {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.refund-table .no-refund {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+/* Booking Button Section */
+.booking-button-section {
+    margin-top: 30px;
+    padding-left: 20px;
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background: color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    margin: 0 0 40px 0;
+    width: 100%;
+}
+
+.booking-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: var(--font-en-main);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: rgba(106, 175, 170, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+}
+
+.booking-btn:hover {
+    color: rgba(106, 175, 170, 1);
+    transform: translateX(5px);
+}
+
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .reservation-content-container {
+        max-width: 100%;
     }
 
-    /* --- NAVIGATION --- */
-    .navigation-off {
-        height: 100px;
-        width: 100% !important;
+    .reservation-info-section {
+        padding: 60px 0;
     }
 
-    /* --- HERO SECTION --- */
-    .main-section {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 500px;
-        min-height: auto;
-        max-height: none;
-        overflow: hidden;
-        order: 1;
-    }
-
-    .main-bg {
-        display: flex;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-    }
-
-    .main-bg::-webkit-scrollbar {
-        display: none;
-    }
-
-    .main-slide {
-        position: relative;
-        inset: auto;
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100%;
-        opacity: 1;
-        scroll-snap-align: start;
-    }
-
-    .main-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .main-content {
-        left: 0;
-        right: 0;
-        padding: 100px 20px 0;
-        max-width: none;
-        text-align: center;
-        box-sizing: border-box;
-    }
-
-    .main-section .main-title {
-        text-align: center;
-        padding: 0 20px;
-        white-space: normal;
-        word-break: keep-all;
-    }
-
-    .main-subtitle {
-        text-align: center;
-        padding: 0 20px;
-        white-space: normal;
-        word-break: keep-all;
-    }
-
-    .main-section .main-title br,
-    .main-subtitle br {
-        display: none;
-    }
-
-    .title-divider {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .main-arrow {
-        gap: 16px;
-    }
-
-    /* --- SECTION-CON (Main Content) --- */
-    .section-con {
-        display: block;
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto;
-        min-height: auto;
-        order: 2;
-        padding: 60px 20px;
-        box-sizing: border-box;
-        overflow: visible;
-    }
-
-    .section-con > * {
-        margin-left: 0;
-    }
-
-    .page-title {
-        position: relative;
-        top: auto;
-        left: auto;
-        font-size: 36px;
-        margin-bottom: 20px;
-    }
-
-    .tabs-group {
-        position: relative;
-        top: auto;
-        left: auto;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 30px;
-        justify-content: center;
-    }
-
-    .tab-btn {
-        width: auto;
-        height: 44px;
+    .facility-intro-section {
+        margin-bottom: 60px;
         padding: 0 20px;
     }
 
-    .tab-btn .tab-text {
-        font-size: 16px;
+
+    .facility-title {
+        font-size: clamp(2rem, 8vw, 3rem);
     }
 
-    .text-content-area {
-        padding-top: 0;
-        padding-left: 0;
-        padding-right: 0;
-        width: 100%;
-        gap: 10px;
+    .facility-description {
+        font-size: 1rem;
     }
 
-    .section-con .section-header {
-        width: 100% !important;
+    .reservation-banner-section {
+        margin: 40px 0;
     }
 
-    .section-line {
-        width: 100% !important;
+    .reservation-banner-section .container {
+        padding: 0 20px;
     }
 
-    /* --- 아코디언 토글 --- */
-    .section-con .section-title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        margin-bottom: 0;
-        padding-bottom: 14px;
-        font-size: 20px;
-    }
-
-    .section-con .section-title::after {
-        content: '';
-        width: 8px;
-        height: 8px;
-        border-right: 2px solid rgba(0,0,0,0.6);
-        border-bottom: 2px solid rgba(0,0,0,0.6);
-        transform: rotate(-135deg);
-        transition: transform 0.3s ease;
-        flex-shrink: 0;
-        margin-left: 10px;
-    }
-
-    .info-section.is-open .section-title::after {
-        transform: rotate(45deg);
-    }
-
-    .info-section .info-list,
-    .info-section .extra-info,
-    .info-section .fee-table-container {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transition: max-height 0.4s ease, opacity 0.3s ease;
-    }
-
-    .info-section.is-open .info-list,
-    .info-section.is-open .extra-info {
-        max-height: 2000px;
-        opacity: 1;
-    }
-
-    .info-section.is-open .fee-table-container {
-        max-height: 500px;
-        opacity: 1;
-        overflow-x: auto;
-    }
-
-    .info-list {
-        width: 100% !important;
-        padding-left: 0;
-    }
-
-    .info-list li {
-        font-size: 15px;
-        line-height: 1.8;
-    }
-
-    .info-list li br {
-        display: none;
-    }
-
-    .extra-info {
-        width: 100% !important;
-        font-size: 15px;
-    }
-
-    .extra-info br {
-        display: none;
-    }
-
-    .side-img-wrapper {
-        display: none;
-    }
-
-    .fee-table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    .fee-table-container::-webkit-scrollbar {
-        display: none;
-    }
-
-    .fee-table {
-        width: 100%;
-        min-width: 600px;
-        font-size: 14px;
-    }
-
-    .fee-table td {
-        font-size: 14px;
-        padding: 12px 4px;
-    }
-
-    /* --- CONTENT-4: MOONLIGHT --- */
-    .content-4 {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
+    .reservation-banner-image {
         height: 250px;
-        min-height: auto;
-        max-height: none;
-        order: 3;
     }
 
-    .content-4-text {
+    .reservation-content-layout {
         padding: 0 20px;
     }
 
-    /* --- FOOTER --- */
-    .section-footer {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto;
-        order: 4;
+    .reservation-info-content {
+        max-width: 100%;
+    }
+
+    .accordion-title {
+        font-size: 1.1rem;
+        padding-left: 20px;
+    }
+
+    .booking-button-section {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .booking-btn {
+        font-size: 1.3rem;
+    }
+}
+
+.info-title {
+    font-family: var(--font-ko-main);
+    font-size: 2rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+    margin: 0 0 30px 0;
+    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    padding-bottom: 20px;
+}
+
+.info-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Section Styles */
+.reservation-guide-container,
+.usage-container,
+.checkin-checkout-container,
+.refund-container {
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-family: var(--font-ko-main);
+    font-size: 2rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+    margin: 0 0 20px 0;
+}
+
+.section-divider {
+    width: 80px;
+    height: 2px;
+    background: color-mix(in srgb, var(--color-secondary) 30%, transparent);
+    border: none;
+    margin: 0 auto;
+}
+
+/* Content Areas */
+.reservation-guide-content,
+.usage-content,
+.checkin-checkout-content,
+.refund-content {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.reservation-guide-rules,
+.usage-rules,
+.checkin-checkout-rules,
+.refund-rules {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+}
+
+.reservation-guide-rules p,
+.usage-rules p,
+.checkin-checkout-rules p,
+.refund-rules p {
+    margin: 0 0 15px 0;
+}
+
+/* Table Styles */
+/* .table-section {
+    margin-top: 40px;
+} */
+
+.table-title {
+    font-family: var(--font-ko-main);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.refund-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.refund-table th,
+.refund-table td {
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.refund-table th {
+    background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+    font-family: var(--font-ko-sub);
+    font-weight: 600;
+    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+}
+
+.refund-table td {
+    font-family: var(--font-ko-sub);
+    color: #666;
+}
+
+.refund-table .no-refund {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 0 20px;
+    }
+
+    .page-content {
+        padding: 60px 0;
+    }
+
+    .reservation-container,
+    .reservation-guide-container,
+    .usage-container,
+    .checkin-checkout-container,
+    .refund-container {
+        padding: 0 20px;
+    }
+
+    .reservation-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .text-content {
+        padding: 20px;
+    }
+
+    .info-title {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .reservation-guide-content,
+    .usage-content,
+    .checkin-checkout-content,
+    .refund-content {
+        padding: 40px 20px;
+    }
+
+    .info-image img {
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 0 15px;
+    }
+
+    .reservation-container,
+    .reservation-guide-container,
+    .usage-container,
+    .checkin-checkout-container,
+    .refund-container {
+        padding: 0 15px;
+    }
+
+    .text-content {
+        padding: 15px;
+    }
+
+    .reservation-guide-content,
+    .usage-content,
+    .checkin-checkout-content,
+    .refund-content {
+        padding: 30px 15px;
+    }
+
+    .info-title {
+        font-size: 1.3rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
     }
 }

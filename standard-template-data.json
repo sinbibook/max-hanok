@@ -1,15 +1,14 @@
 {
   "metadata": {
-    "version": "1.141.0",
-    "generatedAt": "2026-04-13T08:28:09.124Z",
-    "templateType": "fullpage_visual",
+    "version": "1.142.0",
+    "generatedAt": "2026-04-13T09:44:35.063Z",
+    "templateType": "full_banner_slider_group",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "name": "Max 한옥 펜션",
-    "nameEn": "Max Hanok Pensio",
     "description": "맥스 한옥 펜션으로 놀러오세요",
     "subtitle": "한옥의 멋을 살린 맥스 한옥 펜션",
     "address": "서울특별시 금천구 가산디지털2로 144",
@@ -24,9 +23,6 @@
     "reservationGuide": "• 기준인원 초과 시 추가 요금이 발생합니다.\n• 기준인원 초과 시 성인 1인 30,000원 / 아동 1인 20,000원 / 24개월 미만 무료(증빙서류 지참)입니다.\n• 결제는 필수입니다.",
     "province": "서울특별시",
     "city": "금천구",
-    "domain": "max-hanok.com",
-    "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
-    "ybsId": "abc",
     "amenities": [
       "WiFi",
       "주차장",
@@ -229,7 +225,11 @@
           }
         ]
       }
-    ]
+    ],
+    "nameEn": "Max Hanok Pensio",
+    "domain": "max-hanok.com",
+    "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
+    "ybsId": "abc"
   },
   "rooms": [
     {
@@ -1174,9 +1174,8 @@
     }
   ],
   "homepage": {
-    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "fullpage_visual",
+    "templateType": "full_banner_slider_group",
     "images": [
       {
         "logo": [
@@ -1226,39 +1225,39 @@
                 "title": "전통 한옥의 느낌~!",
                 "images": [
                   {
+                    "id": "133345d7-31f6-4911-acd3-fe224fbf5b15",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776063826587-lhdoravlbt.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  },
+                  {
                     "id": "cd63aeb5-42ac-4466-96bf-33faf9048bd9",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1759403312211-z6jfoo7x0er.jpg",
-                    "sortOrder": 0,
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": true
                   },
                   {
                     "id": "7bf4da6b-3adf-4177-82ad-8a23bc98c5cb",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1759403312210-jyx877k0c5.jpg",
-                    "sortOrder": 1,
+                    "sortOrder": 2,
                     "description": "",
                     "isSelected": true
                   },
                   {
                     "id": "2f012877-d686-4aff-b672-dea4e11bfd7a",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1769397904038-fojbgcti2d7.jpg",
-                    "sortOrder": 2,
+                    "sortOrder": 3,
                     "description": "",
                     "isSelected": true
                   },
                   {
                     "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
-                    "sortOrder": 3,
-                    "description": "",
-                    "isSelected": false
-                  },
-                  {
-                    "id": "133345d7-31f6-4911-acd3-fe224fbf5b15",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776063826587-lhdoravlbt.jpg",
                     "sortOrder": 4,
                     "description": "",
-                    "isSelected": false
+                    "isSelected": true
                   }
                 ],
                 "videos": [
@@ -1270,7 +1269,7 @@
                     "isSelected": true
                   }
                 ],
-                "mediaType": "video",
+                "mediaType": "image",
                 "description": "한옥느낌의 맥스펜션!!!!"
               },
               "closing": {
@@ -1291,7 +1290,15 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
+                "videos": [
+                  {
+                    "id": "3d5c01ac-0076-4081-bbac-a21950b79881",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_closing/1776072157086-kvptnq942te.MP4",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  }
+                ],
                 "mediaType": "video",
                 "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
               },
@@ -1378,8 +1385,16 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
-                "mediaType": "image",
+                "videos": [
+                  {
+                    "id": "efd482ff-1152-4027-afcf-20eb4440bf15",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1776072275421-e8yhgog1p57.MP4",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  }
+                ],
+                "mediaType": "video",
                 "description": "맥스펜션에서의 뜻깊은 순간들"
               },
               "signature": {
@@ -1415,7 +1430,7 @@
                   }
                 ],
                 "videos": [],
-                "mediaType": "image",
+                "mediaType": "video",
                 "description": "맥스펜션이 선사하는 잊을 수 없는 경험들"
               }
             }
@@ -1823,12 +1838,6 @@
       },
       "theme": {
         "font": {
-          "koMain": {
-            "cdn": null,
-            "key": "sokchoseadotum",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
-            "family": "SokchoSeaDotum"
-          },
           "koSub": {
             "cdn": null,
             "key": "aritaburi",
@@ -1840,6 +1849,12 @@
             "key": "chonburi",
             "woff2": null,
             "family": "Chonburi"
+          },
+          "koMain": {
+            "cdn": null,
+            "key": "sokchoseadotum",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
+            "family": "SokchoSeaDotum"
           }
         },
         "color": {
@@ -2057,6 +2072,7 @@
           "images": []
         }
       ]
-    }
+    },
+    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   }
 }

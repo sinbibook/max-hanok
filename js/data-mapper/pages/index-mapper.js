@@ -1,574 +1,543 @@
 /**
  * Index Page Data Mapper
- * Extends BaseDataMapper for Index page specific mappings
+ * index.html 전용 매핑 함수들을 포함한 클래스
+ * BaseDataMapper를 상속받아 index 페이지 특화 기능 제공
  */
 class IndexMapper extends BaseDataMapper {
     constructor() {
         super();
     }
 
-    /**
-     * 메인 매핑 메서드
-     */
-    async mapPage() {
-        if (!this.isDataLoaded) return;
-
-        try {
-            // SEO 메타 태그 업데이트
-            this.updateMetaTags();
-
-            // 각 섹션 매핑
-            this.mapHeroSection();
-            this.mapEssenceSection();
-            this.mapRoomsSection();
-            this.mapFacilitySection();
-            this.mapClosingSection();
-
-            // 슬라이더 재초기화
-            this.reinitializeSliders();
-
-        } catch (error) {
-            console.error('IndexMapper mapPage error:', error);
-        }
-    }
-
-    /**
-     * 슬라이더 재초기화
-     */
-    reinitializeSliders() {
-        // Hero 슬라이더 재초기화
-        if (typeof window.initHeroSlider === 'function') {
-            window.initHeroSlider();
-        }
-
-        // Room Carousel 재초기화 (카드 동적 생성 후)
-        if (typeof window.initRoomCarousel === 'function') {
-            window.initRoomCarousel();
-        }
-
-        // Facility Slideshow 재초기화 (슬라이드 동적 생성 후)
-        if (typeof window.initFacilitySlideshow === 'function') {
-            window.initFacilitySlideshow();
-        }
-    }
-
     // ============================================================================
-    // 🎯 HERO SECTION MAPPING
+    // 🏠 INDEX PAGE SPECIFIC MAPPINGS
     // ============================================================================
 
     /**
-     * Video 엘리먼트 생성 헬퍼
-     */
-    _createVideoElement(url, extraAttrs = {}) {
-        const videoEl = document.createElement('video');
-        videoEl.src = url;
-        videoEl.autoplay = true;
-        videoEl.muted = true;
-        videoEl.loop = true;
-        videoEl.playsInline = true;
-        Object.entries(extraAttrs).forEach(([k, v]) => videoEl.setAttribute(k, v));
-        return videoEl;
-    }
-
-    /**
-     * videos 배열에서 isSelected + sortOrder 기준 첫 번째 영상 반환
-     */
-    _getSelectedVideo(videos) {
-        return (videos || [])
-            .filter(v => v.isSelected === true)
-            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))[0] || null;
-    }
-
-    /**
-     * Hero Section 매핑 (메인 소개 섹션)
+     * Hero 섹션 매핑 (슬라이더 이미지 생성)
      */
     mapHeroSection() {
+        if (!this.isDataLoaded) return;
+
         const heroData = this.safeGet(this.data, 'homepage.customFields.pages.index.sections.0.hero');
-
-        // 데이터 없어도 슬라이더/video는 항상 생성 (empty placeholder 표시)
-        const mediaType = heroData?.mediaType || 'image';
-        if (mediaType === 'video') {
-            this.mapHeroVideo(heroData?.videos || []);
-        } else {
-            this.mapHeroSlider(heroData?.images || []);
-        }
-
         if (!heroData) return;
 
-        // 메인 소개 타이틀 매핑
-        const heroTitleElement = this.safeSelect('[data-hero-title]');
-        if (heroTitleElement) {
-            heroTitleElement.textContent = this.sanitizeText(heroData.title, '메인 히어로 타이틀');
+        const heroSlider = document.getElementById('hero-slider');
+        if (!heroSlider) return;
+
+        heroSlider.innerHTML = '';
+
+        const images = heroData.images
+            ? heroData.images.filter(img => img.isSelected).sort((a, b) => a.sortOrder - b.sortOrder)
+            : [];
+
+        if (images.length === 0) {
+            // 이미지가 없을 때 placeholder
+            const slide = document.createElement('div');
+            slide.className = 'hero-slide active';
+
+            const img = document.createElement('img');
+            img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+            img.alt = 'No Image Available';
+            img.className = 'empty-image-placeholder';
+            img.loading = 'lazy';
+
+            slide.appendChild(img);
+            heroSlider.appendChild(slide);
+        } else {
+            images.forEach((img, index) => {
+                const slide = document.createElement('div');
+                slide.className = `hero-slide${index === 0 ? ' active' : ''}`;
+                slide.innerHTML = `<img src="${img.url}" alt="${img.description || 'Hero Image'}" loading="lazy">`;
+                heroSlider.appendChild(slide);
+            });
         }
 
-        // 메인 소개 설명 매핑
-        const heroDescElement = this.safeSelect('[data-hero-description]');
-        if (heroDescElement) {
-            heroDescElement.innerHTML = this._formatTextWithLineBreaks(heroData.description, '메인 히어로 설명');
+        // 슬라이더 초기화 (index.js의 initHeroSlider 호출)
+        if (typeof window.initHeroSlider === 'function') {
+            window.initHeroSlider(true); // skipDelay=true
         }
     }
 
     /**
-     * Hero Video 매핑 (video 모드)
+     * Room Preview 섹션 매핑
      */
-    mapHeroVideo(videos) {
-        const sliderContainer = this.safeSelect('[data-hero-slider]');
-        if (!sliderContainer) return;
+    mapRoomPreviewSection() {
+        if (!this.isDataLoaded) return;
 
-        sliderContainer.innerHTML = '';
+        const roomsData = this.safeGet(this.data, 'rooms');
+        const tabsContainer = this.safeSelect('[data-room-tabs]');
+        const descriptionsContainer = this.safeSelect('[data-room-descriptions]');
+        const imagesContainer = this.safeSelect('[data-room-images]');
 
-        const selectedVideo = this._getSelectedVideo(videos);
+        if (!tabsContainer || !descriptionsContainer || !imagesContainer) return;
 
-        if (!selectedVideo) {
-            const slideDiv = document.createElement('div');
-            slideDiv.className = 'main-slide';
-            const imgElement = document.createElement('img');
-            imgElement.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-            imgElement.alt = '영상 없음';
-            imgElement.classList.add('empty-image-placeholder');
-            slideDiv.appendChild(imgElement);
-            sliderContainer.appendChild(slideDiv);
-            return;
-        }
+        // 기존 콘텐츠 클리어
+        tabsContainer.innerHTML = '';
+        descriptionsContainer.innerHTML = '';
+        imagesContainer.innerHTML = '';
 
-        sliderContainer.appendChild(this._createVideoElement(selectedVideo.url, { 'data-hero-video': '' }));
-    }
+        // 1. unique한 group 추출
+        const uniqueGroups = (roomsData && Array.isArray(roomsData))
+            ? [...new Set(roomsData.map(room => room.group).filter(Boolean))]
+            : [];
 
-    /**
-     * Hero Slider 이미지 매핑
-     */
-    mapHeroSlider(images) {
-        const sliderContainer = this.safeSelect('[data-hero-slider]');
-        if (!sliderContainer) return;
+        // 데이터가 없을 때 placeholder UI 생성
+        if (uniqueGroups.length === 0) {
+            // Placeholder 탭
+            const placeholderTab = document.createElement('button');
+            placeholderTab.className = 'room-tab active';
+            placeholderTab.setAttribute('data-room', 'placeholder');
+            placeholderTab.innerHTML = `
+                <span class="room-tab-number">00</span>
+                <span class="room-tab-name">No Rooms</span>
+            `;
+            tabsContainer.appendChild(placeholderTab);
 
-        // 이미지 배열 정규화 (isSelected:true 필터 + sortOrder 정렬)
-        let normalizedImages = [];
-        if (images && Array.isArray(images) && images.length > 0) {
-            if (typeof images[0] === 'string') {
-                normalizedImages = images.map(url => ({ url, description: '' }));
-            } else {
-                normalizedImages = images
-                    .filter(img => img.isSelected === true)
-                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
-                    .map(img => ({ url: img.url, description: img.description || '' }));
+            // Placeholder 설명
+            const placeholderDesc = document.createElement('div');
+            placeholderDesc.className = 'room-desc-item active';
+            placeholderDesc.setAttribute('data-room', 'placeholder');
+            placeholderDesc.innerHTML = '<p class="room-desc-text">객실 정보가 없습니다.</p>';
+            descriptionsContainer.appendChild(placeholderDesc);
+
+            // Placeholder 이미지
+            const placeholderImage = document.createElement('div');
+            placeholderImage.className = 'room-image-item active';
+            placeholderImage.setAttribute('data-room', 'placeholder');
+            const img = document.createElement('img');
+            img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+            img.alt = 'No Room Image';
+            img.className = 'empty-image-placeholder';
+            placeholderImage.appendChild(img);
+            imagesContainer.appendChild(placeholderImage);
+        } else {
+            uniqueGroups.forEach((group, index) => {
+                // 해당 그룹의 모든 객실 찾기
+                const roomsInGroup = roomsData.filter(room => room.group === group);
+                if (roomsInGroup.length === 0) return;
+
+                // 탭 생성
+                const tab = document.createElement('button');
+                tab.className = `room-tab${index === 0 ? ' active' : ''}`;
+                tab.setAttribute('data-room', group);
+                tab.innerHTML = `
+                    <span class="room-tab-content">
+                        <span class="room-tab-number">${String(index + 1).padStart(2, '0')}</span>
+                        <span class="room-tab-name">${group}</span>
+                    </span>
+                    <button class="room-tab-detail-btn" data-group="${group}">
+                        <span class="btn-text">VIEW</span>
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7,7 17,7 17,17"></polyline>
+                        </svg>
+                    </button>
+                `;
+                tabsContainer.appendChild(tab);
+
+                // VIEW 버튼 클릭 이벤트
+                const detailBtn = tab.querySelector('.room-tab-detail-btn');
+                detailBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // tab 클릭 이벤트 방지
+                    window.location.href = `room-list.html?group=${encodeURIComponent(group)}`;
+                });
+
+                // 설명 생성 (customFields 우선)
+                const descItem = document.createElement('div');
+                descItem.className = `room-desc-item${index === 0 ? ' active' : ''}`;
+                descItem.setAttribute('data-room', group);
+                const propertyName = this.getPropertyName();
+                descItem.innerHTML = `<p class="room-desc-text">${propertyName}의 ${group} 객실입니다.</p>`;
+                descriptionsContainer.appendChild(descItem);
+
+                // 이미지 슬라이더 생성 - 그룹의 모든 객실 썸네일 수집
+                const imageItem = document.createElement('div');
+                imageItem.className = `room-image-item${index === 0 ? ' active' : ''}`;
+                imageItem.setAttribute('data-room', group);
+
+                // 그룹 내 모든 객실의 썸네일 수집 (customFields 우선)
+                const allThumbnails = [];
+
+                roomsInGroup.forEach(room => {
+                    const selectedThumbnails = this.getRoomImages(room, 'roomtype_thumbnail');
+                    allThumbnails.push(...selectedThumbnails);
+                });
+
+                if (allThumbnails.length === 0) {
+                    const img = document.createElement('img');
+                    img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                    img.alt = 'No Room Image';
+                    img.className = 'empty-image-placeholder';
+                    imageItem.appendChild(img);
+                } else {
+                    const sliderHTML = `
+                        <div class="room-image-slider">
+                            <div class="room-slide-track">
+                                ${allThumbnails.map((img, imgIndex) => `
+                                    <div class="room-slide${imgIndex === 0 ? ' active' : ''}">
+                                        <img src="${img.url}" alt="${img.description || group}" loading="lazy">
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="room-slider-controls">
+                                <button class="room-slider-prev">‹</button>
+                                <button class="room-slider-next">›</button>
+                            </div>
+                        </div>
+                    `;
+                    imageItem.innerHTML = sliderHTML;
+                }
+                imagesContainer.appendChild(imageItem);
+            });
+
+            // 슬라이더 및 애니메이션 초기화
+            if (typeof window.initRoomImageSlider === 'function') {
+                window.initRoomImageSlider();
             }
+
+            if (typeof window.initRoomPreviewAnimation === 'function') {
+                window.initRoomPreviewAnimation();
+            }
+
+            // Room tabs 이벤트 리스너 - 모바일과 데스크톱 지원
+            const tabs = document.querySelectorAll('.room-tab');
+            const images = document.querySelectorAll('.room-image-item');
+            const descItems = document.querySelectorAll('.room-desc-item');
+
+            function activateTab(tab) {
+                const roomType = tab.dataset.room;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                images.forEach(img => {
+                    img.classList.toggle('active', img.dataset.room === roomType);
+                });
+
+                descItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.room === roomType);
+                });
+            }
+
+            tabs.forEach(tab => {
+                // Desktop: hover event
+                tab.addEventListener('mouseenter', () => {
+                    if (window.innerWidth > 768) {
+                        activateTab(tab);
+                    }
+                });
+
+                // Mobile: click/touch event
+                tab.addEventListener('click', (e) => {
+                    // VIEW 버튼 클릭시에는 preventDefault 하지 않음
+                    if (!e.target.closest('.room-tab-detail-btn')) {
+                        e.preventDefault();
+                        activateTab(tab);
+                    }
+                });
+
+                // iOS Safari 전용 터치 이벤트
+                tab.addEventListener('touchend', (e) => {
+                    // VIEW 버튼 터치시에는 preventDefault 하지 않음
+                    if (!e.target.closest('.room-tab-detail-btn')) {
+                        e.preventDefault();
+                        activateTab(tab);
+                    }
+                }, { passive: false });
+            });
         }
-
-        // 기존 슬라이드 초기화
-        sliderContainer.innerHTML = '';
-
-        if (normalizedImages.length === 0) {
-            // 이미지 없을 때 empty-image-placeholder
-            const slideDiv = document.createElement('div');
-            slideDiv.className = 'main-slide';
-
-            const imgElement = document.createElement('img');
-            imgElement.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-            imgElement.alt = '이미지 없음';
-            imgElement.classList.add('empty-image-placeholder');
-
-            slideDiv.appendChild(imgElement);
-            sliderContainer.appendChild(slideDiv);
-            return;
-        }
-
-        normalizedImages.forEach((img, index) => {
-            const slideDiv = document.createElement('div');
-            slideDiv.className = 'main-slide';
-
-            const imgElement = document.createElement('img');
-            imgElement.src = img.url;
-            imgElement.alt = this.sanitizeText(img.description, '히어로 이미지');
-            imgElement.loading = index === 0 ? 'eager' : 'lazy';
-
-            slideDiv.appendChild(imgElement);
-            sliderContainer.appendChild(slideDiv);
-        });
     }
 
-    // ============================================================================
-    // 💎 ESSENCE SECTION MAPPING
-    // ============================================================================
-
     /**
-     * Essence Section 매핑 (핵심 메시지 섹션)
+     * Essence 섹션 매핑
      */
     mapEssenceSection() {
+        if (!this.isDataLoaded) return;
+
         const essenceData = this.safeGet(this.data, 'homepage.customFields.pages.index.sections.0.essence');
         if (!essenceData) return;
 
-        // 설명 매핑
-        const descElement = this.safeSelect('[data-essence-description]');
-        if (descElement) {
-            descElement.innerHTML = this._formatTextWithLineBreaks(essenceData.description, '핵심 메시지 섹션 설명');
+        const titleEl = this.safeSelect('[data-essence-title]');
+        const descEl = this.safeSelect('[data-essence-description]');
+
+        if (titleEl) {
+            const description = (essenceData.description !== undefined && essenceData.description !== '')
+                ? essenceData.description
+                : '특징 섹션 설명';
+            titleEl.innerHTML = description.replace(/\n/g, '<br>');
+        }
+        if (descEl) {
+            const title = (essenceData.title !== undefined && essenceData.title !== '')
+                ? essenceData.title
+                : '특징 섹션 타이틀';
+            descEl.textContent = title;
         }
 
-        // essence 공통 cleanup (모드 전환 시 이전 상태 초기화)
-        this._resetEssenceLayout();
+        // 어드민에서 이미 선택된 이미지만 전송하므로 필터링 불필요
+        const selectedImages = essenceData.images && essenceData.images.length > 0
+            ? essenceData.images.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+            : [];
 
-        const mediaType = essenceData.mediaType || 'image';
-        if (mediaType === 'video') {
-            this.initEssenceVideo(essenceData.videos || []);
-        } else {
-            this.initEssenceImages(essenceData.images || []);
-        }
-    }
+        const applyImage = (element, image) => {
+            if (!element) return;
+            const img = element.querySelector('img');
+            if (!img) return;
 
-    /**
-     * Essence 레이아웃 초기화 (video ↔ image 전환 시 공통 cleanup)
-     */
-    _resetEssenceLayout() {
-        const inner = this.safeSelect('.content-1-inner');
-        if (!inner) return;
-
-        const existingVideo = inner.querySelector('.essence-video-container');
-        if (existingVideo) existingVideo.remove();
-
-        const imageArea = inner.querySelector('.content-group .content-image.large');
-        if (imageArea) imageArea.style.display = '';
-
-        const con1Item = inner.querySelector('.con1-item.con1-1');
-        if (con1Item) con1Item.style.display = '';
-
-        const con134 = inner.querySelector('.con1-34');
-        if (con134) con134.style.display = '';
-    }
-
-    /**
-     * Essence Video 매핑 (video 모드)
-     */
-    initEssenceVideo(videos) {
-        const inner = this.safeSelect('.content-1-inner');
-        if (!inner) return;
-
-        const selectedVideo = this._getSelectedVideo(videos);
-
-        // 이미지 슬롯 숨기기
-        const imageArea = inner.querySelector('.content-group .content-image.large');
-        if (imageArea) imageArea.style.display = 'none';
-
-        const con1Item = inner.querySelector('.con1-item.con1-1');
-        if (con1Item) con1Item.style.display = 'none';
-
-        const con134 = inner.querySelector('.con1-34');
-        if (con134) con134.style.display = 'none';
-
-        // video 컨테이너 삽입 (content-group 다음)
-        const contentGroup = inner.querySelector('.content-group');
-        if (!contentGroup) return;
-
-        const videoWrapper = document.createElement('div');
-        videoWrapper.className = 'essence-video-container';
-
-        if (selectedVideo) {
-            videoWrapper.appendChild(this._createVideoElement(selectedVideo.url));
-        } else {
-            const img = document.createElement('img');
-            img.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-            img.alt = '영상 없음';
-            img.classList.add('empty-image-placeholder');
-            videoWrapper.appendChild(img);
-        }
-
-        contentGroup.after(videoWrapper);
-    }
-
-    /**
-     * Essence 이미지 초기화 (최대 4개, 개수에 따라 슬롯 동적 show/hide)
-     */
-    initEssenceImages(images) {
-
-        // 이미지 정규화 (isSelected:true 필터 + sortOrder 정렬, 최대 4개)
-        let normalizedImages = [];
-        if (images && Array.isArray(images) && images.length > 0) {
-            if (typeof images[0] === 'string') {
-                normalizedImages = images.slice(0, 4).map(url => ({ url, description: '' }));
+            if (image?.url) {
+                img.src = image.url;
+                img.classList.remove('empty-image-placeholder');
             } else {
-                normalizedImages = images
-                    .filter(img => img.isSelected === true)
-                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
-                    .slice(0, 4)
-                    .map(img => ({ url: img.url, description: img.description || '' }));
+                img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                img.classList.add('empty-image-placeholder');
             }
-        }
-
-        // 슬롯 정의: imgSelector, hideTarget (이미지 없을 때 숨길 요소)
-        const slots = [
-            {
-                imgSelector: '[data-essence-image-1]',
-                hideTarget: '.content-group .content-image.large'
-            },
-            {
-                imgSelector: '[data-essence-image-2]',
-                hideTarget: '.con1-item.con1-1'
-            },
-            {
-                imgSelector: '[data-essence-image-3]',
-                hideTarget: '.con1-item.con1-3'
-            },
-            {
-                imgSelector: '[data-essence-image-4]',
-                hideTarget: '.con1-item.con1-4'
-            }
-        ];
-
-        slots.forEach((slot, index) => {
-            const imgEl = this.safeSelect(slot.imgSelector);
-            const img = normalizedImages[index] || null;
-            if (imgEl) {
-                imgEl.src = img?.url || ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-                imgEl.alt = this.sanitizeText(img?.description, '에센스 이미지');
-                imgEl.loading = index === 0 ? 'eager' : 'lazy';
-                if (!img?.url) imgEl.classList.add('empty-image-placeholder');
-                else imgEl.classList.remove('empty-image-placeholder');
-            }
-        });
-
-        // 이미지 설명 매핑 (1번: images[0], 2번: images[1])
-        const descEl1 = this.safeSelect('[data-essence-image-description-1]');
-        if (descEl1) {
-            descEl1.innerHTML = this._formatTextWithLineBreaks(normalizedImages[0]?.description, '에센스 이미지 설명 1');
-        }
-
-        const descEl2 = this.safeSelect('[data-essence-image-description-2]');
-        if (descEl2) {
-            descEl2.innerHTML = this._formatTextWithLineBreaks(normalizedImages[1]?.description, '에센스 이미지 설명 2');
-        }
-    }
-
-    // ============================================================================
-    // 🏠 ROOMS SECTION MAPPING
-    // ============================================================================
-
-    /**
-     * Rooms Section 매핑
-     */
-    mapRoomsSection() {
-        const roomsData = this.safeGet(this.data, 'rooms');
-        if (!roomsData || !Array.isArray(roomsData)) return;
-
-        const roomsContainer = this.safeSelect('[data-rooms-container]');
-        if (!roomsContainer) return;
-
-        // 섹션 서브타이틀 (숙소명 + 하드코딩 문구)
-        const subtitleEl = this.safeSelect('[data-rooms-subtitle]');
-        if (subtitleEl) {
-            subtitleEl.textContent = `${this.getPropertyName()}에서 나만의 특별한 공간을 찾아보세요.`;
-        }
-
-        // displayOrder 정렬
-        const sortedRooms = [...roomsData].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
-
-        roomsContainer.innerHTML = '';
-
-        const createCard = (room) => {
-            // roomtype_thumbnail 이미지 (base-mapper의 getRoomImages 사용)
-            const thumbnails = this.getRoomImages(room, 'roomtype_thumbnail');
-            const thumbnailUrl = thumbnails[0]?.url || null;
-
-            const card = document.createElement('div');
-            card.className = 'room-card';
-            const roomName = this.getRoomName(room);
-            card.innerHTML = `
-                <div class="room-image">
-                    <img alt="${roomName}" loading="lazy">
-                </div>
-                <div class="room-info">
-                    <h3>${roomName}</h3>
-                    <p>${this._formatTextWithLineBreaks(room.description, '객실 설명')}</p>
-                    <button class="btn-more" onclick="navigateTo('room', '${room.id}')">View More</button>
-                </div>
-            `;
-
-            // src 직접 할당 (data URI 깨짐 방지)
-            const imgEl = card.querySelector('.room-image img');
-            if (thumbnailUrl) {
-                imgEl.src = thumbnailUrl;
-            } else {
-                imgEl.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-                imgEl.classList.add('empty-image-placeholder');
-            }
-
-            return card;
         };
 
-        // 룸 개수 저장 (carousel에서 롤링 여부 판단용)
-        roomsContainer.dataset.roomCount = sortedRooms.length;
+        const leftImage = this.safeSelect('[data-essence-image-0]');
+        const rightImage = this.safeSelect('[data-essence-image-1]');
 
-        // Set 1 생성
-        sortedRooms.forEach(room => roomsContainer.appendChild(createCard(room)));
-
-        // Set 2 생성 (무한 스크롤용 복제 — carousel에서 롤링 비활성화 시 불필요하지만,
-        // 화면 리사이즈 대응을 위해 항상 생성하고 carousel에서 제어)
-        sortedRooms.forEach(room => roomsContainer.appendChild(createCard(room)));
+        applyImage(leftImage, selectedImages[0]);
+        applyImage(rightImage, selectedImages[1]);
     }
 
-    // ============================================================================
-    // 🏊 FACILITY SECTION MAPPING
-    // ============================================================================
-
     /**
-     * Facility Section 매핑 (부대시설 섹션)
-     * - property.facilities를 displayOrder 정렬 후 전체 동적 생성
+     * Gallery 섹션 매핑
      */
-    mapFacilitySection() {
-        const facilities = this.safeGet(this.data, 'property.facilities');
-        if (!facilities || !Array.isArray(facilities) || facilities.length === 0) return;
+    mapGallerySection() {
+        if (!this.isDataLoaded) return;
 
-        const sortedFacilities = [...facilities]
-            .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+        const galleryData = this.safeGet(this.data, 'homepage.customFields.pages.index.sections.0.gallery');
+        if (!galleryData) {
+            return;
+        }
 
-        const leftImagesEl = this.safeSelect('.meditation-image');
-        const infoEl = this.safeSelect('.meditation-info');
-        const rightImagesEl = this.safeSelect('.special-right-image');
+        const titleElement = this.safeSelect('[data-gallery-title]');
+        const imagesWrapper = this.safeSelect('[data-gallery-images]');
 
-        // 컨테이너 초기화
-        if (leftImagesEl) leftImagesEl.innerHTML = '';
-        if (infoEl) infoEl.innerHTML = '';
+        if (titleElement) {
+            const title = (galleryData.title !== undefined && galleryData.title !== '')
+                ? galleryData.title
+                : '갤러리 섹션 타이틀';
+            titleElement.textContent = title;
+        }
+        if (!imagesWrapper) {
+            return;
+        }
 
-        // 오른쪽 이미지 컨테이너: .image-overlay 보존
-        const overlay = rightImagesEl ? rightImagesEl.querySelector('.image-overlay') : null;
-        if (rightImagesEl) rightImagesEl.innerHTML = '';
+        imagesWrapper.innerHTML = '';
 
-        sortedFacilities.forEach((facility) => {
-            const images = (facility.images || [])
-                .filter(img => img.isSelected === true)
-                .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+        const selectedImages = galleryData.images
+            ? galleryData.images.filter(img => img.isSelected).sort((a, b) => a.sortOrder - b.sortOrder)
+            : [];
 
-            const firstImg = images[0] || null;
-            const secondImg = images[1] || null;
-
-            // 왼쪽 이미지 (.meditation-image)
-            if (leftImagesEl) {
+        if (selectedImages.length === 0) {
+            // 4개 placeholder
+            const createPlaceholderItem = () => {
+                const placeholderItem = document.createElement('div');
+                placeholderItem.className = 'experience-accordion-item visible';
                 const img = document.createElement('img');
-                img.className = 'facility-slide';
-                img.src = firstImg ? firstImg.url : ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-                img.alt = this.sanitizeText(facility.name, '부대시설 이미지');
-                if (!firstImg) img.classList.add('empty-image-placeholder');
-                leftImagesEl.appendChild(img);
-            }
+                img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                img.alt = 'No Image Available';
+                img.className = 'empty-image-placeholder';
+                img.loading = 'lazy';
+                const overlay = document.createElement('div');
+                overlay.className = 'experience-accordion-overlay';
+                overlay.innerHTML = '<h4>갤러리 섹션 설명</h4>';
+                placeholderItem.appendChild(img);
+                placeholderItem.appendChild(overlay);
+                return placeholderItem;
+            };
 
-            // 정보 슬라이드 (.meditation-info)
-            if (infoEl) {
-                const slideDiv = document.createElement('div');
-                slideDiv.className = 'facility-slide';
+            const leftAccordion = document.createElement('div');
+            leftAccordion.className = 'experience-accordion-left';
+            leftAccordion.appendChild(createPlaceholderItem());
+            leftAccordion.appendChild(createPlaceholderItem());
 
-                const title = document.createElement('h3');
-                title.className = 'meditation-title';
-                title.textContent = this.sanitizeText(facility.name, '부대시설명');
+            const rightAccordion = document.createElement('div');
+            rightAccordion.className = 'experience-accordion-right';
+            rightAccordion.appendChild(createPlaceholderItem());
+            rightAccordion.appendChild(createPlaceholderItem());
 
-                const desc = document.createElement('p');
-                desc.className = 'meditation-text';
-                desc.innerHTML = this._formatTextWithLineBreaks(facility.description, '부대시설 설명');
+            imagesWrapper.appendChild(leftAccordion);
+            imagesWrapper.appendChild(rightAccordion);
+        } else {
+            const midPoint = Math.ceil(selectedImages.length / 2);
+            const leftImages = selectedImages.slice(0, midPoint);
+            const rightImages = selectedImages.slice(midPoint);
 
-                const facilityId = facility.id;
-                const btn = document.createElement('button');
-                btn.className = 'btn-outline';
-                btn.textContent = 'View More';
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    window.location.href = 'facility.html?id=' + facilityId;
-                });
+            const leftAccordion = document.createElement('div');
+            leftAccordion.className = 'experience-accordion-left';
+            leftImages.forEach(img => {
+                const description = img.description || '갤러리 섹션 설명';
+                const item = document.createElement('div');
+                item.className = 'experience-accordion-item visible';
+                item.innerHTML = `
+                    <img src="${img.url}" alt="${description}" loading="lazy">
+                    <div class="experience-accordion-overlay">
+                        <h4>${description}</h4>
+                    </div>
+                `;
+                leftAccordion.appendChild(item);
+            });
 
-                slideDiv.appendChild(title);
-                slideDiv.appendChild(desc);
-                slideDiv.appendChild(btn);
-                infoEl.appendChild(slideDiv);
-            }
+            const rightAccordion = document.createElement('div');
+            rightAccordion.className = 'experience-accordion-right';
+            rightImages.forEach(img => {
+                const description = img.description || '갤러리 섹션 설명';
+                const item = document.createElement('div');
+                item.className = 'experience-accordion-item visible';
+                item.innerHTML = `
+                    <img src="${img.url}" alt="${description}" loading="lazy">
+                    <div class="experience-accordion-overlay">
+                        <h4>${description}</h4>
+                    </div>
+                `;
+                rightAccordion.appendChild(item);
+            });
 
-            // 오른쪽 이미지 (.special-right-image)
-            if (rightImagesEl) {
-                const img = document.createElement('img');
-                img.className = 'facility-slide';
-                // 두 번째 이미지 없으면 첫 번째 재사용
-                const rightSrc = secondImg || firstImg;
-                img.src = rightSrc ? rightSrc.url : ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-                img.alt = this.sanitizeText(facility.name, '부대시설 이미지');
-                if (!rightSrc) img.classList.add('empty-image-placeholder');
-                rightImagesEl.appendChild(img);
-            }
-        });
-
-        // overlay 복원
-        if (rightImagesEl && overlay) rightImagesEl.appendChild(overlay);
+            imagesWrapper.appendChild(leftAccordion);
+            imagesWrapper.appendChild(rightAccordion);
+        }
     }
 
-    // ============================================================================
-    // 🎬 CLOSING SECTION MAPPING
-    // ============================================================================
+    /**
+     * Signature 섹션 매핑
+     */
+    mapSignatureSection() {
+        if (!this.isDataLoaded) return;
+
+        const signatureData = this.safeGet(this.data, 'homepage.customFields.pages.index.sections.0.signature');
+        if (!signatureData) return;
+
+        const slidesContainer = this.safeSelect('[data-signature-slides]');
+        if (!slidesContainer) return;
+
+        slidesContainer.innerHTML = '';
+
+        const images = signatureData.images
+            ? signatureData.images.filter(img => img.isSelected).sort((a, b) => a.sortOrder - b.sortOrder)
+            : [];
+
+        if (images.length > 0) {
+            images.forEach((img, index) => {
+                const slideElement = document.createElement('div');
+                slideElement.className = `signature-slide${index === 0 ? ' active' : ''}`;
+                slideElement.innerHTML = `
+                    <div class="signature-slide-image">
+                        <img src="${img.url}" alt="${img.description || ''}" loading="lazy">
+                    </div>
+                    <div class="signature-slide-content">
+                        <span class="quote-mark quote-top">"</span>
+                        <h3 class="signature-slide-title">${img.description || ''}</h3>
+                        <span class="quote-mark quote-bottom">"</span>
+                    </div>
+                `;
+                slidesContainer.appendChild(slideElement);
+            });
+        } else {
+            // 이미지 없을 때 placeholder 슬라이드 생성
+            const slideElement = document.createElement('div');
+            slideElement.className = 'signature-slide active';
+            slideElement.innerHTML = `
+                <div class="signature-slide-image">
+                    <img src="" alt="특색 이미지" class="empty-image-placeholder">
+                </div>
+                <div class="signature-slide-content">
+                    <span class="quote-mark quote-top">"</span>
+                    <h3 class="signature-slide-title">시그니처 섹션 설명</h3>
+                    <span class="quote-mark quote-bottom">"</span>
+                </div>
+            `;
+            slidesContainer.appendChild(slideElement);
+
+            // Placeholder 적용
+            const placeholderImg = slideElement.querySelector('.empty-image-placeholder');
+            if (placeholderImg) {
+                ImageHelpers.applyPlaceholder(placeholderImg);
+            }
+        }
+
+        if (typeof window.initSignatureSlider === 'function') {
+            window.initSignatureSlider();
+        }
+    }
 
     /**
-     * Closing Section 매핑 (마무리 섹션)
+     * Closing 섹션 매핑
      */
     mapClosingSection() {
+        if (!this.isDataLoaded) return;
+
         const closingData = this.safeGet(this.data, 'homepage.customFields.pages.index.sections.0.closing');
+        if (!closingData) return;
 
-        const bgEl = this.safeSelect('[data-closing-image]');
-        if (bgEl) {
-            const mediaType = closingData?.mediaType || 'image';
-
-            // 기존 video 태그 제거 (모드 전환 시 cleanup)
-            const existingVideo = bgEl.querySelector('.closing-video');
-            if (existingVideo) existingVideo.remove();
-
-            if (mediaType === 'video') {
-                const selectedVideo = this._getSelectedVideo(closingData?.videos);
-
-                bgEl.style.backgroundImage = '';
-
-                if (selectedVideo) {
-                    const videoEl = this._createVideoElement(selectedVideo.url);
-                    videoEl.className = 'closing-video';
-                    bgEl.appendChild(videoEl);
-                } else {
-                    bgEl.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
-                    bgEl.classList.add('empty-image-placeholder');
-                }
+        // 배경 이미지 매핑
+        const img = this.safeSelect('[data-closing-image]');
+        if (img) {
+            if (closingData.images?.[0]) {
+                img.src = closingData.images[0].url;
+                img.classList.remove('empty-image-placeholder');
             } else {
-                // 배경 이미지 매핑 (div → background-image)
-                const selectedImages = (closingData?.images || [])
-                    .filter(img => img.isSelected === true)
-                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-                if (selectedImages.length > 0) {
-                    bgEl.style.backgroundImage = `url('${selectedImages[0].url}')`;
-                    bgEl.classList.remove('empty-image-placeholder');
-                } else {
-                    bgEl.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
-                    bgEl.classList.add('empty-image-placeholder');
-                }
+                img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                img.classList.add('empty-image-placeholder');
+                img.alt = 'No Image Available';
             }
         }
 
-        // 타이틀 매핑
-        const closingTitle = this.safeSelect('[data-closing-title]');
-        if (closingTitle) {
-            closingTitle.textContent = this.sanitizeText(closingData?.title, '마무리 섹션 타이틀');
-        }
-
-        // 설명 매핑
-        const descElement = this.safeSelect('[data-closing-description]');
-        if (descElement) {
-            descElement.innerHTML = this._formatTextWithLineBreaks(
-                closingData?.description,
-                '마무리 섹션 설명'
-            );
+        // Logo 이미지 매핑
+        const logoImg = this.safeSelect('[data-closing-logo]');
+        if (logoImg) {
+            const logoImages = this.safeGet(this.data, 'homepage.images.0.logo');
+            if (logoImages && logoImages.length > 0 && logoImages[0]?.url) {
+                logoImg.src = logoImages[0].url;
+                logoImg.classList.remove('empty-image-placeholder');
+            } else {
+                logoImg.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                logoImg.classList.add('empty-image-placeholder');
+            }
         }
     }
-}
 
-// ============================================================================
-// 🚀 INITIALIZATION
-// ============================================================================
+    /**
+     * Property 정보 매핑 (이름, 영문명) - customFields 우선
+     */
+    mapPropertyInfo() {
+        if (!this.isDataLoaded) return;
 
-// 페이지 로드 시 자동 초기화 (로컬 환경용, iframe 아닐 때만)
-if (typeof window !== 'undefined' && window.parent === window) {
-    window.addEventListener('DOMContentLoaded', async () => {
-        const mapper = new IndexMapper();
-        await mapper.initialize();
-        // 매핑 완료 알림 (index.js에서 수신)
-        window.dispatchEvent(new CustomEvent('mapperReady'));
-    });
+        const propertyName = this.getPropertyName();
+        const propertyNameEn = this.getPropertyNameEn();
+
+        // Map property name to all elements
+        this.safeSelectAll('.logo-text, .brand-title, [data-property-name]').forEach(el => {
+            el.textContent = propertyName;
+        });
+
+        this.safeSelectAll('.logo-subtitle, .brand-subtitle, [data-property-name-en]').forEach(el => {
+            el.textContent = propertyNameEn;
+        });
+    }
+
+    // ============================================================================
+    // 🔄 TEMPLATE METHODS IMPLEMENTATION
+    // ============================================================================
+
+    /**
+     * Index 페이지 전체 매핑 실행
+     */
+    async mapPage() {
+        if (!this.isDataLoaded) {
+            return;
+        }
+
+        // Index 페이지 섹션들 순차 매핑
+        this.mapPropertyInfo();
+        this.mapHeroSection();
+        this.mapRoomPreviewSection();
+        this.mapEssenceSection();
+        this.mapGallerySection();
+        this.mapSignatureSection();
+        this.mapClosingSection();
+        this.updateMetaTags();
+        this.reinitializeScrollAnimations();
+    }
 }
 
 // ES6 모듈 및 글로벌 노출
@@ -577,3 +546,28 @@ if (typeof module !== 'undefined' && module.exports) {
 } else {
     window.IndexMapper = IndexMapper;
 }
+
+// 자동 초기화 및 window.baseMapper 등록
+(function() {
+    'use strict';
+
+    // 페이지 로드 완료 후 매퍼 초기화
+    function initMapper() {
+        // PreviewHandler가 이미 존재하면 초기화하지 않음 (PreviewHandler가 처리)
+        if (window.previewHandler) {
+            return;
+        }
+
+        // 일반 초기화 (JSON 파일 로드)
+        const mapper = new IndexMapper();
+        window.baseMapper = mapper;
+        mapper.initialize();
+    }
+
+    // DOMContentLoaded 이후에 초기화
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMapper);
+    } else {
+        initMapper();
+    }
+})();
