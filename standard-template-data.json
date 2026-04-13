@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.140.0",
-    "generatedAt": "2026-04-13T08:25:52.663Z",
+    "version": "1.141.0",
+    "generatedAt": "2026-04-13T08:28:09.124Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1327,7 +1327,15 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
+                "videos": [
+                  {
+                    "id": "dacbf938-5a48-4f88-8dfa-d8defb3faba5",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1776068684805-7m03vmp7y5r.MP4",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  }
+                ],
                 "mediaType": "video",
                 "description": "TEST"
               },
