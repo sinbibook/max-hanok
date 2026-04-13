@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.138.0",
-    "generatedAt": "2026-04-13T07:14:30.484Z",
+    "version": "1.139.0",
+    "generatedAt": "2026-04-13T07:46:18.983Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1263,8 +1263,8 @@
                 ],
                 "videos": [
                   {
-                    "id": "dbc89383-0d86-47f2-969c-d2a97e99ca63",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776064136304-ou1k3sjqh4.MP4",
+                    "id": "1884a15a-d9b7-44b9-8077-df573e8a0040",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776066224629-gfk9wxna38m.MP4",
                     "sortOrder": 0,
                     "description": "",
                     "isSelected": true
@@ -1277,15 +1277,22 @@
                 "title": "당신의 이야기",
                 "images": [
                   {
+                    "id": "9c12d85d-b3e5-4105-8384-934ed2a0b83c",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_closing/1776065360046-lxv0vi7e4j.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  },
+                  {
                     "id": "d6c60296-3269-4ede-8456-a6f8d3f92849",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_closing/1759299095224-f3u7mrjhjcb.jpg",
-                    "sortOrder": 0,
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": true
                   }
                 ],
                 "videos": [],
-                "mediaType": "image",
+                "mediaType": "video",
                 "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
               },
               "essence": {
@@ -1321,7 +1328,7 @@
                   }
                 ],
                 "videos": [],
-                "mediaType": "image",
+                "mediaType": "video",
                 "description": "TEST"
               },
               "gallery": {
