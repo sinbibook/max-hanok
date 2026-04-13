@@ -1,34 +1,71 @@
-<footer class="site-footer">
-    <div class="footer-wrapper">
-        <div class="footer-left">
-            <!-- custom field : 저작권 정보 자동 생성 (mapper) -->
-            <p class="footer-copyright" data-footer-copyright></p>
-        </div>
-        <div class="footer-right">
-            <div class="footer-contact">
-                <div class="contact-item">
-                    <svg class="icon-phone" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M26.9269 28.3439C24.115 28.3439 21.3369 27.7309 18.5924 26.5049C15.848 25.2789 13.3511 23.5412 11.1016 21.2917C8.85204 19.0422 7.11429 16.5452 5.8883 13.8008C4.66232 11.0564 4.04932 8.27822 4.04932 5.46632C4.04932 5.06141 4.18429 4.72398 4.45424 4.45404C4.72418 4.1841 5.06161 4.04913 5.46652 4.04913H10.9328C11.2478 4.04913 11.529 4.15598 11.7764 4.36969C12.0239 4.58339 12.1701 4.83646 12.2151 5.1289L13.0924 9.85288C13.1374 10.2128 13.1261 10.5165 13.0586 10.7639C12.9912 11.0114 12.8674 11.2251 12.6875 11.405L9.41442 14.7118C9.86432 15.5442 10.3986 16.3484 11.0172 17.1244C11.6358 17.9005 12.3163 18.6485 13.0586 19.3683C13.756 20.0657 14.4871 20.7124 15.2519 21.3085C16.0168 21.9047 16.8266 22.4502 17.6814 22.9451L20.8532 19.7732C21.0557 19.5708 21.32 19.4189 21.6462 19.3177C21.9723 19.2165 22.2929 19.1884 22.6078 19.2334L27.2643 20.1782C27.5793 20.2681 27.838 20.4312 28.0404 20.6674C28.2429 20.9036 28.3441 21.1679 28.3441 21.4604V26.9267C28.3441 27.3316 28.2091 27.6691 27.9392 27.939C27.6692 28.2089 27.3318 28.3439 26.9269 28.3439Z" fill="currentColor"/>
-                    </svg>
-                    <!-- custom field : 전화번호 매핑 -->
-                    <p class="phone-number" data-footer-phone></p>
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Top Section -->
+        <div class="footer-top">
+            <div class="footer-info-grid">
+                <!-- Company Info -->
+                <div class="footer-section footer-company">
+                    <h3 class="footer-title" data-footer-logo-text>숙소명</h3>
+                    <div class="footer-info-item">
+                        <span class="footer-label">대표자</span>
+                        <span class="footer-value" data-footer-representative-name>홍길동</span>
+                    </div>
+                    <div class="footer-info-item">
+                        <span class="footer-label">사업자번호</span>
+                        <span class="footer-value" data-footer-business-number>000-00-00000</span>
+                    </div>
+                    <div class="footer-info-item">
+                        <span class="footer-label">통신판매업</span>
+                        <span class="footer-value" data-footer-ecommerce>제2024-0000호</span>
+                    </div>
                 </div>
-                <div class="contact-item">
-                    <!-- custom field : 주소 매핑 -->
-                    <p class="address" data-footer-address></p>
+
+                <!-- Contact Info -->
+                <div class="footer-section footer-contact">
+                    <h3 class="footer-title">CONTACT</h3>
+                    <div class="footer-info-item">
+                        <span class="footer-label">TEL</span>
+                        <span class="footer-value" data-footer-phone>000-0000-0000</span>
+                    </div>
+                    <div class="footer-info-item">
+                        <span class="footer-label">ADDRESS</span>
+                        <span class="footer-value" data-footer-address>주소를 입력해주세요</span>
+                    </div>
+                </div>
+
+                <!-- Social & Follow Us -->
+                <div class="footer-section footer-social" data-social-links-section>
+                    <h3 class="footer-title">FOLLOW US</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" data-social-instagram aria-label="Instagram" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" data-social-facebook aria-label="Facebook" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" data-social-blog aria-label="Blog" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19l8-8 4 4 6-6"/>
+                                <circle cx="9" cy="7" r="2"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="footer-divider"></div>
-    <div class="footer-info-wrapper">
-        <div class="footer-info">
-            <!-- custom field : 대표자명 매핑 -->
-            <p data-footer-representative-name></p>
-            <!-- custom field : 사업자등록번호 매핑 -->
-            <p data-footer-business-number></p>
-            <!-- custom field : 통신판매업신고번호 매핑 (없으면 숨김) -->
-            <p class="footer-info-line" data-footer-ecommerce></p>
+
+        <!-- Bottom Section -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p class="copyright" data-footer-copyright></p>
+            </div>
         </div>
     </div>
 </footer>

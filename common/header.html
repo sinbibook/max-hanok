@@ -1,82 +1,203 @@
-<header class="site-header">
-    <div class="header-wrapper">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Component</title>
+    <link rel="stylesheet" href="styles/header.css">
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Max 한옥 펜션" />
+  <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
+  <meta property="og:url" content="https://max-hanok.com" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Max 한옥 펜션" />
+  <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
+</head>
+<body>
+    <!-- Header Component -->
+    <!-- Header -->
+<header class="header" id="header">
+    <div class="header-content">
         <div class="header-inner">
-            <div class="header-logo">
-                <a href="index.html">
-                    <!-- custom field : 로고 이미지 매핑 -->
-                    <img data-logo src="" alt="">
-                </a>
+            <!-- Logo Area -->
+            <div class="logo-container" onclick="navigateTo('home')">
+                <div class="logo-icon">
+                    <img data-logo src="" alt="로고" class="logo-image">
+                </div>
+                <!-- <span class="logo-text" data-logo-text></span> -->
             </div>
-            <nav class="header-nav">
-                <span class="header-menu-btn">Menu</span>
-                <ul class="nav-menu">
-                    <li class="has-dropdown">
-                        <a href="main.html">Prologue</a>
-                        <div class="dropdown-sub">
-                            <a href="main.html">Prologue</a>
-                            <a href="directions.html">오시는 길</a>
+
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav">
+                <div class="nav-container">
+                    <div class="main-menu">
+                        <div class="menu-item-wrapper">
+                            <button class="menu-item" data-menu="about">About</button>
+                            <div class="submenu">
+                                <button class="submenu-item" onclick="navigateTo('main')">소개</button>
+                                <button class="submenu-item" onclick="navigateTo('directions')">오시는길</button>
+                            </div>
                         </div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="room.html">Rooms</a>
-                        <!-- custom field : 객실 서브메뉴 동적 생성 (mapper) -->
-                        <div class="dropdown-sub" data-rooms-sub></div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="facility.html">Specials</a>
-                        <!-- custom field : 시설 서브메뉴 동적 생성 (mapper) -->
-                        <div class="dropdown-sub" data-facilities-sub></div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="reservation.html">Reservation</a>
-                        <div class="dropdown-sub">
-                            <a href="reservation.html">예약 안내</a>
+
+                        <div class="menu-item-wrapper">
+                            <button class="menu-item" data-menu="space" data-room-link>Spaces</button>
+                            <div class="submenu">
+                                <!-- Room group links will be dynamically added here -->
+                            </div>
                         </div>
-                    </li>
-                    <!-- custom field : 예약 버튼 그룹 -->
-                    <li class="button-group">
-                        <a href="#" class="btn-book" data-booking-engine><span class="book-full">예약하기</span><span class="book-short">예약</span></a>
-                        <a href="#" class="btn-ybs" data-ybs-booking style="display: none;"><span class="ybs-full">YBS</span><span class="ybs-short">YBS</span></a>
-                    </li>
-                </ul>
+
+                        <div class="menu-item-wrapper">
+                            <button class="menu-item" data-menu="specials" data-facility-link>Specials</button>
+                            <div class="submenu">
+                                <!-- Facility links will be dynamically added here -->
+                            </div>
+                        </div>
+
+                        <div class="menu-item-wrapper">
+                            <button class="menu-item" data-menu="reservation">Reservation</button>
+                            <div class="submenu">
+                                <button class="submenu-item" onclick="navigateTo('reservation-info')">예약안내</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Reservation Button -->
+                <button class="reservation-btn" data-booking-engine>
+                    <span class="btn-text">예약</span>
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7,7 17,7 17,17"></polyline>
+                    </svg>
+                </button>
+
+                <!-- YBS Button -->
+                <button class="ybs-btn" data-ybs-button>
+                    <span class="btn-text">YBS</span>
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7,7 17,7 17,17"></polyline>
+                    </svg>
+                </button>
             </nav>
-        </div>
-    </div>
-    <!-- Dropdown Background (데스크톱: 배경 패널 / 모바일: 아코디언 메뉴) -->
-    <div class="header-dropdown" aria-label="서브 메뉴">
-        <div class="header-dropdown-inner">
-            <div class="dropdown-columns">
-                <div class="dropdown-col is-expanded" role="group" aria-label="Prologue">
-                    <span class="dropdown-col-title">Prologue<span class="col-arrow"></span></span>
-                    <div class="dropdown-col-links">
-                        <a href="main.html">Prologue</a>
-                        <a href="directions.html">오시는 길</a>
-                    </div>
-                </div>
-                <div class="dropdown-col is-expanded" role="group" aria-label="Rooms">
-                    <span class="dropdown-col-title">Rooms<span class="col-arrow"></span></span>
-                    <!-- custom field : 객실 메뉴 동적 생성 (mapper) -->
-                    <div class="dropdown-col-links" data-rooms-list></div>
-                </div>
-                <div class="dropdown-col is-expanded" role="group" aria-label="Specials">
-                    <span class="dropdown-col-title">Specials<span class="col-arrow"></span></span>
-                    <!-- custom field : 시설 메뉴 동적 생성 (mapper) -->
-                    <div class="dropdown-col-links" data-facilities-list></div>
-                </div>
-                <div class="dropdown-col is-expanded" role="group" aria-label="Reservation">
-                    <span class="dropdown-col-title">Reservation<span class="col-arrow"></span></span>
-                    <div class="dropdown-col-links">
-                        <a href="reservation.html">예약 안내</a>
-                    </div>
-                </div>
-            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <svg class="icon" id="menu-icon" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <svg class="icon" id="close-icon" viewBox="0 0 24 24" style="display: none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
         </div>
     </div>
 </header>
 
-<!-- Scripts -->
-<script src="js/image-helpers.js"></script>
-<script src="js/data-mapper/core/base-mapper.js"></script>
-<script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-<script src="js/header-footer-loader.js"></script>
-<script src="js/common/header.js"></script>
+<!-- Mobile Menu (header 밖에 위치) -->
+<div class="mobile-menu" id="mobile-menu">
+        <!-- Mobile Menu Close Button -->
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <div class="mobile-menu-grid">
+            <!-- About Section -->
+            <div class="mobile-menu-section">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
+                    <h3 class="mobile-menu-title">About</h3>
+                    <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
+                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="mobile-sub-items mobile-accordion-content active">
+                    <button class="mobile-sub-item" onclick="navigateTo('main')">소개</button>
+                    <button class="mobile-sub-item" onclick="navigateTo('directions')">오시는길</button>
+                </div>
+            </div>
+
+            <!-- Spaces Section -->
+            <div class="mobile-menu-section">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
+                    <h3 class="mobile-menu-title">Spaces</h3>
+                    <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
+                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="mobile-sub-items mobile-accordion-content active" id="mobile-spaces-items">
+                    <!-- 동적으로 로드됨 -->
+                </div>
+            </div>
+
+            <!-- Specials Section -->
+            <div class="mobile-menu-section">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
+                    <h3 class="mobile-menu-title">Specials</h3>
+                    <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
+                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="mobile-sub-items mobile-accordion-content active" id="mobile-specials-items">
+                    <button class="mobile-sub-item" onclick="navigateTo('facility')">BBQ</button>
+                    <!-- 동적으로 로드됨 -->
+                </div>
+            </div>
+
+            <!-- Reservation Section -->
+            <div class="mobile-menu-section">
+                <div class="mobile-accordion-header active" onclick="toggleMobileAccordion(this)">
+                    <h3 class="mobile-menu-title">Reservation</h3>
+                    <svg class="mobile-accordion-icon" viewBox="0 0 24 24">
+                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="mobile-sub-items mobile-accordion-content active">
+                    <button class="mobile-sub-item" onclick="navigateTo('reservation-info')">예약안내</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Mobile Buttons Container -->
+        <div class="mobile-buttons-container">
+            <!-- Mobile Reservation Button -->
+            <button class="mobile-reservation-btn" data-booking-engine>
+                <span>예약</span>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7,7 17,7 17,17"></polyline>
+                </svg>
+            </button>
+
+            <!-- Mobile YBS Button -->
+            <button class="mobile-ybs-btn" data-ybs-button>
+                <span class="btn-text">YBS</span>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7,7 17,7 17,17"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Header script -->
+    <script src="js/common/header.js"></script>
+</body>
+</html>

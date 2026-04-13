@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="숙소 설명">
+  <meta name="keywords" content="SEO 키워드">
+  <title>숙소명 - 소개</title>
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/theme.css">
+
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션 - 숙소소개" />
@@ -23,69 +25,73 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 </head>
 <body>
+  <!-- Include Header -->
+  <div id="header-placeholder"></div>
 
-    <!-- Navigation (Header) -->
-    <div class="index-page">
-        <div id="header-container"></div>
+  <!-- 메인 소개 섹션 히어로 0번째 이미지-->
+  <section class="hero-section">
+    <div class="hero-background">
+      <img src="" alt="메인 배경" data-customfield-main-hero-image-0>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text-center">
+        <h1 class="hero-title">ABOUT</h1>
+      </div>
     </div>
 
-    <div id="app" class="main-page">
-
-        <!-- CUSTOM FIELD : 메인 소개 섹션 이미지 매핑 -->
-        <div class="main-section">
-            <!-- custom field : 히어로 슬라이더 이미지 동적 생성 (mapper) -->
-            <div class="main-bg" data-hero-slider></div>
-            <div class="main-content">
-                <!-- custom field : 메인 소개 섹션 타이틀 매핑 -->
-                <h1 class="main-title" data-main-about-title></h1>
-                <div class="title-divider"><div class="bar-progress"></div></div>
-                <!-- custom field : 메인 소개 섹션 설명 매핑 -->
-                <p class="main-subtitle" data-main-about-description></p>
-            </div>
-            <div class="main-arrow">
-                <div class="arrow-left"></div>
-                <p class="arrow-number">01</p>
-                <div class="arrow-divider"></div>
-                <p class="arrow-number">10</p>
-                <div class="arrow-right"></div>
-            </div>
-        </div>
-
-        <!-- Introduction Section -->
-        <div class="section-con">
-            <!-- 하드코딩, 매핑 x -->
-            <p class="prologue-title">Prologue</p>
-            <!-- custom field : about 블록 동적 생성 (mapper) -->
-            <div data-main-introduction></div>
-        </div>
-
-        <!-- 홈/마무리 섹션과 동일하게 매핑 -->
-        <div class="content-4 closing-section">
-            <!-- custom field : 마무리 섹션 이미지 매핑 -->
-            <div class="content-4-bg" data-closing-image></div>
-            <div class="content-4-text">
-                <!-- custom field : 마무리 섹션 제목 매핑 -->
-                <h2 data-closing-title></h2>
-                <!-- custom field : 마무리 섹션 내용 매핑 -->
-                <p data-closing-description></p>
-            </div>
-        </div>
-
+    <!-- Scroll Down Indicator -->
+    <div class="hero-scroll-down" onclick="scrollToNextSection()">
+      <svg class="scroll-arrow" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+      </svg>
     </div>
+  </section>
 
-    <div id="footer-container"></div>
+  <!-- Main Info Section -->
+  <section class="location-info-section">
+    <!-- Facility Introduction Section -->
+    <div class="facility-intro-section">
+      <div class="facility-intro-content">
+        <div class="facility-label">
+          <span class="facility-number" data-main-title>ABOUT</span>
+        </div>
+        <p class="facility-description" data-main-description>메인 페이지 안내입니다.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Scripts -->
-    <script src="js/common.js"></script>
-    <script src="js/pages/main.js"></script>
+  <!-- 소개섹션 custom-field (동적으로 생성됨) -->
+  <div class="main-content-wrapper">
+    <!-- JavaScript로 동적 생성됨 -->
+  </div>
 
-    <!-- Data Mapper -->
-    <script src="js/image-helpers.js"></script>
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/main-mapper.js"></script>
-    <script src="js/preview-handler.js"></script>
+  <!-- Include ImageWithFallback script -->
+  <script src="js/image-with-fallback.js"></script>
 
-    <!-- Header / Footer Loader -->
-    <script src="js/header-footer-loader.js"></script>
+  <!-- Common JavaScript -->
+  <script src="js/common.js"></script>
+
+  <!-- Preview Handler for Admin Integration -->
+  <script src="js/preview-handler.js"></script>
+
+  <!-- Image Helpers -->
+  <script src="js/image-helpers.js"></script>
+
+  <!-- Base Data Mapper -->
+  <script src="js/data-mapper/core/base-mapper.js"></script>
+
+  <!-- Main Page Mapper -->
+  <script src="js/data-mapper/pages/main-mapper.js"></script>
+
+  <!-- Header Footer Mapper -->
+  <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+  <!-- Header and Footer Loader -->
+  <script src="js/header-footer-loader.js"></script>
+
+  <!-- Page-specific script -->
+  <script type="module" src="js/pages/main.js"></script>
+
 </body>
 </html>

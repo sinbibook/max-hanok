@@ -1,367 +1,342 @@
-// Room 페이지 JavaScript
+/**
+ * Room Detail Page JavaScript
+ */
+
 (function() {
     'use strict';
 
-    // ==========================================
-    // Main Hero Slideshow
-    // ==========================================
-    function initMainSlideshow() {
-        var slides = document.querySelectorAll('.main-slide');
+    let currentSlideIndex = 0;
+    let autoSlideInterval;
+    let ticking = false;
+
+
+    // Change slide
+    function changeSlide(direction) {
+        const slides = document.querySelectorAll('.hero-slide');
         if (slides.length === 0) return;
 
-        // 슬라이드 1개: active만 붙이고 화살표 숨김
-        if (slides.length === 1) {
-            slides[0].classList.add('active');
-            var arrow = document.querySelector('.main-arrow');
-            if (arrow) arrow.style.display = 'none';
-            return;
+        // Remove active class from current slide
+        slides[currentSlideIndex].classList.remove('active');
+
+        // Calculate new index
+        currentSlideIndex += direction;
+
+        if (currentSlideIndex >= slides.length) {
+            currentSlideIndex = 0;
+        } else if (currentSlideIndex < 0) {
+            currentSlideIndex = slides.length - 1;
         }
 
-        var bg = document.querySelector('.main-bg');
-        var progress = document.querySelector('.title-divider .bar-progress');
-        var arrowNums = document.querySelectorAll('.main-arrow .arrow-number');
-        var arrowLeft = document.querySelector('.main-arrow .arrow-left');
-        var arrowRight = document.querySelector('.main-arrow .arrow-right');
-        var current = 0;
-        var total = slides.length;
+        // Add active class to new slide
+        slides[currentSlideIndex].classList.add('active');
 
-        function padNum(n) {
-            return n < 10 ? '0' + n : '' + n;
+        // Update page numbers and progress
+        updatePageNumbers();
+        updateProgressBar();
+    }
+
+    // Update page numbers
+    function updatePageNumbers() {
+        const currentPageEl = document.getElementById('hero-current');
+        const totalPagesEl = document.getElementById('hero-total');
+        const slides = document.querySelectorAll('.hero-slide');
+
+        if (currentPageEl) {
+            currentPageEl.textContent = String(currentSlideIndex + 1).padStart(2, '0');
         }
 
-        function updateNumbers() {
-            if (arrowNums.length >= 2) {
-                arrowNums[0].textContent = padNum(current + 1);
-                arrowNums[1].textContent = padNum(total);
-            }
-        }
-
-        function isMobileScroll() {
-            return bg && bg.scrollWidth > bg.clientWidth;
-        }
-
-        function goTo(index) {
-            slides[current].classList.remove('active');
-            current = (index + total) % total;
-            slides[current].classList.add('active');
-            updateNumbers();
-            if (isMobileScroll()) {
-                bg.scrollTo({ left: current * bg.offsetWidth, behavior: 'smooth' });
-            }
-        }
-
-        function restartProgress() {
-            if (!progress) return;
-            progress.style.animation = 'none';
-            progress.offsetHeight;
-            progress.style.animation = '';
-        }
-
-        updateNumbers();
-
-        slides[0].classList.add('active');
-
-        if (progress) {
-            progress.addEventListener('animationiteration', function() {
-                goTo(current + 1);
-            });
-        }
-
-        if (bg) {
-            var scrollTimer;
-            bg.addEventListener('scroll', function() {
-                clearTimeout(scrollTimer);
-                scrollTimer = setTimeout(function() {
-                    var snapped = Math.round(bg.scrollLeft / bg.offsetWidth);
-                    if (snapped !== current && snapped >= 0 && snapped < total) {
-                        slides[current].classList.remove('active');
-                        current = snapped;
-                        slides[current].classList.add('active');
-                        updateNumbers();
-                        restartProgress();
-                    }
-                }, 150);
-            });
-        }
-
-        if (arrowLeft) {
-            arrowLeft.style.cursor = 'pointer';
-            arrowLeft.addEventListener('click', function() {
-                goTo(current - 1);
-                restartProgress();
-            });
-        }
-
-        if (arrowRight) {
-            arrowRight.style.cursor = 'pointer';
-            arrowRight.addEventListener('click', function() {
-                goTo(current + 1);
-                restartProgress();
-            });
+        if (totalPagesEl) {
+            totalPagesEl.textContent = String(slides.length).padStart(2, '0');
         }
     }
 
-    // ==========================================
-    // Room Exterior Slider (이미지 + 탭 연동)
-    // ==========================================
-    function initRoomSlider() {
-        var slides = document.querySelectorAll('.img-frame .room-slide');
-        var tabs = document.querySelectorAll('.slider-tabs .tab-item');
-        var progress = document.querySelector('.section-room .bar-progress');
-        var prevBtn = document.querySelector('.room-prev');
-        var nextBtn = document.querySelector('.room-next');
-
-        if (slides.length === 0) return;
-
-        // 슬라이드 1개: 화살표/프로그레스 숨김
-        if (slides.length === 1) {
-            slides[0].classList.add('active');
-            if (tabs[0]) tabs[0].classList.add('active');
-            var specialBar = document.querySelector('.special-bar');
-            if (specialBar) specialBar.style.display = 'none';
-            return;
+    // Update progress bar like index.html
+    function updateProgressBar() {
+        const progressFill = document.getElementById('hero-progress-fill');
+        if (progressFill) {
+            // Reset progress bar to 0 and animate to 100% like index.html
+            progressFill.style.transition = 'none';
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+                progressFill.style.transition = 'width 4000ms linear';
+                progressFill.style.width = '100%';
+            }, 50);
         }
-
-        var current = 0;
-        var total = slides.length;
-
-        function goTo(index) {
-            slides[current].classList.remove('active');
-            if (tabs[current]) tabs[current].classList.remove('active');
-            current = (index + total) % total;
-            slides[current].classList.add('active');
-            if (tabs[current]) tabs[current].classList.add('active');
-        }
-
-        function restartProgress() {
-            if (!progress) return;
-            progress.style.animation = 'none';
-            progress.offsetHeight;
-            progress.style.animation = '';
-        }
-
-        if (progress) {
-            progress.addEventListener('animationiteration', function() {
-                goTo(current + 1);
-            });
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', function() {
-                goTo(current - 1);
-                restartProgress();
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
-                goTo(current + 1);
-                restartProgress();
-            });
-        }
-
-        tabs.forEach(function(tab, index) {
-            tab.addEventListener('click', function() {
-                goTo(index);
-                restartProgress();
-            });
-        });
     }
 
-    // ==========================================
-    // Room Preview Carousel (무한 루프)
-    // ==========================================
-    function initRoomPreviewCarousel() {
-        var track = document.querySelector('.room-scroll-track');
-        if (!track) return;
+    // Start auto slide
+    function startAutoSlide() {
+        stopAutoSlide(); // Clear any existing interval
+        autoSlideInterval = setInterval(() => {
+            changeSlide(1);
+        }, 4000); // 4초마다 자동 슬라이드
+    }
 
-        var prevBtn = document.querySelector('.nav-btn.prev');
-        var nextBtn = document.querySelector('.nav-btn.next');
+    // Stop auto slide
+    function stopAutoSlide() {
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+        }
+    }
 
-        var speed = 60; // px per second
-        var position = 0;
-        var halfWidth = 0;
-        var cardWidth = 0;
-        var isManualMoving = false;
-        var isRolling = false;
-        var animFrameId = null;
-        var lastTime = null;
+    // Navigation and Touch Support
+    function initSliderNavigation() {
+        const prevButton = document.querySelector('#hero-prev');
+        const nextButton = document.querySelector('#hero-next');
+        const sliderElement = document.querySelector('#hero-slider');
 
-        function shouldRoll() {
-            var roomCount = parseInt(track.dataset.roomCount || '1', 10);
-            var isSmallScreen = window.innerWidth <= 1000;
-            // 1000px 이하: 2개 이상일 때 롤링, PC: 4개 이상일 때 롤링
-            if (isSmallScreen) {
-                return roomCount >= 2;
-            }
-            return roomCount >= 4;
+        let isDragging = false;
+        let startX = 0;
+        let currentX = 0;
+
+        // Button Navigation
+        if (prevButton) {
+            prevButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                changeSlide(-1);
+            });
         }
 
-        function measure() {
-            halfWidth = track.scrollWidth / 2;
-            var firstCard = track.querySelector('.room-card');
-            if (firstCard) {
-                cardWidth = firstCard.offsetWidth + 40;
-            }
+        if (nextButton) {
+            nextButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                changeSlide(1);
+            });
         }
 
-        measure();
+        // Touch and Mouse Events
+        function getClientX(e) {
+            return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        }
 
-        function tick(time) {
-            if (!lastTime) lastTime = time;
-            var delta = (time - lastTime) / 1000;
-            lastTime = time;
-            if (delta > 0.1) delta = 0.016; // 탭 비활성 복귀 시 점프 방지
-            if (!isManualMoving) {
-                position -= speed * delta;
-                if (position <= -halfWidth) {
-                    position += halfWidth;
+        function handleStart(e) {
+            isDragging = true;
+            startX = getClientX(e);
+            currentX = startX;
+
+            // Pause auto-slide during interaction
+            stopAutoSlide();
+
+            e.preventDefault();
+        }
+
+        function handleMove(e) {
+            if (!isDragging) return;
+            currentX = getClientX(e);
+            e.preventDefault();
+        }
+
+        function handleEnd() {
+            if (!isDragging) return;
+
+            isDragging = false;
+            const deltaX = currentX - startX;
+            const threshold = 50; // 최소 드래그 거리
+
+            if (Math.abs(deltaX) > threshold) {
+                if (deltaX > 0) {
+                    // 오른쪽으로 스와이프 - 이전 슬라이드
+                    changeSlide(-1);
+                } else {
+                    // 왼쪽으로 스와이프 - 다음 슬라이드
+                    changeSlide(1);
                 }
-                track.style.transform = 'translateX(' + position + 'px)';
-            }
-            animFrameId = requestAnimationFrame(tick);
-        }
-
-        function hideDuplicateCards() {
-            var roomCount = parseInt(track.dataset.roomCount || '1', 10);
-            var cards = track.querySelectorAll('.room-card');
-            for (var i = 0; i < cards.length; i++) {
-                cards[i].style.display = i >= roomCount ? 'none' : '';
-            }
-        }
-
-        function showAllCards() {
-            var cards = track.querySelectorAll('.room-card');
-            for (var i = 0; i < cards.length; i++) {
-                cards[i].style.display = '';
-            }
-        }
-
-        function startRolling() {
-            if (isRolling) return;
-            isRolling = true;
-            track.closest('.room-grid').classList.remove('no-rolling');
-            showAllCards();
-            track.style.transform = '';
-            position = 0;
-            lastTime = null;
-            measure();
-            animFrameId = requestAnimationFrame(tick);
-        }
-
-        function stopRolling() {
-            if (!isRolling) return;
-            isRolling = false;
-            if (animFrameId) {
-                cancelAnimationFrame(animFrameId);
-                animFrameId = null;
-            }
-            position = 0;
-            track.style.transform = '';
-            track.closest('.room-grid').classList.add('no-rolling');
-            hideDuplicateCards();
-        }
-
-        function updateRollingState() {
-            measure();
-            if (shouldRoll()) {
-                startRolling();
             } else {
-                if (isRolling) {
-                    stopRolling();
-                } else {
-                    track.closest('.room-grid').classList.add('no-rolling');
-                    hideDuplicateCards();
-                }
+                // 충분히 움직이지 않았으면 자동 슬라이드 재시작
+                startAutoSlide();
             }
         }
 
-        updateRollingState();
+        // Touch Events
+        if (sliderElement) {
+            sliderElement.addEventListener('touchstart', handleStart, { passive: false });
+            sliderElement.addEventListener('touchmove', handleMove, { passive: false });
+            sliderElement.addEventListener('touchend', handleEnd, { passive: false });
 
-        function manualMove(direction) {
-            if (!isRolling) return;
-            isManualMoving = true;
-            var target = position + (direction * cardWidth);
-            var start = position;
-            var distance = target - start;
-            var duration = 400;
-            var startTime = null;
+            // Mouse Events (for desktop)
+            sliderElement.addEventListener('mousedown', handleStart);
+            sliderElement.addEventListener('mousemove', handleMove);
+            sliderElement.addEventListener('mouseup', handleEnd);
+            sliderElement.addEventListener('mouseleave', handleEnd);
+        }
+    }
 
-            function animate(time) {
-                if (!startTime) startTime = time;
-                var elapsed = time - startTime;
-                var progress = Math.min(elapsed / duration, 1);
-                var ease = progress < 0.5
-                    ? 2 * progress * progress
-                    : -1 + (4 - 2 * progress) * progress;
 
-                position = start + distance * ease;
+    // Scroll animation and parallax effect with throttling
+    function handleScrollAnimation() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const elements = document.querySelectorAll('.stylized-title-container, .room-card, .room-header-info, .room-images-section, .room-details-section, .room-large-image-section');
 
-                if (position <= -halfWidth) {
-                    position += halfWidth;
-                } else if (position > 0) {
-                    position -= halfWidth;
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('animate');
+                    }
+                });
+
+                // Gallery animation
+                const gallerySection = document.querySelector('.room-gallery-section-wrap');
+                if (gallerySection) {
+                    const galleryTop = gallerySection.getBoundingClientRect().top;
+                    const galleryVisible = 200;
+
+                    if (galleryTop < window.innerHeight - galleryVisible) {
+                        const mainImage = document.querySelector('.gallery-main-image');
+                        const contentArea = document.querySelector('.gallery-content-area');
+
+                        if (mainImage) mainImage.classList.add('animate');
+                        if (contentArea) contentArea.classList.add('animate');
+                    }
                 }
 
-                track.style.transform = 'translateX(' + position + 'px)';
+                // New Parallax effect
+                applyParallaxEffect();
 
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    isManualMoving = false;
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    // New simple parallax implementation
+    function applyParallaxEffect() {
+        const scrollY = window.scrollY;
+        const heroSection = document.querySelector('.hero-slider-section');
+        const mainSection = document.querySelector('.main-content-section');
+
+        if (!heroSection || !mainSection) return;
+
+        const heroHeight = heroSection.offsetHeight;
+
+        // Hero moves slightly slower (parallax background effect)
+        const heroTransform = scrollY * 0.3;
+        heroSection.style.transform = `translateY(${heroTransform}px)`;
+
+        // Main content moves up to cover hero when scrolling
+        if (scrollY > heroHeight * 0.3) {
+            const coverDistance = Math.min(scrollY - (heroHeight * 0.3), heroHeight * 0.7);
+            const coverTransform = -(coverDistance * 0.5);
+            mainSection.style.transform = `translateY(${coverTransform}px)`;
+        } else {
+            mainSection.style.transform = 'translateY(0)';
+        }
+    }
+
+    // Check if device is mobile
+    function isMobile() {
+        return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+
+
+    // Initialize accordion functionality
+    function initializeAccordion() {
+        const closeButtons = document.querySelectorAll('.accordion-close');
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const targetId = this.getAttribute('data-target');
+                const content = document.getElementById(targetId);
+
+                if (content) {
+                    content.classList.toggle('collapsed');
                 }
+            });
+        });
+    }
+
+    // Initialize gallery thumbnail functionality
+    function initializeGalleryThumbnails() {
+        const thumbnails = document.querySelectorAll('.gallery-thumb');
+        const mainImage = document.querySelector('.gallery-main-image img');
+
+        if (!mainImage || thumbnails.length === 0) return;
+
+        // Set first thumbnail as active by default
+        thumbnails[0].classList.add('active');
+
+        thumbnails.forEach((thumb) => {
+            thumb.addEventListener('click', function() {
+                // Remove active class from all thumbnails
+                thumbnails.forEach(t => t.classList.remove('active'));
+
+                // Add active class to clicked thumbnail
+                this.classList.add('active');
+
+                // Get the image source from the clicked thumbnail
+                const thumbImg = this.querySelector('img');
+                if (thumbImg && mainImage) {
+                    // Add fade effect
+                    mainImage.style.opacity = '0.3';
+
+                    setTimeout(() => {
+                        mainImage.src = thumbImg.src;
+                        mainImage.alt = thumbImg.alt;
+                        mainImage.style.opacity = '1';
+                    }, 150);
+                }
+            });
+
+            // Add keyboard support
+            thumb.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+
+            // Make thumbnails focusable
+            thumb.setAttribute('tabindex', '0');
+        });
+    }
+
+    // Export slider initialization function for RoomMapper
+    window.initializeSlider = function() {
+        updatePageNumbers();
+        startAutoSlide();
+    };
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', async function() {
+        // RoomMapper 초기화
+        if (typeof RoomMapper !== 'undefined') {
+            const roomMapper = new RoomMapper();
+            await roomMapper.initialize();
+        }
+
+        // Initialize slider navigation
+        initSliderNavigation();
+
+        // Initialize accordion
+        initializeAccordion();
+
+        // Initialize gallery thumbnails
+        initializeGalleryThumbnails();
+
+        // Initial animation check
+        setTimeout(() => {
+            handleScrollAnimation();
+        }, 100);
+
+        // Scroll event listener
+        window.addEventListener('scroll', handleScrollAnimation);
+
+        // Resize event listener to handle mobile detection
+        window.addEventListener('resize', () => {
+            if (isMobile()) {
+                // Reset transforms on mobile
+                const heroSection = document.querySelector('.hero-slider-section');
+                const mainSection = document.querySelector('.main-content-section');
+
+                if (heroSection) heroSection.style.transform = 'none';
+                if (mainSection) mainSection.style.transform = 'none';
             }
-
-            requestAnimationFrame(animate);
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', function() {
-                if (!isManualMoving) manualMove(1);
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
-                if (!isManualMoving) manualMove(-1);
-            });
-        }
-
-        window.addEventListener('resize', function() {
-            updateRollingState();
         });
-    }
-
-    // ==========================================
-    // Info Accordion (모바일 전용)
-    // ==========================================
-    function initInfoAccordion() {
-        if (window.innerWidth > 768) return;
-
-        var blocks = document.querySelectorAll('.section-info .info-block');
-        blocks.forEach(function(block) {
-            block.classList.add('active');
-        });
-
-        var titles = document.querySelectorAll('.section-info .block-title');
-        titles.forEach(function(title) {
-            title.addEventListener('click', function() {
-                var block = this.closest('.info-block');
-                block.classList.toggle('active');
-            });
-        });
-    }
-
-    // 매퍼에서 재초기화 시 사용
-    window.initHeroSlider = initMainSlideshow;
-    window.initRoomSlider = initRoomSlider;
-    window.initRoomPreviewCarousel = initRoomPreviewCarousel;
-
-    // DOM ready
-    document.addEventListener('DOMContentLoaded', function() {
-        initMainSlideshow();
-        initRoomSlider();
-        initRoomPreviewCarousel();
-        initInfoAccordion();
     });
+
 })();

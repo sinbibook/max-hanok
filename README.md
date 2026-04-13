@@ -1,1 +1,1 @@
-# template-fullpage-visual
+# template-full-banner-slider-group Template
