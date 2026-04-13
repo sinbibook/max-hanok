@@ -663,6 +663,7 @@ class PreviewHandler {
             switch (section) {
                 case 'hero':
                     mapper.mapHeroSection();
+                    if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
                     break;
                 case 'essence':
                     mapper.mapEssenceSection();
