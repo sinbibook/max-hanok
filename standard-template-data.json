@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.134.0",
-    "generatedAt": "2026-04-13T05:47:23.063Z",
+    "version": "1.135.0",
+    "generatedAt": "2026-04-13T05:51:41.281Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -259,9 +259,9 @@
         "poolState": "N"
       },
       "timeSettings": {
-        "timeSettingType": "property",
-        "checkin": "15:00",
-        "checkout": "11:00",
+        "timeSettingType": "roomtype",
+        "checkin": "22:00",
+        "checkout": "15:00",
         "checkinDeadline": "22:00"
       },
       "bedTypes": [
@@ -437,9 +437,9 @@
       ],
       "displayOrder": 0,
       "createdAt": "2025-10-28T10:44:16.685Z",
-      "updatedAt": "2026-03-24T05:52:10.752Z",
+      "updatedAt": "2026-04-13T05:50:41.075Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
-      "updatedBy": "105feacd-2c72-418a-8df3-2c62ca0b04c5"
+      "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
     {
       "id": "43387b98-deb4-4271-a3ee-dd2045ae75e6",
@@ -1254,8 +1254,6 @@
                     "isSelected": true
                   }
                 ],
-                "mediaType": "video",
-                "description": "한옥느낌의 맥스펜션!!!!",
                 "videos": [
                   {
                     "id": "c9ded161-60ae-4e73-86d0-390a222f1ab2",
@@ -1264,7 +1262,9 @@
                     "description": "",
                     "isSelected": true
                   }
-                ]
+                ],
+                "mediaType": "video",
+                "description": "한옥느낌의 맥스펜션!!!!"
               },
               "closing": {
                 "title": "당신의 이야기",
@@ -1277,9 +1277,9 @@
                     "isSelected": true
                   }
                 ],
+                "videos": [],
                 "mediaType": "video",
-                "description": "맥스 한옷 펜션에서 하루를 즐겨보세요.",
-                "videos": []
+                "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
               },
               "essence": {
                 "title": "한옥의 멋을 느껴보세요.",
@@ -1313,8 +1313,6 @@
                     "isSelected": true
                   }
                 ],
-                "mediaType": "video",
-                "description": "TEST",
                 "videos": [
                   {
                     "id": "6bf23505-edec-440e-8b00-5ac6af5b148f",
@@ -1323,7 +1321,9 @@
                     "description": "",
                     "isSelected": true
                   }
-                ]
+                ],
+                "mediaType": "video",
+                "description": "TEST"
               },
               "gallery": {
                 "title": "특별한 순간",
@@ -1364,9 +1364,9 @@
                     "isSelected": true
                   }
                 ],
+                "videos": [],
                 "mediaType": "image",
-                "description": "맥스펜션에서의 뜻깊은 순간들",
-                "videos": []
+                "description": "맥스펜션에서의 뜻깊은 순간들"
               },
               "signature": {
                 "title": "주요 순간들",
@@ -1400,9 +1400,9 @@
                     "isSelected": true
                   }
                 ],
+                "videos": [],
                 "mediaType": "image",
-                "description": "맥스펜션이 선사하는 잊을 수 없는 경험들",
-                "videos": []
+                "description": "맥스펜션이 선사하는 잊을 수 없는 경험들"
               }
             }
           ]
