@@ -1689,3 +1689,73 @@
     opacity: 1;
     transform: scale(1);
 }
+
+/* ===================================
+   Video Mode Styles
+   =================================== */
+
+/* Essence video mode */
+.essence-left-image.video-mode {
+    height: 680px;
+}
+
+.essence-left-image.video-mode video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px;
+}
+
+@media (max-width: 1024px) {
+    .essence-left-image.video-mode {
+        height: 420px;
+        grid-column: unset;
+    }
+}
+
+@media (max-width: 768px) {
+    .essence-left-image.video-mode {
+        height: 400px;
+    }
+}
+
+/* Hero video */
+#hero-slider video[data-hero-video] {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Gallery video */
+.gallery-video-container {
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.gallery-video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-video-container img.empty-image-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Closing video */
+.index-closing .closing-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
