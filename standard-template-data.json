@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.142.0",
-    "generatedAt": "2026-04-13T09:44:35.063Z",
+    "version": "1.143.0",
+    "generatedAt": "2026-04-13T10:14:40.881Z",
     "templateType": "full_banner_slider_group",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -9,6 +9,7 @@
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "name": "Max 한옥 펜션",
+    "nameEn": "Max Hanok Pensio",
     "description": "맥스 한옥 펜션으로 놀러오세요",
     "subtitle": "한옥의 멋을 살린 맥스 한옥 펜션",
     "address": "서울특별시 금천구 가산디지털2로 144",
@@ -23,6 +24,9 @@
     "reservationGuide": "• 기준인원 초과 시 추가 요금이 발생합니다.\n• 기준인원 초과 시 성인 1인 30,000원 / 아동 1인 20,000원 / 24개월 미만 무료(증빙서류 지참)입니다.\n• 결제는 필수입니다.",
     "province": "서울특별시",
     "city": "금천구",
+    "domain": "max-hanok.com",
+    "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
+    "ybsId": "abc",
     "amenities": [
       "WiFi",
       "주차장",
@@ -225,11 +229,7 @@
           }
         ]
       }
-    ],
-    "nameEn": "Max Hanok Pensio",
-    "domain": "max-hanok.com",
-    "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
-    "ybsId": "abc"
+    ]
   },
   "rooms": [
     {
@@ -1174,6 +1174,7 @@
     }
   ],
   "homepage": {
+    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
     "templateType": "full_banner_slider_group",
     "images": [
@@ -1838,6 +1839,12 @@
       },
       "theme": {
         "font": {
+          "koMain": {
+            "cdn": null,
+            "key": "sokchoseadotum",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
+            "family": "SokchoSeaDotum"
+          },
           "koSub": {
             "cdn": null,
             "key": "aritaburi",
@@ -1849,12 +1856,6 @@
             "key": "chonburi",
             "woff2": null,
             "family": "Chonburi"
-          },
-          "koMain": {
-            "cdn": null,
-            "key": "sokchoseadotum",
-            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
-            "family": "SokchoSeaDotum"
           }
         },
         "color": {
@@ -2072,7 +2073,6 @@
           "images": []
         }
       ]
-    },
-    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
+    }
   }
 }
