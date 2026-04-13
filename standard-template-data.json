@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.136.0",
-    "generatedAt": "2026-04-13T06:11:48.261Z",
+    "version": "1.137.0",
+    "generatedAt": "2026-04-13T07:09:28.039Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1251,11 +1251,18 @@
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
                     "sortOrder": 3,
                     "description": "",
-                    "isSelected": true
+                    "isSelected": false
+                  },
+                  {
+                    "id": "133345d7-31f6-4911-acd3-fe224fbf5b15",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776063826587-lhdoravlbt.jpg",
+                    "sortOrder": 4,
+                    "description": "",
+                    "isSelected": false
                   }
                 ],
                 "videos": [],
-                "mediaType": "image",
+                "mediaType": "video",
                 "description": "한옥느낌의 맥스펜션!!!!"
               },
               "closing": {
