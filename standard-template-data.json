@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.132.0",
-    "generatedAt": "2026-04-10T08:44:21.698Z",
+    "version": "1.133.0",
+    "generatedAt": "2026-04-13T05:45:54.793Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1222,7 +1222,7 @@
           "sections": [
             {
               "hero": {
-                "title": "전통 한옥의 느낌",
+                "title": "전통 한옥의 느낌~!",
                 "images": [
                   {
                     "id": "cd63aeb5-42ac-4466-96bf-33faf9048bd9",
@@ -1239,20 +1239,22 @@
                     "isSelected": true
                   },
                   {
-                    "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
+                    "id": "2f012877-d686-4aff-b672-dea4e11bfd7a",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1769397904038-fojbgcti2d7.jpg",
                     "sortOrder": 2,
                     "description": "",
                     "isSelected": true
                   },
                   {
-                    "id": "2f012877-d686-4aff-b672-dea4e11bfd7a",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1769397904038-fojbgcti2d7.jpg",
+                    "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
                     "sortOrder": 3,
                     "description": "",
                     "isSelected": true
                   }
                 ],
+                "mediaType": "video",
+                "description": "한옥느낌의 맥스펜션!!!!",
                 "videos": [
                   {
                     "id": "c9ded161-60ae-4e73-86d0-390a222f1ab2",
@@ -1261,9 +1263,7 @@
                     "description": "",
                     "isSelected": true
                   }
-                ],
-                "mediaType": "video",
-                "description": "한옥느낌의 맥스펜션!!!!"
+                ]
               },
               "closing": {
                 "title": "당신의 이야기",
@@ -1276,17 +1276,9 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [
-                  {
-                    "id": "857a5e45-7b52-435c-a9eb-a7a04f0e8a45",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_closing/1775806733436-1mm1fzo8gi8.MP4",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true
-                  }
-                ],
                 "mediaType": "video",
-                "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
+                "description": "맥스 한옷 펜션에서 하루를 즐겨보세요.",
+                "videos": []
               },
               "essence": {
                 "title": "한옥의 멋을 느껴보세요.",
@@ -1296,7 +1288,7 @@
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1762753836719-n94acropqtn.jpg",
                     "sortOrder": 0,
                     "description": "",
-                    "isSelected": true
+                    "isSelected": false
                   },
                   {
                     "id": "248feeac-3629-4f29-929a-bee4058d4edb",
@@ -1320,9 +1312,17 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
                 "mediaType": "video",
-                "description": "TEST"
+                "description": "TEST",
+                "videos": [
+                  {
+                    "id": "6bf23505-edec-440e-8b00-5ac6af5b148f",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1776048205552-grq8t48mrz.MP4",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  }
+                ]
               },
               "gallery": {
                 "title": "특별한 순간",
@@ -1363,9 +1363,9 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
                 "mediaType": "image",
-                "description": "맥스펜션에서의 뜻깊은 순간들"
+                "description": "맥스펜션에서의 뜻깊은 순간들",
+                "videos": []
               },
               "signature": {
                 "title": "주요 순간들",
@@ -1399,9 +1399,9 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
                 "mediaType": "image",
-                "description": "맥스펜션이 선사하는 잊을 수 없는 경험들"
+                "description": "맥스펜션이 선사하는 잊을 수 없는 경험들",
+                "videos": []
               }
             }
           ]
@@ -1427,8 +1427,6 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
-                "mediaType": "image",
                 "description": ""
               },
               "notice": {
@@ -1445,34 +1443,46 @@
                 "title": "한옥의 멋",
                 "images": [
                   {
+                    "id": "7a6937a1-3fb4-4628-bbfd-f43824628fcb",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1760084067557-sx1j1s99c5n.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  },
+                  {
                     "id": "d83219b9-3046-44c0-9e56-41639cba1b26",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1759123442318-laqpu8bsysl.jpg",
-                    "sortOrder": 0,
+                    "sortOrder": 1,
                     "description": "메인 슬라이더4",
                     "isSelected": true
                   },
                   {
                     "id": "1d179de7-71ee-454d-9779-fb803eb78e99",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1760084694650-lswg7lpyyvd.jpg",
-                    "sortOrder": 1,
+                    "sortOrder": 2,
                     "description": "",
                     "isSelected": true
                   },
                   {
-                    "id": "7a6937a1-3fb4-4628-bbfd-f43824628fcb",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1760084067557-sx1j1s99c5n.jpg",
-                    "sortOrder": 2,
+                    "id": "a5fbbb0a-650c-462f-b00b-12493dd99772",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1776049349858-gcxs5vc9e1f.jpg",
+                    "sortOrder": 3,
                     "description": "",
-                    "isSelected": false
+                    "isSelected": true
+                  },
+                  {
+                    "id": "2d3450e5-d48e-48e7-a43d-57998a2fc15d",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1776049473580-x39ytyf4hl.jpg",
+                    "sortOrder": 4,
+                    "description": "",
+                    "isSelected": true
                   }
                 ],
-                "videos": [],
-                "mediaType": "image",
                 "description": "느껴보지 못한 새로운 경험을 제공합니다."
               },
               "about": [
                 {
-                  "title": "한옥의 미",
+                  "title": "한옥의 미12",
                   "images": [
                     {
                       "id": "dd293c39-04ba-4b41-9894-1a124b0c12bd",
@@ -1483,17 +1493,33 @@
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
                     },
                     {
-                      "id": "5f86d412-4ac0-4029-9a21-8bae524fce7b",
-                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287201453-csrkd6t24su.jpg",
+                      "id": "4da7168b-0587-49c0-9c6a-37d11f9d7371",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287240706-u5fxb3mio4.jpg",
                       "sortOrder": 1,
                       "description": "",
                       "isSelected": true,
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
                     },
                     {
-                      "id": "4da7168b-0587-49c0-9c6a-37d11f9d7371",
-                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287240706-u5fxb3mio4.jpg",
+                      "id": "5f86d412-4ac0-4029-9a21-8bae524fce7b",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287201453-csrkd6t24su.jpg",
                       "sortOrder": 2,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
+                    },
+                    {
+                      "id": "1f18fa50-e2cb-467e-bae8-5a382228a317",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1776049077659-sv571oz4ckn.jpg",
+                      "sortOrder": 3,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
+                    },
+                    {
+                      "id": "9ea22335-1e10-407f-b3bb-202deab7d12e",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1776049077660-ibm4decynh.jpg",
+                      "sortOrder": 4,
                       "description": "",
                       "isSelected": true,
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
@@ -1508,7 +1534,7 @@
                     {
                       "id": "18809828-802d-4e18-86cc-445985cbcf0b",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857850-wnw3ksxcgib.jpg",
-                      "sortOrder": 3,
+                      "sortOrder": 5,
                       "description": "",
                       "isSelected": true,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
@@ -1516,7 +1542,7 @@
                     {
                       "id": "3c262154-f606-4675-b1fc-7b951f74d8ba",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857849-94b8jg0plxq.jpg",
-                      "sortOrder": 4,
+                      "sortOrder": 6,
                       "description": "",
                       "isSelected": true,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
@@ -1524,9 +1550,17 @@
                     {
                       "id": "b387ffb4-ffe9-4941-b4aa-68e849602957",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857850-4fft2g0x8n5.jpg",
-                      "sortOrder": 5,
+                      "sortOrder": 7,
                       "description": "",
                       "isSelected": true,
+                      "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
+                    },
+                    {
+                      "id": "c0c33b74-f340-482c-9838-5adff5bf7b85",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1776049574612-j4oc68z9rj.jpg",
+                      "sortOrder": 8,
+                      "description": "",
+                      "isSelected": false,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
                     }
                   ],
@@ -1720,8 +1754,6 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
-                "mediaType": "image",
                 "description": ""
               },
               "about": {
@@ -1735,8 +1767,6 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [],
-                "mediaType": "image",
                 "description": "연락처 : 010-0000-0000\nemail : mex-pension@pension.com "
               }
             }
@@ -1763,7 +1793,7 @@
                 "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1767766134567-vk1z03o4h0p.jpg",
                 "sortOrder": 1,
                 "description": "",
-                "isSelected": true,
+                "isSelected": false,
                 "blockId": "ab6f5b31-5ead-4e67-8f9f-4d3bfd7ce07d"
               }
             ],
@@ -1798,8 +1828,8 @@
           }
         },
         "color": {
-          "primary": "#F5F0E8",
-          "secondary": "#3E5B45"
+          "primary": "#e8ebe6",
+          "secondary": "#7a8471"
         }
       },
       "property": {
@@ -1858,6 +1888,7 @@
       "roomtypes": [
         {
           "id": "c20a834f-87a0-458c-a75f-bc81df58ab98",
+          "name": "별하방 테스트",
           "images": [
             {
               "id": "681dcdb6-d0c8-4f09-9f61-f60a98ce4e55",
@@ -1869,9 +1900,18 @@
               "category": "roomtype_thumbnail"
             },
             {
+              "id": "86d9b190-5c54-49f8-877e-79ddf07f4f87",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1767689749407-k2hrz6tqx8.jpg",
+              "sortOrder": 0,
+              "description": "",
+              "isSelected": true,
+              "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
+              "category": "roomtype_interior"
+            },
+            {
               "id": "a3663a1d-488f-4654-8607-1988549cdd07",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1767689749407-d2phdeprze.jpg",
-              "sortOrder": 0,
+              "sortOrder": 1,
               "description": "",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
@@ -1880,18 +1920,9 @@
             {
               "id": "9b88d93f-1a09-469e-8a50-4c57eca50c23",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1767689749407-msjrgqgdk6q.jpg",
-              "sortOrder": 1,
-              "description": "",
-              "isSelected": true,
-              "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
-              "category": "roomtype_interior"
-            },
-            {
-              "id": "86d9b190-5c54-49f8-877e-79ddf07f4f87",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1767689749407-k2hrz6tqx8.jpg",
               "sortOrder": 2,
               "description": "",
-              "isSelected": false,
+              "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_interior"
             },
@@ -1900,7 +1931,7 @@
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_interior/1767689749407-s0b8s11op0o.jpg",
               "sortOrder": 3,
               "description": "",
-              "isSelected": false,
+              "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_interior"
             },
