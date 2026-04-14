@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.148.0",
-    "generatedAt": "2026-04-14T03:21:28.412Z",
-    "templateType": "full_banner_wipe",
+    "version": "1.149.0",
+    "generatedAt": "2026-04-14T05:15:25.917Z",
+    "templateType": "full_banner_conveyer",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1176,7 +1176,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_wipe",
+    "templateType": "full_banner_conveyer",
     "images": [
       {
         "logo": [
@@ -1226,8 +1226,8 @@
                 "title": "전통 한옥의 느낌~!",
                 "images": [
                   {
-                    "id": "133345d7-31f6-4911-acd3-fe224fbf5b15",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776063826587-lhdoravlbt.jpg",
+                    "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
                     "sortOrder": 0,
                     "description": "",
                     "isSelected": true
@@ -1252,13 +1252,6 @@
                     "sortOrder": 3,
                     "description": "",
                     "isSelected": true
-                  },
-                  {
-                    "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
-                    "sortOrder": 4,
-                    "description": "",
-                    "isSelected": true
                   }
                 ],
                 "videos": [
@@ -1270,7 +1263,7 @@
                     "isSelected": true
                   }
                 ],
-                "mediaType": "video",
+                "mediaType": "image",
                 "description": "한옥느낌의 맥스펜션!!!!"
               },
               "closing": {
@@ -1387,7 +1380,7 @@
                     "isSelected": true
                   }
                 ],
-                "mediaType": "video",
+                "mediaType": "image",
                 "description": "맥스펜션에서의 뜻깊은 순간들"
               },
               "signature": {
