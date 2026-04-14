@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.146.0",
-    "generatedAt": "2026-04-14T02:11:19.572Z",
-    "templateType": "full_banner_slider_flat",
+    "version": "1.147.0",
+    "generatedAt": "2026-04-14T03:14:08.645Z",
+    "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1176,7 +1176,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_slider_flat",
+    "templateType": "full_banner_wipe",
     "images": [
       {
         "logo": [
@@ -1291,16 +1291,8 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [
-                  {
-                    "id": "3d5c01ac-0076-4081-bbac-a21950b79881",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_closing/1776072157086-kvptnq942te.MP4",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true
-                  }
-                ],
-                "mediaType": "video",
+                "videos": [],
+                "mediaType": "image",
                 "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
               },
               "essence": {
