@@ -49,16 +49,7 @@ class IndexMapper extends BaseDataMapper {
 
         // Essence 슬라이더는 initEssenceImages에서 초기화됨
 
-        // Gallery 슬라이더 재초기화
-        if (typeof window.setupInfiniteSlider === 'function') {
-            const gallerySlider = document.querySelector('.gallery-slider');
-            if (gallerySlider && gallerySlider.querySelectorAll('.gallery-item').length > 0) {
-                window.setupInfiniteSlider();
-                if (typeof window.setupDragAndSwipe === 'function') {
-                    window.setupDragAndSwipe();
-                }
-            }
-        }
+        // Gallery: CSS animation 기반이므로 별도 재초기화 불필요
     }
 
     /**
@@ -80,8 +71,6 @@ class IndexMapper extends BaseDataMapper {
      * 직접적인 애니메이션 등록 (fallback)
      */
     initDirectAnimations() {
-        console.log('Index Mapper: Using direct animations');
-
         const animationPairs = [
             { selector: '.room-item', className: 'animate-fade-in' },
             { selector: '.gallery-item', className: 'animate-fade-in' },
@@ -689,7 +678,6 @@ class IndexMapper extends BaseDataMapper {
             }
 
             roomItem.innerHTML = `
-                <div class="room-number short-text"></div>
                 <div class="room-image">
                     <img alt="${roomName}" loading="lazy" class="${imageClass}">
                 </div>
@@ -705,11 +693,23 @@ class IndexMapper extends BaseDataMapper {
             // src는 직접 할당 (data URI 깨짐 방지)
             roomItem.querySelector('.room-image img').src = roomImage;
 
+            // 전체 박스 클릭 이벤트 추가
+            roomItem.addEventListener('click', (e) => {
+                // 버튼 클릭인 경우 이벤트 전파 방지
+                if (e.target.classList.contains('room-view-btn')) {
+                    return;
+                }
+                navigateTo('room', room.id);
+            });
+
             roomsContainer.appendChild(roomItem);
         });
 
-        // 드래그 스크롤 기능 추가
-        this.addDragScrollToRooms(roomsContainer);
+        // 드래그 스크롤 기능 추가 (최초 1회만)
+        if (!roomsContainer.dataset.dragInit) {
+            this.addDragScrollToRooms(roomsContainer);
+            roomsContainer.dataset.dragInit = 'true';
+        }
     }
 
     /**
@@ -792,15 +792,6 @@ class IndexMapper extends BaseDataMapper {
 
         // 부드러운 스크롤 추가
         container.style.scrollBehavior = 'smooth';
-    }
-
-    /**
-     * 룸 페이지로 이동
-     */
-    navigateToRoom(roomId) {
-        if (typeof navigateTo === 'function') {
-            navigateTo('room', roomId);
-        }
     }
 
     // ============================================================================

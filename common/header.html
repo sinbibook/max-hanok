@@ -28,37 +28,13 @@
             </div>
             <div class="header-buttons">
                 <!-- Reservation Button -->
-                <div class="circular-reservation-btn desktop-only" data-booking-engine>
-                    <svg class="rotating-text" viewBox="0 0 100 100">
-                        <defs>
-                            <path id="circle-path" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"></path>
-                        </defs>
-                        <text>
-                            <textPath href="#circle-path" startOffset="0%">
-                                RESERVATION • RESERVATION • RESERVATION •
-                            </textPath>
-                        </text>
-                    </svg>
-                    <div class="btn-center">
-                        <span style="font-weight: 700; font-size: 16px;">예약</span>
-                    </div>
+                <div class="simple-reservation-btn desktop-only" data-booking-engine>
+                    <span class="reservation-text">예약</span>
                 </div>
 
-                <!-- YBS Button -->
-                <div class="circular-ybs-btn desktop-only" data-ybs-booking>
-                    <svg class="rotating-text" viewBox="0 0 100 100">
-                        <defs>
-                            <path id="ybs-circle-path" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"></path>
-                        </defs>
-                        <text>
-                            <textPath href="#ybs-circle-path" startOffset="0%">
-                                YBS • YBS • YBS • YBS • YBS •
-                            </textPath>
-                        </text>
-                    </svg>
-                    <div class="btn-center">
-                        <span style="font-weight: 700; font-size: 14px;">YBS</span>
-                    </div>
+                <!-- YBS Button (desktop left side) -->
+                <div class="simple-ybs-btn desktop-only" data-ybs-booking>
+                    <span class="ybs-text">YBS</span>
                 </div>
 
                 <!-- Menu Button -->
@@ -68,7 +44,6 @@
                         <span></span>
                         <span></span>
                     </div>
-                    <span class="menu-label">MENU</span>
                 </div>
             </div>
         </div>
@@ -116,7 +91,7 @@
             <!-- Mobile Menu Reservation Button -->
             <div class="mobile-menu-reservation">
                 <button class="reservation-btn" data-booking-engine onclick="toggleHeaderMenu(); navigateTo('reservation')">
-                    RESERVATION
+                    예약
                 </button>
             </div>
         </div>
@@ -135,12 +110,12 @@
                 </defs>
                 <text>
                     <textPath href="#mobile-res-path" startOffset="0%">
-                        RESERVATION • RESERVATION •
+                        예약 • 예약 • 예약 • 예약 • 예약 •
                     </textPath>
                 </text>
             </svg>
             <div class="btn-center">
-                <span style="font-weight: 700; font-size: 14px;">예약</span>
+                <span style="font-weight: 700; font-size: 15px;">예약</span>
             </div>
         </div>
 
