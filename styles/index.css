@@ -1759,3 +1759,9 @@
     object-fit: cover;
     z-index: 0;
 }
+
+@media (max-width: 768px) {
+    .index-closing:has(.closing-video) {
+        min-height: 120vh;
+    }
+}
