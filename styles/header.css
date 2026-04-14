@@ -17,7 +17,7 @@
 .header.scrolled {
     background: color-mix(in srgb, var(--color-secondary) 70%, transparent);
     padding: 15px 0;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 20px color-mix(in srgb, var(--color-secondary) 5%, transparent);
 }
 
 .header-content {
@@ -113,7 +113,7 @@
 }
 
 .menu-item {
-    font-family: var(--font-ko-sub);
+    font-family: var(--font-ko-main);
     color: white;
     font-size: 1rem;
     font-weight: 500;
@@ -154,9 +154,9 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.9);
+    background: color-mix(in srgb, white 90%, transparent);
     padding: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 10%, transparent);
     opacity: 0;
     visibility: hidden;
     transform: translateX(-50%) translateY(-10px);
@@ -219,13 +219,13 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 10px 24px;
+    padding: 12px 24px;
     background: transparent;
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid color-mix(in srgb, white 30%, transparent);
     font-family: var(--font-en-main);
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     cursor: pointer;
@@ -241,7 +241,7 @@
 }
 
 .header.scrolled .reservation-btn {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: color-mix(in srgb, white 30%, transparent);
     color: white;
 }
 
@@ -253,7 +253,6 @@
 
 .reservation-btn .btn-text {
     display: inline-block;
-    font-size: 1.1rem;
 }
 
 .reservation-btn .icon {
@@ -278,7 +277,7 @@
     padding: 12px 24px;
     background: transparent;
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid color-mix(in srgb, white 30%, transparent);
     font-family: var(--font-en-main);
     font-size: 0.9rem;
     font-weight: 400;
@@ -297,7 +296,7 @@
 }
 
 .header.scrolled .ybs-btn {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: color-mix(in srgb, white 30%, transparent);
     color: white;
 }
 
@@ -356,7 +355,7 @@
     width: 100%;
     height: 100vh;
     height: 100dvh;
-    background: rgba(0, 0, 0, 0.95);
+    background: color-mix(in srgb, var(--color-secondary) 95%, transparent);
     transition: right 0.3s ease;
     z-index: 2000;
     overflow: hidden;
@@ -415,7 +414,7 @@ body.mobile-menu-open {
 }
 
 .mobile-menu-section:not(:last-child) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid color-mix(in srgb, white 10%, transparent);
 }
 
 .mobile-menu-title {
@@ -439,10 +438,10 @@ body.mobile-menu-open {
 }
 
 .mobile-sub-item {
-    font-family: var(--font-ko-sub);
+    font-family: var(--font-ko-main);
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.8);
+    color: color-mix(in srgb, white 80%, transparent);
     font-size: 1rem;
     padding: 10px;
     text-align: left;
@@ -451,7 +450,7 @@ body.mobile-menu-open {
 }
 
 .mobile-sub-item:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, white 10%, transparent);
     color: white;
     padding-left: 15px;
 }
@@ -470,7 +469,7 @@ body.mobile-menu-open {
 }
 
 .mobile-menu-title-button:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, white 10%, transparent);
     padding-left: 10px;
 }
 
@@ -514,7 +513,7 @@ body.mobile-menu-open {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.95);
+    background: color-mix(in srgb, var(--color-secondary) 95%, transparent);
     padding: 20px;
     padding-bottom: calc(20px + env(safe-area-inset-bottom));
     z-index: 2001;
@@ -530,34 +529,30 @@ body.mobile-menu-open {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 10px 16px;
+    padding: 14px 16px;
     background: white;
     border: none;
     color: var(--color-secondary);
     font-family: var(--font-en-main);
-    font-size: 0.8rem;
-    font-weight: 400;
+    font-size: 1.1rem;
+    font-weight: 700;
     letter-spacing: 0.1em;
     border-radius: 0;
     margin: 0;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 20%, transparent);
     position: relative;
 }
 
 .mobile-reservation-btn:hover {
-    background: rgba(255, 255, 255, 0.95);
+    background: color-mix(in srgb, white 95%, transparent);
     transform: translateY(-1px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 25px color-mix(in srgb, var(--color-secondary) 25%, transparent);
 }
 
 .mobile-reservation-btn:hover .icon {
     transform: translate(2px, -2px);
-}
-
-.mobile-reservation-btn span {
-    font-size: 1.1rem;
 }
 
 .mobile-reservation-btn .icon {
@@ -588,14 +583,14 @@ body.mobile-menu-open {
     margin: 0;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 20%, transparent);
     position: relative;
 }
 
 .mobile-ybs-btn:hover {
-    background: rgba(255, 255, 255, 0.95);
+    background: color-mix(in srgb, white 95%, transparent);
     transform: translateY(-1px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 25px color-mix(in srgb, var(--color-secondary) 25%, transparent);
 }
 
 .mobile-ybs-btn:hover .icon {
@@ -623,8 +618,16 @@ body.mobile-menu-open {
 }
 
 @media (max-width: 768px) {
+    .header { 
+        padding: 0;
+    }
+
+    .header.scrolled { 
+        padding: 0 0 10px 0;
+    }
     .header-content {
-        padding: 0 20px 0 0;
+        padding: 10px 0 0;
+        max-width: 90%;
     }
 
     .header-inner {

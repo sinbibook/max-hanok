@@ -1,1 +1,1 @@
-# template-full-banner-slider-group Template
+# template-full-banner-slider-flat Template

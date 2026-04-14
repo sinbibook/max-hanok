@@ -107,86 +107,6 @@ class BaseDataMapper {
     }
 
     // ============================================================================
-    // 🏠 CUSTOMFIELDS HELPERS (Property & Room)
-    // ============================================================================
-
-    /**
-     * 숙소 이름 가져오기 (customFields 우선, 없으면 기본값)
-     */
-    getPropertyName() {
-        const customName = this.safeGet(this.data, 'homepage.customFields.property.name');
-        return this.sanitizeText(customName, this.safeGet(this.data, 'property.name') || '숙소명');
-    }
-
-    /**
-     * 숙소 영문명 가져오기 (customFields 우선, 없으면 기본값)
-     */
-    getPropertyNameEn() {
-        const customNameEn = this.safeGet(this.data, 'homepage.customFields.property.nameEn');
-        return this.sanitizeText(customNameEn, this.safeGet(this.data, 'property.nameEn') || 'PROPERTY NAME');
-    }
-
-    /**
-     * customFields에서 숙소 이미지 가져오기 (NO fallback - customFields만 사용)
-     * @param {string} imageCategory - 이미지 카테고리 (property_exterior 등)
-     * @returns {Array} - 이미지 배열
-     */
-    getPropertyImages(imageCategory) {
-        const customImages = this.safeGet(this.data, 'homepage.customFields.property.images') || [];
-
-        // customFields에서 해당 카테고리의 이미지 필터링
-        const filteredImages = customImages.filter(img => img.category === imageCategory && img.isSelected);
-
-        return filteredImages.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-    }
-
-    /**
-     * 현재 객실의 customFields 데이터 가져오기
-     * @param {string} roomId - 객실 ID
-     * @returns {Object|null} - customFields.roomtypes에서 해당 객실 데이터
-     */
-    getRoomTypeCustomFields(roomId) {
-        const roomtypes = this.safeGet(this.data, 'homepage.customFields.roomtypes') || [];
-        return roomtypes.find(rt => rt.id === roomId) || null;
-    }
-
-    /**
-     * 객실 이름 가져오기 (customFields 우선, 없으면 기본값)
-     * @param {Object} room - 객실 데이터
-     * @returns {string} 객실 이름
-     */
-    getRoomName(room) {
-        const customFields = this.getRoomTypeCustomFields(room.id);
-        return this.sanitizeText(customFields?.name, room.name || '객실명');
-    }
-
-    /**
-     * 객실 영문명 가져오기 (customFields 우선, 없으면 기본값)
-     * @param {Object} room - 객실 데이터
-     * @returns {string} 객실 영문명
-     */
-    getRoomNameEn(room) {
-        const customFields = this.getRoomTypeCustomFields(room.id);
-        return this.sanitizeText(customFields?.nameEn, room.nameEn || 'ROOM NAME');
-    }
-
-    /**
-     * customFields에서 객실 이미지 가져오기 (NO fallback - customFields만 사용)
-     * @param {Object} room - 객실 데이터
-     * @param {string} imageCategory - 이미지 카테고리 (roomtype_interior, roomtype_exterior, roomtype_thumbnail)
-     * @returns {Array} - 이미지 배열
-     */
-    getRoomImages(room, imageCategory) {
-        const customFields = this.getRoomTypeCustomFields(room.id);
-        const customImages = customFields?.images || [];
-
-        // customFields에서 해당 카테고리의 이미지 필터링
-        const filteredImages = customImages.filter(img => img.category === imageCategory && img.isSelected);
-
-        return filteredImages.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-    }
-
-    // ============================================================================
     // 🖼️ IMAGE UTILITIES
     // ============================================================================
 
@@ -216,6 +136,90 @@ class BaseDataMapper {
             'SPA': '힐링과 휴식을 위한 스파 시설'
         };
         return descriptions[code] || '';
+    }
+
+    // ============================================================================
+    // 🏠 CUSTOMFIELDS HELPERS (Property & Room)
+    // ============================================================================
+
+    /**
+     * 숙소 이름 가져오기 (customFields 우선, 없으면 기본값)
+     * @returns {string} 숙소 이름
+     */
+    getPropertyName() {
+        const customName = this.safeGet(this.data, 'homepage.customFields.property.name');
+        return this.sanitizeText(customName, this.safeGet(this.data, 'property.name') || '숙소명');
+    }
+
+    /**
+     * 숙소 영문명 가져오기 (customFields 우선, 없으면 기본값)
+     * @returns {string} 숙소 영문명
+     */
+    getPropertyNameEn() {
+        const customNameEn = this.safeGet(this.data, 'homepage.customFields.property.nameEn');
+        return this.sanitizeText(customNameEn, this.safeGet(this.data, 'property.nameEn') || 'PROPERTY NAME');
+    }
+
+    /**
+     * 숙소 이미지 가져오기 (customFields의 카테고리별 이미지)
+     * @param {string} imageCategory - 이미지 카테고리 (property_exterior, property_interior, property_thumbnail 등)
+     * @returns {Array} 정렬된 이미지 배열
+     */
+    getPropertyImages(imageCategory) {
+        const customImages = this.safeGet(this.data, 'homepage.customFields.property.images') || [];
+
+        // 카테고리와 isSelected로 필터링
+        const filteredImages = customImages.filter(img => img.category === imageCategory && img.isSelected);
+
+        // sortOrder로 정렬
+        return filteredImages.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    }
+
+    /**
+     * 객실 customFields 가져오기
+     * @param {string} roomId - 객실 ID
+     * @returns {Object|null} 객실 customFields 데이터
+     */
+    getRoomTypeCustomFields(roomId) {
+        const roomtypes = this.safeGet(this.data, 'homepage.customFields.roomtypes') || [];
+        return roomtypes.find(rt => rt.id === roomId) || null;
+    }
+
+    /**
+     * 객실 이름 가져오기 (customFields 우선, 없으면 기본값)
+     * @param {Object} room - 객실 데이터
+     * @returns {string} 객실 이름
+     */
+    getRoomName(room) {
+        const customFields = this.getRoomTypeCustomFields(room.id);
+        return this.sanitizeText(customFields?.name, room.name || '객실명');
+    }
+
+    /**
+     * 객실 영문명 가져오기 (customFields 우선, 없으면 기본값)
+     * @param {Object} room - 객실 데이터
+     * @returns {string} 객실 영문명
+     */
+    getRoomNameEn(room) {
+        const customFields = this.getRoomTypeCustomFields(room.id);
+        return this.sanitizeText(customFields?.nameEn, room.nameEn || 'ROOM NAME');
+    }
+
+    /**
+     * 객실 이미지 가져오기 (customFields의 카테고리별 이미지)
+     * @param {Object} room - 객실 데이터
+     * @param {string} imageCategory - 이미지 카테고리 (roomtype_interior, roomtype_exterior, roomtype_thumbnail)
+     * @returns {Array} 정렬된 이미지 배열
+     */
+    getRoomImages(room, imageCategory) {
+        const customFields = this.getRoomTypeCustomFields(room.id);
+        const customImages = customFields?.images || [];
+
+        // 카테고리와 isSelected로 필터링
+        const filteredImages = customImages.filter(img => img.category === imageCategory && img.isSelected);
+
+        // sortOrder로 정렬
+        return filteredImages.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
     }
 
     // ============================================================================

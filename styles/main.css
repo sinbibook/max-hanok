@@ -32,6 +32,7 @@
 
 
 .hero-description {
+    font-family: var(--font-ko-sub);
     font-size: 1rem;
     color: #666;
     line-height: 1.6;
@@ -152,6 +153,7 @@
 }
 
 .hero-sub-description {
+    font-family: var(--font-ko-sub);
     font-size: 1rem;
     color: #666;
     line-height: 1.7;
@@ -218,6 +220,7 @@
 }
 
 .text-description {
+    font-family: var(--font-ko-sub);
     font-size: clamp(0.95rem, 1.5vw, 1.1rem);
     color: #666;
     line-height: 1.7;
