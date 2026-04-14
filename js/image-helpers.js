@@ -18,10 +18,6 @@ const ImageHelpers = {
         }
 
         if (!imagesData || imagesData.length === 0) {
-            // demo-filled.json 사용 시에는 폴백 없이 그대로 둠
-            if (window.useImageHelpersFallback === false) {
-                return;
-            }
             this.applyPlaceholder(imageElement, overlayElement);
             return;
         }
@@ -36,10 +32,7 @@ const ImageHelpers = {
 
                 // 이미지 로드 에러 처리
                 imageElement.onerror = () => {
-                    // demo-filled.json 사용 시에는 에러 시에도 폴백 없음
-                    if (window.useImageHelpersFallback !== false) {
-                        this.applyPlaceholder(imageElement, overlayElement);
-                    }
+                    this.applyPlaceholder(imageElement, overlayElement);
                 };
 
                 imageElement.src = firstImage.url;
@@ -48,30 +41,34 @@ const ImageHelpers = {
                 imageElement.style.opacity = '1';
                 if (overlayElement) overlayElement.style.display = '';
             } else {
-                // demo-filled.json 사용 시에는 폴백 없이 그대로 둠
-                if (window.useImageHelpersFallback === false) {
-                    return;
-                }
                 this.applyPlaceholder(imageElement, overlayElement);
             }
         } catch (error) {
-            // demo-filled.json 사용 시에는 에러 시에도 폴백 없음
-            if (window.useImageHelpersFallback !== false) {
-                this.applyPlaceholder(imageElement, overlayElement);
-            }
+            this.applyPlaceholder(imageElement, overlayElement);
         }
     },
 
     /**
-     * 플레이스홀더 적용
+     * 플레이스홀더 적용 (img 태그용)
      */
     applyPlaceholder(imageElement, overlayElement = null) {
         if (!imageElement) return;
-        imageElement.src = this.EMPTY_IMAGE_WITH_ICON;
-        imageElement.alt = '이미지 없음';
-        imageElement.classList.add('empty-image-placeholder');
-        imageElement.style.opacity = '1';
-        if (overlayElement) overlayElement.style.display = 'none';
+
+        // img 태그인 경우
+        if (imageElement.tagName === 'IMG') {
+            imageElement.src = this.EMPTY_IMAGE_WITH_ICON;
+            imageElement.alt = '이미지 없음';
+            imageElement.classList.add('empty-image-placeholder');
+            imageElement.style.opacity = '1';
+            if (overlayElement) overlayElement.style.display = 'none';
+        } else {
+            // background-image용 (div, section 등)
+            imageElement.style.backgroundImage = `url('${this.EMPTY_IMAGE_WITH_ICON}')`;
+            imageElement.style.backgroundSize = 'cover';
+            imageElement.style.backgroundPosition = 'center';
+            imageElement.style.backgroundRepeat = 'no-repeat';
+            imageElement.classList.add('empty-background-placeholder');
+        }
     },
 
     /**
