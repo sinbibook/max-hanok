@@ -114,7 +114,7 @@
 }
 
 .accordion-item {
-    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    border-bottom: 2px solid rgba(93, 109, 126, 0.2);
     margin-bottom: 0;
 }
 
@@ -152,7 +152,7 @@
 .close-icon {
     width: 20px;
     height: 20px;
-    stroke: color-mix(in srgb, var(--color-secondary) 70%, transparent);
+    stroke: rgba(93, 109, 126, 0.7);
     stroke-width: 2;
     fill: none;
 }
@@ -166,7 +166,7 @@
     white-space: pre-line;
     border-radius: 10px;
     margin-bottom: 10px;
-    background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+    background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
 }
 
 .accordion-content.active {
@@ -188,7 +188,7 @@
     flex-shrink: 0;
     width: 20px;
     height: 20px;
-    color: color-mix(in srgb, var(--color-secondary) 70%, transparent);
+    color: rgba(93, 109, 126, 0.7);
 }
 
 .accordion-text {
@@ -264,7 +264,7 @@
 .divider {
     border: none;
     height: 1px;
-    background: color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    background: rgba(93, 109, 126, 0.2);
     margin: 0 0 40px 0;
     width: 100%;
 }
@@ -352,9 +352,9 @@
     font-family: var(--font-ko-main);
     font-size: 2rem;
     font-weight: 600;
-    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+    color: rgba(93, 109, 126, 0.8);
     margin: 0 0 30px 0;
-    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    border-bottom: 2px solid rgba(93, 109, 126, 0.2);
     padding-bottom: 20px;
 }
 
@@ -384,14 +384,14 @@
     font-family: var(--font-ko-main);
     font-size: 2rem;
     font-weight: 600;
-    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+    color: rgba(93, 109, 126, 0.8);
     margin: 0 0 20px 0;
 }
 
 .section-divider {
     width: 80px;
     height: 2px;
-    background: color-mix(in srgb, var(--color-secondary) 30%, transparent);
+    background: rgba(93, 109, 126, 0.3);
     border: none;
     margin: 0 auto;
 }
@@ -411,7 +411,7 @@
 .usage-rules,
 .checkin-checkout-rules,
 .refund-rules {
-    font-family: var(--font-ko-sub);
+    font-family: var(--font-ko-main);
     font-size: 1rem;
     color: #666;
     line-height: 1.8;
@@ -430,10 +430,10 @@
 } */
 
 .table-title {
-    font-family: var(--font-ko-main);
+    font-family: var(--font-ko-sub);
     font-size: 1.3rem;
     font-weight: 600;
-    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+    color: rgba(93, 109, 126, 0.8);
     margin: 0 0 20px 0;
     text-align: center;
 }
@@ -457,10 +457,10 @@
 }
 
 .refund-table th {
-    background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+    background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
     font-family: var(--font-ko-sub);
     font-weight: 600;
-    color: color-mix(in srgb, var(--color-secondary) 80%, transparent);
+    color: rgba(93, 109, 126, 0.8);
 }
 
 .refund-table td {

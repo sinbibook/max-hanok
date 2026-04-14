@@ -2,12 +2,11 @@
  * Room List Page Data Mapper
  * room-list.html 전용 매핑 함수들을 포함한 클래스
  * BaseDataMapper를 상속받아 객실 목록 페이지 전용 기능 제공
- * URL 파라미터로 ?group=그룹명을 받아서 해당 그룹 객실만 필터링
+ * 모든 객실을 표시 (그룹 필터링 제거)
  */
 class RoomListMapper extends BaseDataMapper {
     constructor() {
         super();
-        this.currentGroup = null;
         this.filteredRooms = [];
     }
 
@@ -16,15 +15,7 @@ class RoomListMapper extends BaseDataMapper {
     // ============================================================================
 
     /**
-     * URL에서 group 파라미터 추출
-     */
-    getCurrentGroup() {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('group');
-    }
-
-    /**
-     * 그룹별로 객실 필터링
+     * 모든 객실 반환 (그룹 필터링 제거)
      */
     filterRoomsByGroup() {
         if (!this.isDataLoaded || !this.data.rooms) {
@@ -32,21 +23,8 @@ class RoomListMapper extends BaseDataMapper {
             return [];
         }
 
-        this.currentGroup = this.getCurrentGroup();
-
-        // group 파라미터가 없으면 전체 객실 반환
-        if (!this.currentGroup) {
-            this.filteredRooms = this.data.rooms;
-            return this.filteredRooms;
-        }
-
-        // 해당 그룹의 객실만 필터링
-        this.filteredRooms = this.data.rooms.filter(room => room.group === this.currentGroup);
-
-        if (this.filteredRooms.length === 0) {
-            console.warn(`No rooms found for group: ${this.currentGroup}`);
-        }
-
+        // 항상 모든 객실 반환
+        this.filteredRooms = this.data.rooms;
         return this.filteredRooms;
     }
 
@@ -56,20 +34,10 @@ class RoomListMapper extends BaseDataMapper {
     mapHeroSection() {
         if (!this.isDataLoaded) return;
 
-        // 그룹별 객실 필터링 (Hero 이미지 매핑에 필요)
-        this.filterRoomsByGroup();
-
-        // Hero 제목 매핑 - URL 그룹 파라미터로 표시
+        // Hero 제목 매핑 - 항상 "ALL ROOMS" 표시
         const heroTitle = this.safeSelect('[data-customfield-room-list-hero-title]');
         if (heroTitle) {
-            const currentGroup = this.getCurrentGroup();
-            if (currentGroup) {
-                // 그룹 파라미터가 있으면 그룹명 표시
-                heroTitle.textContent = currentGroup;
-            } else {
-                // 그룹 파라미터가 없으면 "전체 객실" 표시
-                heroTitle.textContent = '전체 객실';
-            }
+            heroTitle.textContent = 'ALL ROOMS';
         }
 
         // Hero 이미지 매핑
@@ -85,12 +53,13 @@ class RoomListMapper extends BaseDataMapper {
         const heroImageElement = this.safeSelect('[data-customfield-room-list-hero-image-0]');
         if (!heroImageElement) return;
 
-        // 그룹별 필터링된 객실 중 첫 번째 객실의 exterior 이미지 사용 (customFields 우선)
-        if (this.filteredRooms && this.filteredRooms.length > 0) {
-            const firstRoom = this.filteredRooms[0];
-            const selectedImages = this.getRoomImages(firstRoom, 'roomtype_exterior');
+        // 첫 번째 객실의 exterior 이미지 사용 (customFields 헬퍼 함수 사용)
+        if (this.data.rooms && this.data.rooms.length > 0) {
+            const firstRoom = this.data.rooms[0];
 
-            const firstExterior = selectedImages[0];
+            // customFields 헬퍼 함수로 외부 이미지 가져오기 (category: roomtype_exterior)
+            const exteriorImages = this.getRoomImages(firstRoom, 'roomtype_exterior');
+            const firstExterior = exteriorImages[0];
 
             if (firstExterior?.url) {
                 heroImageElement.src = firstExterior.url;
@@ -101,10 +70,6 @@ class RoomListMapper extends BaseDataMapper {
                 heroImageElement.src = ImageHelpers.EMPTY_IMAGE_SVG;
                 heroImageElement.classList.add('empty-image-placeholder');
             }
-        } else {
-            // filteredRooms가 없을 때도 placeholder 적용
-            heroImageElement.src = ImageHelpers.EMPTY_IMAGE_SVG;
-            heroImageElement.classList.add('empty-image-placeholder');
         }
     }
 
@@ -114,17 +79,10 @@ class RoomListMapper extends BaseDataMapper {
     mapTitleSection() {
         if (!this.isDataLoaded) return;
 
-        // Main Title에 그룹명 매핑
+        // Main Title - 항상 "ALL ROOMS" 표시
         const mainTitle = this.safeSelect('[data-customfield-room-list-main-title]');
         if (mainTitle) {
-            const currentGroup = this.getCurrentGroup();
-            if (currentGroup) {
-                // 그룹 파라미터가 있으면 그룹명 표시
-                mainTitle.textContent = currentGroup;
-            } else {
-                // 그룹 파라미터가 없으면 "전체 객실" 표시
-                mainTitle.textContent = '전체 객실';
-            }
+            mainTitle.textContent = 'ALL ROOMS';
         }
     }
 
@@ -162,21 +120,13 @@ class RoomListMapper extends BaseDataMapper {
         const roomCard = document.createElement('div');
         roomCard.className = 'room-card';
 
-        // 객실명 가져오기 (customFields 우선)
+        // customFields 헬퍼 함수 사용
         const roomName = this.getRoomName(room);
 
-        // 객실 이미지 가져오기 (customFields 우선)
-        const sortedImages = this.getRoomImages(room, 'roomtype_thumbnail');
-        const firstThumbnail = sortedImages[0];
-
-        let imageUrl, imageClass;
-        if (firstThumbnail?.url) {
-            imageUrl = firstThumbnail.url;
-            imageClass = '';
-        } else {
-            imageUrl = ImageHelpers.EMPTY_IMAGE_SVG;
-            imageClass = 'empty-image-placeholder';
-        }
+        // 객실 이미지 가져오기 (customFields 헬퍼 함수 사용)
+        const thumbnailImages = this.getRoomImages(room, 'roomtype_thumbnail');
+        const imageUrl = thumbnailImages[0]?.url || ImageHelpers.EMPTY_IMAGE_SVG;
+        const imageClass = thumbnailImages[0]?.url ? '' : ' empty-image-placeholder';
 
         // 객실 타입 (bedTypes 또는 roomStructures 사용)
         const roomType = room.bedTypes?.join(', ') || '-';
@@ -186,7 +136,7 @@ class RoomListMapper extends BaseDataMapper {
 
         roomCard.innerHTML = `
             <div class="room-card-image" onclick="selectRoom('${room.id}')" style="cursor: pointer;">
-                <img alt="${roomName}" loading="lazy">
+                <img src="${imageUrl}" alt="${roomName}" loading="lazy" class="${imageClass}">
                 <div class="room-overlay">
                     <div class="overlay-content">
                         <div class="overlay-info">
@@ -223,10 +173,6 @@ class RoomListMapper extends BaseDataMapper {
                 </div>
                 <div class="room-info">
                     <div class="room-info-item">
-                        <span class="room-info-label">그룹</span>
-                        <span class="room-info-value">${room.group || '-'}</span>
-                    </div>
-                    <div class="room-info-item">
                         <span class="room-info-label">인원</span>
                         <span class="room-info-value">기준 ${room.baseOccupancy || '-'}명 / 최대 ${room.maxOccupancy || '-'}명</span>
                     </div>
@@ -237,15 +183,6 @@ class RoomListMapper extends BaseDataMapper {
                 </div>
             </div>
         `;
-
-        // 이미지 src와 class를 DOM API로 설정 (data URI 파싱 문제 방지)
-        const imgElement = roomCard.querySelector('.room-card-image img');
-        if (imgElement) {
-            imgElement.src = imageUrl;
-            if (imageClass) {
-                imgElement.classList.add(imageClass);
-            }
-        }
 
         // 애니메이션을 위한 지연시간 추가
         roomCard.style.transitionDelay = `${index * 0.1}s`;

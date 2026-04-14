@@ -144,6 +144,8 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
+        // 디버그 정보 업데이트
+
         // 테마 데이터가 있으면 CSS 변수 적용
         const theme = this._getThemeFromData(data);
         if (theme) {
@@ -170,17 +172,13 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
-        // theme 데이터가 있으면 CSS 변수 즉시 업데이트
-        const theme = this._getThemeFromData(data);
-        if (theme) {
-            this.applyThemeVariables(theme);
-        }
-
         // 초기화되지 않은 경우 초기 데이터로 처리
         if (!this.isInitialized) {
             this.handleInitialData(data);
             return;
         }
+
+        // 디버그 정보 업데이트
 
         // 기존 데이터와 병합
         if (data.rooms && Array.isArray(data.rooms)) {
@@ -196,6 +194,12 @@ class PreviewHandler {
         } else {
             // 기존 데이터와 병합
             this.currentData = this.mergeData(this.currentData, data);
+        }
+
+        // 테마 데이터가 있으면 CSS 변수 적용
+        const theme = this._getThemeFromData(this.currentData);
+        if (theme) {
+            this.applyThemeVariables(theme);
         }
 
         // 전체 페이지 다시 렌더링 (폴백)
@@ -220,190 +224,12 @@ class PreviewHandler {
             this.applyThemeVariables(theme);
         }
 
+        // 디버그 정보 업데이트
+
         // 전체 다시 렌더링
         this.renderTemplate(data);
 
         this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
-    }
-
-    /**
-     * 데이터에서 테마 정보 추출
-     * @private
-     */
-    _getThemeFromData(data) {
-        return data?.homepage?.customFields?.theme || data?.theme;
-    }
-
-    /**
-     * 기본 폰트 fallback 값 (CSS에서 동적으로 읽어옴)
-     */
-    getDefaultFonts() {
-        // 캐시된 값이 있으면 반환
-        if (this._cachedDefaultFonts) {
-            return this._cachedDefaultFonts;
-        }
-
-        const root = document.documentElement;
-        const computedStyle = getComputedStyle(root);
-
-        // CSS 변수에서 현재 값 읽기
-        this._cachedDefaultFonts = {
-            koMain: computedStyle.getPropertyValue('--font-ko-main').trim() || "'MaruBuri', sans-serif",
-            koSub: computedStyle.getPropertyValue('--font-ko-sub').trim() || "'Noto Serif KR', serif",
-            enMain: computedStyle.getPropertyValue('--font-en-main').trim() || "'Chonburi', serif"
-        };
-
-        return this._cachedDefaultFonts;
-    }
-
-    /**
-     * 기본 색상 fallback 값 (CSS에서 동적으로 읽어옴)
-     */
-    getDefaultColors() {
-        // 캐시된 값이 있으면 반환
-        if (this._cachedDefaultColors) {
-            return this._cachedDefaultColors;
-        }
-
-        const root = document.documentElement;
-        const computedStyle = getComputedStyle(root);
-
-        // CSS 변수에서 현재 값 읽기
-        this._cachedDefaultColors = {
-            primary: computedStyle.getPropertyValue('--color-primary').trim() || '#f8f8f8',
-            secondary: computedStyle.getPropertyValue('--color-secondary').trim() || '#1a1a1a'
-        };
-
-        return this._cachedDefaultColors;
-    }
-
-    /**
-     * CDN URL로 폰트 로드 (link 태그)
-     */
-    loadFontFromCdn(key, cdnUrl) {
-        if (!cdnUrl || !key) return;
-
-        const linkId = `font-cdn-${key}`;
-        if (document.getElementById(linkId)) return;
-
-        const link = document.createElement('link');
-        link.id = linkId;
-        link.rel = 'stylesheet';
-        link.href = cdnUrl;
-        document.head.appendChild(link);
-    }
-
-    /**
-     * woff2 URL로 폰트 로드 (@font-face)
-     */
-    loadFontFromWoff2(key, family, woff2Url) {
-        if (!woff2Url || !family) return;
-
-        const styleId = `font-woff2-${key}`;
-        if (document.getElementById(styleId)) return;
-
-        const style = document.createElement('style');
-        style.id = styleId;
-        style.textContent = `
-@font-face {
-    font-family: '${family}';
-    src: url('${woff2Url}') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}`;
-        document.head.appendChild(style);
-    }
-
-    /**
-     * 단일 폰트 CSS 변수 적용
-     */
-    applyFont(fontValue, cssVar, defaultValue) {
-        const root = document.documentElement;
-
-        // fontValue가 유효한 객체인 경우
-        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
-            // cdn이 있으면 link 태그, woff2만 있으면 style 태그
-            if (fontValue.cdn) {
-                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
-            } else if (fontValue.woff2) {
-                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
-            }
-
-            // defaultValue에서 generic family 추출 (e.g., serif, sans-serif)
-            const genericFamily = defaultValue.split(',').pop().trim() || 'sans-serif';
-            root.style.setProperty(cssVar, `'${fontValue.family}', ${genericFamily}`);
-            return;
-        }
-
-        // null/undefined인 경우 기본값으로 리셋
-        root.style.setProperty(cssVar, defaultValue);
-    }
-
-    /**
-     * 단일 색상 CSS 변수 적용
-     */
-    applyColor(colorValue, cssVar, defaultValue) {
-        const root = document.documentElement;
-
-        if (colorValue && typeof colorValue === 'string' && colorValue.trim()) {
-            root.style.setProperty(cssVar, colorValue);
-        } else {
-            // null/undefined/빈 문자열인 경우 기본값으로 리셋
-            root.style.setProperty(cssVar, defaultValue);
-        }
-    }
-
-    /**
-     * 테마 CSS 변수 적용 (font/color)
-     */
-    applyThemeVariables(theme) {
-        const defaultFonts = this.getDefaultFonts();
-        const defaultColors = this.getDefaultColors();
-        const fontData = theme.font || theme;
-
-        // 폰트 변수 업데이트
-        if (fontData) {
-            if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
-            if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
-            if ('enMain' in fontData) this.applyFont(fontData.enMain, '--font-en-main', defaultFonts.enMain);
-        }
-
-        // 색상 변수 업데이트
-        if ('color' in theme) {
-            if (!theme.color) {
-                // color가 null이면 전체 기본값으로 리셋
-                this.applyColor(null, '--color-primary', defaultColors.primary);
-                this.applyColor(null, '--color-secondary', defaultColors.secondary);
-            } else {
-                if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
-                if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
-            }
-        }
-    }
-
-    /**
-     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
-     */
-    handleThemeUpdate(data) {
-        if (!data) return;
-        this.applyThemeVariables(data);
-        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
-    }
-
-    /**
-     * 팝업 업데이트 처리
-     */
-    handlePopupUpdate(data) {
-        if (window.popupManager) {
-            window.popupManager.updateFromPreview(data);
-        } else if (window.PopupManager) {
-            window.popupManager = new PopupManager();
-            window.popupManager.init().then(() => {
-                window.popupManager.updateFromPreview(data);
-            });
-        }
-
-        this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
     }
 
     /**
@@ -553,6 +379,14 @@ class PreviewHandler {
         }
     }
 
+
+    /**
+     * 데이터에서 테마 정보 추출
+     * @private
+     */
+    _getThemeFromData(data) {
+        return data?.homepage?.customFields?.theme || data?.theme;
+    }
 
     /**
      * 데이터 구조 초기화 헬퍼 함수
@@ -878,6 +712,193 @@ class PreviewHandler {
 
     }
 
+
+    /**
+     * 테마 업데이트 처리
+     */
+    handleThemeUpdate(data) {
+        const theme = this._getThemeFromData(data);
+        if (theme) {
+            this.applyThemeVariables(theme);
+        }
+    }
+
+    /**
+     * 팝업 업데이트 처리
+     */
+    handlePopupUpdate(data) {
+        if (window.popupManager) {
+            window.popupManager.updateFromPreview(data);
+        } else if (window.PopupManager) {
+            window.popupManager = new PopupManager();
+            window.popupManager.init().then(() => {
+                window.popupManager.updateFromPreview(data);
+            });
+        }
+
+        this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
+    }
+
+    /**
+     * 테마 변수들을 CSS에 적용
+     */
+    applyThemeVariables(theme) {
+        const defaultFonts = this.getDefaultFonts();
+        const defaultColors = this.getDefaultColors();
+
+        // 폰트 변수 매핑
+        const fontMappings = {
+            koMain: '--font-ko-main',
+            koSub: '--font-ko-sub',
+            enMain: '--font-en-main'
+        };
+
+        // 폰트 변수 업데이트
+        const fontData = theme.font || theme;
+        if (fontData) {
+            for (const [key, cssVar] of Object.entries(fontMappings)) {
+                if (key in fontData) {
+                    this.applyFont(fontData[key], cssVar, defaultFonts[key]);
+                }
+            }
+        }
+
+        // 색상 변수 업데이트
+        if ('color' in theme) {
+            if (!theme.color) {
+                // color가 null이면 전체 기본값으로 리셋
+                this.applyColor(null, '--color-primary', defaultColors.primary);
+                this.applyColor(null, '--color-secondary', defaultColors.secondary);
+            } else {
+                if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
+                if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
+            }
+        }
+    }
+
+    /**
+     * 기본 폰트 fallback 값 (CSS에서 동적으로 읽어옴)
+     */
+    getDefaultFonts() {
+        // 캐시된 값이 있으면 반환
+        if (this._cachedDefaultFonts) {
+            return this._cachedDefaultFonts;
+        }
+
+        const root = document.documentElement;
+        const computedStyle = getComputedStyle(root);
+
+        // CSS 변수에서 현재 값 읽기
+        this._cachedDefaultFonts = {
+            koMain: computedStyle.getPropertyValue('--font-ko-main').trim() || "'Maruburi', sans-serif",
+            koSub: computedStyle.getPropertyValue('--font-ko-sub').trim() || "'Noto Serif KR', serif",
+            enMain: computedStyle.getPropertyValue('--font-en-main').trim() || "'Chonburi', serif"
+        };
+
+        return this._cachedDefaultFonts;
+    }
+
+    /**
+     * 기본 색상 fallback 값 (CSS에서 동적으로 읽어옴)
+     */
+    getDefaultColors() {
+        // 캐시된 값이 있으면 반환
+        if (this._cachedDefaultColors) {
+            return this._cachedDefaultColors;
+        }
+
+        const root = document.documentElement;
+        const computedStyle = getComputedStyle(root);
+
+        // CSS 변수에서 현재 값 읽기
+        this._cachedDefaultColors = {
+            primary: computedStyle.getPropertyValue('--color-primary').trim() || '#f8f8f8',
+            secondary: computedStyle.getPropertyValue('--color-secondary').trim() || '#1a1a1a'
+        };
+
+        return this._cachedDefaultColors;
+    }
+
+    /**
+     * 단일 폰트 CSS 변수 적용
+     */
+    applyFont(fontValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+
+        // fontValue가 유효한 객체인 경우
+        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
+            // cdn이 있으면 link 태그, woff2만 있으면 style 태그
+            if (fontValue.cdn) {
+                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
+            } else if (fontValue.woff2) {
+                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
+            }
+
+            // defaultValue에서 generic family 추출 (e.g., serif, sans-serif)
+            const genericFamily = defaultValue.split(',').pop().trim() || 'sans-serif';
+            root.style.setProperty(cssVar, `'${fontValue.family}', ${genericFamily}`);
+            return;
+        }
+
+        // null/undefined인 경우 기본값으로 리셋
+        root.style.setProperty(cssVar, defaultValue);
+    }
+
+    /**
+     * 단일 색상 CSS 변수 적용
+     */
+    applyColor(colorValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+
+        if (colorValue && typeof colorValue === 'string' && colorValue.trim()) {
+            root.style.setProperty(cssVar, colorValue);
+        } else {
+            // null/undefined인 경우 기본값으로 리셋
+            root.style.setProperty(cssVar, defaultValue);
+        }
+    }
+
+    /**
+     * CDN에서 폰트 로드
+     */
+    loadFontFromCdn(fontKey, cdnUrl) {
+        const linkId = `font-${fontKey}`;
+
+        // 이미 로드된 폰트인지 확인
+        if (document.getElementById(linkId)) {
+            return;
+        }
+
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = cdnUrl;
+        link.media = 'all';
+        document.head.appendChild(link);
+    }
+
+    /**
+     * WOFF2 폰트를 @font-face로 로드
+     */
+    loadFontFromWoff2(fontKey, fontFamily, woff2Url) {
+        const styleId = `font-face-${fontKey}`;
+
+        // 이미 정의된 @font-face인지 확인
+        if (document.getElementById(styleId)) {
+            return;
+        }
+
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+            @font-face {
+                font-family: '${fontFamily}';
+                src: url('${woff2Url}') format('woff2');
+                font-display: swap;
+            }
+        `;
+        document.head.appendChild(style);
+    }
 
     /**
      * 현재 데이터 반환 (디버깅용)

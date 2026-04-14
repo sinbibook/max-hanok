@@ -123,7 +123,8 @@ class IndexMapper extends BaseDataMapper {
     mapRoomPreviewSection() {
         if (!this.isDataLoaded) return;
 
-        const roomsData = this.safeGet(this.data, 'rooms');
+        const roomsData = this.safeGet(this.data, 'rooms') || [];
+
         const tabsContainer = this.safeSelect('[data-room-tabs]');
         const descriptionsContainer = this.safeSelect('[data-room-descriptions]');
         const imagesContainer = this.safeSelect('[data-room-images]');
@@ -135,22 +136,11 @@ class IndexMapper extends BaseDataMapper {
         descriptionsContainer.innerHTML = '';
         imagesContainer.innerHTML = '';
 
-        // 1. unique한 group 추출
-        const uniqueGroups = (roomsData && Array.isArray(roomsData))
-            ? [...new Set(roomsData.map(room => room.group).filter(Boolean))]
-            : [];
+        // rooms 데이터로 탭 리스트 생성
+        const allRooms = roomsData;
 
         // 데이터가 없을 때 placeholder UI 생성
-        if (uniqueGroups.length === 0) {
-            // Placeholder 탭
-            const placeholderTab = document.createElement('button');
-            placeholderTab.className = 'room-tab active';
-            placeholderTab.setAttribute('data-room', 'placeholder');
-            placeholderTab.innerHTML = `
-                <span class="room-tab-number">00</span>
-                <span class="room-tab-name">No Rooms</span>
-            `;
-            tabsContainer.appendChild(placeholderTab);
+        if (allRooms.length === 0) {
 
             // Placeholder 설명
             const placeholderDesc = document.createElement('div');
@@ -170,21 +160,27 @@ class IndexMapper extends BaseDataMapper {
             placeholderImage.appendChild(img);
             imagesContainer.appendChild(placeholderImage);
         } else {
-            uniqueGroups.forEach((group, index) => {
-                // 해당 그룹의 모든 객실 찾기
-                const roomsInGroup = roomsData.filter(room => room.group === group);
-                if (roomsInGroup.length === 0) return;
+            // 모든 객실을 순회하며 탭 생성
+            allRooms.forEach((room, index) => {
+                // customFields 헬퍼 함수 사용
+                const roomCustomFields = this.getRoomTypeCustomFields(room.id);
+
+                // 이름: customFields 우선, fallback rooms
+                const roomName = this.getRoomName(room);
+
+                // 이미지: customFields 이미지 사용 (category: roomtype_interior)
+                const interiorImages = this.getRoomImages(room, 'roomtype_interior');
 
                 // 탭 생성
                 const tab = document.createElement('button');
                 tab.className = `room-tab${index === 0 ? ' active' : ''}`;
-                tab.setAttribute('data-room', group);
+                tab.setAttribute('data-room', room.id);
                 tab.innerHTML = `
                     <span class="room-tab-content">
                         <span class="room-tab-number">${String(index + 1).padStart(2, '0')}</span>
-                        <span class="room-tab-name">${group}</span>
+                        <span class="room-tab-name">${roomName}</span>
                     </span>
-                    <button class="room-tab-detail-btn" data-group="${group}">
+                    <button class="room-tab-detail-btn" data-room-id="${room.id}">
                         <span class="btn-text">VIEW</span>
                         <svg class="icon" viewBox="0 0 24 24">
                             <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -194,35 +190,21 @@ class IndexMapper extends BaseDataMapper {
                 `;
                 tabsContainer.appendChild(tab);
 
-                // VIEW 버튼 클릭 이벤트
-                const detailBtn = tab.querySelector('.room-tab-detail-btn');
-                detailBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // tab 클릭 이벤트 방지
-                    window.location.href = `room-list.html?group=${encodeURIComponent(group)}`;
-                });
-
-                // 설명 생성 (customFields 우선)
+                // 설명 생성
                 const descItem = document.createElement('div');
                 descItem.className = `room-desc-item${index === 0 ? ' active' : ''}`;
-                descItem.setAttribute('data-room', group);
-                const propertyName = this.getPropertyName();
-                descItem.innerHTML = `<p class="room-desc-text">${propertyName}의 ${group} 객실입니다.</p>`;
+                descItem.setAttribute('data-room', room.id);
+                const description = roomCustomFields?.description || room.description || `${roomName} 객실입니다.`;
+                descItem.innerHTML = `<p class="room-desc-text">${description}</p>`;
                 descriptionsContainer.appendChild(descItem);
 
-                // 이미지 슬라이더 생성 - 그룹의 모든 객실 썸네일 수집
+                // 이미지 슬라이더 생성 - customFields 객실 interior 이미지 사용
                 const imageItem = document.createElement('div');
                 imageItem.className = `room-image-item${index === 0 ? ' active' : ''}`;
-                imageItem.setAttribute('data-room', group);
+                imageItem.setAttribute('data-room', room.id);
 
-                // 그룹 내 모든 객실의 썸네일 수집 (customFields 우선)
-                const allThumbnails = [];
-
-                roomsInGroup.forEach(room => {
-                    const selectedThumbnails = this.getRoomImages(room, 'roomtype_thumbnail');
-                    allThumbnails.push(...selectedThumbnails);
-                });
-
-                if (allThumbnails.length === 0) {
+                // getRoomImages 헬퍼가 이미 isSelected 필터링과 정렬을 수행함
+                if (interiorImages.length === 0) {
                     const img = document.createElement('img');
                     img.src = ImageHelpers.EMPTY_IMAGE_SVG;
                     img.alt = 'No Room Image';
@@ -232,9 +214,9 @@ class IndexMapper extends BaseDataMapper {
                     const sliderHTML = `
                         <div class="room-image-slider">
                             <div class="room-slide-track">
-                                ${allThumbnails.map((img, imgIndex) => `
+                                ${interiorImages.map((img, imgIndex) => `
                                     <div class="room-slide${imgIndex === 0 ? ' active' : ''}">
-                                        <img src="${img.url}" alt="${img.description || group}" loading="lazy">
+                                        <img src="${img.url}" alt="${img.description || roomName}" loading="lazy">
                                     </div>
                                 `).join('')}
                             </div>
@@ -264,16 +246,16 @@ class IndexMapper extends BaseDataMapper {
             const descItems = document.querySelectorAll('.room-desc-item');
 
             function activateTab(tab) {
-                const roomType = tab.dataset.room;
+                const roomId = tab.dataset.room;
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
                 images.forEach(img => {
-                    img.classList.toggle('active', img.dataset.room === roomType);
+                    img.classList.toggle('active', img.dataset.room === roomId);
                 });
 
                 descItems.forEach(item => {
-                    item.classList.toggle('active', item.dataset.room === roomType);
+                    item.classList.toggle('active', item.dataset.room === roomId);
                 });
             }
 
@@ -287,7 +269,7 @@ class IndexMapper extends BaseDataMapper {
 
                 // Mobile: click/touch event
                 tab.addEventListener('click', (e) => {
-                    // VIEW 버튼 클릭시에는 preventDefault 하지 않음
+                    // 상세보기 버튼 클릭이 아닌 경우에만 탭 활성화
                     if (!e.target.closest('.room-tab-detail-btn')) {
                         e.preventDefault();
                         activateTab(tab);
@@ -296,12 +278,22 @@ class IndexMapper extends BaseDataMapper {
 
                 // iOS Safari 전용 터치 이벤트
                 tab.addEventListener('touchend', (e) => {
-                    // VIEW 버튼 터치시에는 preventDefault 하지 않음
+                    // 상세보기 버튼 클릭이 아닌 경우에만 탭 활성화
                     if (!e.target.closest('.room-tab-detail-btn')) {
                         e.preventDefault();
                         activateTab(tab);
                     }
                 }, { passive: false });
+            });
+
+            // 상세보기 버튼 이벤트
+            const detailBtns = document.querySelectorAll('.room-tab-detail-btn');
+            detailBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 탭 클릭 이벤트 방지
+                    const roomId = btn.dataset.roomId;
+                    window.location.href = `room.html?id=${encodeURIComponent(roomId)}`;
+                });
             });
         }
     }
@@ -361,7 +353,6 @@ class IndexMapper extends BaseDataMapper {
     /**
      * Essence Video 매핑 (video 모드)
      * - right 슬롯 숨기고, left 슬롯을 2컬럼으로 확장
-     * - center 텍스트는 그대로 유지
      */
     initEssenceVideo(videos) {
         const left = this.safeSelect('[data-essence-image-0]');
@@ -639,7 +630,6 @@ class IndexMapper extends BaseDataMapper {
             }
         } else {
             if (imgEl) imgEl.style.display = '';
-            // 이미지 매핑
             const img = imgEl;
             if (img) {
                 const selectedImages = (closingData.images || [])
@@ -675,11 +665,12 @@ class IndexMapper extends BaseDataMapper {
     }
 
     /**
-     * Property 정보 매핑 (이름, 영문명) - customFields 우선
+     * Property 정보 매핑 (이름, 영문명)
      */
     mapPropertyInfo() {
         if (!this.isDataLoaded) return;
 
+        // customFields 헬퍼 함수 사용
         const propertyName = this.getPropertyName();
         const propertyNameEn = this.getPropertyNameEn();
 
