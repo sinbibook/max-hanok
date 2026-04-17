@@ -1,307 +1,378 @@
-/* ================================
+/* ===================================
    Main Page Styles
-   ================================ */
+   =================================== */
 
-/* Main page specific overrides - using common hero styles */
-
-/* Main About Section - Below marquee */
-.main-about-section {
-    padding: 80px 20px 0;
-    min-height: 700px;
-    background: var(--color-primary);
-    text-align: center;
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    min-height: 100vh;
     position: relative;
-}
-
-
-.main-about-content {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.main-about-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-secondary);
-    margin-bottom: 30px;
-    line-height: 1.4;
-    letter-spacing: 0.02em;
-    transform: translateY(30px);
-    transition: all 1s ease;
-}
-
-.main-about-title.animate {
-    transform: translateY(0);
-}
-
-.main-about-description {
-    font-family: var(--font-ko-sub);
-    font-size: 1.125rem;
-    font-weight: 400;
-    color: #666;
-    line-height: 1.8;
-    letter-spacing: 0.01em;
-    transform: translateY(30px);
-    transition: all 1s ease;
-    transition-delay: 0.2s;
-}
-
-.main-about-description.animate {
-    transform: translateY(0);
-}
-
-/* Animation - Slide up from bottom */
-@keyframes slideUp {
-    from {
-            transform: translateY(30px);
-    }
-    to {
-            transform: translateY(0);
-    }
-}
-
-/* Intro Section - Dynamic blocks */
-.intro-section {
-    background: var(--color-primary);
-    padding: 100px 20px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center;
+    overflow: hidden;
 }
 
-.intro-block {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    max-width: 1200px;
-    width: 100%;
-    margin: 50px auto;
-}
-
-/* Reverse layout for even blocks (2nd, 4th, etc) */
-.intro-block:nth-child(even) {
-    flex-direction: row-reverse;
-}
-
-.intro-block:nth-child(even) .intro-block-content {
-    text-align: left;
-}
-
-/* Last block gets extra padding bottom */
-.intro-block:last-child {
-    padding-bottom: 100px;
-}
-
-.intro-block-image {
-    position: relative;
-    width: 55%;
-    height: 500px;
-    flex-shrink: 0;
-    opacity: 0;
-    transform: translateX(-100px);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-.intro-block-image.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Even blocks - image slides from right */
-.intro-block:nth-child(even) .intro-block-image {
-    opacity: 0;
-    transform: translateX(100px);
-}
-
-.intro-block:nth-child(even) .intro-block-image.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Animation - Slide from left */
-@keyframes slideInLeft {
-    from {
-            transform: translateX(-50px);
-    }
-    to {
-            transform: translateX(0);
-    }
-}
-
-/* Animation - Slide from right */
-@keyframes slideInRight {
-    from {
-            transform: translateX(50px);
-    }
-    to {
-            transform: translateX(0);
-    }
-}
-
-/* 테두리 제거됨 */
-
-.intro-block-image img {
+/* Hero Background */
+.hero-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-    animation: blobMorph 6s linear infinite;
     z-index: 1;
 }
 
-/* Morphing animation for blob shapes */
-@keyframes blobMorph {
-    0% {
-        border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
-    }
-    16.67% {
-        border-radius: 45% 55% 50% 50% / 50% 45% 55% 50%;
-    }
-    33.33% {
-        border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
-    }
-    50% {
-        border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%;
-    }
-    66.67% {
-        border-radius: 55% 45% 55% 45% / 45% 55% 45% 55%;
-    }
-    83.33% {
-        border-radius: 45% 55% 45% 55% / 55% 45% 55% 45%;
-    }
-    100% {
-        border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
-    }
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-.intro-block-content {
-    width: 45%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: right;
-    padding-left: 20px;
-    opacity: 0;
-    transform: translateX(100px);
-    transition: opacity 1s ease, transform 1s ease;
-    transition-delay: 0.3s;
-}
 
-.intro-block-content.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Even blocks - content slides from left */
-.intro-block:nth-child(even) .intro-block-content {
-    opacity: 0;
-    transform: translateX(-100px);
-}
-
-.intro-block:nth-child(even) .intro-block-content.animate {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.intro-block-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--color-secondary);
-    margin-bottom: 10px;
-    letter-spacing: 0.02em;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--color-secondary);
-}
-
-.intro-block-description {
+.hero-description {
     font-family: var(--font-ko-sub);
     font-size: 1rem;
-    font-weight: 400;
     color: #666;
-    line-height: 1.8;
-    letter-spacing: 0.01em;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Main Title Section */
+
+.main-content {
+    padding: 0 20px;
+}
+
+.main-title-section {
+    padding: 150px 0 0 0;
+}
+
+/* Facility Introduction Section */
+.facility-intro-section {
+    text-align: center;
+    margin: 80px 0;
+    padding: 0 40px;
+}
+
+.facility-intro-content {
     max-width: 800px;
-    margin-top: 10px;
+    margin: 0 auto;
+}
+
+.facility-label {
+    margin-bottom: 20px;
 }
 
 
-/* Mobile Responsive */
+.facility-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Hero Bottom Section - Image 50% + Text 50% */
+.hero-bottom-section {
+    margin: 70px auto;
+    display: flex;
+    max-width: 80%;
+    width: 100%;
+}
+
+.hero-image-half {
+    flex: 1;
+    min-height: 600px;
+    position: relative;
+}
+
+/* Animation classes for scroll effects */
+.hero-image-half.scroll-animate {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease;
+}
+
+.hero-image-half.scroll-animate.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hero-image-half img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    transition: border-radius 0.8s ease;
+}
+
+/* 모든 hero-image-half 이미지에 12px border-radius */
+.hero-image-half img {
+    border-radius: 12px;
+}
+
+
+.hero-text-half {
+    flex: 1;
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    opacity: 1;
+}
+
+/* Animation classes for scroll effects */
+.hero-text-half.scroll-animate {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease;
+}
+
+.hero-text-half.scroll-animate.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hero-text-content {
+    max-width: 400px;
+}
+
+.hero-sub-title {
+    font-family: var(--font-ko-main);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0 0 1.5rem 0;
+    line-height: 1.3;
+}
+
+.hero-sub-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+}
+
+
+/* Full Width Images - 배너 이미지에 12px border-radius */
+.hero-bottom-section > img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+/* Animation classes for scroll effects - 가운데에서 양옆으로 펼쳐지는 효과 */
+.hero-bottom-section > img.scroll-animate {
+    opacity: 0;
+    transform: scaleX(0) translateY(30px);
+    transform-origin: center center;
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-bottom-section > img.scroll-animate.animate {
+    opacity: 1;
+    transform: scaleX(1) translateY(0);
+}
+
+/* Content Sections */
+.content-section {
+    padding: 80px 0;
+    background: var(--color-primary);
+}
+
+.section-container {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.section-container.reverse {
+    direction: rtl;
+}
+
+.section-container.reverse > * {
+    direction: ltr;
+}
+
+.text-content {
+    padding: 40px 0;
+}
+
+.text-content h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0 0 2rem 0;
+    line-height: 1.3;
+}
+
+.text-description {
+    font-family: var(--font-ko-sub);
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    color: #666;
+    line-height: 1.7;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.image-item {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.image-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-content {
+        padding: 60px 30px 30px;
+    }
+
+    .hero-text-half {
+        padding: 40px 30px;
+    }
+
+    .main-title-section {
+        padding: 130px 0 0 0;
+    }
+
+    .facility-intro-section {
+        margin-bottom: 60px;
+        padding: 0 30px;
+    }
+
+    .facility-description {
+        font-size: 1rem;
+    }
+
+    .section-container {
+        padding: 0 30px;
+        gap: 60px;
+    }
+}
+
+/* Main Content Wrapper - default no padding for desktop */
+.main-content-wrapper {
+    padding: 0;
+}
+
 @media (max-width: 768px) {
-    .hero-property-title {
-        font-size: 2.5rem;
-        bottom: 80px;
+    /* Add padding only on mobile */
+    .main-content-wrapper {
+        padding: 0 20px;
+    }
+    .section-container {
+        max-width: 100%;
+    }
+    .hero-section {
+        height: 60vh;
+        min-height: 60vh;
     }
 
-    .main-about-section {
-        padding: 60px 20px;
-    }
-
-    .main-about-section::before {
-        width: 90%;
-    }
-
-    .main-about-title {
-        font-size: 1.7rem;
-    }
-
-    .main-about-description {
-        font-size: 1rem;
-    }
-
-    /* Intro Section Mobile */
-    .marquee-section {
-        margin-top: 100px;
-    }
-
-    .intro-section {
-       padding: 0px 20px 60px 20px;
-    }
-
-    .intro-block {
+    .hero-bottom-section {
         flex-direction: column;
+        max-width: 100%;
+    }
+
+    .hero-image-half {
+        min-height: 300px;
+    }
+
+    .hero-image-half img {
+        height: 300px;
+    }
+
+    .hero-content {
+        padding: 40px 20px 20px;
+    }
+
+    .hero-text-half {
+        padding: 40px 20px;
+    }
+
+    .facility-intro-section {
+        margin-bottom: 60px;
+        padding: 0 20px;
+    }
+
+    .section-container {
+        grid-template-columns: 1fr;
         gap: 40px;
-        margin-top: 50px;
+        padding: 0 20px;
     }
 
-    /* 모바일에서는 row-reverse 제거 */
-    .intro-block:nth-child(even) {
-        flex-direction: column;
+    .section-container.reverse {
+        direction: ltr;
     }
 
-    /* 모바일에서 짝수 번째 블록의 콘텐츠도 중앙 정렬 */
-    .intro-block:nth-child(even) .intro-block-content {
-        text-align: center;
+    .image-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 
-    /* 모바일에서 마지막 블록 패딩 제거 */
-    .intro-block:last-child {
-        padding-bottom: 0;
+    .content-section {
+        padding: 60px 0;
     }
 
-    .intro-block-image {
+    /* Full width images - inherit margin from parent */
+    .hero-bottom-section > img {
+        margin: 0;
         width: 100%;
-        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 30px 15px 15px;
     }
 
-    .intro-block-content {
-        width: 100%;
-        text-align: center;
-        padding-left: 0;
+    .hero-text-half {
+        padding: 30px 15px;
     }
 
-    .intro-block-title {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
+    .facility-intro-section {
+        padding: 0 15px;
     }
 
-    .intro-block-description {
-        font-size: 1rem;
+    .section-container {
+        padding: 0 15px;
+        gap: 30px;
+    }
+
+    .content-section {
+        padding: 40px 0;
+    }
+
+    /* Fix gallery-property-english-name mobile font size */
+    .gallery-property-english-name {
+        font-size: 2rem;
     }
 }

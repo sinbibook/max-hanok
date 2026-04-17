@@ -1,18 +1,18 @@
 {
   "metadata": {
-    "version": "1.151.0",
-    "generatedAt": "2026-04-14T08:36:41.055Z",
-    "templateType": "full_banner_accordion",
+    "version": "1.152.0",
+    "generatedAt": "2026-04-17T09:59:31.278Z",
+    "templateType": "full_banner_slider_flat",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "name": "Max 한옥 펜션",
-    "nameEn": "Max Hanok Pensio",
-    "description": "맥스 한옥 펜션으로 놀러오세요",
+    "nameEn": "Max Hanok Pension12",
+    "description": "BankAccount 역직렬화 수정 검증 테스트",
     "subtitle": "한옥의 멋을 살린 맥스 한옥 펜션",
-    "address": "서울특별시 금천구 가산디지털2로 144",
+    "address": "경기도 가평군",
     "latitude": 37.4810281626186,
     "longitude": 126.879311225819,
     "contactPhone": "0507-1234-5555",
@@ -61,12 +61,12 @@
       "리조트"
     ],
     "businessInfo": {
-      "businessName": "김맥스 사업자 변경 다시",
-      "businessNumber": "123-32-32322",
-      "representativeName": "김맥스입니다.!",
-      "businessAddress": "경기도 서울",
-      "businessPhone": "010-0000-0001",
-      "businessEmail": "m@m.com",
+      "businessName": "테스트 대표",
+      "businessNumber": "123-44-55555",
+      "representativeName": "신규 맥스",
+      "businessAddress": "서울",
+      "businessPhone": "010-0000-0000",
+      "businessEmail": "d@na.com",
       "businessType": "individual",
       "businessCategory": "",
       "eCommerceRegistrationNumber": ""
@@ -291,7 +291,7 @@
         "로프트"
       ],
       "status": "active",
-      "bankAccountId": "fc01fc36-48e5-41b5-bf2c-0fde72c1f30d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [
@@ -437,7 +437,7 @@
       ],
       "displayOrder": 0,
       "createdAt": "2025-10-28T10:44:16.685Z",
-      "updatedAt": "2026-04-13T05:50:41.075Z",
+      "updatedAt": "2026-04-16T11:42:17.477Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
@@ -491,7 +491,7 @@
         "거실분리형"
       ],
       "status": "active",
-      "bankAccountId": "9f290f43-b6f7-4fb1-b3c3-6c474b6ff77d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [
@@ -574,7 +574,7 @@
       ],
       "displayOrder": 2,
       "createdAt": "2025-09-26T02:37:07.978Z",
-      "updatedAt": "2026-03-25T02:51:46.898Z",
+      "updatedAt": "2026-04-16T08:38:41.376Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
@@ -771,7 +771,7 @@
       "roomViews": [],
       "roomStructures": [],
       "status": "active",
-      "bankAccountId": "fc01fc36-48e5-41b5-bf2c-0fde72c1f30d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [
@@ -854,7 +854,7 @@
       ],
       "displayOrder": 4,
       "createdAt": "2025-11-11T06:07:45.136Z",
-      "updatedAt": "2026-03-25T06:57:48.441Z",
+      "updatedAt": "2026-04-16T08:38:41.376Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
@@ -895,7 +895,7 @@
       "roomViews": [],
       "roomStructures": [],
       "status": "active",
-      "bankAccountId": "9f290f43-b6f7-4fb1-b3c3-6c474b6ff77d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [],
@@ -905,7 +905,7 @@
       ],
       "displayOrder": 5,
       "createdAt": "2026-01-22T07:04:17.926Z",
-      "updatedAt": "2026-03-25T06:57:48.441Z",
+      "updatedAt": "2026-04-16T08:38:41.376Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
@@ -946,7 +946,7 @@
       "roomViews": [],
       "roomStructures": [],
       "status": "active",
-      "bankAccountId": "fc01fc36-48e5-41b5-bf2c-0fde72c1f30d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [
@@ -1000,7 +1000,7 @@
       ],
       "displayOrder": 6,
       "createdAt": "2026-01-22T07:10:42.428Z",
-      "updatedAt": "2026-03-25T06:57:48.441Z",
+      "updatedAt": "2026-04-16T08:38:41.376Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
@@ -1041,7 +1041,7 @@
       "roomViews": [],
       "roomStructures": [],
       "status": "active",
-      "bankAccountId": "9f290f43-b6f7-4fb1-b3c3-6c474b6ff77d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [],
@@ -1066,7 +1066,7 @@
       ],
       "displayOrder": 7,
       "createdAt": "2026-03-25T01:57:20.386Z",
-      "updatedAt": "2026-03-25T06:57:48.441Z",
+      "updatedAt": "2026-04-16T08:38:41.376Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
@@ -1107,7 +1107,7 @@
       "roomViews": [],
       "roomStructures": [],
       "status": "active",
-      "bankAccountId": "9f290f43-b6f7-4fb1-b3c3-6c474b6ff77d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [],
@@ -1117,7 +1117,7 @@
       ],
       "displayOrder": 8,
       "createdAt": "2026-03-25T01:57:20.403Z",
-      "updatedAt": "2026-03-25T06:57:48.441Z",
+      "updatedAt": "2026-04-16T08:38:41.376Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     },
@@ -1158,7 +1158,7 @@
       "roomViews": [],
       "roomStructures": [],
       "status": "active",
-      "bankAccountId": "9f290f43-b6f7-4fb1-b3c3-6c474b6ff77d",
+      "bankAccountId": "5701e911-1a36-4e6d-9d67-6498fc0654ce",
       "images": [
         {
           "thumbnail": [],
@@ -1168,7 +1168,7 @@
       ],
       "displayOrder": 9,
       "createdAt": "2026-03-25T02:53:19.166Z",
-      "updatedAt": "2026-03-25T06:57:48.441Z",
+      "updatedAt": "2026-04-16T08:38:41.376Z",
       "createdBy": "daa759e3-2284-43fd-b7ea-391d79902a4a",
       "updatedBy": "daa759e3-2284-43fd-b7ea-391d79902a4a"
     }
@@ -1176,7 +1176,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_accordion",
+    "templateType": "full_banner_slider_flat",
     "images": [
       {
         "logo": [
@@ -1254,16 +1254,8 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [
-                  {
-                    "id": "1884a15a-d9b7-44b9-8077-df573e8a0040",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776066224629-gfk9wxna38m.MP4",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true
-                  }
-                ],
-                "mediaType": "video",
+                "videos": [],
+                "mediaType": "image",
                 "description": "한옥느낌의 맥스펜션!!!!"
               },
               "closing": {
@@ -1320,15 +1312,7 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [
-                  {
-                    "id": "dacbf938-5a48-4f88-8dfa-d8defb3faba5",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1776068684805-7m03vmp7y5r.MP4",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true
-                  }
-                ],
+                "videos": [],
                 "mediaType": "image",
                 "description": "산정호수 옆, 테라스527 캠핑장은\n숲과 하늘 속에서 걷고 쉬며\n여유로운 하루를 보낼 수 있습니다.\n\n모든 객실은 개별 공간으로\n프라이빗한 바비큐와 휴식을 제공합니다.\n불멍,버스 노래방 등 선택형 서비스도\n함께 즐길 수 있습니다.\n\n주변 명소와 가까워 가볍게\n이어지는 여행이 가능합니다."
               },
@@ -1371,15 +1355,7 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [
-                  {
-                    "id": "efd482ff-1152-4027-afcf-20eb4440bf15",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_gallery/1776072275421-e8yhgog1p57.MP4",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true
-                  }
-                ],
+                "videos": [],
                 "mediaType": "video",
                 "description": "맥스펜션에서의 뜻깊은 순간들"
               },
@@ -1415,16 +1391,8 @@
                     "isSelected": true
                   }
                 ],
-                "videos": [
-                  {
-                    "id": "53b94c21-350d-4745-afff-fdb9f3e09387",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_signature/1776154949989-h4elp8bnk7n.MP4",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true
-                  }
-                ],
-                "mediaType": "video",
+                "videos": [],
+                "mediaType": "image",
                 "description": "맥스펜션이 선사하는 잊을 수 없는 경험들"
               }
             }
@@ -1907,7 +1875,8 @@
             "isSelected": true,
             "category": "property_surrounding"
           }
-        ]
+        ],
+        "nameEn": "Max Hanok Pension12"
       },
       "roomtypes": [
         {

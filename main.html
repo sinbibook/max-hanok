@@ -14,72 +14,72 @@
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션 - 숙소소개" />
-  <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta property="og:description" content="BankAccount 역직렬화 수정 검증 테스트" />
   <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
   <meta property="og:url" content="https://max-hanok.com" />
 
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Max 한옥 펜션 - 숙소소개" />
-  <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta name="twitter:description" content="BankAccount 역직렬화 수정 검증 테스트" />
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 </head>
 <body>
-  <main class="main-content">
-      <!-- CUSTOM FIELD : 메인 소개 섹션 -->
-      <!-- homepage.customFields.pages.main.sections[0].hero.images 매핑 -->
-      <section class="hero-section hero-center-bottom">
-          <div class="hero-slider" data-hero-slider>
-              <!-- 동적으로 hero-slide가 생성됩니다 -->
-          </div>
-          <!-- 페이지명 하드코딩 -->
-          <div class="hero-property-title">PROLOGUE</div>
-          <div class="hero-bottom-info">
-              <div class="hero-progress-container">
-                  <button class="hero-nav-prev" aria-label="Previous slide">&lt;</button>
-                  <span class="current-slide hero-indicators" data-current-slide>01</span>
-                  <div class="hero-progress-bar">
-                      <div class="hero-progress-fill" data-hero-progress></div>
-                  </div>
-                  <span class="total-slides hero-indicators" data-total-slides>02</span>
-                  <button class="hero-nav-next" aria-label="Next slide">&gt;</button>
-              </div>
-          </div>
-      </section>
-      <div class="main-about-section">
-          <div class="main-about-content">
-              <!-- homepage.customFields.pages.main.sections[0].hero.title 매핑 -->
-              <h2 class="main-about-title" data-main-about-title></h2>
-              <!-- homepage.customFields.pages.main.sections[0].hero.description 매핑 -->
-              <p class="main-about-description" data-main-about-description></p>
-          </div>
+  <!-- Include Header -->
+  <div id="header-placeholder"></div>
 
-          <!-- CUSTOM FIELD : 소개 섹션 / 동적 블록 생성 영역 / 최소 블럭 1개 -->
-          <!-- homepage.customFields.pages.main.sections[0].about[] 매핑 -->
-          <section class="intro-section">
-            <!-- 동적으로 intro-block이 생성됩니다 -->
-          </section>
+  <!-- 메인 소개 섹션 히어로 0번째 이미지-->
+  <section class="hero-section">
+    <div class="hero-background">
+      <img src="" alt="메인 배경" data-customfield-main-hero-image-0>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text-center">
+        <h1 class="hero-title">ABOUT</h1>
+      </div>
+    </div>
+
+    <!-- Scroll Down Indicator -->
+    <div class="hero-scroll-down" onclick="scrollToNextSection()">
+      <svg class="scroll-arrow" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Main Info Section -->
+  <section class="location-info-section">
+    <!-- Facility Introduction Section -->
+    <div class="facility-intro-section">
+      <div class="facility-intro-content">
+        <div class="facility-label">
+          <span class="facility-number" data-main-title>ABOUT</span>
         </div>
+        <p class="facility-description" data-main-description>메인 페이지 안내입니다.</p>
+      </div>
+    </div>
+  </section>
 
-      <!-- property.images[0].exterior[] 첫번째 이미지 매핑 -->
-      <section class="full-banner" data-main-banner>
-        <!-- property.nameEn 매핑 -->
-        <h2 class="full-banner-title" data-main-banner-title></h2>
-      </section>
+  <!-- 소개섹션 custom-field (동적으로 생성됨) -->
+  <div class="main-content-wrapper">
+    <!-- JavaScript로 동적 생성됨 -->
+  </div>
 
-  </main>
+  <!-- Include ImageWithFallback script -->
+  <script src="js/image-with-fallback.js"></script>
 
-  <!-- Include ImageWithFallback script (standard-template-data.json에서만 필요) -->
-  <!-- <script src="js/image-with-fallback.js"></script> -->
+  <!-- Common JavaScript -->
+  <script src="js/common.js"></script>
+
+  <!-- Preview Handler for Admin Integration -->
+  <script src="js/preview-handler.js"></script>
 
   <!-- Image Helpers -->
   <script src="js/image-helpers.js"></script>
 
-  <!-- Base Data Mapper (must load before preview-handler) -->
+  <!-- Base Data Mapper -->
   <script src="js/data-mapper/core/base-mapper.js"></script>
-
-  <!-- Preview Handler for Admin Integration -->
-  <script src="js/preview-handler.js"></script>
 
   <!-- Main Page Mapper -->
   <script src="js/data-mapper/pages/main-mapper.js"></script>
@@ -90,14 +90,8 @@
   <!-- Header and Footer Loader -->
   <script src="js/header-footer-loader.js"></script>
 
-  <!-- Fullscreen Slider Component -->
-  <script src="js/components/fullscreen-slider.js"></script>
-
   <!-- Page-specific script -->
   <script type="module" src="js/pages/main.js"></script>
-
-  <!-- Scroll Animations -->
-  <script src="js/scroll-animations.js"></script>
 
 </body>
 </html>

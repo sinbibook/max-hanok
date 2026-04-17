@@ -9,100 +9,104 @@
 
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/slider.css">
     <link rel="stylesheet" href="styles/directions.css">
 
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션 - 오시는길" />
-  <meta property="og:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta property="og:description" content="BankAccount 역직렬화 수정 검증 테스트" />
   <meta property="og:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
   <meta property="og:url" content="https://max-hanok.com" />
 
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Max 한옥 펜션 - 오시는길" />
-  <meta name="twitter:description" content="맥스 한옥 펜션으로 놀러오세요" />
+  <meta name="twitter:description" content="BankAccount 역직렬화 수정 검증 테스트" />
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg" />
 </head>
 <body>
-    <main class="main-content">
-         <!-- CUSTOM FIELD : 메인 소개 섹션 -->
-        <!-- homepage.customFields.pages.directions.sections[0].hero.images 매핑 -->
-        <section class="hero-section hero-center-bottom">
-            <div class="hero-slider" data-hero-slider>
-                <!-- 동적으로 hero-slide가 생성됩니다 -->
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 소개 섹션 히어로 0번째 이미지-->
+    <section class="hero-section">
+        <div class="hero-background">
+            <img src="" alt="오시는길 배경" data-customfield-directions-hero-image-0>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text-center">
+                <h1 class="hero-title" data-directions-hero-title>LOCATION</h1>
             </div>
-           <!-- 페이지명 하드코딩 -->
-            <div class="hero-property-title">DIRECTIONS</div>
-            <div class="hero-bottom-info">
-                <div class="hero-progress-container">
-                    <button class="hero-nav-prev" aria-label="Previous slide">&lt;</button>
-                    <span class="current-slide hero-indicators" data-current-slide>01</span>
-                    <div class="hero-progress-bar">
-                        <div class="hero-progress-fill" data-hero-progress></div>
-                    </div>
-                    <span class="total-slides hero-indicators" data-total-slides>02</span>
-                    <button class="hero-nav-next" aria-label="Next slide">&gt;</button>
-                </div>
-            </div>
-        </section>
-        <section class="location-section">
-            <div class="location-content">
-                <!-- property.name + "오시는 길" 매핑 -->
-                <h2 class="about-title animate-element" data-directions-title>
-                    <span data-property-name></span> 오시는 길
-                </h2>
-                <div class="location-details animate-element">
-                    <div class="location-address-wrapper animate-element">
-                        <div class="location-address-section">
-                            <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 0 25 25" fill="none">
-                                <path d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round"/>
-                                <path d="M12 14.0137V22" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round"/>
-                            </svg>
-                            <!-- property.address 매핑 -->
-                            <p class="location-address" data-directions-address></p>
-                        </div>
+        </div>
 
-                        <!-- 구분선 -->
-                        <div class="location-divider"></div>
-
-                        <!-- homepage.customFields.pages.directions.sections[0].notice.description 매핑 -->
-                        <!-- 데이터 없으면 display: none -->
-                        <div class="location-note" data-directions-notes>
-                            <!-- 동적으로 p 태그가 생성됩니다 -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 지도 섹션 -->
-                <div class="map-wrapper animate-element">
-                    <div class="map-container">
-                        <div id="kakao-map"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- property.images[0].exterior 첫번째 이미지 배경 매핑 -->
-    <section class="full-banner" data-directions-banner-bg>
-      <!-- property.nameEn 매핑 (uppercase) -->
-      <h2 class="full-banner-title" data-directions-banner-title></h2>
+        <!-- Scroll Down Indicator -->
+        <div class="hero-scroll-down" onclick="scrollToNextSection()">
+            <svg class="scroll-arrow" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
     </section>
 
+    <!-- Location Info Section -->
+    <section class="location-info-section">
+        <div class="directions-content-container">
+        <!-- Facility Introduction Section -->
+        <div class="facility-intro-section">
+            <div class="facility-intro-content">
+                <div class="facility-label">
+                    <span class="facility-number" data-directions-title>LOCATION</span>
+                </div>
+                <p class="facility-description" data-directions-description>
+                    오시는 길 안내입니다.
+                </p>
+            </div>
+        </div>
 
+        <!-- Banner Image Section 히어로 1번째 이미지 -->
+        <div class="directions-banner-section">
+            <div class="container">
+                <img src="" alt="오시는길 배너" class="directions-banner-image" data-customfield-directions-hero-image-1>
+            </div>
+        </div>
+
+        <!-- 지도 섹션 -->
+        <section class="map-section main-content-fade-in">
+            <div class="container">
+                <div class="address-section">
+                    <p>
+                        <svg class="location-icon" viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span data-directions-address></span>
+                    </p>
+                    <!-- 안내사항  -->
+                     <div class="notice-wrap">
+                        <h4 data-customfield-directions-notice-title>안내사항</h4>
+                        <p data-customfield-directions-notice-description>안내사항 1</p>
+                     </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="map-container">
+                    <div id="kakao-map"></div>
+                </div>
+            </div>
+        </section>
+        </div> <!-- directions-content-container -->
 
     <!-- Kakao Map SDK -->
     <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>
 
-    <!-- Include ImageWithFallback script (standard-template-data.json에서만 필요) -->
-    <!-- <script src="js/image-with-fallback.js"></script> -->
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
 
     <!-- Common JavaScript -->
     <script src="js/common.js"></script>
 
-    <!-- Image Helpers (매핑 시 주석 해제 필요) -->
+    <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
 
     <!-- Base Data Mapper -->
@@ -120,14 +124,8 @@
     <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
 
-    <!-- Fullscreen Slider Component -->
-    <script src="js/components/fullscreen-slider.js"></script>
-
     <!-- Page-specific script -->
     <script src="js/pages/directions.js"></script>
-
-    <!-- Scroll Animations -->
-    <script src="js/scroll-animations.js"></script>
 
 </body>
 </html>
