@@ -2,69 +2,90 @@
 (function() {
     'use strict';
 
-    // Scroll Effect for Transparent Header
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('.transparent-header');
-        const body = document.body;
+    // Update submenu position based on header height
+    function updateSubmenuPosition() {
+        const header = document.querySelector('.header');
+        const unifiedSubmenu = document.querySelector('.unified-submenu');
 
-        if (header) {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-                body.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-                body.classList.remove('scrolled');
-            }
+        if (header && unifiedSubmenu) {
+            const headerHeight = header.offsetHeight;
+            unifiedSubmenu.style.top = `${headerHeight}px`;
         }
+    }
+
+    // Scroll Effect for Header
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (!header) return;
+
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        // Update submenu position after header state change
+        // setTimeout(updateSubmenuPosition, 100);
     });
 
-    // Toggle Menu Overlay
-    window.toggleMenuOverlay = function() {
-        const menuOverlay = document.getElementById('menu-overlay');
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuText = menuToggle ? menuToggle.querySelector('.menu-text') : null;
-        const overlayBg = document.getElementById('menu-overlay-bg');
+    // Toggle Mobile Menu
+    window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
         const body = document.body;
+        const html = document.documentElement;
 
-        if (!menuOverlay || !menuToggle) return;
+        if (mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            menuIcon.style.display = 'block';
+            closeIcon.style.display = 'none';
 
-        const isActive = menuOverlay.classList.contains('active');
+            // 현재 스크롤 위치 저장
+            const scrollY = body.style.top ? -parseInt(body.style.top) : 0;
 
-        if (isActive) {
-            // Close menu
-            menuOverlay.classList.remove('active');
-            menuToggle.classList.remove('active');
-            body.classList.remove('menu-open');
-            if (overlayBg) overlayBg.classList.remove('active');
+            // 모든 스타일 완전히 리셋
+            body.classList.remove('mobile-menu-open');
+            body.style.overflow = '';
+            body.style.position = '';
+            body.style.width = '';
+            body.style.height = '';
+            body.style.top = '';
+            body.style.left = '';
 
-            // Change text back to MENU
-            if (menuText) {
-                menuText.textContent = 'MENU';
+            html.style.overflow = '';
+
+            // 원래 스크롤 위치로 복원
+            if (scrollY > 0) {
+                window.scrollTo(0, scrollY);
             }
         } else {
-            // Open menu
-            // Change text to CLOSE
-            if (menuText) {
-                menuText.textContent = 'CLOSE';
-            }
+            // 현재 스크롤 위치 저장
+            const scrollY = window.pageYOffset;
 
+            mobileMenu.classList.add('active');
+            menuIcon.style.display = 'none';
+            closeIcon.style.display = 'block';
 
-            menuOverlay.classList.add('active');
-            menuToggle.classList.add('active');
-            body.classList.add('menu-open');
-            if (overlayBg) overlayBg.classList.add('active');
+            // body 고정하되 현재 스크롤 위치 유지
+            body.classList.add('mobile-menu-open');
+            body.style.overflow = 'hidden';
+            body.style.position = 'fixed';
+            body.style.width = '100%';
+            body.style.height = '100%';
+            body.style.top = `-${scrollY}px`;
+            body.style.left = '0';
+
+            html.style.overflow = 'hidden';
         }
     };
 
-    // Keep the old function name for compatibility
-    window.toggleSideHeader = window.toggleMenuOverlay;
-
     // Navigation function
-    window.navigateTo = function(page, id = null) {
-        // Close menu overlay if open
-        const menuOverlay = document.getElementById('menu-overlay');
-        if (menuOverlay && menuOverlay.classList.contains('active')) {
-            toggleMenuOverlay();
+    window.navigateTo = function(page) {
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+            toggleMobileMenu();
         }
 
         // Navigate to page
@@ -82,73 +103,51 @@
             case 'reservation-info':
                 url = 'reservation.html';
                 break;
-            case 'room':
-                url = 'room.html';
-                break;
-            case 'facility':
-                url = 'facility.html';
-                break;
-            case 'reservation':
-                url = 'reservation.html';
-                break;
             default:
                 url = page + '.html';
         }
 
-        // Navigate to URL (preserve preview query string and add id if provided)
         if (url) {
-            const currentParams = new URLSearchParams(window.location.search);
-            const isPreview = currentParams.get('preview');
-            const params = new URLSearchParams();
-
-            if (id) {
-                params.set('id', id);
-            }
-            if (isPreview) {
-                params.set('preview', isPreview);
-            }
-
-            const queryString = params.toString();
-            if (queryString) {
-                url += '?' + queryString;
-            }
-
             window.location.href = url;
         }
     };
 
-    // Initialize Accordion Menu
-    function initializeAccordionMenu() {
-        const menuItems = document.querySelectorAll('.menu-item');
+    // Submenu hover effect
+    function initSubmenuHover() {
+        const menuItems = document.querySelectorAll('.menu-item-wrapper');
 
-        // 기본적으로 모든 메뉴 열기
         menuItems.forEach(item => {
-            item.classList.add('accordion-active');
+            let hoverTimeout;
 
-            // 타이틀 클릭 이벤트 추가
-            const title = item.querySelector('.menu-item-title');
-            if (title) {
-                title.addEventListener('click', function(e) {
-                    e.stopPropagation();
+            item.addEventListener('mouseenter', function() {
+                clearTimeout(hoverTimeout);
+            });
 
-                    // 다른 메뉴들 닫기 (선택적 - 한 번에 하나만 열리게 하려면)
-                    // menuItems.forEach(otherItem => {
-                    //     if (otherItem !== item) {
-                    //         otherItem.classList.remove('accordion-active');
-                    //     }
-                    // });
-
-                    // 현재 메뉴 토글
-                    item.classList.toggle('accordion-active');
-                });
-            }
+            item.addEventListener('mouseleave', function() {
+                hoverTimeout = setTimeout(() => {
+                    // Optional: Add any cleanup code here
+                }, 100);
+            });
         });
     }
 
+    // Check if logo image exists and hide text
+    function checkLogoImage() {
+        const logoImage = document.querySelector('.logo-image');
+        const logoText = document.querySelector('.logo-text');
+
+        if (logoImage && logoText) {
+            // Check if logo image src exists and is not empty
+            if (logoImage.src && !logoImage.src.includes('undefined') && !logoImage.src.endsWith('/')) {
+                logoText.style.display = 'none';
+            }
+        }
+    }
+
+
     // Check and set header state based on scroll position
     function checkInitialScroll() {
-        const header = document.querySelector('.transparent-header');
-
+        const header = document.querySelector('.header');
         if (header) {
             if (window.scrollY > 50 || window.pageYOffset > 50) {
                 header.classList.add('scrolled');
@@ -158,61 +157,40 @@
         }
     }
 
-
-
-    // Initialize header immediately (since this script is loaded dynamically)
-    function initializeHeader() {
-        // Initialize header functions
-
+    // Initialize header on page load
+    document.addEventListener('DOMContentLoaded', function() {
         // Check initial scroll position
         checkInitialScroll();
 
-        // Initialize menu toggle button
-        const menuToggle = document.getElementById('menu-toggle');
-        if (menuToggle) {
-            menuToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleMenuOverlay();
-            });
-        }
+        // Initialize submenu hover
+        initSubmenuHover();
 
-        // Initialize accordion menu
-        initializeAccordionMenu();
+        // Check logo image
+        checkLogoImage();
 
+        // Update submenu position initially
+        updateSubmenuPosition();
 
-        // Initialize overlay click event
-        const overlayBg = document.getElementById('menu-overlay-bg');
-        if (overlayBg) {
-            overlayBg.addEventListener('click', function() {
-                toggleMenuOverlay();
-            });
-        }
+        // Update submenu position on window resize
+        window.addEventListener('resize', updateSubmenuPosition);
+    });
 
-        // Initialize YBS booking button
-        const ybsBookingBtn = document.querySelector('[data-ybs-booking]');
-        if (ybsBookingBtn) {
-            ybsBookingBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                // YBS booking functionality handled by header-footer-mapper
-            });
-        }
+    // Mobile Accordion Toggle
+    window.toggleMobileAccordion = function(header) {
+        const content = header.nextElementSibling;
+        const isActive = content.classList.contains('active');
 
-        // Initialize mobile booking buttons
-        const mobileBookingBtns = document.querySelectorAll('.mobile-booking-btn');
-        mobileBookingBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Mobile booking functionality handled by header-footer-mapper
-            });
-        });
-    }
-
-    // Call initialization immediately
-    initializeHeader();
+        // Toggle current accordion
+        header.classList.toggle('active');
+        content.classList.toggle('active');
+    };
 
     // Also check when window loads (for refresh scenarios)
     window.addEventListener('load', function() {
         checkInitialScroll();
     });
+
+    // Immediate check for page refresh scenarios
+    checkInitialScroll();
 
 })();
