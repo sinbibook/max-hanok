@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.153.0",
-    "generatedAt": "2026-04-17T10:15:09.690Z",
+    "version": "1.154.0",
+    "generatedAt": "2026-04-17T10:22:33.941Z",
     "templateType": "full_banner_slider_flat",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1819,10 +1819,7 @@
             "family": "Chonburi"
           }
         },
-        "color": {
-          "primary": "#e8ebe6",
-          "secondary": "#7a8471"
-        }
+        "color": null
       },
       "property": {
         "name": "Max 한옥 펜션",
