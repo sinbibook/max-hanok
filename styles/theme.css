@@ -1,26 +1,17 @@
-/* CDN Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
+:root {
+  --font-koMain: 'SokchoSeaDotum';
+  --font-koSub: 'Aritaburi';
+  --font-enMain: 'Chonburi';
+}
 
-/* Font Faces */
 @font-face {
   font-family: 'SokchoSeaDotum';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
-  font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Aritaburi';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff') format('woff');
-  font-weight: 400;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff') format('woff2');
   font-display: swap;
-}
-
-/* CSS Variables */
-:root {
-  --font-ko-main: 'SokchoSeaDotum', sans-serif;
-  --font-ko-sub: 'Aritaburi', sans-serif;
-  --font-en-main: 'Chonburi', sans-serif;
-  --color-primary: #f8f8f8;
-  --color-secondary: #1a1a1a;
 }
