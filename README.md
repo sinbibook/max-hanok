@@ -1,1 +1,1 @@
-# template-full-banner-slider-flat Template
+# max-hanok
