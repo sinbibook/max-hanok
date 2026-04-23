@@ -1,5 +1,28 @@
+/* CDN Fonts */
+@import url('https://use.typekit.net/vll4umt.css');
+@import url('https://fonts.cdnfonts.com/css/bruno-ace-2');
+
+/* Font Faces */
+@font-face {
+    font-family: 'ImHyeMin';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Escoredream';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
 /* CSS Variables */
 :root {
-  --color-primary: #FFF9F1;
-  --color-secondary: #B66E41;
+  --font-ko-main: 'Escoredream', sans-serif;
+  --font-ko-sub: 'ImHyeMin', sans-serif;
+  --font-en-main: 'Bruno Ace', sans-serif;
+  --color-primary: #F5F5F5;
+  --color-secondary: #1D3A5F;
 }
