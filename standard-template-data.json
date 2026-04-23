@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.169.0",
-    "generatedAt": "2026-04-23T07:44:32.198109Z",
+    "version": "1.170.0",
+    "generatedAt": "2026-04-23T07:46:24.530049Z",
     "templateType": "full_banner_conveyer",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1832,9 +1832,24 @@
       },
       "theme": {
         "font": {
-          "koMain": null,
-          "koSub": null,
-          "enMain": null
+          "koMain": {
+            "cdn": null,
+            "key": "sokchoseadotum",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2",
+            "family": "SokchoSeaDotum"
+          },
+          "koSub": {
+            "cdn": null,
+            "key": "aritaburi",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff",
+            "family": "Aritaburi"
+          },
+          "enMain": {
+            "cdn": "https://fonts.googleapis.com/css2?family=Chonburi&display=swap",
+            "key": "chonburi",
+            "woff2": null,
+            "family": "Chonburi"
+          }
         },
         "color": null
       },
