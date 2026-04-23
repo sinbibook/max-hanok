@@ -1,58 +1,218 @@
-/**
- * Header Component Script
- * - Loads header HTML into the page
- * - Handles header scroll behavior
- */
-
+// Header JavaScript
 (function() {
     'use strict';
 
-    // Initialize header behavior (header-footer-loader.js가 HTML 주입 후 이 스크립트를 동적 로드)
-    function loadHeader() {
-        initHeaderBehavior();
-    }
+    // Scroll Effect for Transparent Header
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.transparent-header');
+        const body = document.body;
 
-    // Initialize header behavior
-    function initHeaderBehavior() {
-        const header = document.querySelector('.site-header');
-        if (!header) return;
+        if (header) {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                body.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+                body.classList.remove('scrolled');
+            }
+        }
+    });
 
-        // 모바일 Menu 버튼 클릭 시 드롭다운 토글
-        const menuBtn = header.querySelector('.header-menu-btn');
-        const dropdown = header.querySelector('.header-dropdown');
-        if (!menuBtn || !dropdown) return;
+    // Toggle Menu Overlay
+    window.toggleMenuOverlay = function() {
+        const menuOverlay = document.getElementById('menu-overlay');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuText = menuToggle ? menuToggle.querySelector('.menu-text') : null;
+        const overlayBg = document.getElementById('menu-overlay-bg');
+        const body = document.body;
 
-        menuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var isOpen = dropdown.classList.toggle('is-open');
-            header.classList.toggle('menu-active', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        });
+        if (!menuOverlay || !menuToggle) return;
 
-        // 드롭다운 외부 클릭 시 닫기
-        document.addEventListener('click', function(e) {
-            if (!header.contains(e.target)) {
-                dropdown.classList.remove('is-open');
-                header.classList.remove('menu-active');
-                document.body.style.overflow = '';
+        const isActive = menuOverlay.classList.contains('active');
+
+        if (isActive) {
+            // Close menu
+            menuOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            body.classList.remove('menu-open');
+            if (overlayBg) overlayBg.classList.remove('active');
+
+            // Change text back to MENU
+            if (menuText) {
+                menuText.textContent = 'MENU';
+            }
+        } else {
+            // Open menu
+            // Change text to CLOSE
+            if (menuText) {
+                menuText.textContent = 'CLOSE';
+            }
+
+
+            menuOverlay.classList.add('active');
+            menuToggle.classList.add('active');
+            body.classList.add('menu-open');
+            if (overlayBg) overlayBg.classList.add('active');
+        }
+    };
+
+    // Keep the old function name for compatibility
+    window.toggleSideHeader = window.toggleMenuOverlay;
+
+    // Navigation function
+    window.navigateTo = function(page, id = null) {
+        // Close menu overlay if open
+        const menuOverlay = document.getElementById('menu-overlay');
+        if (menuOverlay && menuOverlay.classList.contains('active')) {
+            toggleMenuOverlay();
+        }
+
+        // Navigate to page
+        let url = '';
+        switch(page) {
+            case 'home':
+                url = 'index.html';
+                break;
+            case 'main':
+                url = 'main.html';
+                break;
+            case 'directions':
+                url = 'directions.html';
+                break;
+            case 'reservation-info':
+                url = 'reservation.html';
+                break;
+            case 'room':
+                url = 'room.html';
+                break;
+            case 'facility':
+                url = 'facility.html';
+                break;
+            case 'reservation':
+                url = 'reservation.html';
+                break;
+            default:
+                url = page + '.html';
+        }
+
+        // Navigate to URL (preserve preview query string and add id if provided)
+        if (url) {
+            const currentParams = new URLSearchParams(window.location.search);
+            const isPreview = currentParams.get('preview');
+            const params = new URLSearchParams();
+
+            if (id) {
+                params.set('id', id);
+            }
+            if (isPreview) {
+                params.set('preview', isPreview);
+            }
+
+            const queryString = params.toString();
+            if (queryString) {
+                url += '?' + queryString;
+            }
+
+            window.location.href = url;
+        }
+    };
+
+    // Initialize Accordion Menu
+    function initializeAccordionMenu() {
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        // 기본적으로 모든 메뉴 열기
+        menuItems.forEach(item => {
+            item.classList.add('accordion-active');
+
+            // 타이틀 클릭 이벤트 추가
+            const title = item.querySelector('.menu-item-title');
+            if (title) {
+                title.addEventListener('click', function(e) {
+                    e.stopPropagation();
+
+                    // 다른 메뉴들 닫기 (선택적 - 한 번에 하나만 열리게 하려면)
+                    // menuItems.forEach(otherItem => {
+                    //     if (otherItem !== item) {
+                    //         otherItem.classList.remove('accordion-active');
+                    //     }
+                    // });
+
+                    // 현재 메뉴 토글
+                    item.classList.toggle('accordion-active');
+                });
             }
         });
+    }
 
-        // 모바일 아코디언: 타이틀 클릭 시 서브메뉴 접기/펼치기
-        var colTitles = dropdown.querySelectorAll('.dropdown-col-title');
-        colTitles.forEach(function(title) {
-            title.addEventListener('click', function(e) {
-                e.stopPropagation();
-                var col = title.closest('.dropdown-col');
-                col.classList.toggle('is-expanded');
+    // Check and set header state based on scroll position
+    function checkInitialScroll() {
+        const header = document.querySelector('.transparent-header');
+
+        if (header) {
+            if (window.scrollY > 50 || window.pageYOffset > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+    }
+
+
+
+    // Initialize header immediately (since this script is loaded dynamically)
+    function initializeHeader() {
+        // Initialize header functions
+
+        // Check initial scroll position
+        checkInitialScroll();
+
+        // Initialize menu toggle button
+        const menuToggle = document.getElementById('menu-toggle');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleMenuOverlay();
+            });
+        }
+
+        // Initialize accordion menu
+        initializeAccordionMenu();
+
+
+        // Initialize overlay click event
+        const overlayBg = document.getElementById('menu-overlay-bg');
+        if (overlayBg) {
+            overlayBg.addEventListener('click', function() {
+                toggleMenuOverlay();
+            });
+        }
+
+        // Initialize YBS booking button
+        const ybsBookingBtn = document.querySelector('[data-ybs-booking]');
+        if (ybsBookingBtn) {
+            ybsBookingBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // YBS booking functionality handled by header-footer-mapper
+            });
+        }
+
+        // Initialize mobile booking buttons
+        const mobileBookingBtns = document.querySelectorAll('.mobile-booking-btn');
+        mobileBookingBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Mobile booking functionality handled by header-footer-mapper
             });
         });
     }
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadHeader);
-    } else {
-        loadHeader();
-    }
+    // Call initialization immediately
+    initializeHeader();
+
+    // Also check when window loads (for refresh scenarios)
+    window.addEventListener('load', function() {
+        checkInitialScroll();
+    });
+
 })();
