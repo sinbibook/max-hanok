@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.162.0",
-    "generatedAt": "2026-04-23T06:05:58.849078683Z",
+    "generatedAt": "2026-04-23T06:15:18.350976349Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -560,14 +560,6 @@
           ],
           "exterior": [
             {
-              "id": "a0e28522-5fbd-45b7-89c1-429eea4161d9",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031679-e68fnsngtz8.jpg",
-              "sortOrder": 0,
-              "description": "",
-              "isSelected": true,
-              "blockId": null
-            },
-            {
               "id": "e87ab7c3-a86b-4987-81c1-4fd1e9bbe496",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1759117596242-f8h5ve7y3xq.jpg",
               "sortOrder": 0,
@@ -576,9 +568,9 @@
               "blockId": null
             },
             {
-              "id": "db3494ba-dbde-4520-bd9b-2d235945c7d5",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031680-qbim10g0s9.jpg",
-              "sortOrder": 1,
+              "id": "a0e28522-5fbd-45b7-89c1-429eea4161d9",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031679-e68fnsngtz8.jpg",
+              "sortOrder": 0,
               "description": "",
               "isSelected": true,
               "blockId": null
@@ -588,6 +580,14 @@
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1759117596242-x7z25eixiz9.jpg",
               "sortOrder": 1,
               "description": "2222",
+              "isSelected": true,
+              "blockId": null
+            },
+            {
+              "id": "db3494ba-dbde-4520-bd9b-2d235945c7d5",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031680-qbim10g0s9.jpg",
+              "sortOrder": 1,
+              "description": "",
               "isSelected": true,
               "blockId": null
             },
@@ -1170,7 +1170,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_wipe",
+    "templateType": "full_banner_conveyer",
     "images": [
       {
         "logo": [
@@ -1851,7 +1851,10 @@
             "family": "Chonburi"
           }
         },
-        "color": null
+        "color": {
+          "primary": "#FFF9F1",
+          "secondary": "#B66E41"
+        }
       },
       "property": {
         "name": "Max 한옥 펜션",
