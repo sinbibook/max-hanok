@@ -1,14 +1,10 @@
+/* Theme CSS - 테마 변수 정의 (폰트, 색상) */
+/* 배포 시 이 파일만 덮어쓰면 됨 */
+
 /* CDN Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
+@import url('https://use.typekit.net/vll4umt.css');
 
 /* Font Faces */
-@font-face {
-  font-family: 'SokchoSeaDotum';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-
 @font-face {
   font-family: 'Aritaburi';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff') format('woff');
@@ -18,9 +14,9 @@
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'SokchoSeaDotum', sans-serif;
+  --font-ko-main: 'Aritaburi', sans-serif;
   --font-ko-sub: 'Aritaburi', sans-serif;
-  --font-en-main: 'Chonburi', sans-serif;
-  --color-primary: #e6f3ff;
-  --color-secondary: #658399;
+  --font-en-main: 'Amandine', serif;
+  --color-primary: #fdfcf4;
+  --color-secondary: #31423d;
 }
