@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.158.0",
-    "generatedAt": "2026-04-23T05:16:48.799903520Z",
+    "generatedAt": "2026-04-23T05:31:32.442230115Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1170,7 +1170,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "fullpage_scroll",
+    "templateType": "full_banner_wipe",
     "images": [
       {
         "logo": [
@@ -1210,9 +1210,9 @@
       }
     ],
     "seo": {
-      "title": "한옥의 아름다움 맥스 한옥 펜션입니다.",
-      "description": "맥스 한옥 펜션으로 놀러오세요.",
-      "keywords": "펜션, 한옥 정통, 민속놀이"
+      "title": "seo 제목 수정",
+      "description": "seo 설명 수정",
+      "keywords": "seo, 키워드, 수정"
     },
     "socialLinks": {
       "facebook": null,
