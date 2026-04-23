@@ -3,8 +3,8 @@
 
 /* Font Faces */
 @font-face {
-  font-family: 'YeongjuSeonbi';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/YEONGJUSeonbiTTF.woff2') format('woff2');
+  font-family: 'SokchoSeaDotum';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
@@ -18,7 +18,7 @@
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'YeongjuSeonbi', sans-serif;
+  --font-ko-main: 'SokchoSeaDotum', sans-serif;
   --font-ko-sub: 'Aritaburi', sans-serif;
   --font-en-main: 'Chonburi', sans-serif;
   --color-primary: #e6f3ff;
