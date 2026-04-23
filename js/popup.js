@@ -21,6 +21,7 @@ class PopupManager {
         this.autoPlayInterval = 5000; // 자동 슬라이드 간격 (5초)
         this._slides = null; // 슬라이드 DOM 캐시
         this._dots = null; // 도트 DOM 캐시
+        this._previewDismissed = false; // 미리보기에서 사용자가 팝업을 닫은 경우
     }
 
     /**
@@ -116,6 +117,10 @@ class PopupManager {
         // 팝업이 있으면 첫 번째 팝업 표시
         this.currentIndex = 0;
         if (this.popups.length > 0) {
+            // 미리보기에서 이미 닫은 경우 다시 표시하지 않음
+            if (this.isPreviewMode && this._previewDismissed) {
+                return;
+            }
             this.show();
         } else {
             this.hide();
@@ -579,6 +584,9 @@ class PopupManager {
             this.show();
         } else {
             // 모든 팝업 닫기
+            if (this.isPreviewMode) {
+                this._previewDismissed = true;
+            }
             this.hide();
         }
     }
@@ -589,6 +597,8 @@ class PopupManager {
     updateFromPreview(popupData) {
         // 미리보기 모드 활성화
         this.isPreviewMode = true;
+        // 팝업 설정 자체가 변경된 경우 닫힘 플래그 리셋
+        this._previewDismissed = false;
 
         // 팝업 데이터 처리
         const popups = popupData?.popups || popupData || [];
