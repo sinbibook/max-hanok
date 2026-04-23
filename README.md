@@ -1,1 +1,1 @@
-# template-full-banner-wipe
+# template-full-banner-accordion Template
