@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.157.0",
-    "generatedAt": "2026-04-23T05:14:10.556405453Z",
+    "version": "1.158.0",
+    "generatedAt": "2026-04-23T05:16:48.799903520Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1832,9 +1832,24 @@
       },
       "theme": {
         "font": {
-          "koMain": null,
-          "koSub": null,
-          "enMain": null
+          "koMain": {
+            "cdn": null,
+            "key": "yeongjuseonbi",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/YEONGJUSeonbiTTF.woff2",
+            "family": "YeongjuSeonbi"
+          },
+          "koSub": {
+            "cdn": null,
+            "key": "aritaburi",
+            "woff2": "https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff",
+            "family": "Aritaburi"
+          },
+          "enMain": {
+            "cdn": "https://fonts.googleapis.com/css2?family=Chonburi&display=swap",
+            "key": "chonburi",
+            "woff2": null,
+            "family": "Chonburi"
+          }
         },
         "color": null
       },
