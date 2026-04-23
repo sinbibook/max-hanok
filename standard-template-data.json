@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.171.0",
-    "generatedAt": "2026-04-23T09:51:44.295048905Z",
-    "templateType": "full_banner_conveyer",
+    "version": "1.172.0",
+    "generatedAt": "2026-04-23T10:27:23.906030020Z",
+    "templateType": "full_banner_slider_flat",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1170,7 +1170,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_conveyer",
+    "templateType": "full_banner_slider_flat",
     "images": [
       {
         "logo": [
@@ -1327,7 +1327,7 @@
                 ],
                 "videos": [ ],
                 "mediaType": "image",
-                "description": "산정호수 옆, 테라스527 캠핑장은\n숲과 하늘 속에서 걷고 쉬며\n여유로운 하루를 보낼 수 있습니다.\n\n모든 객실은 개별 공간으로\n프라이빗한 바비큐와 휴식을 제공합니다.\n불멍,버스 노래방 등 선택형 서비스도\n함께 즐길 수 있습니다.\n\n주변 명소와 가까워 가볍게\n이어지는 여행이 가능합니다."
+                "description": "Hanhok Pension"
               },
               "gallery": {
                 "title": "특별한 순간",
@@ -1836,10 +1836,7 @@
           "koSub": null,
           "enMain": null
         },
-        "color": {
-          "primary": "#F5F5F5",
-          "secondary": "#1D3A5F"
-        }
+        "color": null
       },
       "property": {
         "name": "Max 한옥 펜션",
