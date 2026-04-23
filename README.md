@@ -1,1 +1,1 @@
-# template-full-banner-conveyer
+# template-full-banner-slider-flat Template
