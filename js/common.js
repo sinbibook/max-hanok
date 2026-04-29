@@ -43,23 +43,25 @@
         }
     };
 
-    // Initialize mobile floating book button
-    // Note: The actual booking link will be set by header-footer-mapper.js
-    function initMobileFloatingBookButton() {
-        // Placeholder function - the actual click handler is set in header-footer-mapper.js
-        // This ensures the button uses the correct realtime booking ID
-    }
+    // Scroll to content function for page hero sections
+    window.scrollToContent = function() {
+        const scrollTarget = document.querySelector('.scroll-target');
+        if (scrollTarget) {
+            scrollTarget.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
 
     // Initialize page load animation when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             initPageLoadAnimation();
-            initMobileFloatingBookButton();
             window.addEventListener('scroll', handleScrollAnimations);
         });
     } else {
         initPageLoadAnimation();
-        initMobileFloatingBookButton();
         window.addEventListener('scroll', handleScrollAnimations);
     }
 
