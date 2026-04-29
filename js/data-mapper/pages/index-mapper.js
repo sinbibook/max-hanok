@@ -177,8 +177,14 @@ class IndexMapper extends BaseDataMapper {
         if (mediaType === 'video') {
             this.mapHeroVideo(heroData.videos || []);
         } else {
-            window.heroImageData = { images: heroData.images || [] };
-            this.mapHeroSlider(heroData.images || []);
+            const rawImages = heroData.images || [];
+            const filteredImages = typeof rawImages[0] === 'string'
+                ? rawImages
+                : rawImages
+                    .filter(img => img && img.isSelected === true)
+                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+            window.heroImageData = { images: filteredImages };
+            this.mapHeroSlider(rawImages);
         }
     }
 
