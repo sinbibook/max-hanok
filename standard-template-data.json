@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.176.0",
-    "generatedAt": "2026-05-07T01:38:05.252091419Z",
+    "version": "1.177.0",
+    "generatedAt": "2026-05-07T02:59:33.602523762Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -15,7 +15,7 @@
     "address": "경기도 가평군",
     "latitude": 37.4810281626186,
     "longitude": 126.879311225819,
-    "contactPhone": "0507-1234-5555",
+    "contactPhone": "02-1234-0000",
     "contactEmail": "max@n.com",
     "checkin": "15:00",
     "checkout": "11:00",
@@ -1852,8 +1852,8 @@
           "enMain": null
         },
         "color": {
-          "primary": "#e6f3ff",
-          "secondary": "#658399"
+          "primary": "#e8e5e1",
+          "secondary": "#635955"
         }
       },
       "property": {
