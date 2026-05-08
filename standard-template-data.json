@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.177.0",
-    "generatedAt": "2026-05-07T02:59:33.602523762Z",
+    "version": "1.178.0",
+    "generatedAt": "2026-05-08T02:09:49.610122627Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -244,14 +244,6 @@
           }
         ]
       }
-    ],
-    "contacts": [
-      {
-        "name": "홈페이지용",
-        "phoneNumber": "0507-1234-1234",
-        "type": "HOMEPAGE",
-        "enabled": true
-      }
     ]
   },
   "rooms": [
@@ -275,6 +267,36 @@
       "bedTypes": [
         "이층침대",
         "이불"
+      ],
+      "bedConfigs": [
+        {
+          "roomIndex": 1,
+          "roomKind": "bedroom",
+          "bedCount": {
+            "double": 0,
+            "single": 0,
+            "bunkBed": 1,
+            "queen": 0,
+            "king": 0,
+            "family": 0,
+            "sofaBed": 0,
+            "beddingSet": 0
+          }
+        },
+        {
+          "roomIndex": 2,
+          "roomKind": "bedroom",
+          "bedCount": {
+            "double": 0,
+            "single": 0,
+            "bunkBed": 0,
+            "queen": 0,
+            "king": 0,
+            "family": 0,
+            "sofaBed": 0,
+            "beddingSet": 1
+          }
+        }
       ],
       "amenities": [
         "침대",
@@ -495,6 +517,22 @@
         "바닥침구",
         "온돌"
       ],
+      "bedConfigs": [
+        {
+          "roomIndex": 1,
+          "roomKind": "bedroom",
+          "bedCount": {
+            "double": 0,
+            "single": 0,
+            "bunkBed": 0,
+            "queen": 0,
+            "king": 0,
+            "family": 0,
+            "sofaBed": 0,
+            "beddingSet": 1
+          }
+        }
+      ],
       "amenities": [
         "침대",
         "헤어드라이어",
@@ -631,6 +669,22 @@
       },
       "bedTypes": [
         "킹 베드"
+      ],
+      "bedConfigs": [
+        {
+          "roomIndex": 1,
+          "roomKind": "bedroom",
+          "bedCount": {
+            "double": 0,
+            "single": 0,
+            "bunkBed": 0,
+            "queen": 0,
+            "king": 1,
+            "family": 0,
+            "sofaBed": 0,
+            "beddingSet": 0
+          }
+        }
       ],
       "amenities": [
         "무료 WiFi",
@@ -790,6 +844,7 @@
         "kitchen": 0
       },
       "bedTypes": [ ],
+      "bedConfigs": null,
       "amenities": [ ],
       "roomViews": [ ],
       "roomStructures": [ ],
@@ -832,6 +887,7 @@
         "kitchen": 0
       },
       "bedTypes": [ ],
+      "bedConfigs": null,
       "amenities": [ ],
       "roomViews": [ ],
       "roomStructures": [ ],
@@ -957,6 +1013,7 @@
         "kitchen": 0
       },
       "bedTypes": [ ],
+      "bedConfigs": null,
       "amenities": [ ],
       "roomViews": [ ],
       "roomStructures": [ ],
@@ -999,6 +1056,7 @@
         "kitchen": 0
       },
       "bedTypes": [ ],
+      "bedConfigs": null,
       "amenities": [ ],
       "roomViews": [ ],
       "roomStructures": [ ],
@@ -1091,6 +1149,7 @@
         "kitchen": 0
       },
       "bedTypes": [ ],
+      "bedConfigs": null,
       "amenities": [ ],
       "roomViews": [ ],
       "roomStructures": [ ],
@@ -1150,6 +1209,7 @@
         "kitchen": 0
       },
       "bedTypes": [ ],
+      "bedConfigs": null,
       "amenities": [ ],
       "roomViews": [ ],
       "roomStructures": [ ],
@@ -1808,6 +1868,134 @@
                 ],
                 "description": "연락처 : 010-0000-0000\nemail : mex-pension@pension.com "
               }
+            }
+          ]
+        },
+        "layoutMap": {
+          "sections": [
+            {
+              "hero": {
+                "title": "배치도",
+                "images": [
+                  {
+                    "id": "6892db1a-549d-4a24-9b63-c3054774bff2",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_hero/1778206050718-7ouvw7fug9.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": null
+                  }
+                ],
+                "description": "숙소 배치도 입니다."
+              },
+              "about": {
+                "title": "맥스 한옥 펜션 배치도",
+                "images": [
+                  {
+                    "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": null
+                  }
+                ],
+                "description": "배치도를 보고 객실을 찾아가세요"
+              },
+              "enabled": true
+            }
+          ]
+        },
+        "nearbyAttractions": {
+          "sections": [
+            {
+              "hero": {
+                "title": "관광지",
+                "images": [
+                  {
+                    "id": "37a8f1d4-5a0a-445b-9c46-b3a0ea775521",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205992064-el9gsmd9i8.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": null
+                  },
+                  {
+                    "id": "5b47aad6-305d-4f6e-bca6-16a50b2ffdbd",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205991963-qfqqhraa4q.jpg",
+                    "sortOrder": 1,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": null
+                  }
+                ],
+                "description": "맥스 한옥 펜션의 주변 관광지 입니다."
+              },
+              "about": [
+                {
+                  "title": "찜질방",
+                  "images": [
+                    {
+                      "id": "81db892f-6940-4663-a32e-cb0f007b2530",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205991962-imhzssmzl6.jpg",
+                      "sortOrder": 0,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
+                    },
+                    {
+                      "id": "704d54dd-ef4a-4f27-ae2d-e3b1633e01b1",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992294-f9qunm2pc0.jpg",
+                      "sortOrder": 1,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
+                    },
+                    {
+                      "id": "1c8b1896-fad0-4816-8b95-d589d5d02f0a",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992098-gtrtvzpdgo.jpg",
+                      "sortOrder": 2,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
+                    }
+                  ],
+                  "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7",
+                  "description": "찜질방 관광지"
+                },
+                {
+                  "title": "민속놀이",
+                  "images": [
+                    {
+                      "id": "e8070679-f9d3-4c9e-acf1-a7785402a92b",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992296-f5gkm63hiq.jpg",
+                      "sortOrder": 3,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
+                    },
+                    {
+                      "id": "d97519d4-4241-4b4b-8a15-5a6974088030",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992205-r83cxkz1b1.jpg",
+                      "sortOrder": 4,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
+                    },
+                    {
+                      "id": "d2d87917-782e-49e2-9350-7bc3465d98c7",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992184-qmbbuqh08t.jpg",
+                      "sortOrder": 5,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
+                    }
+                  ],
+                  "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95",
+                  "description": "민속놀이 관광지"
+                }
+              ],
+              "enabled": true
             }
           ]
         }
