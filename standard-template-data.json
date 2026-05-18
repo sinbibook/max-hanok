@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.185.0",
-    "generatedAt": "2026-05-18T06:47:55.778813633Z",
+    "version": "1.186.0",
+    "generatedAt": "2026-05-18T06:51:49.436897862Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2011,7 +2011,7 @@
                     "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
                     "sortOrder": 0,
-                    "description": "1층 독채 : 한별당, 지음현, 난이당, 다솜재",
+                    "description": "",
                     "isSelected": false,
                     "blockId": null
                   },
