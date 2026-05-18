@@ -971,6 +971,104 @@
         }
     }
 
+    // Check if logo animation should be shown
+    function shouldShowLogoAnimation() {
+        // Check if this is a first visit (no session storage flag)
+        const hasVisited = sessionStorage.getItem('hasVisitedHero');
+
+        // Check if user came from another page (has referrer)
+        const hasReferrer = document.referrer && document.referrer.includes(window.location.hostname);
+
+        // Show animation only if user hasn't visited during this session AND it's not a navigation from another page
+        if (!hasVisited && !hasReferrer) {
+            sessionStorage.setItem('hasVisitedHero', 'true');
+            return true;
+        }
+
+        return false;
+    }
+
+    // Initialize brand reveal animation
+    function initBrandRevealAnimation() {
+        const brandReveal = document.getElementById('hero-brand-reveal');
+        const heroContent = document.getElementById('hero-content');
+        const brandName = document.getElementById('brand-name');
+        const heroImages = document.querySelectorAll('.hero-image');
+        const heroOverlays = document.querySelectorAll('.hero-image-overlay');
+
+        if (!brandReveal) return;
+
+        const showAnimation = shouldShowLogoAnimation();
+
+        if (!showAnimation) {
+            // Skip brand reveal animation - hide it immediately
+            brandReveal.style.display = 'none';
+
+            // Show hero content immediately with smooth entrance animation
+            if (heroContent) {
+                heroContent.classList.remove('with-animation');
+                heroContent.classList.add('no-animation');
+                // Ensure content is visible
+                heroContent.style.opacity = '1';
+            }
+            if (brandName) {
+                brandName.classList.remove('with-animation');
+                brandName.classList.add('no-animation');
+                // Ensure brand name is visible
+                brandName.style.opacity = '1';
+                brandName.style.transform = 'none';
+            }
+
+            // Set hero images and overlays to appear immediately
+            heroImages.forEach(image => {
+                image.classList.remove('with-animation');
+                image.classList.add('no-animation');
+            });
+            heroOverlays.forEach(overlay => {
+                overlay.classList.remove('with-animation');
+                overlay.classList.add('no-animation');
+            });
+
+            // Apply a subtle entrance animation for smooth transition
+            requestAnimationFrame(() => {
+                if (heroContent) {
+                    heroContent.style.animation = 'fadeInQuick 0.6s ease-out forwards';
+                }
+                if (brandName) {
+                    brandName.style.animation = 'slideInQuick 0.8s ease-out forwards';
+                }
+            });
+
+            return false; // 애니메이션 없음을 반환
+
+        } else {
+            // Show full animation sequence
+            brandReveal.style.display = 'flex';
+
+            // Keep animation classes
+            if (heroContent) {
+                heroContent.classList.add('with-animation');
+                heroContent.classList.remove('no-animation');
+            }
+            if (brandName) {
+                brandName.classList.add('with-animation');
+                brandName.classList.remove('no-animation');
+            }
+
+            // Set hero images and overlays to use full animation
+            heroImages.forEach(image => {
+                image.classList.add('with-animation');
+                image.classList.remove('no-animation');
+            });
+            heroOverlays.forEach(overlay => {
+                overlay.classList.add('with-animation');
+                overlay.classList.remove('no-animation');
+            });
+
+            return true; // 애니메이션 있음을 반환
+        }
+    }
+
     // Expose content generators globally for testing
     window.updateRoomContent = function(newRoomData) {
         generateRoomContent(newRoomData);
@@ -1141,6 +1239,7 @@
     }
 
     function init() {
+        const hasAnimation = initBrandRevealAnimation();
         // initHeroSlider는 index-mapper.js에서 슬라이드 생성 후 호출됨
         // generateGalleryContent는 index-mapper.js에서 처리됨
         // generateSignatureContent는 index-mapper.js에서 처리됨

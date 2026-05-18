@@ -109,7 +109,7 @@
     position: absolute;
     width: 400px;
     height: 400px;
-    border: 2px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    border: 2px solid rgba(93, 109, 126, 0.2);
     border-radius: 50%;
     top: 50%;
     left: 50%;
@@ -138,7 +138,7 @@
     font-family: var(--font-en-main);
     font-size: clamp(4rem, 8vw, 8rem);
     font-weight: 400;
-    color: color-mix(in srgb, var(--color-secondary) 30%, transparent);
+    color: rgba(93, 109, 126, 0.3);
     letter-spacing: 0.1em;
     margin: 0;
     line-height: 1;
@@ -280,7 +280,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 0 20px 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
+    border-bottom: 1px solid rgba(93, 109, 126, 0.5);
     margin-bottom: 20px;
 }
 
@@ -301,7 +301,7 @@
     padding: 12px 24px;
     background: transparent;
     color: var(--color-secondary);
-    border: 1px solid color-mix(in srgb, var(--color-secondary) 30%, transparent);
+    border: 1px solid rgba(93, 109, 126, 0.3);
     font-family: var(--font-en-main);
     font-size: 0.9rem;
     font-weight: 400;
@@ -315,7 +315,7 @@
 .room-btn:hover {
     background: var(--color-secondary);
     color: white;
-    border-color: var(--color-secondary);
+    border-color: #333;
 }
 
 .room-btn .btn-text {
@@ -337,7 +337,7 @@
 .room-info {
     margin: 0;
     padding: 20px;
-    background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
+    background: color-mix(in srgb, var(--color-secondary) 5%, transparent);
     border-radius: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -350,13 +350,13 @@
 }
 
 .room-info-label {
-    font-family: var(--font-ko-sub);
+    font-family: var(--font-ko-main);
     font-size: 1rem;
     color: #999;
 }
 
 .room-info-value {
-    font-family: var(--font-ko-sub);
+    font-family: var(--font-ko-main);
     font-size: 1rem;
     font-weight: 600;
     color: var(--color-secondary);

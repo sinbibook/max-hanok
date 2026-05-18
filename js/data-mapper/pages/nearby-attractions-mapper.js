@@ -132,7 +132,7 @@ class NearbyAttractionsMapper extends BaseDataMapper {
         const imgEl = document.createElement('img');
         imgEl.className = 'attraction-item-image';
         imgEl.setAttribute('data-nearby-attractions-image-' + index, '');
-        imgEl.alt = '주변 명소';
+        imgEl.alt = item.title || '주변 명소';
 
         // 이미지 처리 (isSelected === true인 이미지 찾기)
         const images = item.images || [];
@@ -208,6 +208,7 @@ class NearbyAttractionsMapper extends BaseDataMapper {
 
             if (selectedImage && selectedImage.url) {
                 closingBgElement.style.backgroundImage = `url('${selectedImage.url}')`;
+                closingBgElement.classList.remove('empty-image-placeholder');
                 return;
             }
         }
@@ -216,6 +217,7 @@ class NearbyAttractionsMapper extends BaseDataMapper {
         if (typeof ImageHelpers !== 'undefined') {
             closingBgElement.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_SVG}')`;
         }
+        closingBgElement.classList.add('empty-image-placeholder');
     }
 
     /**

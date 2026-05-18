@@ -414,13 +414,11 @@ class FacilityMapper extends BaseDataMapper {
         // usageGuide 추가 (임시)
         if (facility.usageGuide) {
             const usageGuideItem = document.createElement('div');
-            usageGuideItem.className = 'facility-feature-item usage-guide';
-            usageGuideItem.style.marginTop = '20px';
-            // usageGuideItem.style.borderTop = '1px solid #e0e0e0';
+            usageGuideItem.className = 'facility-feature-item usage-guide usage-guide-item';
 
             const description = document.createElement('p');
             description.className = 'feature-description';
-            description.innerHTML = facility.usageGuide.replace(/\n/g, '<br>');
+            description.textContent = facility.usageGuide;
 
             usageGuideItem.appendChild(description);
             container.appendChild(usageGuideItem);
@@ -718,10 +716,12 @@ class FacilityMapper extends BaseDataMapper {
         this.mapSliderSection();
 
         // 메타 태그 업데이트 (페이지별 SEO 적용)
+        const property = this.data.property;
+        // customFields 헬퍼 함수 사용
         const propertyName = this.getPropertyName();
         const pageSEO = {
-            title: facility?.name ? `${facility.name} - ${propertyName}` : 'SEO 타이틀',
-            description: facility?.description || this.data.property?.description || 'SEO 설명'
+            title: (facility?.name && propertyName) ? `${facility.name} - ${propertyName}` : 'SEO 타이틀',
+            description: facility?.description || property?.description || 'SEO 설명'
         };
         this.updateMetaTags(pageSEO);
 
