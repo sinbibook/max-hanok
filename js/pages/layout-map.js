@@ -5,52 +5,68 @@
 (function() {
     'use strict';
 
-    /**
-     * 페이지 초기화
-     */
-    function initPage() {
-        initScrollAnimations();
+    // Scroll to next section function
+    function scrollToNextSection() {
+        const contentSection = document.querySelector('.layout-map-container');
 
-        // mapPage() 완료 후 초기화를 위해 전역 함수 노출
-        // (preview-handler에서 mapPage() 후 호출)
-        window._initLayoutMap = () => {
-            // 추가 초기화 필요시 여기에 작성
-        };
+        if (contentSection) {
+            const targetPosition = contentSection.offsetTop;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
     }
 
-    /**
-     * 스크롤 애니메이션 초기화
-     */
+    // Make function globally available
+    window.scrollToNextSection = scrollToNextSection;
+
+    // Animate sections on scroll using IntersectionObserver
     function initScrollAnimations() {
-        const layoutMapItems = document.querySelectorAll('.layout-map-item');
-        const animateElements = document.querySelectorAll('.animate-element');
+        const sectionsToAnimate = document.querySelectorAll('.layout-map-intro');
+        const itemsToAnimate = document.querySelectorAll('.layout-map-item, .layout-map-description-item');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    observer.unobserve(entry.target);
+                    entry.target.classList.add('animate');
+                } else {
+                    entry.target.classList.remove('animate');
                 }
             });
         }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            threshold: 0.1
         });
 
-        layoutMapItems.forEach(item => {
+        sectionsToAnimate.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Observe all items (images and descriptions) for animations
+        itemsToAnimate.forEach(item => {
             observer.observe(item);
         });
-
-        animateElements.forEach(element => {
-            observer.observe(element);
-        });
     }
 
-    // 페이지 로드 시 초기화
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPage);
-    } else {
-        initPage();
+    // 동적으로 생성된 layout-map items에 대해 스크롤 애니메이션 재실행
+    function reinitScrollAnimations() {
+        initScrollAnimations();
     }
+
+    // 전역 함수로 노출 (mapper 완료 후 호출)
+    window._reinitScrollAnimations = reinitScrollAnimations;
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Initialize scroll animations
+        initScrollAnimations();
+
+        // 페이지 로드 시 enabled 상태 확인
+        if (window.previewHandler && window.previewHandler.checkPageEnabled) {
+            window.previewHandler.checkPageEnabled();
+        }
+
+        console.log('Layout Map page loaded');
+    });
+
 })();

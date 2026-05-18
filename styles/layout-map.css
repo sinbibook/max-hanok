@@ -1,78 +1,110 @@
-/* ===================================
+/* ===========================
    Layout Map Page Styles
-   =================================== */
+   =========================== */
 
-
-/* Layout Map Page Container */
-.layout-map-page {
+/* ===========================
+   Hero Section
+   =========================== */
+.hero-section {
+    height: 100vh;
     position: relative;
-    background: linear-gradient(to bottom, var(--color-primary, #e6f3ff) 0%, var(--color-secondary, #658399) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-/* Layout Map Intro Section */
-.layout-map-intro-section {
-    padding: 80px 20px 60px;
-    max-width: 1200px;
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ===========================
+   Main Container
+   =========================== */
+
+.layout-map-container {
+    position: relative;
+    z-index: 10;
     margin: 0 auto;
+    max-width: 90%;
+    padding: 100px 40px;
+}
+
+/* ===========================
+   Intro Section
+   =========================== */
+
+.layout-map-intro {
     text-align: center;
+    margin-bottom: 80px;
     opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
 }
 
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.layout-map-intro-content {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Animate Element Styles */
-.animate-element {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
-}
-
-.animate-element.visible {
+.layout-map-intro.animate {
     opacity: 1;
     transform: translateY(0);
 }
 
 .layout-map-title {
-    font-family: var(--font-ko-main, 'Arial', sans-serif);
+    font-family: var(--font-ko-main);
     font-size: 2.5rem;
+    font-weight: 600;
     margin: 0 0 20px 0;
-    color: var(--color-secondary, #658399);
-    font-weight: 700;
+    color: var(--color-secondary);
+    letter-spacing: -0.5px;
 }
 
 .layout-map-description {
-    font-size: 1.2rem;
+    font-family: var(--font-ko-sub);
+    font-size: 1.1rem;
     color: #666;
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
-/* Layout Map Content - 이미지와 설명이 교대로 */
+/* ===========================
+   Layout Map Content
+   =========================== */
+
 .layout-map-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px 100px;
     display: flex;
     flex-direction: column;
     gap: 40px;
+    margin-top: 40px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* Layout Map Item */
+/* ===========================
+   Layout Map Item
+   =========================== */
+
 .layout-map-item {
-    display: flex;
-    border-radius: 20px;
-    overflow: hidden;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+}
+
+.layout-map-item.animate {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .layout-map-image {
@@ -80,108 +112,59 @@
     height: auto;
     object-fit: cover;
     display: block;
-    min-height: 400px;
+    border-radius: 12px;
+    min-height: 500px;
 }
 
-/* Layout Map Images (deprecated - kept for compatibility) */
-.layout-map-images {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 60px;
-}
-
-/* Layout Map Descriptions (deprecated - kept for compatibility) */
-.layout-map-descriptions {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px 100px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-}
+/* ===========================
+   Layout Map Description Item
+   =========================== */
 
 .layout-map-description-item {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 40px;
-    border-radius: 12px;
     opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 0.2s;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+    text-align: center;
+    padding: 0 20px;
 }
 
-.layout-map-description-item h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-secondary, #658399);
-    margin: 0 0 15px 0;
+.layout-map-description-item.animate {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .layout-map-description-item p {
+    font-family: var(--font-ko-sub);
     font-size: 1rem;
-    color: #333;
-    line-height: 1.8;
+    color: #666;
     margin: 0;
+    line-height: 1.8;
+    font-weight: 400;
 }
 
-/* Large Screen Responsive */
-@media (min-width: 1400px) {
-    .layout-map-images {
-        max-width: 1350px;
-    }
+/* ===========================
+   Responsive Design
+   =========================== */
 
-    .layout-map-descriptions {
-        max-width: 1350px;
-    }
-}
-
-@media (min-width: 1800px) {
-    .layout-map-images {
-        max-width: 1500px;
-    }
-
-    .layout-map-descriptions {
-        max-width: 1500px;
-    }
-}
-
-/* Mobile Responsive */
 @media (max-width: 1200px) {
-    .layout-map-intro-section {
-        padding: 60px 20px 50px;
+    .layout-map-container {
+        max-width: 100%;
+        padding: 80px 40px;
     }
 
     .layout-map-title {
-        font-size: 2rem;
-    }
-
-    .layout-map-description {
-        font-size: 1.1rem;
-    }
-
-    .layout-map-images {
-        padding-bottom: 50px;
-    }
-
-    .layout-map-descriptions {
-        padding-bottom: 80px;
+        font-size: 2.2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .hero-section.layout-map-hero {
-        height: 60vh;
-        min-height: 60vh;
+    .layout-map-container {
+        max-width: 100%;
+        padding: 60px 25px;
     }
 
-    .hero-property-name {
-        font-size: 36px;
-    }
-
-    .layout-map-intro-section {
-        padding: 50px 20px 40px;
+    .layout-map-intro {
+        margin-bottom: 60px;
     }
 
     .layout-map-title {
@@ -193,40 +176,21 @@
     }
 
     .layout-map-content {
-        padding: 0 20px 60px;
-        gap: 40px;
-    }
-
-    .layout-map-image {
-        min-height: 350px;
+        gap: 50px;
     }
 
     .layout-map-image-description {
-        padding: 25px;
         font-size: 0.95rem;
-    }
-
-    .closing-section.layout-map-closing {
-        min-height: 50vh;
-    }
-
-    .closing-property-name {
-        font-size: 42px;
     }
 }
 
 @media (max-width: 480px) {
-    .hero-section.layout-map-hero {
-        height: 50vh;
-        min-height: 50vh;
+    .layout-map-container {
+        padding: 40px 15px;
     }
 
-    .hero-property-name {
-        font-size: 28px;
-    }
-
-    .layout-map-intro-section {
-        padding: 40px 15px 30px;
+    .layout-map-intro {
+        margin-bottom: 40px;
     }
 
     .layout-map-title {
@@ -238,24 +202,79 @@
     }
 
     .layout-map-content {
-        padding: 0 15px 50px;
-        gap: 30px;
-    }
-
-    .layout-map-image {
-        min-height: 300px;
+        gap: 40px;
     }
 
     .layout-map-image-description {
-        padding: 20px;
         font-size: 0.9rem;
     }
+}
 
-    .closing-section.layout-map-closing {
-        min-height: 40vh;
+/* ===========================
+   Closing Banner Section
+   =========================== */
+
+.layout-closing {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.layout-closing-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.layout-closing-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.layout-closing-content {
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.layout-closing-content .closing-logo {
+    width: 200px !important;
+    height: auto !important;
+    object-fit: contain !important;
+    max-width: 200px;
+    z-index: 100 !important;
+    position: relative !important;
+    display: block !important;
+    margin: 0 auto !important;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: logoFadeIn 1.5s ease-out 1s forwards;
+}
+
+@keyframes logoFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
     }
-
-    .closing-property-name {
-        font-size: 32px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

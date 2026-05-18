@@ -7,14 +7,12 @@
     <meta name="keywords" content="SEO 키워드">
     <title id="page-title">배치도 - 숙소명</title>
 
-  <!-- Preload critical resources -->
-  <link rel="preload" href="styles/common.css" as="style">
-  <link rel="preload" href="styles/layout-map.css" as="style">
-
-  <!-- Theme CSS -->
-  <link rel="stylesheet" href="styles/theme.css">
-  <link rel="stylesheet" href="styles/common.css">
-  <link rel="stylesheet" href="styles/layout-map.css">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/layout-map.css" as="style">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/layout-map.css">
+    <link rel="stylesheet" href="styles/theme.css">
 
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
@@ -30,75 +28,91 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+
     <!-- Hero Section -->
-    <section class="page-hero-section">
+    <section class="hero-section">
         <div class="hero-background">
-            <img data-layout-map-hero-image>
+            <!-- Custom-field layout-map-hero-image-0 -->
+            <img src="" alt="배치도 배경" data-layout-map-hero-image>
+            <div class="hero-overlay"></div>
         </div>
-        <div class="page-title">
-            <span class="property-name-kr" data-property-name></span>
-            <h1 class="typing-text" data-text="LAYOUT MAP" style="--text-length: 10;">LAYOUT MAP</h1>
+        <div class="hero-content">
+            <div class="hero-text-center">
+                <!-- 하드코딩 fixed -->
+                <h1 class="hero-title">숙소 배치도</h1>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="hero-scroll-down" onclick="scrollToNextSection()">
+            <svg class="scroll-arrow" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
         </div>
     </section>
 
-    <!-- Main Content Section -->
-    <main class="layout-map-page">
-        <!-- Layout Map Intro Section -->
-        <div class="layout-map-intro-section">
-            <div class="layout-map-intro-content animate-element">
-                <!-- layoutMap.sections[0].hero.title 매핑 -->
-                <h2 class="layout-map-title" data-layout-map-about-title></h2>
-                <!-- layoutMap.sections[0].hero.description 매핑 -->
-                <p class="layout-map-description" data-layout-map-about-description></p>
-            </div>
+    <main class="layout-map-container">
+        <!-- Custom-field layout-map-hero-title -->
+        <div class="layout-map-intro">
+            <h2 class="layout-map-title" data-layout-map-about-title></h2>
+            <!-- Custom-field layout-map-hero-description -->
+            <p class="layout-map-description" data-layout-map-about-description></p>
         </div>
 
-        <!-- Layout Map Content - 이미지와 설명이 교대로 나옴 -->
-        <div class="layout-map-content">
-            <!-- Layout Map Item 1 -->
-            <div class="layout-map-item animate-element">
+        <!-- Layout Map About Section - 이미지와 설명이 교대로 -->
+        <div class="layout-map-content" id="layout-map-content-container">
+            <!-- Image Item 1 -->
+            <div class="layout-map-item">
+                <!-- Custom-field: layout-map.sections[0].about.images[0] -->
                 <img alt="배치도" class="layout-map-image" data-layout-map-image-0>
             </div>
 
-            <!-- Layout Map Description 1 -->
-            <div class="layout-map-description-item animate-element">
+            <!-- Description Item 1 -->
+            <div class="layout-map-description-item">
+                <!-- Custom-field: layout-map.sections[0].about.description[0] -->
                 <p data-layout-map-description-0></p>
             </div>
         </div>
     </main>
 
-    <!-- Closing Section - Full Banner -->
-    <section class="full-banner" data-layout-map-closing>
-        <img src="" alt="마무리 섹션 이미지" data-layout-map-closing-image>
-        <div class="closing-property-name" data-closing-property-name-en></div>
+    <!-- Closing Section -->
+    <section class="layout-closing">
+        <div class="layout-closing-bg" style="background-size: cover; background-position: center; background-attachment: fixed;" data-layout-map-closing-image-bg></div>
+        <div class="layout-closing-overlay">
+            <div class="layout-closing-content">
+                <img src="" alt="로고" class="closing-logo" data-closing-logo="">
+            </div>
+        </div>
     </section>
 
-    <!-- Common JavaScript -->
-    <script src="js/common.js"></script>
+    <!-- Include Footer -->
+    <div id="footer-placeholder"></div>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
 
+    <!-- Common Slider Module -->
+    <script src="js/common/slider.js"></script>
+
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
 
-    <!-- Base Data Mapper (must load before preview-handler) -->
+    <!-- Base Data Mapper -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
-
-    <!-- Layout Map Mapper -->
-    <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
 
     <!-- Header Footer Mapper -->
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
 
+    <!-- Layout Map Mapper -->
+    <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
     <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
-
-    <!-- Scroll Animations -->
-  <script src="js/common/scroll-animations.js"></script>
 
     <!-- Page-specific script -->
     <script src="js/pages/layout-map.js"></script>
