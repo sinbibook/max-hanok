@@ -44,9 +44,9 @@ if (typeof window.PreviewHandler === 'undefined') {
          */
         getDefaultFonts() {
             return {
-                koMain: "'Aritaburi', sans-serif",
-                koSub: "'Aritaburi', sans-serif",
-                enMain: "'Amandine', serif"
+                koMain: "'MaruBuri', sans-serif",
+                koSub: "'Noto Serif KR', serif",
+                enMain: "'Chonburi', serif"
             };
         }
 
@@ -55,8 +55,8 @@ if (typeof window.PreviewHandler === 'undefined') {
          */
         getDefaultColors() {
             return {
-                primary: '#e6f3ff',
-                secondary: '#658399'
+                primary: '#f8f8f8',
+                secondary: '#1a1a1a'
             };
         }
 
@@ -507,6 +507,18 @@ if (typeof window.PreviewHandler === 'undefined') {
                         item.classList.add('animate-fade-in');
                     });
                 }
+
+                // nearbyAttractions 페이지: 슬라이더 초기화
+                if (currentPage === 'nearbyAttractions') {
+                    if (window._initNearbyAttractionsSlider) {
+                        window._initNearbyAttractionsSlider();
+                    }
+                }
+
+                // layoutMap 페이지: 필요한 초기화
+                if (currentPage === 'layoutMap') {
+                    // layoutMap 초기화 로직 (필요시)
+                }
             }
 
             // Header & Footer 매핑 (모든 페이지에서 공통 실행)
@@ -534,6 +546,11 @@ if (typeof window.PreviewHandler === 'undefined') {
 
             if (logoTextElement && data?.template?.logoText) {
                 logoTextElement.textContent = data.template.logoText;
+            }
+
+            // 각 페이지별 enabled 상태 확인 (페이지 스크립트에서 정의한 함수 호출)
+            if (window._checkPageEnabled) {
+                window._checkPageEnabled();
             }
         }
 
@@ -774,29 +791,6 @@ if (typeof window.PreviewHandler === 'undefined') {
                             break;
                     }
                 }
-            } else if (page === 'nearbyAttractions') {
-                if (window.NearbyAttractionsMapper) {
-                    const mapper = this.createMapper(NearbyAttractionsMapper);
-
-                    switch (section) {
-                        case 'hero':
-                            mapper.mapHeroSection();
-                            mapper.mapIntroSection();
-                            break;
-                        case 'about':
-                            mapper.mapAttractionsContent();
-                            mapper.initializeSlider();
-                            break;
-                        default:
-                            mapper.mapPage();
-                            break;
-                    }
-                }
-            } else if (page === 'layoutMap') {
-                if (window.LayoutMapMapper) {
-                    const mapper = this.createMapper(LayoutMapMapper);
-                    mapper.mapPage();
-                }
             }
         }
 
@@ -814,29 +808,6 @@ if (typeof window.PreviewHandler === 'undefined') {
             mapper.isDataLoaded = true;
             return mapper;
         }
-
-
-
-        /**
-         * 현재 페이지 타입 감지
-         */
-        getCurrentPageType() {
-            const path = window.location.pathname;
-
-            if (path.endsWith('/index.html') || path.endsWith('/') || path === '') return 'index';
-            if (path.endsWith('/main.html')) return 'main';
-            if (path.endsWith('/room.html')) return 'room';
-            if (path.endsWith('/facility.html')) return 'facility';
-            if (path.endsWith('/reservation.html')) return 'reservation';
-            if (path.endsWith('/directions.html')) return 'directions';
-            if (path.endsWith('/nearby-attractions.html')) return 'nearbyAttractions';
-            if (path.endsWith('/layout-map.html')) return 'layoutMap';
-
-            // 루트 경로 또는 기본값으로 index 처리
-            return 'index';
-        }
-
-
 
         /**
          * 데이터 병합 (깊은 병합)
@@ -868,23 +839,6 @@ if (typeof window.PreviewHandler === 'undefined') {
             }
 
             return result;
-        }
-
-
-        /**
-         * 렌더링 완료 신호 전송
-         */
-        notifyRenderComplete(type) {
-            if (window.parent !== window) {
-                window.parent.postMessage({
-                    type: type,
-                    data: {
-                        timestamp: Date.now(),
-                        page: this.getCurrentPageType()
-                    }
-                }, this.parentOrigin || '*');
-            }
-
         }
 
 
@@ -964,6 +918,19 @@ if (typeof window.PreviewHandler === 'undefined') {
                         page: this.getCurrentPageType()
                     }
                 }, this.parentOrigin || '*');
+            }
+        }
+
+        /**
+         * 페이지 활성화 상태 확인 및 리다이렉트
+         */
+        checkPageEnabled() {
+            const pageName = this.getCurrentPageType();
+            const enabledPath = `homepage.customFields.pages.${pageName}.sections.0.enabled`;
+            const isEnabled = this.safeGet(this.currentData, enabledPath);
+
+            if (isEnabled === false) {
+                window.location.href = '404.html';
             }
         }
 

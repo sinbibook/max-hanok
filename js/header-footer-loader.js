@@ -6,28 +6,6 @@
 (function() {
     'use strict';
 
-    // Track if header and footer are both loaded
-    let headerLoaded = false;
-    let footerLoaded = false;
-
-    // Initialize mapper after both header and footer are loaded
-    async function tryInitializeMapper() {
-        if (headerLoaded && footerLoaded && window.HeaderFooterMapper) {
-            // 프리뷰 환경인지 확인 (iframe 내부)
-            const isPreview = window.parent !== window;
-
-            if (!isPreview) {
-                // 일반 페이지: 기본 데이터로 매핑
-                const mapper = new window.HeaderFooterMapper();
-                await mapper.initialize();
-
-                // 매핑 완료 후 헤더/사이드바 표시
-                if (window.showHeaders) window.showHeaders();
-            }
-            // 프리뷰 환경: PreviewHandler가 처리하므로 여기서는 매핑하지 않음
-        }
-    }
-
     // Load CSS
     function loadCSS(href) {
         const link = document.createElement('link');
@@ -39,86 +17,55 @@
     // Load Header
     async function loadHeader() {
         try {
-            // Load header CSS first and ensure it loads before continuing
-            const headerCSS = document.createElement('link');
-            headerCSS.rel = 'stylesheet';
-            headerCSS.href = 'styles/header.css';
-            document.head.appendChild(headerCSS);
+            // Load header CSS first
+            loadCSS('styles/header.css');
 
-            const response = await fetch('common/header.html', { cache: 'no-cache' });
+            const response = await fetch('common/header.html');
             const html = await response.text();
 
             // Create a temporary container
             const temp = document.createElement('div');
             temp.innerHTML = html;
 
-            // Find header opened and top header directly from temp
-            const headerOpened = temp.querySelector('.header-opened');
-            const headerOpenedOverlay = temp.querySelector('.header-opened-overlay');
-            const topHeader = temp.querySelector('.top-header');
-            const mobileFixedButtons = temp.querySelector('.mobile-fixed-buttons');
+            // Extract body content from the loaded HTML
+            const bodyContent = temp.querySelector('body');
+            if (bodyContent) {
+                // Insert header at the beginning of body
+                const header = bodyContent.querySelector('.header');
+                if (header) {
+                    document.body.insertBefore(header, document.body.firstChild);
+                }
 
-            // Insert top header directly to body
-            if (topHeader) {
-                document.body.insertBefore(topHeader, document.body.firstChild);
-            }
+                // Insert mobile menu after header
+                const mobileMenu = bodyContent.querySelector('.mobile-menu');
+                if (mobileMenu) {
+                    document.body.insertBefore(mobileMenu, document.body.firstChild.nextSibling);
+                }
+            } else {
+                // Fallback: try to get header directly
+                const header = temp.querySelector('.header');
+                if (header) {
+                    document.body.insertBefore(header, document.body.firstChild);
+                }
 
-            // Insert header-opened right after top-header
-            if (headerOpened) {
-                document.body.insertBefore(headerOpened, topHeader.nextSibling);
-            }
-
-            // Insert overlay
-            if (headerOpenedOverlay) {
-                document.body.appendChild(headerOpenedOverlay);
-            }
-
-            // Insert mobile buttons
-            if (mobileFixedButtons) {
-                document.body.appendChild(mobileFixedButtons);
+                const mobileMenu = temp.querySelector('.mobile-menu');
+                if (mobileMenu) {
+                    document.body.insertBefore(mobileMenu, document.body.firstChild.nextSibling);
+                }
             }
 
             // Load header JavaScript
             const script = document.createElement('script');
             script.src = 'js/common/header.js';
-            script.onload = async function() {
-                // Remove any inline onclick handlers and set up proper event listener
-                setTimeout(() => {
-                    const hamburgerButton = document.getElementById('hamburger-button');
-                    if (hamburgerButton) {
-                        // Remove inline onclick if it exists
-                        hamburgerButton.removeAttribute('onclick');
-
-                        // Remove any existing listeners by cloning
-                        const newButton = hamburgerButton.cloneNode(true);
-                        hamburgerButton.parentNode.replaceChild(newButton, hamburgerButton);
-
-                        // Add clean event listener
-                        newButton.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (window.toggleHeaderMenu) {
-                                window.toggleHeaderMenu();
-                            }
-                        });
-                    }
-                }, 100);
-
-                // Mark header as loaded after script is fully loaded
-                headerLoaded = true;
-                await tryInitializeMapper();
-            };
             document.body.appendChild(script);
 
             // Immediately check scroll position after header is loaded
-            setTimeout(() => {
-                if (window.scrollY > 50 || window.pageYOffset > 50) {
-                    const header = document.querySelector('.top-header');
-                    if (header) {
-                        header.classList.add('scrolled');
-                    }
+            if (window.scrollY > 50 || window.pageYOffset > 50) {
+                const header = document.querySelector('.header');
+                if (header) {
+                    header.classList.add('scrolled');
                 }
-            }, 100);
+            }
         } catch (error) {
             console.error('Error loading header:', error);
         }
@@ -127,7 +74,7 @@
     // Load Footer
     async function loadFooter() {
         try {
-            const response = await fetch('common/footer.html', { cache: 'no-cache' });
+            const response = await fetch('common/footer.html');
             if (response.ok) {
                 // Load footer CSS
                 loadCSS('styles/footer.css');
@@ -144,20 +91,10 @@
                     document.body.appendChild(footer);
                 }
 
-                // Also append top button if exists
-                const topButton = temp.querySelector('#topButton');
-                if (topButton) {
-                    document.body.appendChild(topButton);
-                }
-
                 // Load footer JavaScript if exists
                 const script = document.createElement('script');
                 script.src = 'js/common/footer.js';
                 document.body.appendChild(script);
-
-                // Mark footer as loaded and try to initialize mapper
-                footerLoaded = true;
-                await tryInitializeMapper();
             }
         } catch (error) {
             console.error('Error loading footer:', error);
@@ -165,9 +102,12 @@
     }
 
     // Initialize
-    document.addEventListener('DOMContentLoaded', function() {
-        loadHeader();
-        loadFooter();
+    document.addEventListener('DOMContentLoaded', async function() {
+        // header와 footer 둘 다 로드 완료될 때까지 대기
+        await Promise.all([loadHeader(), loadFooter()]);
+
+        // 둘 다 로드 완료 후 초기화 이벤트 발생
+        document.dispatchEvent(new Event('headerFooterLoaded'));
     });
 
 })();
