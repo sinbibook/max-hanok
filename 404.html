@@ -8,7 +8,6 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="styles/common.css" as="style">
-    <link rel="preload" href="styles/theme.css" as="style">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/theme.css">
 
@@ -20,15 +19,6 @@
         body {
             display: flex;
             flex-direction: column;
-            background: color-mix(in srgb, var(--color-secondary) 30%, transparent);
-        }
-
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         #footer-placeholder {
@@ -40,7 +30,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 150px 20px 100px;
+            flex: 1;
+            padding: 250px 20px 150px;
             text-align: center;
         }
 
@@ -53,67 +44,46 @@
         .error-code {
             font-size: 80px;
             font-weight: 900;
-            color: var(--color-secondary, #658399);
+            color: var(--color-secondary, #7e594c);
             line-height: 1;
             margin-bottom: 20px;
-            letter-spacing: -2px;
+            font-family: var(--font-en-main, 'Marhey', sans-serif);
         }
 
         .error-title {
-            font-family: var(--font-ko-main);
             font-size: 32px;
             font-weight: 700;
             color: #333;
             margin-bottom: 15px;
+            font-family: var(--font-ko-main, 'Escoredream', sans-serif);
         }
 
         .error-message {
-            font-family: var(--font-ko-sub);
             font-size: 16px;
             color: #666;
             margin-bottom: 40px;
             line-height: 1.8;
             max-width: 500px;
+            font-family: var(--font-ko-main, 'Escoredream', sans-serif);
         }
 
         .error-button {
             display: inline-block;
-            padding: 14px 48px;
-            background: var(--color-secondary, #658399);
+            padding: 12px 40px;
+            background: var(--color-secondary, #7e594c);
             color: white;
             text-decoration: none;
             border-radius: 8px;
-            font-family: var(--font-ko-sub);
             font-weight: 600;
-            font-size: 15px;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            font-family: var(--font-ko-main, 'Escoredream', sans-serif);
         }
 
         .error-button:hover {
-            background: #5a7185;
+            background: #6b4a3f;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .error-container {
-                padding: 100px 20px 80px;
-            }
-
-            .error-code {
-                font-size: 60px;
-            }
-
-            .error-title {
-                font-size: 24px;
-            }
-
-            .error-message {
-                font-size: 14px;
-            }
         }
     </style>
   <!-- Open Graph Meta Tags for Social Media -->
@@ -135,7 +105,22 @@
 
     <!-- Error Content -->
     <main class="error-container">
-        <div class="error-code">404</div>
+        <svg class="error-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Browser window border -->
+            <rect x="8" y="10" width="84" height="80" rx="6" fill="none" stroke="#7e594c" stroke-width="3"/>
+
+            <!-- Browser top bar -->
+            <rect x="8" y="10" width="84" height="18" rx="6" fill="none" stroke="#7e594c" stroke-width="3"/>
+            <line x1="8" y1="28" x2="92" y2="28" stroke="#7e594c" stroke-width="2"/>
+
+            <!-- Browser menu dots -->
+            <circle cx="28" cy="18" r="2" fill="#7e594c"/>
+            <circle cx="38" cy="18" r="2" fill="#7e594c"/>
+            <circle cx="48" cy="18" r="2" fill="#7e594c"/>
+
+            <!-- 404 text -->
+            <text x="50" y="58" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="middle" fill="#7e594c" font-family="Arial, sans-serif">404</text>
+        </svg>
         <h1 class="error-title">페이지를 찾을 수 없습니다.</h1>
         <p class="error-message">
             요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br>

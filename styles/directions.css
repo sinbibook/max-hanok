@@ -2,31 +2,6 @@
    Directions Page Styles
    =================================== */
 
-/* Hero Section */
-.hero-section {
-    height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 /* Container */
 .container {
     margin: 0 auto;
@@ -40,15 +15,13 @@
 
 /* Directions Content Container */
 .directions-content-container {
-    max-width: 80%;
-    margin: 0 auto;
 }
 
 /* Facility Introduction Section */
 .facility-intro-section {
     text-align: center;
-    margin-bottom: 80px;
-    padding: 0 40px;
+    /* margin-bottom: 80px; */
+    padding: 0;
 }
 
 .facility-intro-content {
@@ -60,10 +33,18 @@
     margin-bottom: 20px;
 }
 
+.facility-number {
+    font-family: var(--font-ko-sub);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    letter-spacing: 2px;
+    display: block;
+}
 
 .facility-description {
     font-family: var(--font-ko-sub);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     line-height: 1.8;
     color: #666;
     margin: 0;
@@ -206,7 +187,7 @@
     justify-content: center;
     gap: 10px;
     font-family: var(--font-ko-sub);
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--color-secondary);
     margin: 0;
     padding: 20px 0;
@@ -214,16 +195,51 @@
 
 .address-section .notice-wrap {
     width: 100%;
-    border: 1px dashed #ccc;
-    padding: 30px 40px;
-    margin: 20px 0 0;
-    border-radius: 8px;
-    background: #edeeef;
+    /* padding: 30px 40px; */
+    margin: 0;
+    background: transparent;
+}
+
+.address-section .notice-wrap.has-notice {
+    /* border-top: 1px solid #ccc; */
+    /* padding-top: 20px; */
+    margin-top: 20px;
+}
+
+.location-image-circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 40px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.location-circle-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.notice-customfield {
+    padding-top: 50px;
+    border-top: 1px solid #ccc;
+}
+
+.notice-customfield h4 {
+    font-size: 1.5rem;
+}
+
+.notice-customfield p {
+    font-size: 1.1rem;
 }
 
 .address-section .notice-wrap p {
-   margin-bottom: 0;
-   padding: 20px 0 0 0;
+    margin-bottom: 0;
+    padding: 40px 0;
+    line-height: 1.5;
 }
 
 
@@ -238,9 +254,7 @@
 .map-container {
     width: 100%;
     height: 500px;
-    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
 }
 
@@ -261,11 +275,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .hero-section {
-        height: 60vh;
-        min-height: 60vh;
-    }
-
     .directions-content-container {
         max-width: 100%;
     }
@@ -293,10 +302,12 @@
 
     .directions-banner-section {
         margin: 40px 0;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
     }
 
     .directions-banner-section .container {
-        padding: 0 20px;
+        padding: 0;
     }
 
     .address-section .notice-wrap {
@@ -305,6 +316,7 @@
 
     .directions-banner-image {
         height: 250px;
+        border-radius: 0;
     }
 
     .info-section {
@@ -327,6 +339,11 @@
 
 
     .map-section {
+        padding: 0;
+        margin-bottom: 100px;
+    }
+
+    .map-section .container {
         padding: 0;
     }
 
@@ -353,7 +370,11 @@
     }
 
     .directions-banner-section .container {
-        padding: 0 15px;
+        padding: 0;
+    }
+
+    .map-section .container {
+        padding: 0;
     }
 
     .address-section .notice-wrap {

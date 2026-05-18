@@ -9,11 +9,36 @@
     let autoSlideInterval;
     let ticking = false;
 
-    // Update page numbers (callback for slider module)
+    // Change slide
+    function changeSlide(direction) {
+        const slides = document.querySelectorAll('.hero-slide');
+        if (slides.length === 0) return;
+
+        // Remove active class from current slide
+        slides[currentSlideIndex].classList.remove('active');
+
+        // Calculate new index
+        currentSlideIndex += direction;
+
+        if (currentSlideIndex >= slides.length) {
+            currentSlideIndex = 0;
+        } else if (currentSlideIndex < 0) {
+            currentSlideIndex = slides.length - 1;
+        }
+
+        // Add active class to new slide
+        slides[currentSlideIndex].classList.add('active');
+
+        // Update page numbers and progress
+        updatePageNumbers();
+        updateProgressBar();
+    }
+
+    // Update page numbers
     function updatePageNumbers() {
         const currentPageEl = document.getElementById('hero-current');
         const totalPagesEl = document.getElementById('hero-total');
-        const slides = document.querySelectorAll('.hero-slide'); // Dynamic count
+        const slides = document.querySelectorAll('.hero-slide');
 
         if (currentPageEl) {
             currentPageEl.textContent = String(currentSlideIndex + 1).padStart(2, '0');
@@ -24,11 +49,69 @@
         }
     }
 
+    // Update progress bar (0 to 100%)
+    function updateProgressBar() {
+        const progressFill = document.getElementById('hero-progress-fill');
+        if (progressFill) {
+            // Reset progress bar to 0 and animate to 100%
+            progressFill.style.transition = 'none';
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+                progressFill.style.transition = 'width 4000ms linear';
+                progressFill.style.width = '100%';
+            }, 50);
+        }
+    }
+
+    // Start auto slide
+    function startAutoSlide() {
+        stopAutoSlide(); // Clear any existing interval
+        autoSlideInterval = setInterval(() => {
+            changeSlide(1);
+        }, 4000); // 4초마다 자동 슬라이드
+    }
+
+    // Stop auto slide
+    function stopAutoSlide() {
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+        }
+    }
+
+    // Initialize slider navigation
+    function initSliderNavigation() {
+        const prevButton = document.querySelector('#hero-prev');
+        const nextButton = document.querySelector('#hero-next');
+        const sliderElement = document.querySelector('#hero-slider');
+
+        // Button Navigation
+        if (prevButton) {
+            prevButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                changeSlide(-1);
+            });
+        }
+
+        if (nextButton) {
+            nextButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                changeSlide(1);
+            });
+        }
+
+        // Pause on hover
+        if (sliderElement) {
+            sliderElement.addEventListener('mouseenter', stopAutoSlide);
+            sliderElement.addEventListener('mouseleave', startAutoSlide);
+        }
+    }
+
     // Scroll animation and parallax effect with throttling
     function handleScrollAnimation() {
         if (!ticking) {
             requestAnimationFrame(() => {
-                const elements = document.querySelectorAll('.facility-intro-section, .facility-images-section, .facility-usage-section, .facility-content-section');
+                const elements = document.querySelectorAll('.facility-intro-section, .facility-images-section, .facility-usage-section, .facility-content-section, .facility-experience-section, .facility-gallery-section');
 
                 elements.forEach(element => {
                     const elementTop = element.getBoundingClientRect().top;
@@ -139,6 +222,30 @@
     }
 
 
+    // Initialize experience tabs
+    function initializeExperienceTabs() {
+        const tabButtons = document.querySelectorAll('.facility-experience-tab-button');
+        const tabContents = document.querySelectorAll('.facility-experience-tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetTabId = this.getAttribute('data-tab');
+
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                const targetContent = document.getElementById(targetTabId);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+    }
+
     // Scroll image border-radius animation
     function initImageBorderAnimation() {
         const horizontalImages = document.querySelectorAll('.facility-img-horizontal');
@@ -194,13 +301,23 @@
         if (typeof FacilityMapper !== 'undefined') {
             const facilityMapper = new FacilityMapper();
             await facilityMapper.initialize();
+            await facilityMapper.mapPage();
         }
+
+        // Initialize slider navigation and auto-slide
+        initSliderNavigation();
+        startAutoSlide();
+        updatePageNumbers();
+        updateProgressBar();
 
         // Initialize usage grid
         initializeUsageGrid();
 
-        // Initialize image border animation
-        initImageBorderAnimation();
+        // Initialize experience tabs
+        initializeExperienceTabs();
+
+        // Initialize image border animation (disabled)
+        // initImageBorderAnimation();
 
         // Scroll event listener
         window.addEventListener('scroll', handleScrollAnimation);
@@ -217,6 +334,196 @@
             }
         });
     });
+
+    // Facility Carousel Slider (index 경험 갤러리 스타일)
+    window.initializeFacilityCarousel = function() {
+        if (isMobile()) {
+            initFacilityCarouselMobile();
+        } else {
+            initFacilityCarouselDesktop();
+        }
+    };
+
+    function initFacilityCarouselMobile() {
+        const wrapper = document.querySelector('.gallery-slider-wrapper');
+        const track = document.querySelector('#facility-gallery-track');
+        let slides = document.querySelectorAll('.gallery-slide');
+
+        if (!track || !wrapper || slides.length === 0) {
+            return;
+        }
+
+        const originalSlideCount = slides.length / 2;
+        const gap = 40;
+        let currentIndex = 0;
+        let autoSlideTimer = null;
+        const autoSlideInterval = 4000;
+
+        function updatePosition(animate = true) {
+            slides = document.querySelectorAll('.gallery-slide');
+            const wrapperWidth = wrapper.offsetWidth;
+            const slideWidth = wrapperWidth * 0.9;
+
+            if (animate) {
+                track.style.transition = 'transform 0.6s ease';
+            } else {
+                track.style.transition = 'none';
+            }
+
+            track.style.transform = `translateX(${-(currentIndex * (slideWidth + gap))}px)`;
+
+            // Update active state and opacity
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                const originalIndex = index % originalSlideCount;
+                const currentIndexModulo = currentIndex % originalSlideCount;
+                if (originalIndex === currentIndexModulo) {
+                    slide.classList.add('active');
+                    slide.style.opacity = '1';
+                } else {
+                    slide.style.opacity = '0.4';
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentIndex++;
+            if (currentIndex >= originalSlideCount * 2) {
+                track.style.transition = 'none';
+                currentIndex = originalSlideCount;
+                updatePosition(false);
+
+                setTimeout(() => {
+                    track.style.transition = 'transform 0.6s ease';
+                }, 50);
+            } else {
+                updatePosition(true);
+            }
+        }
+
+        function startAutoSlide() {
+            if (autoSlideTimer) clearInterval(autoSlideTimer);
+            autoSlideTimer = setInterval(nextSlide, autoSlideInterval);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideTimer) {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = null;
+            }
+        }
+
+        updatePosition(false);
+        startAutoSlide();
+
+        // Hover to pause/resume
+        track.addEventListener('mouseenter', stopAutoSlide);
+        track.addEventListener('mouseleave', startAutoSlide);
+    }
+
+    function initFacilityCarouselDesktop() {
+        const wrapper = document.querySelector('.gallery-slider-wrapper');
+        const track = document.querySelector('#facility-gallery-track');
+        let slides = document.querySelectorAll('.gallery-slide');
+
+        if (!track || !wrapper || slides.length === 0) {
+            return;
+        }
+
+        const originalSlideCount = slides.length / 2;
+        const slideWidth = 300;
+        const activeSlideWidth = 480;
+        const gap = 40;
+        let currentIndex = 2;
+        let autoSlideTimer = null;
+        const autoSlideInterval = 4000;
+        let isTransitioning = false;
+
+        // Calculate slide position
+        function calculatePosition(index) {
+            const wrapperWidth = wrapper.offsetWidth;
+            let totalWidth = 0;
+            for (let i = 0; i < index; i++) {
+                totalWidth += slideWidth + gap;
+            }
+
+            const sidePadding = (wrapperWidth - activeSlideWidth) / 2;
+            return -(totalWidth - sidePadding);
+        }
+
+        // Update position
+        function updatePosition(animate = true) {
+            slides = document.querySelectorAll('.gallery-slide');
+            const position = calculatePosition(currentIndex);
+
+            if (animate) {
+                track.style.transition = 'transform 0.6s ease';
+                isTransitioning = true;
+            } else {
+                track.style.transition = 'none';
+            }
+
+            track.style.transform = `translateX(${position}px)`;
+
+            // Update active state and opacity
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                const originalIndex = index % originalSlideCount;
+                const currentIndexModulo = currentIndex % originalSlideCount;
+                slide.style.opacity = (originalIndex === currentIndexModulo) ? '1' : '0.4';
+            });
+
+            const slideToActivate = slides[currentIndex];
+            if (slideToActivate) {
+                slideToActivate.classList.add('active');
+            }
+
+            if (animate) {
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 600);
+            }
+        }
+
+        // Next slide
+        function nextSlide() {
+            if (isTransitioning) return;
+
+            currentIndex++;
+
+            if (currentIndex >= originalSlideCount * 2) {
+                track.style.transition = 'none';
+                currentIndex = originalSlideCount;
+                updatePosition(false);
+
+                setTimeout(() => {
+                    track.style.transition = 'transform 0.6s ease';
+                }, 50);
+            } else {
+                updatePosition(true);
+            }
+        }
+
+        function startAutoSlide() {
+            if (autoSlideTimer) clearInterval(autoSlideTimer);
+            autoSlideTimer = setInterval(nextSlide, autoSlideInterval);
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideTimer) {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = null;
+            }
+        }
+
+        // Initialize
+        updatePosition(false);
+        startAutoSlide();
+
+        // Hover to pause/resume
+        track.addEventListener('mouseenter', stopAutoSlide);
+        track.addEventListener('mouseleave', startAutoSlide);
+    }
 
     // Expose functions globally for external access
     window.facilityGrid = {

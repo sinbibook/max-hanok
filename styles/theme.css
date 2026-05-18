@@ -1,13 +1,30 @@
-/* CDN Fonts */
-@import url('https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css');
-@import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
+/* Font Faces */
+@font-face {
+    font-family: 'Escoredream';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GyeonggiMillenniumBackground';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Marhey';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Marhey'), url('https://fonts.cdnfonts.com/s/107462/Marhey[wght].woff') format('woff');
+}
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'MaruBuri', sans-serif;
-  --font-ko-sub: 'Noto Serif KR', serif;
-  --font-en-main: 'Chonburi', serif;
+  --font-ko-main: 'Escoredream', sans-serif;
+  --font-ko-sub: 'GyeonggiMillenniumBackground', serif;
+  --font-en-main: 'Marhey', sans-serif;
   --color-primary: #F5F4F1;
   --color-secondary: #C36355;
 }

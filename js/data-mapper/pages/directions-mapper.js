@@ -17,78 +17,91 @@ class DirectionsMapper extends BaseDataMapper {
     // ============================================================================
 
     /**
-     * Hero 섹션 매핑 (배경 이미지, 제목) - customFields 활용
+     * Hero 섹션 매핑 (슬라이더 이미지 생성 - index와 동일)
      */
     mapHeroSection() {
-        if (!this.isDataLoaded || !this.data.property) return;
+        if (!this.isDataLoaded) return;
 
-        // directions 페이지 전용 hero 섹션 데이터 가져오기
-        const directionsHeroData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero');
+        const heroData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero');
+        if (!heroData) return;
 
-        // Hero 제목 매핑 (customFields에서 우선, 없으면 기본값)
-        const heroTitleElement = this.safeSelect('[data-directions-hero-title]');
-        if (heroTitleElement) {
-            if (directionsHeroData?.title !== undefined) {
-                heroTitleElement.textContent = directionsHeroData.title;
-            } else {
-                // fallback: 펜션명 + 오시는길
-                heroTitleElement.textContent = `${this.getPropertyName()} 오시는길`;
-            }
+        const heroSlider = document.getElementById('hero-slider');
+        if (!heroSlider) return;
+
+        heroSlider.innerHTML = '';
+
+        const images = heroData.images
+            ? heroData.images.filter(img => img.isSelected).sort((a, b) => a.sortOrder - b.sortOrder)
+            : [];
+
+        if (images.length === 0) {
+            // 이미지가 없을 때 placeholder
+            const slide = document.createElement('div');
+            slide.className = 'hero-slide active';
+
+            const img = document.createElement('img');
+            img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+            img.alt = 'No Image Available';
+            img.className = 'empty-image-placeholder';
+            img.loading = 'lazy';
+
+            slide.appendChild(img);
+            heroSlider.appendChild(slide);
+        } else {
+            images.forEach((img, index) => {
+                const slide = document.createElement('div');
+                slide.className = `hero-slide${index === 0 ? ' active' : ''}`;
+                slide.innerHTML = `<img src="${img.url}" alt="${img.description || 'Hero Image'}" loading="lazy">`;
+                heroSlider.appendChild(slide);
+            });
         }
 
-        // Hero 배경 이미지 매핑 (JSON에서 동적으로)
-        this.mapHeroImage();
+        // 슬라이더 초기화 (index.js의 initHeroSlider 호출)
+        if (typeof window.initHeroSlider === 'function') {
+            window.initHeroSlider(true); // skipDelay=true
+        }
+
+        // Hero 텍스트 매핑 (property name)
+        this.mapHeroText();
     }
 
     /**
-     * Hero 이미지 동적 매핑 (directions 전용 customFields 활용)
+     * Hero 텍스트 매핑 (property name, brand title)
      */
-    mapHeroImage() {
+    mapHeroText() {
+        if (!this.isDataLoaded || !this.data.property) return;
+
+        // Property 영문명 매핑 (brand-title)
+        const brandTitle = this.safeSelect('[data-property-name-en]');
+        if (brandTitle) {
+            brandTitle.textContent = this.getPropertyNameEn();
+        }
+    }
+
+    /**
+     * 위치 안내 원형 이미지 매핑 (hero 이미지 인덱스 1 사용)
+     */
+    mapLocationImage() {
         if (!this.isDataLoaded) return;
 
-        // directions 페이지 전용 hero 섹션 데이터 가져오기
-        const directionsHeroData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero');
+        const heroData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0.hero');
+        if (!heroData) return;
 
-        const images = directionsHeroData?.images;
-
-        // sortOrder로 정렬
-        const sortedImages = images && images.length > 0
-            ? images.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+        const images = heroData.images
+            ? heroData.images.filter(img => img.isSelected).sort((a, b) => a.sortOrder - b.sortOrder)
             : [];
 
-        // 0번째 이미지 매핑 (hero 배경)
-        const heroImage0Element = this.safeSelect('[data-customfield-directions-hero-image-0]');
-        if (heroImage0Element) {
-            const firstImage = sortedImages[0];
-            const imageUrl = firstImage?.url || ImageHelpers.EMPTY_IMAGE_SVG;
-            const imageAlt = firstImage?.description || `${this.getPropertyName()} 오시는길`;
-
-            heroImage0Element.src = imageUrl;
-            heroImage0Element.alt = imageAlt;
-            heroImage0Element.loading = 'eager';
-
-            if (!firstImage?.url) {
-                heroImage0Element.classList.add('empty-image-placeholder');
+        const locationImageEl = this.safeSelect('[data-directions-location-image]');
+        if (locationImageEl) {
+            if (images.length > 1) {
+                // 인덱스 1번 이미지 사용
+                locationImageEl.src = images[1].url;
+                locationImageEl.classList.remove('empty-image-placeholder');
             } else {
-                heroImage0Element.classList.remove('empty-image-placeholder');
-            }
-        }
-
-        // 1번째 이미지 매핑 (banner 이미지)
-        const heroImage1Element = this.safeSelect('[data-customfield-directions-hero-image-1]');
-        if (heroImage1Element) {
-            const secondImage = sortedImages[1];
-            const imageUrl = secondImage?.url || ImageHelpers.EMPTY_IMAGE_SVG;
-            const imageAlt = secondImage?.description || `${this.getPropertyName()} 오시는길 배너`;
-
-            heroImage1Element.src = imageUrl;
-            heroImage1Element.alt = imageAlt;
-            heroImage1Element.loading = 'lazy';
-
-            if (!secondImage?.url) {
-                heroImage1Element.classList.add('empty-image-placeholder');
-            } else {
-                heroImage1Element.classList.remove('empty-image-placeholder');
+                // 이미지가 부족하면 placeholder
+                locationImageEl.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                locationImageEl.classList.add('empty-image-placeholder');
+                locationImageEl.alt = 'No Image Available';
             }
         }
     }
@@ -141,6 +154,7 @@ class DirectionsMapper extends BaseDataMapper {
         // directions 페이지 전용 섹션 데이터 가져오기
         const directionsData = this.safeGet(this.data, 'homepage.customFields.pages.directions.sections.0');
         const noticeSection = this.safeSelect('[data-directions-notice-section]');
+        const noticeWrap = this.safeSelect('.notice-wrap');
         const notice = directionsData?.notice;
 
         // notice 데이터가 없거나 title/description이 모두 비어있으면 섹션 숨김
@@ -149,11 +163,16 @@ class DirectionsMapper extends BaseDataMapper {
 
         if (!notice || (!hasTitle && !hasDescription)) {
             if (noticeSection) noticeSection.style.display = 'none';
+            // notice-wrap에서 has-notice 클래스 제거
+            if (noticeWrap) noticeWrap.classList.remove('has-notice');
             return;
         }
 
         // notice 데이터가 있으면 섹션 표시
         if (noticeSection) noticeSection.style.display = '';
+
+        // notice-wrap에 has-notice 클래스 추가 (border-top 표시)
+        if (noticeWrap) noticeWrap.classList.add('has-notice');
 
         // Notice 제목 매핑
         const noticeTitle = this.safeSelect('[data-customfield-directions-notice-title]');
@@ -202,7 +221,29 @@ class DirectionsMapper extends BaseDataMapper {
         const property = this.data.property;
         const mapContainer = document.getElementById('kakao-map');
 
-        if (!mapContainer || !property.latitude || !property.longitude) {
+        if (!mapContainer) {
+            return;
+        }
+
+        // 맵 좌표 데이터가 없을 때 플레이스홀더 표시
+        if (!property.latitude || !property.longitude) {
+            mapContainer.style.minHeight = '400px';
+            mapContainer.style.backgroundColor = '#f0f0f0';
+            mapContainer.style.borderRadius = '8px';
+            mapContainer.style.display = 'flex';
+            mapContainer.style.alignItems = 'center';
+            mapContainer.style.justifyContent = 'center';
+            mapContainer.innerHTML = `
+                <div style="text-align: center; color: #999;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-bottom: 10px;">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="M21 21l-4.35-4.35"></path>
+                        <circle cx="11" cy="8" r="1"></circle>
+                    </svg>
+                    <p style="margin: 10px 0; font-size: 14px;">지도 영역</p>
+                    <p style="font-size: 12px;">위치 정보를 추가해주세요</p>
+                </div>
+            `;
             return;
         }
 
@@ -333,6 +374,7 @@ class DirectionsMapper extends BaseDataMapper {
 
         // 순차적으로 각 섹션 매핑
         this.mapHeroSection();
+        this.mapLocationImage(); // 위치 안내 원형 이미지 매핑
         this.mapAddressSection();
         this.mapNoticeSection(); // Notice 섹션 매핑 추가
         this.mapMapSection();
@@ -350,6 +392,45 @@ class DirectionsMapper extends BaseDataMapper {
 
         // E-commerce registration 매핑
         this.mapEcommerceRegistration();
+
+        // 클로징 섹션 매핑
+        this.mapClosingSection();
+    }
+
+    /**
+     * 클로징 섹션 매핑 - property_exterior 이미지 및 숙소명 사용 (main과 동일한 방식, 다른 이미지)
+     */
+    mapClosingSection() {
+        if (!this.isDataLoaded) return;
+
+        // property_exterior 이미지 가져오기 (isSelected: true만)
+        const allImages = this.safeGet(this.data, "homepage.customFields.property.images") || [];
+        const exteriorImages = allImages
+            .filter(img => img.category === "property_exterior" && img.isSelected)
+            .sort((a, b) => a.sortOrder - b.sortOrder);
+
+        // 페이지 인덱스 1 (directions) - main(0)과 다른 이미지 순환 선택
+        const pageIndex = 1;
+        const selectedImage = exteriorImages.length > 0 ?
+            exteriorImages[pageIndex % exteriorImages.length] : null;
+
+        // 모든 클로징 이미지 매핑 (데스크탑 + 모바일)
+        this.safeSelectAll('[data-closing-image]').forEach(img => {
+            if (selectedImage?.url) {
+                img.src = selectedImage.url;
+                img.classList.remove('empty-image-placeholder');
+            } else {
+                img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                img.classList.add('empty-image-placeholder');
+                img.alt = 'No Image Available';
+            }
+        });
+
+        // 클로징 섹션 숙소명 매핑
+        const propertyNameEn = this.safeSelect('.closing-property-name-en[data-property-name-en]');
+        if (propertyNameEn && this.data.property) {
+            propertyNameEn.textContent = this.getPropertyNameEn();
+        }
     }
 
     /**

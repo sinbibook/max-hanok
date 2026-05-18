@@ -31,17 +31,45 @@
     <!-- Include Header -->
     <div id="header-placeholder"></div>
 
-    <!-- Hero Slider Section -->
-    <section class="hero-slider-section">
-        <div class="hero-slider" id="hero-slider">
-            <!-- Slides will be dynamically generated -->
+    <!-- Mobile Floating YBS Button -->
+    <button class="mobile-floating-ybs-btn" aria-label="YBS" data-ybs-button>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- Mobile Floating Book Now Button -->
+    <button class="mobile-floating-book-btn" aria-label="Book Now" data-booking-engine>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- 시설 소개 섹션 히어로 -->
+    <section class="hero-section">
+        <!-- Background Images Slider with Fade Animation -->
+        <div class="hero-background">
+            <div class="hero-slider" id="hero-slider">
+                <!-- Hero slides will be dynamically generated here -->
+            </div>
+            <div class="hero-image-overlay"></div>
         </div>
-        <div class="hero-content">
-            <div class="hero-text-center">
-                <h1 class="hero-title" data-facility-hero-page-title></h1>
+        <!-- Hero Content -->
+        <div class="hero-content" id="hero-content">
+            <div class="hero-text">
+                <div class="brand-name" id="brand-name">
+                    <h4 class="brand-title" data-property-name-en></h4>
+                    <div class="brand-divider"></div>
+                    <p class="brand-subtitle">SPECIALS</p>
+                </div>
             </div>
         </div>
-        <!-- Slider Progress -->
         <div class="hero-slider-progress">
             <div class="hero-slider-nav">
                 <button class="hero-slider-arrow prev" id="hero-prev"></button>
@@ -49,7 +77,7 @@
                 <div class="hero-slider-line">
                     <div class="hero-slider-line-fill" id="hero-progress-fill"></div>
                 </div>
-                <span class="hero-slider-total" id="hero-total">05</span>
+                <span class="hero-slider-total" id="hero-total">03</span>
                 <button class="hero-slider-arrow next" id="hero-next"></button>
             </div>
         </div>
@@ -68,64 +96,88 @@
                 <div class="facility-description">
                     <pre data-facility-description></pre>
                 </div>
-                <div class="facility-text-content usage-guide">
-                    <div class="facility-text-header">
-                        <h3 class="facility-section-title">이용 안내</h3>
+                <div class="facility-intro-bottom">
+                    <!-- Facility Images Section -->
+                    <div class="facility-images-section">
+                        <div class="facility-image-horizontal">
+                            <img src="" alt="Facility View" class="facility-img-horizontal" data-facility-images-1>
+                        </div>
                     </div>
-                    <div class="facility-text-body" data-facility-features-container>
+                    <!-- Usage Guide Section -->
+                    <div class="facility-text-content usage-guide">
+                        <div class="facility-text-header">
+                            <h3 class="facility-section-title">이용 안내</h3>
+                        </div>
+                        <div class="facility-text-body" data-facility-usage-guide>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 주요 특징 섹션 custom field -->
-        <div class="facility-content-section">
-            <div class="facility-image-content">
-                <img src="" alt="Facility View" class="facility-content-img" data-facility-features-image>
-            </div>
-            <!-- 임시 주석 처리 -->
-            <div class="facility-text-content">
-                <!-- <div class="facility-text-header">
-                    <h3 class="facility-section-title">주요 특징</h3>
+        <!-- Experience Tab Section -->
+        <div class="facility-experience-section">
+            <div class="facility-experience-content">
+                <!-- Tab Navigation -->
+                <div class="facility-experience-tabs-nav">
+                    <button class="facility-experience-tab-button active" data-tab="features-tab">주요 특징</button>
+                    <button class="facility-experience-tab-button" data-tab="additionalinfos-tab">추가 정보</button>
+                    <button class="facility-experience-tab-button" data-tab="benefits-tab">이용 혜택</button>
                 </div>
-                <div class="facility-text-body" data-facility-features-container>
-                </div> -->
+
+                <!-- Tab Content -->
+                <div class="facility-experience-tabs-content">
+                    <div class="facility-experience-tab-content active" id="features-tab" data-facility-features-container>
+                    </div>
+                    <div class="facility-experience-tab-content" id="additionalinfos-tab" data-facility-additionalinfos-container>
+                    </div>
+                    <div class="facility-experience-tab-content" id="benefits-tab" data-facility-benefits-container>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 추가 정보 섹션 custom field -->
-        <div class="facility-content-section facility-content-reversed">
-            <div class="facility-image-content">
-                <img src="" alt="Facility View" class="facility-content-img" data-facility-additionalinfos-image>
-            </div>
-            <!-- 임시 주석 처리 -->
-            <div class="facility-text-content">
-                <!-- <div class="facility-text-header">
-                    <h3 class="facility-section-title">추가 정보</h3>
+        <!-- Facility Gallery Section -->
+        <section class="experience-gallery-section facility-gallery-section">
+            <!-- Title Area -->
+            <div class="experience-container facility-gallery-container">
+                <div class="experience-header facility-gallery-header">
+                    <h2 class="experience-title facility-gallery-title">Special Gallery</h2>
                 </div>
-                <div class="facility-text-body" data-facility-additionalinfos-container>
-                </div> -->
             </div>
-        </div>
 
-        <!-- 이용 혜택 섹션 custom field -->
-        <div class="facility-content-section">
-            <div class="facility-image-content">
-                <img src="" alt="Facility View" class="facility-content-img" data-facility-benefits-image>
+            <!-- Gallery Slider (100% width) -->
+            <div class="gallery-slider-wrapper facility-slider-wrapper">
+                <div class="gallery-slider-track facility-gallery-track" id="facility-gallery-track"></div>
             </div>
-            <!-- 임시 주석 처리 -->
-            <div class="facility-text-content">
-                <!-- <div class="facility-text-header">
-                    <h3 class="facility-section-title">이용 혜택</h3>
-                </div>
-                <div class="facility-text-body" data-facility-benefits-container>
-                </div> -->
-            </div>
-        </div>
+        </section>
         </div> <!-- facility-content-container -->
     </section>
 
 
+
+  <!-- 마무리 섹션 -->
+  <section class="index-closing">
+    <!-- Background Images with Parallax -->
+    <div class="closing-bg-parallax">
+      <img data-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
+    </div>
+
+    <!-- 배경색 컨테이너 -->
+    <div class="closing-color-container">
+      <!-- 우측 원형 구멍 영역 -->
+      <div class="closing-circle-reveal">
+        <!-- 모바일용 이미지 -->
+        <img class="closing-circle-image" data-closing-image-mobile src="" alt="마무리 섹션 이미지" loading="lazy">
+      </div>
+
+      <!-- 텍스트 컨텐츠 -->
+      <div class="index-closing-text">
+        <h2 class="closing-property-name-en" data-property-name-en></h2>
+        <div class="closing-divider"></div>
+      </div>
+    </div>
+  </section>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>

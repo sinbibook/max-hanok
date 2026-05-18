@@ -47,24 +47,6 @@ class BaseDataMapper {
     }
 
     /**
-     * 스네이크 케이스를 카멜 케이스로 변환
-     * API 데이터 변환용
-     */
-    convertToCamelCase(obj) {
-        if (Array.isArray(obj)) {
-            return obj.map(item => this.convertToCamelCase(item));
-        } else if (obj !== null && typeof obj === 'object') {
-            return Object.keys(obj).reduce((result, key) => {
-                // 스네이크 케이스를 카멜 케이스로 변환
-                const camelKey = key.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-                result[camelKey] = this.convertToCamelCase(obj[key]);
-                return result;
-            }, {});
-        }
-        return obj;
-    }
-
-    /**
      * 시간 포맷팅 함수 (HH:MM:SS -> HH:MM)
      */
     formatTime(timeString) {

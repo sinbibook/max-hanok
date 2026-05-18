@@ -53,6 +53,320 @@ body::before {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* ===================================
+   Hero Section with Animation Effects (All Pages)
+   =================================== */
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: calc(100vh + 100px);
+    min-height: calc(100vh + 100px);
+    overflow: visible;
+    background: var(--color-primary);
+    z-index: 10;
+    clip-path: ellipse(100% 100% at 50% 0%);
+}
+
+/* Background Slider with Fade */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    touch-action: pan-y;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 2s ease-in-out, visibility 0s 2s;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 2s ease-in-out, visibility 0s 0s;
+    z-index: 2;
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hero Content */
+.hero-section .hero-content {
+    position: absolute;
+    top: auto;
+    left: 2rem;
+    bottom: 150px;
+    right: auto;
+    width: 100%;
+    height: auto;
+    z-index: 5;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    transform: none;
+    padding: 2rem;
+}
+
+/* Hero Text */
+.hero-section .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: auto;
+    text-align: left !important;
+}
+
+/* Brand Name */
+.hero-section .brand-name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: auto;
+}
+
+/* Override for Hero Text */
+.hero-section .hero-content .hero-text {
+    text-align: left !important;
+    padding: 2rem 1rem;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    width: auto !important;
+}
+
+.brand-name {
+    margin-bottom: 2rem;
+}
+
+.brand-title {
+    font-family: var(--font-en-main);
+    font-size: clamp(1.2rem, 3vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    -webkit-text-stroke: 0.3px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    animation: slideInFade 0.8s ease-out forwards;
+    animation-delay: 0s;
+}
+
+.brand-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 1);
+    margin: 1.7rem 0 1.8rem 0;
+    opacity: 0;
+    animation: slideInFade 0.8s ease-out forwards;
+    animation-delay: 0s;
+}
+
+.brand-subtitle {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    margin: 0;
+    font-family: var(--font-ko-main);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    -webkit-text-stroke: 0.2px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    animation: slideInFade 0.8s ease-out forwards;
+    animation-delay: 0.8s;
+}
+
+.tagline {
+    opacity: 0;
+    animation: slideInFade 0.8s ease-out forwards;
+    animation-delay: 1.2s;
+}
+
+.tagline-main {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 0.5rem 0;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.tagline-sub {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Hero Slider Arrow */
+.hero-section .hero-slider-arrow {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    font-size: 28px;
+    flex-shrink: 0;
+    color: white;
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
+}
+
+.hero-section .hero-slider-arrow.prev {
+    order: 2;
+}
+
+.hero-section .hero-slider-arrow.next {
+    order: 3;
+}
+
+.hero-slider-line {
+    order: 1;
+}
+
+.hero-section .hero-slider-arrow:hover {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.05);
+}
+
+/* Keyframe Animations */
+@keyframes slideInFade {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes brandFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes dividerExpand {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+    100% {
+        width: 100px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes overlayFade {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes imageReveal {
+    0% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes contentFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInQuick {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInQuick {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Hero Scroll Down Arrow */
 .hero-scroll-down {
     position: absolute;
@@ -334,6 +648,66 @@ img {
 }
 
 @media (max-width: 768px) {
+    /* Hero Section Mobile */
+    .hero-section {
+        height: 60vh;
+        min-height: 60vh;
+        overflow: hidden;
+        clip-path: ellipse(150% 100% at 50% 0%);
+    }
+
+    .hero-section .hero-content {
+        left: 50%;
+        bottom: 10%;
+        right: auto;
+        transform: translateX(-50%);
+        text-align: center;
+        width: 90%;
+        max-width: 90%;
+        padding: 0;
+    }
+
+    .hero-section .hero-text {
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-section .brand-name {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .brand-title {
+        font-size: 1.5rem;
+        text-align: center;
+        line-height: 1.5;
+    }
+
+    .brand-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-section .hero-slider-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+
+    .hero-slider-progress {
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        height: auto;
+        gap: 15px;
+        font-size: 12px;
+        bottom: 3.5rem;
+        top: auto;
+    }
+
+    .hero-slider-line {
+        width: 150px;
+    }
+
     .section-container {
         max-width: 100%;
         padding: 0 15px;
@@ -372,31 +746,38 @@ img {
 /* Slider Progress Bar */
 .hero-slider-progress {
     position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: auto;
+    left: 5rem;
+    top: calc(100vh - 123px);
+    transform: none;
     display: flex;
     align-items: center;
     gap: 20px;
     z-index: 10;
     color: white;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    width: 400px;
+    height: 60px;
 }
 
 .hero-slider-current,
 .hero-slider-total {
     font-family: var(--font-ko-sub);
-    opacity: 0.9;
+    opacity: 0.8;
+    font-size: 12px;
+    display: none;
 }
 
 .hero-slider-line {
-    width: 100px;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.3);
+    width: 250px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.25);
     position: relative;
     overflow: hidden;
+    border-radius: 1px;
+    flex: 1;
 }
 
 .hero-slider-line-fill {
@@ -405,8 +786,8 @@ img {
     top: 0;
     height: 100%;
     width: 0%;
-    background: white;
-    transition: width 4000ms linear;
+    background: rgba(255, 255, 255, 0.9);
+    transition: width 5s linear;
 }
 
 /* Hero Slider Navigation Arrows */
@@ -519,7 +900,8 @@ body {
 }
 
 /* Mobile Floating Book Now Button */
-.mobile-floating-book-btn {
+.mobile-floating-book-btn,
+.mobile-floating-ybs-btn {
     display: none;
     position: fixed;
     bottom: 24px;
@@ -527,36 +909,421 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: var(--color-secondary);
-    opacity: 0.5;
+    background: transparent;
+    opacity: 1;
     color: white;
-    border: none;
+    border: 2px solid white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     z-index: 999;
     transition: all 0.3s ease;
 }
 
-.mobile-floating-book-btn:hover {
-    opacity: 0.7;
+.mobile-floating-book-btn:hover,
+.mobile-floating-ybs-btn:hover {
+    opacity: 0.9;
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.mobile-floating-book-btn:active {
+.mobile-floating-book-btn:active,
+.mobile-floating-ybs-btn:active {
     transform: scale(0.95);
 }
 
-.mobile-floating-book-btn svg {
+.mobile-floating-book-btn svg,
+.mobile-floating-ybs-btn svg {
     width: 24px;
     height: 24px;
 }
 
-/* Show only on mobile */
-@media screen and (max-width: 768px) {
-    .mobile-floating-book-btn {
+/* Mobile Floating Buttons */
+@media screen and (max-width: 1920px) {
+    .mobile-floating-book-btn,
+    .mobile-floating-ybs-btn {
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
+        width: auto;
+        min-width: 80px;
+        height: 36px !important;
+        max-height: 36px;
+        padding: 0 16px;
+        overflow: hidden;
+        border-radius: 50px;
+        background: color-mix(in srgb, var(--color-secondary) 90%, black 10%);
+        border: 1px solid var(--color-primary);
+        font-family: var(--font-en-main);
+        font-size: 0.75rem;
+        font-weight: 400;
+        gap: 4px;
+        letter-spacing: 0.1em;
+    }
+
+    .mobile-floating-book-btn {
+        bottom: 65px;
+        right: 15px;
+    }
+
+    .mobile-floating-ybs-btn {
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .mobile-floating-book-btn::after,
+    .mobile-floating-ybs-btn::after {
+        font-size: 0.8rem;
+        line-height: 1;
+    }
+
+    .mobile-floating-book-btn::after {
+        content: '예약';
+        font-family: 'Noto Serif KR', serif;
+    }
+
+    .mobile-floating-ybs-btn::after {
+        content: 'YBS';
+    }
+
+    .mobile-floating-book-btn svg,
+    .mobile-floating-ybs-btn svg {
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+    }
+
+    /* Remove hover background change on mobile */
+    .mobile-floating-book-btn:hover,
+    .mobile-floating-ybs-btn:hover {
+        background: color-mix(in srgb, var(--color-secondary) 90%, black 10%);
+        border-color: var(--color-primary);
+    }
+}
+
+/* ===================================
+   Closing Section - Common across all pages
+   =================================== */
+
+.index-closing {
+    position: relative;
+    width: 100%;
+    min-height: 80vh;
+    overflow: hidden;
+    clip-path: ellipse(100% 100% at 50% 100%);
+}
+
+/* 배경 이미지 (parallax) */
+.closing-bg-parallax {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.closing-bg-parallax.visible {
+    opacity: 1;
+}
+
+.closing-bg-parallax img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-width: 100%;
+    min-height: 130vh;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.1s ease-out;
+}
+
+/* 배경색 컨테이너 */
+.closing-color-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: transparent;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+}
+
+/* 모바일: 레이아웃 복원 */
+@media (max-width: 1399px) {
+    .closing-color-container {
+        background: var(--color-secondary);
+        justify-content: flex-start;
+    }
+}
+
+/* 우측 원형 구멍 영역 */
+.closing-circle-reveal {
+    /* 데스크탑에서는 숨김 - 전체 배경만 표시 */
+    display: none;
+    position: absolute;
+    right: 10%;
+    top: 55%;
+    transform: translateY(-50%);
+    width: 620px;
+    height: 620px;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 3;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 원형 구멍 안의 이미지 (모바일용) */
+.closing-circle-image {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 원형 마스크 - 배경색 컨테이너에 구멍 만들기 */
+.closing-color-container {
+    /* 데스크탑에서는 마스크 없음 - 전체 배경 표시 */
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+/* 모바일: 원형 마스크 복원 */
+@media (max-width: 768px) {
+    .closing-circle-reveal {
+        display: block;
+    }
+
+    .closing-circle-image {
+        display: block;
+    }
+
+    .closing-color-container {
+        -webkit-mask-image: radial-gradient(
+            circle 310px at calc(100% - 10% - 310px) 55%,
+            transparent 310px,
+            black 311px
+        );
+        mask-image: radial-gradient(
+            circle 310px at calc(100% - 10% - 310px) 55%,
+            transparent 310px,
+            black 311px
+        );
+    }
+}
+
+.index-closing-text {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    max-width: 50%;
+    margin-top: 5vh;
+}
+
+/* 모바일: 좌측 정렬 복원 */
+@media (max-width: 1399px) {
+    .index-closing-text {
+        text-align: left;
+        align-items: flex-start;
+        padding-left: 10%;
+    }
+}
+
+/* 숙소명 영문 */
+.closing-property-name-en {
+    font-family: var(--font-en-main);
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: white;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0;
+    padding-right: 40px;
+    transform: translateY(30px);
+    animation: closingTextFadeIn 1.2s ease-out 0.3s forwards;
+}
+
+/* 구분선 */
+.closing-divider {
+    width: 80px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.6);
+    margin: 30px 0;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: closingDividerFadeIn 1s ease-out 0.8s forwards;
+}
+
+/* Closing Subtitle */
+.closing-subtitle {
+    font-family: var(--font-ko-main);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 30px 0;
+    padding-top: 15px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: closingTextFadeIn 1.2s ease-out 1s forwards;
+}
+
+/* Closing Title */
+.closing-title {
+    font-family: var(--font-ko-main);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 30px 0;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: closingTextFadeIn 1.2s ease-out 1.3s forwards;
+}
+
+@keyframes closingTextFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes closingDividerFadeIn {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+/* Responsive: Non-Desktop (Stacked Layout) */
+@media (max-width: 1399px) {
+    .index-closing {
+        height: auto;
+        min-height: auto;
+        padding: 0;
+        clip-path: ellipse(150% 100% at 50% 100%);
+    }
+
+    .closing-bg-parallax {
+        display: none !important;
+    }
+
+    .closing-circle-reveal {
+        position: relative;
+        display: block;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: clamp(250px, 60vw, 450px);
+        height: clamp(250px, 60vw, 450px);
+        margin: 60px auto 40px;
+    }
+
+    .closing-color-container {
+        -webkit-mask-image: none;
+        mask-image: none;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+    }
+
+    .index-closing-text {
+        padding: 2rem 0 0;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .closing-property-name-en {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        opacity: 1;
+        transform: translateY(0);
+        animation: closingTextFadeIn 1.2s ease-out 0.3s forwards;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .closing-subtitle {
+        font-size: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .closing-title {
+        font-size: clamp(1rem, 3vw, 1.4rem);
+    }
+
+    .closing-divider {
+        margin: 20px auto;
+    }
+
+    .closing-circle-image {
+        display: block;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
+
+/* Mobile: Larger closing circle */
+@media (max-width: 768px) {
+    .closing-circle-reveal {
+        width: 85vw;
+        height: 85vw;
+    }
+}
+
+/* Mobile: Hero Slider Progress Override (must be after desktop styles) */
+@media (max-width: 768px) {
+    .hero-slider-progress {
+        position: absolute;
+        bottom: 3.5rem;
+        left: 34%;
+        top: auto;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 10;
+        color: white;
+        font-size: 12px;
+        width: auto;
+        height: auto;
+    }
+
+    .hero-slider-line {
+        width: 150px;
+    }
+
+    .hero-slider-nav {
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 }

@@ -31,24 +31,56 @@
     <!-- Header will be loaded here -->
     <div id="header-placeholder"></div>
 
+    <!-- Mobile Floating YBS Button -->
+    <button class="mobile-floating-ybs-btn" aria-label="YBS" data-ybs-button>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- Mobile Floating Book Now Button -->
+    <button class="mobile-floating-book-btn" aria-label="Book Now" data-booking-engine>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
     <div class="reservation-page">
-        <!-- Hero Section -->
+        <!-- 예약안내 섹션 히어로 -->
         <section class="hero-section">
+            <!-- Background Images Slider with Fade Animation -->
             <div class="hero-background">
-                <img src="" alt="예약안내 배경" data-reservation-hero-image-0>
-                <div class="hero-overlay"></div>
+                <div class="hero-slider" id="hero-slider">
+                    <!-- Hero slides will be dynamically generated here -->
+                </div>
+                <div class="hero-image-overlay"></div>
             </div>
-            <div class="hero-content">
-                <div class="hero-text-center">
-                    <h1 class="hero-title" data-reservation-hero-title></h1>
+            <!-- Hero Content -->
+            <div class="hero-content" id="hero-content">
+                <div class="hero-text">
+                    <div class="brand-name" id="brand-name">
+                        <h4 class="brand-title" data-property-name-en></h4>
+                        <div class="brand-divider"></div>
+                        <p class="brand-subtitle">RESERVATION</p>
+                    </div>
                 </div>
             </div>
-
-            <!-- Scroll Down Indicator -->
-            <div class="hero-scroll-down" onclick="scrollToNextSection()">
-                <svg class="scroll-arrow" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                </svg>
+            <div class="hero-slider-progress">
+                <div class="hero-slider-nav">
+                    <button class="hero-slider-arrow prev" id="hero-prev"></button>
+                    <span class="hero-slider-current">01</span>
+                    <div class="hero-slider-line">
+                        <div class="hero-slider-line-fill"></div>
+                    </div>
+                    <span class="hero-slider-total">03</span>
+                    <button class="hero-slider-arrow next" id="hero-next"></button>
+                </div>
             </div>
         </section>
 
@@ -59,9 +91,13 @@
             <div class="facility-intro-section">
                 <div class="facility-intro-content">
                     <div class="facility-label">
-                        <span class="facility-number" data-customfield-reservation-about-title></span>
+                        <span class="facility-number">RESERVATION</span>
                     </div>
                     <p class="facility-description" data-customfield-reservation-about-description></p>
+                </div>
+                <!-- Location Image Circle -->
+                <div class="location-image-circle">
+                    <img class="location-circle-image" src="" alt="예약안내 이미지" data-reservation-hero-image-2>
                 </div>
             </div>
 
@@ -76,62 +112,33 @@
             <div class="reservation-content-layout">
                 <!-- Reservation Info Content -->
                 <div class="reservation-info-content">
-                    <!-- Reservation Details Accordion Section -->
+                    <!-- Reservation Details Tab Section -->
                     <div class="reservation-details-section">
-                        <!-- 이용안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">이용안내</h3>
-                                <button class="accordion-close active" data-target="usage-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="accordion-content active" id="usage-content" data-reservation-usage-content>
-                            </div>
+                        <!-- Tab Navigation -->
+                        <div class="reservation-tabs-nav">
+                            <button class="reservation-tab-button active" data-tab="usage-tab">이용안내</button>
+                            <button class="reservation-tab-button" data-tab="reservation-guide-tab">예약안내</button>
+                            <button class="reservation-tab-button" data-tab="checkin-tab">입/퇴실 안내</button>
+                            <button class="reservation-tab-button" data-tab="refund-tab">환불규정</button>
                         </div>
 
-                        <!-- 예약안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">예약안내</h3>
-                                <button class="accordion-close active" data-target="reservation-guide-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
+                        <!-- Tab Content -->
+                        <div class="reservation-tabs-content">
+                            <!-- 이용안내 Tab -->
+                            <div class="reservation-tab-content active" id="usage-tab" data-reservation-usage-content>
                             </div>
-                            <div class="accordion-content active" id="reservation-guide-content" data-reservation-guide-content>
-                            </div>
-                        </div>
 
-                        <!-- 입/퇴실 안내 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">입/퇴실 안내</h3>
-                                <button class="accordion-close active" data-target="checkin-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
+                            <!-- 예약안내 Tab -->
+                            <div class="reservation-tab-content" id="reservation-guide-tab" data-reservation-guide-content>
                             </div>
-                            <div class="accordion-content active" id="checkin-content" data-reservation-checkin-content>
-                            </div>
-                        </div>
 
-                        <!-- 환불규정 Section -->
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <h3 class="accordion-title">환불규정</h3>
-                                <button class="accordion-close active" data-target="refund-content">
-                                    <svg class="close-icon" viewBox="0 0 24 24">
-                                        <path d="M12 6v12M6 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </button>
+                            <!-- 입/퇴실 안내 Tab -->
+                            <div class="reservation-tab-content" id="checkin-tab" data-reservation-checkin-content>
                             </div>
-                            <div class="accordion-content active" id="refund-content">
-                                <p class="accordion-text">취소 시점에 따른 환불 규정은 다음과 같습니다:</p>
+
+                            <!-- 환불규정 Tab -->
+                            <div class="reservation-tab-content" id="refund-tab">
+                                <p class="reservation-text">취소 시점에 따른 환불 규정은 다음과 같습니다:</p>
                                 <div class="table-section">
                                     <div class="table-wrapper">
                                         <table class="refund-table">
@@ -159,6 +166,29 @@
     <!-- Footer will be loaded here -->
     <div id="footer-placeholder"></div>
 
+
+  <!-- 마무리 섹션 -->
+  <section class="index-closing">
+    <!-- Background Images with Parallax -->
+    <div class="closing-bg-parallax">
+      <img data-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
+    </div>
+
+    <!-- 배경색 컨테이너 -->
+    <div class="closing-color-container">
+      <!-- 우측 원형 구멍 영역 -->
+      <div class="closing-circle-reveal">
+        <!-- 모바일용 이미지 -->
+        <img class="closing-circle-image" data-closing-image-mobile src="" alt="마무리 섹션 이미지" loading="lazy">
+      </div>
+
+      <!-- 텍스트 컨텐츠 -->
+      <div class="index-closing-text">
+        <h2 class="closing-property-name-en" data-property-name-en></h2>
+        <div class="closing-divider"></div>
+      </div>
+    </div>
+  </section>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
