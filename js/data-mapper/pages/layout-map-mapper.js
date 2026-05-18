@@ -144,10 +144,10 @@ class LayoutMapMapper extends BaseDataMapper {
 
         if (!container) return;
 
-        // 기존 동적 생성된 아이템 제거
+        // 기존 동적 생성된 아이템 제거 (1번째는 HTML에 있으므로 유지)
         container.querySelectorAll('[data-generated="true"]').forEach(el => el.remove());
 
-        // 2번째 이미지부터 동적 생성 (1번째는 HTML에 이미 있음)
+        // 2번째 이미지부터 동적 생성
         for (let i = 1; i < images.length; i++) {
             // 이미지 아이템 생성
             const imageItem = document.createElement('div');
@@ -184,60 +184,64 @@ class LayoutMapMapper extends BaseDataMapper {
         // 필요한 아이템 생성
         this.generateLayoutMapItems();
 
-        // 첫 번째 이미지 처리 (최소 1개)
+        // 첫 번째 이미지 처리
         const imgEl = document.querySelector('[data-layout-map-image-0]');
-        if (imgEl) {
-            if (images.length > 0 && images[0] && images[0].url && images[0].isSelected) {
-                imgEl.src = images[0].url;
-                imgEl.alt = images[0].description || '배치도';
-                imgEl.classList.remove('empty-image-placeholder');
-            } else {
-                // 이미지가 없을 경우 placeholder 사용
-                if (typeof ImageHelpers !== 'undefined') {
-                    imgEl.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-                    imgEl.alt = '이미지 없음';
-                    imgEl.classList.add('empty-image-placeholder');
-                    imgEl.style.opacity = '1';
-                }
-            }
-        }
-
-        // 첫 번째 설명 처리
+        const imgContainer = imgEl?.closest('.layout-map-item');
         const descEl = document.querySelector('[data-layout-map-description-0]');
-        if (descEl) {
-            if (images.length > 0 && images[0] && images[0].description) {
-                const sanitized = this.sanitizeText(images[0].description);
-                descEl.innerHTML = sanitized.replace(/\n/g, '<br>');
+        const descContainer = descEl?.closest('.layout-map-description-item');
+
+        if (images.length > 0 && images[0]) {
+            if (images[0].isSelected) {
+                // isSelected가 true면 표시
+                if (imgContainer) imgContainer.style.display = '';
+                if (descContainer) descContainer.style.display = '';
+
+                if (imgEl && images[0].url) {
+                    imgEl.src = images[0].url;
+                    imgEl.alt = images[0].description || '배치도';
+                    imgEl.classList.remove('empty-image-placeholder');
+                }
+
+                // 설명 매핑
+                if (descEl && images[0].description) {
+                    const sanitized = this.sanitizeText(images[0].description);
+                    descEl.innerHTML = sanitized.replace(/\n/g, '<br>');
+                }
+            } else {
+                // isSelected가 false면 숨김
+                if (imgContainer) imgContainer.style.display = 'none';
+                if (descContainer) descContainer.style.display = 'none';
             }
         }
 
         // 2번째 이미지부터 매핑
         for (let i = 1; i < images.length; i++) {
             const imageData = images[i];
-
-            // 이미지 매핑
             const imgEl = document.querySelector(`[data-layout-map-image-${i}]`);
-            if (imgEl) {
-                if (imageData && imageData.url && imageData.isSelected) {
+            const imgContainer = imgEl?.closest('.layout-map-item');
+            const descEl = document.querySelector(`[data-layout-map-description-${i}]`);
+            const descContainer = descEl?.closest('.layout-map-description-item');
+
+            if (imageData && imageData.isSelected) {
+                // isSelected가 true면 표시
+                if (imgContainer) imgContainer.style.display = '';
+                if (descContainer) descContainer.style.display = '';
+
+                if (imgEl && imageData.url) {
                     imgEl.src = imageData.url;
                     imgEl.alt = imageData.description || '배치도';
                     imgEl.classList.remove('empty-image-placeholder');
-                } else {
-                    // 이미지가 없을 경우 placeholder 사용
-                    if (typeof ImageHelpers !== 'undefined') {
-                        imgEl.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-                        imgEl.alt = '이미지 없음';
-                        imgEl.classList.add('empty-image-placeholder');
-                        imgEl.style.opacity = '1';
-                    }
                 }
-            }
 
-            // 설명 매핑
-            const descEl = document.querySelector(`[data-layout-map-description-${i}]`);
-            if (descEl && imageData && imageData.description) {
-                const sanitized = this.sanitizeText(imageData.description);
-                descEl.innerHTML = sanitized.replace(/\n/g, '<br>');
+                // 설명 매핑
+                if (descEl && imageData.description) {
+                    const sanitized = this.sanitizeText(imageData.description);
+                    descEl.innerHTML = sanitized.replace(/\n/g, '<br>');
+                }
+            } else {
+                // isSelected가 false면 숨김
+                if (imgContainer) imgContainer.style.display = 'none';
+                if (descContainer) descContainer.style.display = 'none';
             }
         }
     }
