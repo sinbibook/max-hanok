@@ -56,28 +56,15 @@
     // 전역 함수로 노출 (mapper 완료 후 호출)
     window._reinitScrollAnimations = reinitScrollAnimations;
 
-    // enabled 상태 확인 (preview-handler 데이터 업데이트 시)
-    // preview-handler가 없으면 localhost이므로 체크 안 함
-    function checkNearbyAttractionsEnabled() {
-        if (!window.previewHandler) return;
-
-        if (window.previewHandler.currentData) {
-            const nearbyEnabled = window.previewHandler.currentData?.homepage?.customFields?.pages?.nearbyAttractions?.sections?.[0]?.enabled;
-            if (nearbyEnabled === false) {
-                window.location.href = '404.html';
-                return;
-            }
-        }
-    }
-    window._checkPageEnabled = checkNearbyAttractionsEnabled;
-
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', async function() {
         // Initialize scroll animations
         initScrollAnimations();
 
         // 페이지 로드 시 enabled 상태 확인
-        checkNearbyAttractionsEnabled();
+        if (window.previewHandler && window.previewHandler.checkPageEnabled) {
+            window.previewHandler.checkPageEnabled();
+        }
 
         console.log('Nearby Attractions page loaded');
     });

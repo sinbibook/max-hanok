@@ -135,7 +135,7 @@
 /* Image with top-left radius animation */
 .attraction-item-image {
     width: 50%;
-    height: auto;
+    height: 400px;
     object-fit: cover;
     display: block;
     border-top-left-radius: 0;

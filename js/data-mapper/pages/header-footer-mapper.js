@@ -627,10 +627,37 @@ class HeaderFooterMapper extends BaseDataMapper {
     }
 
     /**
+     * 메뉴 아이템 제거 (기존 항목 정리)
+     */
+    removeMenuItems(container, pages) {
+        if (!container) return;
+        pages.forEach(page => {
+            const item = container.querySelector(`[data-menu-id="${page.id}"]`);
+            if (item) item.remove();
+        });
+    }
+
+    /**
+     * 메뉴 아이템 추가
+     */
+    addMenuItems(container, pages, className) {
+        if (!container) return;
+        pages.forEach(page => {
+            if (page.enabled) {
+                const button = document.createElement('button');
+                button.className = className;
+                button.setAttribute('data-menu-id', page.id);
+                button.textContent = page.name;
+                button.onclick = () => { window.location.href = page.path; };
+                container.appendChild(button);
+            }
+        });
+    }
+
+    /**
      * About 메뉴에 layout-map, nearby-attractions 동적 추가
      */
     mapAboutMenuItems() {
-        // About 메뉴의 submenu 찾기
         const aboutMenu = document.querySelector('[data-menu="about"]');
         if (!aboutMenu) return;
 
@@ -652,29 +679,11 @@ class HeaderFooterMapper extends BaseDataMapper {
             }
         ];
 
-        // 기존 메뉴 아이템 제거
-        customPages.forEach(page => {
-            const existingItem = submenu.querySelector(`[data-menu-id="${page.id}"]`);
-            if (existingItem) {
-                existingItem.remove();
-            }
-        });
+        // Desktop 메뉴 업데이트
+        this.removeMenuItems(submenu, customPages);
+        this.addMenuItems(submenu, customPages, 'submenu-item');
 
-        // enabled가 true인 페이지만 메뉴에 추가 (Desktop)
-        customPages.forEach(page => {
-            if (page.enabled) {
-                const button = document.createElement('button');
-                button.className = 'submenu-item';
-                button.setAttribute('data-menu-id', page.id);
-                button.textContent = page.name;
-                button.onclick = () => {
-                    window.location.href = page.path;
-                };
-                submenu.appendChild(button);
-            }
-        });
-
-        // Mobile About 메뉴도 업데이트
+        // Mobile 메뉴 업데이트
         const mobileAboutSection = document.querySelector('.mobile-menu-section');
         if (!mobileAboutSection) return;
 
@@ -682,29 +691,8 @@ class HeaderFooterMapper extends BaseDataMapper {
         if (!mobileAboutHeader || !mobileAboutHeader.textContent.includes('About')) return;
 
         const mobileAboutItems = mobileAboutSection.querySelector('.mobile-sub-items');
-        if (!mobileAboutItems) return;
-
-        // 기존 모바일 메뉴 아이템 제거
-        customPages.forEach(page => {
-            const existingItem = mobileAboutItems.querySelector(`[data-menu-id="${page.id}"]`);
-            if (existingItem) {
-                existingItem.remove();
-            }
-        });
-
-        // enabled가 true인 페이지만 모바일 메뉴에 추가
-        customPages.forEach(page => {
-            if (page.enabled) {
-                const button = document.createElement('button');
-                button.className = 'mobile-sub-item';
-                button.setAttribute('data-menu-id', page.id);
-                button.textContent = page.name;
-                button.onclick = () => {
-                    window.location.href = page.path;
-                };
-                mobileAboutItems.appendChild(button);
-            }
-        });
+        this.removeMenuItems(mobileAboutItems, customPages);
+        this.addMenuItems(mobileAboutItems, customPages, 'mobile-sub-item');
     }
 
     /**

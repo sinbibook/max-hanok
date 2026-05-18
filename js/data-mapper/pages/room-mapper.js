@@ -133,13 +133,10 @@ class RoomMapper extends BaseDataMapper {
      * Hero 텍스트 섹션 매핑
      */
     mapHeroText(room) {
-        // customFields 헬퍼 함수 사용
-        const roomName = this.getRoomName(room);
-
-        // Hero 객실명 매핑
+        // Hero 객실명 매핑 (customFields 우선)
         const roomHeroName = this.safeSelect('[data-room-hero-name]');
         if (roomHeroName) {
-            roomHeroName.textContent = roomName;
+            roomHeroName.textContent = this.getRoomName(room);
         }
 
         // Hero 설명 매핑 (JSON에서 roomPage.hero.title 찾기)
@@ -153,8 +150,8 @@ class RoomMapper extends BaseDataMapper {
                 const formattedText = heroDescription.replace(/\n/g, '<br>');
                 roomHeroDescription.innerHTML = formattedText;
             } else {
-                // 기본값
-                roomHeroDescription.textContent = `${roomName}에서 편안한 휴식을 즐기세요.`;
+                // 기본값 (customFields 우선)
+                roomHeroDescription.textContent = `${this.getRoomName(room)}에서 편안한 휴식을 즐기세요.`;
             }
         }
     }
@@ -168,14 +165,11 @@ class RoomMapper extends BaseDataMapper {
 
         if (!slidesContainer) return;
 
-        // customFields 헬퍼 함수 사용
-        const roomName = this.getRoomName(room);
-
-        // customFields에서 인테리어 이미지 가져오기
+        // customFields에서 interior 이미지 가져오기 (NO fallback - customFields만 사용)
         const sortedImages = this.getRoomImages(room, 'roomtype_interior');
 
         // 이미지가 없으면 빈 이미지 표시
-        if (sortedImages.length === 0) {
+        if (!sortedImages || sortedImages.length === 0) {
             slidesContainer.innerHTML = `
                 <div class="hero-slide active">
                     <img class="w-full h-full object-cover" alt="이미지 없음" loading="eager">
@@ -195,6 +189,7 @@ class RoomMapper extends BaseDataMapper {
         slidesContainer.innerHTML = '';
 
         // 슬라이드 생성
+        const roomName = this.getRoomName(room);
         sortedImages.forEach((image, index) => {
             const slide = document.createElement('div');
             slide.className = `hero-slide ${index === 0 ? 'active' : ''}`;
@@ -229,10 +224,9 @@ class RoomMapper extends BaseDataMapper {
         const room = this.getCurrentRoom();
         if (!room) return;
 
-        // customFields 헬퍼 함수 사용
         const roomName = this.getRoomName(room);
 
-        // 객실명 매핑
+        // 객실명 매핑 (customFields 우선)
         const roomInfoName = this.safeSelect('[data-room-info-name]');
         if (roomInfoName) {
             roomInfoName.textContent = roomName;
@@ -248,7 +242,7 @@ class RoomMapper extends BaseDataMapper {
             if (infoDescription) {
                 roomInfoDescription.textContent = infoDescription;
             } else {
-                // 기본값
+                // 기본값 (customFields 우선)
                 roomInfoDescription.textContent = room.description || `${roomName}의 상세 정보입니다.`;
             }
         }
@@ -364,13 +358,13 @@ class RoomMapper extends BaseDataMapper {
     }
 
     /**
-     * Room Images Section 매핑 (interior 2번째, 3번째)
+     * Room Images Section 매핑 (interior 0번째, 1번째)
      */
     mapRoomImagesSection(room) {
         if (!room) return;
 
-        // customFields 헬퍼 함수 사용
         const roomName = this.getRoomName(room);
+        // customFields에서 interior 이미지 가져오기 (NO fallback - customFields만 사용)
         const sortedImages = this.getRoomImages(room, 'roomtype_interior');
 
         // 3번째 이미지 (horizontal)
@@ -523,8 +517,8 @@ class RoomMapper extends BaseDataMapper {
             return;
         }
 
-        // customFields 헬퍼 함수 사용
         const roomName = this.getRoomName(room);
+        // customFields에서 exterior 이미지 가져오기 (NO fallback - customFields만 사용)
         const sortedExterior = this.getRoomImages(room, 'roomtype_exterior');
 
         // Main large image - exterior 첫 번째 이미지 사용 (썸네일 첫 번째와 동일)
@@ -566,13 +560,10 @@ class RoomMapper extends BaseDataMapper {
             }
         }
 
-        // Property English name 매핑
-        const propertyNameEn = this.safeSelect('[data-property-nameEn]');
-        if (propertyNameEn) {
-            const nameEn = this.safeGet(this.data, 'property.nameEn');
-            if (nameEn) {
-                propertyNameEn.textContent = nameEn;
-            }
+        // Property English name 매핑 (customFields 우선)
+        const propertyNameEnEl = this.safeSelect('[data-property-nameEn]');
+        if (propertyNameEnEl) {
+            propertyNameEnEl.textContent = this.getPropertyNameEn();
         }
     }
 
@@ -602,14 +593,12 @@ class RoomMapper extends BaseDataMapper {
         this.mapRoomAmenities();
         this.mapRoomGallery();
 
-        // 메타 태그 업데이트 (페이지별 SEO 적용)
-        const property = this.data.property;
-        // customFields 헬퍼 함수 사용
-        const propertyName = this.getPropertyName();
+        // 메타 태그 업데이트 (페이지별 SEO 적용, NO fallback - customFields만 사용)
         const roomName = this.getRoomName(room);
+        const propertyName = this.getPropertyName();
         const pageSEO = {
-            title: (roomName && propertyName) ? `${roomName} - ${propertyName}` : 'SEO 타이틀',
-            description: room?.description || property?.description || 'SEO 설명'
+            title: `${roomName} - ${propertyName}`,
+            description: room?.description || 'SEO 설명'
         };
         this.updateMetaTags(pageSEO);
 
