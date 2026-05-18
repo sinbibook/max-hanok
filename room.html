@@ -31,143 +31,116 @@
     <!-- Include Header -->
     <div id="header-placeholder"></div>
 
-    <!-- Hero Slider Section -->
-    <section class="hero-slider-section">
-        <div class="hero-slider" id="hero-slider" data-room-hero-slides-container>
-            <!-- Slides will be dynamically generated -->
+    <!-- Mobile Floating YBS Button -->
+    <button class="mobile-floating-ybs-btn" aria-label="YBS" data-ybs-button>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- Mobile Floating Book Now Button -->
+    <button class="mobile-floating-book-btn" aria-label="Book Now" data-booking-engine>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- 객실 소개 섹션 히어로 -->
+    <section class="hero-section">
+        <!-- Background Images Slider with Fade Animation -->
+        <div class="hero-background">
+            <div class="hero-slider" id="hero-slider" data-room-hero-slides-container>
+                <!-- Hero slides will be dynamically generated here -->
+            </div>
+            <div class="hero-image-overlay"></div>
         </div>
-        <div class="hero-content">
-            <div class="hero-text-center">
-                <h1 class="hero-title" data-room-hero-name></h1>
+        <!-- Hero Content -->
+        <div class="hero-content" id="hero-content">
+            <div class="hero-text">
+                <div class="brand-name" id="brand-name">
+                    <h4 class="brand-title" data-property-name-en></h4>
+                    <div class="brand-divider"></div>
+                    <p class="brand-subtitle" data-room-hero-name></p>
+                </div>
             </div>
         </div>
-        <!-- Slider Progress -->
         <div class="hero-slider-progress">
             <div class="hero-slider-nav">
                 <button class="hero-slider-arrow prev" id="hero-prev"></button>
-                <span class="hero-slider-current" id="hero-current">01</span>
+                <span class="hero-slider-current">01</span>
                 <div class="hero-slider-line">
                     <div class="hero-slider-line-fill" id="hero-progress-fill"></div>
                 </div>
-                <span class="hero-slider-total" id="hero-total" data-room-total-slides>05</span>
+                <span class="hero-slider-total">03</span>
                 <button class="hero-slider-arrow next" id="hero-next"></button>
             </div>
         </div>
-
     </section>
 
     <!-- Main Content Section -->
     <section class="main-content-section main-content-fade-in">
         <div class="room-content-container">
-        <!-- Stylized Title (Left Aligned for room.html) -->
-        <div class="stylized-title-container room-page-title">
-            <div class="circle-background"></div>
-            <div class="title-content">
-                <span class="title-label">DETAIL</span>
-                <h1 class="stylized-title">ROOM INFO</h1>
-            </div>
-        </div>
-
         <!-- Room Header Info -->
         <div class="room-header-info">
             <h2 id="room-name-display" class="room-name-display" data-room-info-name></h2>
             <p id="room-description-display" class="room-description-display" data-room-info-description></p>
         </div>
 
-        <!-- Room Images Section -->
-        <div class="room-images-section">
-            <div class="room-image-horizontal">
-                <img src="" alt="Room Horizontal View" class="room-img-horizontal" data-room-interior-image-0>
-            </div>
-            <div class="room-image-vertical">
-                <img src="" alt="Room Vertical View" class="room-img-vertical" data-room-interior-image-1>
-            </div>
-        </div>
-
-        <!-- Room Details Accordion Section -->
-        <div class="room-details-section">
-            <!-- Type Section -->
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3 class="accordion-title">Room Type</h3>
-                    <button class="accordion-close" data-target="type-content">
-                        <svg class="close-icon" viewBox="0 0 24 24">
-                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
+        <!-- Main Content Wrapper (Images + Details) -->
+        <div class="room-main-wrapper">
+            <!-- Room Images Section -->
+            <div class="room-images-section">
+                <div class="room-image-horizontal">
+                    <img src="" alt="Room Horizontal View" class="room-img-horizontal" data-room-interior-image-0>
                 </div>
-                <div class="accordion-content" id="type-content">
-                    <p id="room-type-display" class="accordion-text" data-room-type>객실 타입 정보</p>
-                </div>
+                <!-- BOOK NOW Button -->
+                <button class="room-view-btn" data-booking-engine>
+                    <span class="btn-text">BOOK NOW</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7,7 17,7 17,17"></polyline>
+                    </svg>
+                </button>
             </div>
 
-            <!-- Room Info Section -->
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3 class="accordion-title">Room Info</h3>
-                    <button class="accordion-close" data-target="roominfo-content">
-                        <svg class="close-icon" viewBox="0 0 24 24">
-                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
+            <!-- Room Details Tabs Section -->
+            <div class="room-details-section">
+                <!-- Tab Navigation -->
+                <div class="room-tabs-nav">
+                    <button class="room-tab-button active" data-tab="roominfo-tab">Room Info</button>
+                    <button class="room-tab-button" data-tab="amenities-tab">Amenities</button>
                 </div>
-                <div class="accordion-content" id="roominfo-content">
-                    <p id="room-info-display" class="accordion-text" data-room-info>객실 정보</p>
-                </div>
-            </div>
 
-            <!-- Amenities Section -->
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3 class="accordion-title">Amenities</h3>
-                    <button class="accordion-close" data-target="amenities-content">
-                        <svg class="close-icon" viewBox="0 0 24 24">
-                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="accordion-content" id="amenities-content">
-                    <p id="amenities-display" class="accordion-text" data-room-amenities>편의시설</p>
+                <!-- Tab Content -->
+                <div class="room-tabs-content">
+                    <!-- Room Info Tab -->
+                    <div class="room-tab-content active" id="roominfo-tab">
+                        <div id="room-info-display" class="tab-info-list" data-room-info></div>
+                    </div>
+
+                    <!-- Amenities Tab -->
+                    <div class="room-tab-content" id="amenities-tab">
+                        <div id="amenities-display" class="tab-info-list" data-room-amenities></div>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- End of room-main-wrapper -->
 
-        <!-- Reservation CTA Button -->
-        <div class="reservation-cta-section">
-            <button class="reservation-cta-btn book-now-style" data-booking-engine>
-                <span class="book-text">BOOK NOW</span>
-                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                    <polyline points="7,7 17,7 17,17"></polyline>
-                </svg>
-            </button>
-        </div>
+        <!-- Gallery Description and Property Name -->
+        <div class="gallery-property-english-name" data-property-nameEn></div>
 
-        <!-- Room Images Section -->
-         <section class="room-gallery-section-wrap">
+        <!-- Room Gallery Section -->
+        <section class="room-gallery-section-wrap">
             <div class="room-gallery-container" data-room-gallery-grid>
-                <!-- Gallery Images - Left Side -->
+                <!-- Gallery Thumbnails - Left Side -->
                 <div class="gallery-images-area">
-                    <!-- Main Large Image -->
-                    <div class="gallery-main-image">
-                        <img src="" alt="Room Main View" data-customfield-room-gallery-main-image>
-                    </div>
-                </div>
-
-                <!-- Gallery Content - Right Side -->
-                <div class="gallery-content-area">
-                    <!-- Text Section -->
-                    <div class="gallery-text-section">
-                        <!-- <div class="gallery-title-section">
-                            <h3 class="gallery-title" data-customfield-room-gallery-title>Jiseda Pool villa Pension</h3>
-                            <div class="gallery-title-underline"></div>
-                        </div> -->
-                        <div class="gallery-description">
-                            <p data-customfield-room-gallery-description></p>
-                        </div>
-                        <div class="gallery-property-english-name" data-property-nameEn></div>
-                    </div>
-
                     <!-- Thumbnail Images Grid -->
                     <div class="gallery-thumbnails">
                         <div class="gallery-thumb">
@@ -181,13 +154,40 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Gallery Main Image - Right Side -->
+                <div class="gallery-content-area">
+                    <div class="gallery-main-image">
+                        <img src="" alt="Room Main View" data-customfield-room-gallery-main-image>
+                    </div>
+                </div>
             </div>
-         </section>
+        </section>
         </div> <!-- room-content-container -->
     </section>
 
+    <!-- 마무리 섹션 -->
+    <section class="index-closing">
+        <!-- Background Images with Parallax -->
+        <div class="closing-bg-parallax">
+            <img data-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
+        </div>
 
+        <!-- 배경색 컨테이너 -->
+        <div class="closing-color-container">
+            <!-- 우측 원형 구멍 영역 -->
+            <div class="closing-circle-reveal">
+                <!-- 모바일용 이미지 -->
+                <img class="closing-circle-image" data-closing-image-mobile src="" alt="마무리 섹션 이미지" loading="lazy">
+            </div>
 
+            <!-- 텍스트 컨텐츠 -->
+            <div class="index-closing-text">
+                <h2 class="closing-property-name-en" data-property-name-en></h2>
+                <div class="closing-divider"></div>
+            </div>
+        </div>
+    </section>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>

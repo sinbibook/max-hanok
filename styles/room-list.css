@@ -40,35 +40,6 @@
         display: none !important;
     }
 
-    .hero-section {
-        height: 60vh !important;
-        padding: 60px 0 !important;
-    }
-}
-
-/* Hero Section */
-.hero-section {
-    height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 /* Room List Section */
@@ -82,67 +53,9 @@
 
 /* Container */
 .container {
-    max-width: 80%;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 40px;
-}
-
-/* Stylized Title */
-.stylized-title-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 80px;
-    min-height: 300px;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-}
-
-.stylized-title-container.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.circle-background {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border: 2px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-}
-
-.title-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-}
-
-.title-label {
-    font-family: var(--font-en-main);
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: #666;
-    letter-spacing: 0.2em;
-    display: block;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-}
-
-.stylized-title {
-    font-family: var(--font-en-main);
-    font-size: clamp(4rem, 8vw, 8rem);
-    font-weight: 400;
-    color: color-mix(in srgb, var(--color-secondary) 30%, transparent);
-    letter-spacing: 0.1em;
-    margin: 0;
-    line-height: 1;
-    text-transform: uppercase;
 }
 
 /* Room List Banner Section */
@@ -192,64 +105,52 @@
     margin: 0;
 }
 
-/* Room Card - List Item */
+/* Room Card - Main Style */
 .room-card {
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    overflow: hidden;
-    box-shadow: none;
-    padding: 0;
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    gap: 0;
+    padding: 15px;
+    background: var(--color-primary);
+    border-top: 2px solid color-mix(in srgb, var(--color-secondary) 30%, transparent);
+    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 30%, transparent);
     min-height: 400px;
-    width: 85%;
-    max-width: 85vw;
-    transition: all 0.8s ease;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
     opacity: 0;
-}
-
-/* Default: Image Left, Content Right - 왼쪽 정렬 */
-.room-card {
-    transform: translateX(-100px);
-    margin-left: 0;
-    margin-right: auto;
-}
-
-/* Alternate: Image Right, Content Left - 오른쪽 정렬 */
-.room-card:nth-child(even) {
-    flex-direction: row-reverse;
-    transform: translateX(100px);
-    margin-left: auto;
-    margin-right: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+    position: relative;
 }
 
 .room-card.animate {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
 }
-
-/* 홀수번째 (기본) - 이미지 왼쪽, 우측 상단 모서리 둥글게 */
-.room-card.animate .room-card-image {
-    border-radius: 0 100px 0 0;
-}
-
-/* 짝수번째 - 이미지 오른쪽, 좌측 상단 모서리 둥글게 */
-.room-card:nth-child(even).animate .room-card-image {
-    border-radius: 100px 0 0 0;
-}
-
 
 /* Room Image */
 .room-card-image {
     position: relative;
-    width: 60%;
-    height: 500px;
-    overflow: hidden;
-    flex: 0 0 60%;
+    width: 50%;
+    height: auto;
+    min-height: 400px;
+    overflow: visible;
+    flex: 0 0 50%;
     border-radius: 0;
-    transition: all 1.2s ease;
+}
+
+.room-card-image::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    width: 200px;
+    height: 90px;
+    background: var(--color-primary);
+    border-top-left-radius: 12px;
+    z-index: 2;
 }
 
 .room-card-image img {
@@ -257,65 +158,133 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border-radius: 12px;
 }
 
+/* Room Overlay Info */
+.overlay-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
 
+.info-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 20%, transparent);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.info-value {
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+}
 
 
 
 /* Room Content */
 .room-card-content {
-    width: 40%;
+    width: 50%;
     padding: 40px 60px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background: transparent;
-    flex: 0 0 40%;
+    justify-content: space-between;
+    background: var(--color-primary);
+    flex: 0 0 50%;
+    position: relative;
+    gap: 20px;
+    z-index: 3;
+}
+
+/* Gradient circle background */
+.room-card-content::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-secondary) 30%, var(--color-primary)) 0%, color-mix(in srgb, var(--color-secondary) 15%, var(--color-primary)) 40%, color-mix(in srgb, var(--color-secondary) 0%, var(--color-primary)) 70%, var(--color-primary) 100%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.room-card-content > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* Room Header */
 .room-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 0 20px 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .room-title {
     font-family: var(--font-ko-main);
-    font-size: 1.4rem;
+    font-size: 2rem;
     font-weight: 600;
     color: var(--color-secondary);
     margin: 0;
+    line-height: 1.2;
 }
 
-/* Room Button - BOOK NOW Style */
+/* Room Button */
 .room-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
     padding: 12px 24px;
-    background: transparent;
-    color: var(--color-secondary);
-    border: 1px solid color-mix(in srgb, var(--color-secondary) 30%, transparent);
+    background: color-mix(in srgb, var(--color-secondary), transparent 10%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     font-family: var(--font-en-main);
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: 0.95rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    position: absolute;
+    right: 8px;
+    bottom: 15px;
+    width: 180px;
+    white-space: nowrap;
+    z-index: 10;
 }
 
-.room-btn:hover {
-    background: var(--color-secondary);
+.room-header .room-btn:hover {
+    background: rgb(100, 70, 60);
     color: white;
-    border-color: var(--color-secondary);
+    border-color: rgb(100, 70, 60);
+    transform: translateY(-2px);
 }
 
 .room-btn .btn-text {
@@ -325,7 +294,9 @@
 .room-btn .arrow-icon {
     width: 18px;
     height: 18px;
+    stroke: currentColor;
     stroke-width: 2;
+    fill: none;
     transition: transform 0.3s ease;
 }
 
@@ -336,10 +307,13 @@
 /* Room Info */
 .room-info {
     margin: 0;
-    padding: 20px;
-    background: color-mix(in srgb, var(--color-secondary) 10%, transparent);
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .room-info-item {
@@ -388,7 +362,17 @@
     }
 
     .room-card-image {
-        height: 250px;
+        height: 300px;
+        min-height: auto;
+    }
+
+    .room-card-content::before {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    .room-header {
+        margin-top: 15px;
     }
 
     .circle-background {
@@ -407,17 +391,20 @@
         padding: 0 20px;
     }
 
-    .stylized-title-container {
-        min-height: 200px;
-        margin-bottom: 60px;
-    }
-
     .room-grid {
         gap: 30px;
     }
 
     .room-card {
         transform: translateX(0) !important;
+    }
+
+    .room-card-image {
+        height: 300px;
+    }
+
+    .room-card-image::after {
+        height: 80px;
     }
 
     .room-list-section .room-grid .room-card .room-card-content {
@@ -443,21 +430,12 @@
     }
 
     .room-btn .arrow-icon {
-        width: 14px;
-        height: 14px;
+        width: 18px;
+        height: 18px;
     }
 
     .room-info {
         border-radius: 10px;
-    }
-
-    .circle-background {
-        width: 250px;
-        height: 250px;
-    }
-
-    .stylized-title {
-        font-size: clamp(3rem, 10vw, 5rem);
     }
 
     .hero-content {
@@ -491,7 +469,7 @@
     }
 
     .room-card-image {
-        height: 200px;
+        height: 300px;
     }
 
     .circle-background {

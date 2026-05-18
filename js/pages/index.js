@@ -11,6 +11,7 @@
         const currentNum = document.querySelector('.hero-slider-current');
         const totalNum = document.querySelector('.hero-slider-total');
         const progressFill = document.querySelector('.hero-slider-line-fill');
+        const progressBar = document.querySelector('.hero-slider-progress');
         const prevButton = document.querySelector('#hero-prev');
         const nextButton = document.querySelector('#hero-next');
         const sliderElement = document.querySelector('#hero-slider') || document.querySelector('.hero-slider');
@@ -22,6 +23,19 @@
         const totalSlides = slides.length;
         let autoSlideTimer = null;
         let isTransitioning = false;
+
+        // 이미지가 1개일 때 프로그레스바와 네비게이션 버튼 숨기기
+        if (totalSlides === 1) {
+            if (progressBar) {
+                progressBar.style.display = 'none';
+            }
+            if (prevButton) {
+                prevButton.style.display = 'none';
+            }
+            if (nextButton) {
+                nextButton.style.display = 'none';
+            }
+        }
 
         // Touch/Drag state
         let isDragging = false;
@@ -179,8 +193,7 @@
     // Expose to window for data mapper
     window.initHeroSlider = initHeroSlider;
     window.initRoomImageSlider = initRoomImageSlider;
-    window.initRoomPreviewAnimation = initRoomPreviewAnimation;
-    window.initSignatureSlider = initSignatureSlider;
+    window.initGallerySlider = initGallerySlider;
 
     // Room Image Slider
     function initRoomImageSlider() {
@@ -188,8 +201,8 @@
 
         sliders.forEach(slider => {
             const slides = slider.querySelectorAll('.room-slide');
-            const prevBtn = slider.querySelector('.room-slider-prev');
-            const nextBtn = slider.querySelector('.room-slider-next');
+            const prevBtn = slider.querySelector('.room-slider-btn.prev') || slider.querySelector('.room-slider-prev');
+            const nextBtn = slider.querySelector('.room-slider-btn.next') || slider.querySelector('.room-slider-next');
 
             if (slides.length === 0) return;
 
@@ -212,29 +225,22 @@
             }
 
             // Button events
-            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            if (nextBtn) nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nextSlide();
+            });
+            if (prevBtn) prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                prevSlide();
+            });
 
             // Auto-slide every 4 seconds
             setInterval(nextSlide, 4000);
         });
     }
 
-    // Fallback signature data for UI testing
-    const fallbackSignatureData = [
-        {
-            id: "signature-1",
-            imageUrl: "images/special.jpg",
-            description: "Special for you",
-            sortOrder: 0
-        },
-        {
-            id: "signature-2",
-            imageUrl: "images/special2.jpg",
-            description: "오션뷰 개별테라스에서 즐기는 BBQ",
-            sortOrder: 1
-        }
-    ];
 
     // Fallback gallery data for UI testing
     const fallbackGalleryData = {
@@ -325,9 +331,15 @@
             const tab = document.createElement('button');
             tab.className = `room-tab${index === 0 ? ' active' : ''}`;
             tab.setAttribute('data-room', room.id);
+
+            // Extract text content from room name (remove any HTML tags)
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = room.name;
+            const roomNameText = tempDiv.textContent || tempDiv.innerText;
+
             tab.innerHTML = `
                 <span class="room-tab-number">${room.number}</span>
-                <span class="room-tab-name">${room.name}</span>
+                <span class="room-tab-name">${roomNameText}</span>
             `;
             tabsContainer.appendChild(tab);
 
@@ -363,96 +375,135 @@
         });
     }
 
-    // Generate gallery content dynamically
-    function generateGalleryContent(galleryData = fallbackGalleryData) {
-        const titleElement = document.querySelector('[data-gallery-title]');
-        const descriptionElement = document.querySelector('[data-gallery-description]');
-        const imagesWrapper = document.querySelector('[data-gallery-images]');
-
-        if (!imagesWrapper) return;
-
-        // Update title and description
-        if (titleElement) titleElement.textContent = galleryData.title;
-        if (descriptionElement) descriptionElement.textContent = galleryData.description;
-
-        // Clear existing content
-        imagesWrapper.innerHTML = '';
-
-        // Filter only selected images and sort by sortOrder
-        const selectedImages = galleryData.images
-            .filter(img => img.isSelected)
-            .sort((a, b) => a.sortOrder - b.sortOrder);
-
-        if (selectedImages.length === 0) return;
-
-        // Split images into left and right groups
-        const midPoint = Math.ceil(selectedImages.length / 2);
-        const leftImages = selectedImages.slice(0, midPoint);
-        const rightImages = selectedImages.slice(midPoint);
-
-        // Generate left accordion group
-        const leftAccordion = document.createElement('div');
-        leftAccordion.className = 'experience-accordion-left';
-        leftImages.forEach(img => {
-            const item = document.createElement('div');
-            item.className = 'experience-accordion-item';
-            item.innerHTML = `
-                <img src="${img.url}" alt="${img.title}">
-                <div class="experience-accordion-overlay">
-                    <h4>${img.title}</h4>
-                </div>
-            `;
-            leftAccordion.appendChild(item);
-        });
-
-        // Generate right accordion group
-        const rightAccordion = document.createElement('div');
-        rightAccordion.className = 'experience-accordion-right';
-        rightImages.forEach(img => {
-            const item = document.createElement('div');
-            item.className = 'experience-accordion-item';
-            item.innerHTML = `
-                <img src="${img.url}" alt="${img.title}">
-                <div class="experience-accordion-overlay">
-                    <h4>${img.title}</h4>
-                </div>
-            `;
-            rightAccordion.appendChild(item);
-        });
-
-        // Add to wrapper
-        imagesWrapper.appendChild(leftAccordion);
-        imagesWrapper.appendChild(rightAccordion);
+    // 모바일 여부 확인
+    function isMobileDevice() {
+        return window.innerWidth <= 768;
     }
 
-    // Generate signature content dynamically
-    function generateSignatureContent(signatureData = fallbackSignatureData) {
-        const slidesContainer = document.querySelector('[data-signature-slides]');
+    // Gallery Slider - 3세트 복제 + 인덱스 점프 무한 루프
+    function initGallerySlider() {
+        const wrapper = document.querySelector('.gallery-slider-wrapper');
+        const track = document.querySelector('.gallery-slider-track');
 
-        if (!slidesContainer) return;
+        if (!track || track.children.length === 0) return;
 
-        // Clear existing content
-        slidesContainer.innerHTML = '';
+        const isMobile = isMobileDevice();
+        const gap = 40;
+        const duration = 600;
+        const autoInterval = 3000;
+        const originalCount = parseInt(track.dataset.originalCount, 10) || 5;
 
-        // Sort by sortOrder and generate slides
-        const sortedSlides = [...signatureData].sort((a, b) => a.sortOrder - b.sortOrder);
+        let currentIndex = originalCount; // 2번째 세트 첫 슬라이드부터 시작
+        let timer = null;
+        let busy = false;
 
-        sortedSlides.forEach((slide, index) => {
-            const slideElement = document.createElement('div');
-            slideElement.className = `signature-slide${index === 0 ? ' active' : ''}`;
-            slideElement.innerHTML = `
-                <div class="signature-slide-image">
-                    <img src="${slide.imageUrl}" alt="${slide.description}">
-                </div>
-                <div class="signature-slide-content">
-                    <span class="quote-mark quote-top">"</span>
-                    <h3 class="signature-slide-title">${slide.description}</h3>
-                    <span class="quote-mark quote-bottom">"</span>
-                </div>
-            `;
-            slidesContainer.appendChild(slideElement);
-        });
+        // 기본 슬라이드 너비 (active가 아닌 일반 슬라이드)
+        function baseWidth() {
+            return isMobile ? wrapper.offsetWidth * 0.9 : 300;
+        }
+
+        // active 슬라이드 너비
+        function activeWidth() {
+            return isMobile ? wrapper.offsetWidth * 0.9 : 480;
+        }
+
+        // 한 칸 이동 거리 (일반 슬라이드 기준, flex 레이아웃에서 일정)
+        function stepSize() {
+            return baseWidth() + gap;
+        }
+
+        // 특정 index를 중앙에 배치하는 translateX 계산
+        // active의 왼쪽 가장자리 = index * stepSize() (앞의 슬라이드는 전부 baseWidth)
+        // active의 중앙 = index * stepSize() + activeWidth() / 2
+        function getTranslateX(index) {
+            var center = wrapper.offsetWidth / 2;
+            return center - (index * stepSize() + activeWidth() / 2);
+        }
+
+        // active 클래스 업데이트
+        function updateActive(index) {
+            var slides = track.children;
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].classList.toggle('active', i === index);
+            }
+        }
+
+        // track 위치 적용
+        function applyPosition(animate) {
+            var tx = getTranslateX(currentIndex);
+            track.style.transition = animate ? 'transform ' + duration + 'ms ease' : 'none';
+            track.style.transform = 'translateX(' + tx + 'px)';
+        }
+
+        // 모든 슬라이드의 CSS transition 비활성화 (점프 시 width 변화 숨기기)
+        function freezeSlides() {
+            var slides = track.children;
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.transition = 'none';
+            }
+        }
+
+        // 슬라이드 transition 복원 (CSS 기본값으로)
+        function unfreezeSlides() {
+            var slides = track.children;
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.transition = '';
+            }
+        }
+
+        // 세트 경계를 넘었으면 가운데 세트로 순간이동
+        function wrapIfNeeded() {
+            if (currentIndex >= originalCount * 2) {
+                // 1) 슬라이드 transition 끄기 (width 480→300, 300→480 변화를 숨김)
+                freezeSlides();
+                // 2) 인덱스를 한 세트분 앞으로 이동
+                currentIndex -= originalCount;
+                // 3) active 클래스 즉시 이동
+                updateActive(currentIndex);
+                // 4) track 위치 즉시 이동 (translateX 차이 = originalCount * stepSize, 항상 일정)
+                applyPosition(false);
+                // 5) 브라우저에게 변경사항 즉시 반영 강제
+                void track.offsetHeight;
+                // 6) 다음 프레임에서 슬라이드 transition 복원
+                requestAnimationFrame(function() {
+                    unfreezeSlides();
+                });
+            }
+        }
+
+        function nextSlide() {
+            if (busy) return;
+            busy = true;
+
+            currentIndex++;
+            updateActive(currentIndex);
+            applyPosition(true);
+
+            setTimeout(function() {
+                busy = false;
+                wrapIfNeeded();
+            }, duration + 50);
+        }
+
+        function start() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(nextSlide, autoInterval);
+        }
+
+        function stop() {
+            if (timer) { clearInterval(timer); timer = null; }
+        }
+
+        // 초기화
+        updateActive(currentIndex);
+        applyPosition(false);
+        requestAnimationFrame(function() { start(); });
+
+        wrapper.addEventListener('mouseenter', stop);
+        wrapper.addEventListener('mouseleave', start);
     }
+
+
 
     // Room Tabs
     function initRoomTabs() {
@@ -556,419 +607,14 @@
         });
     }
 
-    // Essence section border radius animation
-    function initEssenceBorderAnimation() {
-        const essenceSection = document.querySelector('.essence-section');
-        const leftImage = document.querySelector('.essence-left-image img');
-        const rightImage = document.querySelector('.essence-right-image img');
 
-        if (!essenceSection || !leftImage || !rightImage) return;
 
-        // 초기값 설정
-        leftImage.style.borderTopLeftRadius = '0';
-        rightImage.style.borderTopRightRadius = '0';
 
-        // Track animation state
-        let animationTriggered = false;
-
-        // IntersectionObserver로 섹션 감지
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-                    // 섹션이 30% 이상 보일 때 애니메이션 실행
-                    if (!animationTriggered) {
-                        animationTriggered = true;
-                        setTimeout(() => {
-                            leftImage.style.borderTopLeftRadius = '100px';
-                            rightImage.style.borderTopRightRadius = '100px';
-                        }, 300); // 0.3초 딜레이 후 실행
-                    }
-                } else if (!entry.isIntersecting) {
-                    // 섹션이 뷰포트에서 완전히 벗어나면 리셋
-                    animationTriggered = false;
-                    leftImage.style.borderTopLeftRadius = '0';
-                    rightImage.style.borderTopRightRadius = '0';
-                }
-            });
-        }, { threshold: [0, 0.3, 1] });
-
-        observer.observe(essenceSection);
-    }
-
-    // Room preview section border radius animation
-    function initRoomPreviewAnimation() {
-        const roomSection = document.querySelector('.room-preview-section');
-        const roomImages = document.querySelectorAll('.room-image-item img');
-
-        if (!roomSection || roomImages.length === 0) return;
-
-        // 초기값 설정
-        roomImages.forEach(img => {
-            img.style.borderTopLeftRadius = '0';
-        });
-
-        // IntersectionObserver로 섹션 감지
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-                    // 섹션이 30% 이상 보일 때 애니메이션 실행
-                    setTimeout(() => {
-                        roomImages.forEach(img => {
-                            img.style.borderTopLeftRadius = '100px';
-                        });
-                    }, 300);
-                } else if (!entry.isIntersecting) {
-                    // 섹션이 뷰포트에서 벗어나면 리셋
-                    roomImages.forEach(img => {
-                        img.style.borderTopLeftRadius = '0';
-                    });
-                }
-            });
-        }, { threshold: [0.3] });
-
-        observer.observe(roomSection);
-    }
 
     // Experience Gallery Accordion
     function initExperienceAccordion() {
         // No active class needed anymore, pure CSS hover effect
         // JavaScript can be used for additional functionality if needed
-    }
-
-    // Hero Image Half Border Animation using IntersectionObserver
-    function initHeroImageHalfAnimation() {
-        const heroImageHalves = document.querySelectorAll('.hero-image-half');
-
-        if (heroImageHalves.length === 0) return;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // isIntersecting 값에 따라 'animate-in' 클래스를 토글합니다.
-                // 뷰포트에 들어오면 클래스를 추가하고, 나가면 제거합니다.
-                entry.target.classList.toggle('animate-in', entry.isIntersecting);
-            });
-        }, {
-            threshold: 0.7 // 요소가 70% 보일 때 콜백 실행
-        });
-
-        heroImageHalves.forEach(imageHalf => {
-            observer.observe(imageHalf);
-        });
-    }
-
-    // Signature Section Border Animation
-    function initSignatureBorderAnimation() {
-        const signatureSection = document.querySelector('.signature-section');
-        const itemGroups = document.querySelectorAll('.signature-item-group');
-
-        if (!signatureSection || itemGroups.length === 0) return;
-
-        // Track animation state for each item
-        const animationStates = new Array(itemGroups.length).fill(false);
-
-        function handleScroll() {
-            // Animate each group individually based on its visibility
-            itemGroups.forEach((group, index) => {
-                const groupTop = group.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                const triggerPoint = windowHeight * 0.7; // Trigger earlier for better visibility
-
-                const imagesArea = group.querySelector('.signature-images-area');
-                if (!imagesArea) return;
-
-                if (groupTop < triggerPoint && !animationStates[index]) {
-                    animationStates[index] = true;
-
-                    if (index % 2 === 0) {
-                        // Even index (0, 2, 4...) - left-aligned
-                        // First image gets top-left radius
-                        const firstImage = imagesArea.querySelector('.signature-image:first-child img');
-                        if (firstImage) {
-                            firstImage.style.borderTopLeftRadius = '100px';
-                        }
-                    } else {
-                        // Odd index (1, 3, 5...) - right-aligned
-                        // Horizontal image gets top-right radius
-                        const horizontalImage = imagesArea.querySelector('.signature-image.horizontal img');
-                        if (horizontalImage) {
-                            horizontalImage.style.borderTopRightRadius = '100px';
-                        }
-                    }
-                } else if (groupTop > windowHeight && animationStates[index]) {
-                    animationStates[index] = false;
-
-                    // Reset animations
-                    if (index % 2 === 0) {
-                        // Reset first image
-                        const firstImage = imagesArea.querySelector('.signature-image:first-child img');
-                        if (firstImage) {
-                            firstImage.style.borderTopLeftRadius = '0';
-                        }
-                    } else {
-                        // Reset horizontal image
-                        const horizontalImage = imagesArea.querySelector('.signature-image.horizontal img');
-                        if (horizontalImage) {
-                            horizontalImage.style.borderTopRightRadius = '0';
-                        }
-                    }
-                }
-            });
-
-        }
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Check initial position
-    }
-
-    // Section Navigation
-    function initSectionNavigation() {
-        const dots = document.querySelectorAll('.section-dot');
-        const sections = document.querySelectorAll('section');
-        const nav = document.querySelector('.section-nav');
-        const closingSection = document.querySelector('.index-closing');
-
-        if (dots.length === 0 || sections.length === 0) return;
-
-        // Dot click event
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const index = parseInt(dot.dataset.section);
-                if (index >= 0 && index < sections.length) {
-                    // For closing section, use normal scroll
-                    if (sections[index] === closingSection) {
-                        window.scrollTo({
-                            top: sections[index].offsetTop,
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        sections[index].scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            });
-        });
-
-        // Update active dot on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                    const index = Array.from(sections).indexOf(entry.target);
-
-                    // Update active dot
-                    dots.forEach(d => d.classList.remove('active'));
-                    if (dots[index]) {
-                        dots[index].classList.add('active');
-                    }
-
-                    // Change nav color for light sections
-                    if (index === 1 || index === 2 || index === 3 || index === 4) {
-                        nav.classList.add('dark');
-                    } else {
-                        nav.classList.remove('dark');
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    }
-
-    // Fullpage Scroll
-    function initFullpageScroll() {
-        const sections = document.querySelectorAll('section:not(.index-closing)'); // Exclude closing section
-        const closingSection = document.querySelector('.index-closing');
-        let currentSectionIndex = 0;
-        let isScrolling = false;
-        let normalScrollArea = false;
-
-        function scrollToSection(index) {
-            if (index < 0 || index >= sections.length || isScrolling) return;
-
-            isScrolling = true;
-            currentSectionIndex = index;
-
-            sections[index].scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-
-            // Reset scrolling flag after animation
-            setTimeout(() => {
-                isScrolling = false;
-            }, 1000);
-        }
-
-        // Check if we're in normal scroll area (closing section and below)
-        function checkScrollPosition() {
-            if (!closingSection) return;
-
-            const closingRect = closingSection.getBoundingClientRect();
-
-            // If closing section is visible at all
-            if (closingRect.top < window.innerHeight) {
-                normalScrollArea = true;
-            } else if (closingRect.top > window.innerHeight) {
-                normalScrollArea = false;
-            }
-        }
-
-        // Mouse wheel event
-        let lastScrollTime = 0;
-        const scrollThrottle = 1000; // Throttle scroll events
-
-        window.addEventListener('wheel', (e) => {
-            checkScrollPosition();
-
-            // Allow normal scrolling in closing section and below
-            if (normalScrollArea) {
-                // If scrolling up and closing section is at the top of viewport
-                const closingRect = closingSection.getBoundingClientRect();
-                if (e.deltaY < 0 && closingRect.top >= 0 && closingRect.top < 10) {
-                    e.preventDefault();
-                    normalScrollArea = false;
-                    scrollToSection(sections.length - 1);
-                    return;
-                }
-                // Otherwise allow normal scrolling
-                return;
-            }
-
-            e.preventDefault();
-
-            const now = Date.now();
-            if (now - lastScrollTime < scrollThrottle) return;
-            lastScrollTime = now;
-
-            if (e.deltaY > 0) {
-                // Scroll down
-                if (currentSectionIndex === sections.length - 1) {
-                    // If at last fullpage section, allow normal scroll to closing
-                    normalScrollArea = true;
-                    window.scrollTo({
-                        top: closingSection.offsetTop,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    scrollToSection(currentSectionIndex + 1);
-                }
-            } else {
-                // Scroll up
-                scrollToSection(currentSectionIndex - 1);
-            }
-        }, { passive: false });
-
-        // Touch events for mobile
-        let touchStartY = 0;
-        let touchEndY = 0;
-
-        window.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-        });
-
-        window.addEventListener('touchend', (e) => {
-            touchEndY = e.changedTouches[0].clientY;
-
-            const diff = touchStartY - touchEndY;
-            if (Math.abs(diff) > 50) { // Minimum swipe distance
-                if (diff > 0) {
-                    // Swipe up - scroll down
-                    scrollToSection(currentSectionIndex + 1);
-                } else {
-                    // Swipe down - scroll up
-                    scrollToSection(currentSectionIndex - 1);
-                }
-            }
-        });
-
-        // Keyboard navigation
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-                e.preventDefault();
-                scrollToSection(currentSectionIndex + 1);
-            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-                e.preventDefault();
-                scrollToSection(currentSectionIndex - 1);
-            }
-        });
-
-        // Update current section on scroll
-        const observerOptions = {
-            threshold: 0.5
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const index = Array.from(sections).indexOf(entry.target);
-                    if (index !== -1) {
-                        currentSectionIndex = index;
-                    }
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    }
-
-    // Signature Section Slider
-    function initSignatureSlider() {
-        const slides = document.querySelectorAll('.signature-slide');
-        const signatureSection = document.querySelector('.signature-section');
-        const slideImages = document.querySelectorAll('.signature-slide-image img');
-
-        if (slides.length === 0) return;
-
-        let currentSlide = 0;
-        const slideInterval = 4000; // 4초마다 전환
-
-        // 첫 번째 슬라이드 활성화
-        slides[0].classList.add('active');
-
-        // 초기값 설정
-        slideImages.forEach(img => {
-            img.style.borderTopLeftRadius = '0';
-            img.style.transition = 'border-radius 0.8s ease';
-        });
-
-        function nextSlide() {
-            // 현재 슬라이드 숨기기
-            slides[currentSlide].classList.remove('active');
-
-            // 다음 슬라이드 계산
-            currentSlide = (currentSlide + 1) % slides.length;
-
-            // 다음 슬라이드 보이기
-            slides[currentSlide].classList.add('active');
-        }
-
-        // 자동 슬라이드 시작
-        setInterval(nextSlide, slideInterval);
-
-        // 스크롤 시 border-radius 애니메이션
-        if (signatureSection) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-                        // 섹션이 30% 이상 보일 때 애니메이션 실행
-                        setTimeout(() => {
-                            slideImages.forEach(img => {
-                                img.style.borderTopLeftRadius = '100px';
-                            });
-                        }, 300);
-                    } else if (!entry.isIntersecting) {
-                        // 섹션이 뷰포트에서 벗어나면 리셋
-                        slideImages.forEach(img => {
-                            img.style.borderTopLeftRadius = '0';
-                        });
-                    }
-                });
-            }, { threshold: [0.3] });
-
-            observer.observe(signatureSection);
-        }
     }
 
     // Expose content generators globally for testing
@@ -983,16 +629,10 @@
         generateGalleryContent(newGalleryData);
     };
 
-    window.updateSignatureContent = function(newSignatureData) {
-        generateSignatureContent(newSignatureData);
-        // Re-initialize signature slider after updating content
-        initSignatureSlider();
-    };
 
     // Also expose fallback data for reference
     window.fallbackRoomData = fallbackRoomData;
     window.fallbackGalleryData = fallbackGalleryData;
-    window.fallbackSignatureData = fallbackSignatureData;
 
     // Console testing helpers
     window.testRoomData = {
@@ -1134,29 +774,76 @@
     };
 
 
-    // Initialize everything
-    // Check if device is mobile or tablet
-    function isMobileOrTablet() {
-        return window.innerWidth <= 1024;
+    // Closing Parallax Effect
+    function initClosingParallax() {
+        const closingSection = document.querySelector('.index-closing');
+        const closingBg = document.querySelector('.closing-bg-parallax');
+        const closingBgImage = document.querySelector('.closing-bg-parallax img');
+
+        if (!closingSection || !closingBg || !closingBgImage) return;
+
+        // 모바일에서는 parallax 비활성화
+        if (window.innerWidth <= 1024) {
+            closingBg.style.position = 'absolute';
+            closingBg.style.opacity = '1';
+            return;
+        }
+
+        function updateParallax() {
+            const scrollY = window.scrollY;
+            const sectionTop = closingSection.offsetTop;
+            const sectionHeight = closingSection.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            // 클로징 섹션이 뷰포트에 들어오기 시작했는지 확인
+            const sectionBottom = sectionTop + sectionHeight;
+            const isInView = scrollY + windowHeight > sectionTop && scrollY < sectionBottom;
+
+            if (isInView) {
+                // 배경 보이기
+                closingBg.classList.add('visible');
+
+                // 섹션 내에서의 스크롤 진행도 계산 (0~1)
+                const scrollStart = sectionTop - windowHeight;
+                const scrollRange = sectionHeight + windowHeight;
+                const scrollProgress = Math.max(0, Math.min(1, (scrollY - scrollStart) / scrollRange));
+
+                // Parallax 효과: 중앙 정렬 유지하면서 천천히 이동
+                // -10%부터 +10%까지 이동 (총 20% 범위, 중앙 기준)
+                const translateY = (scrollProgress - 0.5) * 20; // -10% ~ +10%
+                closingBgImage.style.transform = `translate(-50%, calc(-50% + ${translateY}%))`;
+            } else {
+                // 배경 숨기기
+                closingBg.classList.remove('visible');
+            }
+        }
+
+        // 스크롤 이벤트에 쓰로틀링 적용
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    updateParallax();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // 초기 실행
+        updateParallax();
     }
 
+    // Initialize everything
     function init() {
         // initHeroSlider는 index-mapper.js에서 슬라이드 생성 후 호출됨
         // generateGalleryContent는 index-mapper.js에서 처리됨
         // generateSignatureContent는 index-mapper.js에서 처리됨
         // initRoomImageSlider와 initRoomTabs는 index-mapper.js에서 room 생성 후 호출됨
         initScrollAnimations();
-        initEssenceBorderAnimation();
         // initRoomPreviewAnimation는 index-mapper.js에서 room 생성 후 호출됨
         initExperienceAccordion();
-        initSignatureBorderAnimation();
-        // initSignatureSlider는 index-mapper.js에서 슬라이드 생성 후 호출됨
-
-        // Only enable section navigation and fullpage scroll on desktop
-        if (!isMobileOrTablet()) {
-            initSectionNavigation();
-            initFullpageScroll();
-        }
+        initClosingParallax();
     }
 
     // Start when DOM is ready

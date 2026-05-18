@@ -56,55 +56,82 @@ class RoomListMapper extends BaseDataMapper {
     mapHeroSection() {
         if (!this.isDataLoaded) return;
 
-        // 그룹별 객실 필터링 (Hero 이미지 매핑에 필요)
+        // 그룹별 객실 필터링
         this.filterRoomsByGroup();
 
-        // Hero 제목 매핑 - URL 그룹 파라미터로 표시
-        const heroTitle = this.safeSelect('[data-customfield-room-list-hero-title]');
-        if (heroTitle) {
-            const currentGroup = this.getCurrentGroup();
-            if (currentGroup) {
-                // 그룹 파라미터가 있으면 그룹명 표시
-                heroTitle.textContent = currentGroup;
-            } else {
-                // 그룹 파라미터가 없으면 "전체 객실" 표시
-                heroTitle.textContent = '전체 객실';
-            }
-        }
+        // Hero 텍스트 매핑 (property name)
+        this.mapHeroText();
 
-        // Hero 이미지 매핑
-        this.mapHeroImage();
+        // Hero 슬라이더 이미지 매핑
+        this.mapHeroSlider();
     }
 
     /**
-     * Hero 이미지 매핑 (기본값 유지 - JSON에 roomList 페이지 데이터 없음)
+     * Hero 텍스트 매핑 (property name, brand title)
      */
-    mapHeroImage() {
+    mapHeroText() {
+        if (!this.isDataLoaded || !this.data.property) return;
+
+        // Property 영문명 매핑 (brand-title)
+        const brandTitle = this.safeSelect('[data-property-name-en]');
+        if (brandTitle) {
+            brandTitle.textContent = this.getPropertyNameEn();
+        }
+    }
+
+    /**
+     * Hero 슬라이더 이미지 매핑
+     */
+    mapHeroSlider() {
         if (!this.isDataLoaded) return;
 
-        const heroImageElement = this.safeSelect('[data-customfield-room-list-hero-image-0]');
-        if (!heroImageElement) return;
+        const heroSlider = document.getElementById('hero-slider');
+        if (!heroSlider) return;
 
-        // 그룹별 필터링된 객실 중 첫 번째 객실의 exterior 이미지 사용 (customFields 우선)
+        heroSlider.innerHTML = '';
+
+        // 그룹별 필터링된 객실들의 이미지 사용
+        let images = [];
+
         if (this.filteredRooms && this.filteredRooms.length > 0) {
-            const firstRoom = this.filteredRooms[0];
-            const selectedImages = this.getRoomImages(firstRoom, 'roomtype_exterior');
+            // 필터링된 객실들의 exterior 이미지 수집
+            this.filteredRooms.forEach((room, roomIndex) => {
+                const selectedImages = this.getRoomImages(room, 'roomtype_exterior');
+                selectedImages.forEach((img, imgIndex) => {
+                    images.push({
+                        url: img.url,
+                        description: img.description || `${room.name} - 이미지`,
+                        roomIndex: roomIndex
+                    });
+                });
+            });
+        }
 
-            const firstExterior = selectedImages[0];
+        if (images.length === 0) {
+            // 이미지가 없을 때 placeholder
+            const slide = document.createElement('div');
+            slide.className = 'hero-slide active';
 
-            if (firstExterior?.url) {
-                heroImageElement.src = firstExterior.url;
-                heroImageElement.alt = firstExterior.description || '객실 외부';
-                heroImageElement.loading = 'eager';
-                heroImageElement.classList.remove('empty-image-placeholder');
-            } else {
-                heroImageElement.src = ImageHelpers.EMPTY_IMAGE_SVG;
-                heroImageElement.classList.add('empty-image-placeholder');
-            }
+            const img = document.createElement('img');
+            img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+            img.alt = 'No Image Available';
+            img.className = 'empty-image-placeholder';
+            img.loading = 'lazy';
+
+            slide.appendChild(img);
+            heroSlider.appendChild(slide);
         } else {
-            // filteredRooms가 없을 때도 placeholder 적용
-            heroImageElement.src = ImageHelpers.EMPTY_IMAGE_SVG;
-            heroImageElement.classList.add('empty-image-placeholder');
+            images.forEach((img, index) => {
+                const slide = document.createElement('div');
+                slide.className = `hero-slide${index === 0 ? ' active' : ''}`;
+                slide.innerHTML = `<img src="${img.url}" alt="${img.description}" loading="lazy">`;
+                heroSlider.appendChild(slide);
+            });
+        }
+
+        // 슬라이더 초기화
+        if (typeof window.initHeroSlider === 'function') {
+            window.initHeroSlider(true); // skipDelay=true
         }
     }
 
@@ -187,52 +214,34 @@ class RoomListMapper extends BaseDataMapper {
         roomCard.innerHTML = `
             <div class="room-card-image" onclick="selectRoom('${room.id}')" style="cursor: pointer;">
                 <img alt="${roomName}" loading="lazy">
-                <div class="room-overlay">
-                    <div class="overlay-content">
-                        <div class="overlay-info">
-                            <div class="info-row">
-                                <span class="info-label">객실 면적</span>
-                                <span class="info-value">${room.size || '-'}m²</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">객실 타입</span>
-                                <span class="info-value">${roomType}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">객실 인원</span>
-                                <span class="info-value">기준 ${room.baseOccupancy || '-'}명 / 최대 ${room.maxOccupancy || '-'}명</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">객실 구성</span>
-                                <span class="info-value">${roomFacilities}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <button class="room-btn" onclick="selectRoom('${room.id}')">
+                    <span class="btn-text">VIEW ROOM</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7,7 17,7 17,17"></polyline>
+                    </svg>
+                </button>
             </div>
             <div class="room-card-content">
                 <div class="room-header">
                     <h3 class="room-title">${roomName}</h3>
-                    <button class="room-btn" onclick="selectRoom('${room.id}')">
-                        <span class="btn-text">VIEW</span>
-                        <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="7,7 17,7 17,17"></polyline>
-                        </svg>
-                    </button>
                 </div>
-                <div class="room-info">
-                    <div class="room-info-item">
-                        <span class="room-info-label">그룹</span>
-                        <span class="room-info-value">${room.group || '-'}</span>
-                    </div>
-                    <div class="room-info-item">
-                        <span class="room-info-label">인원</span>
-                        <span class="room-info-value">기준 ${room.baseOccupancy || '-'}명 / 최대 ${room.maxOccupancy || '-'}명</span>
-                    </div>
-                    <div class="room-info-item">
-                        <span class="room-info-label">넓이</span>
+                <div class="overlay-info">
+                    <div class="info-row">
+                        <span class="info-label">객실 면적</span>
                         <span class="info-value">${room.size || '-'}m²</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">객실 타입</span>
+                        <span class="info-value">${roomType}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">객실 인원</span>
+                        <span class="info-value">기준 ${room.baseOccupancy || '-'}명 / 최대 ${room.maxOccupancy || '-'}명</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">객실 구성</span>
+                        <span class="info-value">${roomFacilities}</span>
                     </div>
                 </div>
             </div>
@@ -258,6 +267,56 @@ class RoomListMapper extends BaseDataMapper {
     // ============================================================================
 
     /**
+     * 클로징 섹션 매핑 - property_exterior 이미지 사용
+     */
+    mapClosingSection() {
+        if (!this.isDataLoaded) return;
+
+        // property_exterior 이미지 가져오기 (isSelected: true만)
+        const allImages = this.safeGet(this.data, "homepage.customFields.property.images") || [];
+        const exteriorImages = allImages
+            .filter(img => img.category === "property_exterior" && img.isSelected)
+            .sort((a, b) => a.sortOrder - b.sortOrder);
+
+        // 페이지 인덱스 2 (room-list) - 순환 선택
+        const pageIndex = 2;
+        const selectedImage = exteriorImages.length > 0 ?
+            exteriorImages[pageIndex % exteriorImages.length] : null;
+
+        // 배경 이미지 매핑 (데스크탑 parallax)
+        const img = this.safeSelect('[data-closing-image]');
+        if (img) {
+            if (selectedImage?.url) {
+                img.src = selectedImage.url;
+                img.classList.remove('empty-image-placeholder');
+            } else {
+                img.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                img.classList.add('empty-image-placeholder');
+                img.alt = 'No Image Available';
+            }
+        }
+
+        // 모바일 이미지 매핑 (원형 구멍 안)
+        const mobileImg = this.safeSelect('[data-closing-image-mobile]');
+        if (mobileImg) {
+            if (selectedImage?.url) {
+                mobileImg.src = selectedImage.url;
+                mobileImg.classList.remove('empty-image-placeholder');
+            } else {
+                mobileImg.src = ImageHelpers.EMPTY_IMAGE_SVG;
+                mobileImg.classList.add('empty-image-placeholder');
+                mobileImg.alt = 'No Image Available';
+            }
+        }
+
+        // 클로징 섹션 숙소명 매핑
+        const propertyNameEn = this.safeSelect('.closing-property-name-en[data-property-name-en]');
+        if (propertyNameEn && this.data.property) {
+            propertyNameEn.textContent = this.getPropertyNameEn();
+        }
+    }
+
+    /**
      * Room List 페이지 전체 매핑 실행
      */
     async mapPage() {
@@ -278,6 +337,9 @@ class RoomListMapper extends BaseDataMapper {
                 window.handleScrollAnimation();
             }, 100);
         }
+
+        // 클로징 섹션 매핑
+        this.mapClosingSection();
     }
 }
 
@@ -296,7 +358,6 @@ if (typeof module !== 'undefined' && module.exports) {
     function initMapper() {
         // PreviewHandler가 이미 존재하면 초기화하지 않음 (PreviewHandler가 처리)
         if (window.previewHandler) {
-            console.log('✅ PreviewHandler detected, skipping auto-initialization');
             return;
         }
 
@@ -304,7 +365,6 @@ if (typeof module !== 'undefined' && module.exports) {
         const mapper = new RoomListMapper();
         window.baseMapper = mapper;
         mapper.initialize();
-        console.log('✅ RoomListMapper initialized');
     }
 
     // DOMContentLoaded 이후에 초기화

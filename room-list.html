@@ -30,48 +30,89 @@
     <!-- Include Header -->
     <div id="header-placeholder"></div>
 
-    <!-- DATA MAPPING: Hero Section -->
+    <!-- Mobile Floating YBS Button -->
+    <button class="mobile-floating-ybs-btn" aria-label="YBS" data-ybs-button>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- Mobile Floating Book Now Button -->
+    <button class="mobile-floating-book-btn" aria-label="Book Now" data-booking-engine>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </button>
+
+    <!-- 객실 소개 섹션 히어로 -->
     <section class="hero-section">
+        <!-- Background Images Slider with Fade Animation -->
         <div class="hero-background">
-            <!-- DATA MAPPING: Hero Background Image -->
-            <img src="" alt="객실 배경" data-customfield-room-list-hero-image-0>
-            <div class="hero-overlay"></div>
+            <div class="hero-slider" id="hero-slider">
+                <!-- Hero slides will be dynamically generated here -->
+            </div>
+            <div class="hero-image-overlay"></div>
         </div>
-        <div class="hero-content">
-            <div class="hero-text-center">
-                <!-- DATA MAPPING: Hero Title -->
-                <h1 class="hero-title" data-customfield-room-list-hero-title></h1>
+        <!-- Hero Content -->
+        <div class="hero-content" id="hero-content">
+            <div class="hero-text">
+                <div class="brand-name" id="brand-name">
+                    <h4 class="brand-title" data-property-name-en></h4>
+                    <div class="brand-divider"></div>
+                    <p class="brand-subtitle"><span data-customfield-room-list-main-title></span> ROOMS</p>
+                </div>
             </div>
         </div>
-
-        <!-- Scroll Down Indicator -->
-        <div class="hero-scroll-down" onclick="scrollToNextSection()">
-            <svg class="scroll-arrow" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-            </svg>
+        <div class="hero-slider-progress">
+            <div class="hero-slider-nav">
+                <button class="hero-slider-arrow prev" id="hero-prev"></button>
+                <span class="hero-slider-current">01</span>
+                <div class="hero-slider-line">
+                    <div class="hero-slider-line-fill"></div>
+                </div>
+                <span class="hero-slider-total">03</span>
+                <button class="hero-slider-arrow next" id="hero-next"></button>
+            </div>
         </div>
     </section>
 
     <!-- Room List Section -->
     <section class="room-list-section main-content-fade-in">
-
-            <!-- DATA MAPPING: Stylized Title Section -->
-            <div class="stylized-title-container">
-                <div class="circle-background"></div>
-                <div class="title-content">
-                    <!-- DATA MAPPING: Title Label -->
-                    <span class="title-label" data-customfield-room-list-title-label>ROOMS</span>
-                    <!-- DATA MAPPING: Main Title -->
-                    <h1 class="stylized-title" data-customfield-room-list-main-title></h1>
-                </div>
-            </div>
-
             <!-- Room Grid -->
             <div class="room-grid" id="room-grid">
                 <!-- Room cards will be dynamically generated here -->
             </div>
 
     </section>
+
+  <!-- 마무리 섹션 -->
+  <section class="index-closing">
+    <!-- Background Images with Parallax -->
+    <div class="closing-bg-parallax">
+      <img data-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
+    </div>
+
+    <!-- 배경색 컨테이너 -->
+    <div class="closing-color-container">
+      <!-- 우측 원형 구멍 영역 -->
+      <div class="closing-circle-reveal">
+        <!-- 모바일용 이미지 -->
+        <img class="closing-circle-image" data-closing-image-mobile src="" alt="마무리 섹션 이미지" loading="lazy">
+      </div>
+
+      <!-- 텍스트 컨텐츠 -->
+      <div class="index-closing-text">
+        <h2 class="closing-property-name-en" data-property-name-en></h2>
+        <div class="closing-divider"></div>
+      </div>
+    </div>
+  </section>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>

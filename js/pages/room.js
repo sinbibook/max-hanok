@@ -37,8 +37,8 @@
 
     // Update page numbers
     function updatePageNumbers() {
-        const currentPageEl = document.getElementById('hero-current');
-        const totalPagesEl = document.getElementById('hero-total');
+        const currentPageEl = document.querySelector('.hero-slider-current');
+        const totalPagesEl = document.querySelector('.hero-slider-total');
         const slides = document.querySelectorAll('.hero-slide');
 
         if (currentPageEl) {
@@ -167,7 +167,7 @@
     function handleScrollAnimation() {
         if (!ticking) {
             requestAnimationFrame(() => {
-                const elements = document.querySelectorAll('.stylized-title-container, .room-card, .room-header-info, .room-images-section, .room-details-section, .room-large-image-section');
+                const elements = document.querySelectorAll('.room-header-info, .room-images-section, .room-details-section, .room-large-image-section');
 
                 elements.forEach(element => {
                     const elementTop = element.getBoundingClientRect().top;
@@ -233,18 +233,25 @@
 
 
 
-    // Initialize accordion functionality
-    function initializeAccordion() {
-        const closeButtons = document.querySelectorAll('.accordion-close');
+    // Initialize tabs functionality
+    function initializeTabs() {
+        const tabButtons = document.querySelectorAll('.room-tab-button');
+        const tabContents = document.querySelectorAll('.room-tab-content');
 
-        closeButtons.forEach(button => {
+        tabButtons.forEach(button => {
             button.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const targetId = this.getAttribute('data-target');
-                const content = document.getElementById(targetId);
+                e.preventDefault();
+                const targetTabId = this.getAttribute('data-tab');
 
-                if (content) {
-                    content.classList.toggle('collapsed');
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                const targetContent = document.getElementById(targetTabId);
+                if (targetContent) {
+                    targetContent.classList.add('active');
                 }
             });
         });
@@ -259,34 +266,56 @@
 
         // Set first thumbnail as active by default
         thumbnails[0].classList.add('active');
+        let currentThumbnailIndex = 0;
 
-        thumbnails.forEach((thumb) => {
-            thumb.addEventListener('click', function() {
-                // Remove active class from all thumbnails
-                thumbnails.forEach(t => t.classList.remove('active'));
+        // Function to change image
+        const changeImageByIndex = function(index) {
+            // Remove active class from all thumbnails
+            thumbnails.forEach(t => t.classList.remove('active'));
 
-                // Add active class to clicked thumbnail
-                this.classList.add('active');
+            // Add active class to current thumbnail
+            thumbnails[index].classList.add('active');
 
-                // Get the image source from the clicked thumbnail
-                const thumbImg = this.querySelector('img');
-                if (thumbImg && mainImage) {
-                    // Add fade effect
-                    mainImage.style.opacity = '0.3';
+            // Get the image source from the current thumbnail
+            const thumbImg = thumbnails[index].querySelector('img');
+            if (thumbImg && mainImage) {
+                const galleryMainImage = document.querySelector('.gallery-main-image');
 
+                // Pre-load the new image
+                const newImg = new Image();
+                newImg.onload = function() {
+                    // Fade out
+                    if (galleryMainImage) {
+                        galleryMainImage.classList.add('fade-out');
+                    }
+
+                    // Change image after fade out completes
                     setTimeout(() => {
                         mainImage.src = thumbImg.src;
                         mainImage.alt = thumbImg.alt;
-                        mainImage.style.opacity = '1';
-                    }, 150);
-                }
-            });
+                        // Fade in
+                        if (galleryMainImage) {
+                            galleryMainImage.classList.remove('fade-out');
+                        }
+                    }, 300);
+                };
+                newImg.src = thumbImg.src;
+            }
+        };
 
-            // Add keyboard support
+        // Auto change every 4 seconds
+        setInterval(() => {
+            currentThumbnailIndex = (currentThumbnailIndex + 1) % thumbnails.length;
+            changeImageByIndex(currentThumbnailIndex);
+        }, 4000);
+
+        // Add keyboard support
+        thumbnails.forEach((thumb) => {
             thumb.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    this.click();
+                    currentThumbnailIndex = Array.from(thumbnails).indexOf(thumb);
+                    changeImageByIndex(currentThumbnailIndex);
                 }
             });
 
@@ -312,8 +341,8 @@
         // Initialize slider navigation
         initSliderNavigation();
 
-        // Initialize accordion
-        initializeAccordion();
+        // Initialize tabs
+        initializeTabs();
 
         // Initialize gallery thumbnails
         initializeGalleryThumbnails();

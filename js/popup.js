@@ -21,6 +21,7 @@ class PopupManager {
         this.autoPlayInterval = 5000; // 자동 슬라이드 간격 (5초)
         this._slides = null; // 슬라이드 DOM 캐시
         this._dots = null; // 도트 DOM 캐시
+        this._previewDismissed = false; // 미리보기에서 팝업 닫은 후 재노출 방지
     }
 
     /**
@@ -84,6 +85,8 @@ class PopupManager {
      * 팝업 데이터 처리 및 표시
      */
     processPopups(popupData) {
+        if (this.isPreviewMode && this._previewDismissed) return;
+
         if (!Array.isArray(popupData)) {
             this.popups = [];
             return;
@@ -580,6 +583,7 @@ class PopupManager {
         } else {
             // 모든 팝업 닫기
             this.hide();
+            if (this.isPreviewMode) this._previewDismissed = true;
         }
     }
 
@@ -589,6 +593,7 @@ class PopupManager {
     updateFromPreview(popupData) {
         // 미리보기 모드 활성화
         this.isPreviewMode = true;
+        this._previewDismissed = false;
 
         // 팝업 데이터 처리
         const popups = popupData?.popups || popupData || [];
