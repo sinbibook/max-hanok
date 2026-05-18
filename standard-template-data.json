@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.178.0",
-    "generatedAt": "2026-05-08T02:09:49.610122627Z",
+    "version": "1.179.0",
+    "generatedAt": "2026-05-18T06:12:37.758755580Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -187,7 +187,7 @@
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/exterior/1761277887779-fv7tghs057s.jpg",
             "sortOrder": 0,
             "description": "",
-            "isSelected": false,
+            "isSelected": true,
             "blockId": null
           }
         ],
@@ -1871,41 +1871,6 @@
             }
           ]
         },
-        "layoutMap": {
-          "sections": [
-            {
-              "hero": {
-                "title": "배치도",
-                "images": [
-                  {
-                    "id": "6892db1a-549d-4a24-9b63-c3054774bff2",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_hero/1778206050718-7ouvw7fug9.jpg",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
-                  }
-                ],
-                "description": "숙소 배치도 입니다."
-              },
-              "about": {
-                "title": "맥스 한옥 펜션 배치도",
-                "images": [
-                  {
-                    "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
-                  }
-                ],
-                "description": "배치도를 보고 객실을 찾아가세요"
-              },
-              "enabled": true
-            }
-          ]
-        },
         "nearbyAttractions": {
           "sections": [
             {
@@ -1913,9 +1878,17 @@
                 "title": "관광지",
                 "images": [
                   {
+                    "id": "1145e93c-b733-4bb8-bf0a-b973cdfee80b",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778466050226-cv4wcenqwo.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": null
+                  },
+                  {
                     "id": "37a8f1d4-5a0a-445b-9c46-b3a0ea775521",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205992064-el9gsmd9i8.jpg",
-                    "sortOrder": 0,
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": true,
                     "blockId": null
@@ -1923,7 +1896,7 @@
                   {
                     "id": "5b47aad6-305d-4f6e-bca6-16a50b2ffdbd",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205991963-qfqqhraa4q.jpg",
-                    "sortOrder": 1,
+                    "sortOrder": 2,
                     "description": "",
                     "isSelected": true,
                     "blockId": null
@@ -1933,7 +1906,7 @@
               },
               "about": [
                 {
-                  "title": "찜질방",
+                  "title": "찜질방입니다.",
                   "images": [
                     {
                       "id": "81db892f-6940-4663-a32e-cb0f007b2530",
@@ -1964,7 +1937,7 @@
                   "description": "찜질방 관광지"
                 },
                 {
-                  "title": "민속놀이",
+                  "title": "민속놀이입니다.",
                   "images": [
                     {
                       "id": "e8070679-f9d3-4c9e-acf1-a7785402a92b",
@@ -1993,8 +1966,66 @@
                   ],
                   "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95",
                   "description": "민속놀이 관광지"
+                },
+                {
+                  "title": "애견동반 객실",
+                  "images": [
+                    {
+                      "id": "49c5c7ee-2af0-41b9-b991-fa4b7db570f6",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778466050220-i4xn4h4on6.jpg",
+                      "sortOrder": 6,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4"
+                    }
+                  ],
+                  "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4",
+                  "description": ""
                 }
               ],
+              "enabled": true
+            }
+          ]
+        },
+        "layoutMap": {
+          "sections": [
+            {
+              "hero": {
+                "title": "배치도",
+                "images": [
+                  {
+                    "id": "6892db1a-549d-4a24-9b63-c3054774bff2",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_hero/1778206050718-7ouvw7fug9.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": null
+                  }
+                ],
+                "description": "숙소 배치도 입니다."
+              },
+              "about": {
+                "title": "맥스 한옥 펜션 배치도",
+                "images": [
+                  {
+                    "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
+                    "sortOrder": 0,
+                    "description": "1층 독채 : 한별당, 지음현, 난이당, 다솜재",
+                    "isSelected": true,
+                    "blockId": null
+                  },
+                  {
+                    "id": "927f2f0c-b187-471d-99e4-39f3db27e325",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778719364160-6jegha9pqt.jpg",
+                    "sortOrder": 1,
+                    "description": "공용시설 : 주차장, 찜질방, LP방, 민속방, 시네마",
+                    "isSelected": true,
+                    "blockId": null
+                  }
+                ],
+                "description": "배치도를 보고 객실을 찾아가세요"
+              },
               "enabled": true
             }
           ]
@@ -2040,8 +2071,8 @@
           "enMain": null
         },
         "color": {
-          "primary": "#e8e5e1",
-          "secondary": "#635955"
+          "primary": "#F5F4F1",
+          "secondary": "#C36355"
         }
       },
       "property": {

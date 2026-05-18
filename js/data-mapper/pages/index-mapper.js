@@ -671,7 +671,6 @@ class IndexMapper extends BaseDataMapper {
         displayRooms.forEach((room) => {
             const roomItem = document.createElement('div');
             roomItem.className = 'room-item';
-            // 전체 클릭 이벤트 제거 - ROOM VIEW 버튼만 클릭 가능
 
             // 객실명 가져오기 (customFields 우선)
             const roomName = this.getRoomName(room);
@@ -702,7 +701,7 @@ class IndexMapper extends BaseDataMapper {
                 <div class="room-content">
                     <h3 class="room-name">${roomName}</h3>
                     <p class="room-description">${this._formatTextWithLineBreaks(room.description, '객실 설명')}</p>
-                    <button class="room-view-btn" onclick="navigateTo('room', '${room.id}')">
+                    <button class="room-view-btn">
                         ROOM VIEW
                     </button>
                 </div>
@@ -710,6 +709,20 @@ class IndexMapper extends BaseDataMapper {
 
             // src는 직접 할당 (data URI 깨짐 방지)
             roomItem.querySelector('.room-image img').src = roomImage;
+
+            // 룸 아이템 전체 클릭 시 룸 페이지로 이동 (드래그 스크롤과 충돌 방지)
+            let downX = 0;
+            let downY = 0;
+            roomItem.addEventListener('mousedown', (e) => {
+                downX = e.pageX;
+                downY = e.pageY;
+            });
+            roomItem.addEventListener('click', (e) => {
+                const moveDistance = Math.abs(e.pageX - downX) + Math.abs(e.pageY - downY);
+                if (moveDistance < 5 && typeof navigateTo === 'function') {
+                    navigateTo('room', room.id);
+                }
+            });
 
             roomsContainer.appendChild(roomItem);
         });
