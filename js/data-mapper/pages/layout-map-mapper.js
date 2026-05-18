@@ -72,11 +72,11 @@ class LayoutMapMapper extends BaseDataMapper {
         // 기존 내용 초기화
         container.innerHTML = '';
 
-        // about.images 개수만큼 동적으로 생성 (isSelected가 true인 것만)
-        const images = (about?.images || []).filter(img => img.isSelected);
+        // about.images 중 isSelected가 true인 이미지들만 추출하여 렌더링
+        const selectedImages = (about?.images || []).filter(img => img.isSelected);
 
-        // images가 비어있어도 최소 1개의 placeholder item 렌더링
-        const itemsToRender = images.length > 0 ? images : [{}];
+        // selectedImages가 비어있어도 최소 1개의 placeholder item 렌더링
+        const itemsToRender = selectedImages.length > 0 ? selectedImages : [{}];
 
         itemsToRender.forEach((imageData) => {
             const item = document.createElement('div');
@@ -90,6 +90,7 @@ class LayoutMapMapper extends BaseDataMapper {
             if (imageData?.url) {
                 img.src = imageData.url;
                 img.alt = imageData.description || 'Layout Map Image';
+                img.classList.remove('empty-image-placeholder');
             } else {
                 img.src = ImageHelpers.EMPTY_IMAGE_SVG;
                 img.alt = 'No Image Available';

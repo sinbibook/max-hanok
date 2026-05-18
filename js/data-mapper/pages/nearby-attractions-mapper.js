@@ -140,7 +140,10 @@ class NearbyAttractionsMapper extends BaseDataMapper {
         if (!this.isDataLoaded) return;
 
         const nearbyAttractionsData = this.getNearbyAttractionsData();
-        const aboutArray = (nearbyAttractionsData?.about || []).filter(item => item.isSelected);
+        // 적어도 하나의 isSelected 이미지를 가진 항목만 필터링
+        const aboutArray = (nearbyAttractionsData?.about || []).filter(item =>
+            Array.isArray(item.images) && item.images.some(img => img.isSelected)
+        );
 
         if (!Array.isArray(aboutArray) || aboutArray.length === 0) return;
 
@@ -169,10 +172,10 @@ class NearbyAttractionsMapper extends BaseDataMapper {
             img.className = 'attraction-item-image';
             img.alt = '주변 명소';
 
-            const attractionImage = attraction.images?.[0];
-            if (attractionImage?.url) {
-                img.src = attractionImage.url;
-                img.alt = attractionImage.description || attraction.title || 'Attraction Image';
+            const selectedImage = attraction.images?.find(img => img.isSelected) || attraction.images?.[0];
+            if (selectedImage?.url) {
+                img.src = selectedImage.url;
+                img.alt = selectedImage.description || attraction.title || 'Attraction Image';
             } else {
                 img.src = ImageHelpers.EMPTY_IMAGE_SVG;
                 img.alt = 'No Image Available';
