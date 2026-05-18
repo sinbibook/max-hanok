@@ -158,7 +158,8 @@ class MainMapper extends BaseDataMapper {
 
         const title = aboutSection.title || '';
         const description = aboutSection.description || '';
-        const propertyNameEn = this.data.property?.nameEn || '';
+        // customFields에서 영문명 우선 가져오기
+        const propertyNameEn = this.getPropertyNameEn();
 
         // Property name element
         const propertyNameDiv = document.createElement('div');

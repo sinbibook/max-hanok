@@ -18,7 +18,7 @@
 /* Footer Top Section */
 .footer-top {
     padding-bottom: 40px;
-    border-bottom: 1px solid color-mix(in srgb, white 10%, transparent);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-info-grid {
@@ -49,7 +49,6 @@
 
 /* Company Info */
 .footer-info-item {
-    font-family: var(--font-ko-sub);
     display: flex;
     gap: 10px;
     font-size: 0.9rem;
@@ -57,12 +56,12 @@
 }
 
 .footer-label {
-    color: color-mix(in srgb, white 50%, transparent);
+    color: rgba(255, 255, 255, 0.5);
     min-width: 80px;
 }
 
 .footer-value {
-    color: color-mix(in srgb, white 80%, transparent);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Quick Links */
@@ -73,7 +72,7 @@
 }
 
 .footer-link {
-    color: color-mix(in srgb, white 80%, transparent);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-size: 0.9rem;
     transition: all 0.3s ease;
@@ -82,7 +81,7 @@
 }
 
 .footer-link:hover {
-    color: var(--color-primary);
+    color: #fff;
     padding-left: 10px;
 }
 
@@ -94,7 +93,7 @@
     transform: translateY(-50%);
     width: 0;
     height: 1px;
-    background: white;
+    background: #fff;
     transition: width 0.3s ease;
 }
 
@@ -117,18 +116,18 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid color-mix(in srgb, white 20%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: color-mix(in srgb, white 80%, transparent);
+    color: rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
 }
 
 .social-icon:hover {
-    background: white;
-    color: var(--color-secondary);
-    border-color: white;
+    background: #fff;
+    color: #1a1a1a;
+    border-color: #fff;
 }
 
 .social-icon svg {
@@ -140,8 +139,8 @@
 .footer-reservation-btn {
     padding: 12px 30px;
     background: transparent;
-    border: 2px solid white;
-    color: white;
+    border: 2px solid #fff;
+    color: #fff;
     font-size: 0.95rem;
     font-weight: 600;
     border-radius: 25px;
@@ -151,8 +150,8 @@
 }
 
 .footer-reservation-btn:hover {
-    background: white;
-    color: var(--color-secondary);
+    background: #fff;
+    color: #1a1a1a;
 }
 
 /* Footer Bottom */
@@ -179,7 +178,7 @@
 }
 
 .footer-bottom-link {
-    color: color-mix(in srgb, white 50%, transparent);
+    color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
     font-size: 0.9rem;
     padding: 0 10px;
@@ -187,7 +186,7 @@
 }
 
 .footer-bottom-link:hover {
-    color: color-mix(in srgb, white 80%, transparent);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .divider {
