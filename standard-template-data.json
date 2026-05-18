@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.192.0",
-    "generatedAt": "2026-05-18T07:27:13.148609671Z",
+    "version": "1.193.0",
+    "generatedAt": "2026-05-18T07:29:50.509275198Z",
     "templateType": "full_banner_slider_group",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2011,8 +2011,8 @@
                     "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
                     "sortOrder": 0,
-                    "description": "",
-                    "isSelected": false,
+                    "description": "1층 : 다온방, 이든방, 별하방, 사랑방",
+                    "isSelected": true,
                     "blockId": null
                   },
                   {
