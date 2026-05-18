@@ -774,6 +774,29 @@ if (typeof window.PreviewHandler === 'undefined') {
                             break;
                     }
                 }
+            } else if (page === 'nearbyAttractions') {
+                if (window.NearbyAttractionsMapper) {
+                    const mapper = this.createMapper(NearbyAttractionsMapper);
+
+                    switch (section) {
+                        case 'hero':
+                            mapper.mapHeroSection();
+                            mapper.mapIntroSection();
+                            break;
+                        case 'about':
+                            mapper.mapAttractionsContent();
+                            mapper.initializeSlider();
+                            break;
+                        default:
+                            mapper.mapPage();
+                            break;
+                    }
+                }
+            } else if (page === 'layoutMap') {
+                if (window.LayoutMapMapper) {
+                    const mapper = this.createMapper(LayoutMapMapper);
+                    mapper.mapPage();
+                }
             }
         }
 
