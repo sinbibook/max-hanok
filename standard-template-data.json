@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.183.0",
-    "generatedAt": "2026-05-18T06:39:34.291787839Z",
+    "version": "1.184.0",
+    "generatedAt": "2026-05-18T06:41:55.562161496Z",
     "templateType": "full_banner_wipe",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1991,7 +1991,7 @@
           "sections": [
             {
               "hero": {
-                "title": "배치도",
+                "title": "숙소 배치도",
                 "images": [
                   {
                     "id": "6892db1a-549d-4a24-9b63-c3054774bff2",
@@ -2002,29 +2002,29 @@
                     "blockId": null
                   }
                 ],
-                "description": "숙소 배치도 입니다."
+                "description": "msx한옥 숙소 배치도 입니다."
               },
               "about": {
-                "title": "맥스 한옥 펜션 배치도",
+                "title": "맥스 한옥 펜션 숙소 배치도",
                 "images": [
                   {
                     "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
                     "sortOrder": 0,
                     "description": "1층 독채 : 한별당, 지음현, 난이당, 다솜재",
-                    "isSelected": true,
+                    "isSelected": false,
                     "blockId": null
                   },
                   {
                     "id": "927f2f0c-b187-471d-99e4-39f3db27e325",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778719364160-6jegha9pqt.jpg",
                     "sortOrder": 1,
-                    "description": "공용시설 : 주차장, 찜질방, LP방, 민속방, 시네마",
+                    "description": "공용시설 : 주차장, 찜질방, LP방, 민속방, 시네마ㅋㅋ",
                     "isSelected": true,
                     "blockId": null
                   }
                 ],
-                "description": "배치도를 보고 객실을 찾아가세요"
+                "description": "숙소 배치도를 보고 객실을 찾아가세요 "
               },
               "enabled": true
             }
