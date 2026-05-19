@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.210.0",
-    "generatedAt": "2026-05-19T04:07:16.227036551Z",
+    "version": "1.211.0",
+    "generatedAt": "2026-05-19T05:03:55.328698870Z",
     "templateType": "fullpage_scroll",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2026,7 +2026,7 @@
                 ],
                 "description": "숙소 배치도를 보고 객실을 찾아가세요 "
               },
-              "enabled": false
+              "enabled": true
             }
           ]
         }
