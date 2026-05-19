@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.214.0",
-    "generatedAt": "2026-05-19T05:13:16.878026047Z",
+    "version": "1.215.0",
+    "generatedAt": "2026-05-19T05:15:34.998309487Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2006,7 +2006,7 @@
                   "description": "테스트 입니다."
                 }
               ],
-              "enabled": true
+              "enabled": false
             }
           ]
         },
@@ -2049,7 +2049,7 @@
                 ],
                 "description": "숙소 배치도를 보고 객실을 찾아가세요 !"
               },
-              "enabled": true
+              "enabled": false
             }
           ]
         }
