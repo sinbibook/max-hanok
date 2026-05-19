@@ -1,4 +1,19 @@
 // Common JavaScript functions
+
+// 페이지 이동 공통 함수
+window.navigateTo = function(page, id) {
+    var urls = {
+        home: 'index.html',
+        main: 'main.html',
+        room: 'room.html',
+        facility: 'facility.html',
+        reservation: 'reservation.html',
+        directions: 'directions.html'
+    };
+    var base = urls[page] || (page + '.html');
+    window.location.href = id ? base + '?id=' + id : base;
+};
+
 (function() {
     'use strict';
 
@@ -15,24 +30,17 @@
         }, 100);
     }
 
-    // Also trigger animations on scroll for better UX (rAF-throttled to avoid scroll jank on mobile)
-    let scrollTicking = false;
+    // Also trigger animations on scroll for better UX
     function handleScrollAnimations() {
-        if (scrollTicking) return;
-        scrollTicking = true;
-        requestAnimationFrame(() => {
-            const fadeElements = document.querySelectorAll('.main-content-fade-in:not(.animate)');
-            if (fadeElements.length === 0) {
-                scrollTicking = false;
-                return;
+        const fadeElements = document.querySelectorAll('.main-content-fade-in:not(.animate)');
+
+        fadeElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 100;
+
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('animate');
             }
-            const viewportCutoff = window.innerHeight - 100;
-            fadeElements.forEach(element => {
-                if (element.getBoundingClientRect().top < viewportCutoff) {
-                    element.classList.add('animate');
-                }
-            });
-            scrollTicking = false;
         });
     }
 
@@ -50,14 +58,56 @@
         }
     };
 
+    // Scroll to content function for page hero sections
+    window.scrollToContent = function() {
+        const scrollTarget = document.querySelector('.scroll-target');
+        if (scrollTarget) {
+            scrollTarget.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
+
+    // ==========================================
+    // Header Dropdown Height Sync
+    // ==========================================
+    function initHeaderDropdownHeight() {
+        var observer = new MutationObserver(function() {
+            var header = document.querySelector('.site-header');
+            var dropdown = document.querySelector('.header-dropdown');
+            if (!header || !dropdown) return;
+
+            observer.disconnect();
+
+            header.addEventListener('mouseenter', function() {
+                var maxBottom = 0;
+                var dropdownTop = dropdown.getBoundingClientRect().top;
+
+                header.querySelectorAll('.dropdown-sub').forEach(function(sub) {
+                    var rect = sub.getBoundingClientRect();
+                    if (rect.bottom > maxBottom) maxBottom = rect.bottom;
+                });
+
+                dropdown.style.minHeight = maxBottom > dropdownTop
+                    ? (maxBottom - dropdownTop + 20) + 'px'
+                    : '350px';
+            });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+
     // Initialize page load animation when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             initPageLoadAnimation();
+            initHeaderDropdownHeight();
             window.addEventListener('scroll', handleScrollAnimations);
         });
     } else {
         initPageLoadAnimation();
+        initHeaderDropdownHeight();
         window.addEventListener('scroll', handleScrollAnimations);
     }
 

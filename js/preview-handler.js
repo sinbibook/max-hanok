@@ -39,6 +39,122 @@ class PreviewHandler {
         return this.baseMapper.convertToCamelCase(data);
     }
 
+    /**
+     * 기본 폰트 fallback 값 (theme.css 기본값과 동일)
+     */
+    getDefaultFonts() {
+        return {
+            koMain: "'Noto Serif KR', serif",
+            koSub: "'Pretendard', sans-serif",
+            enMain: "'Cormorant', serif"
+        };
+    }
+
+    /**
+     * 기본 색상 fallback 값 (theme.css 기본값과 동일)
+     */
+    getDefaultColors() {
+        return {
+            primary: '#ecebe8',
+            secondary: '#683c3c'
+        };
+    }
+
+    /**
+     * CDN URL로 폰트 로드 (link 태그)
+     */
+    loadFontFromCdn(key, cdnUrl) {
+        if (!cdnUrl || !key) return;
+
+        const linkId = `font-cdn-${key}`;
+        if (document.getElementById(linkId)) return;
+
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = cdnUrl;
+        document.head.appendChild(link);
+    }
+
+    /**
+     * woff2 URL로 폰트 로드 (@font-face)
+     */
+    loadFontFromWoff2(key, family, woff2Url) {
+        if (!woff2Url || !family) return;
+
+        const styleId = `font-woff2-${key}`;
+        if (document.getElementById(styleId)) return;
+
+        const style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = `
+@font-face {
+    font-family: '${family}';
+    src: url('${woff2Url}') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}`;
+        document.head.appendChild(style);
+    }
+
+    /**
+     * 단일 폰트 CSS 변수 적용
+     */
+    applyFont(fontValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+
+        // fontValue가 유효한 객체인 경우
+        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
+            // cdn이 있으면 link 태그, woff2만 있으면 style 태그
+            if (fontValue.cdn) {
+                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
+            } else if (fontValue.woff2) {
+                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
+            }
+            root.style.setProperty(cssVar, `'${fontValue.family}', sans-serif`);
+            return;
+        }
+
+        // null/undefined인 경우 기본값으로 리셋
+        root.style.setProperty(cssVar, defaultValue);
+    }
+
+    /**
+     * 단일 색상 CSS 변수 적용
+     */
+    applyColor(colorValue, cssVar, defaultValue) {
+        const root = document.documentElement;
+        root.style.setProperty(cssVar, colorValue || defaultValue);
+    }
+
+    /**
+     * 테마 CSS 변수 적용 (font/color)
+     */
+    applyThemeVariables(theme) {
+        const defaultFonts = this.getDefaultFonts();
+        const defaultColors = this.getDefaultColors();
+        const fontData = theme.font || theme;
+
+        // 폰트 변수 업데이트
+        if (fontData) {
+            if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
+            if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
+            if ('enMain' in fontData) this.applyFont(fontData.enMain, '--font-en-main', defaultFonts.enMain);
+        }
+
+        // 색상 변수 업데이트
+        if ('color' in theme) {
+            if (!theme.color) {
+                // color가 null이면 전체 기본값으로 리셋
+                this.applyColor(null, '--color-primary', defaultColors.primary);
+                this.applyColor(null, '--color-secondary', defaultColors.secondary);
+            } else {
+                if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
+                if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
+            }
+        }
+    }
+
     init() {
         // postMessage 리스너 등록
         window.addEventListener('message', (event) => {
@@ -171,6 +287,12 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
+        // 테마 CSS 변수 적용 (페이지 이동 후에도 테마 유지)
+        const theme = data.homepage?.customFields?.theme;
+        if (theme) {
+            this.applyThemeVariables(theme);
+        }
+
         // 전체 템플릿 렌더링 (완료 대기) - 이미 변환된 데이터 사용
         await this.renderTemplate(this.currentData);
 
@@ -191,16 +313,16 @@ class PreviewHandler {
             this.fallbackTimeout = null;
         }
 
-        // theme 데이터가 있으면 CSS 변수 즉시 업데이트
-        const theme = data?.homepage?.customFields?.theme || data?.theme;
-        if (theme) {
-            this.applyThemeVariables(theme);
-        }
-
         // 초기화되지 않은 경우 초기 데이터로 처리
         if (!this.isInitialized) {
             await this.handleInitialData(data);
             return;
+        }
+
+        // 테마 CSS 변수 적용 (업데이트에 테마 정보가 포함된 경우)
+        const theme = data.homepage?.customFields?.theme;
+        if (theme) {
+            this.applyThemeVariables(theme);
         }
 
         // 새로 들어온 데이터를 카멜 케이스로 변환
@@ -229,147 +351,6 @@ class PreviewHandler {
 
         // 부모 창에 업데이트 완료 신호
         this.notifyRenderComplete('UPDATE_COMPLETE');
-    }
-
-    /**
-     * 기본 폰트 fallback 값 (theme.css 기본값과 동일)
-     */
-    getDefaultFonts() {
-        return {
-            koMain: "'Aritaburi', sans-serif",
-            koSub: "'Aritaburi', sans-serif",
-            enMain: "'Amandine', serif"
-        };
-    }
-
-    /**
-     * 기본 색상 fallback 값 (theme.css 기본값과 동일)
-     */
-    getDefaultColors() {
-        return {
-            primary: '#fdfcf4',
-            secondary: '#31423d'
-        };
-    }
-
-    /**
-     * CDN URL로 폰트 로드 (link 태그)
-     */
-    loadFontFromCdn(key, cdnUrl) {
-        if (!cdnUrl || !key) return;
-
-        const linkId = `font-cdn-${key}`;
-        if (document.getElementById(linkId)) return;
-
-        const link = document.createElement('link');
-        link.id = linkId;
-        link.rel = 'stylesheet';
-        link.href = cdnUrl;
-        document.head.appendChild(link);
-    }
-
-    /**
-     * woff2 URL로 폰트 로드 (@font-face)
-     */
-    loadFontFromWoff2(key, family, woff2Url) {
-        if (!woff2Url || !family) return;
-
-        const styleId = `font-woff2-${key}`;
-        if (document.getElementById(styleId)) return;
-
-        const style = document.createElement('style');
-        style.id = styleId;
-        style.textContent = `
-@font-face {
-    font-family: '${family}';
-    src: url('${woff2Url}') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}`;
-        document.head.appendChild(style);
-    }
-
-    /**
-     * 단일 폰트 CSS 변수 적용
-     */
-    applyFont(fontValue, cssVar, defaultValue) {
-        const root = document.documentElement;
-
-        // fontValue가 유효한 객체인 경우
-        if (fontValue && typeof fontValue === 'object' && fontValue.family) {
-            // cdn이 있으면 link 태그, woff2만 있으면 style 태그
-            if (fontValue.cdn) {
-                this.loadFontFromCdn(fontValue.key, fontValue.cdn);
-            } else if (fontValue.woff2) {
-                this.loadFontFromWoff2(fontValue.key, fontValue.family, fontValue.woff2);
-            }
-            root.style.setProperty(cssVar, `'${fontValue.family}', sans-serif`);
-            return;
-        }
-
-        // null/undefined인 경우 기본값으로 리셋
-        root.style.setProperty(cssVar, defaultValue);
-    }
-
-    /**
-     * 단일 색상 CSS 변수 적용
-     */
-    applyColor(colorValue, cssVar, defaultValue) {
-        const root = document.documentElement;
-        root.style.setProperty(cssVar, colorValue || defaultValue);
-    }
-
-    /**
-     * 테마 CSS 변수 적용 (font/color)
-     */
-    applyThemeVariables(theme) {
-        const defaultFonts = this.getDefaultFonts();
-        const defaultColors = this.getDefaultColors();
-        const fontData = theme.font || theme;
-
-        // 폰트 변수 업데이트
-        if (fontData) {
-            if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
-            if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
-            if ('enMain' in fontData) this.applyFont(fontData.enMain, '--font-en-main', defaultFonts.enMain);
-        }
-
-        // 색상 변수 업데이트
-        if ('color' in theme) {
-            if (!theme.color) {
-                // color가 null이면 전체 기본값으로 리셋
-                this.applyColor(null, '--color-primary', defaultColors.primary);
-                this.applyColor(null, '--color-secondary', defaultColors.secondary);
-            } else {
-                if ('primary' in theme.color) this.applyColor(theme.color.primary, '--color-primary', defaultColors.primary);
-                if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
-            }
-        }
-    }
-
-    /**
-     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
-     */
-    handleThemeUpdate(data) {
-        if (!data) return;
-        this.applyThemeVariables(data);
-        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
-    }
-
-    /**
-     * 팝업 업데이트 처리
-     */
-    handlePopupUpdate(data) {
-        if (window.popupManager) {
-            window.popupManager.updateFromPreview(data);
-        } else if (window.PopupManager) {
-            window.popupManager = new PopupManager();
-            window.popupManager.init().then(() => {
-                window.popupManager.updateFromPreview(data);
-            });
-        }
-
-        this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
     }
 
     /**
@@ -431,19 +412,11 @@ class PreviewHandler {
         const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
         let newPath = `${basePath}${targetPage}`;
 
-        // 현재 URL의 preview 파라미터 확인
-        const currentParams = new URLSearchParams(window.location.search);
-        const isPreview = currentParams.get('preview');
-
         // room 또는 facility 페이지인 경우 id 쿼리 파라미터 추가
         if (messageData.page === 'room' && messageData.roomId) {
             newPath += `?id=${encodeURIComponent(messageData.roomId)}`;
-            if (isPreview) newPath += `&preview=${isPreview}`;
         } else if (messageData.page === 'facility' && messageData.facilityId) {
             newPath += `?id=${encodeURIComponent(messageData.facilityId)}`;
-            if (isPreview) newPath += `&preview=${isPreview}`;
-        } else if (isPreview) {
-            newPath += `?preview=${isPreview}`;
         }
 
         window.location.href = newPath;
@@ -525,8 +498,6 @@ class PreviewHandler {
             // 기존 매핑 로직 실행 (완료 대기)
             await mapper.mapPage();
 
-            // mapPage 완료 후 슬라이더는 이미 초기화되어 있음
-            // (IndexMapper.mapPage 내부에서 _reinitializeHeroSlider 호출)
         }
 
         // Header & Footer 매핑 (모든 페이지에서 공통 실행)
@@ -554,12 +525,6 @@ class PreviewHandler {
 
         if (logoTextElement && data?.template?.logoText) {
             logoTextElement.textContent = data.template.logoText;
-        }
-
-        // 슬라이더 초기화 (다른 페이지들)
-        const pageType = this.getCurrentPageType();
-        if (pageType !== 'nearby-attractions' && pageType !== 'layout-map' && window.initHeroSlider) {
-            setTimeout(() => window.initHeroSlider(), 100);
         }
     }
 
@@ -597,6 +562,7 @@ class PreviewHandler {
      * 데이터 구조 초기화 헬퍼 함수
      */
     ensureDataStructure() {
+        if (!this.currentData) this.currentData = {};
         if (!this.currentData.homepage) this.currentData.homepage = {};
         if (!this.currentData.homepage.customFields) this.currentData.homepage.customFields = {};
         if (!this.currentData.homepage.customFields.pages) this.currentData.homepage.customFields.pages = {};
@@ -646,18 +612,7 @@ class PreviewHandler {
             this.currentData.homepage.customFields.pages[page].sections = [{}];
         }
 
-        // 🔍 디버깅: 업데이트 전 sections[0] 상태
-
-        // 페이지 구조는 hero, about, closing 등 여러 섹션으로 구성됨
-        // data가 여러 섹션 키를 포함하는 풀 섹션 객체면 sections[0]에 병합
-        if (data && typeof data === 'object' && ('hero' in data || 'about' in data || 'enabled' in data)) {
-            Object.assign(this.currentData.homepage.customFields.pages[page].sections[0], data);
-        } else {
-            // 단일 섹션 업데이트
-            this.currentData.homepage.customFields.pages[page].sections[0][section] = data;
-        }
-
-        // 🔍 디버깅: 업데이트 후 sections[0] 상태
+        this.currentData.homepage.customFields.pages[page].sections[0][section] = data;
     }
 
     /**
@@ -665,7 +620,6 @@ class PreviewHandler {
      */
     handleSectionUpdate(messageData) {
         const { page, section, data } = messageData;
-
 
         // logo 섹션 특별 처리 (모든 페이지 공통)
         if (section === 'logo') {
@@ -680,7 +634,7 @@ class PreviewHandler {
         }
 
         // 지원하는 페이지 확인
-        const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions', 'nearbyAttractions', 'layoutMap'];
+        const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions'];
         if (!supportedPages.includes(page)) {
             return;
         }
@@ -724,15 +678,18 @@ class PreviewHandler {
             switch (section) {
                 case 'hero':
                     mapper.mapHeroSection();
+                    if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
                     break;
                 case 'essence':
                     mapper.mapEssenceSection();
                     break;
-                case 'gallery':
-                    mapper.mapGallerySection();
+                case 'rooms':
+                    mapper.mapRoomsSection();
+                    if (typeof window.initRoomCarousel === 'function') window.initRoomCarousel();
                     break;
-                case 'signature':
-                    mapper.mapSignatureSection();
+                case 'facility':
+                    mapper.mapFacilitySection();
+                    if (typeof window.initFacilitySlideshow === 'function') window.initFacilitySlideshow();
                     break;
                 case 'closing':
                     mapper.mapClosingSection();
@@ -745,11 +702,16 @@ class PreviewHandler {
                 switch (section) {
                     case 'hero':
                         mapper.mapHeroSlider();
+                        mapper.mapAboutSection();
+                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
                         break;
                     case 'about':
                         mapper.mapAboutSection();
-                        mapper.mapMarqueeSection();
                         mapper.mapIntroductionSection();
+                        if (typeof window.initGallery === 'function') window.initGallery();
+                        break;
+                    case 'closing':
+                        mapper.mapClosingSection();
                         break;
                 }
             }
@@ -759,22 +721,84 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapBasicInfo();
+                        mapper.mapHeroSlider();
+                        mapper.mapHeroContent();
+                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
                         break;
-                    case 'gallery':
-                        mapper.mapGallerySection();
+                    case 'exterior':
+                        mapper.mapExteriorSlider();
+                        if (typeof window.initRoomSlider === 'function') window.initRoomSlider();
+                        break;
+                    case 'details':
+                        mapper.mapRoomDetails();
+                        break;
+                    case 'preview':
+                        mapper.mapRoomPreview();
+                        if (typeof window.initRoomPreviewCarousel === 'function') window.initRoomPreviewCarousel();
+                        break;
+                    default:
+                        mapper.mapPage();
                         break;
                 }
             }
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapBasicInfo();
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroSlider();
+                        if (typeof window.initFacilityMainSlider === 'function') window.initFacilityMainSlider();
+                        break;
+                    case 'con1':
+                        mapper.mapCon1Slider();
+                        if (typeof window.initFacilityCon1Slider === 'function') window.initFacilityCon1Slider();
+                        break;
+                    case 'con2':
+                        mapper.mapCon2Gallery();
+                        break;
+                    case 'special':
+                        mapper.mapSpecialSection();
+                        if (typeof window.initSpecialSlideshow === 'function') window.initSpecialSlideshow();
+                        break;
+                    case 'closing':
+                        mapper.mapClosingSection();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
                 const mapper = this.createMapper(ReservationMapper);
-                mapper.mapPage();
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroSlider();
+                        mapper.mapHeroContent();
+                        if (typeof window.initMainSlideshow === 'function') window.initMainSlideshow();
+                        break;
+                    case 'about':
+                        mapper.mapSideImage();
+                        break;
+                    case 'usageGuide':
+                        mapper.mapUsageSection();
+                        break;
+                    case 'reservationGuide':
+                        mapper.mapReservationGuideSection();
+                        break;
+                    case 'checkInOut':
+                        mapper.mapCheckInOutSection();
+                        break;
+                    case 'refund':
+                        mapper.mapRefundSection();
+                        break;
+                    case 'closing':
+                        mapper.mapClosingSection();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
             }
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
@@ -782,23 +806,15 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapSliderSection();
+                        mapper.mapHeroSlider();
+                        mapper.mapHeroContent();
                         mapper.mapLocationInfo();
+                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
                         break;
                     default:
                         mapper.mapPage();
                         break;
                 }
-            }
-        } else if (page === 'nearby-attractions') {
-            if (window.NearbyAttractionsMapper) {
-                const mapper = this.createMapper(NearbyAttractionsMapper);
-                mapper.mapPage();
-            }
-        } else if (page === 'layout-map') {
-            if (window.LayoutMapMapper) {
-                const mapper = this.createMapper(LayoutMapMapper);
-                mapper.mapPage();
             }
         }
     }
@@ -826,14 +842,14 @@ class PreviewHandler {
     getCurrentPageType() {
         const path = window.location.pathname;
 
-        if (path.includes('index.html') || path.endsWith('/') || path === '') return 'index';
-        if (path.includes('main.html')) return 'main';
-        if (path.includes('room.html')) return 'room';
-        if (path.includes('facility.html')) return 'facility';
-        if (path.includes('reservation.html')) return 'reservation';
-        if (path.includes('directions.html')) return 'directions';
-        if (path.includes('nearby-attractions.html')) return 'nearbyAttractions';
-        if (path.includes('layout-map.html')) return 'layoutMap';
+        if (path.endsWith('/index.html') || path.endsWith('/') || path === '') return 'index';
+        if (path.endsWith('/main.html')) return 'main';
+        if (path.endsWith('/room.html')) return 'room';
+        if (path.endsWith('/facility.html')) return 'facility';
+        if (path.endsWith('/reservation.html')) return 'reservation';
+        if (path.endsWith('/directions.html')) return 'directions';
+        if (path.endsWith('/nearby-attractions.html')) return 'nearbyAttractions';
+        if (path.endsWith('/layout-map.html')) return 'layoutMap';
 
         // 루트 경로 또는 기본값으로 index 처리
         return 'index';
@@ -855,19 +871,11 @@ class PreviewHandler {
         const result = { ...target };
 
         for (const key in source) {
-            // 🔍 pages 객체의 배열 병합 추적
-            if (key === 'pages' || (typeof target === 'object' && target.pages)) {
-                if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-                }
-            }
-
             if (source[key] === null || source[key] === undefined) {
                 // null이나 undefined는 그대로 설정
                 result[key] = source[key];
             } else if (Array.isArray(source[key])) {
                 // 배열은 완전히 대체 (병합하지 않음)
-                if (key === 'pages' || (typeof target === 'object' && target.pages)) {
-                }
                 result[key] = [...source[key]];
             } else if (typeof source[key] === 'object') {
                 // 객체는 깊은 병합
@@ -938,10 +946,36 @@ class PreviewHandler {
             if (window.showHeaders) window.showHeaders();
         }
     }
+
+    /**
+     * 테마 업데이트 처리 (폰트/색상 실시간 변경)
+     */
+    handleThemeUpdate(data) {
+        if (!data) return;
+        this.applyThemeVariables(data);
+        this.notifyRenderComplete('THEME_UPDATE_COMPLETE');
+    }
+
+    /**
+     * 팝업 업데이트 처리
+     */
+    handlePopupUpdate(data) {
+        if (window.popupManager) {
+            window.popupManager.updateFromPreview(data);
+        } else if (window.PopupManager) {
+            window.popupManager = new PopupManager();
+            window.popupManager.init().then(() => {
+                window.popupManager.updateFromPreview(data);
+            });
+        }
+
+        this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
+    }
+
 }
 
-// 전역 인스턴스 생성 (항상 생성 - iframe이거나 직접 로드일 때 모두)
-if (!window.previewHandler) {
+// 전역 인스턴스 생성 (iframe 내부일 때만 - 어드민 미리보기)
+if (!window.previewHandler && window.parent !== window) {
     window.previewHandler = new PreviewHandler();
 }
 

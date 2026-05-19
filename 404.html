@@ -3,106 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="페이지를 찾을 수 없습니다">
-    <meta name="keywords" content="404">
-    <title>404 - 페이지를 찾을 수 없습니다</title>
+    <title>페이지를 찾을 수 없습니다</title>
 
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
-
-    <style>
-        .not-found-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: var(--color-primary);
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .not-found-content {
-            max-width: 600px;
-        }
-
-        .not-found-code {
-            font-size: 5rem;
-            font-weight: 700;
-            color: var(--color-secondary);
-            margin-bottom: 20px;
-            font-family: var(--font-en-main);
-        }
-
-        .not-found-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-secondary);
-            margin-bottom: 20px;
-            line-height: 1.4;
-            letter-spacing: -0.02em;
-        }
-
-        .not-found-description {
-            font-size: 1.125rem;
-            font-weight: 400;
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            letter-spacing: 0.01em;
-        }
-
-        .not-found-button {
-            display: inline-block;
-            padding: 16px 40px;
-            background-color: var(--color-secondary);
-            color: white;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 0;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .not-found-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: width 0.3s ease;
-        }
-
-        .not-found-button:hover::before {
-            width: 100%;
-        }
-
-        .not-found-button:hover {
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .not-found-code {
-                font-size: 3.5rem;
-            }
-
-            .not-found-title {
-                font-size: 1.5rem;
-            }
-
-            .not-found-description {
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles/404.css">
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션" />
@@ -117,16 +23,71 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <div class="not-found-container">
-        <div class="not-found-content">
-            <div class="not-found-code">404</div>
-            <h1 class="not-found-title">페이지를 찾을 수 없습니다</h1>
-            <p class="not-found-description">죄송합니다. 요청하신 페이지가 존재하지 않거나 비활성화되어 있습니다.</p>
-            <a href="index.html" class="not-found-button">홈으로 돌아가기</a>
+
+    <div id="app" class="error-page-container">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">페이지를 찾을 수 없습니다</h1>
+            <p class="error-description">
+                요청하신 페이지는 이용할 수 없거나 삭제되었습니다.
+            </p>
+            <a href="index.html" class="error-button" onclick="goHome(); return false;">홈으로 돌아가기</a>
         </div>
     </div>
 
-    <!-- Preview Handler for Admin Integration -->
+    <!-- Scripts for preview handler -->
+    <script src="js/common.js"></script>
+    <script src="js/image-helpers.js"></script>
+    <script src="js/data-mapper/core/base-mapper.js"></script>
     <script src="js/preview-handler.js"></script>
+
+    <!-- 홈으로 이동 -->
+    <script>
+        function goHome() {
+            location.replace('index.html');
+        }
+
+        // Preview 모드에서 버튼 숨기기
+        if (typeof window !== 'undefined' && window.parent !== window) {
+            window.addEventListener('DOMContentLoaded', () => {
+                const homeButton = document.querySelector('.error-button');
+                if (homeButton) {
+                    homeButton.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+    <!-- 404 페이지 상태 감시 -->
+    <script>
+        (function() {
+            function checkDisabledPages() {
+                if (!window.PreviewHandler || !window.PreviewHandler.currentData) return;
+
+                const data = window.PreviewHandler.currentData;
+
+                // 모든 페이지의 enabled 상태 확인 (어느 페이지에서 404가 됐는지 모르므로 전부 확인)
+                const nearbyEnabled = data?.homepage?.customFields?.pages?.nearbyAttractions?.sections?.[0]?.enabled;
+                if (nearbyEnabled === true) {
+                    location.replace('nearby-attractions.html');
+                    return;
+                }
+
+                const layoutEnabled = data?.homepage?.customFields?.pages?.layoutMap?.sections?.[0]?.enabled;
+                if (layoutEnabled === true) {
+                    location.replace('layout-map.html');
+                    return;
+                }
+            }
+
+            if (typeof window !== 'undefined' && window.parent === window) {
+                window.addEventListener('DOMContentLoaded', () => {
+                    setTimeout(checkDisabledPages, 500);
+                    setInterval(checkDisabledPages, 1000);
+                });
+            }
+        })();
+    </script>
+
 </body>
 </html>

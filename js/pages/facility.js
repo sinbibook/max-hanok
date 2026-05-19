@@ -1,205 +1,326 @@
-/**
- * Facility Hero Slider - Clean Implementation
- * 3초마다 이미지 전환, 프로그레스바 동기화
- */
+// Main Hero Slideshow
+function initMainSlideshow() {
+    var slides = document.querySelectorAll('.main-slide');
+    if (!slides.length) return;
 
-// 전역 변수로 interval 관리
-window._facilityHeroSliderInterval = null;
-let isTransitioning = false;
+    var bg = document.querySelector('.main-bg');
+    var progress = document.querySelector('.title-divider .bar-progress');
+    var arrowNums = document.querySelectorAll('.main-arrow .arrow-number');
+    var arrowLeft = document.querySelector('.main-arrow .arrow-left');
+    var arrowRight = document.querySelector('.main-arrow .arrow-right');
+    var current = 0;
+    var total = slides.length;
 
-window.initFacilityHeroSlider = function initHeroSlider() {
-    // 기존 interval 정리
-    if (window._facilityHeroSliderInterval) {
-        clearInterval(window._facilityHeroSliderInterval);
-        window._facilityHeroSliderInterval = null;
+    function padNum(n) {
+        return n < 10 ? '0' + n : '' + n;
     }
 
-    const slider = document.querySelector('[data-hero-slider]');
-    if (!slider) return;
-
-    const slides = Array.from(slider.querySelectorAll('.hero-slide'));
-    const currentSlideEl = document.querySelector('[data-current-slide]');
-    const totalSlidesEl = document.querySelector('[data-total-slides]');
-    const progressBar = document.querySelector('[data-hero-progress]');
-    const prevBtn = document.querySelector('.hero-nav-prev');
-    const nextBtn = document.querySelector('.hero-nav-next');
-
-    const SLIDE_DURATION = 3000; // 3초
-    let currentIndex = 0;
-
-    // 슬라이드가 없거나 1개만 있으면 중지
-    if (slides.length <= 1) {
-        if (slides.length === 1) {
-            slides[0].classList.add('active');
-            if (currentSlideEl) currentSlideEl.textContent = '01';
-            if (totalSlidesEl) totalSlidesEl.textContent = '01';
+    function updateNumbers() {
+        if (arrowNums.length >= 2) {
+            arrowNums[0].textContent = padNum(current + 1);
+            arrowNums[1].textContent = padNum(total);
         }
-        return;
     }
 
-    // 초기 설정
-    if (totalSlidesEl) {
-        totalSlidesEl.textContent = String(slides.length).padStart(2, '0');
+    function isMobileScroll() {
+        return bg && bg.scrollWidth > bg.clientWidth;
     }
 
-    // 슬라이드 전환 함수
-    function goToSlide(index) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-
-        // 이전 슬라이드 비활성화
-        const prevSlide = slides[currentIndex];
-        prevSlide.classList.remove('active');
-
-        // 새 슬라이드 활성화
-        currentIndex = index;
-        const newSlide = slides[currentIndex];
-        newSlide.classList.add('active');
-
-        // 새 슬라이드 줌인 시작
-        const newImg = newSlide.querySelector('img');
-        if (newImg) {
-            // 처음에 scale(1)로 설정 (트랜지션 없이)
-            newImg.style.transition = 'none';
-            newImg.style.transform = 'scale(1)';
-
-            // 다음 프레임에서 트랜지션 복원 및 줌인
-            requestAnimationFrame(() => {
-                newImg.style.transition = 'transform 3s ease-out';
-                requestAnimationFrame(() => {
-                    newImg.style.transform = 'scale(1.12)';
-                });
-            });
+    function goTo(index) {
+        slides[current].classList.remove('active');
+        current = (index + total) % total;
+        slides[current].classList.add('active');
+        updateNumbers();
+        if (isMobileScroll()) {
+            bg.scrollTo({ left: current * bg.offsetWidth, behavior: 'smooth' });
         }
-
-        // 이전 슬라이드 줌 리셋 (다음 사용을 위해)
-        setTimeout(() => {
-            const prevImg = prevSlide.querySelector('img');
-            if (prevImg && prevSlide !== newSlide) {
-                prevImg.style.transition = 'none';
-                prevImg.style.transform = 'scale(1)';
-                requestAnimationFrame(() => {
-                    prevImg.style.transition = 'transform 3s ease-out';
-                });
-            }
-        }, 500);
-
-        // 숫자 업데이트
-        if (currentSlideEl) {
-            currentSlideEl.textContent = String(currentIndex + 1).padStart(2, '0');
-        }
-
-        // 프로그레스바 리셋 및 시작
-        resetProgressBar();
-
-        // 트랜지션 종료 후 플래그 리셋
-        setTimeout(() => {
-            isTransitioning = false;
-        }, 600);
     }
 
-    // 프로그레스바 리셋
-    function resetProgressBar() {
-        if (!progressBar) return;
+    function restartProgress() {
+        if (!progress) return;
+        progress.style.animation = 'none';
+        progress.offsetHeight;
+        progress.style.animation = '';
+    }
 
-        // 즉시 리셋
-        progressBar.style.transition = 'none';
-        progressBar.style.width = '0';
+    updateNumbers();
 
-        // 다음 프레임에서 애니메이션 시작
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                progressBar.style.transition = `width ${SLIDE_DURATION}ms linear`;
-                progressBar.style.width = '100%';
-            });
+    slides[0].classList.add('active');
+
+    if (progress) {
+        progress.addEventListener('animationiteration', function() {
+            goTo(current + 1);
         });
     }
 
-    // 다음 슬라이드
-    function nextSlide() {
-        if (isTransitioning) return;
-        const nextIndex = (currentIndex + 1) % slides.length;
-        goToSlide(nextIndex);
-    }
-
-    // 이전 슬라이드
-    function prevSlide() {
-        if (isTransitioning) return;
-        const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-        goToSlide(prevIndex);
-    }
-
-    // 자동 재생 시작
-    function startAutoPlay() {
-        stopAutoPlay(); // 기존 인터벌 정리
-        window._facilityHeroSliderInterval = setInterval(nextSlide, SLIDE_DURATION);
-    }
-
-    // 자동 재생 중지
-    function stopAutoPlay() {
-        if (window._facilityHeroSliderInterval) {
-            clearInterval(window._facilityHeroSliderInterval);
-            window._facilityHeroSliderInterval = null;
-        }
-    }
-
-    // 버튼 이벤트
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                stopAutoPlay();
-                nextSlide();
-                setTimeout(() => {
-                    startAutoPlay();
-                }, 100);
-            }
+    if (bg) {
+        var scrollTimer;
+        bg.addEventListener('scroll', function() {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function() {
+                var snapped = Math.round(bg.scrollLeft / bg.offsetWidth);
+                if (snapped !== current && snapped >= 0 && snapped < total) {
+                    slides[current].classList.remove('active');
+                    current = snapped;
+                    slides[current].classList.add('active');
+                    updateNumbers();
+                    restartProgress();
+                }
+            }, 150);
         });
+    }
+
+    if (arrowLeft) {
+        arrowLeft.style.cursor = 'pointer';
+        arrowLeft.addEventListener('click', function() {
+            goTo(current - 1);
+            restartProgress();
+        });
+    }
+
+    if (arrowRight) {
+        arrowRight.style.cursor = 'pointer';
+        arrowRight.addEventListener('click', function() {
+            goTo(current + 1);
+            restartProgress();
+        });
+    }
+}
+
+// Section-Con1 Slider
+function initCon1Slider() {
+    var imgSlides = document.querySelectorAll('.main-img-slide');
+    var textSlides = document.querySelectorAll('.slider-text-slide');
+    if (!imgSlides.length) return;
+
+    var prevBtn = document.querySelector('.slider-btn-prev');
+    var nextBtn = document.querySelector('.slider-btn-next');
+    var current = 0;
+    var total = imgSlides.length;
+
+    function goTo(index) {
+        imgSlides[current].classList.remove('active');
+        if (textSlides[current]) textSlides[current].classList.remove('active');
+        current = (index + total) % total;
+        imgSlides[current].classList.add('active');
+        if (textSlides[current]) textSlides[current].classList.add('active');
+    }
+
+    var autoTimer = setInterval(function() {
+        goTo(current + 1);
+    }, 4000);
+
+    function resetTimer() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(function() {
+            goTo(current + 1);
+        }, 4000);
     }
 
     if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (!isTransitioning) {
-                stopAutoPlay();
-                prevSlide();
-                setTimeout(() => {
-                    startAutoPlay();
-                }, 100);
-            }
+        prevBtn.addEventListener('click', function() {
+            goTo(current - 1);
+            resetTimer();
         });
     }
 
-    // 초기화
-    slides.forEach(slide => slide.classList.remove('active'));
-    goToSlide(0);
-    startAutoPlay();
-};
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            goTo(current + 1);
+            resetTimer();
+        });
+    }
+}
 
-// 디테일 슬라이더 (룸 디테일용)
+// Section-Con2 롤링 갤러리 (RAF 기반)
+function initRollingGallery() {
+    var track = document.querySelector('.rolling-track');
+    if (!track) return;
 
-// Intersection Observer for animations
-function initAnimations() {
-    const animatedElements = document.querySelectorAll('.animate-element:not(.animate)');
+    if (window._rollingRafId) {
+        cancelAnimationFrame(window._rollingRafId);
+        window._rollingRafId = null;
+    }
 
-    if (!animatedElements.length) return;
+    track.style.animation = 'none';
+    track.style.transform = 'translateX(0)';
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+    var setEl = track.querySelector('.rolling-set');
+    var setWidth = setEl ? setEl.offsetWidth : 2440;
+
+    var PX_PER_SEC_DESKTOP = 50;
+    var PX_PER_SEC_MOBILE  = 80;
+
+    var position  = 0;
+    var dragging  = false;
+    var dragStartX = 0;
+    var dragStartPos = 0;
+    var lastTime  = null;
+    var DRAG_THRESHOLD = 8;
+    var dragThresholdPassed = false;
+
+    function getPxPerSec() {
+        return window.innerWidth <= 768 ? PX_PER_SEC_MOBILE : PX_PER_SEC_DESKTOP;
+    }
+
+    function tick(ts) {
+        if (lastTime !== null) {
+            var delta = Math.min((ts - lastTime) / 1000, 0.1);
+            if (!dragging) {
+                position += getPxPerSec() * delta;
+                position = position % setWidth;
+                track.style.transform = 'translateX(-' + Math.round(position) + 'px)';
+            }
+        }
+        lastTime = ts;
+        window._rollingRafId = requestAnimationFrame(tick);
+    }
+
+    window._rollingRafId = requestAnimationFrame(tick);
+
+    function onDragStart(x) {
+        dragStartX = x;
+        dragStartPos = position;
+        dragThresholdPassed = false;
+    }
+
+    function onDragMove(x) {
+        var diff = x - dragStartX;
+        if (!dragThresholdPassed) {
+            if (Math.abs(diff) < DRAG_THRESHOLD) return;
+            dragThresholdPassed = true;
+            dragging = true;
+        }
+        position = dragStartPos - diff;
+        position = ((position % setWidth) + setWidth) % setWidth;
+        track.style.transform = 'translateX(-' + Math.round(position) + 'px)';
+    }
+
+    function onDragEnd() {
+        dragging = false;
+        dragThresholdPassed = false;
+        lastTime = null;
+    }
+
+    track.addEventListener('touchstart', function(e) {
+        onDragStart(e.touches[0].clientX);
+    }, { passive: true });
+
+    track.addEventListener('touchmove', function(e) {
+        onDragMove(e.touches[0].clientX);
+    }, { passive: true });
+
+    track.addEventListener('touchend', onDragEnd);
+    track.addEventListener('touchcancel', onDragEnd);
+
+    track.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        onDragStart(e.clientX);
+        track.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', function(e) {
+        if (!dragThresholdPassed && !dragging) return;
+        onDragMove(e.clientX);
+    });
+
+    window.addEventListener('mouseup', function() {
+        if (!dragging && !dragThresholdPassed) return;
+        track.style.cursor = 'grab';
+        onDragEnd();
+    });
+
+    track.style.cursor = 'grab';
+}
+
+// Special Slideshow (Content-3)
+function initSpecialSlideshow() {
+    var content3 = document.querySelector('.content-3');
+    if (!content3) return;
+
+    var slides = content3.querySelectorAll('.meditation-image .facility-slide');
+    var total = slides.length;
+    if (total === 0) return;
+
+    var current = 0;
+    var progress = content3.querySelector('.bar-progress');
+    var barBtns = content3.querySelectorAll('.bar-controls button');
+
+    function showSlide(index) {
+        var containers = ['.meditation-image', '.meditation-info', '.special-right-image'];
+        containers.forEach(function(sel) {
+            content3.querySelectorAll(sel + ' .facility-slide').forEach(function(el, i) {
+                el.classList.toggle('active', i === index);
+            });
+        });
+    }
+
+    showSlide(0);
+
+    if (progress) {
+        progress.addEventListener('animationiteration', function() {
+            current = (current + 1) % total;
+            showSlide(current);
+        });
+    }
+
+    function restartProgress() {
+        if (!progress) return;
+        progress.style.animation = 'none';
+        progress.offsetHeight;
+        progress.style.animation = '';
+    }
+
+    if (barBtns.length >= 2) {
+        barBtns[0].addEventListener('click', function() {
+            current = (current - 1 + total) % total;
+            showSlide(current);
+            restartProgress();
+        });
+        barBtns[1].addEventListener('click', function() {
+            current = (current + 1) % total;
+            showSlide(current);
+            restartProgress();
+        });
+    }
+}
+
+// Scroll Animations (IntersectionObserver)
+function initFacilityScrollAnimations() {
+    var animElements = document.querySelectorAll(
+        '.anim-fade-up, .anim-fade-right, .anim-scale-in'
+    );
+    if (!animElements.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -60px 0px'
     });
 
-    animatedElements.forEach(element => {
-        observer.observe(element);
+    animElements.forEach(function(el) {
+        observer.observe(el);
     });
 }
 
-// 페이지 로드 시 초기화
-document.addEventListener('DOMContentLoaded', () => {
-    // Hero slider는 mapper에서 이미지 로드 후 초기화됨
-    initAnimations();
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    initMainSlideshow();
+    initCon1Slider();
+    initRollingGallery();
+    initSpecialSlideshow();
+    initFacilityScrollAnimations();
 });
+
+// Global expose for mapper reinit
+window.initFacilityMainSlider = initMainSlideshow;
+window.initFacilityCon1Slider = initCon1Slider;
+window.initFacilityRollingTouch = initRollingGallery;
+window.initSpecialSlideshow = initSpecialSlideshow;
+window.initFacilityScrollAnimations = initFacilityScrollAnimations;
