@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="숙소 설명">
   <meta name="keywords" content="SEO 키워드">
-  <title>숙소명 - 소개</title>
+  <title>Main - 템플릿</title>
 
+  <!-- Preload critical resources -->
+  <link rel="preload" href="styles/common.css" as="style">
+  <link rel="preload" href="styles/main.css" as="style">
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="styles/theme.css">
   <link rel="stylesheet" href="styles/common.css">
   <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/theme.css">
-
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션 - 숙소소개" />
@@ -25,111 +29,67 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-  <!-- Include Header -->
-  <div id="header-placeholder"></div>
 
-  <!-- Mobile Floating YBS Button -->
-  <button class="mobile-floating-ybs-btn" aria-label="YBS" data-ybs-button>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
-      <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
-      <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
+  <main>
+      <section class="page-hero-section">
+        <!-- CUSTOM FIELD : 메인 소개 섹션 이미지 매핑 1장 -->
+          <div class="hero-background">
+              <img data-main-hero-img>
+          </div>
+          <!-- 페이지 제목 하드코딩 fixed -->
+          <div class="page-title">
+              <span class="property-name-kr" data-main-property-name-kr></span>
+              <h1 class="typing-text" data-text="Prologue" style="--text-length: 8;">Prologue</h1>
+          </div>
+          <!-- Scroll Down Icon -->
+          <div class="scroll-down-icon" onclick="scrollToContent()">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+          </div>
+      </section>
+      <div class="content-wrap scroll-target">
+          <div class="main-container">
+              <div class="text-content">
+                  <div class="logo-line-container">
+                      <!-- 숙소 영문명 매핑 fixed -->
+                      <span class="logo-text-line" data-main-property-name-en></span>
+                      <div class="horizontal-line"></div>
+                  </div>
+                  <!-- custom field : 메인 소개 섹션 타이틀/설명 매핑 -->
+                  <div class="hero-content">
+                      <h2 class="hero-title" data-main-about-title></h2>
+                      <p class="hero-description" data-main-about-description></p>
+                  </div>
+              </div>
+              <!-- custom field : 소개 블록 동적 생성 - 이미지1, 제목, 설명이 한블록-->
+              <div class="about-content" data-main-introduction>
+                  <!-- 동적으로 about-block들이 생성됩니다 -->
+              </div>
+          </div>
 
-  <!-- Mobile Floating Book Now Button -->
-  <button class="mobile-floating-book-btn" aria-label="Book Now" data-booking-engine>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
-      <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
-      <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
-
-  <!-- 메인 소개 섹션 히어로 -->
-  <section class="hero-section">
-    <!-- Background Images Slider with Fade Animation -->
-    <div class="hero-background">
-      <div class="hero-slider" id="hero-slider">
-        <!-- Hero slides will be dynamically generated here -->
+          <!-- 숙소 외경이미지 0번째 fixed -->
+          <section class="full-banner" data-main-banner>
+              <!-- 숙소 영문명 매핑 fixed -->
+              <div class="closing-property-name" data-closing-property-name></div>
+          </section>
       </div>
-      <div class="hero-image-overlay"></div>
-    </div>
-    <!-- Hero Content -->
-    <div class="hero-content" id="hero-content">
-      <div class="hero-text">
-        <div class="brand-name" id="brand-name">
-          <h4 class="brand-title" data-property-name-en></h4>
-          <div class="brand-divider"></div>
-          <p class="brand-subtitle" data-property-name></p>
-        </div>
-      </div>
-    </div>
-    <div class="hero-slider-progress">
-      <div class="hero-slider-nav">
-        <button class="hero-slider-arrow prev" id="hero-prev"></button>
-        <div class="hero-slider-line">
-          <div class="hero-slider-line-fill"></div>
-        </div>
-        <button class="hero-slider-arrow next" id="hero-next"></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Info Section -->
-  <section class="main-intro-section">
-    <div class="main-intro-content">
-      <div class="main-label">
-        <span class="main-title" data-main-title>ABOUT</span>
-      </div>
-      <p class="main-description" data-main-description>메인 페이지 안내입니다.</p>
-    </div>
-  </section>
-
-  <!-- 소개섹션 custom-field (동적으로 생성됨) -->
-  <div class="main-content-wrapper">
-    <!-- JavaScript로 동적 생성됨 -->
-  </div>
-
-  <!-- 마무리 섹션 -->
-  <section class="index-closing">
-    <!-- Background Images with Parallax -->
-    <div class="closing-bg-parallax visible">
-      <img data-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
-    </div>
-
-    <!-- 배경색 컨테이너 -->
-    <div class="closing-color-container">
-      <!-- 우측 원형 구멍 영역 -->
-      <div class="closing-circle-reveal">
-        <!-- 모바일용 이미지 -->
-        <img class="closing-circle-image" data-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
-      </div>
-
-      <!-- 텍스트 컨텐츠 -->
-      <div class="index-closing-text">
-        <h2 class="closing-property-name-en" data-property-name-en></h2>
-        <div class="closing-divider"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Include ImageWithFallback script -->
-  <script src="js/image-with-fallback.js"></script>
+  </main>
 
   <!-- Common JavaScript -->
   <script src="js/common.js"></script>
 
-  <!-- Preview Handler for Admin Integration -->
-  <script src="js/preview-handler.js"></script>
+  <!-- Include ImageWithFallback script -->
+  <script src="js/image-with-fallback.js"></script>
 
   <!-- Image Helpers -->
   <script src="js/image-helpers.js"></script>
 
-  <!-- Base Data Mapper -->
+  <!-- Base Data Mapper (must load before preview-handler) -->
   <script src="js/data-mapper/core/base-mapper.js"></script>
+
+  <!-- Preview Handler for Admin Integration -->
+  <script src="js/preview-handler.js"></script>
 
   <!-- Main Page Mapper -->
   <script src="js/data-mapper/pages/main-mapper.js"></script>
@@ -140,8 +100,15 @@
   <!-- Header and Footer Loader -->
   <script src="js/header-footer-loader.js"></script>
 
+  <!-- Fullscreen Slider Component (나중에 추가) -->
+  <!-- <script src="js/components/fullscreen-slider.js"></script> -->
+
+  <!-- Scroll Animations -->
+  <script src="js/common/scroll-animations.js"></script>
+
   <!-- Page-specific script -->
   <script type="module" src="js/pages/main.js"></script>
+
 
 </body>
 </html>

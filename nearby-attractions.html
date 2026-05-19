@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="숙소 설명">
+    <meta name="description" content="주변 명소">
     <meta name="keywords" content="SEO 키워드">
     <title id="page-title">주변 명소 - 숙소명</title>
 
@@ -28,110 +28,59 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Include Header -->
-    <div id="header-placeholder"></div>
-
-<div class="reservation-page">
     <!-- Hero Section -->
-    <!-- JSON 매핑: customFields.pages.nearbyAttractions.sections[0].hero -->
-    <section class="hero-section">
-        <!-- Background Images -->
+    <section class="page-hero-section">
         <div class="hero-background">
-            <div class="hero-slider" id="hero-slider">
-                <div class="hero-slide active">
-                    <!-- 이미지: hero.images[0].url -->
-                    <img src="" alt="주변관광지 배경" data-customfield-nearby-attractions-hero-image-0>
-                </div>
-            </div>
-            <div class="hero-image-overlay"></div>
+            <!-- nearbyAttractions.hero.images[0]매핑 -->
+            <img data-nearby-hero-image>
         </div>
-        <!-- Hero Content -->
-        <div class="hero-content">
-            <div class="hero-text">
-                <div class="brand-name">
-                    <!-- 숙소명(영문): property.nameEn -->
-                    <h4 class="brand-title" data-property-name-en></h4>
-                    <div class="brand-divider"></div>
-                    <!-- 제목: 하드코딩 fixed -->
-                    <p class="brand-subtitle">주변 관광지</p>
-                </div>
-            </div>
+        <div class="page-title">
+            <span class="property-name-kr" data-property-name></span>
+            <!-- NEARBY ATTRACTIONS 하드코딩 fixed -->
+            <h1 class="typing-text" data-text="NEARBY ATTRACTIONS" style="--text-length: 18;">NEARBY ATTRACTIONS</h1>
         </div>
     </section>
 
     <!-- Main Content Section -->
-    <!-- JSON 매핑: customFields.pages.nearbyAttractions.sections[0] -->
-    <main class="attractions-container">
+    <main class="attractions-page">
         <div class="attractions-intro-section">
-            <div class="attractions-intro-content">
-                <div class="attractions-label">
-                    <!-- 제목: hero.title -->
-                    <span class="attractions-number" data-attractions-title></span>
-                </div>
-                <p class="attractions-description">
-                    <!-- 설명: hero.description -->
-                    <span data-nearby-attractions-hero-description></span>
-                </p>
+            <div class="attractions-intro-content animate-element">
+                <!-- nearbyAttractions.hero.title 매핑 -->
+                <h2 class="attractions-title" data-nearby-attractions-about-title></h2>
+                <!-- nearbyAttractions.hero.description 매핑 -->
+                <p class="attractions-description" data-nearby-attractions-about-description></p>
             </div>
         </div>
-        <!-- Attractions Grid (동적으로 생성됨) -->
-        <!-- JSON 매핑: about[] 배열 개수만큼 동적 생성 -->
-        <!-- 각 항목: title, images[0].url, description -->
-        <div class="attractions-grid" id="attractions-grid">
-        </div>
+
+        <!-- Attractions About Section -->
+        <section class="attractions-slider-section">
+            <div class="attractions-slider" data-attractions-slider></div>
+        </section>
     </main>
 
-    <!-- Closing Section (Index Style) -->
-    <!-- JSON 매핑: property.images.0.exterior[0] (이미지 사용) -->
-    <section class="index-closing">
-        <!-- 배경 이미지 (parallax) -->
-        <div class="closing-bg-parallax">
-            <!-- 이미지: property.images.0.exterior[0].url -->
-            <img data-customfield-nearby-attractions-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
-        </div>
-
-        <!-- 배경색 컨테이너 -->
-        <div class="closing-color-container">
-            <!-- 우측 원형 구멍 영역 -->
-            <div class="closing-circle-reveal">
-                <!-- 모바일용 이미지 -->
-                <!-- 이미지: property.images.0.exterior[0].url -->
-                <img class="closing-circle-image" data-customfield-nearby-attractions-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
-            </div>
-
-            <!-- 텍스트 컨텐츠 -->
-            <div class="index-closing-text">
-                <!-- 숙소명(영문): property.nameEn -->
-                <h2 class="closing-property-name-en" data-property-name-en></h2>
-                <div class="closing-divider"></div>
-            </div>
-        </div>
+    <!-- Closing Section - Full Banner -->
+    <section class="full-banner" data-nearby-closing>
+        <img src="" alt="마무리 섹션 이미지" data-nearby-closing-image>
+        <div class="closing-property-name" data-closing-property-name-en></div>
     </section>
-</div>
-
-    <!-- Include Footer -->
-    <div id="footer-placeholder"></div>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
 
-    <!-- Common Slider Module -->
-    <script src="js/common/slider.js"></script>
-
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
 
-    <!-- Base Data Mapper -->
+    <!-- Base Data Mapper (must load before preview-handler) -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
 
     <!-- Preview Handler for Admin Integration -->
     <script src="js/preview-handler.js"></script>
 
-    <!-- Header Footer Mapper -->
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
     <!-- Nearby Attractions Mapper -->
     <script src="js/data-mapper/pages/nearby-attractions-mapper.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
 
     <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>

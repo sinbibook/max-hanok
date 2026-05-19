@@ -1,339 +1,532 @@
-/* ===================================
-   Main Page Styles
-   =================================== */
+/* Main �t� � ��| */
 
-.main-content {
-    padding: 0 20px;
-}
-
-.main-title-section {
-    padding: 150px 0 0 0;
-}
-
-/* Main Intro Section (Before Content Wrapper) */
-.main-intro-section {
-    background: var(--color-primary);
-    padding: 120px 0 80px 0;
-}
-
-.main-intro-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 80px;
-    text-align: center;
-}
-
-.main-label {
-    margin-bottom: 30px;
-}
-
-.main-title {
-    font-family: var(--font-ko-main);
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--color-secondary);
-    letter-spacing: 2px;
-}
-
-.main-description {
-    font-family: var(--font-ko-sub);
-    font-size: 1.1rem;
-    color: #666;
-    line-height: 1.8;
-    margin: 0;
-    font-weight: 400;
-}
-
-/* Main Content Wrapper */
-.main-content-wrapper {
-    padding: 0;
-    background: var(--color-primary);
-    margin-bottom: 100px;
-}
-
-/* Main Content Item Section */
-.main-content-item {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.main-content-item:first-child .main-content-border-top {
-    display: block;
-}
-
-.main-content-border-top {
-    width: 100%;
-    height: 2px;
-    background: color-mix(in srgb, var(--color-secondary) 30%, transparent);
-    display: none;
-}
-
-.main-content-border-bottom {
-    width: 100%;
-    height: 2px;
-    background: color-mix(in srgb, var(--color-secondary) 30%, transparent);
-}
-
-/* Main Content Container */
-.main-content-container {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: 100px;
-    padding: 30px 80px;
-    max-width: 1600px;
-    margin: 0 auto;
-    width: 100%;
-    min-height: 500px;
-}
-
-/* Text Section */
-.main-content-text {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 0;
+/* �t� ��\ 9X */
+.page-hero-section {
     position: relative;
-    overflow: visible;
-}
-
-.main-content-text::before {
-    content: '';
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--color-secondary) 30%, var(--color-primary)) 0%, color-mix(in srgb, var(--color-secondary) 15%, var(--color-primary)) 40%, color-mix(in srgb, var(--color-secondary) 0%, var(--color-primary)) 70%, var(--color-primary) 100%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.main-content-text > * {
-    position: relative;
-    z-index: 1;
-}
-
-.main-content-number {
-    font-family: var(--font-ko-sub);
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--color-secondary);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.main-content-description {
-    font-family: var(--font-ko-sub);
-    font-size: 1.15rem;
-    color: #666;
-    line-height: 1.7;
-    margin: 0;
-    margin-bottom: auto;
-    font-weight: 400;
-}
-
-.main-content-title {
-    font-family: var(--font-ko-main);
-    font-size: 2.8rem;
-    font-weight: 400;
-    color: var(--color-secondary);
-    margin: 0;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-}
-
-/* Image Section */
-.main-content-image {
-    flex: 1;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
-    aspect-ratio: 3/4;
-    min-width: 0;
-    height: 450px;
 }
 
-.main-content-image img {
+/* ��l� 0� t�� */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeIn 1.5s ease forwards;
+}
+
+.hero-background img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 12px;
+    object-position: center;
 }
 
-.main-content-image img.empty-image-placeholder {
-    object-fit: contain;
+/* 애니메이션 키프레임 */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
-/* Full Image Section */
-.main-content-item.main-content-full-image .main-content-container {
-    padding: 60px 80px;
+@keyframes fadeInCenter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }
 
-.main-content-item.main-content-full-image .main-content-image {
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blinkCursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* �t� � (Prologue) */
+.page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    text-align: center;
+    opacity: 1;
+}
+
+/* page-title h1 스타일은 common.css에서 관리 */
+
+
+/* �t�� $� �Lt (index.html ��|�  �) */
+/* main-container 스타일은 common.css로 이동 */
+
+.text-content {
+    position: relative;
+    margin-bottom: 80px;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+
+/* logo-line-container 스타일은 common.css로 이동됨 */
+
+.hero-content {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-content .hero-title {
+    font-family: var(--font-ko-main);
+    font-size: 28px;  /* essence-title과 동일 */
+    font-weight: 700;
+    color: var(--color-secondary, #658399);
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+    display: block;
     width: 100%;
-    aspect-ratio: 16/9;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .main-content-container {
-        gap: 60px;
-        padding: 80px 60px;
+.text-content .hero-description {
+    font-family: var(--font-ko-sub);
+    font-size: 17px;  /* essence-description과 동일 */
+    color: #666;
+    line-height: 1.8;
+    text-align: right;
+    max-width: 600px;
+    margin-left: auto;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+
+.hero-text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 60px;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 180px;
+    padding: 0;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    /* 전체 컨테이너에 그라데이션 적용 */
+    background: linear-gradient(to bottom,
+        var(--color-primary) 0%,
+        var(--color-secondary) 50%,
+        var(--color-secondary) 100%);
+}
+
+/* 소개 블록 - 배경 제거 */
+.about-block {
+    position: relative;
+    width: 100vw;
+    margin: 0;
+    min-height: 600px;
+    opacity: 1;
+    /* 개별 블록 배경 제거 */
+    background: transparent;
+}
+
+/* 개별 블록 배경 스타일 제거 - 컨테이너 레벨에서 그라데이션 적용 */
+
+.about-block:last-child {
+    margin-bottom: 0;
+}
+
+.about-content {
+    position: relative;
+}
+
+.about-content::after {
+    content: '';
+    display: block;
+    width: 100vw;
+    height: 100px;
+    background: var(--color-secondary);
+    opacity: 0.8;
+    position: relative;
+    left: 0;
+}
+
+/* 짝수 번째 about-block - 반대 레이아웃 */
+.about-block:nth-child(even) .about-image {
+    left: auto;
+    right: 20px;
+    transform: translateX(100px);
+}
+
+/* 짝수 블록 이미지 - 오른쪽에서 나타남 */
+.about-block:nth-child(even) .about-image.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.about-block:nth-child(even) .about-text {
+    right: auto;
+    left: 20px;
+    text-align: left;
+    transform: translateY(-50%) translateX(-100px);
+}
+
+/* 짝수 블록 텍스트 - 왼쪽에서 나타남 */
+.about-block:nth-child(even) .about-text.visible {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* 짝수 번째 about-text 세로줄 위치 조정 */
+.about-block:nth-child(even) .about-text::after {
+    right: auto;
+    left: 0;
+}
+
+/* 내부 컨테이너 - 최대 너비 제한 */
+.about-block-inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 600px;
+    padding: 80px 20px 100px;
+}
+
+/* 세로 이미지 컨테이너 - 왼쪽에 위치 */
+.about-image {
+    width: 500px;
+    height: 600px;
+    position: absolute;
+    left: 20px;
+    top: -50px;
+    border-radius: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    z-index: 2;
+}
+
+/* 홀수 블록 이미지 - 왼쪽에서 나타남 */
+.about-block:nth-child(odd) .about-image.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 텍스트 영역 - 우측에 위치 */
+.about-text {
+    position: absolute;
+    right: 20px;
+    top: 60%;
+    transform: translateY(-50%) translateX(100px);
+    width: 50%;
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    z-index: 1;
+}
+
+/* 홀수 블록 텍스트 - 오른쪽에서 나타남 */
+.about-block:nth-child(odd) .about-text.visible {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* about-text 영역 우측 세로줄 */
+.about-text::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 1px;
+    height: calc(100% + 100px);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.about-title {
+    font-family: var(--font-ko-main);
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+}
+
+.about-description {
+    font-family: var(--font-ko-sub);
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.8;
+    margin: 0;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+}
+
+/* 모든 블록 어두운 색상 텍스트로 통일 */
+.about-block .about-title {
+    color: var(--color-primary);
+}
+
+.about-block .about-description {
+    color: var(--color-primary);
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: normal;
+    color: white;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
+    letter-spacing: 2px;
+}
+
+.hero-description {
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+
+/* Q ��| */
+@media (max-width: 1024px) {
+    /* page-title h1은 common.css에서 관리 */
+
+    .hero-title {
+        font-size: 42px;
     }
 
-    .main-content-title {
-        font-size: clamp(2rem, 3.5vw, 3rem);
+    .hero-description {
+        font-size: 16px;
+    }
+
+    /* About block tablet styles */
+    .about-block-inner {
+        padding: 60px 20px 80px;
+        height: 500px;
+    }
+
+    .about-image {
+        width: 400px;
+        height: 500px;
+        left: 20px;
+        top: -30px;
+    }
+
+    .about-text {
+        width: 50%;
+        padding: 30px 40px;
+    }
+
+    .about-block:nth-child(even) .about-image {
+        right: 20px;
+    }
+
+    .about-block:nth-child(even) .about-text {
+        left: 20px;
     }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-    .main-content-text::before {
+@media (max-width: 768px) {
+    .page-hero-section {
+        height: 70vh;
+    }
+
+    /* page-title h1은 common.css에서 관리 */
+
+    /* main-container 스타일은 common.css로 이동 */
+
+    .hero-text-content {
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 36px;
+        letter-spacing: 1px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+        max-width: 90%;
+    }
+
+    /* About 블록 모바일 - 새로운 디자인 */
+    .about-content {
+        gap: 0;
+        margin-top: 100px;
+    }
+
+    .about-block {
+        min-height: auto;
+        padding: 80px 0;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    .about-block-inner {
+        height: auto;
+        padding: 0;
+    }
+
+    .about-block .about-image {
+        position: relative;
+        width: 90%;
+        height: 350px;
+        left: auto;
+        right: auto;
+        transform: none;
+        top: 0;
+        border-radius: 0;
+        margin: 0 auto 40px;
+        display: block;
+        opacity: 1 !important;
+    }
+
+    .about-text {
+        position: relative;
+        width: 90%;
+        max-width: none;
+        padding: 0;
+        margin: 0 auto;
+        text-align: center;
+        top: 0;
+        right: auto;
+        left: auto;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    /* visible 클래스가 추가되어도 transform 제거 */
+    .about-block:nth-child(even) .about-text.visible,
+    .about-block:nth-child(odd) .about-text.visible {
+        transform: none !important;
+        opacity: 1;
+    }
+
+    /* 모바일에서 세로줄 숨김 */
+    .about-text::after {
         display: none;
     }
-}
 
-@media (max-width: 1024px) {
-    .main-content-container {
-        gap: 40px;
-        padding: 60px 40px;
+    /* 짝수 번째 블록도 동일하게 중앙정렬 */
+    .about-block:nth-child(even) .about-image {
+        left: auto;
+        right: auto;
+        transform: none;
+        margin: 0 auto 40px;
     }
 
-    .main-content-image {
-        width: 100%;
-        aspect-ratio: 4/3;
-        height: auto;
+    .about-block:nth-child(even) .about-text {
+        text-align: center;
+        left: auto;
+        right: auto;
+        margin: 0 auto;
     }
 
-    .main-content-title {
-        font-size: clamp(2rem, 5vw, 2.8rem);
+    .about-title {
+        font-size: 24px;
+        text-align: center;
     }
 
-    .main-title-section {
-        padding: 130px 0 0 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-content-container {
-        flex-direction: column;
-        gap: 30px;
-        padding: 60px 40px;
-        min-height: auto;
-    }
-
-    .main-content-text {
-        gap: 30px;
-        min-height: auto;
-        padding: 60px 0;
-    }
-
-    .main-content-text::before {
-        width: 200px;
-        height: 200px;
-    }
-
-    .main-content-image {
-        aspect-ratio: 16/9;
-        height: auto;
-        width: 100%;
-    }
-
-    .main-content-description {
-        font-size: 0.95rem;
-    }
-
-    .main-content-number {
-        margin-bottom: 0;
-        font-size: 1.5rem;
-    }
-
-    .main-content-title {
-        font-size: clamp(1.8rem, 6vw, 2.5rem);
-    }
-
-    .main-content-item.main-content-full-image .main-content-container {
-        padding: 50px 40px;
-    }
-}
-
-@media (max-width: 1024px) {
-    
-    .main-intro-section {
-        padding: 100px 0 80px 0;
-    }
-
-    .main-intro-content {
-        padding: 0 50px;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-intro-section {
-        padding: 80px 0 60px 0;
-    }
-
-    .main-intro-content {
-        padding: 0 40px;
-    }
-
-    .main-title {
-        font-size: clamp(2rem, 6vw, 2.5rem);
-    }
-
-    .main-description {
-        font-size: 1rem;
+    .about-description {
+        font-size: 14px;
+        text-align: center;
     }
 }
 
 @media (max-width: 480px) {
-    .main-content-container {
-        gap: 30px;
-        padding: 50px 20px;
+    /* page-title h1은 common.css에서 관리 */
+
+    /* main-container 스타일은 common.css로 이동 */
+
+    .hero-title {
+        font-size: 28px;
     }
 
-    .main-intro-section {
-        padding: 60px 0 50px 0;
+    .hero-description {
+        font-size: 14px;
     }
 
-    .main-intro-content {
+    /* About 블록 480px - 새로운 디자인 */
+    .about-content {
+        gap: 0;
+        margin-top: 80px;
+    }
+
+    .about-block {
+        min-height: auto;
+        padding: 60px 0;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    .about-block-inner {
+        height: auto;
+        padding: 0;
+    }
+
+    .about-block .about-image {
+        width: 90%;
+        height: 250px;
+        left: auto;
+        right: auto;
+        transform: none;
+        border-radius: 0;
+        margin: 0 auto 25px;
+        display: block;
+    }
+
+    .about-text {
         padding: 0 20px;
     }
 
-    .main-label {
-        margin-bottom: 20px;
+    .about-title {
+        font-size: 20px;
     }
 
-    .main-title {
-        font-size: clamp(1.5rem, 8vw, 2rem);
-    }
-
-    .main-description {
-        font-size: 0.95rem;
-    }
-
-    .main-content-number {
-        font-size: 0.85rem;
-    }
-
-    .main-content-description {
-        font-size: 1rem;
-    }
-
-    .main-content-title {
-        font-size: clamp(1.5rem, 7vw, 2rem);
-    }
-
-    .main-content-image {
-        aspect-ratio: 16/9;
-        height: auto;
-        width: 100%;
-    }
-
-    .main-content-item.main-content-full-image .main-content-container {
-        padding: 40px 20px;
+    .about-description {
+        font-size: 13px;
     }
 }

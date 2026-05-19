@@ -7,12 +7,14 @@
     <meta name="keywords" content="SEO 키워드">
     <title id="page-title">배치도 - 숙소명</title>
 
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/common.css" as="style">
-    <link rel="preload" href="styles/layout-map.css" as="style">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/layout-map.css">
-    <link rel="stylesheet" href="styles/theme.css">
+  <!-- Preload critical resources -->
+  <link rel="preload" href="styles/common.css" as="style">
+  <link rel="preload" href="styles/layout-map.css" as="style">
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/layout-map.css">
 
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
@@ -28,107 +30,75 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Include Header -->
-    <div id="header-placeholder"></div>
-
     <!-- Hero Section -->
-    <!-- JSON 매핑: customFields.pages.layoutMap.sections[0].hero -->
-    <section class="hero-section">
-        <!-- Background Images -->
+    <section class="page-hero-section">
         <div class="hero-background">
-            <div class="hero-slider" id="hero-slider">
-                <div class="hero-slide active">
-                    <!-- 이미지: hero.images[0].url -->
-                    <img src="" alt="배치도 배경" data-customfield-layout-map-hero-image-0>
-                </div>
-            </div>
-            <div class="hero-image-overlay"></div>
+            <img data-layout-map-hero-image>
         </div>
-        <!-- Hero Content -->
-        <div class="hero-content">
-            <div class="hero-text">
-                <div class="brand-name">
-                    <!-- 숙소명(영문): property.nameEn -->
-                    <h4 class="brand-title" data-property-name-en></h4>
-                    <div class="brand-divider"></div>
-                    <!-- 제목:하드코딩 fixed-->
-                    <p class="brand-subtitle">숙소 배치도</p>
-                </div>
-            </div>
+        <div class="page-title">
+            <span class="property-name-kr" data-property-name></span>
+            <h1 class="typing-text" data-text="LAYOUT MAP" style="--text-length: 10;">LAYOUT MAP</h1>
         </div>
     </section>
 
     <!-- Main Content Section -->
-    <!-- JSON 매핑: customFields.pages.layoutMap.sections[0].about -->
-    <main class="layout-map-container">
-        <!-- Title and Description -->
-        <div class="layout-map-intro">
-            <!-- 제목: about.title -->
-            <h2 class="layout-map-title" data-layout-map-about-title></h2>
-            <!-- 설명: about.description -->
-            <p class="layout-map-description" data-layout-map-about-description></p>
+    <main class="layout-map-page">
+        <!-- Layout Map Intro Section -->
+        <div class="layout-map-intro-section">
+            <div class="layout-map-intro-content animate-element">
+                <!-- layoutMap.sections[0].hero.title 매핑 -->
+                <h2 class="layout-map-title" data-layout-map-about-title></h2>
+                <!-- layoutMap.sections[0].hero.description 매핑 -->
+                <p class="layout-map-description" data-layout-map-about-description></p>
+            </div>
         </div>
 
-        <!-- Layout Map Images (동적으로 생성됨) -->
-        <!-- JSON 매핑: about.images[] 배열 개수만큼 동적 생성 -->
-        <!-- 각 항목: images[0].url, images[0].description -->
-        <div class="layout-map-content" id="layout-map-content">
+        <!-- Layout Map Content - 이미지와 설명이 교대로 나옴 -->
+        <div class="layout-map-content">
+            <!-- Layout Map Item 1 -->
+            <div class="layout-map-item animate-element">
+                <img alt="배치도" class="layout-map-image" data-layout-map-image-0>
+            </div>
+
+            <!-- Layout Map Description 1 -->
+            <div class="layout-map-description-item animate-element">
+                <p data-layout-map-description-0></p>
+            </div>
         </div>
     </main>
 
-    <!-- Closing Section (Index Style) -->
-    <!-- JSON 매핑: property.images.0.exterior[0] (이미지 사용) -->
-    <section class="index-closing">
-        <!-- 배경 이미지 (parallax) -->
-        <div class="closing-bg-parallax">
-            <!-- 이미지: property.images.0.exterior[0].url -->
-            <img data-customfield-layout-map-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
-        </div>
-
-        <!-- 배경색 컨테이너 -->
-        <div class="closing-color-container">
-            <!-- 우측 원형 구멍 영역 -->
-            <div class="closing-circle-reveal">
-                <!-- 모바일용 이미지 -->
-                <!-- 이미지: property.images.0.exterior[0].url -->
-                <img class="closing-circle-image" data-customfield-layout-map-closing-image src="" alt="마무리 섹션 이미지" loading="lazy">
-            </div>
-
-            <!-- 텍스트 컨텐츠 -->
-            <div class="index-closing-text">
-                <!-- 숙소명(영문): property.nameEn -->
-                <h2 class="closing-property-name-en" data-property-name-en></h2>
-                <div class="closing-divider"></div>
-            </div>
-        </div>
+    <!-- Closing Section - Full Banner -->
+    <section class="full-banner" data-layout-map-closing>
+        <img src="" alt="마무리 섹션 이미지" data-layout-map-closing-image>
+        <div class="closing-property-name" data-closing-property-name-en></div>
     </section>
 
-    <!-- Include Footer -->
-    <div id="footer-placeholder"></div>
+    <!-- Common JavaScript -->
+    <script src="js/common.js"></script>
 
     <!-- Include ImageWithFallback script -->
     <script src="js/image-with-fallback.js"></script>
 
-    <!-- Common Slider Module -->
-    <script src="js/common/slider.js"></script>
-
     <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
 
-    <!-- Base Data Mapper -->
+    <!-- Base Data Mapper (must load before preview-handler) -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
 
     <!-- Preview Handler for Admin Integration -->
     <script src="js/preview-handler.js"></script>
 
-    <!-- Header Footer Mapper -->
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
     <!-- Layout Map Mapper -->
     <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
 
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
     <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
+
+    <!-- Scroll Animations -->
+  <script src="js/common/scroll-animations.js"></script>
 
     <!-- Page-specific script -->
     <script src="js/pages/layout-map.js"></script>
