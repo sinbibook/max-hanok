@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.213.0",
-    "generatedAt": "2026-05-19T05:10:49.408383036Z",
+    "version": "1.214.0",
+    "generatedAt": "2026-05-19T05:13:16.878026047Z",
     "templateType": "fullpage_visual",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1975,12 +1975,35 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778466050220-i4xn4h4on6.jpg",
                       "sortOrder": 6,
                       "description": "",
-                      "isSelected": false,
+                      "isSelected": true,
                       "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4"
                     }
                   ],
                   "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4",
                   "description": ""
+                },
+                {
+                  "title": "새로운 관광지",
+                  "images": [
+                    {
+                      "id": "7a6f1f78-cdb5-4eb3-8474-da76b3074c34",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1779167575107-dnyuwdwdmz.jpg",
+                      "sortOrder": 7,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "7a3b058f-30c3-48a6-8b37-261bbf38fc09"
+                    },
+                    {
+                      "id": "6a1b1f13-5e27-4dfa-aec2-308f57a8a186",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1779167575081-wlec2mjm2n.jpg",
+                      "sortOrder": 8,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "7a3b058f-30c3-48a6-8b37-261bbf38fc09"
+                    }
+                  ],
+                  "blockId": "7a3b058f-30c3-48a6-8b37-261bbf38fc09",
+                  "description": "테스트 입니다."
                 }
               ],
               "enabled": true
@@ -1991,7 +2014,7 @@
           "sections": [
             {
               "hero": {
-                "title": "숙소 배치도",
+                "title": "max 펜션 숙소 배치도",
                 "images": [
                   {
                     "id": "6892db1a-549d-4a24-9b63-c3054774bff2",
@@ -2020,11 +2043,11 @@
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778719364160-6jegha9pqt.jpg",
                     "sortOrder": 1,
                     "description": "공용시설 : 주차장, 찜질방, LP방, 민속방, 시네마ㅋㅋ",
-                    "isSelected": true,
+                    "isSelected": false,
                     "blockId": null
                   }
                 ],
-                "description": "숙소 배치도를 보고 객실을 찾아가세요 "
+                "description": "숙소 배치도를 보고 객실을 찾아가세요 !"
               },
               "enabled": true
             }
