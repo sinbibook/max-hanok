@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.209.0",
-    "generatedAt": "2026-05-19T04:04:17.651207096Z",
+    "version": "1.210.0",
+    "generatedAt": "2026-05-19T04:07:16.227036551Z",
     "templateType": "fullpage_scroll",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1878,24 +1878,24 @@
                 "title": "관광지!!!",
                 "images": [
                   {
-                    "id": "5b47aad6-305d-4f6e-bca6-16a50b2ffdbd",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205991963-qfqqhraa4q.jpg",
+                    "id": "37a8f1d4-5a0a-445b-9c46-b3a0ea775521",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205992064-el9gsmd9i8.jpg",
                     "sortOrder": 0,
                     "description": "",
-                    "isSelected": false,
+                    "isSelected": true,
                     "blockId": null
                   },
                   {
-                    "id": "1145e93c-b733-4bb8-bf0a-b973cdfee80b",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778466050226-cv4wcenqwo.jpg",
+                    "id": "5b47aad6-305d-4f6e-bca6-16a50b2ffdbd",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205991963-qfqqhraa4q.jpg",
                     "sortOrder": 1,
                     "description": "",
                     "isSelected": true,
                     "blockId": null
                   },
                   {
-                    "id": "37a8f1d4-5a0a-445b-9c46-b3a0ea775521",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205992064-el9gsmd9i8.jpg",
+                    "id": "1145e93c-b733-4bb8-bf0a-b973cdfee80b",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778466050226-cv4wcenqwo.jpg",
                     "sortOrder": 2,
                     "description": "",
                     "isSelected": true,
@@ -1944,7 +1944,7 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992296-f5gkm63hiq.jpg",
                       "sortOrder": 3,
                       "description": "",
-                      "isSelected": false,
+                      "isSelected": true,
                       "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
                     },
                     {
@@ -2026,7 +2026,7 @@
                 ],
                 "description": "숙소 배치도를 보고 객실을 찾아가세요 "
               },
-              "enabled": true
+              "enabled": false
             }
           ]
         }
