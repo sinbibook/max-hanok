@@ -32,14 +32,7 @@
     /**
      * 페이지 초기화
      */
-    async function initPage() {
-        // enabled 값 확인 - 비활성화된 페이지는 404로 리다이렉트
-        const nearbyAttractionsData = await getNearbyAttractionsData();
-        if (nearbyAttractionsData && !nearbyAttractionsData.enabled) {
-            window.location.href = '404.html';
-            return;
-        }
-
+    function initPage() {
         setupScrollAnimations();
 
         // mapPage() 완료 후 슬라이더 초기화를 위해 전역 함수 노출
@@ -48,26 +41,6 @@
             initSlider();
             startAutoSlide();
         };
-    }
-
-    /**
-     * Nearby Attractions 데이터 가져오기 (preview-handler 또는 로컬 JSON)
-     */
-    async function getNearbyAttractionsData() {
-        // preview-handler에서 데이터를 받은 경우
-        if (window.previewHandler && window.previewHandler.currentData) {
-            return window.previewHandler.currentData?.homepage?.customFields?.pages?.nearbyAttractions?.sections?.[0];
-        }
-
-        // 로컬 데이터 로드
-        try {
-            const response = await fetch('standard-template-data.json');
-            const data = await response.json();
-            return data?.homepage?.customFields?.pages?.nearbyAttractions?.sections?.[0];
-        } catch (error) {
-            console.error('Failed to load nearby attractions data:', error);
-            return null;
-        }
     }
 
     /**

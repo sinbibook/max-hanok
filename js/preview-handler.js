@@ -444,23 +444,6 @@ if (typeof window.PreviewHandler === 'undefined') {
             const currentPage = this.getCurrentPageType();
             let mapper = null;
 
-            // 비활성화된 페이지 체크 (layoutMap, nearbyAttractions)
-            if (currentPage === 'layoutMap') {
-                const layoutMapData = data?.homepage?.customFields?.pages?.layoutMap?.sections?.[0];
-                if (layoutMapData && !layoutMapData.enabled) {
-                    console.warn('⚠️ Layout Map page is disabled');
-                    window.location.href = '404.html';
-                    return;
-                }
-            } else if (currentPage === 'nearbyAttractions') {
-                const nearbyAttractionsData = data?.homepage?.customFields?.pages?.nearbyAttractions?.sections?.[0];
-                if (nearbyAttractionsData && !nearbyAttractionsData.enabled) {
-                    console.warn('⚠️ Nearby Attractions page is disabled');
-                    window.location.href = '404.html';
-                    return;
-                }
-            }
-
             // 현재 페이지에 맞는 매퍼 선택
             switch (currentPage) {
                 case 'index':
@@ -639,35 +622,6 @@ if (typeof window.PreviewHandler === 'undefined') {
             }
 
             this.currentData.homepage.customFields.pages[page].sections[0][section] = data;
-
-            // enabled 필드 변경 시 처리 (layoutMap, nearbyAttractions)
-            if (section === 'enabled') {
-                const isEnabled = data;
-                if (page === 'layoutMap' || page === 'nearbyAttractions') {
-                    if (isEnabled) {
-                        // 활성화된 페이지로 이동
-                        const targetPage = page === 'layoutMap' ? 'layout-map.html' : 'nearby-attractions.html';
-                        if (!window.location.pathname.includes(targetPage)) {
-                            window.location.href = targetPage;
-                        } else {
-                            // 이미 해당 페이지에 있으면 페이지 새로고침
-                            window.location.reload();
-                        }
-                    } else {
-                        // 비활성화는 404로
-                        if (window.location.pathname.includes(`/${page === 'layoutMap' ? 'layout-map' : 'nearby-attractions'}.html`)) {
-                            window.location.href = '404.html';
-                        }
-                    }
-                    // 헤더 메뉴도 업데이트
-                    if (window.HeaderFooterMapper) {
-                        const mapper = new window.HeaderFooterMapper();
-                        mapper.data = this.currentData;
-                        mapper.isDataLoaded = true;
-                        mapper.mapAboutMenuItems();
-                    }
-                }
-            }
         }
 
         /**
