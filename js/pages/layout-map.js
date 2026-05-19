@@ -1,56 +1,72 @@
-/**
- * Layout Map Page JavaScript
- */
-
 (function() {
     'use strict';
 
     /**
-     * 페이지 초기화
+     * Scroll to content function
      */
-    function initPage() {
-        initScrollAnimations();
-
-        // mapPage() 완료 후 초기화를 위해 전역 함수 노출
-        // (preview-handler에서 mapPage() 후 호출)
-        window._initLayoutMap = () => {
-            // 추가 초기화 필요시 여기에 작성
-        };
-    }
+    window.scrollToContent = function() {
+        const target = document.querySelector('.scroll-target');
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     /**
-     * 스크롤 애니메이션 초기화
+     * Setup scroll animations with IntersectionObserver
      */
-    function initScrollAnimations() {
-        const layoutMapItems = document.querySelectorAll('.layout-map-item');
-        const animateElements = document.querySelectorAll('.animate-element');
-
+    function setupScrollAnimations() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    observer.unobserve(entry.target);
+                    entry.target.classList.add('visible');
                 }
             });
         }, {
             threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            rootMargin: '0px 0px -50px 0px'
         });
 
-        layoutMapItems.forEach(item => {
-            observer.observe(item);
-        });
+        // Observe all animate-element and layout-map-item elements
+        document.querySelectorAll('.animate-element, .layout-map-item')
+            .forEach(el => {
+                observer.observe(el);
+            });
 
-        animateElements.forEach(element => {
-            observer.observe(element);
-        });
+        return observer;
     }
 
-    // 페이지 로드 시 초기화
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPage);
-    } else {
-        initPage();
+    /**
+     * Setup full banner animation
+     */
+    function setupFullBannerAnimation() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        const fullBanner = document.querySelector('.full-banner');
+        if (fullBanner) {
+            observer.observe(fullBanner);
+        }
     }
+
+    /**
+     * Setup all animations (called by mapper)
+     */
+    window.setupLayoutMapAnimations = function() {
+        setupScrollAnimations();
+        setupFullBannerAnimation();
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            setupFullBannerAnimation();
+            setupScrollAnimations();
+        }, 1000);
+    });
 })();

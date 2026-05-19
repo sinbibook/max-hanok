@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="숙소 배치도">
+    <meta name="description" content="숙소 설명">
     <meta name="keywords" content="SEO 키워드">
-    <title id="page-title">배치도 - 숙소명</title>
+    <title>배치도 - 숙소명</title>
 
-  <!-- Preload critical resources -->
-  <link rel="preload" href="styles/common.css" as="style">
-  <link rel="preload" href="styles/layout-map.css" as="style">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/layout-map.css" as="style">
 
-  <!-- Theme CSS -->
-  <link rel="stylesheet" href="styles/theme.css">
-  <link rel="stylesheet" href="styles/common.css">
-  <link rel="stylesheet" href="styles/layout-map.css">
-
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/layout-map.css">
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션" />
@@ -30,78 +29,60 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Hero Section -->
+
     <section class="page-hero-section">
+        <!-- Hero background image -->
         <div class="hero-background">
-            <img data-layout-map-hero-image>
+            <img data-customfield-layout-map-hero-image-0>
         </div>
-        <div class="page-title">
-            <span class="property-name-kr" data-property-name></span>
-            <h1 class="typing-text" data-text="LAYOUT MAP" style="--text-length: 10;">LAYOUT MAP</h1>
+        <!-- Scroll Down Arrow -->
+        <div class="scroll-down-section" onclick="scrollToContent()">
+            <span class="scroll-text">Scroll Down</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </div>
     </section>
 
-    <!-- Main Content Section -->
-    <main class="layout-map-page">
-        <!-- Layout Map Intro Section -->
-        <div class="layout-map-intro-section">
-            <div class="layout-map-intro-content animate-element">
-                <!-- layoutMap.sections[0].hero.title 매핑 -->
-                <h2 class="layout-map-title" data-layout-map-about-title></h2>
-                <!-- layoutMap.sections[0].hero.description 매핑 -->
-                <p class="layout-map-description" data-layout-map-about-description></p>
-            </div>
-        </div>
+    <main class="layout-map-content-wrapper scroll-target">
+        <div class="main-container">
 
-        <!-- Layout Map Content - 이미지와 설명이 교대로 나옴 -->
-        <div class="layout-map-content">
-            <!-- Layout Map Item 1 -->
-            <div class="layout-map-item animate-element">
-                <img alt="배치도" class="layout-map-image" data-layout-map-image-0>
+            <!-- Hero content: title and description -->
+            <div class="hero-content animate-element">
+                <h2 class="hero-title title-with-circle-and-line" data-layout-map-about-title></h2>
+                <p class="hero-description" data-layout-map-about-description></p>
             </div>
 
-            <!-- Layout Map Description 1 -->
-            <div class="layout-map-description-item animate-element">
-                <p data-layout-map-description-0></p>
-            </div>
+            <!-- Layout map images (dynamically generated) -->
+            <div id="layout-map-content" class="animate-element"></div>
+
         </div>
+
+        <!-- Full banner closing section -->
+        <section class="full-banner animate-element" data-main-banner>
+            <div class="closing-property-name" data-closing-property-name></div>
+        </section>
     </main>
 
-    <!-- Closing Section - Full Banner -->
-    <section class="full-banner" data-layout-map-closing>
-        <img src="" alt="마무리 섹션 이미지" data-layout-map-closing-image>
-        <div class="closing-property-name" data-closing-property-name-en></div>
-    </section>
-
-    <!-- Common JavaScript -->
-    <script src="js/common.js"></script>
-
-    <!-- Include ImageWithFallback script -->
+    <!-- Scripts -->
     <script src="js/image-with-fallback.js"></script>
-
-    <!-- Image Helpers -->
+    <script src="js/common.js"></script>
     <script src="js/image-helpers.js"></script>
-
-    <!-- Base Data Mapper (must load before preview-handler) -->
     <script src="js/data-mapper/core/base-mapper.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
-    <script src="js/preview-handler.js"></script>
-
-    <!-- Layout Map Mapper -->
     <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
-
-    <!-- Header Footer Mapper -->
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
-    <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
-
-    <!-- Scroll Animations -->
-  <script src="js/common/scroll-animations.js"></script>
-
-    <!-- Page-specific script -->
+    <script src="js/common/scroll-animations.js"></script>
     <script src="js/pages/layout-map.js"></script>
+
+    <!-- Initialize Data Mapper -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const layoutMapMapper = new LayoutMapMapper();
+            await layoutMapMapper.initialize();
+        });
+    </script>
 
 </body>
 </html>
