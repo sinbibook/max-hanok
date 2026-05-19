@@ -63,6 +63,7 @@ class HeaderFooterMapper extends BaseDataMapper {
 
             if (logoUrl) {
                 logoImage.onerror = () => {
+                    console.warn('⚠️ 헤더 로고 이미지 로드 실패');
                     // 로드 실패 시 placeholder 적용
                     if (typeof ImageHelpers !== 'undefined') {
                         ImageHelpers.applyPlaceholder(logoImage);
@@ -94,48 +95,11 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 시설 메뉴 동적 생성
         this.mapFacilityMenuItems();
 
+        // 새 페이지 메뉴 enabled 체크
+        this.mapNewPageMenuVisibility();
+
         // 예약 버튼에 realtimeBookingId 매핑
         this.mapReservationButtons();
-
-        // 신규 페이지 enabled 체크
-        this.mapNewPageMenuVisibility();
-    }
-
-    /**
-     * 신규 페이지 (nearbyAttractions, layoutMap) 메뉴 표시 여부 결정 (헤더 + 푸터)
-     */
-    mapNewPageMenuVisibility() {
-        if (!this.isDataLoaded) return;
-
-        // Nearby Attractions 메뉴 표시 여부
-        const nearbyAttractionsEnabled = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.enabled') === true;
-
-        // 헤더 메뉴
-        const nearbyAttractionsMenuItems = document.querySelectorAll('.nearby-attractions-menu');
-        nearbyAttractionsMenuItems.forEach(item => {
-            item.style.display = nearbyAttractionsEnabled ? '' : 'none';
-        });
-
-        // 푸터 메뉴
-        const nearbyAttractionsMenuLinks = document.querySelectorAll('.nearby-attractions-menu-link');
-        nearbyAttractionsMenuLinks.forEach(link => {
-            link.style.display = nearbyAttractionsEnabled ? '' : 'none';
-        });
-
-        // Layout Map 메뉴 표시 여부
-        const layoutMapEnabled = this.safeGet(this.data, 'homepage.customFields.pages.layoutMap.sections.0.enabled') === true;
-
-        // 헤더 메뉴
-        const layoutMapMenuItems = document.querySelectorAll('.layout-map-menu');
-        layoutMapMenuItems.forEach(item => {
-            item.style.display = layoutMapEnabled ? '' : 'none';
-        });
-
-        // 푸터 메뉴
-        const layoutMapMenuLinks = document.querySelectorAll('.layout-map-menu-link');
-        layoutMapMenuLinks.forEach(link => {
-            link.style.display = layoutMapEnabled ? '' : 'none';
-        });
     }
 
     /**
@@ -149,15 +113,15 @@ class HeaderFooterMapper extends BaseDataMapper {
         // realtimeBookingId 찾기 (전체 URL)
         const realtimeBookingId = this.data.property.realtimeBookingId;
 
-        if (realtimeBookingId) {
+        if (realtimeBookingId && realtimeBookingId.startsWith('http')) {
             const allBookingButtons = document.querySelectorAll('[data-booking-engine], [data-property-realtime-booking-id]');
+            const openBookingUrl = () => window.open(realtimeBookingId, '_blank');
+
             allBookingButtons.forEach(button => {
                 if (button.matches('[data-booking-engine]')) {
                     button.setAttribute('data-realtime-booking-id', realtimeBookingId);
                 }
-                button.onclick = () => {
-                    window.open(realtimeBookingId, '_blank');
-                };
+                button.onclick = openBookingUrl;
             });
         }
 
@@ -429,6 +393,7 @@ class HeaderFooterMapper extends BaseDataMapper {
 
             if (logoUrl) {
                 footerLogoImage.onerror = () => {
+                    console.warn('⚠️ 푸터 로고 이미지 로드 실패');
                     // 로드 실패 시 placeholder 적용
                     if (typeof ImageHelpers !== 'undefined') {
                         ImageHelpers.applyPlaceholder(footerLogoImage);
@@ -462,6 +427,12 @@ class HeaderFooterMapper extends BaseDataMapper {
         const footerPhone = this.safeSelect('[data-footer-phone]');
         if (footerPhone && property.contactPhone) {
             footerPhone.textContent = `${property.contactPhone}`;
+        }
+
+        // 이메일 매핑
+        const emailElement = this.safeSelect('[data-footer-email]');
+        if (emailElement && property.contactEmail) {
+            emailElement.textContent = property.contactEmail;
         }
 
         // 주소 매핑 (property.address 사용)
@@ -570,6 +541,7 @@ class HeaderFooterMapper extends BaseDataMapper {
      */
     async mapHeader() {
         if (!this.isDataLoaded) {
+            console.error('Cannot map header: data not loaded');
             return;
         }
 
@@ -640,6 +612,7 @@ class HeaderFooterMapper extends BaseDataMapper {
      */
     async mapFooter() {
         if (!this.isDataLoaded) {
+            console.error('Cannot map footer: data not loaded');
             return;
         }
 
@@ -667,6 +640,31 @@ class HeaderFooterMapper extends BaseDataMapper {
             this.mapHeader(),
             this.mapFooter()
         ]);
+    }
+
+    /**
+     * 새로운 페이지 메뉴 활성화/비활성화 제어
+     * nearby-attractions, layout-map의 enabled 값에 따라 메뉴 표시/숨김
+     */
+    mapNewPageMenuVisibility() {
+        if (!this.isDataLoaded) return;
+
+        const pages = this.safeGet(this.data, 'homepage.customFields.pages');
+        if (!pages) return;
+
+        // Nearby Attractions 메뉴 제어
+        const naEnabled = pages?.nearbyAttractions?.sections?.[0]?.enabled !== false;
+        const naMenu = document.querySelector('[data-nearby-attractions-menu]');
+        if (naMenu) {
+            naMenu.style.display = naEnabled ? '' : 'none';
+        }
+
+        // Layout Map 메뉴 제어
+        const lmEnabled = pages?.layoutMap?.sections?.[0]?.enabled !== false;
+        const lmMenu = document.querySelector('[data-layout-map-menu]');
+        if (lmMenu) {
+            lmMenu.style.display = lmEnabled ? '' : 'none';
+        }
     }
 
     /**

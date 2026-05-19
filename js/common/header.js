@@ -2,21 +2,26 @@
 (function() {
     'use strict';
 
-    // Scroll Effect for Transparent Header
+    // Scroll Effect for Transparent Header (rAF-throttled)
+    let headerScrollTicking = false;
     window.addEventListener('scroll', function() {
-        const header = document.querySelector('.transparent-header');
-        const body = document.body;
-
-        if (header) {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-                body.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-                body.classList.remove('scrolled');
+        if (headerScrollTicking) return;
+        headerScrollTicking = true;
+        requestAnimationFrame(function() {
+            const header = document.querySelector('.transparent-header');
+            const body = document.body;
+            if (header) {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                    body.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                    body.classList.remove('scrolled');
+                }
             }
-        }
-    });
+            headerScrollTicking = false;
+        });
+    }, { passive: true });
 
     // Toggle Menu Overlay
     window.toggleMenuOverlay = function() {
@@ -193,7 +198,8 @@
         if (ybsBookingBtn) {
             ybsBookingBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                // YBS booking functionality handled by header-footer-mapper
+                // Add YBS booking functionality here
+                console.log('YBS Booking clicked');
             });
         }
 
@@ -202,7 +208,8 @@
         mobileBookingBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                // Mobile booking functionality handled by header-footer-mapper
+                // Add mobile booking functionality here
+                console.log('Mobile booking clicked:', this.textContent);
             });
         });
     }
