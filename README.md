@@ -1,1 +1,1 @@
-# template-full-banner-rounded-group Template
+# template-full-banner-wipe

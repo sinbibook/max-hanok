@@ -31,7 +31,7 @@
             align-items: center;
             justify-content: center;
             flex: 1;
-            padding: 250px 20px 150px;
+            padding: 120px 20px 50px;
             text-align: center;
         }
 
@@ -44,10 +44,9 @@
         .error-code {
             font-size: 80px;
             font-weight: 900;
-            color: var(--color-secondary, #7e594c);
+            color: var(--color-secondary, #658399);
             line-height: 1;
             margin-bottom: 20px;
-            font-family: var(--font-en-main, 'Marhey', sans-serif);
         }
 
         .error-title {
@@ -55,7 +54,6 @@
             font-weight: 700;
             color: #333;
             margin-bottom: 15px;
-            font-family: var(--font-ko-main, 'Escoredream', sans-serif);
         }
 
         .error-message {
@@ -64,13 +62,12 @@
             margin-bottom: 40px;
             line-height: 1.8;
             max-width: 500px;
-            font-family: var(--font-ko-main, 'Escoredream', sans-serif);
         }
 
         .error-button {
             display: inline-block;
             padding: 12px 40px;
-            background: var(--color-secondary, #7e594c);
+            background: var(--color-secondary, #658399);
             color: white;
             text-decoration: none;
             border-radius: 8px;
@@ -78,11 +75,10 @@
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            font-family: var(--font-ko-main, 'Escoredream', sans-serif);
         }
 
         .error-button:hover {
-            background: #6b4a3f;
+            background: #5a7185;
             transform: translateY(-2px);
         }
     </style>
@@ -107,19 +103,19 @@
     <main class="error-container">
         <svg class="error-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <!-- Browser window border -->
-            <rect x="8" y="10" width="84" height="80" rx="6" fill="none" stroke="#7e594c" stroke-width="3"/>
+            <rect x="8" y="10" width="84" height="80" rx="6" fill="none" stroke="#4a5568" stroke-width="3"/>
 
             <!-- Browser top bar -->
-            <rect x="8" y="10" width="84" height="18" rx="6" fill="none" stroke="#7e594c" stroke-width="3"/>
-            <line x1="8" y1="28" x2="92" y2="28" stroke="#7e594c" stroke-width="2"/>
+            <rect x="8" y="10" width="84" height="18" rx="6" fill="none" stroke="#4a5568" stroke-width="3"/>
+            <line x1="8" y1="28" x2="92" y2="28" stroke="#4a5568" stroke-width="2"/>
 
             <!-- Browser menu dots -->
-            <circle cx="28" cy="18" r="2" fill="#7e594c"/>
-            <circle cx="38" cy="18" r="2" fill="#7e594c"/>
-            <circle cx="48" cy="18" r="2" fill="#7e594c"/>
+            <circle cx="28" cy="18" r="2" fill="#4a5568"/>
+            <circle cx="38" cy="18" r="2" fill="#4a5568"/>
+            <circle cx="48" cy="18" r="2" fill="#4a5568"/>
 
-            <!-- 404 text -->
-            <text x="50" y="58" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="middle" fill="#7e594c" font-family="Arial, sans-serif">404</text>
+            <!-- 404 text in red -->
+            <text x="50" y="58" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="middle" fill="#e86d6d" font-family="Arial, sans-serif">404</text>
         </svg>
         <h1 class="error-title">페이지를 찾을 수 없습니다.</h1>
         <p class="error-message">

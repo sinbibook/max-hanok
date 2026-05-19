@@ -1,159 +1,59 @@
-/**
- * Reservation Page JavaScript
- */
 
-(function() {
-    'use strict';
-
-    let ticking = false;
-
-    // Hero Slider Initialization
-    function initHeroSlider(skipDelay = false) {
-        const slider = document.getElementById('hero-slider');
-        if (!slider) return;
-
-        const slides = slider.querySelectorAll('.hero-slide');
-        const prevButton = document.querySelector('#hero-prev');
-        const nextButton = document.querySelector('#hero-next');
-        const progressFill = document.querySelector('.hero-slider-line-fill');
-        const currentSpan = document.querySelector('.hero-slider-current');
-        const totalSpan = document.querySelector('.hero-slider-total');
-
-        if (slides.length <= 1) {
-            // Hide controls if only one slide
-            if (prevButton) prevButton.style.display = 'none';
-            if (nextButton) nextButton.style.display = 'none';
-            return;
-        }
-
-        let currentSlide = 0;
-        let autoSlideTimer;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-            updateProgress();
-        }
-
-        function updateProgress() {
-            if (progressFill) {
-                progressFill.style.transition = 'none';
-                progressFill.style.width = '0%';
-                setTimeout(() => {
-                    progressFill.style.transition = 'width 4000ms linear';
-                    progressFill.style.width = '100%';
-                }, 50);
-            }
-
-            // Update slide numbers
-            if (currentSpan) {
-                currentSpan.textContent = String(currentSlide + 1).padStart(2, '0');
-            }
-            if (totalSpan) {
-                totalSpan.textContent = String(slides.length).padStart(2, '0');
-            }
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        function startAutoSlide() {
-            autoSlideTimer = setInterval(nextSlide, 4000);
-        }
-
-        function stopAutoSlide() {
-            if (autoSlideTimer) clearInterval(autoSlideTimer);
-        }
-
-        // Button events
-        if (prevButton) prevButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            prevSlide();
-        });
-        if (nextButton) nextButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            nextSlide();
-        });
-
-        // Pause on hover
-        if (slider) {
-            slider.addEventListener('mouseenter', stopAutoSlide);
-            slider.addEventListener('mouseleave', startAutoSlide);
-        }
-
-        // Initialize
-        showSlide(0);
-        startAutoSlide();
+// 스크롤 기반 이미지 및 텍스트 애니메이션 시스템
+document.addEventListener('DOMContentLoaded', function() {
+    // 타이핑 애니메이션 처리
+    const typingText = document.querySelector('.typing-text');
+    if (typingText) {
+        setTimeout(() => {
+            typingText.classList.add('typed');
+        }, 2700);
     }
+    // 모든 이미지 패널 가져오기
+    const imagePanels = document.querySelectorAll('.reservation-panel-image');
+    // 모든 reservation 박스 가져오기
+    const reservationBoxes = document.querySelectorAll('.reservation-box');
 
-    // Scroll to next section function
-    function scrollToNextSection() {
-        const nextSection = document.querySelector('.reservation-info-section');
+    // 이미지 애니메이션을 위한 Intersection Observer 설정
+    const imageObserverOptions = {
+        root: null,
+        rootMargin: '-20% 0px',
+        threshold: 0
+    };
 
-        if (nextSection) {
-            const targetPosition = nextSection.offsetTop;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-
-    // Make function globally available
-    window.scrollToNextSection = scrollToNextSection;
-
-    // Simple initialization - no animations needed for facility-style layout
-
-    // Tab functionality
-    function initializeTabs() {
-        const tabButtons = document.querySelectorAll('.reservation-tab-button');
-        const tabContents = document.querySelectorAll('.reservation-tab-content');
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetTabId = this.getAttribute('data-tab');
-
-                // Remove active class from all buttons and contents
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                tabContents.forEach(content => content.classList.remove('active'));
-
-                // Add active class to clicked button and corresponding content
-                this.classList.add('active');
-                const targetContent = document.getElementById(targetTabId);
-                if (targetContent) {
-                    targetContent.classList.add('active');
-                }
-            });
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // CSS에서 border-radius를 처리하므로 JavaScript에서는 설정하지 않음
+            } else {
+                entry.target.classList.remove('visible');
+            }
         });
-    }
+    }, imageObserverOptions);
 
-    // Make function globally available
-    window.initHeroSlider = initHeroSlider;
+    // 텍스트 박스 애니메이션을 위한 Intersection Observer 설정
+    const textObserverOptions = {
+        root: null,
+        rootMargin: '-10% 0px',
+        threshold: 0.2
+    };
 
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', async function() {
-        // ReservationMapper 초기화
-        if (typeof ReservationMapper !== 'undefined') {
-            const reservationMapper = new ReservationMapper();
-            await reservationMapper.initialize();
+    const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, textObserverOptions);
 
-            // Initialize hero slider after mapper completes
-            setTimeout(() => {
-                initHeroSlider(true);
-            }, 100);
-        }
-
-        initializeTabs();
+    // 각 이미지 패널 관찰 시작
+    imagePanels.forEach(panel => {
+        imageObserver.observe(panel);
     });
 
-})();
+    // 각 텍스트 박스 관찰 시작
+    reservationBoxes.forEach(box => {
+        textObserver.observe(box);
+    });
+
+});

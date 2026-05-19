@@ -1,30 +1,21 @@
+/* CDN Fonts */
+@import url('https://use.typekit.net/vll4umt.css');
+@import url('https://fonts.cdnfonts.com/css/roustel');
+
 /* Font Faces */
 @font-face {
-    font-family: 'Escoredream';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
+    font-family: 'Aritaburi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-buri-SemiBold.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
-
-@font-face {
-    font-family: 'GyeonggiMillenniumBackground';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Marhey';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Marhey'), url('https://fonts.cdnfonts.com/s/107462/Marhey[wght].woff') format('woff');
+    font-display: swap;
 }
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'Escoredream', sans-serif;
-  --font-ko-sub: 'GyeonggiMillenniumBackground', serif;
-  --font-en-main: 'Marhey', sans-serif;
+  --font-ko-main: 'Aritaburi', sans-serif;
+  --font-ko-sub: 'Aritaburi', sans-serif;
+  --font-en-main: 'Amandine', serif;
   --color-primary: #F5F4F1;
   --color-secondary: #C36355;
 }
