@@ -33,6 +33,7 @@ class PreviewHandler {
     convertData(data) {
         // BaseDataMapper가 없으면 원본 그대로 반환 (fallback)
         if (!this.baseMapper) {
+            console.warn('BaseDataMapper not loaded, returning original data');
             return data;
         }
         return this.baseMapper.convertToCamelCase(data);
@@ -224,11 +225,7 @@ class PreviewHandler {
         // 전체 페이지 다시 렌더링 (완료 대기)
         await this.renderTemplate(this.currentData);
 
-        // 팝업 데이터가 있으면 팝업도 업데이트
-        const popupData = data?.homepage?.customFields?.popup;
-        if (popupData && window.popupManager) {
-            window.popupManager.updateFromTemplateData(data);
-        }
+        // 팝업은 POPUP_UPDATE 메시지에서만 업데이트 (다른 영역 수정 시 팝업이 다시 열리는 문제 방지)
 
         // 부모 창에 업데이트 완료 신호
         this.notifyRenderComplete('UPDATE_COMPLETE');
@@ -239,9 +236,9 @@ class PreviewHandler {
      */
     getDefaultFonts() {
         return {
-            koMain: "'ReperepointSpecialItalic', sans-serif",
-            koSub: "'Pretendard', sans-serif",
-            enMain: "'Chonburi', sans-serif"
+            koMain: "'Aritaburi', sans-serif",
+            koSub: "'Aritaburi', sans-serif",
+            enMain: "'Amandine', serif"
         };
     }
 
@@ -250,8 +247,8 @@ class PreviewHandler {
      */
     getDefaultColors() {
         return {
-            primary: '#f5f5f5',
-            secondary: '#1D3A5F'
+            primary: '#fdfcf4',
+            secondary: '#31423d'
         };
     }
 
@@ -472,12 +469,6 @@ class PreviewHandler {
      */
     async renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
-
-        // 404 페이지는 렌더링하지 않음
-        if (currentPage === '404') {
-            return;
-        }
-
         let mapper = null;
 
         // 현재 페이지에 맞는 매퍼 선택
@@ -564,6 +555,12 @@ class PreviewHandler {
         if (logoTextElement && data?.template?.logoText) {
             logoTextElement.textContent = data.template.logoText;
         }
+
+        // 슬라이더 초기화 (다른 페이지들)
+        const pageType = this.getCurrentPageType();
+        if (pageType !== 'nearby-attractions' && pageType !== 'layout-map' && window.initHeroSlider) {
+            setTimeout(() => window.initHeroSlider(), 100);
+        }
     }
 
 
@@ -649,7 +646,18 @@ class PreviewHandler {
             this.currentData.homepage.customFields.pages[page].sections = [{}];
         }
 
-        this.currentData.homepage.customFields.pages[page].sections[0][section] = data;
+        // 🔍 디버깅: 업데이트 전 sections[0] 상태
+
+        // 페이지 구조는 hero, about, closing 등 여러 섹션으로 구성됨
+        // data가 여러 섹션 키를 포함하는 풀 섹션 객체면 sections[0]에 병합
+        if (data && typeof data === 'object' && ('hero' in data || 'about' in data || 'enabled' in data)) {
+            Object.assign(this.currentData.homepage.customFields.pages[page].sections[0], data);
+        } else {
+            // 단일 섹션 업데이트
+            this.currentData.homepage.customFields.pages[page].sections[0][section] = data;
+        }
+
+        // 🔍 디버깅: 업데이트 후 sections[0] 상태
     }
 
     /**
@@ -657,6 +665,7 @@ class PreviewHandler {
      */
     handleSectionUpdate(messageData) {
         const { page, section, data } = messageData;
+
 
         // logo 섹션 특별 처리 (모든 페이지 공통)
         if (section === 'logo') {
@@ -671,7 +680,7 @@ class PreviewHandler {
         }
 
         // 지원하는 페이지 확인
-        const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions'];
+        const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions', 'nearbyAttractions', 'layoutMap'];
         if (!supportedPages.includes(page)) {
             return;
         }
@@ -739,6 +748,7 @@ class PreviewHandler {
                         break;
                     case 'about':
                         mapper.mapAboutSection();
+                        mapper.mapMarqueeSection();
                         mapper.mapIntroductionSection();
                         break;
                 }
@@ -780,50 +790,15 @@ class PreviewHandler {
                         break;
                 }
             }
-        } else if (page === 'nearbyAttractions') {
+        } else if (page === 'nearby-attractions') {
             if (window.NearbyAttractionsMapper) {
                 const mapper = this.createMapper(NearbyAttractionsMapper);
-
-                const data = this.safeGet(this.currentData, 'homepage.customFields.pages.nearbyAttractions.sections.0');
-                if (data && data.enabled === false) {
-                    this.show404Page();
-                    return;
-                }
-
-                switch (section) {
-                    case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapHeroText();
-                        break;
-                    case 'about':
-                        mapper.mapAttractionsContent();
-                        break;
-                    default:
-                        mapper.mapPage();
-                        break;
-                }
+                mapper.mapPage();
             }
-        } else if (page === 'layoutMap') {
+        } else if (page === 'layout-map') {
             if (window.LayoutMapMapper) {
                 const mapper = this.createMapper(LayoutMapMapper);
-
-                const data = this.safeGet(this.currentData, 'homepage.customFields.pages.layoutMap.sections.0');
-                if (data && data.enabled === false) {
-                    this.show404Page();
-                    return;
-                }
-
-                switch (section) {
-                    case 'hero':
-                        mapper.mapHeroSlider();
-                        break;
-                    case 'about':
-                        mapper.mapLayoutMapContent();
-                        break;
-                    default:
-                        mapper.mapPage();
-                        break;
-                }
+                mapper.mapPage();
             }
         }
     }
@@ -851,7 +826,6 @@ class PreviewHandler {
     getCurrentPageType() {
         const path = window.location.pathname;
 
-        if (path.includes('404.html')) return '404';
         if (path.includes('index.html') || path.endsWith('/') || path === '') return 'index';
         if (path.includes('main.html')) return 'main';
         if (path.includes('room.html')) return 'room';
@@ -881,11 +855,19 @@ class PreviewHandler {
         const result = { ...target };
 
         for (const key in source) {
+            // 🔍 pages 객체의 배열 병합 추적
+            if (key === 'pages' || (typeof target === 'object' && target.pages)) {
+                if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                }
+            }
+
             if (source[key] === null || source[key] === undefined) {
                 // null이나 undefined는 그대로 설정
                 result[key] = source[key];
             } else if (Array.isArray(source[key])) {
                 // 배열은 완전히 대체 (병합하지 않음)
+                if (key === 'pages' || (typeof target === 'object' && target.pages)) {
+                }
                 result[key] = [...source[key]];
             } else if (typeof source[key] === 'object') {
                 // 객체는 깊은 병합
@@ -899,20 +881,6 @@ class PreviewHandler {
         return result;
     }
 
-
-    /**
-     * 안전한 객체 접근 (경로 문자열 사용)
-     */
-    safeGet(obj, path, defaultValue = null) {
-        try {
-            const result = path.split('.').reduce((current, prop) => {
-                return current?.[prop] ?? null;
-            }, obj);
-            return result ?? defaultValue;
-        } catch (error) {
-            return defaultValue;
-        }
-    }
 
     /**
      * 렌더링 완료 신호 전송
@@ -970,17 +938,10 @@ class PreviewHandler {
             if (window.showHeaders) window.showHeaders();
         }
     }
-
-    /**
-     * 404 페이지 표시
-     */
-    show404Page() {
-        window.location.href = '404.html';
-    }
 }
 
-// 전역 인스턴스 생성 (iframe 내부일 때만 - 어드민 미리보기)
-if (!window.previewHandler && window.parent !== window) {
+// 전역 인스턴스 생성 (항상 생성 - iframe이거나 직접 로드일 때 모두)
+if (!window.previewHandler) {
     window.previewHandler = new PreviewHandler();
 }
 

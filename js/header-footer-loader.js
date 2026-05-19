@@ -53,7 +53,6 @@
             const transparentHeader = temp.querySelector('.transparent-header');
             const menuOverlay = temp.querySelector('.menu-overlay');
             const menuOverlayBg = temp.querySelector('.menu-overlay-bg');
-            const mobileFixedButtons = temp.querySelector('.mobile-fixed-buttons');
 
             // Insert overlay background first
             if (menuOverlayBg) {
@@ -68,11 +67,6 @@
             // Insert transparent header
             if (transparentHeader) {
                 document.body.insertBefore(transparentHeader, document.body.firstChild);
-            }
-
-            // Insert mobile fixed buttons
-            if (mobileFixedButtons) {
-                document.body.appendChild(mobileFixedButtons);
             }
 
             // Load header JavaScript
@@ -174,20 +168,26 @@
         const scrollBtn = document.getElementById('scrollToTop');
         if (!scrollBtn) return;
 
-        // Show/hide button based on scroll position
+        // Show/hide button based on scroll position (rAF-throttled)
+        let ticking = false;
         function toggleScrollButton() {
-            if (window.scrollY > 100) {
-                scrollBtn.classList.add('visible');
-            } else {
-                scrollBtn.classList.remove('visible');
-            }
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                if (window.scrollY > 100) {
+                    scrollBtn.classList.add('visible');
+                } else {
+                    scrollBtn.classList.remove('visible');
+                }
+                ticking = false;
+            });
         }
 
         // Initial check
         toggleScrollButton();
 
         // Listen for scroll events
-        window.addEventListener('scroll', toggleScrollButton);
+        window.addEventListener('scroll', toggleScrollButton, { passive: true });
 
         // Scroll to top on click
         scrollBtn.addEventListener('click', () => {

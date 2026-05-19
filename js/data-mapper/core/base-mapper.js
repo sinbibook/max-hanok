@@ -15,20 +15,13 @@ class BaseDataMapper {
     // ============================================================================
 
     /**
-     * URL 생성 헬퍼 (preview 쿼리스트링 자동 유지)
+     * URL 생성 헬퍼
      * @param {string} page - 페이지 파일명 (예: 'room.html')
      * @param {Object} params - 추가 쿼리 파라미터 (예: { id: 'room-001' })
      * @returns {string} 완성된 URL
      */
     buildUrl(page, params = {}) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isPreview = urlParams.get('preview') === 'true';
-
         const queryParams = new URLSearchParams(params);
-        if (isPreview) {
-            queryParams.set('preview', 'true');
-        }
-
         const queryString = queryParams.toString();
         return queryString ? `${page}?${queryString}` : page;
     }
@@ -53,7 +46,7 @@ class BaseDataMapper {
 
     /**
      * JSON 데이터 로드
-     * URL에 ?preview=true가 있으면 preview-data.json, 없으면 standard-template-data.json 로드
+     * standard-template-data.json만 사용
      * 잘못된 쿼리스트링은 자동으로 제거
      */
     async loadData() {
@@ -62,11 +55,10 @@ class BaseDataMapper {
             const urlParams = new URLSearchParams(window.location.search);
 
             // 잘못된 쿼리스트링 감지 시 index로 리다이렉트
-            // 허용된 파라미터: preview (값이 true일 때만), id
+            // 허용된 파라미터: id
+            const allowedParams = ['id'];
             const allParamsValid = Array.from(urlParams.keys()).every(key => {
-                if (key === 'preview') return urlParams.get('preview') === 'true';
-                if (key === 'id') return true;
-                return false;
+                return allowedParams.includes(key);
             });
 
             if (window.location.search && !allParamsValid) {
@@ -75,12 +67,9 @@ class BaseDataMapper {
                 return;
             }
 
-            // 항상 standard-template-data.json 로드 (preview-handler가 override함)
-            const dataFile = 'standard-template-data.json';
-
             // 캐시 방지를 위한 타임스탬프 추가
             const timestamp = new Date().getTime();
-            const response = await fetch(`./${dataFile}?t=${timestamp}`);
+            const response = await fetch(`./standard-template-data.json?t=${timestamp}`);
             const rawData = await response.json();
 
             // 스네이크 케이스를 카멜 케이스로 자동 변환

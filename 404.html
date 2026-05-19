@@ -4,82 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="페이지를 찾을 수 없습니다">
-    <meta name="keywords" content="404, 오류">
+    <meta name="keywords" content="404">
     <title>404 - 페이지를 찾을 수 없습니다</title>
 
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
-    <style>
-        /* 404 페이지 헤더 스타일 */
-        .transparent-header {
-            background-color: var(--color-primary) !important;
-        }
 
-        .error-container {
-            position: relative;
+    <style>
+        .not-found-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #fff;
-            flex-direction: column;
-            gap: 30px;
-            text-align: center;
-            padding: 100px 20px;
             min-height: 100vh;
-            font-family: var(--font-ko-main, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+            background-color: var(--color-primary);
+            padding: 40px 20px;
+            text-align: center;
         }
 
-        .error-icon {
-            width: 80px;
-            height: 80px;
-            color: var(--color-secondary, #0f0f0f);
+        .not-found-content {
+            max-width: 600px;
         }
 
-        .error-title {
-            font-size: 32px;
+        .not-found-code {
+            font-size: 5rem;
             font-weight: 700;
-            color: var(--color-secondary, #0f0f0f);
-            margin: 0;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+            font-family: var(--font-en-main);
         }
 
-        .error-message {
-            font-size: 18px;
+        .not-found-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+            line-height: 1.4;
+            letter-spacing: -0.02em;
+        }
+
+        .not-found-description {
+            font-size: 1.125rem;
+            font-weight: 400;
             color: #666;
-            max-width: 500px;
-            line-height: 1.6;
-            margin: 0;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            letter-spacing: 0.01em;
         }
 
-        .error-button {
-            padding: 15px 40px;
-            font-size: 16px;
+        .not-found-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background-color: var(--color-secondary);
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
             font-weight: 600;
-            color: #fff;
-            background-color: var(--color-secondary, #0f0f0f);
-            border: none;
             border-radius: 0;
+            border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 20px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
 
-        .error-button:hover {
-            opacity: 0.8;
+        .not-found-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: width 0.3s ease;
+        }
+
+        .not-found-button:hover::before {
+            width: 100%;
+        }
+
+        .not-found-button:hover {
             transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
-            .error-title {
-                font-size: 24px;
+            .not-found-code {
+                font-size: 3.5rem;
             }
 
-            .error-message {
-                font-size: 16px;
+            .not-found-title {
+                font-size: 1.5rem;
             }
 
-            .error-button {
-                padding: 12px 30px;
-                font-size: 14px;
+            .not-found-description {
+                font-size: 1rem;
             }
         }
     </style>
@@ -97,23 +117,16 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-
-    <div class="error-container">
-        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <circle cx="12" cy="16" r="0.5" fill="currentColor"></circle>
-        </svg>
-        <h1 class="error-title">이 페이지는 이용할 수 없습니다</h1>
-        <p class="error-message">죄송합니다. 요청하신 페이지는 현재 이용할 수 없습니다.</p>
-        <button class="error-button" onclick="window.location.href='index.html'">홈으로 돌아가기</button>
+    <div class="not-found-container">
+        <div class="not-found-content">
+            <div class="not-found-code">404</div>
+            <h1 class="not-found-title">페이지를 찾을 수 없습니다</h1>
+            <p class="not-found-description">죄송합니다. 요청하신 페이지가 존재하지 않거나 비활성화되어 있습니다.</p>
+            <a href="index.html" class="not-found-button">홈으로 돌아가기</a>
+        </div>
     </div>
 
     <!-- Preview Handler for Admin Integration -->
     <script src="js/preview-handler.js"></script>
-
-    <!-- Base Data Mapper -->
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-
 </body>
 </html>

@@ -45,50 +45,9 @@ body {
 .hero-property-name {
     flex: 0 0 auto;
     font-family: var(--font-en-main), serif;
-    font-size: 1.8rem;
+    font-size: 1.125rem;
     color: #fff;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid #fff;
-    padding-bottom: 8px;
-    margin-bottom: 30px;
-}
-
-/* Index page hero content - 우측 중앙 위치 */
-.hero-content {
-    position: absolute;
-    top: 50%;
-    right: 60px;
-    transform: translateY(-50%);
-    text-align: right;
-    color: #fff;
-    z-index: 3;
-    width: auto;
-    padding: 0;
-}
-
-/* 데스크탑에서만 max-width 적용 */
-@media (min-width: 769px) {
-    .hero-content {
-        max-width: 60%;
-    }
-}
-
-/* 큰 화면에서 더 우측으로 이동 */
-@media (min-width: 1800px) {
-    .hero-content {
-        right: 15%;
-        left: auto;
-        transform: translateY(-50%);
-    }
-}
-
-/* 매우 큰 화면에서 빨간선 위치까지 이동 */
-@media (min-width: 1920px) {
-    .hero-content {
-        right: 10%;
-        left: auto;
-        transform: translateY(-50%);
-    }
 }
 
 /* Index page progress container - 중앙 위치 */
@@ -129,13 +88,22 @@ body {
 
 /* 모바일 반응형 */
 @media (max-width: 768px) {
-    /* 모바일에서 일반 스크롤 강제 활성화 */
-    html, body {
-        overflow: auto !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
+    /* 모바일: 스크롤 컨테이너는 뷰포트 하나로 통일 (html/body 둘 다 overflow clip 사용).
+       overflow-x: hidden + overflow-y: visible 조합은 브라우저가 y를 auto로 강제 치환하여
+       중첩 스크롤 컨테이너가 되므로, clip을 써서 스크롤 컨테이너 생성 자체를 막는다.
+       결과: 페이지 스크롤은 오로지 윈도우(뷰포트) 하나만 담당 → iOS 모멘텀 꼬임 제거. */
+    html {
+        overflow-x: hidden !important; /* fallback for browsers without `clip` */
+        overflow-x: clip !important;
         height: auto !important;
-        position: relative !important;
+        scroll-behavior: auto !important;
+    }
+
+    body {
+        overflow-x: hidden !important; /* fallback */
+        overflow-x: clip !important;
+        height: auto !important;
+        overscroll-behavior-y: none;
     }
 
     /* 모바일에서는 fp-nav 보정 제거 */
@@ -148,7 +116,7 @@ body {
     }
 
     .hero-property-name {
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
 
     #fullpage {
@@ -161,17 +129,26 @@ body {
     .fp-section,
     .section {
         height: auto !important;
-        min-height: auto !important;
+        min-height: 100vh; /* fallback */
+        min-height: 100svh !important; /* 주소창 show/hide로 안 변하는 고정 뷰포트 높이 */
         position: relative !important;
         transform: none !important;
         top: auto !important;
         left: auto !important;
-        padding: 40px 0;
+    }
+
+    .fp-section.hero-section,
+    .section.hero-section,
+    .fp-section.closing-section,
+    .section.closing-section {
+        min-height: 50vh;
+        min-height: 50svh !important;
     }
 
     /* Signature Section 모바일 조정 */
     .signature-section {
-        min-height: 50vh !important;
+        min-height: 50vh;
+        min-height: 50svh !important;
         height: auto !important;
         padding: 80px 20px !important;
     }
@@ -191,6 +168,13 @@ body {
         text-align: center;
     }
 
+    .signature-section .signature-thumbnails {
+        display: none;
+    }
+
+    .signature-right {
+        display: none;
+    }
 
     /* Navigation dots 완전히 숨기기 */
     .fp-nav {
@@ -220,14 +204,7 @@ body {
     }
 
     .hero-content {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 100%;
-        transform: translateY(-50%);
-        text-align: center;
         padding: 0 40px;
-        bottom: auto;
     }
 
     /* 모바일에서 히어로 섹션 텍스트만 즉시 표시 */
@@ -251,111 +228,57 @@ body {
         transform: translateY(0) !important;
     }
 
-    /* 모바일 갤러리 영역 - 가로 스크롤 스타일 */
+    /* 모바일 갤러리 스타일 수정 */
     .gallery-section {
-        padding: 80px 0 40px 0 !important;
-        min-height: auto !important;
+        min-height: 100vh;
+        min-height: 100svh !important;
         height: auto !important;
-        background: transparent !important;
-        position: relative !important;
-        overflow: hidden !important;
-        z-index: 1 !important;
+        background: linear-gradient(to bottom, var(--color-secondary) 0%, var(--color-secondary) 50%, var(--color-primary) 50%, var(--color-primary) 100%) !important;
     }
 
-    .gallery-header {
-        margin-bottom: 40px !important;
-        text-align: center !important;
-        padding: 0 20px !important;
-        display: block !important;
-        width: 100% !important;
-    }
-
-    .gallery-title,
-    .gallery-description {
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
+    /* 모바일 주소창 show/hide 시 100vh 재계산으로 인한 스크롤 점프 방지 */
+    .gallery-section .section-wrapper,
+    .closing-section .section-wrapper {
+        height: auto !important;
+        min-height: 100vh;
+        min-height: 100svh !important;
     }
 
     .gallery-container {
-        display: flex !important;
-        flex-direction: column !important;
-        position: relative !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        justify-content: flex-start !important;
+        height: auto !important;
+        min-height: 100vh;
+        min-height: 100svh !important;
+        padding: 40px 0 !important;
     }
 
     .gallery-slider-wrapper {
-        width: 100% !important;
-        overflow: hidden !important;
-        position: relative !important;
+        height: 300px !important;
+        min-height: 300px !important;
+        overflow: visible !important;
+        transform: translateY(-50px) !important;
     }
 
-    /* 강력한 가로 슬라이더 스타일 - common.css 완전 덮어쓰기 */
-    .gallery-section .gallery-slider-wrapper .gallery-slider {
-        display: flex !important;
-        flex-direction: row !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        gap: 0px !important;
+    .gallery-slider {
+        height: 300px !important;
+        min-height: 300px !important;
         padding: 0 20px !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
-        height: auto !important;
-        width: 100% !important;
-        grid-template-columns: unset !important;
-        grid-template-rows: unset !important;
-        transform: none !important;
-        transition: none !important;
     }
 
-    .gallery-section .gallery-slider-wrapper .gallery-slider::-webkit-scrollbar {
-        display: none !important;
+    .gallery-item {
+        width: 250px !important;
+        height: 280px !important;
+        flex-shrink: 0 !important;
     }
 
-    .gallery-section .gallery-slider .gallery-item {
-        flex: 0 0 calc(100vw - 60px) !important;
-        width: calc(100vw - 60px) !important;
-        height: 350px !important;
-        border-radius: 8px !important;
-        overflow: hidden !important;
-        scroll-snap-align: center !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-        margin: 0 10px !important;
-        margin-bottom: 0 !important;
-        max-width: calc(100vw - 60px) !important;
-        min-width: calc(100vw - 40px) !important;
+    .gallery-header {
+        padding: 40px 20px !important;
+        text-align: center !important;
     }
 
-
-    .gallery-item img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-    }
-
-    /* 갤러리 아이템 콘텐츠 숨김 (모바일용) */
-    .gallery-item .gallery-content,
-    .gallery-item .gallery-item-overlay,
-    .gallery-item-description {
-        display: none !important;
-    }
-
-    /* 모든 갤러리 관련 호버/애니메이션 효과 제거 */
-    .gallery-item:hover,
-    .gallery-item.active {
-        transform: none !important;
-    }
-
-    /* Closing section이 갤러리 아래 오도록 */
-    .closing-section {
-        position: relative !important;
-        margin-top: 0 !important;
-        height: 60vh !important;
-        min-height: 60vh !important;
+    /* 모바일: 상시 구동되는 장식 애니메이션 정지 (스크롤 중 페인트 부하 제거) */
+    .essence-right::before,
+    .signature-left::before {
+        animation: none !important;
     }
 }
 
@@ -390,7 +313,7 @@ body {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: rgba(49, 66, 61, 0.3);
+    background: rgba(255,255,255,0.3);
     border: 1px solid rgba(0,0,0,0.3);
     transition: all 0.3s ease;
     cursor: pointer;
@@ -399,7 +322,7 @@ body {
 
 .fp-nav a:hover span,
 .fp-nav a.active span {
-    background: var(--color-secondary);
+    background: #fff;
     transform: scale(1.3);
     border: 1px solid rgba(0,0,0,0.4);
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
@@ -450,219 +373,379 @@ body {
 }
 
 /* ================================
-   Section 2: Essence Section - Overlapping Layout
+   Video Section Styles
    ================================ */
-.essence-section {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
+
+/* Hero Video */
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-/* 큰 화면에서만 최대 너비 제한 */
-@media (min-width: 1920px) {
-    .essence-section {
-        max-width: 1600px;
-        margin: 0 auto;
+/* Essence Video */
+.essence-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Signature Video */
+.signature-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Gallery Video */
+.gallery-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Closing Video */
+.closing-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .essence-video {
+        flex: none;
+        width: 100%;
+        height: 60vh;
+        height: 60svh;
+        min-height: 400px;
+    }
+
+    .signature-video {
+        width: 100%;
+        height: 60vh;
+        height: 60svh;
+        min-height: 300px;
+    }
+
+    .gallery-video {
+        width: 100%;
+        height: 60vh;
+        height: 60svh;
+        min-height: 300px;
     }
 }
 
-.essence-container {
+/* ================================
+   Section 2: Essence Section - Split Layout
+   ================================ */
+.essence-section {
+    background: #f5f5f5;
     position: relative;
+    height: 100vh;
+}
+
+/* Property Name EN Styling */
+.property-name-en {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-en-main), serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    font-style: italic;
+    background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) 50%, var(--color-secondary) 50%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    z-index: 10;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(99, 89, 85, 0.1);
+}
+
+.essence-container {
+    display: flex;
     height: 100%;
     width: 100%;
 }
 
-/* 이미지 영역 - 우측 75% */
+/* 왼쪽: 이미지 영역 */
 .essence-left {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 75%;
+    width: 50%;
     height: 100%;
     overflow: hidden;
-    padding: 30px;
+    position: relative;
 }
 
 .essence-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
 }
 
-/* 텍스트 영역 - 좌측에서 시작하여 이미지 위로 확장 */
+/* 오른쪽: 텍스트 영역 */
 .essence-right {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: auto;
-    max-width: 800px;
+    position: relative;
+    width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 60px;
-    z-index: 2;
+    background: var(--color-primary);
+    overflow: hidden;
+}
+
+.essence-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/shadow1.png') no-repeat right top;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: 0;
+    animation: floatingShadow 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes floatingShadow {
+    0%, 100% {
+        transform: rotate(0deg) scale(1) translate(0, 0);
+    }
+    20% {
+        transform: rotate(-1deg) scale(1.02) translate(2px, -3px);
+    }
+    40% {
+        transform: rotate(1deg) scale(1.01) translate(-3px, 2px);
+    }
+    60% {
+        transform: rotate(-0.5deg) scale(1.03) translate(4px, -2px);
+    }
+    80% {
+        transform: rotate(0.5deg) scale(1.01) translate(-2px, 3px);
+    }
 }
 
 .essence-content {
     position: relative;
+    max-width: 500px;
     width: 100%;
-    max-width: 800px;
-    text-align: left;
-    padding: 0;
+    text-align: center;
+    z-index: 1;
 }
 
 .essence-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 600;
     color: var(--color-secondary);
     margin-bottom: 20px;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.02em;
     line-height: 1.3;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-}
-
-.essence-title.animate {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .essence-divider {
-    width: 40px;
-    height: 2px;
-    background: var(--color-secondary);
-    margin: 0 0 30px 0;
+    width: 1px;
+    height: 60px;
+    background: #333;
+    margin: 0 auto 30px auto;
 }
 
 .essence-description {
-    font-family: var(--font-ko-sub);
     font-size: 1rem;
     font-weight: 400;
-    color: var(--text-secondary);
+    color: #666;
     line-height: 1.8;
     letter-spacing: 0.01em;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-    transition-delay: 0.6s;
-}
-
-.essence-description.animate {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* ================================
-   Section 3: Signature Section - New Layout
+   Section 3: Signature Section (Like Essence Section)
    ================================ */
 .signature-section {
     background: var(--color-primary);
     position: relative;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 60px;
 }
 
 .signature-container {
-    width: 100%;
-    max-width: 1200px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
+    height: 100%;
+    width: 100%;
 }
 
-/* 상단 텍스트 영역 */
+/* 왼쪽: 텍스트 영역 */
 .signature-left {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.signature-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    text-align: left;
+    height: 100%;
+    background-image: url('../images/shadow2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    pointer-events: none;
+    animation: leafFloat 15s ease-in-out infinite;
+    transform-origin: center center;
+}
+
+@keyframes leafFloat {
+    0%, 100% {
+        transform: rotate(0deg) scale(1) translate(0, 0);
+    }
+    15% {
+        transform: rotate(2deg) scale(1.02) translate(3px, -5px);
+    }
+    30% {
+        transform: rotate(-1deg) scale(1.01) translate(-2px, 2px);
+    }
+    45% {
+        transform: rotate(1.5deg) scale(1.03) translate(5px, -3px);
+    }
+    60% {
+        transform: rotate(-2deg) scale(1.01) translate(-4px, 4px);
+    }
+    75% {
+        transform: rotate(0.5deg) scale(1.02) translate(2px, -6px);
+    }
+    85% {
+        transform: rotate(-1.5deg) scale(1.01) translate(-3px, 3px);
+    }
+}
+
+.signature-content {
+    max-width: 700px;
 }
 
 .signature-title {
-    font-size: 2.2rem;
-    font-weight: 600;
+    font-size: 2rem;
+    font-weight: 700;
     color: var(--color-secondary);
-    margin-bottom: 20px;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-}
-
-.essence-divider {
-    width: 40px;
-    height: 2px;
-    background: var(--color-secondary);
-    margin: 0 0 30px 0;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    text-align: center;
 }
 
 .signature-description {
-    font-family: var(--font-ko-sub);
     font-size: 1rem;
     font-weight: 400;
-    color: var(--text-secondary);
+    color: #666;
     line-height: 1.8;
     letter-spacing: 0.01em;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-/* 하단 이미지 영역 */
-.signature-right {
-    width: 100%;
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-}
-
-/* 메인 이미지 */
-.signature-image {
-    width: 70%;
-    height: 450px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-/* 썸네일 영역 */
+/* Signature Thumbnails */
 .signature-thumbnails {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 30%;
+    gap: 25px;
+    margin-top: 80px;
+    justify-content: center;
 }
 
 .signature-thumb {
-    width: 100%;
-    height: calc((450px - 30px) / 3);
-    cursor: pointer;
-    overflow: hidden;
+    width: 200px;
+    height: 200px;
     position: relative;
-    padding: 5px;
-    box-sizing: border-box;
-    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hexagon border (only visible when active or hover) */
+.signature-thumb::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    clip-path: none;
+    transition: background 0.3s ease;
+    z-index: 1;
+}
+
+/* White padding inner layer */
+.signature-thumb::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    background: var(--color-primary);
+    clip-path: none;
+    z-index: 2;
 }
 
 .signature-thumb img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
     object-fit: cover;
+    clip-path: none;
+    transition: transform 0.3s ease;
+    z-index: 3;
 }
 
-.signature-thumb.active {
-    border-color: var(--color-secondary);
+.signature-thumb:hover img {
+    transform: translate(-50%, -50%) scale(1.1);
 }
 
-.signature-thumb:not(.active) {
-    opacity: 0.7;
+/* Active state - show border */
+.signature-thumb.active::before {
+    background: var(--color-secondary);
+}
+
+/* Hover state - show semi-transparent border */
+.signature-thumb:hover:not(.active)::before {
+    background: rgba(99, 89, 85, 0.3);
+}
+
+/* 오른쪽: 이미지 영역 */
+.signature-right {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
 .signature-image {
-    flex: 1;
-    height: 450px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    transition: opacity 0.5s ease;
 }
 
 /* ================================
@@ -728,13 +811,11 @@ body {
     align-items: center;
     gap: 25px;
     z-index: 2;
-    width: 90%;
-    margin: 0 auto;
 }
 
 /* 타이틀 */
 .closing-title {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -752,8 +833,7 @@ body {
 
 /* 설명 */
 .closing-description {
-    font-family: var(--font-ko-sub);
-    font-size: 16px;
+    font-size: 1.25rem;
     line-height: 1.8;
     font-weight: 400;
     letter-spacing: 0.02em;
@@ -771,27 +851,62 @@ body {
 }
 
 
-/* Closing Section Property Name */
-.closing-property-name {
-    font-family: var(--font-en-main), serif;
-    font-size: 2rem;
-    font-weight: 300;
-    color: var(--color-primary);
-    margin: 0 auto 30px auto;
-    width: 90%;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+/* Closing Section CTA Buttons */
+.closing-cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
     opacity: 0;
     transform: translateY(30px);
     transition: all 1s ease;
-    transition-delay: 0.2s;
-    border-bottom: 1px solid rgba(245, 245, 245, 0.5);
-    padding-bottom: 10px;
 }
 
-.closing-property-name.animate {
+.closing-cta-buttons.animate {
     opacity: 1;
     transform: translateY(0);
+    transition-delay: 1s;
+}
+
+
+.closing-btn {
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid var(--color-primary);
+    border-radius: 0;
+    color: var(--color-primary);
+    font-family: var(--font-ko-main), sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+.closing-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--color-primary);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.closing-btn:hover {
+    color: #333;
+}
+
+.closing-btn:hover::before {
+    left: 0;
+}
+
+.closing-btn span {
+    display: inline-block;
 }
 
 
@@ -816,8 +931,14 @@ body {
 
     .section {
         height: auto !important;
-        min-height: auto;
-        padding: 40px 0;
+        min-height: 100vh;
+        min-height: 100svh;
+    }
+
+    .section.hero-section,
+    .section.closing-section {
+        min-height: 50vh;
+        min-height: 50svh;
     }
 
     .fp-nav a {
@@ -834,102 +955,46 @@ body {
         padding: 60px 20px;
     }
 
-    /* Essence section mobile - 세로 레이아웃 */
-    .essence-section {
-        height: auto;
-        min-height: auto;
-        padding: 40px 0;
-    }
-
+    /* Essence section mobile */
     .essence-container {
-        display: flex;
-        flex-direction: column;
-        position: static;
-        padding: 30px 0;
+        flex-direction: column-reverse;
     }
 
-    .essence-left {
-        position: static;
+    .essence-left,
+    .essence-right {
         width: 100%;
-        box-sizing: border-box;
-        margin: 0;
-    }
-
-    .essence-image {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
+        height: 50vh;
+        height: 50svh;
     }
 
     .essence-right {
-        position: static;
-        width: 100%;
-        max-width: none;
-        height: auto;
         padding: 40px 20px;
-        display: block;
-    }
-
-    .essence-content {
-        max-width: none;
-        width: 100%;
-        text-align: left;
-    }
-
-    .essence-title {
-        font-size: 1.8rem;
     }
 
     /* Signature section mobile */
-    .signature-section {
-        padding: 40px 30px;
-        height: auto;
-        min-height: auto;
-        background: rgba(29, 58, 95, 0.1);
+    .signature-container {
+        flex-direction: column;
     }
 
-    .signature-left {
-        margin-bottom: 40px;
-    }
-
-    .signature-content {
+    .signature-left,
+    .signature-right {
+        width: 100%;
         padding: 0;
     }
 
-    .signature-title {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-        text-align: left;
-    }
-
-    .signature-description {
-        margin-bottom: 40px;
-        text-align: left;
+    /* 모바일: 고정 50svh + overflow:hidden 조합으로 signature-content가
+       위아래로 잘려 보이는 문제 제거. 콘텐츠 높이 그대로 따라가게 하되
+       flex 수직 센터 정렬은 유지 (콘텐츠가 짧을 때의 시각적 위치 보존). */
+    .signature-left {
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
+        padding: 40px 20px;
     }
 
     .signature-right {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .signature-image {
-        width: 100%;
         height: 50vh;
-        min-height: 300px;
-        object-fit: cover;
-    }
-
-    .signature-thumbnails {
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-between;
-        gap: 10px;
-    }
-
-    .signature-thumb {
-        flex: 1;
-        height: 100px;
-        max-width: calc((100% - 20px) / 3);
+        height: 50svh;
     }
 
     .essence-title {
@@ -940,10 +1005,7 @@ body {
         font-size: 0.9rem;
     }
 
-    .closing-background {
-        height: 100%;
-    }
-
+    .gallery-container,
     .closing-content {
         padding: 0 20px;
     }
@@ -958,7 +1020,7 @@ body {
     }
 
     .closing-description {
-        font-size: 16px;
+        font-size: 1.25rem;
     }
 
     .closing-title {
@@ -970,14 +1032,23 @@ body {
     .closing-description {
         bottom: 60px;
         left: 20px;
-        font-size: 16px;
+        font-size: 1rem;
     }
 
-    .closing-property-name {
-        font-size: 2rem;
-        margin-bottom: 20px;
+    .closing-cta-buttons {
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 20px;
     }
 
+    .closing-btn {
+        width: 100%;
+        padding: 14px 24px;
+    }
+
+    .gallery-slider {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
@@ -985,11 +1056,17 @@ body {
         font-size: 1.25rem;
     }
 
+    .essence-divider {
+        height: 40px;
+    }
 
     .essence-description {
         font-size: 0.875rem;
     }
 
+    .signature-section {
+        padding: 3rem 0 0 0 !important;
+    }
 
     .signature-title,
     .gallery-title {
@@ -1001,23 +1078,13 @@ body {
         font-size: 1rem;
     }
 
-    /* 480px 이하에서도 동일한 갤러리 슬라이딩 스타일 적용 */
-    .gallery-section .gallery-slider .gallery-item {
-        height: 300px !important;
-        flex: 0 0 calc(100vw - 60px) !important;
-        width: calc(100vw - 60px) !important;
-        max-width: calc(100vw - 60px) !important;
-        min-width: calc(100vw - 60px) !important;
-        margin: 0 10px !important;
-    }
-
 
     .closing-title {
         font-size: 1.5rem;
     }
 
     .closing-description {
-        font-size: 16px;
+        font-size: 1rem;
     }
 }
 
@@ -1069,6 +1136,9 @@ body {
     transition-delay: 0.7s;
 }
 
+.signature-thumb.animate-element:nth-child(3) {
+    transition-delay: 0.8s;
+}
 
 .gallery-title.animate-element {
     transition-delay: 0.1s;
@@ -1078,47 +1148,3 @@ body {
     transition-delay: 0.3s;
 }
 
-
-
-/* ================================
-   비디오 지원
-   ================================ */
-
-/* Hero */
-[data-hero-slider] video.hero-video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hero-slider:has([data-hero-slider] video.hero-video) .hero-bottom-info { display: none; }
-
-/* Essence */
-.essence-left video.essence-video { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px; }
-.essence-container:has(.essence-left .essence-video) .essence-left { flex: 2; }
-.essence-container:has(.essence-left .essence-video) .essence-right { flex: 1; }
-
-/* Signature */
-.signature-right video.signature-video { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px; }
-
-/* Gallery */
-.gallery-video-container { max-width: 1200px; margin: 20px auto 0; padding: 0 20px; height: 60vh; overflow: hidden; border-radius: 8px; box-sizing: border-box; }
-.gallery-section:has(.gallery-video-container) { padding-bottom: 100px; }
-.gallery-video-container video { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px; }
-
-/* Closing */
-.closing-background .closing-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-
-@media (max-width: 768px) {
-    .gallery-section:has(.gallery-video-container) { padding-bottom: 60px; }
-    .closing-section:has(.closing-video) { min-height: unset; }
-    .essence-container:has(.essence-left .essence-video) { padding-left: 0; padding-right: 0; }
-    .essence-container:has(.essence-left .essence-video) .essence-left { flex: none; width: 100%; height: 60vh; min-height: 400px; }
-    .essence-left video.essence-video { height: 100%; min-height: 400px; }
-}
-
-/* ================================
-   모바일 히어로 섹션 100vh 설정
-   ================================ */
-@media (max-width: 768px) {
-    .hero-section {
-        height: 60vh !important;
-        min-height: 60vh !important;
-        padding: 0 !important;
-    }
-}
