@@ -106,10 +106,10 @@
 
     // Navigation function
     window.navigateTo = function(page, id) {
-        // Close mobile menu if open
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            toggleMobileMenu();
+        // Close header menu if open
+        const headerOpened = document.getElementById('header-opened');
+        if (headerOpened && headerOpened.classList.contains('expanded')) {
+            window.toggleHeaderMenu();
         }
 
         // Navigate to page
@@ -124,6 +124,13 @@
             case 'directions':
                 url = 'directions.html';
                 break;
+            case 'nearby-attractions':
+                url = 'nearby-attractions.html';
+                break;
+            case 'layout-map':
+                url = 'layout-map.html';
+                break;
+            case 'reservation':
             case 'reservation-info':
                 url = 'reservation.html';
                 break;
@@ -264,7 +271,6 @@
                             const isNotHeader = !topHeader.contains(e.target);
 
                             if (isOutsideMenu && isNotHeader) {
-                                console.log('Outside click detected, closing menu');
                                 e.preventDefault();
                                 e.stopPropagation();
                                 toggleHeaderMenu();
@@ -276,7 +282,6 @@
                         if (e.key === 'Escape' || e.keyCode === 27) {
                             const headerOpened = document.getElementById('header-opened');
                             if (headerOpened && headerOpened.classList.contains('expanded')) {
-                                console.log('ESC key pressed, closing menu');
                                 e.preventDefault();
                                 e.stopPropagation();
                                 toggleHeaderMenu();

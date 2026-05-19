@@ -107,6 +107,9 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 시설 메뉴 동적 생성
         this.mapFacilityMenuItems();
 
+        // About 섹션 메뉴 동적 표시 (주변 관광지, 배치도)
+        this.mapAboutMenuItems();
+
         // 예약 버튼에 realtimeBookingId 매핑
         this.mapReservationButtons();
     }
@@ -183,56 +186,6 @@ class HeaderFooterMapper extends BaseDataMapper {
                 };
             }
         }
-
-        // About 섹션에 동적 메뉴 추가 (enabled가 true인 페이지만)
-        this.mapAboutMenuItems();
-    }
-
-    /**
-     * About 메뉴에 layout-map, nearby-attractions 동적 추가
-     */
-    mapAboutMenuItems() {
-        // About 메뉴 찾기 (첫 번째 dropdown-section)
-        const dropdownSections = document.querySelectorAll('.dropdown-section');
-        let aboutMenuList = null;
-
-        for (const section of dropdownSections) {
-            const title = section.querySelector('.dropdown-section-title');
-            if (title && title.textContent.includes('About')) {
-                aboutMenuList = section.querySelector('.dropdown-section-list');
-                break;
-            }
-        }
-
-        if (!aboutMenuList) return;
-
-        const customPages = [
-            {
-                name: '주변 관광지',
-                id: 'nearby-attractions',
-                path: 'nearby-attractions.html',
-                enabled: this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.enabled')
-            },
-            {
-                name: '숙소 배치도',
-                id: 'layout-map',
-                path: 'layout-map.html',
-                enabled: this.safeGet(this.data, 'homepage.customFields.pages.layoutMap.sections.0.enabled')
-            }
-        ];
-
-        // enabled가 true인 페이지만 메뉴에 추가
-        customPages.forEach(page => {
-            if (page.enabled) {
-                const existingItem = aboutMenuList.querySelector(`[data-menu-id="${page.id}"]`);
-                if (!existingItem) {
-                    const li = document.createElement('li');
-                    li.setAttribute('data-menu-id', page.id);
-                    li.innerHTML = `<a onclick="navigateTo('${page.id}')">${page.name}</a>`;
-                    aboutMenuList.appendChild(li);
-                }
-            }
-        });
     }
 
     /**
@@ -414,6 +367,37 @@ class HeaderFooterMapper extends BaseDataMapper {
             facilitiesList.appendChild(li);
         });
 
+    }
+
+    /**
+     * About 섹션 메뉴 아이템 동적 표시 (주변 관광지, 배치도)
+     * enabled: true일 때만 메뉴에 표시
+     */
+    mapAboutMenuItems() {
+        const aboutMenu = this.safeSelect('[data-about-menu]');
+        if (!aboutMenu) return;
+
+        // 주변 관광지 메뉴 표시 여부
+        const nearbyAttractionsMenu = aboutMenu.querySelector('.nearby-attractions-menu');
+        if (nearbyAttractionsMenu) {
+            const isEnabled = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.enabled');
+            if (isEnabled === true) {
+                nearbyAttractionsMenu.style.display = '';
+            } else {
+                nearbyAttractionsMenu.style.display = 'none';
+            }
+        }
+
+        // 배치도 메뉴 표시 여부
+        const layoutMapMenu = aboutMenu.querySelector('.layout-map-menu');
+        if (layoutMapMenu) {
+            const isEnabled = this.safeGet(this.data, 'homepage.customFields.pages.layoutMap.sections.0.enabled');
+            if (isEnabled === true) {
+                layoutMapMenu.style.display = '';
+            } else {
+                layoutMapMenu.style.display = 'none';
+            }
+        }
     }
 
     /**
