@@ -780,13 +780,6 @@ class PreviewHandler {
         } else if (page === 'nearbyAttractions') {
             if (window.NearbyAttractionsMapper) {
                 const mapper = this.createMapper(NearbyAttractionsMapper);
-                const nearbyAttractionsData = mapper.safeGet(this.currentData, 'homepage.customFields.pages.nearbyAttractions.sections.0');
-
-                // enabled가 false면 404 표시
-                if (nearbyAttractionsData && nearbyAttractionsData.enabled === false) {
-                    this.show404Page();
-                    return;
-                }
 
                 switch (section) {
                     case 'hero':
@@ -804,13 +797,6 @@ class PreviewHandler {
         } else if (page === 'layoutMap') {
             if (window.LayoutMapMapper) {
                 const mapper = this.createMapper(LayoutMapMapper);
-                const layoutMapData = mapper.safeGet(this.currentData, 'homepage.customFields.pages.layoutMap.sections.0');
-
-                // enabled가 false면 404 표시
-                if (layoutMapData && layoutMapData.enabled === false) {
-                    this.show404Page();
-                    return;
-                }
 
                 switch (section) {
                     case 'hero':
