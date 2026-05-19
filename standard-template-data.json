@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.207.0",
-    "generatedAt": "2026-05-19T03:54:58.736156109Z",
+    "version": "1.208.0",
+    "generatedAt": "2026-05-19T03:56:46.698701150Z",
     "templateType": "full_banner_accordion",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1882,7 +1882,7 @@
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_hero/1778205991963-qfqqhraa4q.jpg",
                     "sortOrder": 0,
                     "description": "",
-                    "isSelected": true,
+                    "isSelected": false,
                     "blockId": null
                   },
                   {
@@ -1913,7 +1913,7 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205991962-imhzssmzl6.jpg",
                       "sortOrder": 0,
                       "description": "",
-                      "isSelected": true,
+                      "isSelected": false,
                       "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
                     },
                     {
@@ -1944,7 +1944,7 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992296-f5gkm63hiq.jpg",
                       "sortOrder": 3,
                       "description": "",
-                      "isSelected": true,
+                      "isSelected": false,
                       "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
                     },
                     {
@@ -1975,7 +1975,7 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778466050220-i4xn4h4on6.jpg",
                       "sortOrder": 6,
                       "description": "",
-                      "isSelected": true,
+                      "isSelected": false,
                       "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4"
                     }
                   ],
@@ -2012,7 +2012,7 @@
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
                     "sortOrder": 0,
                     "description": "1층 : 다온방, 이든방, 별하방, 사랑방",
-                    "isSelected": false,
+                    "isSelected": true,
                     "blockId": null
                   },
                   {
