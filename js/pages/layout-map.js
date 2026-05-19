@@ -8,14 +8,7 @@
     /**
      * 페이지 초기화
      */
-    async function initPage() {
-        // enabled 값 확인 - 비활성화된 페이지는 404로 리다이렉트
-        const layoutMapData = await getLayoutMapData();
-        if (layoutMapData && !layoutMapData.enabled) {
-            window.location.href = '404.html';
-            return;
-        }
-
+    function initPage() {
         initScrollAnimations();
 
         // mapPage() 완료 후 초기화를 위해 전역 함수 노출
@@ -23,26 +16,6 @@
         window._initLayoutMap = () => {
             // 추가 초기화 필요시 여기에 작성
         };
-    }
-
-    /**
-     * Layout Map 데이터 가져오기 (preview-handler 또는 로컬 JSON)
-     */
-    async function getLayoutMapData() {
-        // preview-handler에서 데이터를 받은 경우
-        if (window.previewHandler && window.previewHandler.currentData) {
-            return window.previewHandler.currentData?.homepage?.customFields?.pages?.layoutMap?.sections?.[0];
-        }
-
-        // 로컬 데이터 로드
-        try {
-            const response = await fetch('standard-template-data.json');
-            const data = await response.json();
-            return data?.homepage?.customFields?.pages?.layoutMap?.sections?.[0];
-        } catch (error) {
-            console.error('Failed to load layout map data:', error);
-            return null;
-        }
     }
 
     /**
