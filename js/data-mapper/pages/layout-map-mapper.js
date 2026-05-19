@@ -179,8 +179,8 @@ class LayoutMapMapper extends BaseDataMapper {
     async mapPage() {
         const layoutMapData = this.getLayoutMapData();
 
-        // enabled가 false면 404로 리다이렉트
-        if (layoutMapData && layoutMapData.enabled === false) {
+        // 실제 배포 환경에서만 enabled 체크 (프리뷰는 preview-handler에서 처리)
+        if (!window.previewHandler && layoutMapData && layoutMapData.enabled === false) {
             window.location.href = '404.html';
             return;
         }

@@ -442,6 +442,13 @@ class PreviewHandler {
      */
     async renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
+
+        // 현재 데이터 업데이트 (이미 변환된 데이터)
+        this.currentData = data;
+
+        // 페이지 활성화 상태 먼저 확인 (렌더링 전)
+        this.checkPageEnabled();
+
         let mapper = null;
 
         // 현재 페이지에 맞는 매퍼 선택
@@ -829,6 +836,28 @@ class PreviewHandler {
     }
 
 
+
+    /**
+     * 중첩된 객체 속성 안전 접근
+     */
+    safeGet(obj, path, defaultValue = null) {
+        return path.split('.').reduce((current, key) => {
+            return current && current[key] !== undefined ? current[key] : defaultValue;
+        }, obj);
+    }
+
+    /**
+     * 페이지 활성화 상태 확인 및 리다이렉트
+     */
+    checkPageEnabled() {
+        const pageName = this.getCurrentPageType();
+        const enabledPath = `homepage.customFields.pages.${pageName}.sections.0.enabled`;
+        const isEnabled = this.safeGet(this.currentData, enabledPath);
+
+        if (isEnabled === false) {
+            window.location.href = '404.html';
+        }
+    }
 
     /**
      * 현재 페이지 타입 감지
