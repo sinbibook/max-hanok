@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.206.0",
-    "generatedAt": "2026-05-19T03:47:21.735911008Z",
-    "templateType": "full_banner_conveyer",
+    "version": "1.207.0",
+    "generatedAt": "2026-05-19T03:54:58.736156109Z",
+    "templateType": "full_banner_accordion",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1238,7 +1238,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_conveyer",
+    "templateType": "full_banner_accordion",
     "images": [
       {
         "logo": [
