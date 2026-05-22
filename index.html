@@ -8,8 +8,41 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/slider-arrows.css">
+    <link rel="stylesheet" href="styles/quote-section.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Italiana:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@500&display=swap"
+    />
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션 - 홈" />
@@ -24,173 +57,155 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Navigation (Header) - page-wrapper 밖으로 분리 -->
-    <div class="navigation-off">
-        <div id="header-container"></div>
-    </div>
+    <div class="page">
+      <!-- header.html include -->
+      <div id="header-container"></div>
+      <!-- ===================== 1. HERO ===================== -->
+      <section class="hero">
+        <!-- HOMEPAGE Property : 숙소명 매핑 -->
+        <div class="hero-title" data-hero-property-name>
+          <h1 class="hero-title-text"></h1>
+        </div>
+        <!-- ===================== 2. GALLERY ===================== -->
+        <div class="gallery-section" data-gallery>
+        <!-- CUSTOM FIELD : 홈 갤러리 섹션 이미지 매핑 -->
+          <div class="gallery-track" data-gallery-image>
+            <!-- 동적 생성 (index-mapper.js) -->
+          </div>
+        </div>
 
-    <div class="page-wrapper">
-        <!-- CUSTOM FIELD : 메인 소개 섹션 이미지 매핑 -->
-        <div class="main-section">
-            <div class="main-bg" data-hero-slider></div>
-            <div class="main-content">
-                <!-- custom field : 메인 소개 섹션 타이틀 매핑 -->
-                <h1 class="main-title" data-hero-title></h1>
-                <div class="title-divider"><div class="bar-progress"></div></div>
-                <!-- custom field : 메인 소개 섹션 설명 매핑 -->
-                <p class="main-subtitle" data-hero-description></p>
-            </div>
-            <div class="main-arrow">
-                <div class="arrow-left"></div>
-                <p class="arrow-number">01</p>
+        <!-- ===================== 3. CON-2: SLIDER ===================== -->
+        <div class="slider-section" data-hero-section>
+          <!-- CUSTOM FIELD : 홈 메인 소개 섹션 이미지 매핑 -->
+          <div class="slider-bg-wrap" data-hero-images>
+            <!-- 동적 생성 (index-mapper.js) -->
+          </div>
+          <div class="slider-content">
+            <!-- CUSTOM FIELD : 홈 메인 소개 섹션 설명 매핑 -->
+            <div class="slider-heading" data-hero-description></div>
+            <div class="slider-bottom">
+              <!-- CUSTOM FIELD : 홈 메인 소개 섹션 타이틀 매핑 -->
+              <h3 class="slider-subtitle" data-hero-title></h3>
+              <div class="slider-arrows">
+                <img class="arrow-line" loading="lazy" alt="" src="./images/Rectangle-37.svg" />
+                <h3 class="arrow-num">01</h3>
                 <div class="arrow-divider"></div>
-                <p class="arrow-number">10</p>
-                <div class="arrow-right"></div>
+                <h3 class="arrow-num">00</h3>
+                <img class="arrow-line arrow-line-flip" loading="lazy" alt="" src="./images/Rectangle-37.svg" />
+              </div>
             </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ===================== 4. CON-3: PROLOGUE ===================== -->
+      <section class="prologue-section" data-essence-section>
+        <img class="prologue-bg" alt="" src="./images/bg6@2x.png" />
+        <div class="prologue-inner">
+          <div class="prologue-text">
+            <!-- CUSTOM FIELD : 홈 메인 핵심 메시지 섹션 설명 매핑  -->
+            <div class="prologue-heading" data-essence-description></div>
+            <!-- CUSTOM FIELD : 홈 메인 핵심 메시지 타이틀 매핑 -->
+            <div class="prologue-desc" data-essence-title></div>
+          </div>
+          <div class="prologue-divider"></div>
         </div>
-
-        <!-- custom field : 핵심 메시지 섹션 -->
-        <div class="content-1 essence-section">
-            <div class="gradient-circle anim-scale-in"></div>
-
-            <div class="content-1-inner">
-                <div class="content-group">
-                    <div class="title-text" data-essence-description></div>
-                    <!-- custom field : 핵심 메시지 섹션 이미지 1 매핑 , 이미지는 총 4개까지만-->
-                    <div class="content-image large anim-fade-right">
-                        <img data-essence-image-1 src="" alt="">
-                    </div>
-                </div>
-
-                <div class="con1-item con1-1">
-                    <!-- custom field : 핵심 메시지 섹션 이미지 2 매핑 -->
-                    <div class="content-image anim-fade-left">
-                        <img data-essence-image-2 src="" alt="">
-                    </div>
-                    <div class="content-text anim-fade-right">
-                        <h3 class="chapter-tag"># Chapter1</h3>
-                        <!-- custom field : 핵심 메시지 섹션 이미지 1 설명 매핑 -->
-                        <p class="chapter-content" data-essence-image-description-1></p>
-                    </div>
-                </div>
-
-                <div class="con1-34">
-                    <div class="con1-item con1-3">
-                        <div class="content-text right anim-fade-left">
-                            <h3 class="chapter-tag"># Chapter2</h3>
-                            <!-- custom field : 핵심 메시지 섹션 이미지 2 설명 매핑 -->
-                            <p class="chapter-content" data-essence-image-description-2></p>
-                        </div>
-                        <!-- custom field : 핵심 메시지 섹션 이미지 3 매핑 -->
-                        <div class="content-image tall anim-fade-right">
-                            <img data-essence-image-3 src="" alt="">
-                        </div>
-                    </div>
-
-                    <div class="con1-item con1-4">
-                        <!-- custom field : 핵심 메시지 섹션 이미지 4 매핑 -->
-                        <div class="content-image wide anim-fade-up">
-                            <img data-essence-image-4 src="" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- CUSTOM FIELD : 홈 메인 핵심 메시지 이미지 매핑, 이미지는 총 3개 고정 롤링 -->
+        <div class="prologue-main-wrap" data-essence-images>
+          <!-- 동적 생성 (index-mapper.js) -->
         </div>
-
-        <!-- room preview section : 커스텀 영역 x / 룸 정보 매핑 -->
-        <div class="content-2 room-preview-section" >
-            <div class="content-2-bg"></div>
-            <div class="section-header">
-                <div class="section-header-outer">
-                    <div class="section-header-inner">
-                        <div class="text-block">
-                            <h2 class="section-title">Room Preview</h2>
-                            <!-- 문구 변경되어야 함 (숙소명 + 하드코딩 문구 )-->
-                            <p class="section-subtitle" data-rooms-subtitle></p>
-                        </div>
-                        <div class="arrow-block">
-                            <button class="nav-btn prev"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="1"/></svg></button>
-                            <button class="nav-btn next"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1"/></svg></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="room-grid">
-                <div class="room-scroll-track" data-rooms-container>
-                    <!-- 숙소관리 객실 타입 개수에 따라 동적 생성 -->
-                </div>
-            </div>
+        <div class="prologue-thumbs">
+          <!-- 동적 생성 (index-mapper.js) -->
         </div>
+      </section>
 
-        <!-- facility section : 커스텀 영역 x / 부대시설 정보 매핑 -->
-        <div class="content-3 facility-section">
+      <!-- ===================== 5. ROOMVIEW ===================== -->
+       <!-- room preview section : 커스텀 영역 x / 룸 정보 매핑 -->
+      <section class="roomview-section" data-room-section>
+        <!-- 하드코딩, 매핑 x -->
+        <b class="roomview-title">Roomview</b>
+        <div class="room-slider">
+          <div class="room-slider-track">
+            <!-- 동적 생성 (index-mapper.js) -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== 6. SPECIAL OFFERS ===================== -->
+       <!-- facility section : 커스텀 영역 x / 부대시설 정보 매핑 -->
+      <section class="special-section" data-facility-section>
+        <img class="special-bg-img" alt="" src="./images/bg5@2x.png" />
+        <div class="special-content">
+          <!-- 하드코딩, 매핑x -->
+          <b class="special-offers-label">Special offers</b>
+          <!-- 컨텐츠 레이어 (문구 위에 겹침) -->
+          <div class="special-overlay">
             <div class="special-left">
-                <div class="special-header anim-fade-up">
-                    <!-- 하드코딩, 매핑 x -->
-                    <h2>Special Here</h2>
-                    <p>머무는 동안 다양한 부대시설을 함께 즐길 수 있습니다.</p>
-                </div>
-
-                <div class="meditation-image anim-scale-in">
-                    <!-- 부대시설 이미지 동적 생성 (mapper) -->
-                </div>
-
-                <div class="meditation-info anim-fade-right">
-                    <!-- 부대시설 정보 동적 생성 (mapper) -->
-                </div>
-                <!-- 하드코딩, 매핑 x -->
-                <p class="special-script">Special Here</p>
-
-                <div class="arrow-decoration">
-                    <svg width="856" height="250" viewBox="0 0 856 250" fill="none" style="overflow:visible">
-                        <circle cx="731" cy="125" r="125" fill="white" fill-opacity="0.4"/>
-                        <path d="M0 146.5C0 146.5 448.741 146.5 776 146.5L700 89.9999" stroke="black"/>
-                    </svg>
-                </div>
+              <div class="specials-card-img-wrap">
+                <div class="specials-card-img-border"></div>
+                <!-- 동적 생성 (index-mapper.js) -->
+              </div>
             </div>
-
-            <div class="special-right anim-fade-right">
-                <div class="special-right-image">
-                    <!-- 부대시설 오른쪽 이미지 동적 생성 (mapper) -->
-                    <div class="image-overlay"></div>
-                </div>
-                <div class="special-bar">
-                    <div class="bar-line"><div class="bar-progress"></div></div>
-                    <div class="bar-controls">
-                        <button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="1"/></svg></button>
-                        <button><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1"/></svg></button>
+            <div class="special-text-group">
+              <!-- 하드코딩, 매핑x -->
+              <b class="special-here-label">Special<br /> here</b>
+              <div class="special-right">
+                <div class="special-image">
+                  <!-- 동적 생성 (index-mapper.js) -->
+                  <div class="slide">
+                    <div class="slide-dots">
+                      <img class="dot-icon" loading="lazy" alt="" src="./images/Empty-Set1.svg" />
+                      <img class="dot-icon dot-icon-flip" loading="lazy" alt="" src="./images/Empty-Set1.svg" />
                     </div>
+                    <div class="bar-icon" aria-hidden="true"><div class="bar-fill"></div></div>
+                  </div>
                 </div>
+                <!-- 슬라이드 인덱스에 맞춰 JS가 textContent와 href를 교체 -->
+                <h3 class="specials-card-title" data-titles=""></h3>
+                <div class="specials-card-body">
+                  <div class="specials-card-desc" data-descs=""></div>
+                  <a href="#" class="view-more-link view-more-link-sm" data-links="">
+                    <h3 class="view-more-text">View More</h3>
+                    <img class="view-more-line" loading="lazy" alt="" src="./images/Rectangle-8.svg" />
+                  </a>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </section>
 
-        <!-- custom field : 마무리 섹션 -->
-        <div class="content-4 closing-section">
-            <!-- custom field : 마무리 섹션 이미지 한장 매핑 -->
-            <div class="content-4-bg" data-closing-image></div>
-            <div class="content-4-text">
-                <!-- custom field : 마무리 섹션 제목 매핑 -->
-                <h2 data-closing-title></h2>
-                <!-- custom field : 마무리 섹션 내용 매핑 -->
-                <p data-closing-description></p>
-            </div>
+      <!-- ===================== 8. QUOTE (CON-5) ===================== -->
+      <section class="quote-section" data-closing-section>
+        <!-- CUSTOM FIELD : 홈 메인 마무리 섹션 이미지 매핑 -->
+        <img class="quote-bg" loading="lazy" alt="" src="" />
+        <div class="quote-content">
+          <!-- CUSTOM FIELD : 홈 메인 마무리 섹션 타이틀 매핑 -->
+          <b class="quote-title" data-closing-title></b>
+          <!-- CUSTOM FIELD : 홈 메인 마무리 섹션 설명 매핑 -->
+          <b class="quote-body" data-closing-description></b>
         </div>
+      </section>
 
-        <!-- Footer -->
-        <div id="footer-container"></div>
+      <!-- ===================== 9. FOOTER ===================== -->
+      <!-- footer.html include -->
+      <div id="footer-container"></div>
+
     </div>
+
 
     <!-- Popup -->
     <div id="popup-container"></div>
 
     <!-- Scripts -->
     <script src="js/common.js"></script>
+    <script src="js/common/scroll-reveal.js"></script>
     <script src="js/pages/index.js"></script>
 
     <!-- Data Mapper -->
     <script src="js/image-helpers.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
     <script src="js/data-mapper/pages/index-mapper.js"></script>
     <script src="js/preview-handler.js"></script>
 

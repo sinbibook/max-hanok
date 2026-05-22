@@ -90,6 +90,18 @@
         }
     }
 
+    // Footer nav 모바일 아코디언: 타이틀 클릭 시 .footer-nav-tab에 .is-open 토글
+    function setupFooterAccordion(root) {
+        const tabs = root.querySelectorAll('.footer-nav-tab');
+        tabs.forEach(tab => {
+            const item = tab.querySelector('.footer-nav-item');
+            if (!item) return;
+            item.addEventListener('click', () => {
+                tab.classList.toggle('is-open');
+            });
+        });
+    }
+
     // Footer 로드
     async function loadFooter() {
         const footerContainer = document.getElementById('footer-container');
@@ -103,6 +115,8 @@
             const response = await fetch('./common/footer.html', { cache: 'no-cache' });
             const html = await response.text();
             footerContainer.innerHTML = html;
+
+            setupFooterAccordion(footerContainer);
 
             footerLoaded = true;
             await tryInitializeMapper();

@@ -291,9 +291,9 @@
                 if (!startTime) startTime = time;
                 var elapsed = time - startTime;
                 var progress = Math.min(elapsed / duration, 1);
-                var ease = progress < 0.5
-                    ? 2 * progress * progress
-                    : -1 + (4 - 2 * progress) * progress;
+                /* cubic-bezier(0.25, 1, 0.5, 1) JS 근사 — ease-out-quart (1 - (1-x)^4) */
+                var t = 1 - progress;
+                var ease = 1 - t * t * t * t;
 
                 position = start + distance * ease;
 
@@ -352,10 +352,68 @@
         });
     }
 
+    // ==========================================
+    // Room Info 썸네일 ↔ Feature 이미지 슬라이더
+    // - .room-info-thumb 클릭 시 .room-info-feature-img src 교체
+    // - 5초 자동 롤링 (수동 클릭 시 타이머 리셋)
+    // ==========================================
+    function initRoomInfoFeatureSlider() {
+        var thumbs = document.querySelectorAll('.room-info-thumb');
+        var wraps = document.querySelectorAll('.room-info-thumb-wrap');
+        var feature = document.querySelector('.room-info-feature-img');
+        if (thumbs.length === 0 || !feature) return;
+
+        var current = 0;
+        var AUTO_INTERVAL = 3000;     /* 3초 자동 롤링 */
+        var FADE_MS = 250;
+        var autoTimer = null;
+
+        function render(idx) {
+            current = ((idx % thumbs.length) + thumbs.length) % thumbs.length;
+            var nextSrc = thumbs[current].getAttribute('src');
+
+            // is-active는 wrapper에 적용 (검정 outline은 wrapper에 그려짐)
+            wraps.forEach(function (w, i) {
+                w.classList.toggle('is-active', i === current);
+            });
+
+            feature.classList.add('is-fading');
+            setTimeout(function () {
+                feature.setAttribute('src', nextSrc);
+                requestAnimationFrame(function () {
+                    feature.classList.remove('is-fading');
+                });
+            }, FADE_MS);
+        }
+
+        function startAuto() {
+            stopAuto();
+            if (thumbs.length <= 1) return;
+            autoTimer = setInterval(function () {
+                render(current + 1);
+            }, AUTO_INTERVAL);
+        }
+        function stopAuto() {
+            if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+        }
+
+        // 클릭은 wrapper에 (img/wrap 어디 클릭해도 동작)
+        wraps.forEach(function (wrap, i) {
+            wrap.addEventListener('click', function () {
+                render(i);
+                startAuto();
+            });
+        });
+
+        render(0);
+        startAuto();
+    }
+
     // 매퍼에서 재초기화 시 사용
     window.initHeroSlider = initMainSlideshow;
     window.initRoomSlider = initRoomSlider;
     window.initRoomPreviewCarousel = initRoomPreviewCarousel;
+    window.initRoomInfoFeatureSlider = initRoomInfoFeatureSlider;
 
     // DOM ready
     document.addEventListener('DOMContentLoaded', function() {
@@ -363,5 +421,6 @@
         initRoomSlider();
         initRoomPreviewCarousel();
         initInfoAccordion();
+        initRoomInfoFeatureSlider();
     });
 })();

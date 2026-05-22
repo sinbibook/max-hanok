@@ -61,7 +61,7 @@ button {
     align-items: center;
     justify-content: center;
     overflow: visible;
-    transition: background 0.3s ease;
+    transition: background 0.3s var(--ease-elegant);
 }
 
 .header-wrapper {
@@ -194,7 +194,7 @@ button {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+    transition: opacity 0.15s var(--ease-elegant), visibility 0s linear 0.15s;
     z-index: 1002;
 }
 
@@ -203,7 +203,7 @@ button {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transition: opacity 0.15s ease, visibility 0s linear 0s;
+    transition: opacity 0.15s var(--ease-elegant), visibility 0s linear 0s;
 }
 
 /* 데스크톱: 모바일 아코디언 콘텐츠 숨김 */
@@ -240,7 +240,7 @@ button {
     visibility: hidden;
     pointer-events: none;
     z-index: 1003;
-    transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+    transition: opacity 0.15s var(--ease-elegant), visibility 0s linear 0.15s;
     max-height: calc(100vh - 200px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -253,7 +253,7 @@ button {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transition: opacity 0.15s ease, visibility 0s linear 0s;
+    transition: opacity 0.15s var(--ease-elegant), visibility 0s linear 0s;
 }
 
 .dropdown-sub a {
@@ -264,7 +264,7 @@ button {
     color: rgba(255, 255, 255, 0.75);
     white-space: nowrap;
     padding: 0 15px;
-    transition: color 0.2s ease;
+    transition: color 0.2s var(--ease-elegant);
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -299,7 +299,7 @@ button {
     line-height: 2;
     color: rgba(255, 255, 255, 0.75);
     white-space: nowrap;
-    transition: color 0.2s ease;
+    transition: color 0.2s var(--ease-elegant);
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -695,7 +695,7 @@ button {
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: none;
         border-top: none;
-        transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+        transition: opacity 0.2s var(--ease-elegant), visibility 0s linear 0.2s;
     }
 
     .site-header:hover .header-dropdown,
@@ -711,7 +711,7 @@ button {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        transition: opacity 0.2s ease, visibility 0s linear 0s;
+        transition: opacity 0.2s var(--ease-elegant), visibility 0s linear 0s;
     }
 
     /* 모바일: 아코디언 콘텐츠 표시 */
@@ -757,7 +757,7 @@ button {
         border-right: 1.5px solid white;
         border-bottom: 1.5px solid white;
         transform: rotate(45deg);
-        transition: transform 0.25s ease;
+        transition: transform 0.25s var(--ease-elegant);
     }
 
     .dropdown-col.is-expanded .col-arrow {
@@ -767,7 +767,7 @@ button {
     .dropdown-col-links {
         overflow: hidden;
         max-height: 0;
-        transition: max-height 0.3s ease, padding 0.3s ease;
+        transition: max-height 0.3s var(--ease-elegant), padding 0.3s var(--ease-elegant);
         padding: 0;
         align-items: flex-start;
     }

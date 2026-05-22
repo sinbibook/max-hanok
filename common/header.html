@@ -1,86 +1,76 @@
-<header class="site-header">
-    <div class="header-wrapper">
-        <div class="header-inner">
-            <div class="header-logo">
-                <a href="index.html">
-                    <!-- custom field : 로고 이미지 매핑 -->
-                    <img data-logo src="" alt="">
-                </a>
-            </div>
-            <nav class="header-nav">
-                <span class="header-menu-btn">Menu</span>
-                <ul class="nav-menu">
-                    <li class="has-dropdown">
-                        <a href="main.html">Prologue</a>
-                        <div class="dropdown-sub">
-                            <a href="main.html">Prologue</a>
-                            <a href="directions.html">오시는 길</a>
-                            <a href="nearby-attractions.html" class="nearby-attractions-menu" style="display:none;">주변 관광지</a>
-                            <a href="layout-map.html" class="layout-map-menu" style="display:none;">숙소 배치도</a>
-                        </div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="room.html">Rooms</a>
-                        <!-- custom field : 객실 서브메뉴 동적 생성 (mapper) -->
-                        <div class="dropdown-sub" data-rooms-sub></div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="facility.html">Specials</a>
-                        <!-- custom field : 시설 서브메뉴 동적 생성 (mapper) -->
-                        <div class="dropdown-sub" data-facilities-sub></div>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="reservation.html">Reservation</a>
-                        <div class="dropdown-sub">
-                            <a href="reservation.html">예약 안내</a>
-                        </div>
-                    </li>
-                    <!-- custom field : 예약 버튼 그룹 -->
-                    <li class="button-group">
-                        <a href="#" class="btn-book" data-booking-engine><span class="book-full">예약하기</span><span class="book-short">예약</span></a>
-                        <a href="#" class="btn-ybs" data-ybs-booking style="display: none;"><span class="ybs-full">YBS</span><span class="ybs-short">YBS</span></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-    <!-- Dropdown Background (데스크톱: 배경 패널 / 모바일: 아코디언 메뉴) -->
-    <div class="header-dropdown" aria-label="서브 메뉴">
-        <div class="header-dropdown-inner">
-            <div class="dropdown-columns">
-                <div class="dropdown-col is-expanded" role="group" aria-label="Prologue">
-                    <span class="dropdown-col-title">Prologue<span class="col-arrow"></span></span>
-                    <div class="dropdown-col-links">
-                        <a href="main.html">Prologue</a>
-                        <a href="directions.html">오시는 길</a>
-                        <a href="nearby-attractions.html" class="nearby-attractions-menu" style="display:none;">주변 관광지</a>
-                        <a href="layout-map.html" class="layout-map-menu" style="display:none;">숙소 배치도</a>
-                    </div>
-                </div>
-                <div class="dropdown-col is-expanded" role="group" aria-label="Rooms">
-                    <span class="dropdown-col-title">Rooms<span class="col-arrow"></span></span>
-                    <!-- custom field : 객실 메뉴 동적 생성 (mapper) -->
-                    <div class="dropdown-col-links" data-rooms-list></div>
-                </div>
-                <div class="dropdown-col is-expanded" role="group" aria-label="Specials">
-                    <span class="dropdown-col-title">Specials<span class="col-arrow"></span></span>
-                    <!-- custom field : 시설 메뉴 동적 생성 (mapper) -->
-                    <div class="dropdown-col-links" data-facilities-list></div>
-                </div>
-                <div class="dropdown-col is-expanded" role="group" aria-label="Reservation">
-                    <span class="dropdown-col-title">Reservation<span class="col-arrow"></span></span>
-                    <div class="dropdown-col-links">
-                        <a href="reservation.html">예약 안내</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+<header class="header">
+    <a href="./index.html" class="logo-link" aria-label="홈으로">
+      <img
+        class="logo"
+        data-logo
+        loading="lazy"
+        alt=""
+        src=""
+      />
+    </a>
+    <nav class="header-nav">
+      <div class="header-reserve-btns">
+        <a href="#" class="btn-reservation btn-salmon" data-booking-engine>예약</a>
+        <a href="#" class="btn-reservation btn-gray" data-ybs-booking>YBS</a>
+      </div>
+      <button class="menu-toggle" aria-label="메뉴 열기">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
 
-<!-- Scripts -->
-<script src="js/image-helpers.js"></script>
-<script src="js/data-mapper/core/base-mapper.js"></script>
-<script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-<script src="js/header-footer-loader.js"></script>
-<script src="js/common/header.js"></script>
+  <!-- ===================== Navigation Panel (메뉴 토글 클릭 시 표시) ===================== -->
+  <div class="navigation" hidden aria-hidden="true">
+    <main class="navigation-off">
+      <img class="navigation-off-child" loading="lazy" alt="" src="./public/Rectangle-34@2x.png" />
+      <img class="navigation-off-item" alt="" src="./public/Line-4.svg" />
+      <main class="navigation-off-inner">
+        <div class="mask-group-parent">
+          <img class="mask-group-icon" alt="" src="./public/Mask-group@2x.png" />
+
+          <div class="btn-r">
+            <button class="button-reservation" data-booking-engine>
+              <div class="button-reservation-child"></div>
+              <div class="div">예약</div>
+            </button>
+            <button class="button-ybs" data-ybs-booking>
+              <div class="button-ybs-child"></div>
+              <div class="div">YBS</div>
+            </button>
+            <img class="close-icon" alt="닫기" role="button" tabindex="0" src="./public/close.svg" />
+          </div>
+
+          <section class="room-parent">
+            <div class="prologue">
+              <!-- 하드코딩, 매핑x -->
+              <a class="reservation" href="./main.html">Prologue</a>
+              <a class="reservation" href="./directions.html"><div class="div2">오시는길</div></a>
+              <!-- 주변 관광지 / 숙소 배치도: enabled 시 header-footer-mapper.js가 동적 추가 -->
+            </div>
+            <div class="room" data-rooms-sub>
+              <!-- 동적 생성 (header-footer-mapper.js) -->
+            </div>
+            <div class="special" data-facilities-sub>
+              <!-- 동적 생성 (header-footer-mapper.js) -->
+            </div>
+            <div class="txt">
+              <!-- 하드코딩, 매핑x -->
+              <a class="reservation" href="./reservation.html">Reservation</a>
+            </div>
+          </section>
+
+          <nav class="title">
+            <!-- 하드코딩, 매핑x -->
+            <a class="specials" href="./main.html">Prologue</a>
+            <a class="specials" href="./room.html">Rooms</a>
+            <a class="specials" href="./facility.html">Specials</a>
+            <a class="specials" href="./reservation.html">Reservation</a>
+          </nav>
+        </div>
+      </main>
+    </main>
+  </div>
+
+  <script src="./js/common/header-menu.js"></script>

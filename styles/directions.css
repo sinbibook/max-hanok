@@ -1,464 +1,440 @@
-/* Directions Page Styles */
+/* ===========================
+   Directions Page Styles (Figma export 기반)
+   - 헤더/푸터는 동적 로드 (header.css / footer.css 사용)
+   - 본 파일은 Direction 콘텐츠 영역(.direction, .content, .con-2, .location-info-wrapper, .con-5)만 담당
+   =========================== */
 
-/* =========================================
-   PAGE LAYOUT
-   ========================================= */
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-.page-wrapper {
+.direction {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-whitesmoke);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;             /* footer-container 등 자식이 풀 width로 늘어나도록 */
+  isolation: isolate;
+  line-height: normal;
+  letter-spacing: normal;
+}
+/* footer-container 명시적 풀 width 보장 */
+.direction #footer-container {
+  width: 100%;
+  align-self: stretch;
+}
+
+/* ===========================
+   1. HERO (Direction 타이틀 + 화살표) — main.html con-1과 동일 사이즈/반응형 + 슬라이더
+   =========================== */
+.direction .content {
+  align-self: stretch;
+  height: auto;
+  min-height: clamp(600px, 60vw, 1082px);  /* main.html con-1-wrapper와 동일 반응형 */
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  font-size: 66px;
+  color: var(--color-white);
+  font-family: var(--font-italiana);
+  display: flex;
+  align-items: flex-start;
+}
+/* 모바일(≤768px)에서만 hero 세로 viewport 60vh로 단축 — direction/room/facility/reservation 공통
+   부모/자식 모든 hero 컨테이너에 강제 적용해서 .bg2 padding이 부풀리는 것 방지 */
+@media screen and (max-width: 768px) {
+  .direction .content,
+  .direction .con-2,
+  .direction .bg2 {
+    height: 60vh !important;
+    min-height: 60vh !important;
+    max-height: 60vh !important;
+    box-sizing: border-box !important;
+  }
+  /* bg2 padding 축소 — content가 60vh 안에 자연스럽게 정렬되도록 */
+  .direction .bg2 {
+    padding-top: 0 !important;
+    padding-bottom: 20px !important;
+    overflow: hidden !important;
+  }
+}
+
+.direction .con-2 {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--color-white);
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+/* bg2: 슬라이더 컨테이너 (background-image 제거하고 .bg-slides로 크로스페이드) */
+.direction .bg2 {
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 0 53px;
+  background-image: none;          /* 단일 bg 제거 → bg-slides 사용 */
+  max-width: 100%;
+  box-sizing: border-box;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+/* 슬라이더 layer (absolute, behind bg-child) */
+.direction .bg-slides {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.direction .bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-elegant) !important;
+}
+.direction .bg-slide.is-active {
+  opacity: 1;
+}
+/* bg-child(텍스트/화살표)는 슬라이드 위로 */
+.direction .bg-child {
+  position: relative;
+  z-index: 1;
+}
+/* 화살표 클릭 활성화 */
+.direction .arrow-child2[role="button"],
+.direction .arrow-child4[role="button"] {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.direction .bg-child {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.direction .address-container-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 40px;
+  max-width: 100%;
+}
+
+.direction .address-container {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0 1px;
+  gap: 25px;
+}
+
+.direction .direction-info {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 54px 0 57px;
+}
+
+.direction .direction2 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: 0.03em;
+  line-height: 100%;
+  font-weight: 400;
+  font-family: inherit;
+  text-shadow: var(--text-shadow-1, 0px 0px 4px rgba(0, 0, 0, 0.15));
+  z-index: 1;
+}
+
+.direction .direction-divider {
+  align-self: stretch;
+  height: 1px;
+  position: relative;
+  border-top: 1px solid var(--color-white);
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.direction .arrow-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 18px 0 19px;
+  box-sizing: border-box;
+  max-width: 100%;
+  font-size: 20px;
+}
+
+.direction .arrow2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: var(--color-white);
+  font-family: var(--font-italiana);
+}
+
+.direction .arrow-child2 {
+  height: 10px;
+  width: 100px;
+  position: relative;
+  cursor: pointer;
+}
+
+.direction .h36 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: -0.01em;
+  line-height: 36px;
+  font-weight: 400;
+  font-family: inherit;
+}
+
+.direction .arrow-child3 {
+  height: 11px;
+  width: 1px;
+  position: relative;
+  border-right: 1px solid var(--color-white);
+  box-sizing: border-box;
+}
+
+.direction .arrow-child4 {
+  height: 10px;
+  width: 100px;
+  position: relative;
+  object-fit: contain;
+  transform: scaleX(-1);
+  cursor: pointer;
+}
+
+/* ===========================
+   2. LOCATION INFO (주소 + 카카오맵)
+   =========================== */
+.direction .location-info-wrapper {
+  align-self: stretch;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 112px 20px 144px;     /* 상단 여백 112px 복원 */
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 56px;
+  color: var(--Black);
+  font-family: var(--font-italiana);
+}
+
+.direction .location-info {
+  width: 1500px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.direction .details-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
+  max-width: 100%;
+}
+
+.direction .direction3 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: 0.03em;
+  line-height: 120%;
+  font-weight: 400;
+  font-family: inherit;
+  z-index: 1;
+}
+
+.direction .address-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 26px 0 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  font-size: 20px;
+  font-family: var(--font-ko-sub);
+}
+
+.direction .h38 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: -0.01em;
+  line-height: 180%;
+  font-weight: 400;
+  font-family: inherit;
+  color: var(--Black);
+  z-index: 1;
+}
+
+.direction .map-container {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;        /* 어떤 화면에서도 가로 가운데 정렬 */
+  max-width: 100%;
+  text-align: center;
+  font-size: var(--fs-64, 64px);
+  color: var(--color-white);
+  font-family: var(--font-abhaya-libre-extrabold, "Abhaya Libre ExtraBold");
+}
+
+.direction .img1 {
+  background-color: var(--color-black);
+  overflow: hidden;
+  padding: 343px 554px 342px 555px;
+  box-sizing: border-box;
+  z-index: 1;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+#kakao-map {
+  position: absolute;
+  inset: 0;
+}
+
+/* ===========================
+   3. QUOTE 섹션은 quote-section.css 사용 (main.html과 동일)
+   .direction .quote-section은 별도 스타일 불필요
+   =========================== */
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media screen and (max-width: 1200px) {
+  .direction .location-info-wrapper {
+    padding-bottom: 94px;
+  }
+  .direction .img1 {
+    padding-left: 277px;
+    padding-right: 277px;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  /* .content padding-bottom 제거 — 모든 페이지(direction/room/facility/reservation)에서
+     hero 높이를 min-height clamp(600, 60vw, 1082px) 단일 값으로 통일 */
+  .direction .content {
+    padding-bottom: 0;
+  }
+  .direction .bg2 {
+    padding-bottom: 34px;
+  }
+  .direction .direction2 {
+    font-size: 53px;
+    line-height: 53px;
+  }
+  .direction .direction3 {
+    font-size: 45px;
+    line-height: 54px;
+  }
+  .direction .img1 {
+    padding-top: 223px;
+    padding-bottom: 222px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  /* .content padding-bottom 제거 — 모든 페이지에서 hero 높이 통일 */
+  .direction .content {
+    padding-bottom: 0;
+  }
+  .direction .location-info-wrapper {
+    padding-bottom: 61px;
+  }
+  .direction .details-container {
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .direction .img1 {
+    padding-left: 138px;
+    padding-right: 138px;
+  }
+  /* 모바일에서 Direction 타이틀 가운데 정렬 */
+  .direction .address-container-parent {
+    align-items: center !important;
+  }
+  .direction .address-container {
+    align-items: center !important;
+  }
+  .direction .direction-info {
+    justify-content: center !important;
     width: 100%;
-    background: white;
-    overflow-x: hidden;
-}
-
-#footer-container {
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    font-size: 0;
-    background: var(--color-primary);
-}
-
-/* =========================================
-   NAVIGATION (HEADER)
-   ========================================= */
-.navigation-off {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    max-width: none;
-    height: 160px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
-    z-index: 999;
-    pointer-events: none;
-    overflow: visible;
-}
-
-.navigation-off .site-header,
-.navigation-off .header-dropdown {
-    pointer-events: auto;
-}
-
-/* =========================================
-   MAIN HERO SECTION (슬라이드쇼)
-   ========================================= */
-.main-section {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 600px;
-    max-height: 960px;
-    overflow: hidden;
-}
-
-.main-bg {
-    position: absolute;
-    inset: 0;
-    transition: transform 0.1s linear;
-}
-
-.main-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-.main-slide.active {
-    opacity: 1;
-}
-
-.main-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1);
-}
-
-.main-content {
-    position: absolute;
-    left: 150px;
-    top: 0;
-    z-index: 1;
-    padding-top: 180px;
-    max-width: 1600px;
-    opacity: 0;
-    animation: heroFadeIn 1.2s ease forwards 0.3s;
-}
-
-.main-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.6;
-    color: white;
-    letter-spacing: -0.6px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    margin: 0;
-}
-
-.title-divider {
-    width: 658px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    margin-top: 12px;
-    position: relative;
-    overflow: hidden;
-}
-
-.title-divider .bar-progress {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background: white;
-    transform-origin: left;
-    transform: scaleX(0);
-    animation: progressFill 4s linear infinite;
-}
-
-.main-subtitle {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 24px);
-    line-height: 1.5;
-    color: white;
-    letter-spacing: -0.36px;
-    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-    margin: 24px 0 0;
-}
-
-.main-arrow {
-    position: absolute;
-    left: 50%;
-    bottom: 40px;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    z-index: 1;
-    opacity: 0;
-    animation: heroFadeIn 1s ease forwards 1s;
-}
-
-.arrow-left,
-.arrow-right {
-    width: 9px;
-    height: 9px;
-    border-left: 1px solid white;
-    border-bottom: 1px solid white;
-}
-
-.arrow-left {
-    transform: rotate(45deg);
-}
-
-.arrow-right {
-    transform: rotate(-135deg);
-}
-
-.arrow-number {
-    font-family: var(--font-en-main);
-    font-size: 26px;
-    line-height: 36px;
-    color: white;
-    letter-spacing: -0.39px;
-    margin: 0;
-}
-
-.arrow-divider {
-    width: 10px;
-    height: 1px;
-    background: white;
-    transform: rotate(90deg);
-}
-
-/* =========================================
-   CONTENT SECTION 4: UNDER THE MOONLIGHT
-   ========================================= */
-.content-4 {
-    position: relative;
-    width: 100%;
-    min-height: 400px;
-    height: 50vh;
-    max-height: 620px;
-    overflow: hidden;
-    margin-bottom: 0;
-    background-color: #1a1a1a;
-}
-
-.content-4-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&q=80');
-    background-size: cover;
-    background-position: center;
-}
-
-.content-4-text {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-    padding: 0 8%;
-}
-
-.content-4-text h2 {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: clamp(30px, 3.5vw, 46px);
-    line-height: 1.3;
-    color: white;
-    margin: 0 0 20px 0;
-}
-
-.content-4-text p {
-    font-family: var(--font-ko-main);
-    font-weight: 700;
-    font-size: clamp(16px, 1.6vw, 22px);
-    line-height: 1.5;
-    color: white;
-    margin: 0;
-}
-
-/* =========================================
-   Con Section (오시는 길 - Directions 고유)
-   ========================================= */
-.section-con {
-    position: relative;
-    width: 100%;
-    background-color: var(--color-primary);
-    padding: 100px 0 160px;
-}
-
-.directions-info {
-    width: 1600px;
-    max-width: none;
-    margin: 0 auto 22px;
-    padding: 0 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     box-sizing: border-box;
+  }
+  .direction .direction2 {
+    text-align: center;
+  }
 }
 
-.page-title {
-    font-family: var(--font-en-main);
-    font-weight: 700;
-    font-size: 54px;
-    color: black;
-    letter-spacing: -0.81px;
-    line-height: 1.3;
-}
-
-.address-text {
-    font-family: var(--font-ko-sub);
-    font-size: 22px;
-    color: rgba(0,0,0,0.8);
-    letter-spacing: -0.42px;
-    line-height: 1.8;
-}
-
-.address-text .bold {
-    font-weight: 700;
-}
-
-.address-text .medium {
-    font-weight: 500;
-}
-
-.map-container {
-    width: 1600px;
-    max-width: none;
-    margin: 0 auto;
-    height: 800px;
-    border: 1px solid #d3d3d3;
-    overflow: hidden;
-}
-
-.map-img-wrapper {
+@media screen and (max-width: 450px) {
+  .direction .bg2 {
+    padding-bottom: 22px;
+  }
+  .direction .address-container-parent {
+    gap: 20px;
+    align-items: center !important;        /* 모바일에서 가운데 정렬 */
+  }
+  .direction .address-container {
+    align-items: center !important;
+  }
+  .direction .direction-info {
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: center !important;
     width: 100%;
-    height: 100%;
-}
-
-.map-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* =========================================
-   ANIMATIONS
-   ========================================= */
-@keyframes progressFill {
-    0% { transform: scaleX(0); }
-    100% { transform: scaleX(1); }
-}
-
-@keyframes heroFadeIn {
-    to { opacity: 1; }
-}
-
-/* =========================================
-   TABLET RESPONSIVE (max-width: 1400px)
-   ========================================= */
-@media (max-width: 1400px) {
-    .main-content {
-        left: 5vw;
-    }
-
-    .directions-info {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 5vw;
-    }
-
-    .page-title {
-        font-size: clamp(36px, 3.5vw, 54px);
-    }
-
-    .address-text {
-        font-size: clamp(16px, 1.4vw, 22px);
-    }
-
-    .map-container {
-        width: calc(100% - 10vw);
-        max-width: 100%;
-        margin: 0 5vw;
-        height: clamp(400px, 45vw, 800px);
-    }
-}
-
-/* =========================================
-   MOBILE RESPONSIVE (max-width: 768px)
-   ========================================= */
-@media (max-width: 768px) {
-
-    /* --- NAVIGATION GRADIENT --- */
-    .navigation-off {
-        height: 100px;
-    }
-
-    /* --- HERO SECTION --- */
-    .main-section {
-        height: 500px;
-        min-height: auto;
-        max-height: none;
-    }
-
-    .main-bg {
-        display: flex;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-    }
-
-    .main-bg::-webkit-scrollbar {
-        display: none;
-    }
-
-    .main-slide {
-        position: relative;
-        inset: auto;
-        flex: 0 0 100%;
-        width: 100%;
-        height: 100%;
-        opacity: 1;
-        scroll-snap-align: start;
-    }
-
-    .main-slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .main-content {
-        left: 0;
-        right: 0;
-        padding-top: 100px;
-        max-width: none;
-        text-align: center;
-        pointer-events: none;
-    }
-
-    .main-title,
-    .main-subtitle {
-        text-align: center;
-        padding: 0 20px;
-        white-space: normal;
-        word-break: keep-all;
-    }
-
-    .main-title br,
-    .main-subtitle br {
-        display: none;
-    }
-
-    .title-divider {
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .main-arrow {
-        gap: 16px;
-    }
-
-    /* --- CONTENT 4: MOONLIGHT --- */
-    .content-4 {
-        height: 250px;
-        min-height: auto;
-        max-height: none;
-    }
-
-    .content-4-text {
-        padding: 0 20px;
-    }
-
-    /* --- SECTION-CON (오시는 길) --- */
-    .section-con {
-        padding: 60px 0 80px;
-    }
-
-    .directions-info {
-        width: 100%;
-        max-width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        margin-bottom: 40px;
-        padding: 0 20px;
-    }
-
-    .page-title {
-        font-size: 36px;
-    }
-
-    .address-text {
-        font-size: 18px;
-        line-height: 1.6;
-    }
-
-    .address-row {
-        display: block;
-    }
-
-    .map-container {
-        width: calc(100% - 40px);
-        max-width: calc(100% - 40px);
-        margin: 0 20px;
-        height: 300px;
-    }
+    box-sizing: border-box;
+  }
+  .direction .direction2 {
+    font-size: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+  .direction .direction3 {
+    font-size: 34px;
+    line-height: 40px;
+  }
+  .direction .h38 {
+    font-size: 16px;
+    line-height: 29px;
+  }
+  .direction .img1 {
+    padding: 145px 20px 144px;
+  }
 }

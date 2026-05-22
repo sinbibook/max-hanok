@@ -1,34 +1,53 @@
-<footer class="site-footer">
-    <div class="footer-wrapper">
-        <div class="footer-left">
-            <!-- custom field : 저작권 정보 자동 생성 (mapper) -->
-            <p class="footer-copyright" data-footer-copyright></p>
+<footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-nav">
+        <div class="footer-nav-tab">
+          <!-- 하드코딩, 매핑x -->
+          <h3 class="footer-nav-item">Prologue</h3>
+          <div class="footer-col">
+            <a class="footer-col-item" href="./main.html">Prologue</a>
+            <a class="footer-col-item" href="./directions.html">오시는길</a>
+            <!-- 주변 관광지 / 숙소 배치도: enabled 시 header-footer-mapper.js가 동적 추가 -->
+          </div>
         </div>
-        <div class="footer-right">
-            <div class="footer-contact">
-                <div class="contact-item">
-                    <svg class="icon-phone" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <path d="M26.9269 28.3439C24.115 28.3439 21.3369 27.7309 18.5924 26.5049C15.848 25.2789 13.3511 23.5412 11.1016 21.2917C8.85204 19.0422 7.11429 16.5452 5.8883 13.8008C4.66232 11.0564 4.04932 8.27822 4.04932 5.46632C4.04932 5.06141 4.18429 4.72398 4.45424 4.45404C4.72418 4.1841 5.06161 4.04913 5.46652 4.04913H10.9328C11.2478 4.04913 11.529 4.15598 11.7764 4.36969C12.0239 4.58339 12.1701 4.83646 12.2151 5.1289L13.0924 9.85288C13.1374 10.2128 13.1261 10.5165 13.0586 10.7639C12.9912 11.0114 12.8674 11.2251 12.6875 11.405L9.41442 14.7118C9.86432 15.5442 10.3986 16.3484 11.0172 17.1244C11.6358 17.9005 12.3163 18.6485 13.0586 19.3683C13.756 20.0657 14.4871 20.7124 15.2519 21.3085C16.0168 21.9047 16.8266 22.4502 17.6814 22.9451L20.8532 19.7732C21.0557 19.5708 21.32 19.4189 21.6462 19.3177C21.9723 19.2165 22.2929 19.1884 22.6078 19.2334L27.2643 20.1782C27.5793 20.2681 27.838 20.4312 28.0404 20.6674C28.2429 20.9036 28.3441 21.1679 28.3441 21.4604V26.9267C28.3441 27.3316 28.2091 27.6691 27.9392 27.939C27.6692 28.2089 27.3318 28.3439 26.9269 28.3439Z" fill="currentColor"/>
-                    </svg>
-                    <!-- custom field : 전화번호 매핑 -->
-                    <p class="phone-number" data-footer-phone></p>
-                </div>
-                <div class="contact-item">
-                    <!-- custom field : 주소 매핑 -->
-                    <p class="address" data-footer-address></p>
-                </div>
-            </div>
+        <div class="footer-nav-tab">
+          <!-- 하드코딩, 매핑x -->
+          <h3 class="footer-nav-item">Rooms</h3>
+          <div class="footer-col" data-rooms-list>
+            <!-- 동적 생성 (header-footer-mapper.js) -->
+          </div>
         </div>
+        <div class="footer-nav-tab">
+          <!-- 하드코딩, 매핑x -->
+          <h3 class="footer-nav-item">Specials</h3>
+          <div class="footer-col" data-facilities-list>
+            <!-- 동적 생성 (header-footer-mapper.js) -->
+          </div>
+        </div>
+        <div class="footer-nav-tab">
+          <!-- 하드코딩, 매핑x -->
+          <h3 class="footer-nav-item">Reservation</h3>
+          <div class="footer-col">
+            <a class="footer-col-item" href="./reservation.html">Reservation</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <a href="./index.html" class="footer-logo-link" aria-label="홈으로">
+          <img class="footer-logo" data-footer-logo loading="lazy" alt="" src="" />
+        </a>
+        <div class="footer-contact">
+          <div class="footer-contact-detail">
+            <b class="footer-phone" data-footer-phone></b>
+            <b class="footer-address">
+              <span data-footer-address></span><br />
+              <span data-footer-business-number></span>
+              <span data-footer-representative-name></span><br />
+              <span data-footer-ecommerce></span>
+            </b>
+          </div>
+          <b class="footer-copyright" data-footer-copyright></b>
+        </div>
+      </div>
     </div>
-    <div class="footer-divider"></div>
-    <div class="footer-info-wrapper">
-        <div class="footer-info">
-            <!-- custom field : 대표자명 매핑 -->
-            <p data-footer-representative-name></p>
-            <!-- custom field : 사업자등록번호 매핑 -->
-            <p data-footer-business-number></p>
-            <!-- custom field : 통신판매업신고번호 매핑 (없으면 숨김) -->
-            <p class="footer-info-line" data-footer-ecommerce></p>
-        </div>
-    </div>
-</footer>
+  </footer>

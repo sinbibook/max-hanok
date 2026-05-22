@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>오시는길</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/directions.css">
+    <link rel="stylesheet" href="./styles/theme.css">
+    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/footer.css">
+    <link rel="stylesheet" href="./styles/quote-section.css">
+    <link rel="stylesheet" href="./styles/directions.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana:wght@400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap">
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션 - 오시는길" />
@@ -23,91 +32,89 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
-    <!-- Navigation (Header) - page-wrapper 밖으로 분리 -->
-    <div class="navigation-off">
-        <div id="header-container"></div>
-    </div>
+    <div class="direction">
+      <!-- header.html include -->
+      <div id="header-container"></div>
 
-    <div class="page-wrapper">
-        <!-- CUSTOM FIELD : 오시는길 메인소개 섹션 이미지 (슬라이드쇼) -->
-        <div class="main-section">
-            <!-- custom field : 히어로 슬라이더 이미지 동적 생성 (mapper) -->
-            <div class="main-bg" data-hero-slider></div>
-            <div class="main-content">
-                <!-- custom field : 오시는길 타이틀 매핑 -->
-                <h1 class="main-title" data-directions-title></h1>
-                <div class="title-divider"><div class="bar-progress"></div></div>
-                <!-- custom field : 오시는길 설명 매핑 -->
-                <p class="main-subtitle" data-directions-description></p>
+      <main class="content">
+        <section class="con-2">
+          <div class="bg2">
+            <!-- CUSTOM FIELD: 오시는길 메인 소개 섹션 이미지 매핑 (동적생성) -->
+            <div class="bg-slides" data-directions-images>
+              <!-- 동적 생성 (directions-mapper.js) -->
             </div>
-            <div class="main-arrow">
-                <div class="arrow-left"></div>
-                <p class="arrow-number">01</p>
-                <div class="arrow-divider"></div>
-                <p class="arrow-number">10</p>
-                <div class="arrow-right"></div>
-            </div>
-        </div>
-
-        <!-- Con (Content) - 오시는 길 -->
-        <div class="section-con">
-            <div class="directions-info">
-                <!-- 하드코딩, 매핑 x -->
-                <p class="page-title">Directions</p>
-                <p class="address-text">
-                    <span class="address-row">
-                        <!-- 하드코딩, 매핑 x -->
-                        <span class="bold">도로명 주소 : </span>
-                        <!-- 숙소설정 상세주소 매핑 -->
-                        <span class="medium" data-directions-address></span>
-                    </span>
-                    <span class="address-row">
-                        <!-- 하드코딩, 매핑 x -->
-                        <span class="bold">전화 : </span>
-                        <!-- 숙소설정 운영정보 전화번호 매핑 -->
-                        <span class="medium" data-directions-phone></span>
-                    </span>
-                </p>
-            </div>
-
-            <div class="map-container">
-                <!-- kakao map : property.latitude, property.longitude 매핑 -->
-                <div class="map-img-wrapper">
-                    <div id="kakao-map" style="width:100%;height:100%"></div>
+            <div class="bg-child">
+              <div class="address-container-parent">
+                <div class="address-container">
+                  <div class="direction-info">
+                    <!-- 하드코딩, 매핑x -->
+                    <h2 class="direction2">Direction</h2>
+                  </div>
+                  <div class="direction-divider"></div>
                 </div>
+                <div class="arrow-container">
+                  <div class="arrow2">
+                    <img class="arrow-child2 arrow-prev" role="button" tabindex="0" aria-label="이전 슬라이드" loading="lazy" alt="" src="./public/Rectangle-37.svg" />
+                    <h3 class="h36 arrow-num-current">01</h3>
+                    <div class="arrow-child3"></div>
+                    <h3 class="h36 arrow-num-total">00</h3>
+                    <img class="arrow-child4 arrow-next" role="button" tabindex="0" aria-label="다음 슬라이드" loading="lazy" alt="" src="./public/Rectangle-37.svg" />
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
+        </section>
+      </main>
 
-        <!-- 홈 / 마무리 섹션과 동일하게 매핑 -->
-        <div class="content-4 closing-section">
-            <!-- custom field : 마무리 섹션 이미지 매핑 -->
-            <div class="content-4-bg" data-closing-image></div>
-            <div class="content-4-text">
-                <!-- custom field : 마무리 섹션 제목 매핑 -->
-                <h2 data-closing-title></h2>
-                <!-- custom field : 마무리 섹션 내용 매핑 -->
-                <p data-closing-description></p>
+      <section class="location-info-wrapper">
+        <div class="location-info">
+          <div class="details-container">
+            <!-- 하드코딩, 매핑x -->
+            <h2 class="direction3">Direction</h2>
+            <!-- 숙소 주소 매핑 -->
+            <div class="address-details">
+              <h3 class="h38" data-directions-address></h3>
             </div>
+          </div>
+          <div class="map-container">
+            <div class="img1">
+              <!-- kakao map : property.latitude, property.longitude 매핑 -->
+              <div id="kakao-map" style="width:100%;height:100%"></div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <!-- Footer -->
-        <div id="footer-container"></div>
+      <!-- CUSTOM FIELD : index closing 섹션 데이터 재사용 -->
+      <section class="quote-section" data-closing-section>
+        <img class="quote-bg" loading="lazy" alt="" src="" />
+        <div class="quote-content">
+          <b class="quote-title" data-closing-title></b>
+          <b class="quote-body" data-closing-description></b>
+        </div>
+      </section>
+
+      <!-- footer.html include -->
+      <div id="footer-container"></div>
     </div>
 
     <!-- Kakao Map SDK -->
-    <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>
+    <script type="text/javascript" src="./js/kakao-maps-sdk.js"></script>
 
     <!-- Scripts -->
-    <script src="js/common.js"></script>
-    <script src="js/pages/directions.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="./js/common/scroll-reveal.js"></script>
+    <script src="./js/pages/directions.js"></script>
 
     <!-- Data Mapper -->
-    <script src="js/image-helpers.js"></script>
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/directions-mapper.js"></script>
-    <script src="js/preview-handler.js"></script>
+    <script src="./js/image-helpers.js"></script>
+    <script src="./js/data-mapper/core/base-mapper.js"></script>
+    <script src="./js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="./js/data-mapper/pages/directions-mapper.js"></script>
+    <script src="./js/preview-handler.js"></script>
 
     <!-- Header / Footer Loader -->
-    <script src="js/header-footer-loader.js"></script>
+    <script src="./js/header-footer-loader.js"></script>
 </body>
 </html>

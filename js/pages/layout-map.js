@@ -1,179 +1,94 @@
-/**
- * Layout Map Page - Hero Slider + Scroll Animations
- */
-
+// Layout Map Page
 (function() {
-    // ============================================================================
-    // 🎬 HERO SLIDESHOW (from main.js)
-    // ============================================================================
+    'use strict';
 
-    function initMainSlideshow() {
-        const slides = document.querySelectorAll('.main-slide');
+    // Hero Slider 초기화 (directions.js 패턴 적용)
+    window.initLayoutMapHeroSlider = function() {
+        var con2 = document.querySelector('.layout-map-page .con-2');
+        if (!con2) return;
+
+        var slides = con2.querySelectorAll('.bg-slide');
         if (slides.length === 0) return;
 
-        if (slides.length === 1) {
-            slides[0].classList.add('active');
-            const arrow = document.querySelector('.main-arrow');
-            if (arrow) arrow.style.display = 'none';
-            return;
+        var currentEl = con2.querySelector('.arrow-num-current');
+        var totalEl = con2.querySelector('.arrow-num-total');
+        var prevBtn = con2.querySelector('.arrow-prev');
+        var nextBtn = con2.querySelector('.arrow-next');
+
+        var current = 0;
+        var total = slides.length;
+        var AUTO_INTERVAL = 5000;
+        var autoTimer = null;
+
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+        function render() {
+            slides.forEach(function(s, i) {
+                s.classList.toggle('is-active', i === current);
+            });
+            if (currentEl) currentEl.textContent = pad(current + 1);
+            if (totalEl) totalEl.textContent = pad(total);
         }
 
-        const bg = document.querySelector('.main-bg');
-        const progress = document.querySelector('.title-divider .bar-progress');
-        const arrowNums = document.querySelectorAll('.main-arrow .arrow-number');
-        const arrowLeft = document.querySelector('.main-arrow .arrow-left');
-        const arrowRight = document.querySelector('.main-arrow .arrow-right');
-        let current = 0;
-        const total = slides.length;
-
-        function padNum(n) {
-            return n < 10 ? '0' + n : '' + n;
+        function goTo(idx) {
+            current = ((idx % total) + total) % total;
+            render();
         }
 
-        function updateNumbers() {
-            if (arrowNums.length >= 2) {
-                arrowNums[0].textContent = padNum(current + 1);
-                arrowNums[1].textContent = padNum(total);
+        function startAuto() {
+            stopAuto();
+            if (total <= 1) return;
+            autoTimer = setInterval(function() {
+                goTo(current + 1);
+            }, AUTO_INTERVAL);
+        }
+
+        function stopAuto() {
+            if (autoTimer) {
+                clearInterval(autoTimer);
+                autoTimer = null;
             }
         }
 
-        function isMobileScroll() {
-            return bg && bg.scrollWidth > bg.clientWidth;
-        }
-
-        function goTo(index) {
-            slides[current].classList.remove('active');
-            current = (index + total) % total;
-            slides[current].classList.add('active');
-            updateNumbers();
-            if (isMobileScroll()) {
-                bg.scrollTo({ left: current * bg.offsetWidth, behavior: 'smooth' });
-            }
-        }
-
-        function restartProgress() {
-            if (!progress) return;
-            progress.style.animation = 'none';
-            progress.offsetHeight;
-            progress.style.animation = '';
-        }
-
-        updateNumbers();
-        slides[0].classList.add('active');
-
-        if (progress) {
-            progress.addEventListener('animationiteration', () => {
-                goTo(current + 1);
+        function bindArrow(el, delta) {
+            if (!el) return;
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', function() {
+                goTo(current + delta);
+                startAuto();
             });
-        }
-
-        if (bg) {
-            let scrollTimer;
-            bg.addEventListener('scroll', () => {
-                clearTimeout(scrollTimer);
-                scrollTimer = setTimeout(() => {
-                    const snapped = Math.round(bg.scrollLeft / bg.offsetWidth);
-                    if (snapped !== current && snapped >= 0 && snapped < total) {
-                        slides[current].classList.remove('active');
-                        current = snapped;
-                        slides[current].classList.add('active');
-                        updateNumbers();
-                        restartProgress();
-                    }
-                }, 150);
-            });
-        }
-
-        if (arrowLeft) {
-            arrowLeft.style.cursor = 'pointer';
-            arrowLeft.addEventListener('click', () => {
-                goTo(current - 1);
-                restartProgress();
-            });
-        }
-
-        if (arrowRight) {
-            arrowRight.style.cursor = 'pointer';
-            arrowRight.addEventListener('click', () => {
-                goTo(current + 1);
-                restartProgress();
-            });
-        }
-    }
-
-    // ============================================================================
-    // 🎨 SCROLL ANIMATIONS SETUP
-    // ============================================================================
-
-    function setupScrollAnimations() {
-        const animateElements = document.querySelectorAll('.layoutmap-block');
-
-        if (animateElements.length === 0) {
-            return;
-        }
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px 0px -50px 0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    goTo(current + delta);
+                    startAuto();
                 }
             });
-        }, observerOptions);
-
-        animateElements.forEach(element => {
-            observer.observe(element);
-        });
-    }
-
-    function setupFullBannerAnimation() {
-        const bannerElement = document.querySelector('.closing-section');
-
-        if (!bannerElement) {
-            return;
         }
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px 0px -50px 0px',
-            threshold: 0.1
-        };
+        bindArrow(prevBtn, -1);
+        bindArrow(nextBtn, 1);
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+        // Hide arrows if only one slide
+        if (total === 1) {
+            var arrowContainer = con2.querySelector('.arrow-container');
+            if (arrowContainer) arrowContainer.style.display = 'none';
+        }
 
-        observer.observe(bannerElement);
-    }
-
-    window.initHeroSlider = initMainSlideshow;
-    window.setupLayoutMapAnimations = function() {
-        setupScrollAnimations();
-        setupFullBannerAnimation();
+        render();
+        startAuto();
     };
 
-    // ============================================================================
-    // 🚀 INITIALIZATION
-    // ============================================================================
-
-    if (typeof window !== 'undefined' && window.parent === window) {
-        window.addEventListener('DOMContentLoaded', () => {
-            initMainSlideshow();
-            setTimeout(() => {
-                setupScrollAnimations();
-                setupFullBannerAnimation();
-            }, 1000);
+    // Auto initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof window.initLayoutMapHeroSlider === 'function') {
+                window.initLayoutMapHeroSlider();
+            }
         });
+    } else {
+        if (typeof window.initLayoutMapHeroSlider === 'function') {
+            window.initLayoutMapHeroSlider();
+        }
     }
 })();

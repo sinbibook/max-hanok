@@ -1,330 +1,209 @@
 /**
  * Nearby Attractions Page Data Mapper
- * nearby-attractions.html 전용 매핑 함수들을 포함한 클래스
- * BaseDataMapper를 상속받아 주변 관광지 페이지 특화 기능 제공
+ * room.html 구조를 활용한 슬라이더 방식
  */
 class NearbyAttractionsMapper extends BaseDataMapper {
     constructor() {
         super();
     }
 
-    // ============================================================================
-    // 🏠 NEARBY ATTRACTIONS PAGE SPECIFIC MAPPINGS
-    // ============================================================================
+    /**
+     * 주변 관광지 customFields 데이터 가져오기
+     */
+    getNearbyAttractionsData() {
+        return this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0');
+    }
 
     /**
-     * Hero 이미지 매핑
-     * homepage.customFields.nearbyAttractions.sections[0].hero.images → [data-nearby-attractions-hero-slider]
+     * 페이지 매핑
+     */
+    async mapPage() {
+        const data = this.getNearbyAttractionsData();
+
+        // enabled 체크 - false면 404로 리다이렉트 (preview 모드 제외)
+        if (data?.enabled === false && window.parent === window) {
+            window.location.href = './404.html';
+            return;
+        }
+
+        this.mapHeroSlider();
+        this.mapHeroContent();
+        this.mapAttractionsSlider();
+        this.mapClosingSection();
+        this.updateMetaTags({ title: '주변 관광지' });
+
+        // 슬라이더 초기화
+        if (typeof window.initNearbyAttractionsHeroSlider === 'function') {
+            window.initNearbyAttractionsHeroSlider();
+        }
+
+        // 관광지 슬라이더 초기화
+        if (typeof window.initAttractionsSlider === 'function') {
+            window.initAttractionsSlider();
+        }
+    }
+
+    /**
+     * Hero 슬라이더 이미지 생성
      */
     mapHeroSlider() {
         if (!this.isDataLoaded) return;
 
-        const heroData = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.hero');
-        const sliderContainer = this.safeSelect('[data-nearby-attractions-hero-slider]');
-        if (!sliderContainer) return;
+        const heroData = this.getNearbyAttractionsData()?.hero;
+        const sliderContainer = this.safeSelect('[data-nearby-hero-images]');
+        if (!sliderContainer || !heroData) return;
 
         const images = heroData?.images || [];
-        let normalizedImages = [];
-
-        if (images.length > 0) {
-            if (typeof images[0] === 'string') {
-                normalizedImages = images.map(url => ({ url, description: '' }));
-            } else {
-                normalizedImages = images
-                    .filter(img => img.isSelected === true)
-                    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
-                    .map(img => ({ url: img.url, description: img.description || '' }));
-            }
-        }
+        const selectedImages = ImageHelpers.getSelectedImages(images);
 
         sliderContainer.innerHTML = '';
 
-        if (normalizedImages.length === 0) {
+        if (selectedImages.length === 0) {
             const slideDiv = document.createElement('div');
-            slideDiv.className = 'main-slide';
-            const imgEl = document.createElement('img');
-            imgEl.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-            imgEl.alt = '이미지 없음';
-            imgEl.classList.add('empty-image-placeholder');
-            slideDiv.appendChild(imgEl);
+            slideDiv.className = 'bg-slide is-active';
+            slideDiv.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
             sliderContainer.appendChild(slideDiv);
             return;
         }
 
-        normalizedImages.forEach((img, index) => {
+        selectedImages.forEach((img, index) => {
             const slideDiv = document.createElement('div');
-            slideDiv.className = 'main-slide';
-            const imgEl = document.createElement('img');
-            imgEl.src = img.url;
-            imgEl.alt = this.sanitizeText(img.description, '주변 관광지 히어로 이미지');
-            imgEl.loading = index === 0 ? 'eager' : 'lazy';
-            slideDiv.appendChild(imgEl);
+            slideDiv.className = 'bg-slide' + (index === 0 ? ' is-active' : '');
+            slideDiv.style.backgroundImage = `url('${img.url}')`;
+            slideDiv.style.backgroundSize = 'cover';
+            slideDiv.style.backgroundPosition = 'center';
+            slideDiv.style.backgroundRepeat = 'no-repeat';
             sliderContainer.appendChild(slideDiv);
         });
     }
 
     /**
-     * Hero 섹션 제목/설명 매핑
-     * customFields.nearbyAttractions.sections[0].hero.title → [data-nearby-attractions-hero-title]
-     * customFields.nearbyAttractions.sections[0].hero.description → [data-nearby-attractions-hero-description]
+     * Hero 콘텐츠 매핑 (타이틀 + 설명)
      */
     mapHeroContent() {
         if (!this.isDataLoaded) return;
 
-        const heroData = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.hero');
+        const heroData = this.getNearbyAttractionsData()?.hero;
+        const titleEl = this.safeSelect('[data-nearby-hero-title]');
+        const sectionTitleEl = this.safeSelect('[data-nearby-attractions-title]');
+        const sectionDescEl = this.safeSelect('[data-nearby-attractions-description]');
 
-        // Hero 제목 매핑
-        const heroTitle = this.safeSelect('[data-nearby-attractions-hero-title]');
-        if (heroTitle) {
-            heroTitle.textContent = this.sanitizeText(heroData?.title, '주변 관광지 히어로 타이틀');
+        if (titleEl && heroData?.title) {
+            titleEl.textContent = this.sanitizeText(heroData.title, '주변 관광지 타이틀');
         }
 
-        // Hero 설명 매핑
-        const heroDescription = this.safeSelect('[data-nearby-attractions-hero-description]');
-        if (heroDescription) {
-            heroDescription.innerHTML = this._formatTextWithLineBreaks(heroData?.description, '주변 관광지 히어로 설명');
+        if (sectionTitleEl && heroData?.title) {
+            sectionTitleEl.textContent = this.sanitizeText(heroData.title, '주변 관광지 섹션 타이틀');
+        }
+
+        if (sectionDescEl && heroData?.description) {
+            sectionDescEl.textContent = this.sanitizeText(heroData.description, '주변 관광지 설명');
         }
     }
 
     /**
-     * About 섹션 매핑 (관광지 블록 목록 동적 생성)
-     * homepage.customFields.nearbyAttractions.sections[0].about[] → [data-nearby-attractions-about]
+     * 관광지 썸네일 및 설명 생성 (room.html 구조 방식)
      */
-    mapAboutSection() {
+    mapAttractionsSlider() {
         if (!this.isDataLoaded) return;
 
-        const aboutBlocks = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.about');
-        const aboutContainer = this.safeSelect('[data-nearby-attractions-about]');
-        const isDemo = this.dataSource === 'demo-filled.json';
+        const aboutData = this.getNearbyAttractionsData()?.about || [];
+        const container = this.safeSelect('[data-nearby-attractions-list]');
+        const mainImageEl = this.safeSelect('[data-main-image]');
+        const titleEl = this.safeSelect('[data-attraction-title]');
+        const descEl = this.safeSelect('[data-attraction-description]');
 
-        if (!aboutContainer) {
-            return;
+        if (!container || !mainImageEl || !titleEl || !descEl) return;
+
+        container.innerHTML = '';
+
+        // 첫 번째 항목으로 초기화
+        if (aboutData.length > 0) {
+            const firstAttracting = aboutData[0];
+            const firstImages = ImageHelpers.getSelectedImages(firstAttracting?.images || []);
+
+            mainImageEl.src = firstImages.length > 0 ? firstImages[0].url : ImageHelpers.EMPTY_IMAGE_WITH_ICON;
+            mainImageEl.alt = this.sanitizeText(firstAttracting?.title, '관광지 이미지');
+            titleEl.textContent = this.sanitizeText(firstAttracting?.title, '관광지명');
+            descEl.innerHTML = this._formatTextWithLineBreaks(firstAttracting?.description, '관광지 설명');
         }
 
-        // 기존 about-block 제거
-        aboutContainer.innerHTML = '';
+        // 썸네일 생성 (about 배열 수만큼)
+        aboutData.forEach((attraction, index) => {
+            const images = ImageHelpers.getSelectedImages(attraction?.images || []);
+            if (images.length === 0) return;
 
-        // 블록 리스트
-        let blocksToRender = Array.isArray(aboutBlocks) ? [...aboutBlocks] : [];
+            const thumbWrap = document.createElement('div');
+            thumbWrap.className = 'nearby-attractions-thumb-wrap';
+            if (index === 0) thumbWrap.classList.add('is-active');
 
-        // 블록이 없으면 최소 1개 더미 블록 추가
-        if (blocksToRender.length === 0) {
-            blocksToRender.push(isDemo ? {
-                title: '관광지명',
-                description: '관광지 설명',
-                images: ['./images/room.jpg']
-            } : {
-                title: '관광지명',
-                description: '관광지 설명',
-                images: [ImageHelpers.EMPTY_IMAGE_WITH_ICON],
-                isEmpty: true
+            const thumbImg = document.createElement('img');
+            thumbImg.className = 'nearby-attractions-thumb';
+            thumbImg.src = images[0].url;
+            thumbImg.alt = this.sanitizeText(attraction?.title, '썸네일');
+            thumbImg.loading = 'lazy';
+
+            thumbWrap.appendChild(thumbImg);
+
+            // 썸네일 클릭 이벤트 - 메인 이미지, 타이틀, 설명 업데이트 (fade 효과)
+            thumbWrap.addEventListener('click', () => {
+                // 기존 active 제거
+                const allThumbs = container.querySelectorAll('.nearby-attractions-thumb-wrap');
+                allThumbs.forEach(t => t.classList.remove('is-active'));
+
+                // 현재 active 설정
+                thumbWrap.classList.add('is-active');
+
+                // Fade out 효과
+                mainImageEl.style.opacity = '0';
+                titleEl.style.opacity = '0';
+                descEl.style.opacity = '0';
+
+                // 트랜지션 완료 후 콘텐츠 업데이트
+                setTimeout(() => {
+                    // 메인 이미지, 타이틀, 설명 업데이트
+                    mainImageEl.src = images[0].url;
+                    mainImageEl.alt = this.sanitizeText(attraction?.title, '관광지 이미지');
+                    titleEl.textContent = this.sanitizeText(attraction?.title, '관광지명');
+                    descEl.innerHTML = this._formatTextWithLineBreaks(attraction?.description, '관광지 설명');
+
+                    // Fade in 효과
+                    mainImageEl.style.opacity = '1';
+                    titleEl.style.opacity = '1';
+                    descEl.style.opacity = '1';
+                }, 250);
             });
-        }
 
-        // arrow-number 업데이트
-        const arrowCount = this.safeSelect('[data-attractions-count]');
-        if (arrowCount) {
-            arrowCount.textContent = String(blocksToRender.length).padStart(2, '0');
-        }
-
-        // 각 attraction-block 생성
-        blocksToRender.forEach((block, index) => {
-            const attractionBlock = this.createAttractionBlock(block, index, isDemo);
-            aboutContainer.appendChild(attractionBlock);
+            container.appendChild(thumbWrap);
         });
     }
 
-    /**
-     * attraction-block 생성 헬퍼 함수
-     * 3개까지 이미지를 아코디언 갤러리로 표시
-     * 번갈아 레이아웃: odd, even 클래스 추가
-     */
-    createAttractionBlock(block, index, isDemo = true) {
-        const isOdd = index % 2 === 0;
-        const defaultImage = './images/room.jpg';
-        const emptyImage = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
-
-        const block1 = document.createElement('div');
-        block1.className = `attraction-block ${isOdd ? 'odd' : 'even'}`;
-
-        // 이미지 갤러리 (최대 3개)
-        const imgWrapper = document.createElement('div');
-        imgWrapper.className = 'attraction-image';
-
-        const imgGrid = document.createElement('div');
-        imgGrid.className = 'img-grid';
-
-        // 이미지 3개까지 처리 (isSelected true만)
-        let images = block.images && Array.isArray(block.images) ? block.images : [];
-        // 객체 배열인 경우 isSelected 필터링
-        if (images.length > 0 && typeof images[0] === 'object') {
-            images = images.filter(img => img.isSelected === true);
-        }
-        images = images.slice(0, 3);
-
-        const imageUrls = images.map(img =>
-            typeof img === 'string' ? img : (img && img.url ? img.url : null)
-        ).filter(Boolean);
-
-        if (imageUrls.length === 0 && !block.isEmpty) {
-            imageUrls.push(isDemo ? defaultImage : emptyImage);
-        }
-
-        if (imageUrls.length === 0 && block.isEmpty) {
-            imageUrls.push(emptyImage);
-        }
-
-        // 이미지가 1개일 때 single-image 클래스 추가
-        if (imageUrls.length === 1) {
-            imgWrapper.classList.add('single-image');
-        }
-
-        // 이미지 아이템 생성 (최대 3개)
-        imageUrls.forEach((url, i) => {
-            const imgItem = document.createElement('div');
-            imgItem.className = `img-item i${i + 1}`;
-            // 홀수 블록(1,3,5...): 마지막 이미지 활성화 (작은이미지 왼쪽, 큰이미지 오른쪽)
-            // 짝수 블록(2,4,6...): 첫 번째 이미지 활성화 (큰이미지 왼쪽, 작은이미지 오른쪽)
-            if (index % 2 === 0 && i === imageUrls.length - 1) {
-                imgItem.classList.add('is-active');
-            } else if (index % 2 === 1 && i === 0) {
-                imgItem.classList.add('is-active');
-            }
-
-            const img = document.createElement('img');
-            img.src = url;
-            img.alt = this.sanitizeText(block.title, `관광지 이미지 ${i + 1}`);
-
-            if (url === emptyImage) {
-                img.classList.add('empty-image-placeholder');
-            }
-
-            imgItem.appendChild(img);
-            imgGrid.appendChild(imgItem);
-        });
-
-        imgWrapper.appendChild(imgGrid);
-
-        // 텍스트 부분
-        const txtWrapper = document.createElement('div');
-        txtWrapper.className = 'attraction-text';
-
-        const title = document.createElement('h2');
-        title.className = 'attraction-title';
-        title.textContent = this.sanitizeText(block.title, '관광지 제목');
-
-        const description = document.createElement('p');
-        description.className = 'attraction-desc';
-        description.innerHTML = this._formatTextWithLineBreaks(block.description, '관광지 설명');
-
-        txtWrapper.appendChild(title);
-        txtWrapper.appendChild(description);
-
-        // Block: 번갈아 배치 (odd: img-text, even: text-img)
-        if (isOdd) {
-            block1.appendChild(imgWrapper);
-            block1.appendChild(txtWrapper);
-        } else {
-            block1.appendChild(txtWrapper);
-            block1.appendChild(imgWrapper);
-        }
-
-        return block1;
-    }
-
-    /**
-     * Closing Section 매핑 (마무리 섹션)
-     * homepage.customFields.pages.index.sections[0].closing → [data-closing-image], [data-closing-title], [data-closing-description]
-     */
     mapClosingSection() {
-        if (!this.isDataLoaded) return;
-
         const closingData = this.safeGet(this.data, 'homepage.customFields.pages.index.sections.0.closing');
 
-        // 배경 이미지 매핑
-        const bgEl = this.safeSelect('[data-closing-image]');
-        if (bgEl) {
-            const selectedImages = (closingData?.images || [])
+        const bgImg = this.safeSelect('[data-closing-section] img.quote-bg');
+        if (bgImg) {
+            const images = (closingData?.images || [])
                 .filter(img => img.isSelected === true)
                 .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-            if (selectedImages.length > 0) {
-                bgEl.style.backgroundImage = `url('${selectedImages[0].url}')`;
-                bgEl.classList.remove('empty-image-placeholder');
-            } else {
-                bgEl.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
-                bgEl.classList.add('empty-image-placeholder');
-            }
+            bgImg.src = images[0]?.url || ImageHelpers.EMPTY_IMAGE_WITH_ICON;
+            bgImg.classList.toggle('empty-image-placeholder', !images[0]?.url);
         }
 
-        // 타이틀 매핑
-        const closingTitle = this.safeSelect('[data-closing-title]');
-        if (closingTitle) {
-            closingTitle.textContent = this.sanitizeText(closingData?.title, '마무리 섹션 타이틀');
-        }
+        const titleEl = this.safeSelect('[data-closing-title]');
+        if (titleEl) titleEl.textContent = this.sanitizeText(closingData?.title, '');
 
-        // 설명 매핑
-        const descElement = this.safeSelect('[data-closing-description]');
-        if (descElement) {
-            descElement.innerHTML = this._formatTextWithLineBreaks(closingData?.description, '마무리 섹션 설명');
-        }
-    }
-
-    // ============================================================================
-    // 🔄 TEMPLATE METHODS IMPLEMENTATION
-    // ============================================================================
-
-    /**
-     * Nearby Attractions 페이지 전체 매핑 실행
-     */
-    async mapPage() {
-        if (!this.isDataLoaded) {
-            return;
-        }
-
-        // enabled 체크 — false면 404로 리다이렉트
-        const pageData = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0');
-        if (pageData?.enabled === false) {
-            window.location.href = '404.html';
-            return;
-        }
-
-        // Nearby Attractions 페이지 섹션들 순차 매핑
-        this.mapHeroSlider();
-        this.mapHeroContent();
-        this.mapAboutSection();
-        this.mapClosingSection();
-
-        // 슬라이더 재초기화
-        if (typeof window.initHeroSlider === 'function') {
-            window.initHeroSlider();
-        }
-
-        // 스크롤 애니메이션 초기화 (mapper가 .attraction-block을 동적 생성한 후)
-        if (typeof window.setupNearbyAttractionsAnimations === 'function') {
-            window.setupNearbyAttractionsAnimations();
-        }
-
-        // 메타 태그 업데이트
-        this.updateMetaTags();
+        const descEl = this.safeSelect('[data-closing-description]');
+        if (descEl) descEl.innerHTML = this._formatTextWithLineBreaks(closingData?.description, '');
     }
 }
 
-// ============================================================================
-// 🚀 INITIALIZATION
-// ============================================================================
-
-// 페이지 로드 시 자동 초기화 (로컬 환경용, iframe 아닐 때만)
-if (typeof window !== 'undefined' && window.parent === window) {
-    window.addEventListener('DOMContentLoaded', async () => {
+// 자동 초기화
+if (window.parent === window) {
+    document.addEventListener('DOMContentLoaded', async () => {
         const mapper = new NearbyAttractionsMapper();
         await mapper.initialize();
     });
 }
 
-// ES6 모듈 및 글로벌 노출
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = NearbyAttractionsMapper;
-} else {
-    window.NearbyAttractionsMapper = NearbyAttractionsMapper;
-}
+window.NearbyAttractionsMapper = NearbyAttractionsMapper;

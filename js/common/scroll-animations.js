@@ -342,7 +342,7 @@ class ScrollAnimations {
                 }
 
                 wipeOverlay.style.zIndex = '10';
-                wipeOverlay.style.transition = `width ${animationSpeed}ms ease-in-out`;
+                wipeOverlay.style.transition = `width ${animationSpeed}ms cubic-bezier(0.25, 1, 0.5, 1)`;
                 wipeOverlay.style.overflow = 'hidden';
 
                 // 컨테이너 설정
@@ -450,7 +450,7 @@ class ScrollAnimations {
                     height: 100%;
                     background: inherit;
                     z-index: 10;
-                    transition: width 0.8s ease-in-out;
+                    transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
                 }
 
                 .wipe-container.wiping::before {

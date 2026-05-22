@@ -104,7 +104,7 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 시설 메뉴 동적 생성
         this.mapFacilityMenuItems();
 
-        // About 메뉴 아이템 (주변 관광지, 숙소 배치도) enabled 처리
+        // About 섹션 메뉴 동적 표시 (주변 관광지, 배치도)
         this.mapAboutMenuItems();
 
         // 예약 버튼에 realtimeBookingId 매핑
@@ -160,77 +160,136 @@ class HeaderFooterMapper extends BaseDataMapper {
 
     /**
      * 객실 메뉴 아이템 동적 생성
+     * homepage.customFields.roomtypes[] 기준으로 표시
      */
     mapRoomMenuItems() {
-        const roomData = this.safeGet(this.data, 'rooms');
-        if (!roomData || !Array.isArray(roomData)) return;
-
-        const sortedRooms = [...roomData].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
-
-        // 메가 드롭다운 + nav 서브메뉴 모두 처리
         const containers = [
             document.querySelector('[data-rooms-list]'),
             document.querySelector('[data-rooms-sub]')
         ].filter(Boolean);
 
+        containers.forEach(container => { container.innerHTML = ''; });
+
+        const roomtypes = this.safeGet(this.data, 'homepage.customFields.roomtypes');
+        if (!roomtypes || !Array.isArray(roomtypes) || roomtypes.length === 0) return;
+
         containers.forEach(container => {
-            container.innerHTML = '';
-            sortedRooms.forEach(room => {
+            const isFooter = container.closest('.footer') !== null;
+            roomtypes.forEach(room => {
                 const a = document.createElement('a');
-                a.textContent = this.getRoomName(room);
-                a.style.cursor = 'pointer';
-                a.addEventListener('click', () => {
-                    navigateTo('room', room.id);
-                });
+                a.className = isFooter ? 'footer-col-item' : 'reservation';
+                a.textContent = this.sanitizeText(room.name, '객실');
+                a.href = `./room.html?id=${room.id}`;
                 container.appendChild(a);
             });
         });
+
+        // 모바일 accordion 클론도 동기화 (buildMobileAccordion이 mapper보다 먼저 실행되어 빈 상태로 복제됨)
+        this.syncMobileAccordionClone('[data-rooms-sub]');
     }
 
     /**
      * 시설 메뉴 아이템 동적 생성
      */
     mapFacilityMenuItems() {
-        const facilityData = this.safeGet(this.data, 'property.facilities');
-        if (!facilityData || !Array.isArray(facilityData)) return;
-
-        const sortedFacilities = [...facilityData].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
-
-        // 메가 드롭다운 + nav 서브메뉴 모두 처리
         const containers = [
             document.querySelector('[data-facilities-list]'),
             document.querySelector('[data-facilities-sub]')
         ].filter(Boolean);
 
+        containers.forEach(container => { container.innerHTML = ''; });
+
+        const facilityData = this.safeGet(this.data, 'property.facilities');
+        if (!facilityData || !Array.isArray(facilityData)) return;
+
+        const sortedFacilities = [...facilityData].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+
         containers.forEach(container => {
             container.innerHTML = '';
+            const isFooter = container.closest('.footer') !== null;
             sortedFacilities.forEach(facility => {
                 const a = document.createElement('a');
+                a.className = isFooter ? 'footer-col-item' : 'reservation';
                 a.textContent = this.sanitizeText(facility.name, '시설');
-                a.href = `facility.html?id=${facility.id}`;
+                a.href = `./facility.html?id=${facility.id}`;
                 container.appendChild(a);
             });
         });
+
+        // 모바일 accordion 클론도 동기화
+        this.syncMobileAccordionClone('[data-facilities-sub]');
+    }
+
+    syncMobileAccordionClone(selector) {
+        const all = document.querySelectorAll(selector);
+        if (all.length < 2) return;
+        const original = all[0];
+        for (let i = 1; i < all.length; i++) {
+            all[i].innerHTML = original.innerHTML;
+        }
     }
 
     /**
-     * About 메뉴 아이템 (주변 관광지, 숙소 배치도) enabled 처리
+     * About 섹션 메뉴 아이템 동적 표시 (주변 관광지, 배치도)
+     * enabled: true일 때만 메뉴에 표시
      */
     mapAboutMenuItems() {
         if (!this.isDataLoaded) return;
 
-        // 주변 관광지 메뉴 enabled 처리
-        const nearbyEnabled = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.enabled');
-        const nearbyMenus = document.querySelectorAll('.nearby-attractions-menu');
-        nearbyMenus.forEach(el => {
-            el.style.display = (nearbyEnabled === true) ? '' : 'none';
-        });
+        const pages = [
+            {
+                key: 'nearbyAttractions',
+                className: 'nearby-attractions-menu',
+                label: '주변 관광지',
+                href: './nearby-attractions.html',
+                enabled: this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.enabled')
+            },
+            {
+                key: 'layoutMap',
+                className: 'layout-map-menu',
+                label: '숙소 배치도',
+                href: './layout-map.html',
+                enabled: this.safeGet(this.data, 'homepage.customFields.pages.layoutMap.sections.0.enabled')
+            }
+        ];
 
-        // 숙소 배치도 메뉴 enabled 처리
-        const layoutEnabled = this.safeGet(this.data, 'homepage.customFields.pages.layoutMap.sections.0.enabled');
-        const layoutMenus = document.querySelectorAll('.layout-map-menu');
-        layoutMenus.forEach(el => {
-            el.style.display = (layoutEnabled === true) ? '' : 'none';
+        // 헤더 .prologue 컨테이너들 (원본 + 모바일 클론 모두)
+        const headerPrologues = document.querySelectorAll('.navigation .prologue');
+        // 푸터 .footer-col (Prologue 탭)
+        const footerCols = document.querySelectorAll('.footer .footer-nav-tab:first-child .footer-col');
+
+        pages.forEach(({ className, label, href, enabled }) => {
+            // 헤더
+            headerPrologues.forEach(prologue => {
+                const existing = prologue.querySelector(`.${className}`);
+                if (enabled === true) {
+                    if (!existing) {
+                        const a = document.createElement('a');
+                        a.className = `reservation ${className}`;
+                        a.href = href;
+                        a.innerHTML = `<div class="div2">${label}</div>`;
+                        prologue.appendChild(a);
+                    }
+                } else {
+                    if (existing) existing.remove();
+                }
+            });
+
+            // 푸터
+            footerCols.forEach(col => {
+                const existing = col.querySelector(`.${className}`);
+                if (enabled === true) {
+                    if (!existing) {
+                        const a = document.createElement('a');
+                        a.className = `footer-col-item ${className}`;
+                        a.href = href;
+                        a.textContent = label;
+                        col.appendChild(a);
+                    }
+                } else {
+                    if (existing) existing.remove();
+                }
+            });
         });
     }
 
