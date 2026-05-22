@@ -305,4 +305,89 @@ document.addEventListener('DOMContentLoaded', function() {
         textObserver.observe(box);
     });
 
+    /* ====================================================================
+       Reservation 탭 메뉴 (Figma 디자인)
+       - 클릭 시 해당 섹션으로 스크롤 + 활성 탭 indicator 갱신
+       - hover 시 indicator(bg-child7)가 hover된 탭 아래로 이동
+       - hover/활성 시 텍스트 핑크색 (CSS에서 처리)
+       ==================================================================== */
+    (function () {
+        var tabs = document.querySelectorAll('.reservation-page .tab > .b11, .reservation-page .tab > .b12');
+        var indicator = document.querySelector('.reservation-page .bg-child7');
+        if (tabs.length === 0) return;
+
+        var activeIdx = 0;
+
+        function moveIndicatorTo(idx) {
+            if (!indicator || !tabs[idx]) return;
+            var rect = tabs[idx].getBoundingClientRect();
+            var parentRect = tabs[idx].closest('.bg9, .tab-list-parent') || tabs[idx].parentElement;
+            var pRect = parentRect.getBoundingClientRect();
+            // indicator 폭 = 탭 텍스트 폭 + 좌우 24px 버퍼 → 반응형으로 폰트 사이즈/뷰포트에 맞춰 자동 조정
+            var BUFFER = 24;
+            var indicatorW = rect.width + BUFFER * 2;
+            indicator.style.width = indicatorW + 'px';
+            indicator.style.left = (rect.left - pRect.left - BUFFER) + 'px';
+        }
+
+        function setActive(idx) {
+            activeIdx = idx;
+            tabs.forEach(function (t, i) {
+                t.classList.toggle('is-active', i === idx);
+            });
+            moveIndicatorTo(idx);
+        }
+
+        tabs.forEach(function (tab, i) {
+            tab.addEventListener('click', function () {
+                setActive(i);
+                // 클릭 시 해당 섹션으로 페이지 스크롤 — sticky 탭 영역 + 30px 여백 만큼 offset
+                var key = tab.dataset.tab;
+                var target = document.querySelector('.reservation-page [data-tab-content="' + key + '"]');
+                if (!target) return;
+                var tabContainer = document.querySelector('.reservation-page .tab-container-inner');
+                var tabHeight = tabContainer ? tabContainer.getBoundingClientRect().height : 0;
+                var stickyTop = tabContainer ? (parseInt(window.getComputedStyle(tabContainer).top, 10) || 158) : 158;
+                var offset = stickyTop + tabHeight + 30;
+                var targetTop = target.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                    top: targetTop - offset,
+                    behavior: 'smooth'
+                });
+            });
+            tab.addEventListener('mouseenter', function () {
+                moveIndicatorTo(i);
+            });
+            tab.addEventListener('mouseleave', function () {
+                moveIndicatorTo(activeIdx);
+            });
+        });
+
+        if (tabs[0]) setActive(0);
+        window.addEventListener('resize', function () {
+            moveIndicatorTo(activeIdx);
+        });
+
+        /* 컨텐츠 동적 clip-path: 스크롤 시 .txt17의 visible 영역을 viewport 기준 "탭 하단 + 30px"
+           아래로 잘라서, 탭 위쪽으로 올라간 컨텐츠는 렌더링 자체가 안 되게 처리.
+           흰색 박스/마스크/blur 없이 컨텐츠 노출 영역만 정확히 제한 */
+        var txt17 = document.querySelector('.reservation-page .txt17');
+        var tabContainer = document.querySelector('.reservation-page .tab-container-inner');
+        if (txt17 && tabContainer) {
+            function updateClip() {
+                var tabRect = tabContainer.getBoundingClientRect();
+                var txtRect = txt17.getBoundingClientRect();
+                // 탭 박스 bottom = sticky top + 탭 height + padding-bottom(30px) — 이미 모두 포함된 값
+                var maskBottomY = tabRect.bottom;
+                // txt17 기준 좌표로 변환: viewport y → element-local y
+                var insetTop = Math.max(0, maskBottomY - txtRect.top);
+                txt17.style.clipPath = 'inset(' + insetTop + 'px 0 0 0)';
+            }
+            // 초기 적용 + scroll/resize 시 갱신 (passive로 성능 보장)
+            updateClip();
+            window.addEventListener('scroll', updateClip, { passive: true });
+            window.addEventListener('resize', updateClip);
+        }
+    })();
+
 });

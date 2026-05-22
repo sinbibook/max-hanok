@@ -3,12 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>페이지를 찾을 수 없습니다</title>
+    <meta name="description" content="페이지를 찾을 수 없습니다">
+    <title>404 - 페이지를 찾을 수 없습니다</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/404.css">
+    <link rel="stylesheet" href="./styles/theme.css">
+    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/footer.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana:wght@400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap">
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .error-page {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #footer-placeholder {
+            margin-top: auto;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 120px 20px 50px;
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 900;
+            color: var(--color-secondary, #658399);
+            line-height: 1;
+            margin-bottom: 20px;
+            font-family: var(--font-italiana);
+        }
+
+        .error-title {
+            font-size: clamp(24px, 5vw, 40px);
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            font-family: var(--font-pretendard);
+        }
+
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 500px;
+            font-family: var(--font-pretendard);
+        }
+
+        .error-button {
+            display: inline-block;
+            padding: 14px 48px;
+            background: var(--color-secondary, #658399);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-pretendard);
+            font-size: 16px;
+        }
+
+        .error-button:hover {
+            background: #5a7185;
+            transform: translateY(-2px);
+        }
+
+        @media screen and (max-width: 768px) {
+            .error-container {
+                padding: 80px 20px 30px;
+            }
+
+            .error-code {
+                font-size: 70px;
+            }
+        }
+    </style>
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 펜션" />
@@ -23,71 +118,33 @@
   <meta name="twitter:image" content="https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg" />
 </head>
 <body>
+    <div class="error-page">
+        <!-- Include Header -->
+        <div id="header-placeholder"></div>
 
-    <div id="app" class="error-page-container">
-        <div class="error-content">
-            <div class="error-code">404</div>
-            <h1 class="error-title">페이지를 찾을 수 없습니다</h1>
-            <p class="error-description">
-                요청하신 페이지는 이용할 수 없거나 삭제되었습니다.
+        <!-- Error Content -->
+        <main class="error-container">
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">페이지를 찾을 수 없습니다</h2>
+            <p class="error-message">
+                요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br>
+                홈으로 돌아가기 버튼을 클릭해주세요.
             </p>
-            <a href="index.html" class="error-button" onclick="goHome(); return false;">홈으로 돌아가기</a>
-        </div>
+            <button class="error-button" onclick="window.location.href='./index.html'">
+                홈으로 돌아가기
+            </button>
+        </main>
+
+        <!-- Include Footer -->
+        <div id="footer-placeholder"></div>
     </div>
 
-    <!-- Scripts for preview handler -->
-    <script src="js/common.js"></script>
-    <script src="js/image-helpers.js"></script>
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/preview-handler.js"></script>
-
-    <!-- 홈으로 이동 -->
-    <script>
-        function goHome() {
-            location.replace('index.html');
-        }
-
-        // Preview 모드에서 버튼 숨기기
-        if (typeof window !== 'undefined' && window.parent !== window) {
-            window.addEventListener('DOMContentLoaded', () => {
-                const homeButton = document.querySelector('.error-button');
-                if (homeButton) {
-                    homeButton.style.display = 'none';
-                }
-            });
-        }
-    </script>
-
-    <!-- 404 페이지 상태 감시 -->
-    <script>
-        (function() {
-            function checkDisabledPages() {
-                if (!window.PreviewHandler || !window.PreviewHandler.currentData) return;
-
-                const data = window.PreviewHandler.currentData;
-
-                // 모든 페이지의 enabled 상태 확인 (어느 페이지에서 404가 됐는지 모르므로 전부 확인)
-                const nearbyEnabled = data?.homepage?.customFields?.pages?.nearbyAttractions?.sections?.[0]?.enabled;
-                if (nearbyEnabled === true) {
-                    location.replace('nearby-attractions.html');
-                    return;
-                }
-
-                const layoutEnabled = data?.homepage?.customFields?.pages?.layoutMap?.sections?.[0]?.enabled;
-                if (layoutEnabled === true) {
-                    location.replace('layout-map.html');
-                    return;
-                }
-            }
-
-            if (typeof window !== 'undefined' && window.parent === window) {
-                window.addEventListener('DOMContentLoaded', () => {
-                    setTimeout(checkDisabledPages, 500);
-                    setInterval(checkDisabledPages, 1000);
-                });
-            }
-        })();
-    </script>
-
+    <!-- Scripts -->
+    <script src="./js/common.js"></script>
+    <script src="./js/image-helpers.js"></script>
+    <script src="./js/data-mapper/core/base-mapper.js"></script>
+    <script src="./js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="./js/preview-handler.js"></script>
+    <script src="./js/header-footer-loader.js"></script>
 </body>
 </html>

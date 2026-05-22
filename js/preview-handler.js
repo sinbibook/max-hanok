@@ -199,7 +199,6 @@ class PreviewHandler {
             'admin.sinbibook.xyz',    // 개발 환경
             'backoffice.sinbibook.com', // 백오피스 운영 환경
             'backoffice.sinbibook.xyz',  // 백오피스 개발 환경
-            'backoffice.sinbibook.dev',   // 백오피스 dev 환경
             'sinbibook.github.io',    // GitHub Pages
             'file://',                // 로컬 파일 시스템
             'null'                    // iframe null origin
@@ -342,6 +341,17 @@ class PreviewHandler {
         } else {
             // 기존 데이터와 병합
             this.currentData = this.mergeData(this.currentData, convertedData);
+        }
+
+        // nearbyAttractions / layoutMap: enabled=false면 404로 이동
+        const currentPage = this.getCurrentPageType();
+        if (currentPage === 'nearbyAttractions' || currentPage === 'layoutMap') {
+            const pageKey = currentPage;
+            const enabled = this.currentData?.homepage?.customFields?.pages?.[pageKey]?.sections?.[0]?.enabled;
+            if (enabled === false) {
+                window.location.href = './404.html';
+                return;
+            }
         }
 
         // 전체 페이지 다시 렌더링 (완료 대기)
@@ -487,7 +497,7 @@ class PreviewHandler {
                 }
                 break;
             default:
-                return;
+                break;
         }
 
         if (mapper) {
@@ -634,7 +644,7 @@ class PreviewHandler {
         }
 
         // 지원하는 페이지 확인
-        const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions'];
+        const supportedPages = ['index', 'main', 'room', 'facility', 'reservation', 'directions', 'nearbyAttractions', 'layoutMap'];
         if (!supportedPages.includes(page)) {
             return;
         }
@@ -676,20 +686,26 @@ class PreviewHandler {
             const mapper = this.createMapper(IndexMapper);
 
             switch (section) {
+                case 'property':
+                    mapper.mapPropertyName();
+                    break;
+                case 'gallery':
+                    mapper.mapGallerySection();
+                    break;
                 case 'hero':
                     mapper.mapHeroSection();
-                    if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
+                    if (typeof window.initSliderSection === 'function') window.initSliderSection();
                     break;
                 case 'essence':
                     mapper.mapEssenceSection();
+                    if (typeof window.initPrologueSection === 'function') window.initPrologueSection();
                     break;
                 case 'rooms':
                     mapper.mapRoomsSection();
-                    if (typeof window.initRoomCarousel === 'function') window.initRoomCarousel();
                     break;
                 case 'facility':
                     mapper.mapFacilitySection();
-                    if (typeof window.initFacilitySlideshow === 'function') window.initFacilitySlideshow();
+                    if (typeof window.initSpecialSection === 'function') window.initSpecialSection();
                     break;
                 case 'closing':
                     mapper.mapClosingSection();
@@ -700,15 +716,25 @@ class PreviewHandler {
                 const mapper = this.createMapper(MainMapper);
 
                 switch (section) {
+                    case 'property':
+                        mapper.mapPropertyNameEn();
+                        break;
                     case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapAboutSection();
-                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
+                        mapper.mapHeroSection();
+                        if (typeof window.initCon1HeroSlider === 'function') window.initCon1HeroSlider();
                         break;
                     case 'about':
-                        mapper.mapAboutSection();
-                        mapper.mapIntroductionSection();
+                        mapper.mapIntroSection();
                         if (typeof window.initGallery === 'function') window.initGallery();
+                        break;
+                    case 'rooms':
+                        mapper.mapRoomPreviewImage();
+                        break;
+                    case 'facility':
+                        mapper.mapSpecialsPreviewImage();
+                        break;
+                    case 'nearbyAttractions':
+                        mapper.mapLocalSightsImage();
                         break;
                     case 'closing':
                         mapper.mapClosingSection();
@@ -721,19 +747,21 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapHeroContent();
-                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
+                        mapper.mapHeroSection();
+                        if (typeof window.initCon2HeroSlider === 'function') window.initCon2HeroSlider();
                         break;
-                    case 'exterior':
-                        mapper.mapExteriorSlider();
-                        if (typeof window.initRoomSlider === 'function') window.initRoomSlider();
+                    case 'images':
+                        mapper.mapRoomImages();
+                        if (typeof window.initRoomInfoFeatureSlider === 'function') window.initRoomInfoFeatureSlider();
                         break;
                     case 'details':
                         mapper.mapRoomDetails();
                         break;
+                    case 'gallery':
+                        mapper.mapConceptImages();
+                        break;
                     case 'preview':
-                        mapper.mapRoomPreview();
+                        mapper.mapRoomCards();
                         if (typeof window.initRoomPreviewCarousel === 'function') window.initRoomPreviewCarousel();
                         break;
                     default:
@@ -746,22 +774,18 @@ class PreviewHandler {
                 const mapper = this.createMapper(FacilityMapper);
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroSlider();
-                        if (typeof window.initFacilityMainSlider === 'function') window.initFacilityMainSlider();
+                        mapper.mapHeroSection();
+                        if (typeof window.initCon2HeroSlider === 'function') window.initCon2HeroSlider();
                         break;
-                    case 'con1':
-                        mapper.mapCon1Slider();
-                        if (typeof window.initFacilityCon1Slider === 'function') window.initFacilityCon1Slider();
+                    case 'info':
+                        mapper.mapFacilityInfo();
                         break;
-                    case 'con2':
-                        mapper.mapCon2Gallery();
+                    case 'gallery':
+                        mapper.mapGallery();
                         break;
                     case 'special':
                         mapper.mapSpecialSection();
-                        if (typeof window.initSpecialSlideshow === 'function') window.initSpecialSlideshow();
-                        break;
-                    case 'closing':
-                        mapper.mapClosingSection();
+                        if (typeof window.initSpecialSection === 'function') window.initSpecialSection();
                         break;
                     default:
                         mapper.mapPage();
@@ -773,12 +797,11 @@ class PreviewHandler {
                 const mapper = this.createMapper(ReservationMapper);
                 switch (section) {
                     case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapHeroContent();
-                        if (typeof window.initMainSlideshow === 'function') window.initMainSlideshow();
+                        mapper.mapHeroSection();
+                        if (typeof window.initCon2HeroSlider === 'function') window.initCon2HeroSlider();
                         break;
                     case 'about':
-                        mapper.mapSideImage();
+                        mapper.mapContentImages();
                         break;
                     case 'usageGuide':
                         mapper.mapUsageSection();
@@ -790,7 +813,8 @@ class PreviewHandler {
                         mapper.mapCheckInOutSection();
                         break;
                     case 'refund':
-                        mapper.mapRefundSection();
+                        mapper.mapRefundNoticeSection();
+                        mapper.mapCancellationTable();
                         break;
                     case 'closing':
                         mapper.mapClosingSection();
@@ -806,10 +830,52 @@ class PreviewHandler {
 
                 switch (section) {
                     case 'hero':
+                        mapper.mapHeroSection();
+                        if (typeof window.initCon2HeroSlider === 'function') window.initCon2HeroSlider();
+                        break;
+                    case 'closing':
+                        mapper.mapClosingSection();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
+            }
+        } else if (page === 'nearbyAttractions') {
+            if (window.NearbyAttractionsMapper) {
+                const mapper = this.createMapper(NearbyAttractionsMapper);
+                switch (section) {
+                    case 'hero':
                         mapper.mapHeroSlider();
                         mapper.mapHeroContent();
-                        mapper.mapLocationInfo();
-                        if (typeof window.initHeroSlider === 'function') window.initHeroSlider();
+                        if (typeof window.initNearbyAttractionsHeroSlider === 'function') window.initNearbyAttractionsHeroSlider();
+                        break;
+                    case 'about':
+                        mapper.mapAttractionsSlider();
+                        if (typeof window.initAttractionsSlider === 'function') window.initAttractionsSlider();
+                        break;
+                    case 'closing':
+                        mapper.mapClosingSection();
+                        break;
+                    default:
+                        mapper.mapPage();
+                        break;
+                }
+            }
+        } else if (page === 'layoutMap') {
+            if (window.LayoutMapMapper) {
+                const mapper = this.createMapper(LayoutMapMapper);
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroSlider();
+                        mapper.mapHeroContent();
+                        if (typeof window.initLayoutMapHeroSlider === 'function') window.initLayoutMapHeroSlider();
+                        break;
+                    case 'about':
+                        mapper.mapAboutSection();
+                        break;
+                    case 'closing':
+                        mapper.mapClosingSection();
                         break;
                     default:
                         mapper.mapPage();
