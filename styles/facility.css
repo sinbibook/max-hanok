@@ -1,646 +1,562 @@
-/* ===========================
-   Facility Page Styles (Figma export 기반)
-   - 헤더/푸터/Hero는 공통 (header.css/footer.css/directions.css 사용)
-   - 본 파일은 facility 페이지 전용 컨텐츠(.facility-inner, .con-32)만 담당
-   - 모든 셀렉터를 .facility-page 부모로 스코프해 다른 페이지와 충돌 방지
-   =========================== */
+/* ================================
+   Facility Page Styles
+   ================================ */
 
-/* special-section: 웹은 기존 위치 유지, 모바일에서만 100px 위로 이동 (≤768px 미디어쿼리에서 처리) */
-.facility-page .special-section {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hero address-container: "Facility" 타이틀 가운데 정렬 (모든 viewport)
-   directions.css의 우측 정렬 기본값 덮어쓰기 */
-.facility-page .address-container-parent {
-  align-items: center !important;
-}
-.facility-page .address-container {
-  align-items: center !important;
-}
-.facility-page .direction-info {
-  justify-content: center !important;
-  width: 100%;
-  box-sizing: border-box;
-}
-.facility-page .direction2 {
-  text-align: center !important;
-}
-
-/* 1. FACILITY-INNER (Specials 01~05 카드 무한 롤링)
-   bg-parent2 섹션 내부에 통합되어 자연스럽게 표시됨 */
-.facility-page .facility-inner {
-  display: flex;
-  align-items: flex-start;
-  margin-top: 0;                /* 100 → 0 (상단 마진 제거) */
-  padding: 40px 0;
-  box-sizing: border-box;
-  max-width: 100%;
-  width: 100%;
-  text-align: left;
-  font-size: 42px;
-  color: var(--color-white);
-  font-family: var(--font-italiana);
-  position: relative;
-  z-index: 1;
-}
-.facility-page .image-container-parent {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;       /* flex-end → flex-start: con2(max-content)의 좌측 정렬 → img14(Specials 01)부터 viewport에 표시 */
-  gap: 124px;
-  max-width: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-.facility-page .image-container2 {
-  width: 1267px;
-  max-width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-.facility-page .img {
-  width: 959px;
-  max-width: 100%;
-  display: flex;
-  align-items: flex-end;
-  gap: 25px;
-  z-index: 1;
-}
-.facility-page .img2-group {
-  height: 564px;
-  flex: 1;
-  position: relative;
-  min-width: 315px;
-  max-width: 100%;
-}
-.facility-page .img1-icon7,
-.facility-page .img2-icon {
-  position: absolute;
-  object-fit: cover;
-}
-.facility-page .img2-icon {
-  top: 164px;
-  left: 134px;
-  width: 350px;
-  height: 400px;
-}
-.facility-page .img1-icon7 {
-  top: 0;
-  left: 0;
-  border-radius: 100px 0 100px 0;
-  width: 300px;
-  height: 280px;
-  z-index: 1;
-}
-.facility-page .img3-icon {
-  width: 450px;
-  height: 600px;                /* 명시적 사이즈 */
-  position: relative;
-  object-fit: cover;
-  max-width: 100%;
-  padding-left: 130px;
-  box-sizing: content-box;      /* border-box → content-box: 450x600은 컨텐츠 사이즈, padding은 추가 영역 */
-}
-
-/* 2. CON2 — Specials 카드 무한 롤링 트랙
-   .image-container-parent를 overflow:hidden 컨테이너로 사용 */
-.facility-page .image-container-parent {
-  overflow: hidden;
-}
-.facility-page .con2 {
-  height: 400px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  z-index: 1;
-  width: max-content;
-  animation: facility-con2-scroll 35s linear infinite;
-}
-.facility-page .image-container-parent:hover .con2 {
-  animation-play-state: paused;
-}
-/* 정확한 픽셀로 이동: 카드 5개 width(5×360) + gap 5개(5×20) = 1900px
-   원본 5개 끝 + gap 1개 후 = 복제 1번 카드 시작점 → 완벽 seamless */
-@keyframes facility-con2-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-1900px);
-  }
-}
-.facility-page .img14,
-.facility-page .img23,
-.facility-page .img3,
-.facility-page .img43,
-.facility-page .img5 {
-  height: 300px;
-  width: 360px;
-  min-width: 360px;          /* 무한 롤링 안정성: 어떤 viewport에서도 360px 고정 */
-  flex-shrink: 0;
-  flex-grow: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding: 224px 2px 0;
-  box-sizing: border-box;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top;
-  overflow: hidden;
-}
-/* 갤러리 배경 이미지 — facility-mapper.js에서 동적 매핑 */
-.facility-page .img3  { padding: 224px 3px 0; }
-.facility-page .img43 { padding: 224px 0 0; }
-.facility-page .img5  { padding: 224px 4px 0; }
-.facility-page .specials-01,
-.facility-page .specials-03,
-.facility-page .specials-04,
-.facility-page .specials-05 {
-  height: 76px;
-  width: 200px;
-  position: relative;
-  line-height: 180%;
-  display: inline-block;
-  color: var(--color-white);
-  font-family: var(--font-italiana);
-  font-size: 42px;
-  letter-spacing: -0.01em;
-}
-
-/* SPECIAL SECTION:
-   - 좌측 .specials-card-img / -border : index.css의 라운드 도형(400/300px) 유지
-   - 우측 .special-image / .special-image-slide : CSS 라운딩 제거 +
-     이미지 자체에 박힌 라운드 모양(Figma mockup) 가리려고 background-size 110%로 확대 */
-.facility-page .special-image,
-.facility-page .special-image-slide {
-  border-radius: 0 !important;
-}
-.facility-page .special-image-slide {
-  background-size: 110% auto !important;     /* 5%씩 확대 → 라운드 가장자리가 .special-image overflow:hidden 밖으로 잘림 */
-  background-position: center center !important;
-}
-
-/* 3. BG-PARENT2 — facility info 상세 영역 (모든 자식이 bg-parent2 안에 통합)
-   info-title / title7 / bg6 / image-container2 가 세로로 자연 스택됨
-   width: 80vw — viewport의 80% 폭, 가운데 정렬 */
-.facility-page .bg-parent2 {
-  position: relative;
-  align-self: stretch;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 100px 0 80px;
-  box-sizing: border-box;
-  isolation: isolate;
-  gap: 30px;
-  overflow: visible;             /* hidden → visible: bg 이미지가 잘리지 않게 */
-  min-height: 1100px;            /* bg 이미지 자연 비율(약 0.63 가로/세로) 수용 */
-}
-/* bg-parent2-content: 텍스트 + 이미지 그룹을 viewport 정중앙에 배치
-   - max-width + margin auto로 wrapper 자체 중앙 정렬
-   - 모든 위치/마진/transform 값 강제로 균형 (다른 곳에 비대칭 값이 있어도 override) */
-.facility-page .bg-parent2 .bg-parent2-content {
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  transform: none !important;
-  width: 100%;
-  max-width: 1600px;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-left: clamp(20px, 4vw, 60px) !important;
-  padding-right: clamp(20px, 4vw, 60px) !important;
-  padding-top: 0;
-  padding-bottom: 0;
-  box-sizing: border-box;
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 60px;
-}
-/* bg-parent2-text: 그룹의 좌측 자식 — 모든 비대칭 마진/패딩/transform 강제 제거 */
-.facility-page .bg-parent2 .bg-parent2-text {
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  transform: none !important;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 30px;
-  flex: 0 1 auto;
-  min-width: 0;
-  max-width: 760px;
-  width: 100%;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.facility-page .bg-parent2 .bg-parent2-text .bg6 {
-  align-self: flex-start !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  max-width: 100%;
-}
-/* info-title, title7: 가운데 정렬 + 내부 텍스트도 가운데 */
-.facility-page .bg-parent2 .bg-parent2-text .info-title,
-.facility-page .bg-parent2 .bg-parent2-text .title7 {
-  align-self: center !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  max-width: 100%;
-  text-align: center !important;
-  justify-content: center !important;
-}
-.facility-page .bg-parent2 .bg-parent2-text .info-title .facility-info,
-.facility-page .bg-parent2 .bg-parent2-text .title7 .h14,
-.facility-page .bg-parent2 .bg-parent2-text .title7 .h325 {
-  text-align: center !important;
-  align-self: center !important;
-  width: 100%;
-}
-/* image-container2 — 옛 규칙 reset, 좌우 대칭 강제 */
-.facility-page .bg-parent2 .image-container2 {
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  transform: none !important;
-  flex: 0 1 auto;
-  min-width: 0;
-  max-width: 760px;
-  width: 100%;
-  margin: 0 !important;
-  padding: 0 !important;
-  z-index: 1;
-  overflow: visible;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  box-sizing: border-box;
-}
-/* 내부 .img 좌우 대칭 + 자연 정렬 */
-.facility-page .bg-parent2 .image-container2 > .img {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-  justify-content: center;        /* 자식 가운데 정렬 */
-}
-/* img3-icon의 padding-left:130(비대칭) → 0으로 리셋. 그룹이 우측으로 밀리는 원인 제거 */
-.facility-page .bg-parent2 .image-container2 .img3-icon {
-  padding-left: 0 !important;
-  margin: 0 !important;
-}
-.facility-page .bg-parent2 .image-container2 .img {
-  flex-wrap: nowrap !important;
-  transform-origin: top right;
-}
-
-/* ≥1600px: 좌우 80px 패딩 + 텍스트/이미지 max-width 확대 (그룹 가운데 정렬은 유지) */
-@media screen and (min-width: 1600px) {
-  .facility-page .bg-parent2 .bg-parent2-content {
-    padding-left: 80px;
-    padding-right: 80px;
-    gap: 80px;
-  }
-  .facility-page .bg-parent2 .bg-parent2-text {
-    max-width: 760px;
-  }
-  .facility-page .bg-parent2 .image-container2 {
-    max-width: 760px;
-  }
-  /* 텍스트/이미지 폰트도 비슷한 비율로 확대 */
-  .facility-page .bg-parent2 .facility-info,
-  .facility-page .bg-parent2 .h14,
-  .facility-page .bg-parent2 .h325,
-  .facility-page .bg-parent2 .h326,
-  .facility-page .bg-parent2 .div22 {
-    font-size: 1.12em;
-  }
-}
-
-/* ≤1050: directions.css의 .content padding-bottom: 73px 무력화 (facility 한정)
-   → bg-parent2-bg가 hero 바로 아래에 붙어 보이도록 여백 제거
-   .bg2의 padding-bottom은 유지 (bg-child 위치는 main/directions와 동일하게) */
-@media screen and (max-width: 1050px) {
-  .facility-page .content {
-    padding-bottom: 0 !important;
-  }
-}
-
-/* ≤1400: image-container2를 absolute 해제 → bg-parent2-text 아래로 자연 스택 */
-/* ≤1400: 한 줄 나열(row) 해제 → 컬럼 스택 (텍스트 위, 이미지 아래) */
-@media screen and (max-width: 1400px) {
-  .facility-page .bg-parent2 .bg-parent2-content {
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-  }
-  .facility-page .bg-parent2 .bg-parent2-text {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
-  }
-  .facility-page .bg-parent2 .image-container2 {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-  }
-  .facility-page .bg-parent2 .image-container2 .img {
-    transform: scale(min(1, calc((100vw - 40px) / 920)));
-    transform-origin: top center;
-  }
-}
-
-/* ≤768 모바일: image-container2 내부 img2-group + img3-icon 세로 1열 스택 + 가운데 정렬 */
-@media screen and (max-width: 768px) {
-  /* 모바일: special-section 부터 페이지 하단까지 전체 100px 위로 이동 (웹은 영향 없음) */
-  .facility-page .special-section {
-    margin-top: -100px;
-  }
-  .facility-page .bg-parent2 .image-container2 {
-    overflow: visible;
-    margin: 40px auto 0;
-  }
-  .facility-page .bg-parent2 .image-container2 .img {
-    flex-direction: column !important;
-    align-items: center !important;
-    transform: none !important;
-    transform-origin: unset !important;
-    gap: 35px !important;       /* 25 → 35 (+10px) */
-  }
-  .facility-page .img2-group {
-    width: 100% !important;
-    max-width: 350px !important;
-    height: auto !important;
-    aspect-ratio: auto !important;
-    min-width: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 35px !important;          /* img2-icon ↔ img1-icon7 사이 35px */
-    position: relative !important;
-  }
-  .facility-page .img1-icon7,
-  .facility-page .img2-icon {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    max-width: 280px !important;
-    height: auto !important;
-    margin: 0 auto !important;
-    display: block !important;
-  }
-  .facility-page .img1-icon7 {
-    aspect-ratio: 300 / 280;
-  }
-  .facility-page .img2-icon {
-    aspect-ratio: 350 / 400;
-  }
-  .facility-page .img3-icon {
-    width: 100% !important;
-    max-width: 320px !important;
-    height: auto !important;
-    aspect-ratio: 450 / 600 !important;
-    padding-left: 0 !important;
-    box-sizing: border-box !important;
-  }
-}
-.facility-page .bg-parent2 .img {
-  width: 100%;
-  max-width: 100%;
-}
-/* 좌측 텍스트 영역(info-title, title7, bg6)이 우측 image-container2 폭만큼 영역 비워두도록 max-width 제한 */
-.facility-page .bg-parent2 .info-title,
-.facility-page .bg-parent2 .title7,
-.facility-page .bg-parent2 .bg6 {
-  max-width: 45%;
-}
-/* 좁은 화면(≤1100): image-container2 absolute 해제하고 자연 스택 */
-@media screen and (max-width: 1100px) {
-  .facility-page .bg-parent2 .image-container2 {
+/* Hero section height override for facility page - desktop default */
+.hero-section {
+    height: 100vh;
+    min-height: 100vh;
     position: relative;
-    top: auto;
-    right: auto;
+}
+
+/* Hero slider positioning - contains all hero elements */
+.hero-slider {
+    position: relative;
+    height: 100vh;
+}
+
+/* Desktop styles - Use default common.css styles */
+/* Remove desktop overrides that break the layout */
+
+/* Hero slide images height adjustment */
+.hero-slide {
+    height: 100vh !important;
+}
+
+.hero-slide img {
+    height: 100vh !important;
+    object-fit: cover;
+}
+
+/* Mobile specific - contain zoom within hero area */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 65vh !important;
+        min-height: 65vh !important;
+        overflow: hidden !important;
+        position: relative;
+    }
+
+    .hero-slider {
+        overflow: hidden !important;
+        height: 65vh !important;
+        position: relative;
+    }
+
+    .hero-slide {
+        overflow: hidden !important;
+        height: 65vh !important;
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .hero-slide img {
+        height: 65vh !important;
+    }
+
+    /* Ensure zoom animation stays within bounds */
+    .hero-slide img {
+        transform-origin: center center;
+        will-change: transform;
+    }
+
+    /* Mobile hero-property-title positioning */
+    .hero-property-title {
+        position: absolute !important;
+        bottom: 40% !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
+
+    /* Mobile hero-progress-container positioning */
+    .hero-progress-container {
+        left: 50% !important;
+        right: auto !important;
+        /* transform: translateX(-50%) !important; */
+        width: 200px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Ensure progress bar is visible on mobile */
+    .hero-progress-bar {
+        display: block !important;
+        width: 100px !important;
+        height: 2px !important;
+        background: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .hero-progress-fill {
+        display: block !important;
+        height: 2px !important;
+        background: #fff !important;
+    }
+}
+
+
+/* Page name position adjustment */
+.page-name {
+    top: 30px;
+}
+
+/* Facility Main Section */
+.facility-main-section {
+    padding: 80px 20px 15px;
+    background: var(--color-primary);
+    text-align: center;
+    position: relative;
+}
+
+
+
+.facility-main-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.facility-main-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 30px;
+    margin-top: 110px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+}
+
+.facility-main-title.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.facility-main-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+    transition-delay: 0.2s;
+}
+
+.facility-main-description.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Small Hexagon Thumbnail */
+.facility-thumbnail {
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+    position: relative;
+}
+
+.facility-thumbnail.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 썸네일 아래 세로 라인 */
+.facility-thumbnail::after {
+    content: '';
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 70px;
+    background: var(--color-secondary);
+}
+
+/* 세로선 끝에 바로 이어지는 가로선 - width 100%, 1px 두께 */
+.facility-thumbnail::before {
+    content: '';
+    position: absolute;
+    bottom: -70px; /* 세로선 끝지점과 동일한 위치 */
+    left: 0;
     width: 100%;
-    max-width: 100%;
-  }
-  .facility-page .bg-parent2 .info-title,
-  .facility-page .bg-parent2 .title7,
-  .facility-page .bg-parent2 .bg6 {
-    max-width: 100%;
-  }
-}
-/* bg-parent2-bg: top: -14px로 hero와 사이 여백 채움 +
-   z-index 낮춤 + .content z-index 높여서 겹친 부분에서는 hero가 위에 표시됨 */
-.facility-page .bg-parent2 .bg-parent2-bg {
-  position: absolute;
-  top: -14px;                   /* hero와의 사이 여백 채움 */
-  left: 0;
-  right: auto;
-  bottom: 0;
-  width: 100%;
-  height: calc(100% + 14px);
-  max-width: 100%;
-  transform: none;
-  object-fit: contain;
-  object-position: left top;
-  z-index: 0;
-}
-/* bg-parent2 자체를 hero(content) 보다 아래 stacking */
-.facility-page .bg-parent2 {
-  z-index: 0;
-}
-.facility-page .content {
-  position: relative;
-  z-index: 2;
-}
-.facility-page .bg-parent2 .info-title {
-  display: flex;
-  align-items: flex-start;
-  flex-shrink: 0;
-  padding: 0 0 12px;
-  z-index: 1;
-}
-.facility-page .bg-parent2 .facility-info {
-  margin: 0;
-  font-size: clamp(36px, 5vw, 56px);
-  font-family: var(--font-italiana);
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  line-height: 120%;
-  color: var(--Black);
-}
-.facility-page .bg-parent2 .title7 {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  z-index: 2;
-  font-family: var(--font-ko-main);
-}
-.facility-page .bg-parent2 .h14 {
-  margin: 0;
-  font-size: clamp(20px, 2vw, 30px);
-  font-weight: 700;
-  font-family: var(--font-ko-main);
-  letter-spacing: -0.01em;
-  line-height: 180%;
-  color: var(--Black);
-}
-.facility-page .bg-parent2 .h325 {
-  margin: 0;
-  font-size: clamp(15px, 1.3vw, 20px);
-  font-weight: 400;
-  font-family: var(--font-ko-sub);
-  letter-spacing: -0.01em;
-  line-height: 180%;
-  color: var(--Black);
+    height: 1px;
+    background: var(--color-secondary);
+    z-index: 1;
 }
 
-/* bg6: 가로 라인 + 회색 박스 + 시설 이용안내 상세 */
-.facility-page .bg-parent2 .bg6 {
-  position: relative;
-  width: 100%;
-  max-width: 622px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 30px 0 60px;
-  isolation: isolate;
-  gap: 30px;
-  box-sizing: border-box;
-  z-index: 1;
-  text-align: left;
-}
-/* bg-child2: bg-child3(회색 박스)의 정확히 최상단에 붙는 1px 검정 라인 */
-.facility-page .bg-parent2 .bg-child2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: var(--Black);
-  flex-shrink: 0;
-  z-index: 2;
-}
-.facility-page .bg-parent2 .bg-child3 {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.5);
-  flex-shrink: 0;
-  z-index: 0;
-}
-.facility-page .bg-parent2 .info-details {
-  padding: 0 30px;
-  box-sizing: border-box;
-  max-width: 100%;
-  display: flex;
-  align-items: flex-start;
-  z-index: 2;
-}
-.facility-page .bg-parent2 .access-details {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-  max-width: 100%;
-}
-.facility-page .bg-parent2 .frame-parent10 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.facility-page .bg-parent2 .ellipse-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-}
-.facility-page .bg-parent2 .frame-child7 {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background-color: var(--Black);
-}
-.facility-page .bg-parent2 .h326 {
-  margin: 0;
-  font-size: clamp(16px, 1.3vw, 20px);
-  font-family: var(--font-ko-main);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 120%;
-  color: var(--Black);
-}
-.facility-page .bg-parent2 .wrapper2 {
-  padding: 0 0 0 13px;
-}
-.facility-page .bg-parent2 .div22 {
-  font-size: clamp(13px, 1vw, 15px);
-  font-family: var(--font-ko-sub);
-  color: var(--Black);
-  letter-spacing: -0.01em;
-  line-height: 180%;
+.facility-thumbnail-house {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
 }
 
-@media screen and (max-width: 900px) {
-  .facility-page .bg-parent2 {
-    padding: 60px 20px 40px;
-  }
-  .facility-page .bg-parent2 .info-details {
-    padding: 0 16px;
-  }
-}
-
-/* ===========================
-   RESPONSIVE
-   =========================== */
-@media screen and (max-width: 900px) {
-  .facility-page .facility-inner {
-    padding: 60px 0;            /* 좌우 20 → 0 */
-  }
-  .facility-page .image-container-parent {
-    gap: 60px;
-  }
-  .facility-page .img {
-    flex-direction: column;
+/* Green border for house thumbnail */
+.facility-thumbnail-house::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
-    align-items: stretch;
-  }
-  .facility-page .img2-group {
-    width: 100%;
-  }
+    height: 100%;
+    background: var(--color-secondary);
+    clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 0% 100%, 0% 40%);
+    z-index: 1;
 }
 
-@media screen and (max-width: 450px) {
-  .facility-page .specials-01,
-  .facility-page .specials-03,
-  .facility-page .specials-04,
-  .facility-page .specials-05 {
-    font-size: 28px;
-    width: auto;
-  }
-  .facility-page .img14,
-  .facility-page .img23,
-  .facility-page .img3,
-  .facility-page .img43,
-  .facility-page .img5 {
-    width: 280px;
-  }
+/* White padding for house thumbnail */
+.facility-thumbnail-house::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    background: var(--color-primary);
+    clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 0% 100%, 0% 40%);
+    z-index: 2;
+}
+
+.facility-thumbnail-house img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    object-fit: cover;
+    object-position: center;
+    clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 0% 100%, 0% 40%);
+    z-index: 3;
+}
+
+
+.facility-full-image {
+    width: 100%;
+    max-width: 1200px;
+    height: 500px;
+    margin: 60px auto 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+    transition-delay: 0.4s;
+}
+
+.facility-full-image.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.facility-full-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Facility Details Wrapper */
+.facility-details-wrapper {
+    padding: 0 0 30px 0;
+    background: var(--color-primary);
+}
+
+.facility-details-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.facility-details-content .facility-details-section {
+    margin-top: 30px;
+    padding: 30px;
+    background: rgba(49, 66, 61, 0.05);
+    border-radius: 8px;
+}
+
+/* Facility Details Section */
+.facility-details-section {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+    transition-delay: 0.5s;
+}
+
+.facility-details-section.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.facility-detail-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 30px;
+    letter-spacing: 0.02em;
+}
+
+.facility-detail-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.facility-detail-content p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    letter-spacing: 0.01em;
+}
+
+.facility-detail-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Additional Info Section */
+.facility-additional-wrapper {
+    padding: 0 20px 100px 20px;
+    background: var(--color-primary);
+}
+
+.facility-additional-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.facility-additional-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+}
+
+.facility-additional-section.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.facility-section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 0.02em;
+}
+
+.facility-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.facility-info-card {
+    background: rgba(49, 66, 61, 0.05);
+    border-radius: 8px;
+    padding: 40px 30px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease;
+}
+
+.facility-info-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.facility-info-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.facility-info-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.facility-info-card.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.facility-card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 25px;
+    letter-spacing: 0.02em;
+}
+
+.facility-card-content {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+}
+
+.facility-card-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.facility-card-content ul li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.facility-card-content ul li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-secondary);
+    font-weight: bold;
+}
+
+.facility-card-content ul li:last-child {
+    margin-bottom: 0;
+}
+
+/* Gallery styles moved to common.css */
+.marquee-section {
+    padding-top: 140px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .facility-main-section {
+        padding: 60px 20px 0 20px;
+    }
+
+    .facility-main-section::before {
+        width: 90%;
+    }
+
+
+    .facility-main-title {
+        font-size: 1.7rem;
+        margin-bottom: 20px;
+    }
+
+    .facility-main-description {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+
+    .facility-thumbnail-house {
+        width: 150px;
+        height: 135px;
+    }
+
+    .facility-full-image {
+        height: 350px;
+        margin: 40px 20px 0 20px;
+        max-width: calc(100% - 40px);
+    }
+
+    .facility-details-wrapper {
+        padding: 10px 20px 30px 20px;
+    }
+
+    .facility-detail-title {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .facility-detail-content p {
+        font-size: 0.95rem;
+    }
+
+    .facility-additional-wrapper {
+        padding: 60px 20px;
+    }
+
+    .facility-section-title {
+        font-size: 1.7rem;
+        margin-bottom: 40px;
+    }
+
+    .facility-info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .facility-info-card {
+        padding: 30px 20px;
+    }
+
+    .facility-card-title {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .facility-card-content {
+        font-size: 0.95rem;
+    }
+
+    /* .facility-gallery-section {
+        min-height: 800px;
+        padding-top: 150px;
+    }
+
+    .facility-gallery-label {
+        top: 40px;
+        left: 20px;
+    }
+
+    .facility-gallery-label span {
+        font-size: 2.5rem;
+    } */
+
+    /* .facility-gallery-container {
+        max-width: 100%;
+        position: relative;
+        bottom: auto;
+        transform: none;
+        left: auto;
+        padding: 0 20px 20px;
+    }
+
+    .facility-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        justify-items: center;
+    }
+
+    .facility-gallery-container .gallery-item {
+        width: 100%;
+        max-width: 350px;
+        height: 350px;
+    } */
+
+    .gallery-item img {
+        height: 100%;
+    }
+
+    .facility-gallery-container .gallery-item,
+    .facility-gallery-section .facility-gallery-container .gallery-item {
+        height: 30vh !important;
+        min-height: 30vh !important;
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1800px) {
+    .facility-main-content {
+        max-width: 1600px;
+    }
 }

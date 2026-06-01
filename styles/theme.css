@@ -1,20 +1,20 @@
 /* CDN Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
 
 /* Font Faces */
 @font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-display: swap;
+  font-family: 'ReperepointSpecialItalic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-SpecialItalicA.woff') format('woff');
+  font-weight: 400;
+  font-display: swap;
 }
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'Noto Serif KR', serif;
+  --font-ko-main: 'ReperepointSpecialItalic', sans-serif;
   --font-ko-sub: 'Pretendard', sans-serif;
-  --font-en-main: 'Cormorant', serif;
+  --font-en-main: 'Chonburi', sans-serif;
   --color-primary: #F5F4F1;
   --color-secondary: #C36355;
 }
