@@ -1,148 +1,185 @@
-/* Layout Map Page Styles */
+/* ================================
+   Layout Map Page Styles
+   ================================ */
 
-.layout-map-content-wrapper {
+/* Main About Section - Below marquee */
+.main-about-section {
+    padding: 80px 20px 0;
+    min-height: 700px;
+    background: var(--color-primary);
+    text-align: center;
     position: relative;
 }
 
-.hero-content {
-    margin: 50px 0 60px;
+.main-about-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.hero-title {
-    font-size: 28px;
+.main-about-title {
+    font-size: 2rem;
     font-weight: 700;
     color: var(--color-secondary);
-    margin: 0 0 20px 0;
-    line-height: 1.3;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
-}
-
-.hero-title.title-with-circle-and-line::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--color-secondary);
-    margin-left: 20px;
-}
-
-.hero-description {
-    font-family: var(--font-ko-sub);
-    font-size: 17px;
-    color: #555;
-    line-height: 1.8;
-    margin-top: 20px;
-    max-width: 700px;
-    text-align: right;
-    margin-left: auto;
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
-}
-
-/* Layout Map Content Container */
-#layout-map-content {
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    margin-bottom: 100px;
-}
-
-/* Individual Layout Map Item */
-.layout-map-item {
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.layout-map-item.visible {
+.main-about-title.animate {
     opacity: 1;
     transform: translateY(0);
 }
 
-.layout-map-image {
+.main-about-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: 0.2s;
+}
+
+.main-about-description.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Intro Section - Dynamic blocks */
+.intro-section {
+    background: var(--color-primary);
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout-map-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin: 50px auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.layout-map-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Layout map image container */
+.layout-map-image-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.layout-map-image-wrapper img {
     width: 100%;
     height: auto;
-    min-height: 400px;
-    object-fit: contain;
     display: block;
-    background: #f5f5f5;
-    border-radius: 0;
+    object-fit: cover;
 }
 
-.layout-map-image-description {
+/* Layout map description */
+.layout-map-description-wrapper {
+    width: 100%;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+}
+
+.layout-map-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-secondary);
+    text-align: center;
+}
+
+.layout-map-description {
     font-family: var(--font-ko-sub);
-    font-size: 17px;
+    font-size: 1rem;
+    font-weight: 400;
     color: #666;
-    line-height: 1.6;
-    margin: 16px 0 0 0;
-    text-align: left;
-    background: rgba(101, 131, 153, 0.1);
-    padding: 25px;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    margin-top: 10px;
+    text-align: center;
 }
 
-/* Tablet Responsive */
-@media (max-width: 1024px) {
-    #layout-map-content {
-        gap: 50px;
-    }
-
-    .layout-map-image {
-        min-height: 350px;
-    }
+/* Last item gets extra padding bottom */
+.layout-map-item:last-child {
+    padding-bottom: 100px;
 }
 
+/* Mobile Responsive */
 @media (max-width: 768px) {
-    #layout-map-content {
-        gap: 40px;
-        margin-bottom: 60px;
+    .hero-property-title {
+        font-size: 2.5rem;
+        bottom: 80px;
     }
 
-    .layout-map-image {
-        min-height: 280px;
+    .main-about-section {
+        padding: 60px 20px;
     }
 
-    .layout-map-image-description {
-        font-size: 14px;
+    .main-about-title {
+        font-size: 1.7rem;
     }
 
-    .hero-content {
-        margin: 40px 0 50px;
+    .main-about-description {
+        font-size: 1rem;
     }
 
-    .hero-description {
-        font-size: 15px;
-        text-align: center;
-        margin-left: 0;
+    .intro-section {
+       padding: 0px 20px 60px 20px;
+    }
+
+    .layout-map-item {
+        flex-direction: column;
+        margin: 10px 0;
+    }
+
+    /* 모바일에서 마지막 아이템 패딩 제거 */
+    .layout-map-item:last-child {
+        padding-bottom: 0;
+    }
+
+    .layout-map-image-wrapper {
+        width: 100%;
         max-width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    #layout-map-content {
-        gap: 30px;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
     }
 
-    .layout-map-image {
-        min-height: 200px;
+    .layout-map-description-wrapper {
+        width: 100%;
+        padding: 20px;
     }
 
-    .layout-map-image-description {
-        font-size: 13px;
+    .layout-map-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
     }
 
-    .hero-content {
-        margin: 30px 0 40px;
-    }
-
-    .hero-description {
-        font-size: 14px;
+    .layout-map-description {
+        font-size: 1rem;
     }
 }
