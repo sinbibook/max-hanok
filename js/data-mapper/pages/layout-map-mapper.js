@@ -1,206 +1,205 @@
 /**
- * Layout Map Data Mapper
+ * Layout Map Page Data Mapper
  * layout-map.html 전용 매핑 함수들을 포함한 클래스
+ * BaseDataMapper를 상속받아 배치도 페이지 전용 기능 제공
  */
 class LayoutMapMapper extends BaseDataMapper {
     constructor() {
         super();
     }
 
+    /**
+     * 배치도 customFields 데이터 가져오기
+     */
     getLayoutMapData() {
         return this.safeGet(this.data, 'homepage.customFields.pages.layoutMap.sections.0');
     }
 
-    mapHeroSlider() {
+    /**
+     * Hero 섹션 매핑 (customFields layoutMap.hero 이미지 사용)
+     */
+    mapHeroSection() {
         if (!this.isDataLoaded) return;
 
-        const section = this.getLayoutMapData();
-        if (!section || !section.hero) return;
+        const heroImg = this.safeSelect('[data-customfield-layout-map-hero-image-0]');
+        if (!heroImg) return;
 
-        const sliderContainer = document.querySelector('[data-hero-slider]');
-        if (!sliderContainer) return;
+        const layoutMapData = this.getLayoutMapData();
+        const heroImages = layoutMapData?.hero?.images;
 
-        sliderContainer.innerHTML = '';
+        if (heroImages && Array.isArray(heroImages) && heroImages.length > 0) {
+            const selectedImages = heroImages
+                .filter(img => img.isSelected === true)
+                .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
 
-        const images = section.hero.images || [];
-        const selectedImages = images.filter(img => img.isSelected).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-        if (selectedImages.length === 0) {
-            const slide = document.createElement('div');
-            slide.className = 'hero-slide active';
-            const img = document.createElement('img');
-            if (typeof ImageHelpers !== 'undefined') {
-                ImageHelpers.applyPlaceholder(img);
+            if (selectedImages.length > 0) {
+                heroImg.src = selectedImages[0].url;
+                heroImg.alt = this.sanitizeText(selectedImages[0].description, '배치도 이미지');
+                heroImg.classList.remove('empty-image-placeholder');
+                return;
             }
-            slide.appendChild(img);
-            sliderContainer.appendChild(slide);
-            return;
         }
 
-        selectedImages.forEach((imgData, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'hero-slide';
-            if (index === 0) slide.classList.add('active');
-
-            const img = document.createElement('img');
-            img.src = imgData.url || '';
-            img.alt = this.sanitizeText(imgData.description, `배치도 이미지 ${index + 1}`);
-            img.loading = index === 0 ? 'eager' : 'lazy';
-
-            slide.appendChild(img);
-            sliderContainer.appendChild(slide);
-        });
-
-        const totalSlides = document.querySelector('[data-total-slides]');
-        if (totalSlides) {
-            totalSlides.textContent = String(selectedImages.length).padStart(2, '0');
-        }
+        // No image fallback
+        heroImg.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
+        heroImg.alt = '이미지 없음';
+        heroImg.classList.add('empty-image-placeholder');
     }
 
+    /**
+     * 배치도 콘텐츠 매핑 (about 섹션)
+     */
     mapLayoutMapContent() {
         if (!this.isDataLoaded) return;
 
-        const section = this.getLayoutMapData();
-        if (!section || !section.about) return;
+        const layoutMapData = this.getLayoutMapData();
+        const about = layoutMapData?.about;
 
-        const titleEl = document.querySelector('[data-layout-map-about-title]');
-        if (titleEl) {
-            titleEl.textContent = this.sanitizeText(section.about.title, '배치도 타이틀');
+        if (!about) return;
+
+        const aboutTitle = document.querySelector('[data-layout-map-about-title]');
+        if (aboutTitle && about?.title) {
+            aboutTitle.textContent = about.title;
         }
 
-        const descEl = document.querySelector('[data-layout-map-about-description]');
-        if (descEl) {
-            descEl.textContent = this.sanitizeText(section.about.description, '배치도 설명');
+        const aboutDesc = document.querySelector('[data-layout-map-about-description]');
+        if (aboutDesc && about?.description) {
+            aboutDesc.textContent = about.description;
         }
 
-        const introSection = document.querySelector('.intro-section');
-        if (!introSection) return;
+        const container = document.getElementById('layout-map-content');
+        if (!container) return;
 
-        introSection.innerHTML = '';
+        container.innerHTML = '';
 
-        const images = section.about.images || [];
-        // isSelected가 true인 이미지만 필터링
-        const selectedImages = images.filter(img => img.isSelected).sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+        const images = about?.images || [];
+        const selectedImages = images.filter(img => img.isSelected === true);
+        const itemsToRender = selectedImages.length > 0 ? selectedImages : [{}];
 
-        if (selectedImages.length === 0) {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'layout-map-item animate-element';
-            const imageWrapperDiv = document.createElement('div');
-            imageWrapperDiv.className = 'layout-map-image-wrapper';
-            const img = document.createElement('img');
-            if (typeof ImageHelpers !== 'undefined') {
-                ImageHelpers.applyPlaceholder(img);
-            }
-            imageWrapperDiv.appendChild(img);
-            itemDiv.appendChild(imageWrapperDiv);
-            introSection.appendChild(itemDiv);
-            return;
-        }
-
-        selectedImages.forEach((image, index) => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'layout-map-item animate-element';
-
-            // Image wrapper
-            const imageWrapperDiv = document.createElement('div');
-            imageWrapperDiv.className = 'layout-map-image-wrapper';
+        itemsToRender.forEach((imageData) => {
+            const item = document.createElement('div');
+            item.className = 'layout-map-item';
 
             const img = document.createElement('img');
-            if (image.url) {
-                img.src = image.url;
+            img.className = 'layout-map-image';
+            img.alt = '배치도';
+
+            if (imageData?.url) {
+                img.src = imageData.url;
+                img.alt = this.sanitizeText(imageData.description, 'Layout Map Image');
             } else {
-                if (typeof ImageHelpers !== 'undefined') {
-                    ImageHelpers.applyPlaceholder(img);
-                }
-            }
-            img.alt = this.sanitizeText(image.description, `배치도 이미지 ${index + 1}`);
-
-            imageWrapperDiv.appendChild(img);
-
-            // Description wrapper
-            const descWrapperDiv = document.createElement('div');
-            descWrapperDiv.className = 'layout-map-description-wrapper';
-
-            if (image.description) {
-                const descDiv = document.createElement('div');
-                descDiv.className = 'layout-map-description';
-                descDiv.innerHTML = this._formatTextWithLineBreaks(this.sanitizeText(image.description, ''));
-                descWrapperDiv.appendChild(descDiv);
+                img.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
+                img.alt = '이미지 없음';
+                img.classList.add('empty-image-placeholder');
             }
 
-            itemDiv.appendChild(imageWrapperDiv);
-            itemDiv.appendChild(descWrapperDiv);
-            introSection.appendChild(itemDiv);
+            const description = document.createElement('p');
+            description.className = 'layout-map-image-description';
+            description.textContent = imageData?.description || '';
+
+            item.appendChild(img);
+            item.appendChild(description);
+
+            container.appendChild(item);
         });
-
-        if (typeof window.setupLayoutMapAnimations === 'function') {
-            window.setupLayoutMapAnimations();
-        }
     }
 
+    /**
+     * Full Banner 섹션 매핑
+     */
     mapClosingSection() {
-        if (!this.isDataLoaded || !this.data.property) return;
+        if (!this.isDataLoaded) return;
+
+        const banner = this.safeSelect('[data-main-banner]');
+        if (!banner) return;
+
+        const isDemo = this.dataSource === 'demo-filled.json';
 
         const exteriorImages = this.getPropertyImages('property_exterior');
-        const bannerEl = document.querySelector('[data-main-banner]');
-        if (bannerEl) {
-            if (exteriorImages.length > 0) {
-                bannerEl.style.backgroundImage = `url('${exteriorImages[0].url}')`;
-            } else {
-                if (typeof ImageHelpers !== 'undefined') {
-                    ImageHelpers.applyPlaceholder(bannerEl);
-                }
-            }
+        const targetImage = exteriorImages[0];
+
+        const existingPlaceholder = banner.querySelector('.banner-placeholder-img');
+        if (existingPlaceholder) {
+            existingPlaceholder.remove();
+        }
+
+        if (targetImage && targetImage.url) {
+            banner.style.backgroundImage = `url('${targetImage.url}')`;
+            banner.classList.remove('empty-image-placeholder');
+        } else if (isDemo) {
+            banner.style.backgroundImage = `url('./images/exterior.jpg')`;
+            banner.classList.remove('empty-image-placeholder');
+        } else {
+            banner.style.backgroundImage = 'none';
+            banner.classList.add('empty-image-placeholder');
+
+            const placeholderImg = document.createElement('img');
+            placeholderImg.src = ImageHelpers.EMPTY_IMAGE_WITH_ICON;
+            placeholderImg.alt = '이미지 없음';
+            placeholderImg.className = 'banner-placeholder-img empty-image-placeholder';
+            placeholderImg.style.cssText = 'width: 100%; height: 100%; position: absolute; top: 0; left: 0;';
+            banner.style.position = 'relative';
+            banner.insertBefore(placeholderImg, banner.firstChild);
+        }
+
+        if (targetImage?.url || isDemo) {
+            banner.style.backgroundSize = 'cover';
+            banner.style.backgroundPosition = 'center';
+            banner.style.backgroundRepeat = 'no-repeat';
         }
 
         const propertyNameEn = this.getPropertyNameEn();
-        const nameEl = document.querySelector('[data-closing-property-name]');
-        if (nameEl) {
-            nameEl.textContent = propertyNameEn;
+        const closingPropertyName = banner.querySelector('[data-closing-property-name]');
+        if (closingPropertyName) {
+            closingPropertyName.textContent = propertyNameEn;
         }
     }
 
+    /**
+     * Property 정보 매핑
+     */
     mapPropertyInfo() {
+        if (!this.isDataLoaded) return;
+
         const propertyName = this.getPropertyName();
-        const nameElements = document.querySelectorAll('[data-property-name]');
-        nameElements.forEach(el => {
+        const propertyNameEn = this.getPropertyNameEn();
+
+        document.querySelectorAll('[data-property-name]').forEach(el => {
             el.textContent = propertyName;
         });
 
-        const propertyNameEn = this.getPropertyNameEn();
-        const nameEnElements = document.querySelectorAll('[data-property-name-en]');
-        nameEnElements.forEach(el => {
+        document.querySelectorAll('[data-property-name-en]').forEach(el => {
             el.textContent = propertyNameEn;
         });
     }
 
+    /**
+     * 전체 페이지 매핑
+     */
     async mapPage() {
-        if (!this.isDataLoaded) return;
+        const layoutMapData = this.getLayoutMapData();
 
-        const section = this.getLayoutMapData();
-        if (section && section.enabled === false) {
-            // Preview 모드에서는 preview 파라미터 유지
-            const urlParams = new URLSearchParams(window.location.search);
-            const isPreview = urlParams.get('preview');
-            let redirectUrl = '404.html';
-            if (isPreview) {
-                redirectUrl += `?preview=${isPreview}`;
-            }
-            window.location.href = redirectUrl;
+        // 실제 배포 환경에서만 enabled 체크 (프리뷰는 preview-handler에서 처리)
+        if (!window.previewHandler && layoutMapData && layoutMapData.enabled === false) {
+            window.location.href = '404.html';
             return;
         }
 
-        this.mapHeroSlider();
+        this.mapPropertyInfo();
+        this.mapHeroSection();
         this.mapLayoutMapContent();
         this.mapClosingSection();
-        this.mapPropertyInfo();
-
-        await this.reinitializeScrollAnimations();
+        this.updateMetaTags({ title: `배치도 - ${this.getPropertyName()}` });
+        this.reinitializeScrollAnimations();
     }
 }
 
+// Global exposure
+if (typeof window !== 'undefined') {
+    window.LayoutMapMapper = LayoutMapMapper;
+}
+
+// ES6 module support
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = LayoutMapMapper;
-} else {
-    window.LayoutMapMapper = LayoutMapMapper;
 }
