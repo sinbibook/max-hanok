@@ -1,58 +1,40 @@
 {
   "metadata": {
-    "version": "1.225.0",
-    "generatedAt": "2026-06-02T03:15:33.563829947Z",
+    "version": "1.226.0",
+    "generatedAt": "2026-06-18T02:30:32.329794509Z",
     "templateType": "full_banner_accordion",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
-    "name": "Max 한옥 펜션",
-    "nameEn": "Max Hanok Pension12",
-    "description": "BankAccount 역직렬화 수정 검증 테스트",
+    "name": "Max 한옥",
+    "nameEn": "Jeju Bijasupgil15 Pension",
+    "description": "자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!",
     "subtitle": "한옥의 멋을 살린 맥스 한옥 펜션",
-    "address": "경기도 가평군",
-    "latitude": 37.4810281626186,
-    "longitude": 126.879311225819,
-    "contactPhone": "02-1234-0000",
+    "address": "제주특별자치도 제주시 구좌읍 비자숲길 15 한옥펜션",
+    "latitude": 33.4952332300215,
+    "longitude": 126.811950585325,
+    "contactPhone": "",
     "contactEmail": "max@n.com",
     "checkin": "15:00",
     "checkout": "11:00",
-    "checkInOutInfo": "[입/퇴실 안내]\n - 입실시각: 15시\n - 퇴실시각: 11시\n ※ 22시 이후 입실 시 사전 문의 부탁드립니다.",
-    "usageGuide": "• 고객님의 안전과, 방범을 위해 숙소 외부, 시설에 CCTV가 설치되어 있습니다.\n• 입금 시 예약자 명과 입금자 명이 다를 경우 확인 전화주셔야 예약이 완료됩니다.\n• 예약인원 외 입실 시 즉각 퇴실 조치하며, 해당 경우로 인한 환불은 불가합니다.\n• 미성년자는 보호자 동반 없이 이용하실 수 없습니다.\n• 반려동물과 함께 입실하실 수 없습니다.\n• 객실 내에서는 금연입니다. 적발 시 즉시 퇴실 조치 및 과태료 200,000원이 청구됨을 유의 바랍니다.\n• 실내에서 냄새가 많이 발생하는 음식 조리는 불가합니다. (고기/수산물/튀김)\n• 시설물의 외부 유출이나 파손, 분실 시 동일 제품 재구입 비용을 청구합니다.",
+    "checkInOutInfo": "",
+    "usageGuide": "[스파]\n- 이용 객실: 전 객실\n- 스파 형태: 스파\n- 수용 인원: 2",
     "reservationGuide": "• 기준인원 초과 시 추가 요금이 발생합니다.\n• 기준인원 초과 시 성인 1인 30,000원 / 아동 1인 20,000원 / 24개월 미만 무료(증빙서류 지참)입니다.\n• 결제는 필수입니다.",
     "province": "서울특별시",
     "city": "금천구",
     "domain": "max-hanok.com",
-    "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/10290",
-    "ybsId": "abc",
-    "amenities": [
-      "WiFi",
-      "주차장",
-      "수영장",
-      "헬스장",
-      "스파",
-      "레스토랑",
-      "세탁시설",
-      "엘리베이터"
-    ],
+    "realtimeBookingId": "",
+    "ybsId": "",
+    "amenities": [ ],
     "nearbyAttractions": [
       "산",
-      "공원",
-      "수상스포츠"
+      "해수욕장"
     ],
-    "services": [
-      "룸서비스",
-      "컨시어지",
-      "셔틀버스",
-      "공항픽업",
-      "모닝콜",
-      "일일청소"
-    ],
+    "services": [ ],
     "propertyThemes": [
-      "산뷰",
-      "힐링",
+      "가족",
       "커플"
     ],
     "propertyTypes": [
@@ -61,14 +43,14 @@
       "리조트"
     ],
     "businessInfo": {
-      "businessName": "대표사업자변경2",
-      "businessNumber": "124-44-11111",
-      "representativeName": "변경2",
-      "businessAddress": "주소변경",
+      "businessName": "비자숲길15펜션",
+      "businessNumber": "318-46-00248",
+      "representativeName": "김효진",
+      "businessAddress": "제주특별자치도 제주시 구좌읍 비자숲길 15",
       "businessPhone": "010-0000-0000",
-      "businessEmail": "jil@c.com",
-      "businessType": "individual",
-      "businessCategory": "",
+      "businessEmail": "",
+      "businessType": "corporate",
+      "businessCategory": "숙박",
       "eCommerceRegistrationNumber": "",
       "ecommerceRegistrationNumber": ""
     },
@@ -89,11 +71,60 @@
     },
     "facilities": [
       {
+        "id": "3a00278d-ed36-4da4-ba90-9cbd5ea9ba07",
+        "name": "서비스",
+        "description": "1212안녕하세요\n시설설명 영역입니다.",
+        "usageGuide": "12",
+        "displayOrder": 0,
+        "images": [
+          {
+            "id": "10fe85d4-265e-438d-9175-011a48fab6ce",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613234-pwza1c2ilc.jpg",
+            "sortOrder": 0,
+            "description": "시설이미지 1에 대한 설명",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "85fb7ae3-e25e-495a-b9e8-91b331bf555c",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1769410159556-mjjc8uubvi.jpg",
+            "sortOrder": 1,
+            "description": "시설이미지 2에 대한 설명",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "d351e84f-aef8-46a7-81ef-7414b38f59ec",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-8pw23atnlte.jpg",
+            "sortOrder": 2,
+            "description": "test",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "0d17e872-c76f-4a62-91af-f0ca2201ea1d",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-bemhe14wvq7.jpg",
+            "sortOrder": 3,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "5174ae08-1aac-471b-9c83-522b23da92bb",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-nmortwduvv.jpg",
+            "sortOrder": 4,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          }
+        ]
+      },
+      {
         "id": "bec67e73-5b27-451f-a33b-6a9fee7c0690",
         "name": "찜질방",
         "description": "찜질방 설명입니다.",
         "usageGuide": "[찜질방]\n  - 운영시간: 연중무휴 24시간 운영 (매월 둘째주 월요일 휴무)\n  - 입장료: 성인 12,000원 / 어린이(36개월~초등학생) 7,000원 / 경로(만 65세 이상) 9,000원\n  - 이용시간: 기본 12시간 이용 가능 (연장 시 2시간당 2,000원 추가)\n  - 주차안내: 무료 주차 지원 (이용 고객 한정, 최대 12시간)\n  - 준비물: 입장 시 수건 2장, 찜질복 1벌, 락커키 제공 (개인 세면도구는 별도 준비)\n  - 샤워실: 남녀 구분된 샤워실과 사우나 운영 (샴푸, 바디워시, 드라이기 비치)\n  - 찜질방 시설: 황토방, 소금방, 얼음방, 수면실 등 다양한 테마방 운영\n  - 식당: 찜질방 내 식당에서 식혜, 계란, 라면 등 간단한 식사 및 음료 판매\n  - 효능: 혈액순환 개선, 피로회복, 피부미용, 스트레스 해소",
-        "displayOrder": 2,
+        "displayOrder": 1,
         "images": [
           {
             "id": "f0079d87-2cd2-45fc-8bfc-43034e427537",
@@ -136,20 +167,65 @@
             "blockId": null
           }
         ]
+      },
+      {
+        "id": "63ac5e9b-aa71-460b-aba1-fab8d814c61f",
+        "name": "스파",
+        "description": "",
+        "usageGuide": "- 이용 객실: 전 객실\n- 스파 형태: 스파\n- 수용 인원: 2\n\n",
+        "displayOrder": 3,
+        "images": [
+          {
+            "id": "b15ea5bf-c88f-409f-8c3b-c042a9c7af3a",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/63ac5e9b-aa71-460b-aba1-fab8d814c61f/main/1781658509368-j5zu6e4t1o.jpg",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          }
+        ]
       }
     ],
     "refundPolicies": [
       {
-        "refundProcessingDays": 5,
+        "refundProcessingDays": 10,
+        "refundRate": 100
+      },
+      {
+        "refundProcessingDays": 9,
+        "refundRate": 90
+      },
+      {
+        "refundProcessingDays": 8,
         "refundRate": 80
       },
       {
-        "refundProcessingDays": 3,
+        "refundProcessingDays": 7,
+        "refundRate": 70
+      },
+      {
+        "refundProcessingDays": 6,
+        "refundRate": 60
+      },
+      {
+        "refundProcessingDays": 5,
         "refundRate": 50
       },
       {
-        "refundProcessingDays": 1,
+        "refundProcessingDays": 4,
+        "refundRate": 40
+      },
+      {
+        "refundProcessingDays": 3,
         "refundRate": 30
+      },
+      {
+        "refundProcessingDays": 2,
+        "refundRate": 20
+      },
+      {
+        "refundProcessingDays": 1,
+        "refundRate": 10
       },
       {
         "refundProcessingDays": 0,
@@ -159,33 +235,91 @@
     "refundSettings": {
       "customerRefundNotice": "",
       "immediateRefundEnabled": true,
-      "immediateRefundTimeLimit": "60"
+      "immediateRefundTimeLimit": "60",
+      "immediateRefundMinuteLimit": "20",
+      "sameDayReservationHourLimit": "12"
     },
     "images": [
       {
         "thumbnail": [
           {
-            "id": "ef512baf-e868-452d-8e44-3687785de193",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1761277887779-7s034fpxa2.jpg",
+            "id": "4fa6fdf7-7b45-4b02-a932-503d4bf82664",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg",
             "sortOrder": 0,
             "description": "",
-            "isSelected": true,
+            "isSelected": false,
             "blockId": null
           },
           {
-            "id": "f6512bdd-25dc-4f27-af09-fd6e9288a8da",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1763620623823-mvrcj054sr.jpg",
+            "id": "11bf4ef1-2aa9-49be-a9f4-126c1e38d192",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/thumbnail/1781244812494-4cgfb6o0te.jpg",
             "sortOrder": 1,
             "description": "",
-            "isSelected": false,
+            "isSelected": true,
             "blockId": null
           }
         ],
         "exterior": [
           {
-            "id": "f89b3fd8-91b9-451f-ae28-aa64baa5f729",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/exterior/1761277887779-fv7tghs057s.jpg",
+            "id": "23e5bda8-81db-4c10-ac10-a0c69d133659",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/fLFhiJ06ujr9.jpg",
             "sortOrder": 0,
+            "description": "",
+            "isSelected": false,
+            "blockId": null
+          },
+          {
+            "id": "3bdc0894-b696-4689-8bd6-b58b3f719e30",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/afBbr90xhGMO.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": false,
+            "blockId": null
+          },
+          {
+            "id": "c1463781-2850-4294-9814-144763d10762",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/H2gWekaKAFXT.jpg",
+            "sortOrder": 2,
+            "description": "",
+            "isSelected": false,
+            "blockId": null
+          },
+          {
+            "id": "66762c78-e27a-47f0-bf95-7a89fb8bd1a7",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/3cNYmSKwpODf.jpg",
+            "sortOrder": 3,
+            "description": "",
+            "isSelected": false,
+            "blockId": null
+          },
+          {
+            "id": "3bf0e5c6-41c6-43b4-9a70-d8256e4dbfb6",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/jIxOPWhzQeXE.jpg",
+            "sortOrder": 4,
+            "description": "",
+            "isSelected": false,
+            "blockId": null
+          },
+          {
+            "id": "4b962228-8b1b-4bc4-a229-b584616baba0",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/amIy3OtKPoMw.jpg",
+            "sortOrder": 5,
+            "description": "",
+            "isSelected": false,
+            "blockId": null
+          },
+          {
+            "id": "30d08c96-2287-4a46-b3af-ce79840bd4cb",
+            "url": "https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/jaWniIu6GC3M.jpg",
+            "sortOrder": 6,
+            "description": "",
+            "isSelected": false,
+            "blockId": null
+          },
+          {
+            "id": "91a00afe-76a8-48da-85b7-84ec1cfac7ae",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/exterior/1781244812495-3q6yzk8c53.jpg",
+            "sortOrder": 7,
             "description": "",
             "isSelected": true,
             "blockId": null
@@ -193,56 +327,15 @@
         ],
         "surrounding": [
           {
-            "id": "80d2c2e4-f258-41d5-8d2f-bafdd153af14",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/surrounding/1773976396263-yteswg46ksn.jpg",
+            "id": "e01fc054-a707-4df9-b727-866c43948b07",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/surrounding/1781244812870-f0856s6gjn.jpg",
             "sortOrder": 0,
-            "description": "",
-            "isSelected": false,
-            "blockId": null
-          },
-          {
-            "id": "fe32bf93-7854-4f7b-8fb8-465b86dfdcb6",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/surrounding/1761277887779-t352qscdz0f.jpg",
-            "sortOrder": 1,
-            "description": "",
-            "isSelected": true,
-            "blockId": null
-          },
-          {
-            "id": "d3f46bd5-a929-4d06-ae03-c52984a3d659",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/surrounding/1761277887779-7esd9f06ylk.jpg",
-            "sortOrder": 2,
-            "description": "",
-            "isSelected": true,
-            "blockId": null
-          },
-          {
-            "id": "50813da4-1840-4dd3-a54f-14f1355d8314",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/surrounding/1761277887779-04liil0l2s9n.jpg",
-            "sortOrder": 3,
-            "description": "",
-            "isSelected": true,
-            "blockId": null
-          },
-          {
-            "id": "2b453d1a-a31d-4476-abbe-d7a8624fe108",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/surrounding/1773976396264-axo8fa7wpur.jpg",
-            "sortOrder": 4,
             "description": "",
             "isSelected": true,
             "blockId": null
           }
         ],
-        "commonArea": [
-          {
-            "id": "7bf1a6c1-9297-4ba1-bdc8-388854214069",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/property/373324d8-f2fb-4cb1-a8b1-9fc3d7796624/common_area/1769410158601-gykebhfp9m.jpg",
-            "sortOrder": 0,
-            "description": "",
-            "isSelected": true,
-            "blockId": null
-          }
-        ]
+        "commonArea": [ ]
       }
     ]
   },
@@ -606,18 +699,18 @@
           ],
           "exterior": [
             {
-              "id": "a0e28522-5fbd-45b7-89c1-429eea4161d9",
-              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031679-e68fnsngtz8.jpg",
-              "sortOrder": 0,
-              "description": "",
-              "isSelected": true,
-              "blockId": null
-            },
-            {
               "id": "e87ab7c3-a86b-4987-81c1-4fd1e9bbe496",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1759117596242-f8h5ve7y3xq.jpg",
               "sortOrder": 0,
               "description": "12",
+              "isSelected": true,
+              "blockId": null
+            },
+            {
+              "id": "a0e28522-5fbd-45b7-89c1-429eea4161d9",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/roomtype/43387b98-deb4-4271-a3ee-dd2045ae75e6/exterior/1763431031679-e68fnsngtz8.jpg",
+              "sortOrder": 0,
+              "description": "",
               "isSelected": true,
               "blockId": null
             },
@@ -1912,8 +2005,8 @@
                       "id": "81db892f-6940-4663-a32e-cb0f007b2530",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205991962-imhzssmzl6.jpg",
                       "sortOrder": 0,
-                      "description": "",
-                      "isSelected": false,
+                      "description": "숙소에서 1분 거리",
+                      "isSelected": true,
                       "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
                     },
                     {
@@ -1974,7 +2067,7 @@
                       "id": "49c5c7ee-2af0-41b9-b991-fa4b7db570f6",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778466050220-i4xn4h4on6.jpg",
                       "sortOrder": 6,
-                      "description": "",
+                      "description": "애견동반 객실이 준비되어 있습니다.",
                       "isSelected": true,
                       "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4"
                     }
@@ -2099,7 +2192,7 @@
         }
       },
       "property": {
-        "name": "Max 한옥 펜션",
+        "name": "Max 한옥",
         "images": [
           {
             "id": "62e5fbf0-47f0-4fd5-84c8-c4f535bc4e13",
@@ -2156,12 +2249,12 @@
             "category": "property_surrounding"
           }
         ],
-        "nameEn": "Max Hanok Pension12"
+        "nameEn": "Jeju Bijasupgil15 Pension"
       },
       "roomtypes": [
         {
           "id": "c20a834f-87a0-458c-a75f-bc81df58ab98",
-          "name": "별하방 테스트",
+          "name": "별하방 테스트34343",
           "images": [
             {
               "id": "681dcdb6-d0c8-4f09-9f61-f60a98ce4e55",
@@ -2262,7 +2355,8 @@
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_exterior"
             }
-          ]
+          ],
+          "nameEn": "byeolhabang room"
         },
         {
           "id": "43387b98-deb4-4271-a3ee-dd2045ae75e6",
