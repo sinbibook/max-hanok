@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.226.0",
-    "generatedAt": "2026-06-18T02:30:32.329794509Z",
+    "version": "1.227.0",
+    "generatedAt": "2026-06-18T02:31:45.428452884Z",
     "templateType": "full_banner_accordion",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2314,7 +2314,7 @@
               "id": "fbcaedf5-00ec-4cef-bd00-fd45904901a6",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1777272104299-4i11z3xr7r.jpg",
               "sortOrder": 0,
-              "description": "",
+              "description": "이미지 설명입니다1.",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_exterior"
@@ -2323,7 +2323,7 @@
               "id": "795aec2d-9a5f-4320-84f6-c88ad5fa859e",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1777272104356-qulxtdu35s.jpg",
               "sortOrder": 1,
-              "description": "",
+              "description": "이미지 설명입니다2",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_exterior"
@@ -2332,7 +2332,7 @@
               "id": "c2d00a4f-943f-4c9e-ab1c-1dbfd07ae70f",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1777272104462-c1xq1swsed.jpg",
               "sortOrder": 2,
-              "description": "",
+              "description": "이미지 설명입니다3",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_exterior"
@@ -2341,7 +2341,7 @@
               "id": "baa70068-c1c2-4b01-b2ff-198d822d3a79",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1777272104350-bcm854m3g2.jpg",
               "sortOrder": 3,
-              "description": "",
+              "description": "이미지 설명입니다4",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_exterior"
@@ -2350,7 +2350,7 @@
               "id": "d4ac3d5a-e865-4d0d-ad0a-fa8ebc3c0a75",
               "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_exterior/1777272104451-no6p7jdixs.jpg",
               "sortOrder": 4,
-              "description": "",
+              "description": "이미지 설명입니다5",
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_exterior"
