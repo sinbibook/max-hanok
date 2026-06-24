@@ -1,25 +1,21 @@
+/* CDN Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Jeju+Myeongjo&family=Qwigley&display=swap');
+
 /* Font Faces */
 @font-face {
-    font-family: 'Chosunilbo';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Continuous';
-    src: url('../fonts/continuous.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Abigail';
+  font-style: normal;
+  src:
+    url(../fonts/abigail.woff) format('woff'),
+    url(../fonts/abigail.otf) format('opentype');
+  font-display: swap;
 }
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'Chosunilbo', serif;
-  --font-ko-sub: 'Chosunilbo', serif;
-  --font-en-main: 'Continuous', serif;
+  --font-ko-main: 'Noto Sans KR', 'Malgun Gothic', dotum, sans-serif;
+  --font-ko-sub: 'Jeju Myeongjo', serif;
+  --font-en-main: 'Abigail', cursive;
   --color-primary: #F5F4F1;
   --color-secondary: #C36355;
 }

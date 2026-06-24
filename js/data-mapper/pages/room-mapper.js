@@ -1,663 +1,311 @@
-/**
- * Room Page Data Mapper
- * room.html 전용 매핑 함수들을 포함한 클래스
- * BaseDataMapper를 상속받아 객실 페이지 전용 기능 제공
- * URL 파라미터로 ?index=0,1,2...를 받아서 동적으로 객실 정보 표시
- */
-class RoomMapper extends BaseDataMapper {
-    constructor() {
-        super();
-        this.currentRoom = null;
-        this.currentRoomIndex = null;
-        this.currentRoomPageData = null;
+(function (global) {
+  'use strict';
+
+  var ROOM_COUNT_LABELS = {
+    bedroom: '침대룸',
+    bathroom: '화장실',
+    livingRoom: '거실',
+    ondol: '온돌룸',
+    kitchen: '주방'
+  };
+
+  function buildRoomStructure(room) {
+    if (!room) return '';
+    var structures = room.roomStructures || [];
+    var base = structures.length ? structures[0] : '';
+    var counts = room.totalRoomCount || {};
+    var labels = [];
+    Object.keys(ROOM_COUNT_LABELS).forEach(function (key) {
+      if (counts[key] >= 1) labels.push(ROOM_COUNT_LABELS[key]);
+    });
+    if (base && labels.length) return base + '/ ' + labels.join(' ');
+    return base || labels.join(' ');
+  }
+
+  function setText(selector, value) {
+    document.querySelectorAll(selector).forEach(function (el) {
+      el.textContent = value == null ? '' : value;
+    });
+  }
+
+  function RoomMapper() {
+    BaseDataMapper.call(this);
+  }
+  RoomMapper.prototype = Object.create(BaseDataMapper.prototype);
+  RoomMapper.prototype.constructor = RoomMapper;
+
+  RoomMapper.prototype.mapPage = function () {
+    this.mapHeroSlides();
+    this.mapNav();
+    this.mapInfo();
+    this.mapIntro();
+    this.mapTable();
+    this.mapGallery();
+    this.mapRoomSlides();
+    this.refreshSwipers();
+  };
+
+  RoomMapper.prototype.getRoomtypes = function () {
+    var cf = this.getCustomFields();
+    if (cf.roomtypes && cf.roomtypes.length) return cf.roomtypes;
+    if (this.data && this.data.customFields && this.data.customFields.roomtypes) {
+      return this.data.customFields.roomtypes;
+    }
+    return cf.roomtypes || [];
+  };
+
+  // URL ?room_id= 로 현재 roomtype 결정 (없으면 첫 번째)
+  RoomMapper.prototype.getCurrentRoomtype = function () {
+    var roomtypes = this.getRoomtypes();
+    if (!roomtypes.length) return null;
+    var id = new URLSearchParams(window.location.search).get('room_id');
+    if (id) {
+      var found = roomtypes.filter(function (rt) {
+        return String(rt.id) === String(id);
+      })[0];
+      if (found) return found;
+    }
+    return roomtypes[0];
+  };
+
+  RoomMapper.prototype.getMatchedRoom = function (rt) {
+    if (!rt) return null;
+    var rooms = (this.data && this.data.rooms) || [];
+    return (
+      rooms.filter(function (r) {
+        return r.id === rt.id;
+      })[0] || null
+    );
+  };
+
+  // roomtypes[current] interior 이미지[isSelected]
+  RoomMapper.prototype.getInteriorImages = function (rt) {
+    if (!rt) return [];
+    return (rt.images || [])
+      .filter(function (im) {
+        return im.category === 'roomtype_interior' && im.isSelected;
+      })
+      .sort(function (a, b) {
+        return a.sortOrder - b.sortOrder;
+      });
+  };
+
+  RoomMapper.prototype.refreshSwipers = function () {
+    if (typeof window.initSwipers === 'function') window.initSwipers();
+    if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+      window.setTimeout(function () {
+        window.locoScroll.update();
+      }, 200);
+    }
+  };
+
+  // MAPPER: roomtypes[current] interior → [data-room-hero-slides] (배경 슬라이드)
+  RoomMapper.prototype.mapHeroSlides = function () {
+    var wrapper = document.querySelector('[data-room-hero-slides]');
+    if (!wrapper) return;
+    var images = this.getInteriorImages(this.getCurrentRoomtype());
+
+    wrapper.innerHTML = '';
+    var list = images.length ? images : [null];
+    list.forEach(function (img) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      var box = document.createElement('div');
+      box.className = 'img';
+      if (img && img.url) {
+        box.style.background = 'url(' + img.url + ') no-repeat 50%';
+        box.style.backgroundSize = 'cover';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(box);
+      }
+      slide.appendChild(box);
+      wrapper.appendChild(slide);
+    });
+  };
+
+  // MAPPER: roomtypes[] → [data-room-list-nav] (미리보기 li 뒤 동적 생성, 현재 active)
+  RoomMapper.prototype.mapNav = function () {
+    var nav = document.querySelector('[data-room-list-nav]');
+    if (!nav) return;
+    var current = this.getCurrentRoomtype();
+    var currentId = current && current.id;
+    nav.querySelectorAll('[data-generated="nav"]').forEach(function (li) {
+      li.remove();
+    });
+    this.getRoomtypes().forEach(function (rt) {
+      if (!rt.name || !rt.name.trim()) return;
+      var isCurrent = String(rt.id) === String(currentId);
+      var li = document.createElement('li');
+      li.setAttribute('data-generated', 'nav');
+      if (isCurrent) li.className = 'active';
+      var a = document.createElement('a');
+      a.href = '/room.html?room_id=' + rt.id;
+      if (isCurrent) a.className = 'on';
+      a.textContent = rt.name;
+      li.appendChild(a);
+      nav.appendChild(li);
+    });
+  };
+
+  // MAPPER: 이름/구조 + 대표이미지/썸네일 (info)
+  RoomMapper.prototype.mapInfo = function () {
+    var rt = this.getCurrentRoomtype();
+    var room = this.getMatchedRoom(rt);
+    setText('[data-room-name]', rt && rt.name);
+    setText('[data-room-structure]', buildRoomStructure(room));
+
+    var interior = this.getInteriorImages(rt);
+
+    // 대표 이미지 (fl): interior[0]
+    var mainEl = document.querySelector('[data-room-image-main]');
+    if (mainEl) {
+      if (interior[0] && interior[0].url) {
+        mainEl.style.background = 'url(' + interior[0].url + ') no-repeat 28% center';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(mainEl);
+      }
     }
 
-    // ============================================================================
-    // 🏠 ROOM PAGE SPECIFIC MAPPINGS
-    // ============================================================================
-
-    /**
-     * 현재 객실 정보 가져오기 (URL 파라미터 기반)
-     */
-    getCurrentRoom() {
-        if (!this.isDataLoaded || !this.data.rooms) {
-            console.error('Data not loaded or no rooms data available');
-            return null;
-        }
-
-        // URL에서 room id 추출
-        const urlParams = new URLSearchParams(window.location.search);
-        let roomId = urlParams.get('id');
-
-        // id가 없으면 첫 번째 room으로 리다이렉트
-        if (!roomId && this.data.rooms.length > 0) {
-            console.warn('Room id not specified, redirecting to first room');
-            window.location.href = `room.html?id=${this.data.rooms[0].id}`;
-            return null;
-        }
-
-        if (!roomId) {
-            console.error('Room id not specified in URL and no rooms available');
-            return null;
-        }
-
-        // rooms 배열에서 해당 id의 객실 찾기
-        const roomIndex = this.data.rooms.findIndex(room => room.id === roomId);
-
-        if (roomIndex === -1) {
-            console.error(`Room with id ${roomId} not found`);
-            return null;
-        }
-
-        const room = this.data.rooms[roomIndex];
-        this.currentRoom = room;
-        this.currentRoomIndex = roomIndex; // 인덱스도 저장 (페이지 데이터 접근용)
-        return room;
-    }
-
-    /**
-     * 현재 객실 인덱스 가져오기
-     */
-    getCurrentRoomIndex() {
-        if (this.currentRoomIndex !== undefined) {
-            return this.currentRoomIndex;
-        }
-
-        // getCurrentRoom()이 호출되지 않았을 경우를 위한 fallback
-        const urlParams = new URLSearchParams(window.location.search);
-        const roomId = urlParams.get('id');
-
-        if (roomId && this.data.rooms) {
-            const index = this.data.rooms.findIndex(room => room.id === roomId);
-            if (index !== -1) {
-                this.currentRoomIndex = index;
-                return index;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * 현재 객실 페이지 데이터 가져오기 (캐시 포함)
-     */
-    getCurrentRoomPageData() {
-        // 현재 room을 먼저 가져와서 캐시가 유효한지 확인
-        const room = this.getCurrentRoom();
-        if (!room || !room.id) {
-            return null;
-        }
-
-        // 캐시된 데이터가 있고 같은 room이면 바로 반환
-        if (this.currentRoomPageData && this.currentRoomPageData.id === room.id) {
-            return this.currentRoomPageData;
-        }
-
-        const roomPages = this.safeGet(this.data, 'homepage.customFields.pages.room');
-        if (!roomPages || !Array.isArray(roomPages)) {
-            return null;
-        }
-
-        // pages.room 배열에서 현재 room.id와 일치하는 페이지 데이터 찾기
-        const pageData = roomPages.find(page => page.id === room.id);
-        if (!pageData) {
-            return null;
-        }
-
-        // 캐시 저장
-        this.currentRoomPageData = {
-            id: room.id,
-            data: pageData
-        };
-
-        return this.currentRoomPageData;
-    }
-
-    /**
-     * Fullscreen Slider 섹션 매핑 (페이지 상단) - customFields 우선
-     */
-    mapSliderSection() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
-
-        const sliderContainer = this.safeSelect('[data-room-slider]');
-        if (!sliderContainer) return;
-
-        // customFields에서 roomtype_interior 카테고리 이미지 가져오기
-        const interiorImages = this.getRoomImages(room, 'roomtype_interior');
-
-        // 이미지가 없으면 빈 이미지 표시
-        if (interiorImages.length === 0) {
-            sliderContainer.innerHTML = `
-                <div class="fullscreen-slide active">
-                    <img alt="이미지 없음">
-                </div>
-            `;
-            const img = sliderContainer.querySelector('img');
-            ImageHelpers.applyPlaceholder(img);
-
-            // Total 카운트 업데이트
-            const navTotal = this.safeSelect('.nav-total');
-            if (navTotal) navTotal.textContent = '01';
-            return;
-        }
-
-        // 기존 슬라이드 제거
-        sliderContainer.innerHTML = '';
-
-        // 슬라이드 생성
-        interiorImages.forEach((image, index) => {
-            const slide = document.createElement('div');
-            slide.className = `fullscreen-slide ${index === 0 ? 'active' : ''}`;
-
-            const img = document.createElement('img');
-            img.src = image.url;
-            img.alt = image.description || this.getRoomName(room);
-            img.loading = index === 0 ? 'eager' : 'lazy';
-            img.setAttribute('data-image-fallback', '');
-
-            slide.appendChild(img);
-            sliderContainer.appendChild(slide);
-        });
-
-        // Total 카운트 업데이트
-        const navTotal = this.safeSelect('.nav-total');
-        if (navTotal) {
-            navTotal.textContent = String(interiorImages.length).padStart(2, '0');
-        }
-
-        // Fullscreen Slider 재초기화
-        this.reinitializeSlider();
-    }
-
-    /**
-     * Fullscreen Slider 재초기화
-     */
-    reinitializeSlider() {
-        const sliderContainer = this.safeSelect('.fullscreen-slider-container');
-        if (!sliderContainer || typeof FullscreenSlider !== 'function') {
-            return;
-        }
-
-        // 기존 슬라이더 인스턴스 제거
-        if (window.fullscreenSlider) {
-            window.fullscreenSlider = null;
-        }
-
-        // 새 슬라이더 인스턴스 생성 (selector 문자열 전달)
-        window.fullscreenSlider = new FullscreenSlider('.fullscreen-slider-container');
-    }
-
-    /**
-     * 기본 정보 섹션 매핑 (객실명, 썸네일, 설명) - customFields 우선
-     */
-    mapBasicInfo() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
-
-        // 객실명 매핑 (customFields 우선)
-        const roomNameEl = this.safeSelect('[data-room-name]');
-        if (roomNameEl) {
-            roomNameEl.textContent = this.getRoomName(room);
-        }
-
-        // 썸네일 이미지 매핑 (customFields 우선)
-        const roomThumbnail = this.safeSelect('[data-room-thumbnail]');
-        if (roomThumbnail) {
-            const thumbnailImages = this.getRoomImages(room, 'roomtype_thumbnail');
-
-            if (thumbnailImages.length > 0) {
-                roomThumbnail.src = thumbnailImages[0].url;
-                roomThumbnail.alt = thumbnailImages[0].description || this.getRoomName(room);
-                roomThumbnail.setAttribute('data-image-fallback', '');
-            } else {
-                ImageHelpers.applyPlaceholder(roomThumbnail);
-            }
-        }
-
-        // 객실 설명 매핑 (CUSTOM FIELD)
-        const roomDescription = this.safeSelect('[data-room-description]');
-        if (roomDescription) {
-            const roomPageData = this.getCurrentRoomPageData();
-            const heroTitle = roomPageData?.data?.sections?.[0]?.hero?.title;
-            roomDescription.innerHTML = this._formatTextWithLineBreaks(heroTitle, '객실 히어로 타이틀');
-        }
-    }
-
-    /**
-     * 객실 정보 섹션 매핑 (Room Information 섹션)
-     */
-    mapRoomInfoSection() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
-
-        // 시스템 데이터: 객실 설명 매핑
-        const roomInfoDescription = this.safeSelect('[data-room-info-description]');
-        if (roomInfoDescription) {
-            roomInfoDescription.innerHTML = this._formatTextWithLineBreaks(room.description, `${this.getRoomName(room)}의 상세 정보입니다.`);
-        }
-
-        // 객실 내부 이미지 4장 끝에서부터 순서대로 매핑
-        this.mapRoomMainImage();
-        this.mapRoomThumbnails();
-    }
-
-    /**
-     * 메인 이미지 매핑 (customFields 우선)
-     */
-    mapRoomMainImage() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
-
-        const mainImg = this.safeSelect('[data-room-main-img]');
-        if (!mainImg) return;
-
-        // customFields에서 roomtype_interior 카테고리 이미지 가져오기
-        const interiorImages = this.getRoomImages(room, 'roomtype_interior');
-
-        // 인덱스 2번부터 4개 이미지 (2, 3, 4, 5번)
-        const selectedImages = interiorImages.slice(2, 6);
-        const mainImage = selectedImages[0]; // 2번 인덱스 이미지
-
-        if (mainImage) {
-            mainImg.src = mainImage.url;
-            mainImg.alt = mainImage.description || this.getRoomName(room);
-            mainImg.setAttribute('data-image-fallback', '');
+    // 썸네일 (fr): li 배경 (interior[3], interior[4])
+    var thumbs = document.querySelector('[data-room-thumbs]');
+    if (thumbs) {
+      thumbs.querySelectorAll('li').forEach(function (li, i) {
+        var img = interior[i + 3];
+        if (img && img.url) {
+          li.style.background = 'url(' + img.url + ') no-repeat center center';
         } else {
-            ImageHelpers.applyPlaceholder(mainImg);
+          ImageHelpers.applyBackgroundPlaceholder(li);
         }
+      });
     }
 
-    /**
-     * 썸네일 이미지들 매핑 (인덱스 2번부터 4개 interior 이미지) - customFields 우선
-     */
-    mapRoomThumbnails() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
-
-        const thumbnailsContainer = this.safeSelect('[data-room-thumbnails]');
-        if (!thumbnailsContainer) return;
-
-        // customFields에서 roomtype_interior 카테고리 이미지 가져오기
-        const interiorImages = this.getRoomImages(room, 'roomtype_interior');
-
-        // 인덱스 2번부터 4개 이미지 가져오기 (2, 3, 4, 5번)
-        let lastFourImages = interiorImages.slice(2, 6);
-
-        // 4개가 안 되면 null로 채움 (UI 구조 유지 위해)
-        while (lastFourImages.length < 4) {
-            lastFourImages.push(null);
-        }
-
-        // 기존 썸네일 제거
-        thumbnailsContainer.innerHTML = '';
-
-        // 썸네일 생성 (항상 4개)
-        lastFourImages.forEach((image, index) => {
-            const thumbDiv = document.createElement('div');
-            thumbDiv.className = 'room-thumb animate-element';
-            thumbDiv.setAttribute('data-index', index);
-
-            // 첫 번째 썸네일에 active 클래스 추가
-            if (index === 0) {
-                thumbDiv.classList.add('active');
-            }
-
-            const img = document.createElement('img');
-            if (image && image.url) {
-                img.src = image.url;
-                img.alt = image.description || this.getRoomName(room);
-                img.loading = 'lazy';
-                img.setAttribute('data-image-fallback', '');
-                img.classList.remove('empty-image-placeholder');
-            } else {
-                ImageHelpers.applyPlaceholder(img);
-            }
-
-            thumbDiv.appendChild(img);
-            thumbnailsContainer.appendChild(thumbDiv);
-        });
-
-        // 썸네일이 화면에 보이는 경우 바로 animate 클래스 추가 (프리뷰 업데이트 시)
-        const thumbnails = thumbnailsContainer.querySelectorAll('.room-thumb');
-        thumbnails.forEach((thumb, index) => {
-            setTimeout(() => {
-                thumb.classList.add('animate');
-            }, index * 100);
-        });
-
-        // 썸네일 클릭 이벤트 재설정 (room.js의 함수 호출)
-        if (typeof window.setupRoomThumbnailInteraction === 'function') {
-            window.setupRoomThumbnailInteraction();
-        }
-    }
-
-    /**
-     * 객실 상세 정보 매핑
-     */
-    mapRoomDetails() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
-
-        // 객실 크기 (시스템 데이터)
-        const roomSize = this.safeSelect('[data-room-size]');
-        if (roomSize) {
-            roomSize.textContent = room.size || '-';
-        }
-
-        // 침대 타입 (시스템 데이터)
-        const roomBedTypes = this.safeSelect('[data-room-bed-types]');
-        if (roomBedTypes) {
-            const bedTypes = room.bedTypes || [];
-            roomBedTypes.textContent = bedTypes.length > 0 ? bedTypes.join(', ') : '-';
-        }
-
-        // 객실 구성 (시스템 데이터)
-        const roomComposition = this.safeSelect('[data-room-composition]');
-        if (roomComposition) {
-            const roomStructures = room.roomStructures || [];
-            roomComposition.textContent = roomStructures.length > 0 ? roomStructures.join(', ') : '-';
-        }
-
-        // 인원 (시스템 데이터)
-        const roomCapacity = this.safeSelect('[data-room-capacity]');
-        if (roomCapacity) {
-            const capacity = `기준 ${room.baseOccupancy || 2}인 / 최대 ${room.maxOccupancy || 4}인`;
-            roomCapacity.textContent = capacity;
-        }
-
-        // 체크인 (시스템 데이터)
-        const roomCheckin = this.safeSelect('[data-room-checkin]');
-        if (roomCheckin) {
-            const checkinTime = this.data.property?.checkinTime || '15:00';
-            roomCheckin.textContent = checkinTime;
-        }
-
-        // 체크아웃 (시스템 데이터)
-        const roomCheckout = this.safeSelect('[data-room-checkout]');
-        if (roomCheckout) {
-            const checkoutTime = this.data.property?.checkoutTime || '11:00';
-            roomCheckout.textContent = checkoutTime;
-        }
-
-        // 객실 이용규칙/안내사항 (시스템 데이터)
-        const roomGuide = this.safeSelect('[data-room-guide]');
-        if (roomGuide) {
-            const roomInfo = room.roomInfo || '편안한 휴식 공간';
-            roomGuide.innerHTML = this._formatTextWithLineBreaks(roomInfo);
-        }
-    }
-
-    /**
-     * 객실 편의시설/특징 매핑
-     */
-    mapRoomAmenities() {
-        const room = this.getCurrentRoom();
-        if (!room || !room.amenities || room.amenities.length === 0) {
-            return;
-        }
-
-        const amenitiesGrid = this.safeSelect('[data-room-amenities-grid]');
-        if (!amenitiesGrid) {
-            return;
-        }
-
-        // 기존 어메니티 제거
-        amenitiesGrid.innerHTML = '';
-
-        // JSON 데이터의 실제 어메니티들에 맞춘 아이콘 매핑 (기존 방식 유지)
-        const amenityIcons = {
-            // JSON에서 나오는 실제 어메니티들
-            '간이 주방': 'M3 6h18M3 6l3-3h12l3 3M3 6v15a2 2 0 002 2h14a2 2 0 002-2V6M10 12h4',
-            '냉장고': 'M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zM12 8h.01M12 16h.01',
-            '전자레인지': 'M3 7h18v10H3V7zM7 7V3a1 1 0 011-1h8a1 1 0 011 1v4M9 12h6',
-            '인덕션': 'M8 12a4 4 0 118 0 4 4 0 01-8 0zM12 8v8M8 12h8',
-            '조리도구': 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
-            '그릇': 'M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9zM8 12h8',
-            '정수기': 'M12 2v20M8 5h8M6 12h12M8 19h8',
-            '와이파이': 'M2 7h20M2 12h20M2 17h20',
-            '에어컨': 'M3 12h18M3 8h18M3 16h18M12 3v18',
-            '침구류': 'M3 7h18v10H3V7zM7 3h10v4H7V3z',
-            '수건': 'M3 12h18M6 7h12M6 17h12',
-            '어메니티': 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
-            '청소용품': 'M6 2l3 6 5-4-8 13 4-7 6 2z',
-            '헤어드라이어': 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
-            '기본': 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
-        };
-
-        // 어메니티 아이템들 생성 (기존 방식과 동일)
-        room.amenities.forEach(amenity => {
-            const amenityDiv = document.createElement('div');
-            amenityDiv.className = 'feature-item';
-
-            const amenityName = amenity.name?.ko || amenity.name || amenity;
-            const iconPath = amenityIcons[amenityName] || amenityIcons['기본'];
-
-            amenityDiv.innerHTML = `
-                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"/>
-                </svg>
-                <span class="text-base md:text-lg text-gray-600">${amenityName}</span>
-            `;
-
-            amenitiesGrid.appendChild(amenityDiv);
-        });
-    }
-
-    /**
-     * 숙소 영문명 마키 텍스트 매핑 (customFields 우선)
-     */
-    mapMarquee() {
-        const marqueeContainer = this.safeSelect('[data-room-marquee]');
-        if (!marqueeContainer) return;
-
-        // customFields 우선
-        const propertyNameEn = this.getPropertyNameEn();
-
-        // 기존 내용 제거
-        marqueeContainer.innerHTML = '';
-
-        // 반복할 텍스트 생성 (3번 반복)
-        for (let i = 0; i < 3; i++) {
-            const span = document.createElement('span');
-            span.textContent = propertyNameEn;
-            marqueeContainer.appendChild(span);
-        }
-    }
-
-    /**
-     * 객실 배너 이미지 매핑 (customFields 우선)
-     */
-    mapBanner() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
-
-        const bannerSection = this.safeSelect('[data-room-banner]');
-        if (!bannerSection) return;
-
-        // customFields에서 roomtype_thumbnail 카테고리 이미지 가져오기
-        const thumbnailImages = this.getRoomImages(room, 'roomtype_thumbnail');
-
-        if (thumbnailImages.length > 0) {
-            bannerSection.style.backgroundImage = `url('${thumbnailImages[0].url}')`;
+    // 썸네일 (mobile): li > img
+    var thumbsM = document.querySelector('[data-room-thumbs-m]');
+    if (thumbsM) {
+      thumbsM.querySelectorAll('li img').forEach(function (img, i) {
+        var src = interior[i];
+        if (src && src.url) {
+          img.src = src.url;
+          img.alt = '';
         } else {
-            bannerSection.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
+          ImageHelpers.applyPlaceholder(img);
         }
-
-        bannerSection.style.backgroundSize = 'cover';
-        bannerSection.style.backgroundPosition = 'center';
-        bannerSection.style.backgroundRepeat = 'no-repeat';
+      });
     }
+  };
 
-    /**
-     * 외부 갤러리 섹션 매핑 (customFields 우선)
-     */
-    mapExteriorGallery() {
-        const room = this.getCurrentRoom();
-        if (!room) return;
+  // MAPPER: pages.room[matched].sections[0].hero.title → [data-room-intro]
+  RoomMapper.prototype.mapIntro = function () {
+    var rt = this.getCurrentRoomtype();
+    var roomPages = (this.getPages().room) || [];
+    var matched = rt && roomPages.filter(function (r) { return String(r.id) === String(rt.id); })[0];
+    var title = matched && matched.sections && matched.sections[0] && matched.sections[0].hero && matched.sections[0].hero.title;
+    setText('[data-room-intro]', title || '');
+  };
 
-        // 갤러리 제목 매핑 (CUSTOM FIELD)
-        const galleryTitle = this.safeSelect('[data-room-gallery-title]');
-        if (galleryTitle) {
-            const roomPageData = this.getCurrentRoomPageData();
-            const galleryTitleText = roomPageData?.data?.sections?.[0]?.gallery?.title;
-            galleryTitle.innerHTML = this._formatTextWithLineBreaks(galleryTitleText || 'Gallery');
-        }
-
-        // 갤러리 이미지 매핑 (customFields 우선)
-        const galleryContainer = this.safeSelect('[data-room-gallery]');
-        if (!galleryContainer) return;
-
-        // customFields에서 roomtype_exterior 카테고리 이미지 가져오기
-        const exteriorImages = this.getRoomImages(room, 'roomtype_exterior');
-
-        // 최대 5개 이미지만 사용
-        const galleryImages = exteriorImages.slice(0, 5);
-
-        // 기존 갤러리 제거
-        galleryContainer.innerHTML = '';
-
-        if (galleryImages.length === 0) {
-            // 이미지가 0개일 때만 5개 placeholder UI 생성
-            for (let i = 0; i < 5; i++) {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-
-                const img = document.createElement('img');
-                ImageHelpers.applyPlaceholder(img);
-
-                galleryItem.appendChild(img);
-                galleryContainer.appendChild(galleryItem);
-            }
-            galleryContainer.setAttribute('data-count', 5);
-            return;
-        }
-
-        // 이미지가 있으면 실제 이미지 개수만큼만 생성
-        galleryImages.forEach((image, index) => {
-            const galleryItem = document.createElement('div');
-            galleryItem.className = 'gallery-item';
-
-            const img = document.createElement('img');
-            img.src = image.url;
-            img.alt = image.description || this.getRoomName(room);
-            img.loading = index === 0 ? 'eager' : 'lazy';
-            img.setAttribute('data-image-fallback', '');
-
-            galleryItem.appendChild(img);
-            galleryContainer.appendChild(galleryItem);
-        });
-
-        // data-count 속성 설정 (CSS에서 레이아웃 결정에 사용)
-        galleryContainer.setAttribute('data-count', galleryImages.length);
+  // MAPPER: 표 (객실명/기준/최대/유형/평형 + 집기품목)
+  RoomMapper.prototype.mapTable = function () {
+    var rt = this.getCurrentRoomtype();
+    var room = this.getMatchedRoom(rt);
+    setText('[data-room-base-occupancy]', room && room.baseOccupancy);
+    setText('[data-room-max-occupancy]', room && room.maxOccupancy);
+    if (room && (room.size || room.size === 0)) {
+      setText('[data-room-size]', room.size + '평');
     }
-
-
-
-    // ============================================================================
-    // 🔄 TEMPLATE METHODS IMPLEMENTATION
-    // ============================================================================
-
-    /**
-     * Room 페이지 전체 매핑 실행
-     */
-    async mapPage() {
-        if (!this.isDataLoaded) {
-            console.error('Cannot map room page: data not loaded');
-            return;
-        }
-
-        const room = this.getCurrentRoom();
-        if (!room) {
-            console.error('Cannot map room page: room not found');
-            return;
-        }
-
-        // 순차적으로 각 섹션 매핑
-        this.mapSliderSection();        // Fullscreen slider at top
-        this.mapBasicInfo();             // Room name, thumbnail, description
-        this.mapRoomInfoSection();       // Room info description + main image + thumbnails
-        this.mapRoomDetails();           // Size, bed types, composition, capacity, checkin, checkout, guide
-        this.mapRoomAmenities();         // Amenities grid (if exists)
-        this.mapMarquee();               // Property English name marquee
-        this.mapBanner();                // Exterior banner image
-        this.mapExteriorGallery();       // Exterior gallery section
-
-        // 메타 태그 업데이트 (페이지별 SEO 적용) - customFields 우선
-        const pageSEO = {
-            title: `${this.getRoomName(room)} - ${this.getPropertyName()}`,
-            description: room?.description || this.data.property?.description || 'SEO 설명'
-        };
-        this.updateMetaTags(pageSEO);
-
-        // OG 이미지 업데이트 (객실 이미지 사용)
-        this.updateOGImage(room);
-
-        // E-commerce registration 매핑
-        this.mapEcommerceRegistration();
+    if (room && room.amenities && room.amenities.length) {
+      setText('[data-room-amenities]', room.amenities.join(', '));
     }
+  };
 
-
-    /**
-     * OG 이미지 업데이트 (customFields 우선)
-     * @param {Object} room - 현재 객실 데이터
-     */
-    updateOGImage(room) {
-        if (!this.isDataLoaded || !room) return;
-
-        const ogImage = this.safeSelect('meta[property="og:image"]');
-        if (!ogImage) return;
-
-        // customFields에서 thumbnail, interior, exterior 순으로 첫 번째 이미지 찾기
-        const thumbnailImages = this.getRoomImages(room, 'roomtype_thumbnail');
-        const interiorImages = this.getRoomImages(room, 'roomtype_interior');
-        const exteriorImages = this.getRoomImages(room, 'roomtype_exterior');
-
-        const imageUrl = thumbnailImages[0]?.url || interiorImages[0]?.url || exteriorImages[0]?.url;
-
-        // 우선순위: 객실 이미지 > 로고 이미지
-        if (imageUrl) {
-            ogImage.setAttribute('content', imageUrl);
+  // MAPPER: roomtypes[current] interior → [data-room-gallery] (.list li p배경+img, 레이아웃 유지)
+  RoomMapper.prototype.mapGallery = function () {
+    var gallery = document.querySelector('[data-room-gallery]');
+    if (!gallery) return;
+    var interior = this.getInteriorImages(this.getCurrentRoomtype());
+    var lis = gallery.querySelectorAll('li');
+    lis.forEach(function (li, i) {
+      var p = li.querySelector('p');
+      var img = li.querySelector('img');
+      var src = interior[i];
+      if (p) {
+        if (src && src.url) {
+          p.style.backgroundImage = 'url(' + src.url + ')';
         } else {
-            const defaultImage = this.getDefaultOGImage();
-            if (defaultImage) {
-                ogImage.setAttribute('content', defaultImage);
-            }
+          ImageHelpers.applyBackgroundPlaceholder(p);
         }
-    }
+      }
+      if (img) {
+        if (src && src.url) {
+          img.src = src.url;
+          img.alt = '';
+        } else {
+          ImageHelpers.applyPlaceholder(img);
+        }
+      }
+    });
+  };
 
-    /**
-     * 네비게이션 함수 설정
-     */
-    setupNavigation() {
-        // 홈으로 이동 함수 설정
-        window.navigateToHome = () => {
-            window.location.href = './index.html';
-        };
-    }
-}
+  // MAPPER: roomtypes[] (+ rooms[] id매칭) → [data-room-list-slides] (미리보기 슬라이더)
+  RoomMapper.prototype.mapRoomSlides = function () {
+    var wrapper = document.querySelector('[data-room-list-slides]');
+    if (!wrapper) return;
+    var roomtypes = this.getRoomtypes().filter(function (rt) {
+      return rt && rt.name && rt.name.trim();
+    });
+    var rooms = (this.data && this.data.rooms) || [];
 
-// ES6 모듈 및 글로벌 노출
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = RoomMapper;
-} else {
-    window.RoomMapper = RoomMapper;
-}
+    wrapper.innerHTML = '';
+    if (!roomtypes.length) return;
 
-// ============================================================================
-// 🚀 INITIALIZATION
-// ============================================================================
+    roomtypes.forEach(function (rt) {
+      var thumbs = (rt.images || []).filter(function (im) {
+        return im.category === 'roomtype_thumbnail';
+      });
+      var sel = thumbs.filter(function (t) {
+        return t.isSelected;
+      });
+      var thumbUrl = (sel[0] && sel[0].url) || (thumbs[0] && thumbs[0].url) || '';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const roomMapper = new RoomMapper();
+      var matched = rooms.filter(function (r) {
+        return r.id === rt.id;
+      })[0];
+      var structureText = buildRoomStructure(matched);
 
-    try {
-        // 데이터 로드
-        await roomMapper.loadData();
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide item';
+      var a = document.createElement('a');
+      a.href = 'room.html?room_id=' + rt.id;
+      a.className = 'custom_mousemove';
+      a.setAttribute('data-hover', 'Click');
 
-        // 페이지 매핑 실행
-        await roomMapper.mapPage();
-    } catch (error) {
-        console.error('Error initializing room mapper:', error);
-    }
-});
+      var img = document.createElement('div');
+      img.className = 'img';
+      if (thumbUrl) {
+        img.style.background = 'url(' + thumbUrl + ') no-repeat 50%';
+        img.style.backgroundSize = 'cover';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(img);
+      }
+
+      var txt = document.createElement('div');
+      txt.className = 'txt';
+      txt.innerHTML = '<p class="btxt"></p><p class="stxt"></p>';
+      txt.querySelector('.btxt').textContent = rt.name || '';
+      txt.querySelector('.stxt').textContent = structureText;
+
+      a.appendChild(img);
+      a.appendChild(txt);
+      slide.appendChild(a);
+      wrapper.appendChild(slide);
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.previewHandler) return;
+    var mapper = new RoomMapper();
+    mapper.initialize();
+    global.roomMapperInstance = mapper;
+  });
+
+  global.RoomMapper = RoomMapper;
+})(window);

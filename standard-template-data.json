@@ -1,14 +1,15 @@
 {
   "metadata": {
-    "version": "1.233.0",
-    "generatedAt": "2026-06-24T08:17:04.101049995Z",
-    "templateType": "gallery_sidebar",
+    "version": "1.234.0",
+    "generatedAt": "2026-06-24T08:19:02.127055294Z",
+    "templateType": "trip_d",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "name": "Max 한옥",
+    "nameEn": "Jeju Bijasupgil15 Pension",
     "description": "자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!",
     "subtitle": "한옥의 멋을 살린 맥스 한옥 펜션",
     "address": "제주특별자치도 제주시 구좌읍 비자숲길 15 한옥펜션",
@@ -23,6 +24,9 @@
     "reservationGuide": "• 기준인원 초과 시 추가 요금이 발생합니다.\n• 기준인원 초과 시 성인 1인 30,000원 / 아동 1인 20,000원 / 24개월 미만 무료(증빙서류 지참)입니다.\n• 결제는 필수입니다.",
     "province": "서울특별시",
     "city": "금천구",
+    "domain": "max-hanok.com",
+    "realtimeBookingId": "",
+    "ybsId": "",
     "amenities": [ ],
     "nearbyAttractions": [
       "산",
@@ -47,7 +51,8 @@
       "businessEmail": "",
       "businessType": "corporate",
       "businessCategory": "숙박",
-      "eCommerceRegistrationNumber": ""
+      "eCommerceRegistrationNumber": "",
+      "ecommerceRegistrationNumber": ""
     },
     "contractInfo": {
       "contractStartDate": "2025-09-10T00:00:00.000Z",
@@ -332,11 +337,7 @@
         ],
         "commonArea": [ ]
       }
-    ],
-    "nameEn": "Jeju Bijasupgil15 Pension",
-    "domain": "max-hanok.com",
-    "realtimeBookingId": "",
-    "ybsId": ""
+    ]
   },
   "rooms": [
     {
@@ -1328,8 +1329,9 @@
     }
   ],
   "homepage": {
+    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "trip_c",
+    "templateType": "trip_d",
     "images": [
       {
         "logo": [
@@ -1962,49 +1964,6 @@
             }
           ]
         },
-        "layoutMap": {
-          "sections": [
-            {
-              "hero": {
-                "title": "max 펜션 숙소 배치도",
-                "images": [
-                  {
-                    "id": "6892db1a-549d-4a24-9b63-c3054774bff2",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_hero/1778206050718-7ouvw7fug9.jpg",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
-                  }
-                ],
-                "description": "msx한옥 숙소 배치도 입니다."
-              },
-              "about": {
-                "title": "맥스 한옥 펜션 숙소 배치도",
-                "images": [
-                  {
-                    "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
-                    "sortOrder": 0,
-                    "description": "1층 : 다온방, 이든방, 별하방, 사랑방",
-                    "isSelected": true,
-                    "blockId": null
-                  },
-                  {
-                    "id": "927f2f0c-b187-471d-99e4-39f3db27e325",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778719364160-6jegha9pqt.jpg",
-                    "sortOrder": 1,
-                    "description": "공용시설 : 주차장, 찜질방, LP방, 민속방, 시네마ㅋㅋ",
-                    "isSelected": false,
-                    "blockId": null
-                  }
-                ],
-                "description": "숙소 배치도를 보고 객실을 찾아가세요 !"
-              },
-              "enabled": true
-            }
-          ]
-        },
         "nearbyAttractions": {
           "sections": [
             {
@@ -2143,6 +2102,49 @@
               "enabled": true
             }
           ]
+        },
+        "layoutMap": {
+          "sections": [
+            {
+              "hero": {
+                "title": "max 펜션 숙소 배치도",
+                "images": [
+                  {
+                    "id": "6892db1a-549d-4a24-9b63-c3054774bff2",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_hero/1778206050718-7ouvw7fug9.jpg",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": null
+                  }
+                ],
+                "description": "msx한옥 숙소 배치도 입니다."
+              },
+              "about": {
+                "title": "맥스 한옥 펜션 숙소 배치도",
+                "images": [
+                  {
+                    "id": "66e44737-75f5-4bab-8ff9-1b0413a69ed4",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778206050696-rdcmsnkir7.jpg",
+                    "sortOrder": 0,
+                    "description": "1층 : 다온방, 이든방, 별하방, 사랑방",
+                    "isSelected": true,
+                    "blockId": null
+                  },
+                  {
+                    "id": "927f2f0c-b187-471d-99e4-39f3db27e325",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/layout_map_about/1778719364160-6jegha9pqt.jpg",
+                    "sortOrder": 1,
+                    "description": "공용시설 : 주차장, 찜질방, LP방, 민속방, 시네마ㅋㅋ",
+                    "isSelected": false,
+                    "blockId": null
+                  }
+                ],
+                "description": "숙소 배치도를 보고 객실을 찾아가세요 !"
+              },
+              "enabled": true
+            }
+          ]
         }
       },
       "popup": {
@@ -2180,9 +2182,9 @@
       },
       "theme": {
         "font": {
+          "koMain": null,
           "koSub": null,
-          "enMain": null,
-          "koMain": null
+          "enMain": null
         },
         "color": {
           "primary": "#F5F4F1",
@@ -2190,6 +2192,7 @@
         }
       },
       "property": {
+        "name": "Max 한옥",
         "images": [
           {
             "id": "62e5fbf0-47f0-4fd5-84c8-c4f535bc4e13",
@@ -2246,7 +2249,6 @@
             "category": "property_surrounding"
           }
         ],
-        "name": "Max 한옥",
         "nameEn": "Jeju Bijasupgil15 Pension"
       },
       "roomtypes": [
@@ -2608,7 +2610,6 @@
           "images": [ ]
         }
       ]
-    },
-    "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
+    }
   }
 }
