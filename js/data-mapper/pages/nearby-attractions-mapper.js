@@ -1,6 +1,15 @@
 (function (global) {
   'use strict';
 
+  // 줄바꿈(\n) → <br>, HTML 이스케이프
+  function nl2br(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br />');
+  }
+
   function NearbyAttractionsMapper() {
     BaseDataMapper.call(this);
   }
@@ -8,164 +17,136 @@
   NearbyAttractionsMapper.prototype.constructor = NearbyAttractionsMapper;
 
   NearbyAttractionsMapper.prototype.mapPage = function () {
-    // enabled=false이면 404로 리다이렉트
-    var pages = this.getPages();
-    if (!pages.nearbyAttractions ||
-        !pages.nearbyAttractions.sections ||
-        !pages.nearbyAttractions.sections[0] ||
-        pages.nearbyAttractions.sections[0].enabled === false) {
+    var section = this.getSection();
+    // enabled=false(또는 섹션 없음)면 404로 리다이렉트 (c/l/e 동일)
+    if (!section || section.enabled === false) {
       window.location.href = '404.html';
       return;
     }
-
-    this.mapHero();
-    this.mapHeroTitle();
-    this.mapAttractionCards();
-    this.updateMetaTags();
+    this.mapHeroSlides(section);
+    this.mapAboutBlocks(section);
+    this.mapClosing();
+    this.refreshSwipers();
   };
 
-  NearbyAttractionsMapper.prototype.mapHero = function () {
+  // customFields.pages.index.sections[0].closing (main_reserve 공용, index/main 동일)
+  NearbyAttractionsMapper.prototype.mapClosing = function () {
     var pages = this.getPages();
-    var page = pages.nearbyAttractions;
-    if (!page || !page.sections || !page.sections[0]) return;
+    var sec = pages.index && pages.index.sections && pages.index.sections[0];
+    var closing = (sec && sec.closing) || {};
+    var descEl = document.querySelector('[data-nearby-closing-description]');
+    if (descEl && closing.description) descEl.innerHTML = nl2br(closing.description);
+  };
 
-    var hero = page.sections[0].hero;
-    if (!hero) return;
+  // customFields.pages.nearbyAttractions.sections[0]
+  NearbyAttractionsMapper.prototype.getSection = function () {
+    var pages = this.getPages();
+    return (
+      (pages.nearbyAttractions &&
+        pages.nearbyAttractions.sections &&
+        pages.nearbyAttractions.sections[0]) ||
+      null
+    );
+  };
 
-    var wrapper = document.querySelector('[data-nearby-attractions-hero-slides]');
-    if (!wrapper) return;
-
-    var images = this.getSelectedImages(hero.images || []);
-    wrapper.innerHTML = '';
-
-    if (!images.length) {
-      var placeholderDiv = document.createElement('div');
-      placeholderDiv.className = 'swiper-slide';
-      var imgDiv = document.createElement('div');
-      imgDiv.className = 'img';
-      imgDiv.style.backgroundColor = '#f0f0f0';
-      imgDiv.style.backgroundImage = ImageHelpers.EMPTY_IMAGE_SVG;
-      imgDiv.style.backgroundRepeat = 'no-repeat';
-      imgDiv.style.backgroundPosition = 'center';
-      imgDiv.style.backgroundSize = 'cover';
-      placeholderDiv.appendChild(imgDiv);
-      wrapper.appendChild(placeholderDiv);
-      return;
+  NearbyAttractionsMapper.prototype.refreshSwipers = function () {
+    if (typeof window.initSwipers === 'function') window.initSwipers();
+    if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+      window.setTimeout(function () {
+        window.locoScroll.update();
+      }, 200);
     }
+  };
 
-    images.forEach(function (img) {
-      var div = document.createElement('div');
-      div.className = 'swiper-slide';
-      var imgDiv = document.createElement('div');
-      imgDiv.className = 'img';
-      imgDiv.style.backgroundImage = 'url(' + img.url + ')';
-      imgDiv.style.backgroundPosition = 'center';
-      imgDiv.style.backgroundSize = 'cover';
-      div.appendChild(imgDiv);
-      wrapper.appendChild(div);
+  // MAPPER: hero.images[isSelected] → [data-nearby-hero-slides] (배경 슬라이드 동적 생성)
+  NearbyAttractionsMapper.prototype.mapHeroSlides = function (section) {
+    var wrapper = document.querySelector('[data-nearby-hero-slides]');
+    if (!wrapper) return;
+    var images = this.getSelectedImages((section.hero || {}).images || []);
+
+    wrapper.innerHTML = '';
+    var list = images.length ? images : [null];
+    list.forEach(function (img) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      var box = document.createElement('div');
+      box.className = 'img';
+      if (img && img.url) {
+        box.style.background = 'url(' + img.url + ') no-repeat 50%';
+        box.style.backgroundSize = 'cover';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(box);
+      }
+      slide.appendChild(box);
+      wrapper.appendChild(slide);
     });
   };
 
-  // MAPPER: customFields.pages.nearbyAttractions.sections[0].hero (title, description)
-  // Fallback: "TRAVL" + "여행하기 좋은도시"
-  NearbyAttractionsMapper.prototype.mapHeroTitle = function () {
-    var pages = this.getPages();
-    var page = pages.nearbyAttractions;
-    if (!page || !page.sections || !page.sections[0]) return;
+  // MAPPER: about[] → [data-nearby-about-blocks] (블록마다 .main_about 행 동적 생성)
+  // 블록 = 이미지(images[0]) + 타이틀(title) + 설명(description) + 이미지설명(images[0].description)
+  NearbyAttractionsMapper.prototype.mapAboutBlocks = function (section) {
+    var container = document.querySelector('[data-nearby-about-blocks]');
+    if (!container) return;
+    var about = section.about || [];
+    var self = this;
 
-    var hero = page.sections[0].hero;
-    if (!hero) return;
+    container.innerHTML = '';
+    about.forEach(function (block) {
+      var images = self.getSelectedImages(block.images || []);
+      var img0 = images[0];
 
-    // Hero 제목: hero.title 우선, "TRAVL" fallback
-    var titleEl = document.querySelector('[data-nearby-attractions-hero-title]');
-    if (titleEl) {
-      if (hero.title && hero.title.trim()) {
-        titleEl.textContent = hero.title;
+      var wrap = document.createElement('div');
+      wrap.className = 'main_about';
+
+      var cont = document.createElement('div');
+      cont.className = 'cont';
+
+      // 좌측 이미지
+      var fl = document.createElement('div');
+      fl.className = 'fl';
+      var img = document.createElement('div');
+      img.className = 'img fadeRight';
+      img.setAttribute('data-scroll', '');
+      if (img0 && img0.url) {
+        img.style.backgroundImage = 'url(' + img0.url + ')';
       } else {
-        titleEl.textContent = 'TRAVL';
+        ImageHelpers.applyBackgroundPlaceholder(img);
       }
-    }
+      fl.appendChild(img);
 
-    // Hero 설명: hero.description 우선, "여행하기 좋은도시" fallback
-    var descEl = document.querySelector('[data-nearby-attractions-hero-description]');
-    if (descEl) {
-      if (hero.description && hero.description.trim()) {
-        descEl.textContent = hero.description;
-      } else {
-        descEl.textContent = '여행하기 좋은도시';
-      }
-    }
-  };
+      // 우측 텍스트
+      var fr = document.createElement('div');
+      fr.className = 'fr';
+      var txt = document.createElement('div');
+      txt.className = 'txt';
 
-  NearbyAttractionsMapper.prototype.mapAttractionCards = function () {
-    var pages = this.getPages();
-    var page = pages.nearbyAttractions;
-    if (!page || !page.sections || !page.sections[0]) return;
+      var title = document.createElement('p');
+      title.className = 'btxt fadeUp';
+      title.setAttribute('data-scroll', '');
+      title.textContent = block.title || '';
+      txt.appendChild(title);
 
-    var about = page.sections[0].about;
-    if (!about || !about.length) return;
-
-    var itemWrap = document.querySelector('[data-nearby-attractions-items]');
-    if (!itemWrap) return;
-
-    itemWrap.innerHTML = '';
-    about.forEach(function (item, itemIndex) {
-      var div = document.createElement('div');
-      div.className = 'item';
-      div.setAttribute('data-aos', 'fade-up');
-
-      // Get first selected image (또는 첫 번째 이미지)
-      var images = item.images || [];
-      if (!images.length) return; // 이미지가 없으면 스킵
-
-      var selectedImage = images.find(function (img) { return img && img.isSelected; }) || images[0];
-      var selectedImageIndex = images.findIndex(function (img) { return img && img.isSelected; });
-      if (selectedImageIndex === -1) selectedImageIndex = 0;
-
-      // Create img element with placeholder handling
-      var img = document.createElement('img');
-      if (selectedImage && selectedImage.url) {
-        img.src = selectedImage.url;
-        img.alt = item.title || '';
-      } else {
-        ImageHelpers.applyPlaceholder(img);
-        img.alt = item.title || '';
+      if (block.description) {
+        var desc = document.createElement('p');
+        desc.className = 'stxt mg60t fadeUp';
+        desc.setAttribute('data-scroll', '');
+        desc.innerHTML = nl2br(block.description);
+        txt.appendChild(desc);
       }
 
-      div.appendChild(img);
-
-      // tx1: title + bar + distance (image description)
-      var tx1 = document.createElement('div');
-      tx1.className = 'tx1';
-
-      var titleSpan = document.createElement('span');
-      titleSpan.className = 'bold';
-      titleSpan.textContent = item.title || '';
-
-      tx1.appendChild(titleSpan);
-
-      // distance info가 있으면 bar + distance 추가
-      var distanceInfo = selectedImage?.description || '';
-
-      if (distanceInfo && distanceInfo.trim()) {
-        var barSpan = document.createElement('span');
-        barSpan.className = 'bar';
-        barSpan.textContent = '｜';
-        tx1.appendChild(barSpan);
-
-        var distanceSpan = document.createElement('span');
-        distanceSpan.textContent = distanceInfo;
-        tx1.appendChild(distanceSpan);
+      if (img0 && img0.description) {
+        var cap = document.createElement('p');
+        cap.className = 'stxt cap mg40t fadeUp';
+        cap.setAttribute('data-scroll', '');
+        cap.textContent = img0.description;
+        txt.appendChild(cap);
       }
 
-      // tx2: item description
-      var tx2 = document.createElement('div');
-      tx2.className = 'tx2';
-      tx2.textContent = item.description || '';
-
-      div.appendChild(tx1);
-      div.appendChild(tx2);
-      itemWrap.appendChild(div);
+      fr.appendChild(txt);
+      cont.appendChild(fl);
+      cont.appendChild(fr);
+      wrap.appendChild(cont);
+      container.appendChild(wrap);
     });
   };
 

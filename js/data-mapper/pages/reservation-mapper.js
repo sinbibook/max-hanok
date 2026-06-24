@@ -1,6 +1,15 @@
 (function (global) {
   'use strict';
 
+  // 줄바꿈(\n) → <br>, HTML 이스케이프
+  function nl2br(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br />');
+  }
+
   function ReservationMapper() {
     BaseDataMapper.call(this);
   }
@@ -8,197 +17,108 @@
   ReservationMapper.prototype.constructor = ReservationMapper;
 
   ReservationMapper.prototype.mapPage = function () {
-    this.mapHero();
-    this.mapContent();
-    this.mapAbout();
-    this.mapRefundTable();
-    this.updateMetaTags();
+    this.mapHeroSlides();
+    this.mapTitle();
+    this.mapCheckinInfo();
+    this.mapUsageGuide();
+    this.mapReservationGuide();
+    this.mapRefundPolicies();
+    this.refreshSwipers();
   };
 
-  // MAPPER: customFields.pages.reservation.sections[0].hero.title + images[isSelected]
-  ReservationMapper.prototype.mapHero = function () {
+  // customFields.pages.reservation.sections[0]
+  ReservationMapper.prototype.getSection = function () {
     var pages = this.getPages();
-    var hero = pages.reservation && pages.reservation.sections && pages.reservation.sections[0] && pages.reservation.sections[0].hero;
-    if (!hero) return;
+    return (pages.reservation && pages.reservation.sections && pages.reservation.sections[0]) || {};
+  };
 
-    // Hero 제목 매핑 (customFields hero.title 우선)
-    var titleEl = document.querySelector('.conReservation .conTitle .tx2 .bold.spot');
-    if (titleEl) {
-      if (hero.title) {
-        titleEl.textContent = hero.title;
-      } else {
-        titleEl.textContent = '펜션정보';
-      }
+  ReservationMapper.prototype.refreshSwipers = function () {
+    if (typeof window.initSwipers === 'function') window.initSwipers();
+    if (window.locoScroll && typeof window.locoScroll.update === 'function') {
+      window.setTimeout(function () {
+        window.locoScroll.update();
+      }, 200);
     }
+  };
 
-    var images = this.getSelectedImages(hero.images || []);
+  // MAPPER: hero.title → [data-reservation-title] (없으면 HTML 기본 문구 fallback 유지)
+  ReservationMapper.prototype.mapTitle = function () {
+    var el = document.querySelector('[data-reservation-title]');
+    if (!el) return;
+    var title = (this.getSection().hero || {}).title;
+    if (title && title.trim()) el.textContent = title;
+  };
+
+  // MAPPER: hero.images[isSelected] → [data-reservation-hero-slides] (배경 슬라이드 동적 생성)
+  ReservationMapper.prototype.mapHeroSlides = function () {
     var wrapper = document.querySelector('[data-reservation-hero-slides]');
     if (!wrapper) return;
+    var images = this.getSelectedImages((this.getSection().hero || {}).images || []);
 
     wrapper.innerHTML = '';
-
-    if (!images.length) {
-      var placeholderDiv = document.createElement('div');
-      placeholderDiv.className = 'swiper-slide';
-      var imgDiv = document.createElement('div');
-      imgDiv.className = 'img';
-      imgDiv.style.backgroundColor = '#f0f0f0';
-      imgDiv.style.backgroundImage = ImageHelpers.EMPTY_IMAGE_SVG;
-      imgDiv.style.backgroundRepeat = 'no-repeat';
-      imgDiv.style.backgroundPosition = 'center';
-      imgDiv.style.backgroundSize = 'cover';
-      placeholderDiv.appendChild(imgDiv);
-      wrapper.appendChild(placeholderDiv);
-      return;
-    }
-
-    images.forEach(function (img) {
-      var div = document.createElement('div');
-      div.className = 'swiper-slide';
-      var imgDiv = document.createElement('div');
-      imgDiv.className = 'img';
-      if (img.url) {
-        imgDiv.style.backgroundImage = 'url(' + img.url + ')';
-        imgDiv.style.backgroundPosition = 'center';
-        imgDiv.style.backgroundSize = 'cover';
+    var list = images.length ? images : [null];
+    list.forEach(function (img) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      var box = document.createElement('div');
+      box.className = 'img';
+      if (img && img.url) {
+        box.style.background = 'url(' + img.url + ') no-repeat 50%';
+        box.style.backgroundSize = 'cover';
       } else {
-        imgDiv.style.backgroundColor = '#f0f0f0';
-        imgDiv.style.backgroundImage = ImageHelpers.EMPTY_IMAGE_SVG;
-        imgDiv.style.backgroundRepeat = 'no-repeat';
-        imgDiv.style.backgroundPosition = 'center';
-        imgDiv.style.backgroundSize = 'cover';
+        ImageHelpers.applyBackgroundPlaceholder(box);
       }
-      div.appendChild(imgDiv);
-      wrapper.appendChild(div);
+      slide.appendChild(box);
+      wrapper.appendChild(slide);
     });
   };
 
-  // MAPPER: customFields.pages.reservation.about.description (Priority 1)
-  // FALLBACK: property.usageGuide (Priority 2)
-  // reservationGuide, checkInOutInfo
-  ReservationMapper.prototype.mapContent = function () {
-    var prop = this.getProperty();
-    var pages = this.getPages();
-
-    // 이용안내: customFields.pages.reservation.sections[0].about (제목, 내용) 우선, property.usageGuide가 fallback
-    var about = pages.reservation && pages.reservation.sections && pages.reservation.sections[0] && pages.reservation.sections[0].about;
-
-    // 이용안내 제목: about.title 우선, "이용안내" 하드코딩 fallback
-    var usageTitleEl = document.querySelector('[data-reservation-usage-title]');
-    if (usageTitleEl) {
-      if (about && about.title && about.title.trim()) {
-        usageTitleEl.textContent = about.title;
-      } else {
-        usageTitleEl.textContent = '이용안내';
-      }
-    }
-
-    // 이용안내 내용: about.description 우선, property.usageGuide fallback
-    var usageEl = document.querySelector('[data-reservation-usage-content]');
-    if (usageEl) {
-      var usageContent = '';
-
-      // Priority 1: customFields.pages.reservation.sections[0].about.description (빈값 아닐 때)
-      if (about && about.description && about.description.trim()) {
-        usageContent = about.description;
-      }
-      // Priority 2: property.usageGuide (fallback)
-      else if (prop.usageGuide) {
-        usageContent = prop.usageGuide;
-      }
-
-      if (usageContent) {
-        usageEl.innerHTML = usageContent
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/\n/g, '<br>');
-      }
-    }
-
-    // 예약안내
-    var guideEl = document.querySelector('[data-reservation-guide-content]');
-    if (guideEl && prop.reservationGuide) {
-      guideEl.innerHTML = prop.reservationGuide
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-    }
-
-    // 입/퇴실 안내
-    var checkinEl = document.querySelector('[data-reservation-checkin-content]');
-    if (checkinEl && prop.checkInOutInfo) {
-      checkinEl.innerHTML = prop.checkInOutInfo
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-    }
+  // MAPPER: property.checkin/checkout/checkInOutInfo → [data-reservation-checkin-info] ([입퇴실안내] 라벨 + 내용)
+  ReservationMapper.prototype.mapCheckinInfo = function () {
+    var el = document.querySelector('[data-reservation-checkin-info]');
+    if (!el) return;
+    var p = this.getProperty();
+    var lines = ['[입퇴실안내]'];
+    if (p.checkin) lines.push('- 입실: ' + p.checkin);
+    if (p.checkout) lines.push('- 퇴실: ' + p.checkout);
+    var html = lines.join('\n');
+    if (p.checkInOutInfo) html += '\n' + p.checkInOutInfo;
+    el.innerHTML = nl2br(html);
   };
 
-  // MAPPER: customFields.pages.reservation.sections[0].about (title, images, description)
-  ReservationMapper.prototype.mapAbout = function () {
-    var pages = this.getPages();
-    var about = pages.reservation && pages.reservation.sections && pages.reservation.sections[0] && pages.reservation.sections[0].about;
-    var accordion = document.querySelector('[data-reservation-about-accordion]');
+  // MAPPER: property.usageGuide → [data-reservation-usage-guide]
+  ReservationMapper.prototype.mapUsageGuide = function () {
+    var el = document.querySelector('[data-reservation-usage-guide]');
+    if (!el) return;
+    var guide = this.getProperty().usageGuide || '';
+    el.innerHTML = guide ? nl2br(guide) : '';
+  };
 
-    if (!about) {
-      // about 데이터가 없으면 아코디언 숨김
-      if (accordion) accordion.style.display = 'none';
+  // MAPPER: property.reservationGuide → [data-reservation-reservation-guide]
+  ReservationMapper.prototype.mapReservationGuide = function () {
+    var el = document.querySelector('[data-reservation-reservation-guide]');
+    if (!el) return;
+    var guide = this.getProperty().reservationGuide || '';
+    el.innerHTML = guide ? nl2br(guide) : '';
+  };
+
+  // MAPPER: property.refundPolicies → [data-reservation-refund-policies] (동적 생성)
+  // 형식: "* 이용일 {days}일 이전 취소시 {rate}% 환불" (당일은 "* 당일 취소시 {rate}% 환불")
+  ReservationMapper.prototype.mapRefundPolicies = function () {
+    var el = document.querySelector('[data-reservation-refund-policies]');
+    if (!el) return;
+    var policies = this.getProperty().refundPolicies || [];
+    if (!policies.length) {
+      el.innerHTML = '';
       return;
     }
-
-    // about이 있으면 아코디언 표시
-    if (accordion) accordion.style.display = 'block';
-
-    // 제목 매핑
-    var titleEl = document.querySelector('[data-reservation-about-title]');
-    if (titleEl && about.title) {
-      titleEl.textContent = about.title;
-    }
-
-    // 이미지 매핑
-    var imagesEl = document.querySelector('[data-reservation-about-images]');
-    if (imagesEl && about.images && about.images.length) {
-      imagesEl.innerHTML = '';
-      var selectedImages = this.getSelectedImages(about.images);
-      selectedImages.forEach(function (img) {
-        var imgDiv = document.createElement('img');
-        imgDiv.src = img.url;
-        imgDiv.alt = img.description || '';
-        imgDiv.style.maxWidth = '100%';
-        imgDiv.style.marginBottom = '10px';
-        imagesEl.appendChild(imgDiv);
-      });
-    }
-
-    // 설명 매핑
-    var descEl = document.querySelector('[data-reservation-about-description]');
-    if (descEl && about.description) {
-      descEl.innerHTML = about.description
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-    }
-  };
-
-  // MAPPER: property.refundPolicies[] → 표 동적 생성
-  ReservationMapper.prototype.mapRefundTable = function () {
-    var prop = this.getProperty();
-    var policies = prop.refundPolicies || [];
-    var container = document.querySelector('[data-reservation-refund-table]');
-    if (!container || !policies.length) return;
-
-    var html = '';
-    policies.forEach(function (p) {
+    var lines = policies.map(function (p) {
       var days = p.refundProcessingDays;
-      var daysLabel = days === 0 ? '당일' : days + '일전';
-      var refundText = p.refundRate === 100 ? '전액 환불' : p.refundRate + '% 환불';
-      html += '* 이용일 ' + daysLabel + ' 취소시 ' + refundText + '<br>';
+      var rate = p.refundRate;
+      var when = days > 0 ? '이용일 ' + days + '일 이전 취소시' : '당일 취소시';
+      return '* ' + when + ' ' + rate + '% 환불';
     });
-    container.innerHTML = html;
+    el.innerHTML = lines.join('<br />');
   };
 
   document.addEventListener('DOMContentLoaded', function () {
