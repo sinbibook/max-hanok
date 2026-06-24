@@ -1,28 +1,19 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading">
+<!DOCTYPE html>
+<html lang="ko">
   <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" href="data:,">
     <title data-page-title>Max 한옥</title>
-    <link rel="icon" href="data:," />
-    <!-- SEO: homepage.seo → preview-handler.applySeo()가 title/description/keywords/og 동적 주입 (하드코딩 없음) -->
-    <meta property="og:type" content="website" />
-    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
-    <link rel="stylesheet" type="text/css" href="styles/theme.css" />
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="styles/vendor/swiper-bundle.min.css" />
-
-    <script src="js/gsap.min.js"></script>
-    <script src="js/ScrollTrigger.min.js"></script>
-    <script type="text/javascript" src="js/swiper-bundle.min.js"></script>
-    <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
-
-    <script nomodule="" src="js/polyfill.min.js" crossorigin="anonymous"></script>
-    <script
-      nomodule=""
-      src="https://polyfill.io/v3/polyfill.min.js?features=Object.assign%2CElement.prototype.append%2CNodeList.prototype.forEach%2CCustomEvent%2Csmoothscroll"
-      crossorigin="anonymous"
-    ></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/theme.css" as="style">
+    <link rel="preload" href="styles/common.css" as="style">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/nearby-attractions.css" />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
@@ -37,94 +28,39 @@
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
 </head>
   <body>
-    <div id="header-wrap"></div>
-
-    <!-- s: scroll-wrap -->
-    <div class="scroll-wrap" id="doc" data-scroll-container="">
-      <!-- s: container -->
-      <div id="container" class="fadeDown" data-scroll="">
-        <!-- s: sub_visual (히어로 — main.html과 동일 구조: svisual 배경 슬라이더) -->
-        <div class="sub_visual visual">
-          <div class="visual_box">
-            <div class="visual_control">
-              <div
-                class="swiper-arw swiper-button-prev"
-                style="
-                  background: url('images/visual_prev.webp') no-repeat left center;
-                  background-size: auto 100%;
-                "
-              ></div>
-              <div class="paging swiper-pagination"></div>
-              <div
-                class="swiper-arw swiper-button-next"
-                style="
-                  background: url('images/visual_next.webp') no-repeat right center;
-                  background-size: auto 100%;
-                "
-              ></div>
-            </div>
-            <div class="swiper-container svisual">
-              <!-- data-* : data-nearby-hero-slides | customFields.pages.nearbyAttractions.sections[0].hero.images[isSelected] (배경 슬라이드 동적 생성) -->
-              <div class="swiper-wrapper" data-nearby-hero-slides>
-                <!-- MAPPER: hero.images 기준 .swiper-slide>.img(background) 동적 생성 -->
-              </div>
-            </div>
+    <div class="wrapper">
+      <div class="container">
+        <!-- MAPPER: customFields.pages.nearbyAttractions.sections[0].hero.images[isSelected] -->
+        <div class="con01" data-aos="fade-up">
+          <div class="img swiper-container">
+            <div class="swiper-wrapper" data-nearby-attractions-hero-slides></div>
           </div>
+          <div class="tx1_1">주변 여행지</div>
         </div>
-        <!-- e: sub_visual -->
-
-        <!-- s: content (about — main.html의 main_about 구조 재사용, 블록마다 반복) -->
-        <section id="content" class="sub">
-          <!-- data-* : data-nearby-about-blocks | customFields.pages.nearbyAttractions.sections[0].about[] (블록 동적 생성) -->
-          <div data-nearby-about-blocks>
-            <!--
-              MAPPER: about[] 각 블록마다 .main_about 행 동적 생성 (이미지 좌 / 텍스트 우, main.html 동일)
-                · .fl .img            ← block.images[isSelected][0].url (배경, 없으면 empty placeholder)  [이미지]
-                · .fr .txt .btxt      ← block.title                                                       [타이틀]
-                · .fr .txt .stxt      ← block.description (\n→<br>, 없으면 생략)                           [설명]
-                · .fr .txt .stxt.cap  ← block.images[isSelected][0].description (없으면 생략)              [이미지설명]
-            -->
-          </div>
-
-          <!-- 배경: 디자인 기본 이미지(real_bg) 유지 — closing 이미지 매핑 안 함 (index/main 동일) -->
-          <div
-            class="main_reserve"
-            style="
-              background: url(images/real_bg.webp) no-repeat center top;
-              background-size: cover;
-            "
-          >
-            <div class="cont">
-              <p
-                class="fadeUp"
-                data-scroll=""
-                style="background: url(images/real_dots.png) no-repeat center top"
-              ></p>
-              <!-- data-* : data-nearby-closing-description | customFields.pages.index.sections[0].closing.description -->
-              <p class="fadeUp" data-scroll="" data-nearby-closing-description></p>
-              <!-- data-* : data-booking-link | property.realtimeBookingId -->
-              <a href="#!" target="_blank" class="fadeUp" data-scroll="" data-booking-link>
-                <span>예약하기</span>
-              </a>
+        <!-- MAPPER: nearbyAttractions.sections[0].hero.title + description -->
+        <div class="con13 w1440">
+          <div class="conTitle" data-aos="fade-up">
+            <div class="tx1" data-nearby-attractions-hero-title>TRAVL</div>
+            <div class="tx2">
+              <span class="bold spot" data-nearby-attractions-hero-description>여행하기 좋은도시</span>
             </div>
           </div>
-        </section>
-        <!-- e: content -->
+          <!-- MAPPER: nearbyAttractions.sections[0].about[] (title, distance, description, image) -->
+          <div class="itemWrap" data-nearby-attractions-items></div>
+        </div>
       </div>
-      <!-- e: container -->
-      <div id="footer-wrap"></div>
     </div>
-    <!-- e: scroll-wrap -->
 
-    <!-- infra: 데이터 매핑 & 동적 헤더/푸터 -->
-    <script src="js/image-helpers.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/preview-handler.js"></script>
+    <script src="js/image-helpers.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
     <script src="js/data-mapper/pages/nearby-attractions-mapper.js"></script>
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
-    <!-- 페이지 인터랙션 (vanilla) -->
     <script src="js/common.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="js/pages/nearby-attractions.js"></script>
   </body>
 </html>
