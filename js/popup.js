@@ -153,15 +153,16 @@ class PopupManager {
     }
 
     /**
-     * 숨김 저장소: preview는 세션 단위(sessionStorage), 실사이트는 하루 단위(localStorage)
-     * → preview에선 같은 세션 내 새로고침엔 안 뜨고, 새 세션이면 다시 뜸(작업 중 영구 숨김 방지)
+     * 숨김 저장소: preview·실사이트 모두 하루 단위(localStorage)
+     * → "오늘 하루 보지 않기" 시 같은 날(toDateString 기준)에는 다시 뜨지 않음.
+     *   날짜가 바뀌면(다음 날) isHiddenToday에서 false가 되어 다시 노출됨.
      */
     _dismissStore() {
-        return this.isPreviewMode ? window.sessionStorage : window.localStorage;
+        return window.localStorage;
     }
 
     /**
-     * 오늘(세션) 숨김 여부 확인
+     * 오늘 하루 숨김 여부 확인 (저장된 날짜가 오늘과 같으면 숨김)
      */
     isHiddenToday(id) {
         try {
@@ -174,7 +175,7 @@ class PopupManager {
     }
 
     /**
-     * 오늘 하루(세션) 보지 않기 설정
+     * 오늘 하루 보지 않기 설정 (오늘 날짜를 저장)
      */
     hideToday(id) {
         try {
