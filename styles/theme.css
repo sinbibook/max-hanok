@@ -1,21 +1,13 @@
 /* CDN Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Jeju+Myeongjo&family=Qwigley&display=swap');
-
-/* Font Faces */
-@font-face {
-  font-family: 'Abigail';
-  font-style: normal;
-  src:
-    url(../fonts/abigail.woff) format('woff'),
-    url(../fonts/abigail.otf) format('opentype');
-  font-display: swap;
-}
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'Noto Sans KR', 'Malgun Gothic', dotum, sans-serif;
-  --font-ko-sub: 'Jeju Myeongjo', serif;
-  --font-en-main: 'Abigail', cursive;
+  --font-ko-main: 'Pretendard Variable';
+  --font-ko-sub: 'Noto Serif KR', serif;
+  --font-en-main: 'Chonburi', serif;
   --color-primary: #F5F5F5;
   --color-secondary: #5C82B4;
 }
