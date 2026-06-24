@@ -33,6 +33,7 @@ class PreviewHandler {
     convertData(data) {
         // BaseDataMapper가 없으면 원본 그대로 반환 (fallback)
         if (!this.baseMapper) {
+            console.warn('BaseDataMapper not loaded, returning original data');
             return data;
         }
         return this.baseMapper.convertToCamelCase(data);
@@ -224,11 +225,7 @@ class PreviewHandler {
         // 전체 페이지 다시 렌더링 (완료 대기)
         await this.renderTemplate(this.currentData);
 
-        // 팝업 데이터가 있으면 팝업도 업데이트
-        const popupData = data?.homepage?.customFields?.popup;
-        if (popupData && window.popupManager) {
-            window.popupManager.updateFromTemplateData(data);
-        }
+        // 팝업은 POPUP_UPDATE 메시지에서만 업데이트 (다른 영역 수정 시 팝업이 다시 열리는 문제 방지)
 
         // 부모 창에 업데이트 완료 신호
         this.notifyRenderComplete('UPDATE_COMPLETE');
@@ -239,9 +236,9 @@ class PreviewHandler {
      */
     getDefaultFonts() {
         return {
-            koMain: "'ReperepointSpecialItalic', sans-serif",
-            koSub: "'Pretendard', sans-serif",
-            enMain: "'Chonburi', sans-serif"
+            koMain: "'Chosunilbo', sans-serif",
+            koSub: "'Chosunilbo', sans-serif",
+            enMain: "'Continuous', sans-serif"
         };
     }
 
@@ -250,8 +247,8 @@ class PreviewHandler {
      */
     getDefaultColors() {
         return {
-            primary: '#f5f5f5',
-            secondary: '#1D3A5F'
+            primary: '#fff8ef',
+            secondary: '#6c5f51'
         };
     }
 
@@ -328,9 +325,9 @@ class PreviewHandler {
     applyThemeVariables(theme) {
         const defaultFonts = this.getDefaultFonts();
         const defaultColors = this.getDefaultColors();
-        const fontData = theme.font || theme;
 
         // 폰트 변수 업데이트
+        const fontData = theme.font || theme;
         if (fontData) {
             if ('koMain' in fontData) this.applyFont(fontData.koMain, '--font-ko-main', defaultFonts.koMain);
             if ('koSub' in fontData) this.applyFont(fontData.koSub, '--font-ko-sub', defaultFonts.koSub);
@@ -348,6 +345,20 @@ class PreviewHandler {
                 if ('secondary' in theme.color) this.applyColor(theme.color.secondary, '--color-secondary', defaultColors.secondary);
             }
         }
+    }
+
+    /**
+     * 숙소 변경 처리 (다른 숙소 선택)
+     */
+    async handlePropertyChange(data) {
+        // API 데이터를 카멜 케이스로 변환해서 저장
+        this.currentData = this.convertData(data);
+        this.isInitialized = true;
+
+        // 전체 다시 렌더링 (완료 대기) - 이미 변환된 데이터 사용
+        await this.renderTemplate(this.currentData);
+
+        this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
     }
 
     /**
@@ -376,20 +387,6 @@ class PreviewHandler {
     }
 
     /**
-     * 숙소 변경 처리 (다른 숙소 선택)
-     */
-    async handlePropertyChange(data) {
-        // API 데이터를 카멜 케이스로 변환해서 저장
-        this.currentData = this.convertData(data);
-        this.isInitialized = true;
-
-        // 전체 다시 렌더링 (완료 대기) - 이미 변환된 데이터 사용
-        await this.renderTemplate(this.currentData);
-
-        this.notifyRenderComplete('PROPERTY_CHANGE_COMPLETE');
-    }
-
-    /**
      * 페이지 네비게이션 처리 (라우팅)
      */
     handlePageNavigation(messageData) {
@@ -403,9 +400,7 @@ class PreviewHandler {
             'room': 'room.html',
             'facility': 'facility.html',
             'reservation': 'reservation.html',
-            'directions': 'directions.html',
-            'nearbyAttractions': 'nearby-attractions.html',
-            'layoutMap': 'layout-map.html'
+            'directions': 'directions.html'
         };
 
         const targetPage = pageMap[messageData.page];
@@ -434,19 +429,11 @@ class PreviewHandler {
         const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
         let newPath = `${basePath}${targetPage}`;
 
-        // 현재 URL의 preview 파라미터 확인
-        const currentParams = new URLSearchParams(window.location.search);
-        const isPreview = currentParams.get('preview');
-
         // room 또는 facility 페이지인 경우 id 쿼리 파라미터 추가
         if (messageData.page === 'room' && messageData.roomId) {
             newPath += `?id=${encodeURIComponent(messageData.roomId)}`;
-            if (isPreview) newPath += `&preview=${isPreview}`;
         } else if (messageData.page === 'facility' && messageData.facilityId) {
             newPath += `?id=${encodeURIComponent(messageData.facilityId)}`;
-            if (isPreview) newPath += `&preview=${isPreview}`;
-        } else if (isPreview) {
-            newPath += `?preview=${isPreview}`;
         }
 
         window.location.href = newPath;
@@ -472,12 +459,6 @@ class PreviewHandler {
      */
     async renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
-
-        // 404 페이지는 렌더링하지 않음
-        if (currentPage === '404') {
-            return;
-        }
-
         let mapper = null;
 
         // 현재 페이지에 맞는 매퍼 선택
@@ -510,16 +491,6 @@ class PreviewHandler {
             case 'directions':
                 if (window.DirectionsMapper) {
                     mapper = new DirectionsMapper();
-                }
-                break;
-            case 'nearbyAttractions':
-                if (window.NearbyAttractionsMapper) {
-                    mapper = new NearbyAttractionsMapper();
-                }
-                break;
-            case 'layoutMap':
-                if (window.LayoutMapMapper) {
-                    mapper = new LayoutMapMapper();
                 }
                 break;
             default:
@@ -736,9 +707,11 @@ class PreviewHandler {
                 switch (section) {
                     case 'hero':
                         mapper.mapHeroSlider();
+                        mapper.mapAboutSection(); // hero.title, hero.description 매핑
                         break;
                     case 'about':
                         mapper.mapAboutSection();
+                        mapper.mapMarqueeSection();
                         mapper.mapIntroductionSection();
                         break;
                 }
@@ -752,19 +725,40 @@ class PreviewHandler {
                         mapper.mapBasicInfo();
                         break;
                     case 'gallery':
-                        mapper.mapGallerySection();
+                        mapper.mapExteriorGallery();
                         break;
                 }
             }
         } else if (page === 'facility') {
             if (window.FacilityMapper) {
                 const mapper = this.createMapper(FacilityMapper);
-                mapper.mapBasicInfo();
+
+                switch (section) {
+                    case 'hero':
+                        mapper.mapFullscreenSlider();
+                        mapper.mapBasicInfo();
+                        mapper.mapFirstSectionImage();
+                        break;
+                    case 'about':
+                        mapper.mapUsageGuide();
+                        break;
+                    case 'experience':
+                        mapper.mapSecondSection();
+                        break;
+                }
             }
         } else if (page === 'reservation') {
             if (window.ReservationMapper) {
                 const mapper = this.createMapper(ReservationMapper);
-                mapper.mapPage();
+
+                switch (section) {
+                    case 'hero':
+                        mapper.mapHeroSection();
+                        break;
+                    case 'about':
+                        mapper.mapReservationInfoSection();
+                        break;
+                }
             }
         } else if (page === 'directions') {
             if (window.DirectionsMapper) {
@@ -774,51 +768,6 @@ class PreviewHandler {
                     case 'hero':
                         mapper.mapSliderSection();
                         mapper.mapLocationInfo();
-                        break;
-                    default:
-                        mapper.mapPage();
-                        break;
-                }
-            }
-        } else if (page === 'nearbyAttractions') {
-            if (window.NearbyAttractionsMapper) {
-                const mapper = this.createMapper(NearbyAttractionsMapper);
-
-                const data = this.safeGet(this.currentData, 'homepage.customFields.pages.nearbyAttractions.sections.0');
-                if (data && data.enabled === false) {
-                    this.show404Page();
-                    return;
-                }
-
-                switch (section) {
-                    case 'hero':
-                        mapper.mapHeroSlider();
-                        mapper.mapHeroText();
-                        break;
-                    case 'about':
-                        mapper.mapAttractionsContent();
-                        break;
-                    default:
-                        mapper.mapPage();
-                        break;
-                }
-            }
-        } else if (page === 'layoutMap') {
-            if (window.LayoutMapMapper) {
-                const mapper = this.createMapper(LayoutMapMapper);
-
-                const data = this.safeGet(this.currentData, 'homepage.customFields.pages.layoutMap.sections.0');
-                if (data && data.enabled === false) {
-                    this.show404Page();
-                    return;
-                }
-
-                switch (section) {
-                    case 'hero':
-                        mapper.mapHeroSlider();
-                        break;
-                    case 'about':
-                        mapper.mapLayoutMapContent();
                         break;
                     default:
                         mapper.mapPage();
@@ -851,15 +800,12 @@ class PreviewHandler {
     getCurrentPageType() {
         const path = window.location.pathname;
 
-        if (path.includes('404.html')) return '404';
         if (path.includes('index.html') || path.endsWith('/') || path === '') return 'index';
         if (path.includes('main.html')) return 'main';
         if (path.includes('room.html')) return 'room';
         if (path.includes('facility.html')) return 'facility';
         if (path.includes('reservation.html')) return 'reservation';
         if (path.includes('directions.html')) return 'directions';
-        if (path.includes('nearby-attractions.html')) return 'nearbyAttractions';
-        if (path.includes('layout-map.html')) return 'layoutMap';
 
         // 루트 경로 또는 기본값으로 index 처리
         return 'index';
@@ -901,20 +847,6 @@ class PreviewHandler {
 
 
     /**
-     * 안전한 객체 접근 (경로 문자열 사용)
-     */
-    safeGet(obj, path, defaultValue = null) {
-        try {
-            const result = path.split('.').reduce((current, prop) => {
-                return current?.[prop] ?? null;
-            }, obj);
-            return result ?? defaultValue;
-        } catch (error) {
-            return defaultValue;
-        }
-    }
-
-    /**
      * 렌더링 완료 신호 전송
      */
     notifyRenderComplete(type) {
@@ -950,9 +882,7 @@ class PreviewHandler {
             'room': 'RoomMapper',
             'facility': 'FacilityMapper',
             'reservation': 'ReservationMapper',
-            'directions': 'DirectionsMapper',
-            'nearbyAttractions': 'NearbyAttractionsMapper',
-            'layoutMap': 'LayoutMapMapper'
+            'directions': 'DirectionsMapper'
         };
 
         const mapperClass = mapperConfig[currentPage];
@@ -969,13 +899,6 @@ class PreviewHandler {
             // 매핑 완료 후 헤더 표시 (FOUC 방지)
             if (window.showHeaders) window.showHeaders();
         }
-    }
-
-    /**
-     * 404 페이지 표시
-     */
-    show404Page() {
-        window.location.href = '404.html';
     }
 }
 

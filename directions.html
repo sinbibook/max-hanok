@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/slider.css">
     <link rel="stylesheet" href="styles/directions.css">
-
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 오시는길" />
@@ -25,83 +24,66 @@
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
 </head>
 <body>
+
+    <!-- Main Content -->
     <main class="main-content">
-         <!-- CUSTOM FIELD : 메인 소개 섹션 -->
-        <!-- homepage.customFields.pages.directions.sections[0].hero.images 매핑 -->
-        <section class="hero-section hero-center-bottom">
-            <div class="hero-slider" data-hero-slider>
-                <!-- 동적으로 hero-slide가 생성됩니다 -->
+        <section class="main-section fullscreen-slider">
+          <div class="fullscreen-slider-container">
+            <div class="fullscreen-slider-inner" data-directions-slider>
+              <!-- 동적으로 슬라이드가 생성됩니다 -->
             </div>
-           <!-- 페이지명 하드코딩 -->
-            <div class="hero-property-title">DIRECTIONS</div>
-            <div class="hero-bottom-info">
-                <div class="hero-progress-container">
-                    <button class="hero-nav-prev" aria-label="Previous slide">&lt;</button>
-                    <span class="current-slide hero-indicators" data-current-slide>01</span>
-                    <div class="hero-progress-bar">
-                        <div class="hero-progress-fill" data-hero-progress></div>
-                    </div>
-                    <span class="total-slides hero-indicators" data-total-slides>02</span>
-                    <button class="hero-nav-next" aria-label="Next slide">&gt;</button>
-                </div>
+            <div class="fullscreen-slider-content">
+              <h2 class="fullscreen-slider-title centered">Location</h2>
             </div>
+
+            <div class="fullscreen-slider-nav">
+              <span class="nav-arrow nav-prev">‹</span>
+              <span class="nav-current">01</span>
+              <span class="nav-divider">|</span>
+              <span class="nav-total">03</span>
+              <span class="nav-arrow nav-next">›</span>
+            </div>
+          </div>
         </section>
-        <section class="location-section">
-            <div class="location-content">
-                <!-- property.name + "오시는 길" 매핑 -->
-                <h2 class="about-title animate-element" data-directions-title>
-                    <span data-property-name></span> 오시는 길
-                </h2>
-                <div class="location-details animate-element">
-                    <div class="location-address-wrapper animate-element">
-                        <div class="location-address-section">
-                            <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 0 25 25" fill="none">
-                                <path d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round"/>
-                                <path d="M12 14.0137V22" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round"/>
-                            </svg>
-                            <!-- property.address 매핑 -->
-                            <p class="location-address" data-directions-address></p>
-                        </div>
+        <div class="content-wrap">
+           <div class="about-description-wrap">
+            <!-- CUSTOM FIELD : 메인 소개 섹션 타이틀 매핑 -->
+            <h2 class="about-title animate-element" data-directions-title></h2>
 
-                        <!-- 구분선 -->
-                        <div class="location-divider"></div>
-
-                        <!-- homepage.customFields.pages.directions.sections[0].notice.description 매핑 -->
-                        <!-- 데이터 없으면 display: none -->
-                        <div class="location-note" data-directions-notes>
-                            <!-- 동적으로 p 태그가 생성됩니다 -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 지도 섹션 -->
-                <div class="map-wrapper animate-element">
-                    <div class="map-container">
-                        <div id="kakao-map"></div>
-                    </div>
+            <div class="location-details animate-element">
+                <div class="location-address-wrapper animate-element">
+                    <svg class="location-icon" viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <!-- 숙소 주소 매핑 -->
+                    <p class="location-address" data-directions-address></p>
                 </div>
             </div>
-        </section>
+            <!-- CUSTOM FIELD : 안내사항 섹션 매핑, 없으면 display none -->
+             <div class="location-note animate-element" data-directions-notes></div>
+           </div>
+
+           <!-- 지도 섹션 -->
+           <section class="map-section animate-element">
+
+               <div class="map-container animate-element">
+                   <div id="kakao-map"></div>
+               </div>
+           </section>
+        </div>
     </main>
-
-    <!-- property.images[0].exterior 첫번째 이미지 배경 매핑 -->
-    <section class="full-banner" data-directions-banner-bg>
-      <!-- property.nameEn 매핑 (uppercase) -->
-      <h2 class="full-banner-title" data-directions-banner-title></h2>
-    </section>
-
-
 
     <!-- Kakao Map SDK -->
     <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>
 
-    <!-- Include ImageWithFallback script (standard-template-data.json에서만 필요) -->
-    <!-- <script src="js/image-with-fallback.js"></script> -->
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
 
     <!-- Common JavaScript -->
     <script src="js/common.js"></script>
 
-    <!-- Image Helpers (매핑 시 주석 해제 필요) -->
+    <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
 
     <!-- Base Data Mapper -->
@@ -124,9 +106,6 @@
 
     <!-- Page-specific script -->
     <script src="js/pages/directions.js"></script>
-
-    <!-- Scroll Animations -->
-    <script src="js/scroll-animations.js"></script>
 
 </body>
 </html>

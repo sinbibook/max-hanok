@@ -19,103 +19,88 @@
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
 </head>
 <body>
-    <!-- Transparent Header -->
-    <header class="transparent-header">
-        <div class="header-container">
-            <!-- Left: Logo -->
-            <div class="header-logo" onclick="navigateTo('home')">
-                <img class="logo-img" data-logo src="" alt="" />
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="top-header-content">
+            <div class="hamburger-button" id="hamburger-button">
+        <div class="toggle-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+            <div class="logo-container" onclick="navigateTo('home')">
+                <!-- <img data-logo src="images/mutenlol_logo.png" alt="로고" class="logo-image"> -->
+                <span class="logo-text" data-logo-text></span>
             </div>
-
-            <!-- Center: Empty space -->
-            <div></div>
-
-            <!-- Right: YBS Button, Reservation Button and Menu Button -->
-            <div class="header-right">
-                <!-- Reservation Button -->
-                <button class="header-booking-btn" data-property-realtime-booking-id aria-label="예약하기">
-                    <span>예약</span>
+            <div class="booking-buttons">
+                <button class="book-now-btn" data-booking-engine>
+                    예약
                 </button>
-
-                <!-- YBS Button -->
-                <button class="header-ybs-btn" data-ybs-booking aria-label="YBS 예약">
-                    <span>YBS</span>
-                </button>
-
-                <!-- Menu Button -->
-                <button class="menu-toggle" id="menu-toggle" aria-label="메뉴">
-                    <span class="menu-text">MENU</span>
+                <button class="ybs-btn" data-ybs-booking>
+                    YBS
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menu-overlay">
-        <div class="menu-overlay-content">
-
-            <!-- Split Layout Container -->
-            <div class="menu-split-container">
-                <!-- Left: Menu Items in 2x2 Grid -->
-                <div class="menu-left-section">
-                    <div class="menu-grid-2x2">
-                        <!-- Prologue Section -->
-                        <div class="menu-item" data-menu-type="prologue">
-                            <h3 class="menu-item-title">프롤로그</h3>
-                            <ul class="menu-item-list">
-                                <li><a onclick="navigateTo('main')">프롤로그</a></li>
-                                <li><a onclick="navigateTo('directions')">오시는길</a></li>
-                                <li class="nearby-attractions-menu" style="display: none;"><a onclick="navigateTo('nearby-attractions')">주변 관광지</a></li>
-                                <li class="layout-map-menu" style="display: none;"><a onclick="navigateTo('layout-map')">숙소 배치도</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Rooms Section -->
-                        <div class="menu-item" data-menu-type="rooms">
-                            <h3 class="menu-item-title">공간소개</h3>
-                            <ul class="menu-item-list" data-rooms-list>
-                                <li><a onclick="navigateTo('room')">객실명</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Facilities Section -->
-                        <div class="menu-item" data-menu-type="facilities">
-                            <h3 class="menu-item-title">시설소개</h3>
-                            <ul class="menu-item-list" data-facilities-list>
-                                <li><a onclick="navigateTo('facility')">시설명</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Reservation Section -->
-                        <div class="menu-item" data-menu-type="reservation">
-                            <h3 class="menu-item-title">예약안내</h3>
-                            <ul class="menu-item-list">
-                                <li><a onclick="navigateTo('reservation')">예약안내</a></li>
-                            </ul>
-                        </div>
+    <!-- Side Header -->
+    <div class="side-header" id="side-header">
+        <button class="close-button" onclick="toggleSideHeader()" aria-label="메뉴 닫기"></button>
+        <div class="side-header-content">
+            <div class="side-content-top">
+                <!-- Side Header Top with Logo and Close Button -->
+                <div class="side-header-top">
+                    <div class="side-logo-container" onclick="navigateTo('home')">
+                        <span class="side-logo-text" data-logo-text></span>
                     </div>
                 </div>
+                <div class="side-menu-grid">
+                    <!-- About Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title">About</h3>
+                        <ul class="menu-section-list">
+                            <li><a onclick="navigateTo('main')">소개</a></li>
+                            <li><a onclick="navigateTo('directions')">오시는길</a></li>
+                        </ul>
+                    </div>
 
-                <!-- Right: Dynamic Image : property.images[0].exterior[] 매핑 -->
-                <div class="menu-right-section">
-                    <div class="menu-image-container">
-                        <img id="menu-dynamic-image" src="" alt="" data-menu-banner-img />
+                    <!-- Spaces Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Spaces</h3>
+                        <ul class="menu-section-list accordion-content active" data-rooms-list>
+                            <li><a onclick="navigateTo('room')">객실명</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Specials Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Specials</h3>
+                        <ul class="menu-section-list accordion-content active" data-facilities-list>
+                            <li><a onclick="navigateTo('facility')">편의시설</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Reservation Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title">Reservation</h3>
+                        <ul class="menu-section-list">
+                            <li><a onclick="navigateTo('reservation')">예약안내</a></li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+
+            <!-- Image Banner -->
+            <div class="side-content-bottom">
+                <!-- 숙소 외경이미지 ? 썸네일 이미지 ?  -->
+                <div class="side-image-banner" id="side-image-banner" data-side-banner-img></div>
             </div>
         </div>
     </div>
 
-    <!-- Menu Overlay Background -->
-    <div class="menu-overlay-bg" id="menu-overlay-bg"></div>
-
-    <!-- Mobile Fixed Buttons Container (위치: TOP 버튼 위) -->
-    <div class="mobile-fixed-buttons">
-        <!-- Mobile YBS Button (TOP 위) -->
-        <button class="mobile-fixed-ybs-btn" data-ybs-booking aria-label="YBS 예약">
-            YBS
-        </button>
-    </div>
+    <!-- Side Header Overlay for all pages -->
+    <div class="side-header-overlay" id="side-header-overlay"></div>
 
     <!-- Preview Handler for Admin Integration -->
     <script src="js/preview-handler.js"></script>
