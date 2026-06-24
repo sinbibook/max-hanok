@@ -1,23 +1,30 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max 한옥 - 홈</title>
-    <meta name="description" content="안녕하세요!!">
-    <meta name="keywords" content="한옥,전통,맥스!!">
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/theme.css" as="style">
-    <link rel="preload" href="styles/common.css" as="style">
-    <link rel="preload" href="styles/index.css" as="style">
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title data-page-title>Max 한옥 - 홈</title>
+    <link rel="icon" href="data:," />
+    <!-- SEO: homepage.seo → preview-handler.applySeo()가 title/description/keywords/og 동적 주입 (하드코딩 없음) -->
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/theme.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/vendor/swiper-bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/popup.css" />
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="styles/popup.css">
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
 
-  <!-- Open Graph Meta Tags for Social Media -->
+    <script nomodule="" src="js/polyfill.min.js" crossorigin="anonymous"></script>
+    <script
+      nomodule=""
+      src="https://polyfill.io/v3/polyfill.min.js?features=Object.assign%2CElement.prototype.append%2CNodeList.prototype.forEach%2CCustomEvent%2Csmoothscroll"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 홈" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -30,146 +37,174 @@
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
 </head>
-<body>
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="content-wrap">
-            <!-- CUSTOM FIELD : 메인 소개 섹션 -->
-            <section class="hero-section">
-                <div class="hero-content">
-                <div class="hero-left">
-                    <div class="hero-subtitle">
-                        <span class="subtitle-text" data-hero-subtitle></span>
-                        <div class="subtitle-line"></div>
-                    </div>
-                    <!-- 숙소 영문명 매핑 -->
-                    <h1 class="hero-title-property-name">
-                        <span class="hero-title-line" data-delay="0" data-hero-property-name-en></span>
-                    </h1>
-                    <!-- 메인 소개 타이틀 -->
-                    <p class="hero-title" data-hero-title></p>
-                    <!-- 메인 소개 설명 -->
-                    <p class="hero-description" data-hero-description></p>
+  <body>
+    <div id="wrap">
+      <div id="header-wrap"></div>
+
+      <!-- s: scroll-wrap -->
+      <div class="scroll-wrap" id="doc" data-scroll-container="">
+        <!-- s: container -->
+        <div id="container" class="fadeDown" data-scroll="">
+          <!--// main_visual -->
+          <div class="main_visual visual">
+            <div class="visual_box">
+              <div class="visual_control">
+                <div
+                  class="swiper-arw swiper-button-prev"
+                  style="
+                    background: url(images/visual_prev.webp) no-repeat left center;
+                    background-size: auto 100%;
+                  "
+                ></div>
+                <div class="paging swiper-pagination"></div>
+                <div
+                  class="swiper-arw swiper-button-next"
+                  style="
+                    background: url(images/visual_next.webp) no-repeat right center;
+                    background-size: auto 100%;
+                  "
+                ></div>
+              </div>
+              <div class="swiper-container mvisual">
+                <!-- data-* : data-index-hero-slides | customFields.pages.index.sections[0].hero.images[isSelected] (배경 슬라이드 동적 생성) -->
+                <div class="swiper-wrapper" data-index-hero-slides>
+                  <!-- MAPPER: hero.images 기준 .swiper-slide>.img(background-image) 동적 생성 -->
                 </div>
-                <div class="hero-right">
-                    <div class="hero-slider-container">
-                        <div class="hero-slider" data-hero-slider>
-                            <!-- 동적으로 슬라이드가 생성됩니다 -->
-                        </div>
-                        <div class="hero-slider-nav">
-                            <button class="slider-btn prev">‹</button>
-                            <button class="slider-btn next">›</button>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-            </section>
-
-            <!-- CUSTOM FIELD : 핵심 메시지 섹션 / 이미지 x -->
-            <section class="essence-section">
-                <div class="essence-content">
-                    <h4 class="essence-title" data-essence-title></h4>
-                    <p class="essence-description" data-essence-description></p>
+          </div>
+          <!--// main_visual -->
+          <!-- s: content -->
+          <section id="content" class="main">
+            <!-- s: main_about -->
+            <div class="main_about" style="background-image: url(images/about_bg.webp)">
+              <div class="cont">
+                <div class="fl">
+                  <!-- data-* : data-index-about-image | customFields.pages.index.sections[0].essence.images[isSelected][0].url (background-image, 없으면 empty placeholder) -->
+                  <div
+                    class="img fadeRight"
+                    data-scroll=""
+                    data-index-about-image
+                  ></div>
                 </div>
-            </section>
-
-            <!-- CUSTOM FIELD : 특색 섹션 / 이미지 4장 fix -->
-            <section class="signature-section">
-            <div class="signature-container">
-                <div class="signature-content">
-                    <div class="signature-left">
-                        <div class="signature-main-image">
-                            <img id="signature-main-img" data-signature-main-img src="" alt="">
-                        </div>
-                    </div>
-                    <div class="signature-right">
-                        <div class="signature-text-content">
-                            <!-- 특색 섹션 타이틀 / 특색 섹션 설명 사용 x -->
-                            <h2 class="signature-title" id="signature-title" data-signature-title></h2>
-
-                            <!-- 특색 섹션 업로드 이미지 설명 -->
-                            <p class="signature-description" id="signature-description" data-signature-description></p>
-                        </div>
-                        <!-- 특색 섹션 업로드 이미지들 -->
-                        <div class="signature-thumbnails">
-                            <div class="signature-thumb" data-index="0">
-                                <img src="" alt="">
-                            </div>
-                            <div class="signature-thumb" data-index="1">
-                                <img src="" alt="">
-                            </div>
-                            <div class="signature-thumb" data-index="2">
-                                <img src="" alt="">
-                            </div>
-                            <div class="signature-thumb" data-index="3">
-                                <img src="" alt="">
-                            </div>
-                        </div>
-                    </div>
+                <div class="fr">
+                  <div class="txt">
+                    <!-- data-* : data-index-about-title | essence.title (없으면 'A quiet moment...' fallback은 mapper 주입) -->
+                    <p class="btxt fadeUp" data-scroll="" data-index-about-title></p>
+                    <!-- data-* : data-index-about-description | essence.description (없으면 '창밖으로...{숙소명}에서...' fallback은 mapper 주입) -->
+                    <p class="stxt mg60t fadeUp" data-scroll="" data-index-about-description></p>
+                  </div>
                 </div>
+              </div>
             </div>
-            </section>
-
-            <!-- CUSTOM FIELD : 갤러리 섹션 -->
-            <section class="gallery-section">
-            <div class="gallery-container">
-                <div class="gallery-header">
-                    <h2 class="gallery-title" data-gallery-title></h2>
-                    <p class="gallery-description" data-gallery-description></p>
-                </div>
-                <div class="gallery-slider" data-gallery-slider>
-                    <!-- 동적으로 갤러리 아이템이 생성됩니다 -->
-                </div>
-            </div>
-        </section>
-
-            <!-- CUSTOM FIELD : 마무리 섹션 -->
-            <section class="closing-section">
-                <!-- 마무리 섹션 이미지 -->
-                <div class="closing-background">
-                    <img data-closing-bg-img src="" alt="Closing Background">
-                </div>
-                <div class="closing-content">
-                    <div class="closing-border-top"></div>
-                    <div class="closing-text-content">
-                        <!-- 마무리 섹션 설명 -->
-                        <div class="closing-description" data-closing-description></div>
-                        <!-- 숙소 영문명 매핑 -->
-                        <div class="closing-title" data-closing-title></div>
+            <!-- e: main_about -->
+            <div class="main_special" style="background: color-mix(in srgb, var(--color-primary) 55%, transparent)">
+              <div class="cont fadeUp" data-scroll="">
+                <div class="fl">
+                  <div class="swiper-container spec-img">
+                    <!-- data-* : data-index-special-slides | property.facilities[] (이미지 슬라이드, bg=facilities[i].images[isSelected][0].url, 링크 facility.html?id={id}) -->
+                    <div class="swiper-wrapper" data-index-special-slides>
+                      <!-- MAPPER: facilities[] 기준 .swiper-slide.item > a(facility.html?id={id}) > .img(background-image) 동적 생성 -->
                     </div>
-                    <div class="closing-border-bottom"></div>
+                  </div>
                 </div>
-            </section>
+                <div class="fr">
+                  <!-- data-* : data-index-special-titles | property.facilities[] (각 .txt-con: btxt='special' 정적 + stxt=facilities[i].name 동적) -->
+                  <div class="spec-tit" data-index-special-titles>
+                    <!-- MAPPER: facilities[] 기준 .txt-con(첫번째 on) > btxt 'special' + stxt=name 동적 생성 -->
+                  </div>
+                  <div class="swiper-container spec-txt">
+                    <!-- data-* : data-index-special-texts | property.facilities[] (각 슬라이드 btxt='SPECIAL 0N' 정적 + stxt=facilities[i].description 동적) -->
+                    <div class="swiper-wrapper" data-index-special-texts>
+                      <!-- MAPPER: facilities[] 기준 .swiper-slide.item > .txt > btxt 'SPECIAL 0N' + stxt=description 동적 생성 -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+                </div>
+                <div class="btns">
+                  <a
+                    href="#n"
+                    class="spec-prev"
+                    style="background-image: url(images/special_prev.webp)"
+                  ></a>
+                  <a
+                    href="#n"
+                    class="spec-next"
+                    style="background-image: url(images/special_next.webp)"
+                  ></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="main_room" style="background: color-mix(in srgb, var(--color-primary) 55%, transparent)">
+              <div class="cont fadeUp" data-scroll="">
+                <h3>ROOM PREVIEW</h3>
+                <div class="preivew fadeUp" data-scroll="">
+                  <div class="swiper-container">
+                    <!-- data-* : data-index-room-slides | customFields.roomtypes[] (+ rooms[] id매칭으로 구조 텍스트). 컨테이너 비우고 동적 생성, 링크 room.html?room_id={roomtypes[i].id} -->
+                    <div class="swiper-wrapper" data-index-room-slides>
+                      <!-- MAPPER: roomtypes[] 기준 .swiper-slide.item > a(room.html?room_id={id}, .custom_mousemove) > .img(background) + .txt(btxt=name, stxt=구조) 동적 생성 -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+                  <a
+                    href="#n"
+                    class="room-prev"
+                    style="background-image: url(images/special_prev.webp)"
+                  ></a>
+                  <a
+                    href="#n"
+                    class="room-next"
+                    style="background-image: url(images/special_next.webp)"
+                  ></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 배경: 디자인 기본 이미지(real_bg) 유지 — closing 이미지 매핑 안 함 -->
+            <div
+              class="main_reserve"
+              style="
+                background: url(images/real_bg.webp) no-repeat center top;
+                background-size: cover;
+              "
+            >
+              <div class="cont">
+                <p
+                  class="fadeUp"
+                  data-scroll=""
+                  style="background: url(images/real_dots.png) no-repeat center top"
+                ></p>
+                <!-- data-* : data-index-closing-description | customFields.pages.index.sections[0].closing.description -->
+                <p class="fadeUp" data-scroll="" data-index-closing-description></p>
+                <!-- data-* : data-booking-link | property.realtimeBookingId -->
+                <a href="#!" target="_blank" class="fadeUp" data-scroll="" data-booking-link>
+                  <span>예약하기</span>
+                </a>
+              </div>
+            </div>
+          </section>
+          <!-- e: content -->
         </div>
-    </main>
+        <!-- e: container -->
+        <div id="footer-wrap"></div>
+      </div>
+    </div>
 
-    <!-- Popup System -->
+    <!-- 팝업 (homepage.customFields.popup.popups / enabled·기간 따라 노출, 미리보기 POPUP_UPDATE 연동) -->
     <div id="popup-container"></div>
 
-    <!-- Include ImageWithFallback script -->
-    <script src="js/image-with-fallback.js"></script>
-
-    <!-- Image Helpers -->
+    <!-- infra: 데이터 매핑 & 동적 헤더/푸터 -->
     <script src="js/image-helpers.js"></script>
-
-    <!-- Base Data Mapper (must load before preview-handler) -->
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
     <script src="js/preview-handler.js"></script>
-
-    <!-- Index Page Mapper -->
-    <script src="js/data-mapper/pages/index-mapper.js"></script>
-
-    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
-    <!-- Header and Footer Loader -->
+    <script src="js/data-mapper/pages/index-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
-
-    <!-- Page-specific script -->
-    <script src="js/pages/index.js"></script>
+    <!-- 페이지 인터랙션 (vanilla) -->
+    <script src="js/common.js"></script>
+    <script src="js/custom.js"></script>
+    <!-- 팝업 매니저 -->
     <script src="js/popup.js"></script>
-
-</body>
+  </body>
 </html>
