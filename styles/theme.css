@@ -1,20 +1,25 @@
-/* CDN Fonts */
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
-
 /* Font Faces */
 @font-face {
-  font-family: 'ReperepointSpecialItalic';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-SpecialItalicA.woff') format('woff');
-  font-weight: 400;
-  font-display: swap;
+    font-family: 'Chosunilbo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Continuous';
+    src: url('../fonts/continuous.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* CSS Variables */
 :root {
-  --font-ko-main: 'ReperepointSpecialItalic', sans-serif;
-  --font-ko-sub: 'Pretendard', sans-serif;
-  --font-en-main: 'Chonburi', sans-serif;
+  --font-ko-main: 'Chosunilbo', serif;
+  --font-ko-sub: 'Chosunilbo', serif;
+  --font-en-main: 'Continuous', serif;
   --color-primary: #F5F4F1;
   --color-secondary: #C36355;
 }

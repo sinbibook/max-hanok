@@ -20,7 +20,7 @@ class FullscreenSlider {
 
         // Options with defaults
         this.options = {
-            slideDuration: options.slideDuration || 3000,
+            slideDuration: options.slideDuration || 4000,
             autoplay: options.autoplay !== false, // default true
             enableSwipe: options.enableSwipe !== false, // default true
             enableKeyboard: options.enableKeyboard !== false, // default true

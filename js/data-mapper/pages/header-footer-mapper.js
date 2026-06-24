@@ -18,9 +18,8 @@ class HeaderFooterMapper extends BaseDataMapper {
     mapFavicon() {
         if (!this.isDataLoaded) return;
 
-        // 로고 URL 추출 (ImageHelpers가 있을 때만)
-        const logoUrl = (typeof ImageHelpers !== 'undefined') ?
-            ImageHelpers.extractLogoUrl(this.data) : null;
+        // 로고 URL 추출
+        const logoUrl = ImageHelpers.extractLogoUrl(this.data);
 
         if (logoUrl) {
             // 기존 favicon 링크 찾기
@@ -46,35 +45,24 @@ class HeaderFooterMapper extends BaseDataMapper {
 
         const property = this.data.property;
 
-        // Header 로고 텍스트 매핑 (data-logo-text 속성 사용, customFields 우선)
+        // Header 로고 텍스트 매핑 (data-logo-text 속성 사용) - customFields 우선
         const logoTextElements = this.safeSelectAll('[data-logo-text]');
         logoTextElements.forEach(logoText => {
-            if (logoText) {
-                logoText.textContent = this.getPropertyName();
-            }
+            logoText.textContent = this.getPropertyName();
         });
 
         // Header 로고 이미지 매핑 (data-logo 속성 사용)
         const logoImage = this.safeSelect('[data-logo]');
         if (logoImage) {
             // 로고 URL 추출
-            const logoUrl = (typeof ImageHelpers !== 'undefined') ?
-                ImageHelpers.extractLogoUrl(this.data) : null;
+            const logoUrl = ImageHelpers.extractLogoUrl(this.data);
 
             if (logoUrl) {
                 logoImage.onerror = () => {
-                    // 로드 실패 시 placeholder 적용
-                    if (typeof ImageHelpers !== 'undefined') {
-                        ImageHelpers.applyPlaceholder(logoImage);
-                    }
+                    console.warn('⚠️ 헤더 로고 이미지 로드 실패');
                 };
                 logoImage.src = logoUrl;
                 logoImage.alt = this.getPropertyName();
-            } else {
-                // 로고 URL 없을 때 placeholder 적용
-                if (typeof ImageHelpers !== 'undefined') {
-                    ImageHelpers.applyPlaceholder(logoImage);
-                }
             }
         }
     }
@@ -94,69 +82,28 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 시설 메뉴 동적 생성
         this.mapFacilityMenuItems();
 
-        // 예약 버튼에 realtimeBookingId 매핑
+        // 예약 버튼에 예약 URL 매핑
         this.mapReservationButtons();
-
-        // 신규 페이지 enabled 체크
-        this.mapNewPageMenuVisibility();
     }
 
     /**
-     * 신규 페이지 (nearbyAttractions, layoutMap) 메뉴 표시 여부 결정 (헤더 + 푸터)
-     */
-    mapNewPageMenuVisibility() {
-        if (!this.isDataLoaded) return;
-
-        // Nearby Attractions 메뉴 표시 여부
-        const nearbyAttractionsEnabled = this.safeGet(this.data, 'homepage.customFields.pages.nearbyAttractions.sections.0.enabled') === true;
-
-        // 헤더 메뉴
-        const nearbyAttractionsMenuItems = document.querySelectorAll('.nearby-attractions-menu');
-        nearbyAttractionsMenuItems.forEach(item => {
-            item.style.display = nearbyAttractionsEnabled ? '' : 'none';
-        });
-
-        // 푸터 메뉴
-        const nearbyAttractionsMenuLinks = document.querySelectorAll('.nearby-attractions-menu-link');
-        nearbyAttractionsMenuLinks.forEach(link => {
-            link.style.display = nearbyAttractionsEnabled ? '' : 'none';
-        });
-
-        // Layout Map 메뉴 표시 여부
-        const layoutMapEnabled = this.safeGet(this.data, 'homepage.customFields.pages.layoutMap.sections.0.enabled') === true;
-
-        // 헤더 메뉴
-        const layoutMapMenuItems = document.querySelectorAll('.layout-map-menu');
-        layoutMapMenuItems.forEach(item => {
-            item.style.display = layoutMapEnabled ? '' : 'none';
-        });
-
-        // 푸터 메뉴
-        const layoutMapMenuLinks = document.querySelectorAll('.layout-map-menu-link');
-        layoutMapMenuLinks.forEach(link => {
-            link.style.display = layoutMapEnabled ? '' : 'none';
-        });
-    }
-
-    /**
-     * 예약 버튼에 realtimeBookingId 매핑 및 클릭 이벤트 설정
+     * 예약 버튼에 예약 URL 매핑 및 클릭 이벤트 설정
      */
     mapReservationButtons() {
         if (!this.isDataLoaded || !this.data.property) {
             return;
         }
 
-        // realtimeBookingId 찾기 (전체 URL)
-        const realtimeBookingId = this.data.property.realtimeBookingId;
+        // 예약 URL 찾기 (전체 URL이 저장됨)
+        const bookingUrl = this.data.property.realtimeBookingId;
 
-        if (realtimeBookingId) {
-            const allBookingButtons = document.querySelectorAll('[data-booking-engine], [data-property-realtime-booking-id]');
-            allBookingButtons.forEach(button => {
-                if (button.matches('[data-booking-engine]')) {
-                    button.setAttribute('data-realtime-booking-id', realtimeBookingId);
-                }
+        if (bookingUrl) {
+            // 모든 BOOK NOW 버튼에 클릭 이벤트 설정
+            const reservationButtons = document.querySelectorAll('[data-booking-engine]');
+            reservationButtons.forEach(button => {
+                button.setAttribute('data-booking-url', bookingUrl);
                 button.onclick = () => {
-                    window.open(realtimeBookingId, '_blank');
+                    window.open(bookingUrl, '_blank');
                 };
             });
         }
@@ -196,7 +143,7 @@ class HeaderFooterMapper extends BaseDataMapper {
             const rooms = this.safeGet(this.data, 'rooms');
             if (rooms && rooms.length > 0) {
                 spacesMenu.onclick = () => {
-                    window.location.href = this.buildUrl('room.html', { id: rooms[0].id });
+                    window.location.href = `room.html?id=${rooms[0].id}`;
                 };
             }
         }
@@ -207,7 +154,7 @@ class HeaderFooterMapper extends BaseDataMapper {
             const facilities = this.safeGet(this.data, 'property.facilities');
             if (facilities && facilities.length > 0) {
                 specialsMenu.onclick = () => {
-                    window.location.href = this.buildUrl('facility.html', { id: facilities[0].id });
+                    window.location.href = `facility.html?id=${facilities[0].id}`;
                 };
             }
         }
@@ -315,7 +262,7 @@ class HeaderFooterMapper extends BaseDataMapper {
     }
 
     /**
-     * 객실 메뉴 아이템 동적 생성 (Side Header용, customFields 우선)
+     * 객실 메뉴 아이템 동적 생성 (Side Header용)
      */
     mapRoomMenuItems() {
         const roomData = this.safeGet(this.data, 'rooms');
@@ -331,17 +278,18 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 기존 내용 초기화
         roomsList.innerHTML = '';
 
-        // 각 객실 아이템 생성 (customFields 우선)
+        // 각 객실 아이템 생성
         sortedRooms.forEach((room) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
 
+            // customFields 우선
             a.textContent = this.getRoomName(room);
             a.style.cursor = 'pointer';
 
             // 클릭 이벤트 추가
             a.addEventListener('click', () => {
-                window.location.href = this.buildUrl('room.html', { id: room.id });
+                window.location.href = `room.html?id=${room.id}`;
             });
 
             li.appendChild(a);
@@ -376,7 +324,7 @@ class HeaderFooterMapper extends BaseDataMapper {
 
             // 클릭 이벤트 추가
             a.addEventListener('click', () => {
-                window.location.href = this.buildUrl('facility.html', { id: facility.id });
+                window.location.href = `facility.html?id=${facility.id}`;
             });
 
             li.appendChild(a);
@@ -385,27 +333,27 @@ class HeaderFooterMapper extends BaseDataMapper {
     }
 
     /**
-     * 메뉴 배너 이미지 매핑 (customFields 우선)
+     * Side Header 이미지 배너 매핑 (customFields 우선)
      * customFields.property.images (property_exterior) 사용
      */
-    mapMenuBannerImg() {
+    mapSideImageBanner() {
         if (!this.isDataLoaded) return;
 
-        const bannerImg = this.safeSelect('[data-menu-banner-img]');
-        if (!bannerImg) return;
+        const banner = this.safeSelect('[data-side-banner-img]');
+        if (!banner) return;
 
         // customFields에서 property_exterior 카테고리 이미지 가져오기
         const exteriorImages = this.getPropertyImages('property_exterior');
 
-        if (exteriorImages.length > 0) {
-            bannerImg.src = exteriorImages[0].url;
-            bannerImg.alt = this.sanitizeText(exteriorImages[0].description, '메뉴 배너 이미지');
+        if (exteriorImages.length === 0) {
+            banner.style.backgroundImage = `url('${ImageHelpers.EMPTY_IMAGE_WITH_ICON}')`;
         } else {
-            // placeholder 적용
-            if (typeof ImageHelpers !== 'undefined') {
-                ImageHelpers.applyPlaceholder(bannerImg);
-            }
+            banner.style.backgroundImage = `url('${exteriorImages[0].url}')`;
         }
+
+        banner.style.backgroundSize = 'cover';
+        banner.style.backgroundPosition = 'center';
+        banner.style.backgroundRepeat = 'no-repeat';
     }
 
     // ============================================================================
@@ -424,24 +372,21 @@ class HeaderFooterMapper extends BaseDataMapper {
         const footerLogoImage = this.safeSelect('[data-footer-logo]');
         if (footerLogoImage) {
             // 로고 URL 추출
-            const logoUrl = (typeof ImageHelpers !== 'undefined') ?
-                ImageHelpers.extractLogoUrl(this.data) : null;
+            const logoUrl = ImageHelpers.extractLogoUrl(this.data);
 
             if (logoUrl) {
                 footerLogoImage.onerror = () => {
-                    // 로드 실패 시 placeholder 적용
-                    if (typeof ImageHelpers !== 'undefined') {
-                        ImageHelpers.applyPlaceholder(footerLogoImage);
-                    }
+                    console.warn('⚠️ 푸터 로고 이미지 로드 실패');
                 };
                 footerLogoImage.src = logoUrl;
                 footerLogoImage.alt = this.getPropertyName();
-            } else {
-                // 로고 URL 없을 때 placeholder 적용
-                if (typeof ImageHelpers !== 'undefined') {
-                    ImageHelpers.applyPlaceholder(footerLogoImage);
-                }
             }
+        }
+
+        // Footer 로고 텍스트 매핑 (customFields 우선)
+        const footerLogoText = this.safeSelect('[data-footer-logo-text]');
+        if (footerLogoText) {
+            footerLogoText.textContent = this.getPropertyName();
         }
     }
 
@@ -464,16 +409,16 @@ class HeaderFooterMapper extends BaseDataMapper {
             footerPhone.textContent = `${property.contactPhone}`;
         }
 
-        // 주소 매핑 (property.address 사용)
-        const addressElement = this.safeSelect('[data-footer-address]');
-        if (addressElement && property.address) {
-            addressElement.textContent = property.address;
+        // 대표자명 매핑
+        const representativeNameElement = this.safeSelect('[data-footer-representative-name]');
+        if (representativeNameElement && businessInfo.representativeName) {
+            representativeNameElement.textContent = `대표자명 : ${businessInfo.representativeName}`;
         }
 
-        // 대표자명 매핑
-        const representativeElement = this.safeSelect('[data-footer-representative]');
-        if (representativeElement && businessInfo.representativeName) {
-            representativeElement.textContent = `대표자 : ${businessInfo.representativeName}`;
+        // 주소 매핑
+        const addressElement = this.safeSelect('[data-footer-address]');
+        if (addressElement && businessInfo.businessAddress) {
+            addressElement.textContent = `주소 : ${businessInfo.businessAddress}`;
         }
 
         // 사업자번호 매핑
@@ -486,7 +431,7 @@ class HeaderFooterMapper extends BaseDataMapper {
         const ecommerceElement = this.safeSelect('[data-footer-ecommerce]');
         if (ecommerceElement) {
             if (businessInfo.eCommerceRegistrationNumber) {
-                ecommerceElement.textContent = `통신판매업신고번호 : ${businessInfo.eCommerceRegistrationNumber}`;
+                ecommerceElement.textContent = businessInfo.eCommerceRegistrationNumber;
             } else {
                 // 통신판매업신고번호가 없으면 부모 라인 전체 숨김
                 const parentLine = ecommerceElement.closest('.footer-info-line');
@@ -500,65 +445,66 @@ class HeaderFooterMapper extends BaseDataMapper {
         const copyrightElement = this.safeSelect('[data-footer-copyright]');
         if (copyrightElement) {
             const currentYear = new Date().getFullYear();
-            copyrightElement.innerHTML = `<a href="https://sinbibook.com" target="_blank" style="color: inherit; text-decoration: none;">© ${currentYear} 신비서. All rights reserved.</a>`;
+
+            // 링크 요소 생성
+            const copyrightLink = document.createElement('a');
+            copyrightLink.href = 'https://sinbibook.com';
+            copyrightLink.textContent = `© ${currentYear} 신비서. All rights reserved.`;
+            copyrightLink.style.color = 'inherit';
+            copyrightLink.style.textDecoration = 'none';
+            copyrightLink.target = '_blank';
+
+            // 기존 내용을 비우고 링크 추가
+            copyrightElement.innerHTML = '';
+            copyrightElement.appendChild(copyrightLink);
         }
     }
 
     /**
-     * Footer 메뉴 매핑 (객실, 시설) - customFields 우선
+     * Footer 소셜 링크 매핑
+     * socialLinks가 빈 객체면 전체 섹션 숨김
+     * 값이 있는 링크만 표시
      */
-    mapFooterMenus() {
+    mapSocialLinks() {
         if (!this.isDataLoaded) return;
 
-        // 객실 메뉴 매핑 (customFields 우선)
-        const roomsContainer = this.safeSelect('[data-footer-rooms]');
-        if (roomsContainer) {
-            const rooms = this.data.rooms || [];
-            roomsContainer.innerHTML = '';
+        const socialLinks = this.safeGet(this.data, 'homepage.socialLinks') || {};
+        const socialSection = this.safeSelect('[data-social-links-section]');
 
-            if (rooms.length === 0) {
-                const emptyLink = document.createElement('a');
-                emptyLink.textContent = '객실명';
-                emptyLink.href = '#';
-                emptyLink.onclick = () => navigateTo('room');
-                roomsContainer.appendChild(emptyLink);
-            } else {
-                // displayOrder로 정렬
-                const sortedRooms = [...rooms].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
-                sortedRooms.forEach((room) => {
-                    const link = document.createElement('a');
-                    link.textContent = this.getRoomName(room);
-                    link.href = '#';
-                    link.onclick = () => navigateTo('room', room.id);
-                    roomsContainer.appendChild(link);
-                });
+        // socialLinks가 빈 객체인지 체크
+        const hasSocialLinks = Object.keys(socialLinks).length > 0;
+
+        if (!hasSocialLinks) {
+            // 빈 객체면 전체 섹션 숨김
+            if (socialSection) {
+                socialSection.style.display = 'none';
             }
+            return;
         }
 
-        // 시설 메뉴 매핑 - property.facilities 경로 사용
-        const facilitiesContainer = this.safeSelect('[data-footer-facilities]');
-        if (facilitiesContainer) {
-            const facilities = this.safeGet(this.data, 'property.facilities') || [];
-            facilitiesContainer.innerHTML = '';
-
-            if (facilities.length === 0) {
-                const emptyLink = document.createElement('a');
-                emptyLink.textContent = '시설명';
-                emptyLink.href = '#';
-                emptyLink.onclick = () => navigateTo('facility');
-                facilitiesContainer.appendChild(emptyLink);
-            } else {
-                // displayOrder로 정렬
-                const sortedFacilities = [...facilities].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
-                sortedFacilities.forEach((facility, index) => {
-                    const link = document.createElement('a');
-                    link.textContent = this.sanitizeText(facility.name, `시설 ${index + 1}`);
-                    link.href = '#';
-                    link.onclick = () => navigateTo('facility', facility.id);
-                    facilitiesContainer.appendChild(link);
-                });
-            }
+        // 소셜 링크가 있으면 섹션 표시
+        if (socialSection) {
+            socialSection.style.display = 'block';
         }
+
+        // 소셜 링크 설정 객체와 루프를 사용한 매핑
+        const socialLinkConfig = [
+            { type: 'instagram', selector: '[data-social-instagram]' },
+            { type: 'facebook', selector: '[data-social-facebook]' },
+            { type: 'blog', selector: '[data-social-blog]' }
+        ];
+
+        socialLinkConfig.forEach(({ type, selector }) => {
+            const linkElement = this.safeSelect(selector);
+            if (linkElement) {
+                if (socialLinks[type]) {
+                    linkElement.href = socialLinks[type];
+                    linkElement.style.display = 'flex';
+                } else {
+                    linkElement.style.display = 'none';
+                }
+            }
+        });
     }
 
     // ============================================================================
@@ -570,6 +516,7 @@ class HeaderFooterMapper extends BaseDataMapper {
      */
     async mapHeader() {
         if (!this.isDataLoaded) {
+            console.error('Cannot map header: data not loaded');
             return;
         }
 
@@ -580,59 +527,8 @@ class HeaderFooterMapper extends BaseDataMapper {
         this.mapHeaderLogo();
         this.mapHeaderNavigation();
 
-        // 메뉴 배너 이미지 매핑
-        this.mapMenuBannerImg();
-    }
-
-    /**
-     * Footer 소셜 링크 매핑
-     */
-    mapFooterSocialLinks() {
-        if (!this.isDataLoaded) return;
-
-        const socialLinks = this.safeGet(this.data, 'homepage.socialLinks');
-
-        // socialLinks가 빈 객체인지 체크
-        const hasAnyLink = socialLinks && Object.keys(socialLinks).length > 0;
-
-        // Facebook
-        const fbLink = this.safeSelect('[data-social-facebook]');
-        if (fbLink) {
-            if (hasAnyLink && socialLinks.facebook && socialLinks.facebook.trim() !== '') {
-                fbLink.href = socialLinks.facebook;
-                fbLink.target = '_blank';
-                fbLink.rel = 'noopener noreferrer';
-                fbLink.classList.remove('is-hidden');
-            } else {
-                fbLink.classList.add('is-hidden');
-            }
-        }
-
-        // Instagram
-        const igLink = this.safeSelect('[data-social-instagram]');
-        if (igLink) {
-            if (hasAnyLink && socialLinks.instagram && socialLinks.instagram.trim() !== '') {
-                igLink.href = socialLinks.instagram;
-                igLink.target = '_blank';
-                igLink.rel = 'noopener noreferrer';
-                igLink.classList.remove('is-hidden');
-            } else {
-                igLink.classList.add('is-hidden');
-            }
-        }
-
-        // Blog
-        const blogLink = this.safeSelect('[data-social-blog]');
-        if (blogLink) {
-            if (hasAnyLink && socialLinks.blog && socialLinks.blog.trim() !== '') {
-                blogLink.href = socialLinks.blog;
-                blogLink.target = '_blank';
-                blogLink.rel = 'noopener noreferrer';
-                blogLink.classList.remove('is-hidden');
-            } else {
-                blogLink.classList.add('is-hidden');
-            }
-        }
+        // Side Header 이미지 배너 매핑
+        this.mapSideImageBanner();
     }
 
     /**
@@ -640,14 +536,14 @@ class HeaderFooterMapper extends BaseDataMapper {
      */
     async mapFooter() {
         if (!this.isDataLoaded) {
+            console.error('Cannot map footer: data not loaded');
             return;
         }
 
         // Footer 매핑
         this.mapFooterLogo();
         this.mapFooterInfo();
-        this.mapFooterMenus();
-        this.mapFooterSocialLinks();
+        this.mapSocialLinks();
 
         // E-commerce registration 매핑
         this.mapEcommerceRegistration();
