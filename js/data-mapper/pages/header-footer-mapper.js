@@ -73,7 +73,8 @@
       el.style.height = 'auto';
 
       if (logoUrl) {
-        el.src = logoUrl;
+        // 실제 로고 적용 + placeholder 클래스 제거(회색 배경 잔존 방지)
+        ImageHelpers.setImage(el, logoUrl, '로고');
         el.setAttribute('data-logo-mapped', '');
       } else if (!el.hasAttribute('data-logo-mapped')) {
         // 이전 실행에서 실제 로고가 이미 들어갔다면 placeholder로 덮어쓰지 않음

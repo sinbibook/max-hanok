@@ -200,11 +200,10 @@
       englishNameEl.textContent = property.nameEn;
     }
 
-    // Gallery description 매핑 (\n을 <br>로 변환)
+    // Gallery description 매핑 (\n을 <br>로 변환, 빈 값도 반영)
     var descEl = document.querySelector('[data-gallery-description]');
-    if (descEl && gallery && gallery.description) {
-      var html = gallery.description.replace(/\n/g, '<br>');
-      descEl.innerHTML = html;
+    if (descEl) {
+      descEl.innerHTML = (gallery && gallery.description) ? gallery.description.replace(/\n/g, '<br>') : '';
     }
 
     // Rooms 슬라이드 매핑
@@ -333,10 +332,10 @@
     }
 
     // Description 매핑 (\n을 <br>로 변환)
+    // 빈 값도 항상 반영 → 백오피스에서 설명을 지우면 화면도 비워짐
     var descEl = document.querySelector('[data-closing-description]');
-    if (descEl && closing.description) {
-      var html = closing.description.replace(/\n/g, '<br>');
-      descEl.innerHTML = html;
+    if (descEl) {
+      descEl.innerHTML = closing.description ? closing.description.replace(/\n/g, '<br>') : '';
     }
 
     // Images 매핑 (isSelected=true인 첫번째)
@@ -345,7 +344,7 @@
       if (closing.images && closing.images.length > 0) {
         var selectedImg = closing.images.find(function (img) { return img.isSelected; });
         if (selectedImg && selectedImg.url) {
-          imgEl.src = selectedImg.url;
+          ImageHelpers.setImage(imgEl, selectedImg.url);
         } else {
           ImageHelpers.applyPlaceholder(imgEl);
         }
@@ -368,11 +367,10 @@
       titleEl.textContent = (signature && signature.title) || 'SPECIAL OFFERS';
     }
 
-    // Signature description 매핑 (\n을 <br>로 변환)
+    // Signature description 매핑 (\n을 <br>로 변환, 빈 값도 반영)
     var descEl = document.querySelector('[data-index-signature-description]');
-    if (descEl && signature && signature.description) {
-      var html = signature.description.replace(/\n/g, '<br>');
-      descEl.innerHTML = html;
+    if (descEl) {
+      descEl.innerHTML = (signature && signature.description) ? signature.description.replace(/\n/g, '<br>') : '';
     }
 
     // Facilities 슬라이드 동적 생성
