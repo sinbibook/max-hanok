@@ -12,8 +12,8 @@
   function nl2br(s) {
     return String(s == null ? '' : s).replace(/\n/g, '<br>');
   }
+  // 빈 값도 항상 반영 (백오피스에서 값 삭제 시 이전 값/기본 텍스트 잔존 방지)
   function setHtml(sel, val) {
-    if (!val) return;
     document.querySelectorAll(sel).forEach(function (el) { el.innerHTML = nl2br(val); });
   }
   function setBg(el, url) {
