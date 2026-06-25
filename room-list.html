@@ -16,7 +16,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/layout-map.css" />
+    <link rel="stylesheet" href="styles/room-list.css" />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
@@ -33,63 +33,75 @@
   <body>
     <div class="wrapper">
       <div class="container">
-        <!-- MAPPER: customFields.pages.layout-map.sections[0].hero.images[isSelected] -->
-        <div class="con01" data-aos="fade-up">
-          <div class="img swiper-container">
-            <div class="swiper-wrapper">
+        <!-- MAPPER: customFields.pages.roomList.sections[0].hero.images[isSelected] -->
+        <div class="con0" data-aos="fade-up">
+          <div class="swiper">
+            <div class="swiper-wrapper" data-room-list-hero-slides>
               <div class="swiper-slide">
-                <div class="img" data-layout-map-hero-image></div>
+                <img src="images/con0_3.png" alt="" />
+                <div class="tx1">ROOMS</div>
               </div>
             </div>
           </div>
-          <div class="tx1_1">객실 미리보기</div>
         </div>
-
-        <!-- MAPPER: customFields.pages.layout-map.sections[0].about + images -->
-        <div class="con14 w1440">
+        <div class="conRoomList w1440">
+          <!-- MAPPER: homepage.customFields.property.name -->
           <div class="conTitle" data-aos="fade-up">
-            <!-- MAPPER: customFields.pages.layoutMap.sections[0].hero.title (우선) / fallback: ROOM PREVIEW -->
-            <div class="tx1" data-layout-map-hero-title>ROOM PREVIEW</div>
-            <!-- MAPPER: customFields.pages.layoutMap.sections[0].hero.description (우선) / fallback: 객실 배치도 -->
+            <div class="tx1">ROOMS</div>
             <div class="tx2">
-              <span class="bold spot" data-layout-map-hero-description>객실 배치도</span>
+              하드코딩<br />
+              <div class="bold spot" data-property-name>하드코딩</div>
             </div>
           </div>
-          <div class="img" data-aos="fade-up">
-            <img src="images/con14_1.png" alt="배치도" data-layout-map-image-0 />
-          </div>
-        </div>
-
-        <div class="con1">
-          <div class="w1440">
-            <div class="conTitle" data-aos="fade-up">
-              <div class="tx1">ROOM PREVIEW</div>
-              <!-- MAPPER: customFields.pages.layoutMap.sections[0].hero.description (우선) 또는 기본값 -->
-              <div class="tx2" data-layout-map-room-preview-title>
-                여유롭고 특별한 공간<br />
-                <!-- MAPPER: property.name -->
-                <div class="bold spot" data-property-name></div>
-              </div>
-            </div>
-            <div class="swiper-pagination" data-aos="fade-up"></div>
-            <div class="swiperControl">
-              <div class="fraction">
-                <div class="number"></div>
-                <span class="bar">/</span>
-                <div class="total"></div>
-              </div>
-              <div class="navi">
-                <div class="swiper-button-prev">
-                  <img src="images/icon_left_2.png" alt="" />
+          <div class="roomGrid" data-room-list-grid>
+            <!-- 객실 카드는 room-list-mapper.js가 동적 생성 -->
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img src="images/con1_1.png" alt="" />
                 </div>
-                <div class="swiper-button-next">
-                  <img src="images/icon_right_2.png" alt="" />
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
                 </div>
-              </div>
+              </a>
             </div>
-            <!-- MAPPER: customFields.roomtypes[] thumbnail[isSelected] + name (+ rooms[] id매칭 구조) -->
-            <div class="swiper right" data-aos="fade-left">
-              <div class="swiper-wrapper" data-index-room-slides></div>
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img src="images/con1_1.png" alt="" />
+                </div>
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
+                </div>
+              </a>
+            </div>
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img src="images/con1_1.png" alt="" />
+                </div>
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
+                </div>
+              </a>
+            </div>
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img src="images/con1_1.png" alt="" />
+                </div>
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -102,10 +114,10 @@
     <script src="js/preview-handler.js"></script>
     <script src="js/image-helpers.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
+    <script src="js/data-mapper/pages/room-list-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/pages/layout-map.js"></script>
+    <script src="js/pages/room-list.js"></script>
   </body>
 </html>

@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="data:,">
     <title>Max 한옥</title>
-    <link rel="stylesheet" href="styles/theme.css" />
     <link rel="stylesheet" href="styles/common.css" />
     <style>
       html, body { height: 100%; }
       body {
         display: flex;
         flex-direction: column;
-        background-color: var(--color-primary);
+        background-color: #f5f6f8;
       }
       main {
         flex: 1;
@@ -32,46 +31,65 @@
       .errorCode {
         font-size: 120px;
         font-weight: 900;
-        color: var(--color-secondary);
+        color: #2d3a80;
         line-height: 1;
         margin-bottom: 20px;
         letter-spacing: -4px;
       }
       .errorTitle {
-        font-family: var(--font-ko-main);
         font-size: 28px;
         font-weight: 700;
-        color: #333;
+        color: #111;
         margin-bottom: 15px;
       }
       .errorMessage {
         font-size: 16px;
-        color: #666;
+        color: #555;
         margin-bottom: 50px;
         line-height: 1.8;
         max-width: 480px;
       }
-      .errorContainer .btnReservation {
+      /* 404 페이지 버튼 스타일 오버라이드 */
+      .errorContainer .btnBooking_2 {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 20px;
         width: 250px;
         height: 55px;
-        border: 2px solid var(--color-secondary);
+        border: 1px solid #2d3a80;
         font-size: 15px;
         font-weight: 600;
-        color: #fff;
-        background-color: var(--color-secondary);
+        font-style: italic;
+        color: #2d3a80;
+        background: linear-gradient(to right, rgba(96, 70, 58, 0) 25%, #2d3a80);
+        background-position: 1% 50%;
+        background-size: 400% 300%;
+        transition: 3s cubic-bezier(0.165, 0.84, 0.44, 1);
         text-decoration: none;
-        transition: all 0.3s ease;
-        padding: 0;
       }
-      @media (max-width: 1440px) {
+      .errorContainer .btnBooking_2:after {
+        content: "";
+        width: 6px;
+        height: 12px;
+        background-image: url(./images/icon_bullet_1.png);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      .errorContainer .btnBooking_2:hover {
+        transition: 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        color: #fff;
+        background-position: 99% 50%;
+      }
+      .errorContainer .btnBooking_2:hover:after {
+        background-image: url(./images/icon_bullet_1_2.png);
+      }
+      @media (max-width: 1180px) {
         .errorCode { font-size: 80px; }
         .errorTitle { font-size: 22px; }
         .errorMessage { font-size: 14px; }
         .errorContainer { padding: 300px 20px 80px; }
-        .errorContainer .btnReservation {
+        .errorContainer .btnBooking_2 {
           width: 140px;
           height: 40px;
           font-size: 14px;
@@ -92,23 +110,23 @@
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
 </head>
   <body>
-    <div class="wrapper">
-      <main>
-        <div class="errorContainer">
-          <div class="errorCode">404</div>
-          <h1 class="errorTitle">페이지를 찾을 수 없습니다.</h1>
-          <p class="errorMessage">
-            요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br />
-            홈으로 돌아가기 버튼을 클릭해주세요.
-          </p>
-          <a href="index.html" class="btnReservation">홈으로 돌아가기</a>
-        </div>
-      </main>
-    </div>
+    <main>
+      <div class="errorContainer">
+        <div class="errorCode">404</div>
+        <h1 class="errorTitle">페이지를 찾을 수 없습니다.</h1>
+        <p class="errorMessage">
+          요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br />
+          홈으로 돌아가기 버튼을 클릭해주세요.
+        </p>
+        <a href="index.html" class="btnBooking_2">홈으로 돌아가기</a>
+      </div>
+    </main>
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/image-helpers.js"></script>
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
     <script src="js/common.js"></script>
   </body>
