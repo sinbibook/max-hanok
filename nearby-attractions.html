@@ -1,36 +1,30 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:,">
-    <title>Max 한옥</title>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading"><head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta property="og:type" content="website">
+                <title data-page-title>Max 한옥</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" type="text/css" href="styles/theme.css">
+        <link rel="stylesheet" type="text/css" href="styles/reset.css">	
+        <link rel="stylesheet" type="text/css" href="styles/style.css">
+        <link rel="stylesheet" type="text/css" href="styles/board_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/popup_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/swiper-bundle.min.css">
 
-    <link rel="stylesheet" href="styles/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" type="text/css" href="styles/common.css">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <link rel="stylesheet" type="text/css" href="styles/popup_black.css">
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script type="text/javascript">
-        function setCookie(name, value, expirehours) {
-            var todayDate = new Date();
-            todayDate.setHours(todayDate.getHours() + expirehours);
-            document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";";
-        }
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+        <script type="text/javascript" src="js/jquery.cookie.min.js"></script>
 
-        function closeWin(id, checkbox) {
-            if (checkbox.checked) {
-                setCookie(id, "done", 1);
-            }
-            document.getElementById(id).style.display = "none";
-        }
-    </script>
-  <!-- Open Graph Meta Tags for Social Media -->
+        <script type="text/javascript" src="js/ScrollTrigger.min.js"></script>
+        <script type="text/javascript" src="js/gsap.min.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/sly.js"></script>
+        <script nomodule="" src="//polyfill.io/v3/polyfill.min.js?features=Object.assign%2CElement.prototype.append%2CNodeList.prototype.forEach%2CCustomEvent%2Csmoothscroll" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+          <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -42,53 +36,69 @@
   <meta name="twitter:title" content="Max 한옥" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
-</head>
-<body>
-    <script src="js/header-footer-loader.js"></script>
-    <div id="sh_wrapper">
-    <main id="sh_container">
-    
-            <!-- main_banner [s] -->
-            <article>
-                <div id="main_banner">
-                    <div class="swiper-container main_slide">
-                        <!-- MAPPER: nearbyAttractions.sections[0].hero.images[isSelected] → 슬라이드 동적 생성 -->
-                        <div class="swiper-wrapper"></div>
-                    </div>
+</head><body>
+<div id="wrap">
+<div id="header-wrap"></div>
+<div class="scroll-wrap" id="doc" data-scroll-container="">
+        <!-- s: container -->
+        <div id="container">
+            <!--// sub_visual -->
+            <div class="sub_visual visual travel fadeDown" data-scroll="">
+                <div class="visual_box">
+                    <!-- data-* : data-nearby-hero-image | hero.images[isSelected][0] (단일 고정 배경, 슬라이드 미사용. .swiper-slide=100vh) -->
+                    <div class="swiper-slide" data-nearby-hero-image></div>
                 </div>
-            </article>
-            <!-- main_banner [e] -->
-
-            <!-- sh_content [s] -->
-            <div id="sh_content">
-                <!-- nearby attractions [s] -->
-                <div id="facility1004">
-                    <div class="tit">
-                        <span class="deco"></span>
-                        <!-- MAPPER: nearbyAttractions.hero.title (1순위) / 값 없으면 기본값 유지 -->
-                        <h1 data-nearby-title><span>NEARBY</span> ATTRACTIONS</h1>
+            </div>
+            <!--// sub_visual -->
+            <!-- s: content -->
+            <section id="content" class="sub">
+                <!-- s: travel-wrap -->
+                <div class="travel-wrap" id="direction">
+                    <div class="tits">
+                        <h3 class="fadeRight" data-scroll=""><span>Travel</span>TOUR GUIDE</h3>
+                        <!-- data-* : data-nearby-subtitle | hero.description -->
+                        <p class="fadeUp" data-scroll="" data-nearby-subtitle></p>
                     </div>
-
                     <div class="cont">
-                        <div class="inner" data-aos="fade-up">
-                            <!-- MAPPER: nearbyAttractions.about[] → 여행지 리스트 (li: 첫 선택 이미지 + dt 제목 + dd 설명) -->
-                            <ul data-nearby-items></ul>
+                        <div class="fl fadeUp" data-scroll="">
+    <div class="hfix" data-scroll="" data-scroll-sticky="" data-scroll-target="#direction">
+        <div class="travel-slide">
+            <!-- data-* : data-nearby-nav | about[] (앵커 네비 동적 생성, #anchorNN, 첫 항목 active) -->
+            <ul data-nearby-nav></ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+                        <div class="fr travel-list">
+                            <!-- data-* : data-nearby-list | about[] (카드 동적 생성: .sch#anchorNN + 이미지 + btxt=title + stxt=description) -->
+                            <ul data-nearby-list></ul>
                         </div>
                     </div>
                 </div>
-                <!-- nearby attractions [e] -->
-            </div>
-            <!-- sh_content [e] -->
+                <!-- e: travel-wrap -->
+            </section>
+            <!-- e: content -->
+        </div>
+        <!-- e: container -->
+        
 
-    </main>
-    </div>
+<div id="footer-wrap"></div>
+        </div><!-- e: scroll-wrap -->
+    </div><!-- e: wrap -->
 
-    <script src="js/preview-handler.js"></script>
+    <!-- infra: SEO/헤더·푸터 동적 + 데이터 매핑 -->
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/nearby-attractions-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/pages/nearby-attractions.js"></script>
+    <script src="js/data-mapper/pages/nearby-attractions-mapper.js"></script>
+    <script src="js/header-footer-loader.js"></script>
+    <script src="js/custom.js"></script>
 </body>
 </html>

@@ -1,38 +1,30 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:,">
-    <title>Max 한옥 - 숙소소개</title>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading"><head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta property="og:type" content="website">
+                <title data-page-title>Max 한옥 - 숙소소개</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" type="text/css" href="styles/theme.css">
+        <link rel="stylesheet" type="text/css" href="styles/reset.css">	
+        <link rel="stylesheet" type="text/css" href="styles/style.css">	
+        <link rel="stylesheet" type="text/css" href="styles/board_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/popup_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/swiper-bundle.min.css">
 
-    <link rel="stylesheet" href="styles/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" type="text/css" href="styles/common.css">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script type="text/javascript">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+        <script type="text/javascript" src="js/jquery.cookie.min.js"></script>
 
-        function setCookie( name, value, expirehours ) {
-            var todayDate = new Date();
-            todayDate.setHours( todayDate.getHours() + expirehours );
-            document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
-        }
-
-        function closeWin(id,checkbox) {
-
-            if ( checkbox.checked ){
-                setCookie( id, "done" , 1 );
-            }
-            document.getElementById(id).style.display = "none";
-        }
-    </script>
-
-  <!-- Open Graph Meta Tags for Social Media -->
+        <script type="text/javascript" src="js/ScrollTrigger.min.js"></script>
+        <script type="text/javascript" src="js/gsap.min.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/sly.js"></script>
+        <script nomodule="" src="//polyfill.io/v3/polyfill.min.js?features=Object.assign%2CElement.prototype.append%2CNodeList.prototype.forEach%2CCustomEvent%2Csmoothscroll" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+          <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 숙소소개" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -44,97 +36,80 @@
   <meta name="twitter:title" content="Max 한옥 - 숙소소개" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
-</head>
-<body>
-<script src="js/header-footer-loader.js"></script>
-<div id="sh_wrapper">
-    <main id="sh_container">
-            <!-- sh_section [s] -->
-            <section id="sh_section">
-                <!-- main_banner [s] -->
-                <!-- MAPPER: customFields.pages.main.sections[0].hero.images[isSelected] 동적 배경이미지 적용 -->
-                <article>
-                    <div id="main_banner">
-                        <div class="swiper-container main_slide">
-                            <div class="swiper-wrapper" data-main-hero-slides>
-                                <div class="swiper-slide" style="background-size:cover;"></div>
-                                <div class="swiper-slide" style="background-size:cover;"></div>
-                                <div class="swiper-slide" style="background-size:cover;"></div>
-                                <div class="swiper-slide" style="background-size:cover;"></div>
-                                <div class="swiper-slide" style="background-size:cover;"></div>
-                                <div class="swiper-slide" style="background-size:cover;"></div>
-                            </div>
-                        </div>
-                        <div class="controls">
-                            <button type="button" class="arr prev"><img src="images/main_prev.png" alt="prev"></button>
-                            <div class="swiper-container pager">
-                                <ul class="swiper-wrapper"></ul>
-                            </div>
-                            <div class="swiper-progress-bar">
-                                <span class="slide_progress-bar"></span>
-                            </div>
-                            <p class="num num02">0</p>
-                            <button type="button" class="arr next"><img src="images/main_next.png" alt="next"></button>
-                        </div>
+</head><body>
+<div id="wrap">
+<div id="header-wrap"></div>
+<div class="scroll-wrap" id="doc" data-scroll-container="">
+        <!-- s: container -->
+        <div id="container">
+            <!--// sub_visual -->
+            <div class="sub_visual visual fadeDown" data-scroll="">
+                <div class="visual_box">
+                    <div class="visual_control">
+                        <div class="swiper-arw swiper-button-prev" style="background:url(images/visual_prev.png) no-repeat left center ;background-size:auto 100%;"></div>
+                        <div class="paging swiper-pagination"></div>
+                        <div class="swiper-arw swiper-button-next" style="background:url(images/visual_next.png) no-repeat right center ;background-size:auto 100%;"></div>
                     </div>
-                </article>
-                <!-- main_banner [e] -->
-                <!-- s: snb_wrap -->
-                <div id="snb_wrap">
-                    <ul>
-                        <li class="on"><a href="./about.html">외부풍경</a></li>
-                        <li><a href="./directions.html">오시는길</a></li>
-                    </ul>
+                    <div class="swiper-container">
+                        <!-- data-* : data-main-hero-slides | customFields.pages.main.sections[0].hero.images[isSelected] (배경 슬라이드 동적 생성) -->
+                        <div class="swiper-wrapper" data-main-hero-slides></div>
+                    </div>
                 </div>
-                <article>
-                    <article id="atc01">
-                        <div class="all_wrap">
-                            <div data-aos="fade-up" class="aos-init">
-                                <div class="tit">
-                                    <div class="deco"></div>
-                                    <!-- MAPPER: customFields.pages.main.sections[0].hero.title, description -->
-                                    <p><span data-main-hero-title>About</span><span data-main-hero-description></span></p>
-                                </div>
-                                <div class="pager"></div>
-                            </div>
-                            <!-- MAPPER: customFields.pages.main.sections[0].about 동적 생성 -->
-                            <div class="swiper-container atc01_slide" data-aos="fade-up">
-                                <div class="controls">
-                                    <span class="arr prev"><img src="images/left.png" alt="img01"></span>
-                                    <span class="arr next"><img src="images/right.png" alt="img01"></span>
-                                </div>
-                                <ul class="swiper-wrapper" data-main-about-slides>
-                                </ul>
-                            </div>
+                <a href="#snb_wrap" class="scroll_down">scroll down</a>
+            </div>
+            <!--// sub_visual -->
+            <!-- s: snb_wrap -->
+            <div id="snb_wrap">
+                <!-- 서브탭: ABOUT(외부풍경/오시는길). 현재 외부풍경=main.html active -->
+                <ul>
+                    <li class="on"><a href="/main.html">외부풍경</a></li>
+                    <li><a href="/directions.html">오시는길</a></li>
+                </ul>
+            </div>
+            <!-- e: snb_wrap -->
+            <!-- s: content -->
+            <section id="content" class="sub">
+                <!-- s: about-wrap -->
+                <!-- data-* : data-main-about-blocks | about[] 개수만큼 .vimg 블록 동적 생성(좌/우 모서리 교차) -->
+                <div class="about-wrap" data-main-about-blocks>
+                    <div class="info">
+                        <!-- data-* : data-main-about-images | hero.images[isSelected] (li 2칸 .img 배경) -->
+                        <div class="fr">
+                            <ul data-main-about-images>
+                                <li class="fadeUp" data-scroll="">
+                                    <div class="img" style="background-repeat:no-repeat;background-position:center top"></div>
+                                </li>
+                                <li class="fadeUp" data-scroll="">
+                                    <div class="img" style="background-repeat:no-repeat;background-position:27% 50%"></div>
+                                </li>
+                            </ul>
                         </div>
-                    </article>
-                </article>
-                <!-- atc02 [s] -->
-                <!-- MAPPER: customFields.pages.index.sections[0].closing.title, description, images[isSelected] -->
-                <article>
-                    <div id="atc02">
-                        <div class="bg">
-                            <img alt="visual" data-closing-image>
-                        </div>
-                        <div class="txt">
-                            <p data-aos="fade-up" data-closing-title>your perfect stay</p>
-                            <span data-aos="fade-up" data-closing-description>
-                            </span>
-                            <a data-aos="fade-up" href="main.html">(<span>More View</span>)</a>
+                        <div class="fl">
+                            <h4 class="fadeUp" data-scroll="">EXTERIOR <span>Prologue</span></h4>
+                            <!-- data-* : data-main-about-description | hero.description (\n→<br>) -->
+                            <p class="fadeUp" data-scroll="" data-main-about-description></p>
                         </div>
                     </div>
-                </article>
+                    <!-- MAPPER: about[]마다 .vimg 블록 생성 (h4=title|fallback, .stit=description, .img=images[0], 짝수 .vimg-alt) -->
+                </div>
+                <!-- e: about-wrap -->
             </section>
-            <!-- sh_section [e] -->
-    </main>
-    </div>
+            <!-- e: content -->
+        </div>
+        <!-- e: container -->
+        
 
-    <script src="js/preview-handler.js"></script>
+<div id="footer-wrap"></div>
+        </div><!-- e: scroll-wrap -->
+    </div><!-- e: wrap -->
+
+    <!-- infra: SEO/헤더·푸터 동적 + 데이터 매핑 -->
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/main-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/pages/main.js"></script>
+    <script src="js/data-mapper/pages/main-mapper.js"></script>
+    <script src="js/header-footer-loader.js"></script>
+    <script src="js/custom.js"></script>
 </body>
 </html>
