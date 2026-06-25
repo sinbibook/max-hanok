@@ -1,35 +1,30 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:,">
-    <title>Max 한옥 - 시설안내</title>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading"><head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta property="og:type" content="website">
+                <title data-page-title>Max 한옥 - 시설안내</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" type="text/css" href="styles/theme.css">
+        <link rel="stylesheet" type="text/css" href="styles/reset.css">	
+        <link rel="stylesheet" type="text/css" href="styles/style.css">	
+        <link rel="stylesheet" type="text/css" href="styles/board_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/popup_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/swiper-bundle.min.css">
 
-    <link rel="stylesheet" href="styles/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" type="text/css" href="styles/common.css">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script type="text/javascript">
-        function setCookie(name, value, expirehours) {
-            var todayDate = new Date();
-            todayDate.setHours(todayDate.getHours() + expirehours);
-            document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";";
-        }
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+        <script type="text/javascript" src="js/jquery.cookie.min.js"></script>
 
-        function closeWin(id, checkbox) {
-            if (checkbox.checked) {
-                setCookie(id, "done", 1);
-            }
-            document.getElementById(id).style.display = "none";
-        }
-    </script>
-  <!-- Open Graph Meta Tags for Social Media -->
+        <script type="text/javascript" src="js/ScrollTrigger.min.js"></script>
+        <script type="text/javascript" src="js/gsap.min.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/sly.js"></script>
+        <script nomodule="" src="//polyfill.io/v3/polyfill.min.js?features=Object.assign%2CElement.prototype.append%2CNodeList.prototype.forEach%2CCustomEvent%2Csmoothscroll" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+          <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 시설안내" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -41,116 +36,103 @@
   <meta name="twitter:title" content="Max 한옥 - 시설안내" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
-</head>
-<body>
-    <script src="js/header-footer-loader.js"></script>
-    <div id="sh_wrapper">
-    <main id="sh_container">
-    
-            <!-- main_banner [s] -->
-            <article>
-                <div id="main_banner">
-                    <div class="swiper-container main_slide">
-                        <!-- MAPPER: facilities[current].images[isSelected] (sortOrder순) → 히어로 슬라이드 동적 생성 -->
-                        <div class="swiper-wrapper"></div>
+</head><body>
+<div id="wrap">
+<div id="header-wrap"></div>
+<div class="scroll-wrap" id="doc" data-scroll-container="">
+        <!-- s: container -->
+        <div id="container">
+            <!--// sub_visual -->
+            <div class="sub_visual visual fadeDown" data-scroll="">
+                <div class="visual_box">
+                    <div class="visual_control">
+                        <div class="swiper-arw swiper-button-prev" style="background:url() no-repeat left center ;background-size:auto 100%;"></div>
+                        <div class="paging swiper-pagination"></div>
+                        <div class="swiper-arw swiper-button-next" style="background:url() no-repeat right center ;background-size:auto 100%;"></div>
                     </div>
-                    <div class="controls">
-                        <button type="button" class="arr prev"><img src="images/main_prev.png" alt="prev"></button>
-                        <div class="swiper-container pager">
-                            <ul class="swiper-wrapper"></ul>
-                        </div>
-                        <div class="swiper-progress-bar">
-                            <span class="slide_progress-bar"></span>
-                        </div>
-                        <p class="num num02">0</p>
-                        <button type="button" class="arr next"><img src="images/main_next.png" alt="next"></button>
+                    <div class="swiper-container">
+                        <!-- data-* : data-facility-hero-slides | facilities[current].images[isSelected] (배경 슬라이드 rebuild) -->
+                        <div class="swiper-wrapper" data-facility-hero-slides></div>
                     </div>
                 </div>
-            </article>
-            <!-- main_banner [e] -->
-
+                <a href="#snb_wrap" class="scroll_down">scroll down</a>
+            </div>
+            <!--// sub_visual -->
             <!-- s: snb_wrap -->
-            <!-- MAPPER: property.facilities[].name → 특별함 네비 동적 생성 (현재 facility=on) -->
             <div id="snb_wrap">
-                <ul data-room-nav-list>
-                </ul>
-            </div>
+    <!-- data-* : data-facility-nav | facilities[] (동적 생성, 현재 active, facility.html?id={id}) -->
+    <ul data-facility-nav></ul>
+</div>
 
-            <!-- sh_content [s] -->
-            <div id="sh_content">
-                <!-- facility1005 [s] -->
-                <div id="facility1005">
-                    <div class="tit">
-                        <span class="deco"></span>
-                        <!-- MAPPER: facilities[current].name -->
-                        <h1 data-facility-name></h1>
+
+            <!-- e: snb_wrap -->
+            <!-- s: content -->
+            <section id="content" class="sub">
+                <!-- s: special-wrap -->
+                <div class="special-wrap">
+                    <div class="tits">
+                        <!-- data-* : data-facility-name | facilities[current].name -->
+                        <h3 class="fadeUp" data-scroll=""><span>Special</span><span data-facility-name></span></h3>
+                        <!-- data-* : data-facility-description | facilities[current].description (\n→<br>) -->
+                        <p class="fadeUp" data-scroll="" data-facility-description></p>
                     </div>
-
-                    <div class="cont">
-                        <div class="inner" data-aos="fade-up">
-                            <!-- MAPPER: facilities[current].images[isSelected][0] (첫 번째 선택 이미지) -->
-                            <div class="sp_view">
-                                <div class="img"><img data-facility-main-image alt=""></div>
-                            </div>
-
-                            <!-- MAPPER: facilities[current].usageGuide (\n→<br>) -->
-                            <div class="txt">
-                                <p data-facility-usage></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- MAPPER: facilities[current] experience.benefits/features/additionalInfos
-                         → 혜택/특징/추가정보 박스 (각 item title+description). 빈 배열 박스는 숨김,
-                         보이는 박스 개수만큼 균등 분할(1개=100%/2개=50%/3개=1/3), 전체 비면 영역 숨김 -->
-                    <div class="exp_box" data-facility-experience style="display:none">
-                        <div class="exp benefit" data-facility-benefit></div>
-                        <div class="exp feature" data-facility-feature></div>
-                        <div class="exp add_info" data-facility-addinfo></div>
-                    </div>
-
-                    <!-- MAPPER: facilities[current].images[isSelected] 의 2번째~ (sp_view 다음 이미지들) -->
                     <div class="dimg">
-                        <ul data-facility-dimg>
-                            <li class="fadeUp" data-scroll=""><img alt=""></li>
-                            <li class="fadeUp" data-scroll=""><img alt=""></li>
-                        </ul>
+                        <!-- data-* : data-facility-image | facilities[current].images[isSelected][0] (배경, 없으면 placeholder) -->
+                        <div class="img fadeUp" data-scroll="" data-facility-image></div>
+                        <!-- data-* : data-facility-name-en | property.nameEn (숙소 영문명) -->
+                        <h4 class="fadeUp" data-scroll="" data-facility-name-en></h4>
+                        <!-- data-* : data-facility-gallery | facilities[current].images[isSelected] (li 배경+img 동적, 없으면 placeholder) -->
+                        <ul data-facility-gallery></ul>
                     </div>
-                </div>
-                <!-- facility1005 [e] -->
+                    <div class="vimg fadeUp" data-scroll="">
+    <div class="cont">
+        <div class="fl">
+            <!-- data-* : data-facility-slides | facilities[] (이미지 슬라이드 rebuild) -->
+            <div class="swiper-container spec-img">
+                <div class="swiper-wrapper" data-facility-slides></div>
             </div>
-            <!-- sh_content [e] -->
-
-            <!-- atc03 [s] -->
-            <article>
-                <div id="atc03" data-aos="fade-up">
-                    <!-- MAPPER: facility[current].about.title (폴백 "SPECIAL OFFERS") / about.description (폴백 "특별한 경험의 패키지들을 만나보세요.") -->
-                    <div class="tit">
-                        <div class="deco"></div>
-                        <p><span data-facility-signature-title></span></p>
-                        <b data-facility-signature-description></b>
-                    </div>
-                    <div class="controls">
-                        <span class="arr prev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg></span>
-                        <span class="arr next"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
-                    </div>
-                    <!-- MAPPER: property.facilities[] → 슬라이드 동적 생성 (클릭 시 facility.html?id=) -->
-                    <div class="swiper-container offer_slide" data-aos="fade-up">
-                        <ul class="swiper-wrapper" data-facility-offer-slides></ul>
-                    </div>
-                </div>
-            </article>
-            <!-- atc03 [e] -->
-
-    </main>
+        </div>
+        <div class="fr">
+            <!-- data-* : data-facility-titles | facilities[] (txt-con: btxt=name, stxt='Special,') -->
+            <div class="spec-tit" data-facility-titles></div>
+            <div class="swiper-container spec-txt">
+                <!-- data-* : data-facility-texts | facilities[] (0N. name + description, facility.html?id={id}) -->
+                <div class="swiper-wrapper" data-facility-texts></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="btns">
+            <a href="#n" class="spec-prev" style="background-image:url(images/special_prev.png)"></a>
+            <a href="#n" class="spec-next" style="background-image:url(images/special_next.png)"></a>
+        </div>
     </div>
+</div>
+</div>
 
-    <script src="js/preview-handler.js"></script>
+
+
+
+
+
+
+                    <!-- e: special-wrap -->
+                    </section>
+                <!-- e: content -->
+                </div>
+            <!-- e: container -->
+            
+
+<div id="footer-wrap"></div>
+        </div><!-- e: scroll-wrap -->
+    </div><!-- e: wrap -->
+
+    <!-- infra: SEO/헤더·푸터 동적 + 데이터 매핑 -->
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/facility-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/pages/facility.js"></script>
+    <script src="js/data-mapper/pages/facility-mapper.js"></script>
+    <script src="js/header-footer-loader.js"></script>
+    <script src="js/custom.js"></script>
 </body>
 </html>

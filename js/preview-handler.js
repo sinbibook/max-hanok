@@ -127,9 +127,38 @@ class PreviewHandler {
             this.applyThemeVariables(theme);
         }
 
+        this.applySeo(data);
+
         await this.renderTemplate(data);
         this.refreshPopupFromTemplate(data);
         this.notifyRenderComplete('INITIAL_RENDER_COMPLETE');
+    }
+
+    // MAPPER: homepage.seo → <title data-page-title> + meta (description/keywords/og)
+    applySeo(data) {
+        const seo = (data && data.homepage && data.homepage.seo) || {};
+        if (seo.title) {
+            document.title = seo.title;
+            document.querySelectorAll('[data-page-title]').forEach((el) => {
+                el.textContent = seo.title;
+            });
+        }
+        this._setMeta('name', 'description', seo.description);
+        this._setMeta('name', 'keywords', seo.keywords);
+        this._setMeta('property', 'og:title', seo.title);
+        this._setMeta('property', 'og:description', seo.description);
+    }
+
+    // 메타 태그 동적 생성/갱신 (없으면 head에 추가)
+    _setMeta(attr, key, content) {
+        if (!content) return;
+        let meta = document.head.querySelector('meta[' + attr + '="' + key + '"]');
+        if (!meta) {
+            meta = document.createElement('meta');
+            meta.setAttribute(attr, key);
+            document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
     }
 
     async handleTemplateUpdate(data) {
@@ -325,6 +354,7 @@ class PreviewHandler {
     }
 
     handlePopupUpdate(data) {
+        // 팝업을 직접 편집하는 경우 → '오늘 하루 보지 않기' 무시하고 강제 노출(편집 미리보기)
         if (window.popupManager) {
             window.popupManager.updateFromPreview(data, true);
         } else if (window.PopupManager) {
@@ -337,10 +367,9 @@ class PreviewHandler {
         this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
     }
 
-    // 전체 템플릿 데이터에서 팝업 추출 → 미리보기 렌더 (초기/업데이트 렌더 시 enabled 팝업 표시)
-    // POPUP_UPDATE 메시지가 따로 오지 않아도 template-full-banner-flat처럼 enabled면 노출되도록 보강.
+    // 메인 템플릿 데이터 수신 시 팝업(homepage.customFields.popup.popups) 갱신 (preview에서 팝업 노출)
     refreshPopupFromTemplate(data) {
-        const popups =
+        var popups =
             (data && data.homepage && data.homepage.customFields && data.homepage.customFields.popup && data.homepage.customFields.popup.popups) ||
             (data && data.customFields && data.customFields.popup && data.customFields.popup.popups) ||
             [];
@@ -348,7 +377,7 @@ class PreviewHandler {
             window.popupManager.updateFromPreview(popups);
         } else if (window.PopupManager) {
             window.popupManager = new PopupManager();
-            window.popupManager.init().then(() => {
+            window.popupManager.init().then(function () {
                 window.popupManager.updateFromPreview(popups);
             });
         }
@@ -420,27 +449,38 @@ class PreviewHandler {
 
     async renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
+        let mapper = null;
 
-        const mapperClassByPage = {
-            index: 'IndexMapper',
-            main: 'MainMapper',
-            room: 'RoomMapper',
-            facility: 'FacilityMapper',
-            reservation: 'ReservationMapper',
-            directions: 'DirectionsMapper',
-            nearbyAttractions: 'NearbyAttractionsMapper',
-            layoutMap: 'LayoutMapMapper'
-        };
+        switch (currentPage) {
+            case 'index':
+                if (window.IndexMapper) mapper = new IndexMapper();
+                break;
+            case 'main':
+                if (window.MainMapper) mapper = new MainMapper();
+                break;
+            case 'room':
+                if (window.RoomMapper) mapper = new RoomMapper();
+                break;
+            case 'facility':
+                if (window.FacilityMapper) mapper = new FacilityMapper();
+                break;
+            case 'reservation':
+                if (window.ReservationMapper) mapper = new ReservationMapper();
+                break;
+            case 'directions':
+                if (window.DirectionsMapper) mapper = new DirectionsMapper();
+                break;
+            case 'nearbyAttractions':
+                if (window.NearbyAttractionsMapper) mapper = new NearbyAttractionsMapper();
+                break;
+            case 'layoutMap':
+                if (window.LayoutMapMapper) mapper = new LayoutMapMapper();
+                break;
+            default:
+                return;
+        }
 
-        const mapperName = mapperClassByPage[currentPage];
-        if (!mapperName) return;
-
-        // 데이터(INITIAL_DATA)가 매퍼 스크립트보다 먼저 도착할 수 있으므로
-        // (preview-handler.js 가 mapper 스크립트보다 먼저 TEMPLATE_READY 를 보냄)
-        // 클래스가 정의될 때까지 잠깐 대기 → 초기 렌더 누락(빈값/placeholder) 방지
-        const MapperClass = await this.waitForGlobal(mapperName);
-        if (MapperClass) {
-            const mapper = new MapperClass();
+        if (mapper) {
             mapper.data = data;
             mapper.isDataLoaded = true;
             await mapper.mapPage();
@@ -448,9 +488,8 @@ class PreviewHandler {
 
         await this.waitForHeaderDOM();
 
-        const HeaderFooterMapperClass = await this.waitForGlobal('HeaderFooterMapper');
-        if (HeaderFooterMapperClass) {
-            const headerFooterMapper = new HeaderFooterMapperClass();
+        if (window.HeaderFooterMapper) {
+            const headerFooterMapper = new window.HeaderFooterMapper();
             headerFooterMapper.data = data;
             headerFooterMapper.isDataLoaded = true;
             await headerFooterMapper.mapPage();
@@ -459,28 +498,6 @@ class PreviewHandler {
         if (window._checkPageEnabled) {
             window._checkPageEnabled();
         }
-    }
-
-    // window[name] 전역(매퍼 클래스 등)이 정의될 때까지 폴링 대기.
-    // 이미 로드되어 있으면 즉시 반환하므로 정상 케이스 성능 영향 없음.
-    async waitForGlobal(name, maxWaitTime = 3000) {
-        const checkInterval = 30;
-        let waitedTime = 0;
-
-        return new Promise((resolve) => {
-            const check = () => {
-                if (window[name]) {
-                    resolve(window[name]);
-                } else if (waitedTime >= maxWaitTime) {
-                    resolve(window[name] || null);
-                } else {
-                    waitedTime += checkInterval;
-                    setTimeout(check, checkInterval);
-                }
-            };
-
-            check();
-        });
     }
 
     async waitForHeaderDOM() {

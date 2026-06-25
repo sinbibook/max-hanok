@@ -15,9 +15,6 @@
         return res.json();
       })
       .then(function (json) {
-        // fetch 도중 admin 미리보기 데이터(INITIAL_DATA 등)가 도착했다면
-        // fallback 으로 standard 데이터를 렌더해 admin 데이터를 덮어쓰지 않도록 중단
-        if (window.previewHandler && window.previewHandler.adminDataReceived) return;
         self.data = json;
         self.isDataLoaded = true;
         self.mapPage();
@@ -84,7 +81,7 @@
   BaseDataMapper.prototype.getSelectedImages = function (images) {
     if (!images || !images.length) return [];
     return images
-      .filter(function (img) { return img.isSelected; })
+      .filter(function (img) { return img.isSelected && img.url; })
       .sort(function (a, b) { return a.sortOrder - b.sortOrder; });
   };
 

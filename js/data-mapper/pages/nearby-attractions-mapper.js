@@ -7,124 +7,96 @@
   NearbyAttractionsMapper.prototype = Object.create(BaseDataMapper.prototype);
   NearbyAttractionsMapper.prototype.constructor = NearbyAttractionsMapper;
 
-  NearbyAttractionsMapper.prototype.mapPage = function () {
-    // enabled=false이면 404로 리다이렉트
-    var pages = this.getPages();
-    if (!pages.nearbyAttractions ||
-        !pages.nearbyAttractions.sections ||
-        !pages.nearbyAttractions.sections[0] ||
-        pages.nearbyAttractions.sections[0].enabled === false) {
-      window.location.href = '404.html';
-      return;
-    }
-
-    this.mapHero();
-    this.mapHeroTitle();
-    this.mapAttractions();
-    this.updateMetaTags();
-  };
+  function nl2br(s) {
+    return String(s == null ? '' : s).replace(/\n/g, '<br>');
+  }
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function pad2(n) { return ('0' + n).slice(-2); }
+  function setText(sel, val) {
+    if (!val) return;
+    document.querySelectorAll(sel).forEach(function (el) { el.textContent = val; });
+  }
 
   NearbyAttractionsMapper.prototype.getSection = function () {
     var pages = this.getPages();
-    var page = pages.nearbyAttractions;
-    return (page && page.sections && page.sections[0]) || null;
+    return (pages.nearbyAttractions && pages.nearbyAttractions.sections &&
+      pages.nearbyAttractions.sections[0]) || null;
   };
 
-  // MAPPER: nearbyAttractions.hero.images[isSelected][0] → #main_banner 단일 이미지 (슬라이더 X, directions 방식)
-  NearbyAttractionsMapper.prototype.mapHero = function () {
+  NearbyAttractionsMapper.prototype.mapPage = function () {
     var section = this.getSection();
-    var hero = section && section.hero;
-
-    var wrapper = document.querySelector('#main_banner .main_slide .swiper-wrapper');
-    if (!wrapper) return;
-
-    // isSelected=true + url 있는 것만, sortOrder 순 → 첫 번째 1장만 사용
-    var images = hero ? this.getSelectedImages(hero.images || []).filter(function (i) { return i.url; }) : [];
-    var first = images[0];
-
-    wrapper.innerHTML = '';
-    var slide = document.createElement('div');
-    slide.className = 'swiper-slide';
-    if (first && first.url) {
-      slide.style.background = 'url(' + first.url + ') center center / cover no-repeat';
-    } else {
-      // 이미지 없으면 placeholder
-      var placeholderImg = document.createElement('img');
-      ImageHelpers.applyPlaceholder(placeholderImg);
-      placeholderImg.style.width = '100%';
-      placeholderImg.style.height = '100%';
-      placeholderImg.style.objectFit = 'cover';
-      slide.appendChild(placeholderImg);
+    // 섹션 없음/비활성 → 404 리다이렉트 (헤더 메뉴 숨김과 일관)
+    // preview(iframe)에선 백오피스 데이터 도착 전(currentData 없음) 정적 JSON으로 튕기는 것만 방지.
+    // 백오피스에서 '비노출' 선택(currentData 있음)이면 preview에도 404를 보여준다.
+    if (!section || section.enabled === false) {
+      if (window.parent !== window && !(window.previewHandler && window.previewHandler.currentData)) return;
+      window.location.replace('404.html');
+      return;
     }
-    wrapper.appendChild(slide);
+    this.mapHero(section);
+    setText('[data-nearby-subtitle]', (section.hero && section.hero.description) || '');
+    this.mapNavAndList(section);
+    this.refreshLoco();
   };
 
-  // MAPPER: nearbyAttractions.hero.title → #facility1004 h1 (값 없으면 "NEARBY ATTRACTIONS" 유지)
-  NearbyAttractionsMapper.prototype.mapHeroTitle = function () {
-    var section = this.getSection();
-    var hero = section && section.hero;
-
-    // hero.title 1순위, 값 없으면 기본값("NEARBY ATTRACTIONS") 복원
-    // 빈 값도 항상 반영해야 프리뷰에서 실시간으로 기본값으로 되돌아감 (falsy 가드로 막으면 이전 값이 남음)
-    var titleEl = document.querySelector('[data-nearby-title]');
-    if (titleEl) {
-      if (hero && hero.title && hero.title.trim()) {
-        titleEl.textContent = hero.title;
-      } else {
-        titleEl.innerHTML = '<span>NEARBY</span> ATTRACTIONS';
-      }
-    }
+  NearbyAttractionsMapper.prototype.refreshLoco = function () {
+    window.setTimeout(function () {
+      if (window.locoScroll && window.locoScroll.update) window.locoScroll.update();
+      if (window.refreshTravelSpy) window.refreshTravelSpy();
+    }, 400);
   };
 
-  // MAPPER: nearbyAttractions.about[] → 여행지 리스트 (li: 첫 선택 이미지 + dt 제목 + dd 설명)
-  NearbyAttractionsMapper.prototype.mapAttractions = function () {
-    var section = this.getSection();
-    var about = (section && section.about) || [];
+  // sub_visual ← hero.images[isSelected][0] 단일 고정 (슬라이드 미사용)
+  NearbyAttractionsMapper.prototype.mapHero = function (section) {
+    var el = document.querySelector('[data-nearby-hero-image]');
+    if (!el) return;
+    el.style.backgroundRepeat = 'no-repeat';
+    el.style.backgroundPosition = '50% 66%';
+    el.style.backgroundSize = 'cover';
+    var url = this.getFirstSelectedImage((section.hero && section.hero.images) || []);
+    if (url) el.style.backgroundImage = 'url(' + url + ')';
+    else ImageHelpers.applyBackgroundPlaceholder(el);
+  };
 
-    var ul = document.querySelector('[data-nearby-items]');
-    if (!ul) return;
+  // about[] → 좌측 앵커 네비(.travel-slide) + 우측 카드(.travel-list) 동적 생성 (앵커 id 매칭)
+  NearbyAttractionsMapper.prototype.mapNavAndList = function (section) {
+    var nav = document.querySelector('[data-nearby-nav]');
+    var list = document.querySelector('[data-nearby-list]');
+    if (!nav || !list) return;
+    var about = section.about || [];
+    var self = this;
+    var EMPTY = ImageHelpers.EMPTY_IMAGE_SVG;
 
-    ul.innerHTML = '';
+    var navHtml = '';
+    var listHtml = '';
+    about.forEach(function (block, i) {
+      block = block || {};
+      var id = 'anchor' + pad2(i + 1);
+      var title = escapeHtml(block.title || '');
+      var url = self.getFirstSelectedImage(block.images || []);
+      var imgUrl = url || EMPTY;
 
-    if (!about.length) return;
+      navHtml += '<li' + (i === 0 ? ' class="active"' : '') +
+        '><a href="#' + id + '" class="anchor-btn">' + title + '</a></li>';
 
-    about.forEach(function (item) {
-      var li = document.createElement('li');
-
-      // 이미지: 항목 images 중 첫 isSelected (없으면 placeholder)
-      var images = item.images || [];
-      var selected = images.find(function (img) { return img && img.isSelected && img.url; }) ||
-        images.find(function (img) { return img && img.url; }) || null;
-
-      var imgDiv = document.createElement('div');
-      imgDiv.className = 'img';
-      var img = document.createElement('img');
-      if (selected && selected.url) {
-        img.src = selected.url;
-        img.alt = item.title || '';
-      } else {
-        ImageHelpers.applyPlaceholder(img);
-        img.alt = item.title || '';
-      }
-      imgDiv.appendChild(img);
-
-      // 제목/설명
-      var dl = document.createElement('dl');
-      var dt = document.createElement('dt');
-      dt.textContent = item.title || '';
-      var dd = document.createElement('dd');
-      dd.innerHTML = (item.description || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-      dl.appendChild(dt);
-      dl.appendChild(dd);
-
-      li.appendChild(imgDiv);
-      li.appendChild(dl);
-      ul.appendChild(li);
+      listHtml += '' +
+        '<li data-index="' + i + '">' +
+          '<div class="sch" id="' + id + '"></div>' +
+          '<div class="img fadeUp is-inview" data-scroll="" style="background:url(' + imgUrl + ') no-repeat center top;background-size:cover;">' +
+            '<img src="' + imgUrl + '" alt="' + title + '">' +
+          '</div>' +
+          '<div class="txt">' +
+            '<p class="btxt fadeUp is-inview" data-scroll="">' + title + '</p>' +
+            '<p class="stxt fadeUp is-inview" data-scroll="">' + nl2br(block.description || '') + '</p>' +
+          '</div>' +
+        '</li>';
     });
+
+    nav.innerHTML = navHtml;
+    list.innerHTML = listHtml;
   };
 
   document.addEventListener('DOMContentLoaded', function () {

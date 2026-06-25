@@ -19,19 +19,13 @@ var ImageHelpers = {
     },
 
     /**
-     * Set a real image url and clear any previously applied placeholder.
-     * 재사용되는 영구 요소(로고 등)에서 placeholder가 먼저 적용된 뒤 실제
-     * 이미지가 들어오면, 클래스가 남아 회색 배경(#f0f0f0)이 비쳐 보이는
-     * 문제를 방지한다.
-     * @param {HTMLImageElement} imgElement
-     * @param {string} url
-     * @param {string} [alt]
+     * Apply placeholder background to a background-image element (div/p 등)
+     * @param {HTMLElement} el - 배경이미지로 표시하는 요소
      */
-    setImage: function(imgElement, url, alt) {
-        if (!imgElement || !url) return;
-        imgElement.src = url;
-        if (typeof alt === 'string') imgElement.alt = alt;
-        imgElement.classList.remove('empty-image-placeholder');
+    applyBackgroundPlaceholder: function(el) {
+        if (!el) return;
+        el.style.backgroundImage = 'url("' + ImageHelpers.EMPTY_IMAGE_SVG + '")';
+        el.classList.add('empty-image-placeholder');
     }
 };
 

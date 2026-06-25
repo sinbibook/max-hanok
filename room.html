@@ -1,35 +1,30 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:,">
-    <title>Max 한옥 - 객실안내</title>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading"><head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta property="og:type" content="website">
+                <title data-page-title>Max 한옥 - 객실안내</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" type="text/css" href="styles/theme.css">
+        <link rel="stylesheet" type="text/css" href="styles/reset.css">	
+        <link rel="stylesheet" type="text/css" href="styles/style.css">	
+        <link rel="stylesheet" type="text/css" href="styles/board_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/popup_black.css">
+        <link rel="stylesheet" type="text/css" href="styles/swiper-bundle.min.css">
 
-    <link rel="stylesheet" href="styles/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" type="text/css" href="styles/common.css">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script type="text/javascript">
-        function setCookie(name, value, expirehours) {
-            var todayDate = new Date();
-            todayDate.setHours(todayDate.getHours() + expirehours);
-            document.cookie = name + "=" + escape(value) + "; path=/; expires=" + todayDate.toGMTString() + ";";
-        }
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+        <script type="text/javascript" src="js/jquery.cookie.min.js"></script>
 
-        function closeWin(id, checkbox) {
-            if (checkbox.checked) {
-                setCookie(id, "done", 1);
-            }
-            document.getElementById(id).style.display = "none";
-        }
-    </script>
-  <!-- Open Graph Meta Tags for Social Media -->
+        <script type="text/javascript" src="js/ScrollTrigger.min.js"></script>
+        <script type="text/javascript" src="js/gsap.min.js"></script>
+        <script type="text/javascript" src="js/polyfill.min.js"></script>
+        <script type="text/javascript" src="js/sly.js"></script>
+        <script nomodule="" src="//polyfill.io/v3/polyfill.min.js?features=Object.assign%2CElement.prototype.append%2CNodeList.prototype.forEach%2CCustomEvent%2Csmoothscroll" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+        <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+          <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 객실안내" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -41,226 +36,174 @@
   <meta name="twitter:title" content="Max 한옥 - 객실안내" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
-</head>
-<body>
-    <script src="js/header-footer-loader.js"></script>
-    <div id="sh_wrapper">
-    <main id="sh_container">
-    
-            <!-- main_banner [s] -->
-            <article>
-                <div id="main_banner">
-                    <div class="swiper-container main_slide">
-                        <!-- MAPPER: rooms[current].images[0].interior[isSelected] (sortOrder순) → 히어로 슬라이드 동적 생성 -->
-                        <div class="swiper-wrapper"></div>
-                    </div>
-                    <div class="controls">
-                        <button type="button" class="arr prev"><img src="images/main_prev.png" alt="prev"></button>
-                        <div class="swiper-container pager">
-                            <ul class="swiper-wrapper"></ul>
-                        </div>
-                        <div class="swiper-progress-bar">
-                            <span class="slide_progress-bar"></span>
-                        </div>
-                        <p class="num num02">0</p>
-                        <button type="button" class="arr next"><img src="images/main_next.png" alt="next"></button>
-                    </div>
+</head><body>
+<div id="wrap">
+<div id="header-wrap"></div>
+<div class="scroll-wrap" id="doc" data-scroll-container="">
+    <div id="container">
+        <!--// sub_visual -->
+        <div class="sub_visual visual fadeDown" data-scroll="">
+            <div class="visual_box">
+                <div class="visual_control">
+                    <div class="swiper-arw swiper-button-prev" style="background:url(images/visual_prev.png) no-repeat left center ;background-size:auto 100%;"></div>
+                    <div class="paging swiper-pagination"></div>
+                    <div class="swiper-arw swiper-button-next" style="background:url(images/visual_next.png) no-repeat right center ;background-size:auto 100%;"></div>
                 </div>
-            </article>
-            <!-- main_banner [e] -->
-
-            <!-- s: snb_wrap -->
-            <!-- MAPPER: layoutMap.enabled면 "미리보기" + rooms[status=active].name(현재 객실=on) → 객실 네비 동적 생성 -->
-            <div id="snb_wrap">
-                <ul data-room-nav-list>
-                </ul>
+                <div class="swiper-container">
+                    <!-- data-* : data-room-hero-slides | roomtypes[current] interior 이미지[isSelected] (배경 슬라이드 rebuild) -->
+                    <div class="swiper-wrapper" data-room-hero-slides>
+                                            </div>
+                </div>
             </div>
+            <a href="#snb_wrap" class="scroll_down">scroll down</a>
+        </div>
+        <!--// sub_visual -->
+        <!-- s: snb_wrap -->
+        <div id="snb_wrap">
+    <!-- data-* : data-room-list-nav | roomtypes[] (미리보기 li 보존 + 동적, 현재 객실 li.on, room.html?room_id={id}) -->
+    <ul data-room-list-nav>
+        <li data-menu-id="layout-map"><a href="/layout-map.html">미리보기</a></li>
+    </ul>
+</div>
 
-            <div id="room_cont">
-                <!-- 서브페이지 [s] -->
-                <div id="expense1004">
-                    <div class="tit">
-                        <span class="deco"></span>
-                        <!-- MAPPER: rooms[current].name -->
-                        <h1 style="font-family: var(--font-ko-sub);" data-room-name></h1>
+
+
+
+        <!-- e: snb_wrap -->
+        <!-- s: content -->
+        <section id="content" class="sub">
+            <!-- s: room-wrap -->
+            <div class="room-wrap">
+                <div class="info">
+                    <div class="fl">
+                        <div class="txt">
+                            <!-- data-* : data-room-name | roomtypes[current].name -->
+                            <h3 class="fadeUp" data-scroll=""><span>Rooms</span><span data-room-name></span></h3>
+                            <!-- data-* : data-room-structure | rooms[j].roomStructures + totalRoomCount 한글 (id 매칭) -->
+                            <p class="fadeUp" data-scroll="" data-room-structure></p>
+                        </div>
+                        <!-- data-* : data-room-image-thumb | roomtypes[current] interior 이미지(<img>) -->
+                        <div class="img fadeUp" data-scroll="">
+                            <img src="" alt="" data-room-image-thumb>
+                        </div>
+                        <!--dl class="fadeUp" data-scroll>
+                            <dt><span>ROOM INFO</span></dt>
+                            <dd> ※ 자세한 내용은 예약안내 페이지 참고 부탁드립니다.</dd>                        
+                        </dl-->
                     </div>
+                    <div class="fr">
+                        <!-- data-* : data-room-image-main | roomtypes[current] interior 이미지 (배경, 없으면 placeholder) -->
+                        <div class="img fadeLeft" data-scroll="" style="background-repeat:no-repeat;background-position:59% center;background-size:cover;" data-room-image-main></div>
+                    </div>
+                    <div class="table_box">
+    <div class="price_table for_pc">
+        <table cellspacing="0" cellpadding="0" class="table_default">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">객실명</th>
+                    <th style="width: 5%;">기준</th>
+                    <th style="width: 5%;">최대</th>
+                    <th style="width: 20%;">유형</th>
+                    <th style="width: 20%;">평형</th>
+                </tr>             
+            </thead>
+            <tbody>
+                                <tr>
+                    <!-- data-room-name / base-occupancy / max-occupancy / structure / size (size+"평") -->
+                    <td scope="row" data-room-name></td>
+                    <td data-room-base-occupancy></td>
+                    <td data-room-max-occupancy></td>
+                    <td data-room-structure></td>
+                    <td data-room-size></td>
+                </tr>
+                            </tbody>
+        </table>
+                <ul class="table_text">
+            <!-- data-* : data-room-amenities | rooms[j].amenities.join(', ') -->
+            <li><strong>집기품목</strong> : <span data-room-amenities></span></li>
+        </ul>
+            </div>
+    <div class="price_table for_m">
+        <table cellspacing="0" cellpadding="0" class="table_default">
+            <thead>
+                <tr>
+                    <th>객실명</th>
+                    <th>기준</th>
+                    <th>최대</th>
+                    <th>유형</th>
+                </tr> 
+            </thead>
+            <tbody>
+                <tr><td scope="row" data-room-name></td>
+                    <td data-room-base-occupancy></td>
+                    <td data-room-max-occupancy></td>
+                    <td data-room-structure></td>
+            </tr></tbody>
+        </table>
+        <ul class="table_text">
+            <!-- data-* : data-room-amenities (모바일) -->
+            <li><strong>집기품목</strong> : <span data-room-amenities></span></li>
+        </ul>
+            </div>
+    <!--div class="btn_wrap"><a href="https://www.bookingplay.co.kr/partner/item/9860/calendar_main/" target="_blank" class="btn_reserve">실시간 예약</a></div-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+                <div class="memory">
                     <div class="cont">
-                        <div class="room_vw">
-                            <!-- MAPPER: rooms[current].roomStructures (/ 구분) -->
-                            <p class="pl"></p>
-                            <div class="swiper-container rv_slider" data-aos="fade-up">
-                                <div class="arrow">
-                                    <span class="prev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg> </span>
-                                    <span class="next"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </span>
-                                </div>
-                                <!-- MAPPER: rooms[current].images[0] 의 isSelected=true 이미지 sortOrder 순 동적 생성 -->
-                                <ul class="swiper-wrapper"></ul>
-                            </div>
-                        </div>
-                        <div class="r_cont">
-                            <!-- MAPPER: property.realtimeBookingId → 예약 링크 (href) -->
-                            <ul class="golink">
-                                <li>
-                                    <a href="#!" target="blank">예약하기</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="room_if inner" data-aos="fade-up">
-                            <!-- MAPPER: rooms[current].description (\n→<br>) -->
-                            <div class="txt">
-                            </div>
-
-                            <div class="info">
-                                <div class="l_cont">
-                                    <div class="cost">
-                                        <div class="table_box">
-                                            <style>
-                                                .sub_room .table_box {
-                                                    margin-bottom: 100px;
-                                                }
-                                                .table_default {
-                                                    border-collapse: collapse;
-                                                    table-layout: fixed;
-                                                    width: 100%;
-                                                }
-                                                .price_table thead {
-                                                    font-weight: 500;
-                                                    background-color: #f9f9f9;
-                                                    border-top: 1px solid #dcdcdc;
-                                                }
-                                                .table_default th,
-                                                .table_default td {
-                                                    font-size: 14px;
-                                                    letter-spacing: -0.3px;
-                                                    padding: 10px 0;
-                                                    color: #333;
-                                                    vertical-align: middle;
-                                                    text-align: center;
-                                                    box-sizing: border-box;
-                                                    border-bottom: 1px solid #dcdcdc;
-                                                    border-right: 1px solid #dcdcdc;
-                                                    width: auto;
-                                                }
-                                                .table_default tr td:last-child,
-                                                .table_default tr th:last-child {
-                                                    border-right: none;
-                                                }
-                                                .table_text {
-                                                    font-size: 14px;
-                                                    padding: 20px 15px;
-                                                    color: #666;
-                                                }
-                                                .table_text li {
-                                                    line-height: 1.5;
-                                                }
-                                                .table_text li:before {
-                                                    content: '';
-                                                    display: inline-block;
-                                                    vertical-align: middle;
-                                                    width: 2px;
-                                                    height: 2px;
-                                                    background: #333;
-                                                    border-radius: 100%;
-                                                    margin-right: 5px;
-                                                }
-                                                .table_text li + li {
-                                                    margin-top: 5px;
-                                                }
-                                                .table_text strong {
-                                                    font-weight: 500;
-                                                }
-
-                                                .room_wrap .info .fr .txt a{animation-delay:1s;margin-top:25px;display:inline-block;vertical-align:top;  color:#665c52; border:1px solid #665c52; width:182px;height:45px; font-weight:100; box-sizing:border-box; text-align:center; line-height:43px;position:relative; overflow:hidden;}
-                                                .room_wrap .info .fr .txt a span{display:inline-block;vertical-align:top; padding-left:32px; font-size:15px;color:#665c52; -webkit-transition:  color 0.4s ease-in-out;-moz-transition:  color 0.4s ease-in-out;-o-transition:  color 0.4s ease-in-out;transition: color 0.4s ease-in-out;}
-
-                                                .room_wrap .info .fr .txt a::after{content: ""; display: block; width: 100%; height: 0%; border-top:solid 60px #665c52; position: absolute; top: -10px; left: 0; border-right: 45px solid transparent; z-index: -1; transform: translateX(-100%); transition: 0.75s;}
-                                                .room_wrap .info .fr .txt a::before{content: ""; display: block; width: 100%; height: 0%; border-top:solid 60px #665c52; position: absolute; top: -10px; right: 0; border-left: 45px solid transparent; z-index: -1; transform: translateX(100%); transition: 0.75s;}
-                                            </style>
-
-                                            <div class="price_table for_pc">
-                                                <table class="table_default">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 35%;">객실명</th>
-                                                            <th style="width: 10%;">기준</th>
-                                                            <th style="width: 10%;">최대</th>
-                                                            <th style="width: 35%;">유형</th>
-                                                            <th style="width: 10%;">평형</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <!-- MAPPER: rooms[current] → name / baseOccupancy / maxOccupancy / bedTypes(/구분) / size(㎡) -->
-                                                    <tbody>
-                                                        <tr>
-                                                            <td data-room-name></td>
-                                                            <td data-room-base-occupancy></td>
-                                                            <td data-room-max-occupancy></td>
-                                                            <td data-room-type></td>
-                                                            <td data-room-size></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <!-- MAPPER: rooms[current].amenities (, 구분) -->
-                                                <ul class="table_text">
-                                                    <li>
-                                                        <strong>객실 시설</strong> : <span data-room-amenities></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="price_table for_m">
-                                                <table class="table_default">
-                                                    <thead>
-                                                        <tr>
-                                                            <th colspan="2">객실명</th>
-                                                            <th>기준</th>
-                                                            <th>최대</th>
-                                                            <th colspan="2">유형</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td colspan="2"><span data-room-name></span></td>
-                                                            <td data-room-base-occupancy></td>
-                                                            <td data-room-max-occupancy></td>
-                                                            <td colspan="2" data-room-type></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <!-- MAPPER: rooms[current].amenities (, 구분) -->
-                                                <ul class="table_text">
-                                                    <li>
-                                                        <strong>객실 시설</strong> : <span data-room-amenities></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- MAPPER: rooms[current].images[0].exterior[isSelected] (sortOrder순) → 각 li 배경/이미지 (없으면 placeholder) -->
-                                <div class="vimg">
-                                    <ul>
-                                        <li class="fadeUp" data-aos="fade-up"><img alt=""></li>
-                                        <li class="fadeUp" data-aos="fade-up"><img alt=""></li>
-                                        <li class="fadeUp" data-aos="fade-up"><img alt=""></li>
-                                        <li class="fadeUp" data-aos="fade-up"><img alt=""></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- data-* : data-room-memory-image | roomtypes[current] interior 이미지 (배경, 없으면 placeholder) -->
+                        <div class="img fadeRight" data-scroll="" style="background-repeat:no-repeat;background-position:center 50%;" data-room-memory-image></div>
+                        <p class="rtxt fadeUp" data-scroll="">추억을남기는<br>,<br>공간</p>
                     </div>
                 </div>
-                <!-- 서브페이지 [e] -->
+                <div class="vimg">
+                    <!-- data-* : data-room-vimg-title | pages.room[id].sections[0].hero.title (없으면 하드코딩 fallback) -->
+                    <h4 class="fadeUp" data-scroll="" data-room-vimg-title>Make your romantic memory</h4>
+                    <!-- data-* : data-room-vimg-desc | pages.room[id].sections[0].gallery.title (\n→<br>, 없으면 하드코딩 fallback) -->
+                    <p class="stit fadeUp" data-scroll="" data-room-vimg-desc>감성 가득한 순간, <br>평생 잊지못할 낭만적인 추억을 만들어보세요. </p>
+                    <!-- data-* : data-room-gallery | roomtypes[current] interior 이미지 (li 배경+img 동적, 없으면 placeholder) -->
+                    <ul data-room-gallery></ul>
+
+                </div>
             </div>
+            <!-- e: room-wrap -->
+        </section>
+        <!-- e: content -->
 
-    </main>
-    </div>
+        
 
-    <script src="js/preview-handler.js"></script>
+
+
+
+
+
+            </div>
+    
+
+<div id="footer-wrap"></div>
+        </div><!-- e: scroll-wrap -->
+    </div><!-- e: wrap -->
+
+    <!-- infra: SEO/헤더·푸터 동적 + 데이터 매핑 -->
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/room-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/pages/room.js"></script>
+    <script src="js/data-mapper/pages/room-mapper.js"></script>
+    <script src="js/header-footer-loader.js"></script>
+    <script src="js/custom.js"></script>
 </body>
 </html>
