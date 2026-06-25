@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.252.0",
-    "generatedAt": "2026-06-25T03:33:21.978255427Z",
+    "version": "1.253.0",
+    "generatedAt": "2026-06-25T06:39:20.179527021Z",
     "templateType": "trip_f",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1832,7 +1832,7 @@
             "sections": [
               {
                 "hero": {
-                  "title": "찜질방입니다.\n하루의 피로를 풀어보시고\n좋은 시간 보내세요 !!!",
+                  "title": "",
                   "images": [ ],
                   "description": ""
                 },
