@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.244.0",
-    "generatedAt": "2026-06-25T01:25:11.886346008Z",
+    "version": "1.245.0",
+    "generatedAt": "2026-06-25T01:42:41.547793185Z",
     "templateType": "trip_e",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1442,14 +1442,14 @@
                 "description": "WELCOME TO MAX PENSION"
               },
               "closing": {
-                "title": "당신의 이야기",
+                "title": "",
                 "images": [
                   {
                     "id": "9c12d85d-b3e5-4105-8384-934ed2a0b83c",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_closing/1776065360046-lxv0vi7e4j.jpg",
                     "sortOrder": 0,
                     "description": "",
-                    "isSelected": true,
+                    "isSelected": false,
                     "blockId": null
                   },
                   {
@@ -1463,7 +1463,7 @@
                 ],
                 "videos": [ ],
                 "mediaType": "image",
-                "description": "맥스 한옷 펜션에서 하루를 즐겨보세요."
+                "description": ""
               },
               "essence": {
                 "title": "한옥의 멋을 느껴보세요.",
@@ -1615,7 +1615,7 @@
           "sections": [
             {
               "hero": {
-                "title": "한옥의 멋",
+                "title": "",
                 "images": [
                   {
                     "id": "2d3450e5-d48e-48e7-a43d-57998a2fc15d",
@@ -1666,7 +1666,7 @@
                     "blockId": null
                   }
                 ],
-                "description": "느껴보지 못한 새로운 경험을 제공합니다."
+                "description": ""
               },
               "about": [
                 {
