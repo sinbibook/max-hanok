@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.258.0",
-    "generatedAt": "2026-06-25T07:22:18.681642214Z",
-    "templateType": "trip_l",
+    "version": "1.259.0",
+    "generatedAt": "2026-06-25T08:08:53.116974521Z",
+    "templateType": "trip_c",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -342,7 +342,7 @@
     {
       "id": "c20a834f-87a0-458c-a75f-bc81df58ab98",
       "name": "별하방",
-      "description": "별하방입니다.",
+      "description": "별하방입니다.\n안녕\n하세요",
       "roomInfo": "이것저것 많아요",
       "usageGuide": "체크인/체크아웃 시간 준수",
       "group": "A동(미디어아트)",
@@ -1330,7 +1330,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "trip_l",
+    "templateType": "trip_c",
     "images": [
       {
         "logo": [
@@ -1819,6 +1819,21 @@
                 },
                 "gallery": {
                   "title": "테스트입니다.",
+                  "images": [ ]
+                }
+              }
+            ]
+          },
+          {
+            "id": "c20a834f-87a0-458c-a75f-bc81df58ab98",
+            "sections": [
+              {
+                "hero": {
+                  "title": "안녕하세요\n개행처리 테스트",
+                  "images": [ ]
+                },
+                "gallery": {
+                  "title": "",
                   "images": [ ]
                 }
               }

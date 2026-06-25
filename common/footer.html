@@ -1,31 +1,28 @@
-<div class="footer">
-    <div class="w1440">
-        <a href="index.html" class="logo">
-            <img alt="" data-footer-logo>
-        </a>
-        <div class="info">
-            <dl>
-                <dt>전화번호</dt>
-                <dd data-phone></dd>
-            </dl>
-            <dl>
-                <dt>주소</dt>
-                <dd data-address></dd>
-            </dl>
-            <dl>
-                <dt>사업자번호</dt>
-                <dd data-business-number></dd>
-            </dl>
-            <dl>
-                <dt>대표자</dt>
-                <dd data-representative></dd>
-            </dl>
-        </div>
-        <div class="bottom">
-            <!-- 개인정보처리방침 : 정적 링크 유지 (트립일레븐 공통 약관 페이지) -->
-            <a href="http://design.trip11.net/privacy/privacy_policy.html" class="privacy" target="_blank">개인정보처리방침</a>
-            <!-- copyright : 트립일레븐 하드코딩 (매핑 안 함) -->
-            <span class="copy">COPYRIGHT©트립일레븐. ALL RIGHTS RESERVED.</span>
-        </div>
+<footer class="footer" id="footer">
+  <div class="w1440">
+    <!-- MAPPER: homepage.customFields.property.name 또는 고정 슬로건 텍스트 -->
+    <div class="tx1" data-aos="fade-up" data-footer-slogan>
+      지금 바로  함께해 보세요.
     </div>
-</div>
+    <!-- MAPPER: property.contactPhone -->
+    <div class="tx2" data-aos="fade-up" data-footer-phone>+ 000.0000</div>
+    <div class="tx3" data-aos="fade-up">
+      <!-- MAPPER: property.businessInfo.* 조합 -->
+      <span data-footer-business-info>상호 : - ｜대표자 : - ｜ 주소 : - ｜ 사업자번호 : -</span>
+      <br />
+      <!-- 개인정보처리방침 : 정적 링크 유지 (트립일레븐 공통 약관 페이지) -->
+      <a href="http://design.trip11.net/privacy/privacy_policy.html" class="privacy" target="_blank">개인정보처리방침</a>
+      <br /><br />
+      <!-- copyright : 트립일레븐 하드코딩 (매핑 안 함) -->
+      COPYRIGHT&copy;트립일레븐. ALL RIGHTS RESERVED.
+    </div>
+  </div>
+
+  <!-- Mobile Floating Reservation Button -->
+  <div class="mobileReservationBtn">
+    <a href="#!" data-booking-link>
+      <img src="images/icon_reservation.png" alt="" />
+      예약하기
+    </a>
+  </div>
+</footer>

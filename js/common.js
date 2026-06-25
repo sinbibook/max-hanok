@@ -1,118 +1,134 @@
-$(document).ready(function () {
-  // Initialize AOS
-  AOS.init({
-    once: true,
-    duration: 2000,
-  });
+(function () {
+  'use strict';
 
-  // const locomotiveScroll = new LocomotiveScroll();
+  // Swiper 초기화 헬퍼 - 즉시 노출 (pages/[page].js의 ready()에서 사용)
+  window.initSwiper = function (container, options) {
+    if (container && container.length) {
+      return new Swiper(container.find('.swiper')[0], options);
+    }
+  };
 
-  // Swiper 초기화 함수
-  function initSwiper(container, options) {
-    if (container.length) {
-      return new Swiper(container.find(".swiper-container")[0], options);
+  function initCommon() {
+    // AOS
+    AOS.init({ once: true, duration: 2000 });
+
+    // 모바일 헤더 메뉴
+    $(document).on('click', '.header .btnMenu', function () {
+      $('.header').toggleClass('active');
+    });
+    $(document).on('click', '.header .btnClose', function () {
+      $('.header').toggleClass('active');
+    });
+    $(document).on('click', '.header .depth1 > span', function () {
+      $(this).parent().toggleClass('on');
+    });
+
+    // 푸터 IntersectionObserver
+    var $footer = $('#footer');
+    if ($footer.length) {
+      var footerObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            $footer.addClass('footer-visible');
+          } else {
+            $footer.removeClass('footer-visible');
+          }
+        });
+      }, { threshold: 0.1 });
+      footerObserver.observe($footer[0]);
     }
   }
 
-  // con0은 header-footer-loader.js에서 동적 슬라이드 생성 후 초기화
+  // 타이핑 효과
+  // preview에서는 renderTemplate()이 여러 번 호출되어 같은 요소에 typingEffect가
+  // 중복 실행될 수 있다. 이전 실행의 타이머/옵저버를 정리하지 않으면 타이핑 루프가
+  // 동시에 여러 개 돌면서 글자가 겹쳐 나온다(예: '당신' → '당당신신').
+  // 따라서 새로 시작하기 전에 직전 실행을 반드시 취소한다.
+  window.typingEffect = function ($element1, $element2, cursor1, cursor2, container) {
+    // 직전 실행 정리: 진행 중이던 setTimeout 루프와 IntersectionObserver를 취소
+    if (window._typingEffectState) {
+      if (window._typingEffectState.timer1) clearTimeout(window._typingEffectState.timer1);
+      if (window._typingEffectState.timer2) clearTimeout(window._typingEffectState.timer2);
+      if (window._typingEffectState.observer) window._typingEffectState.observer.disconnect();
+    }
+    var state = window._typingEffectState = { timer1: null, timer2: null, observer: null };
 
-  initSwiper($(".con3"), {
-    slidesPerView: 1,
-    loop: $(".con3 .swiper-slide").length > 1, // 슬라이드 부족 시 loop 비활성 (Swiper 경고 방지)
-    effect: "fade",
-    autoplay: {
-      delay: 4000,
-      disableOnInteraction: false,
-    },
-    navigation: {
-      nextEl: $(".con3 .swiper-button-next")[0],
-      prevEl: $(".con3 .swiper-button-prev")[0],
-    },
-  });
+    var text1 = $element1.text().trim();
+    var text2 = $element2.text().trim();
+    var speed = 100;
+    var index1 = 0;
+    var index2 = 0;
 
-  // con4는 각 mapper (header-footer-loader.js, facility-mapper.js)에서 초기화
+    $element1.text('');
+    $element2.text('');
 
-  $(".header .btnMenu").on("click", function () {
-    $(".header .menu").toggleClass("active");
-  });
-  $(".header .menuClose").on("click", function () {
-    $(".header .menu").toggleClass("active");
-  });
+    function typeFirstLine() {
+      if (index1 < text1.length) {
+        $element1.append(text1.charAt(index1++));
+        state.timer1 = setTimeout(typeFirstLine, speed);
+      } else {
+        cursor1.hide();
+        cursor2.show();
+        typeSecondLine();
+      }
+    }
+
+    function typeSecondLine() {
+      if (index2 < text2.length) {
+        $element2.append(text2.charAt(index2++));
+        state.timer2 = setTimeout(typeSecondLine, speed);
+      }
+    }
+
+    var typingObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          container.css('visibility', 'visible');
+          cursor1.show();
+          typeFirstLine();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.1 });
+    state.observer = typingObserver;
+
+    if ($element1.length) {
+      typingObserver.observe($element1[0]);
+    }
+  };
 
   // 이미지 롤링
-  function startRolling($container) {
+  window.cloneImages = function ($container) {
+    $container.find('.img').each(function () {
+      $container.append($(this).clone());
+    });
+  };
+
+  window.startRolling = function ($container) {
     if ($container.length) {
-      let position = 0;
-      const speed = 0.4;
-      const width = $container.width();
-      const totalWidth = $container[0].scrollWidth;
+      var position = 0;
+      var speed = 1;
 
       function roll() {
         position -= speed;
-        if (Math.abs(position) >= totalWidth / 2) {
+        if (Math.abs(position) >= $container[0].scrollWidth / 2) {
           position = 0;
         }
-        $container.css("transform", `translateX(${position}px)`);
+        $container.css('transform', 'translateX(' + position + 'px)');
         requestAnimationFrame(roll);
       }
-
       roll();
     }
-  }
+  };
 
-  function cloneImages($container) {
-    $container.find(".img").each(function () {
-      $container.append($(this).clone());
-    });
-  }
-
-  const $con2 = $(".con2 .imgRolling");
-  cloneImages($con2);
-  startRolling($con2);
-
-  $(".header .menu .depth_1 > a").on("click", function (e) {
-    e.preventDefault();
-
-    $(this).parent().toggleClass("active");
+  // headerFooterLoaded 이벤트 시 공통 초기화
+  document.addEventListener('headerFooterLoaded', function () {
+    initCommon();
   });
 
-  function animateSentences($el) {
-    $el.find(".__sentence").each(function (i) {
-      var $sentence = $(this);
-      gsap.set($sentence.find("span"), {
-        y: "150%",
-        skewY: 30,
-      });
-      gsap.to($sentence.find("span"), {
-        y: "0%",
-        skewY: 0,
-        delay: i * 0.1,
-        duration: 3,
-        ease: "power2.out",
-        stagger: {
-          amount: 0.5,
-          from: "start",
-        },
-      });
-    });
-  }
-
-  var observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var $el = $(entry.target);
-          animateSentences($el);
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.1,
-    }
-  );
-
-  $(".__anim-sentence").each(function () {
-    observer.observe(this);
+  // header/footer-loader 없이 직접 열 경우 폴백
+  $(document).ready(function () {
+    if (!document.querySelector('.header')) return;
+    initCommon();
   });
-});
+})();
