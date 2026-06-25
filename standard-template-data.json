@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.257.0",
-    "generatedAt": "2026-06-25T07:16:58.532357878Z",
-    "templateType": "trip_f",
+    "version": "1.258.0",
+    "generatedAt": "2026-06-25T07:22:18.681642214Z",
+    "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -51,8 +51,7 @@
       "businessEmail": "",
       "businessType": "corporate",
       "businessCategory": "숙박",
-      "eCommerceRegistrationNumber": "",
-      "ecommerceRegistrationNumber": ""
+      "eCommerceRegistrationNumber": ""
     },
     "contractInfo": {
       "contractStartDate": "2025-09-10T00:00:00.000Z",
@@ -1331,7 +1330,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "trip_f",
+    "templateType": "trip_l",
     "images": [
       {
         "logo": [
@@ -2187,8 +2186,8 @@
           "enMain": null
         },
         "color": {
-          "primary": "#F8E9DB",
-          "secondary": "#274946"
+          "primary": "#F5F5DC",
+          "secondary": "#053051"
         }
       },
       "property": {

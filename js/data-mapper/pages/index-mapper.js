@@ -1,143 +1,480 @@
-(function (global) {
-  'use strict';
+// Index Page Mapper - 인덱스 페이지 동적 컨텐츠 매핑
+var IndexMapper = {
+  map: function(data) {
+    if (!data || !data.property) return;
 
-  function IndexMapper() {
-    BaseDataMapper.call(this);
-  }
-  IndexMapper.prototype = Object.create(BaseDataMapper.prototype);
-  IndexMapper.prototype.constructor = IndexMapper;
+    // Con0: 히어로 슬라이더 + 숙소 한글명 매핑
+    this.mapHeroSlides(data);
+    this.mapHeroTitle(data);
 
-  function nl2br(s) {
-    return String(s == null ? '' : s).replace(/\n/g, '<br>');
-  }
-  // 빈 값도 항상 반영 (백오피스에서 값 삭제 시 이전 값/기본 텍스트 잔존 방지)
-  function setText(sel, val) {
-    document.querySelectorAll(sel).forEach(function (el) { el.textContent = (val == null ? '' : val); });
-  }
-  function setHtml(sel, val) {
-    document.querySelectorAll(sel).forEach(function (el) { el.innerHTML = nl2br(val); });
-  }
-  function setBg(el, url) {
-    if (!el) return;
-    if (url) el.style.backgroundImage = 'url(' + url + ')';
-    else ImageHelpers.applyBackgroundPlaceholder(el);
-  }
+    // Con1: 숙소 영문명 + 이미지 매핑
+    this.mapCon1Section(data);
 
-  IndexMapper.prototype.getIndexSection = function () {
-    var pages = this.getPages();
-    return (pages.index && pages.index.sections && pages.index.sections[0]) || {};
-  };
+    // Con2: Signature (주요 순간들) 매핑
+    this.mapSignatureSection(data);
 
-  IndexMapper.prototype.mapPage = function () {
-    this.mapHero();
-    this.mapAbout();
-    this.mapRooms();
-    this.mapMemory();
-    this.mapStay();
-  };
+    // Con3: Gallery 제목/태그 + 객실 슬라이드 매핑
+    this.mapGalleryInfo(data);
+    this.mapRoomsSlider(data);
 
-  // main_visual ← customFields.pages.index.sections[0].hero.images[isSelected]
-  IndexMapper.prototype.mapHero = function () {
-    var hero = this.getIndexSection().hero || {};
-    var wrapper = document.querySelector('[data-index-hero-slides]');
+    // Con4: Essence 제목/태그 + 시설 슬라이드 매핑
+    this.mapEssenceInfo(data);
+    this.mapFacilitiesSlider(data);
+
+    // Con5: Closing 섹션 매핑
+    this.mapClosingSection(data);
+    this.updateMetaTags(data);
+  },
+
+  // CON0: 히어로 슬라이드 매핑
+  mapHeroSlides: function(data) {
+    var sections = data.homepage &&
+                   data.homepage.customFields &&
+                   data.homepage.customFields.pages &&
+                   data.homepage.customFields.pages.index &&
+                   data.homepage.customFields.pages.index.sections;
+
+    if (!sections || !sections[0]) return;
+
+    var hero = sections[0].hero;
+    if (!hero || !hero.images) return;
+
+    var wrapper = document.querySelector('.con0 .swiper-wrapper');
     if (!wrapper) return;
 
-    var images = this.getSelectedImages(hero.images || []);
-    var sig = images.map(function (s) { return s.url; }).join('|') || 'placeholder';
-    if (wrapper.dataset.heroSig === sig) return; // 동일 데이터 재실행 시 재초기화 생략(autoplay 리셋 방지)
-    wrapper.dataset.heroSig = sig;
+    // 기존 슬라이드 제거 (샘플 제거)
+    wrapper.innerHTML = '';
 
-    if (!images.length) {
-      wrapper.innerHTML = '<div class="swiper-slide"></div>';
-      var ph = wrapper.firstChild;
-      ImageHelpers.applyBackgroundPlaceholder(ph);
-      ph.style.backgroundSize = 'cover';
-      ph.style.backgroundPosition = 'center';
-    } else {
-      wrapper.innerHTML = images.map(function (img) {
-        return '<div class="swiper-slide" style="background:url(' + img.url + ') center;background-size:cover;"></div>';
-      }).join('');
-    }
-    if (typeof window.initVisualSwiper === 'function') window.initVisualSwiper();
-  };
+    // isSelected가 true인 이미지만 슬라이드로 생성
+    var hasSelectedImages = false;
+    hero.images.forEach(function(img) {
+      if (img.isSelected) {
+        hasSelectedImages = true;
+        var slide = document.createElement('div');
+        slide.className = 'swiper-slide';
 
-  // main_about (Greeting) ← essence (title / description / 첫 이미지)
-  IndexMapper.prototype.mapAbout = function () {
-    var essence = this.getIndexSection().essence || {};
-    setText('[data-index-about-title]', essence.title);
-    setHtml('[data-index-about-description]', essence.description);
-    setBg(document.querySelector('[data-index-about-image]'), this.getFirstSelectedImage(essence.images || []));
-  };
+        var imgDiv = document.createElement('div');
+        imgDiv.className = 'img';
 
-  // main_room ← customFields.roomtypes[] (이미지=썸네일, btxt=name, stxt=nameEn, 링크 room.html?room_id={id})
-  IndexMapper.prototype.mapRooms = function () {
-    var wrapper = document.querySelector('[data-index-room-slides]');
-    if (!wrapper) return;
-    var self = this;
-    var roomtypes = this.getRoomtypes().filter(function (rt) { return rt.name && rt.name.trim(); });
+        // URL이 있으면 배경이미지, 없으면 placeholder
+        if (img.url) {
+          imgDiv.style.backgroundImage = 'url(' + img.url + ')';
+          imgDiv.style.backgroundRepeat = 'no-repeat';
+          imgDiv.style.backgroundPosition = 'center';
+        } else {
+          ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+        }
 
-    var sig = roomtypes.map(function (rt) { return rt.id; }).join('|') || 'empty';
-    if (wrapper.dataset.roomSig === sig) return;
-    wrapper.dataset.roomSig = sig;
-
-    if (!roomtypes.length) {
-      wrapper.innerHTML = '<div class="swiper-slide item c01"><div class="img" data-noimg></div></div>';
-    } else {
-      wrapper.innerHTML = roomtypes.map(function (rt) {
-        var thumb = self.getRoomtypeThumbnailUrl(rt) || '';
-        var imgDiv = thumb
-          ? '<div class="img" style="background:url(' + thumb + ') no-repeat center center;background-size:cover;"></div>'
-          : '<div class="img" data-noimg></div>';
-        return '' +
-          '<div class="swiper-slide item c01">' +
-            '<a href="room.html?room_id=' + rt.id + '" class="link">' +
-              imgDiv +
-              '<div class="txt">' +
-                '<p class="btxt">' + (rt.name || '') + '</p>' +
-                '<p class="stxt">' + (rt.nameEn || '') + '</p>' +
-              '</div>' +
-            '</a>' +
-          '</div>';
-      }).join('');
-    }
-    // 썸네일 없는 슬라이드 No-Image placeholder
-    wrapper.querySelectorAll('.img[data-noimg]').forEach(function (el) {
-      ImageHelpers.applyBackgroundPlaceholder(el);
+        slide.appendChild(imgDiv);
+        wrapper.appendChild(slide);
+      }
     });
-    if (typeof window.initRoomSwiper === 'function') window.initRoomSwiper();
-  };
 
-  // main_memory ← closing (description / 첫 이미지)
-  IndexMapper.prototype.mapMemory = function () {
-    var closing = this.getIndexSection().closing || {};
-    setHtml('[data-index-memory-description]', closing.description);
-    setBg(document.querySelector('[data-index-memory-image]'), this.getFirstSelectedImage(closing.images || []));
-  };
+    // 선택된 이미지가 없으면 placeholder 슬라이드 생성
+    if (!hasSelectedImages) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
 
-  // main_stay ← gallery (title=태그라인 / description) + property.name + gallery.images(3칸)
-  IndexMapper.prototype.mapStay = function () {
-    var gallery = this.getIndexSection().gallery || {};
-    setText('[data-index-stay-tagline]', gallery.title);
-    setHtml('[data-index-stay-description]', gallery.description);
-    setText('[data-index-stay-name]', this.getPropertyName());
-    setText('[data-index-stay-name-en]', this.getProperty().nameEn);
+      var imgDiv = document.createElement('div');
+      imgDiv.className = 'img';
+      ImageHelpers.applyBackgroundPlaceholder(imgDiv);
 
-    // 3칸 레이아웃(stay-img01/02/03) 유지하며 배경만 교체
-    var container = document.querySelector('[data-index-stay-images]');
-    if (container) {
-      var imgs = this.getSelectedImages(gallery.images || []);
-      var ps = container.querySelectorAll('li .img p');
-      ps.forEach(function (p, i) { setBg(p, imgs[i] && imgs[i].url); });
+      slide.appendChild(imgDiv);
+      wrapper.appendChild(slide);
     }
-  };
+  },
 
-  document.addEventListener('DOMContentLoaded', function () {
-    // previewHandler가 데이터를 받았으면 스킵 (preview-handler가 처리)
-    if (window.previewHandler && window.previewHandler.currentData) return;
-    var mapper = new IndexMapper();
-    mapper.initialize();
-    global.indexMapperInstance = mapper;
-  });
+  // CON0: 숙소 한글명 매핑
+  mapHeroTitle: function(data) {
+    var el = document.querySelector('.con0 .tx1');
+    if (el && data.property.name) {
+      el.textContent = data.property.name;
+    }
+  },
 
-  global.IndexMapper = IndexMapper;
-})(window);
+  // CON1: 숙소 영문명 + 히어로 이미지 매핑
+  mapCon1Section: function(data) {
+    // 영문명 매핑 (property.nameEn → span.travelFont)
+    var engNameEl = document.querySelector('.con1 span.travelFont');
+    if (engNameEl && data.property && data.property.nameEn) {
+      engNameEl.textContent = data.property.nameEn;
+    }
+
+    // 이미지 매핑 (customFields.pages.index.sections[0].hero.images[isSelected])
+    var sections = data.homepage &&
+                   data.homepage.customFields &&
+                   data.homepage.customFields.pages &&
+                   data.homepage.customFields.pages.index &&
+                   data.homepage.customFields.pages.index.sections;
+
+    if (!sections || !sections[0] || !sections[0].hero) return;
+
+    var hero = sections[0].hero;
+    var imgEl = document.querySelector('[data-index-con1-image]');
+
+    if (imgEl && hero.images && hero.images.length > 0) {
+      var selectedImg = hero.images.find(function(img) { return img.isSelected; });
+      var imageUrl = (selectedImg && selectedImg.url) || (hero.images[0] && hero.images[0].url);
+
+      if (imageUrl) {
+        imgEl.src = imageUrl;
+      } else {
+        ImageHelpers.applyPlaceholder(imgEl);
+      }
+    } else if (imgEl) {
+      ImageHelpers.applyPlaceholder(imgEl);
+    }
+  },
+
+  // CON2: 히어로 타이틀 + 이미지 설명 매핑
+  mapSignatureSection: function(data) {
+    var sections = data.homepage &&
+                   data.homepage.customFields &&
+                   data.homepage.customFields.pages &&
+                   data.homepage.customFields.pages.index &&
+                   data.homepage.customFields.pages.index.sections;
+
+    if (!sections || !sections[0] || !sections[0].hero) return;
+
+    var hero = sections[0].hero;
+
+    // 타이틀 매핑 (customFields.pages.index.sections[0].hero.title)
+    var titleEl = document.querySelector('.con2 .title');
+    if (titleEl && hero.title) {
+      titleEl.textContent = hero.title;
+    }
+
+    // 태그 매핑 (hero.images[isSelected].description → #tag)
+    var subTitle = document.querySelector('.con2 .subTitle');
+    if (subTitle) {
+      subTitle.innerHTML = '';
+
+      // description 1개라도 입력되었는지 확인
+      var hasDescription = hero.images && hero.images.some(function(img) { return img && img.isSelected && img.description; });
+
+      if (hasDescription) {
+        // 입력된 태그만 표시 (최대 3개까지)
+        var count = 0;
+        hero.images.forEach(function(img) {
+          if (count < 3 && img && img.isSelected && img.description) {
+            var tag = document.createElement('div');
+            tag.className = 'tag';
+            tag.textContent = '#' + img.description;
+            subTitle.appendChild(tag);
+            count++;
+          }
+        });
+      } else {
+        // Fallback: #이미지설명 3개 표시
+        for (var i = 0; i < 3; i++) {
+          var tag = document.createElement('div');
+          tag.className = 'tag';
+          tag.textContent = '#이미지설명';
+          subTitle.appendChild(tag);
+        }
+      }
+    }
+
+    // 이미지 롤링 매핑 (hero.images[1]부터 - con1에서 [0] 사용)
+    var imgRolling = document.querySelector('.con2 .imgRolling');
+    if (imgRolling) {
+      imgRolling.innerHTML = '';
+      var hasAnyImage = false;
+
+      if (hero.images && hero.images.length > 1) {
+        for (var i = 1; i < hero.images.length; i++) {
+          var img = hero.images[i];
+          if (img && img.isSelected) {
+            var imgDiv = document.createElement('div');
+            imgDiv.className = 'img';
+            if (img.url) {
+              hasAnyImage = true;
+              imgDiv.style.backgroundImage = 'url(' + img.url + ')';
+              imgDiv.style.backgroundRepeat = 'no-repeat';
+              imgDiv.style.backgroundPosition = 'center';
+            } else {
+              ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+            }
+            imgRolling.appendChild(imgDiv);
+          }
+        }
+      }
+
+      // 이미지가 없으면 placeholder 4개 추가
+      if (!hasAnyImage) {
+        for (var i = 0; i < 4; i++) {
+          var placeholderDiv = document.createElement('div');
+          placeholderDiv.className = 'img';
+          ImageHelpers.applyBackgroundPlaceholder(placeholderDiv);
+          imgRolling.appendChild(placeholderDiv);
+        }
+      }
+    }
+  },
+
+  // CON3: Essence 제목/태그 매핑
+  mapGalleryInfo: function(data) {
+    var sections = data.homepage &&
+                   data.homepage.customFields &&
+                   data.homepage.customFields.pages &&
+                   data.homepage.customFields.pages.index &&
+                   data.homepage.customFields.pages.index.sections;
+
+    if (!sections || !sections[0]) return;
+
+    var essence = sections[0].essence;
+    if (!essence) return;
+
+    // 타이틀 매핑 (essence.title → .con3 .title)
+    var titleEl = document.querySelector('.con3 .title');
+    if (titleEl && essence.title) {
+      titleEl.textContent = essence.title;
+    }
+
+    // 태그 매핑 (#숙소한글명 + #객실)
+    var subTitle = document.querySelector('.con3 .subTitle');
+    if (subTitle) {
+      subTitle.innerHTML = '';
+
+      // 숙소한글명 태그
+      if (data.property && data.property.name) {
+        var tag1 = document.createElement('div');
+        tag1.className = 'tag';
+        tag1.textContent = '#' + data.property.name;
+        subTitle.appendChild(tag1);
+      }
+
+      // 객실 태그 (하드코딩)
+      var tag2 = document.createElement('div');
+      tag2.className = 'tag';
+      tag2.textContent = '#객실';
+      subTitle.appendChild(tag2);
+    }
+  },
+
+  // CON3: 객실 슬라이드 매핑 (객실명/이미지=roomtypes, 설명/status=rooms id 매칭)
+  mapRoomsSlider: function(data) {
+    var cf = (data && data.homepage && data.homepage.customFields) || (data && data.customFields) || {};
+    var roomtypes = cf.roomtypes || [];
+    var rooms = data.rooms || [];
+    var wrapper = document.querySelector('.con3 .swiper-wrapper');
+    if (!wrapper) return;
+
+    // 기존 슬라이드 제거 (샘플 제거)
+    wrapper.innerHTML = '';
+
+    roomtypes.forEach(function(rt) {
+      if (!rt.name || !rt.name.trim()) return;
+
+      var matched = rooms.find(function(r) { return r.id === rt.id; });
+      if (matched && matched.status === 'inactive') return;
+
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+
+      var link = document.createElement('a');
+      link.href = 'room.html?room_id=' + rt.id;
+
+      var imgDiv = document.createElement('div');
+      imgDiv.className = 'img';
+
+      // roomtype_thumbnail 중 isSelected === true (sortOrder순) 첫 이미지
+      var thumbs = (rt.images || []).filter(function(im) { return im.category === 'roomtype_thumbnail' && im.isSelected; });
+      thumbs.sort(function(a, b) { return (a.sortOrder || 0) - (b.sortOrder || 0); });
+      var thumbnailUrl = thumbs[0] && thumbs[0].url ? thumbs[0].url : null;
+
+      if (thumbnailUrl) {
+        imgDiv.style.backgroundImage = 'url(' + thumbnailUrl + ')';
+        imgDiv.style.backgroundRepeat = 'no-repeat';
+        imgDiv.style.backgroundPosition = 'center';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+      }
+
+      var textDiv = document.createElement('div');
+      textDiv.className = 'tx';
+
+      var tx1 = document.createElement('div');
+      tx1.className = 'tx1';
+      tx1.textContent = rt.name || '';
+
+      var tx2 = document.createElement('div');
+      tx2.className = 'tx2';
+      tx2.textContent = (matched && matched.description) || '';
+
+      textDiv.appendChild(tx1);
+      textDiv.appendChild(tx2);
+      link.appendChild(imgDiv);
+      link.appendChild(textDiv);
+      slide.appendChild(link);
+      wrapper.appendChild(slide);
+    });
+  },
+
+  // CON4: Gallery 제목/태그 매핑
+  mapEssenceInfo: function(data) {
+    var sections = data.homepage &&
+                   data.homepage.customFields &&
+                   data.homepage.customFields.pages &&
+                   data.homepage.customFields.pages.index &&
+                   data.homepage.customFields.pages.index.sections;
+
+    if (!sections || !sections[0]) return;
+
+    var gallery = sections[0].gallery;
+    if (!gallery) return;
+
+    // 타이틀 매핑 (gallery.title → .con4 .title)
+    var titleEl = document.querySelector('.con4 .title');
+    if (titleEl && gallery.title) {
+      titleEl.textContent = gallery.title;
+    }
+
+    // 태그 매핑 (#숙소한글명 + #부대시설)
+    var subTitle = document.querySelector('.con4 .subTitle');
+    if (subTitle) {
+      subTitle.innerHTML = '';
+
+      // 숙소한글명 태그
+      if (data.property && data.property.name) {
+        var tag1 = document.createElement('div');
+        tag1.className = 'tag';
+        tag1.textContent = '#' + data.property.name;
+        subTitle.appendChild(tag1);
+      }
+
+      // 부대시설 태그 (하드코딩)
+      var tag2 = document.createElement('div');
+      tag2.className = 'tag';
+      tag2.textContent = '#부대시설';
+      subTitle.appendChild(tag2);
+    }
+  },
+
+  // CON4: 시설 슬라이드 매핑
+  mapFacilitiesSlider: function(data) {
+    var facilities = data.property.facilities || [];
+    var wrapper = document.querySelector('.con4 .swiper-wrapper');
+    if (!wrapper) return;
+
+    // 기존 슬라이드 제거 (샘플 제거)
+    wrapper.innerHTML = '';
+
+    facilities.forEach(function(facility) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+
+      var link = document.createElement('a');
+      link.href = 'facility.html?facility_id=' + facility.id;
+
+      var imgDiv = document.createElement('div');
+      imgDiv.className = 'img';
+
+      // facility.images[]에서 isSelected === true인 첫 이미지 찾기
+      var imageUrl = null;
+      if (facility.images && facility.images.length > 0) {
+        var selectedImg = facility.images.find(function(img) { return img.isSelected; });
+        if (selectedImg && selectedImg.url) {
+          imageUrl = selectedImg.url;
+        } else if (facility.images[0] && facility.images[0].url) {
+          // 선택된 이미지가 없으면 첫 번째 이미지 사용
+          imageUrl = facility.images[0].url;
+        }
+      }
+
+      if (imageUrl) {
+        imgDiv.style.backgroundImage = 'url(' + imageUrl + ')';
+        imgDiv.style.backgroundRepeat = 'no-repeat';
+        imgDiv.style.backgroundPosition = 'center';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+      }
+
+      var textDiv = document.createElement('div');
+      textDiv.className = 'tx';
+
+      var tx1 = document.createElement('div');
+      tx1.className = 'tx1';
+      tx1.textContent = facility.name || '';
+
+      textDiv.appendChild(tx1);
+      link.appendChild(imgDiv);
+      link.appendChild(textDiv);
+      slide.appendChild(link);
+      wrapper.appendChild(slide);
+    });
+  },
+
+  // CON5: Closing 섹션 매핑
+  mapClosingSection: function(data) {
+    var sections = data.homepage &&
+                   data.homepage.customFields &&
+                   data.homepage.customFields.pages &&
+                   data.homepage.customFields.pages.index &&
+                   data.homepage.customFields.pages.index.sections;
+
+    if (!sections || !sections[0]) return;
+
+    var closing = sections[0].closing;
+    if (!closing) return;
+
+    // 이미지 매핑 (closing.images[]에서 isSelected인 이미지)
+    var imgEl = document.querySelector('.con5 .img');
+    if (imgEl) {
+      var imageUrl = null;
+      if (closing.images && closing.images.length > 0) {
+        var selectedImg = closing.images.find(function(img) { return img.isSelected; });
+        if (selectedImg && selectedImg.url) {
+          imageUrl = selectedImg.url;
+        } else if (closing.images[0] && closing.images[0].url) {
+          imageUrl = closing.images[0].url;
+        }
+      }
+      if (imageUrl) {
+        imgEl.style.backgroundImage = 'url(' + imageUrl + ')';
+        imgEl.style.backgroundRepeat = 'no-repeat';
+        imgEl.style.backgroundPosition = '50% center';
+        imgEl.style.backgroundSize = 'cover';
+        imgEl.style.backgroundColor = '';
+      } else {
+        imgEl.style.backgroundImage = 'url(' + ImageHelpers.EMPTY_IMAGE_SVG + ')';
+        imgEl.style.backgroundRepeat = 'no-repeat';
+        imgEl.style.backgroundPosition = '50% center';
+        imgEl.style.backgroundSize = 'cover';
+        imgEl.style.backgroundColor = '#f0f0f0';
+      }
+    }
+
+    // 텍스트: 하드코딩 유지 (travelFont는 영문 전용)
+    // 타이틀 커스텀 시 한국어 사용으로 인한 폰트 적용 문제 방지
+    var txEl = document.querySelector('.con5 .tx.travelFont');
+    if (txEl) {
+      txEl.innerHTML = 'Experience<br />Fullness and rest';
+    }
+  }
+,
+
+  updateMetaTags: function(data) {
+    var hp = data && data.homepage || {};
+    var seo = (hp && hp.seo) || {};
+    
+    if (seo.title) {
+      var titleEl = document.querySelector('title');
+      if (titleEl) titleEl.textContent = seo.title;
+    }
+    
+    if (seo.description) {
+      var metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', seo.description);
+      }
+    }
+    
+    if (seo.keywords) {
+      var metaKeys = document.querySelector('meta[name="keywords"]');
+      if (metaKeys) {
+        metaKeys.setAttribute('content', seo.keywords);
+      }
+    }
+  }
+};

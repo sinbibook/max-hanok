@@ -50,12 +50,10 @@ class PreviewHandler {
         ];
 
         const isAllowedOrigin = allowedOrigins.some(allowed => {
-            // 같은 origin은 항상 허용
             if (event.origin === window.location.origin) {
                 return true;
             }
 
-            // localhost는 포트 번호 포함하여 체크
             if (allowed === 'localhost') {
                 return event.origin.startsWith('http://localhost:') ||
                        event.origin.startsWith('https://localhost:') ||
@@ -63,12 +61,10 @@ class PreviewHandler {
                        event.origin === 'https://localhost';
             }
 
-            // file:// 와 null은 정확히 매칭
             if (allowed === 'file://' || allowed === 'null') {
                 return event.origin === allowed;
             }
 
-            // 도메인은 https 프로토콜과 정확히 매칭
             return event.origin === `https://${allowed}` ||
                    event.origin === `http://${allowed}`;
         });
@@ -127,38 +123,9 @@ class PreviewHandler {
             this.applyThemeVariables(theme);
         }
 
-        this.applySeo(data);
-
         await this.renderTemplate(data);
         this.refreshPopupFromTemplate(data);
         this.notifyRenderComplete('INITIAL_RENDER_COMPLETE');
-    }
-
-    // MAPPER: homepage.seo → <title data-page-title> + meta (description/keywords/og)
-    applySeo(data) {
-        const seo = (data && data.homepage && data.homepage.seo) || {};
-        if (seo.title) {
-            document.title = seo.title;
-            document.querySelectorAll('[data-page-title]').forEach((el) => {
-                el.textContent = seo.title;
-            });
-        }
-        this._setMeta('name', 'description', seo.description);
-        this._setMeta('name', 'keywords', seo.keywords);
-        this._setMeta('property', 'og:title', seo.title);
-        this._setMeta('property', 'og:description', seo.description);
-    }
-
-    // 메타 태그 동적 생성/갱신 (없으면 head에 추가)
-    _setMeta(attr, key, content) {
-        if (!content) return;
-        let meta = document.head.querySelector('meta[' + attr + '="' + key + '"]');
-        if (!meta) {
-            meta = document.createElement('meta');
-            meta.setAttribute(attr, key);
-            document.head.appendChild(meta);
-        }
-        meta.setAttribute('content', content);
     }
 
     async handleTemplateUpdate(data) {
@@ -242,9 +209,9 @@ class PreviewHandler {
         const computedStyle = getComputedStyle(root);
 
         this._cachedDefaultFonts = {
-            koMain: computedStyle.getPropertyValue('--font-ko-main').trim() || "'Noto Sans KR', sans-serif",
-            koSub: computedStyle.getPropertyValue('--font-ko-sub').trim() || "'Pretendard', sans-serif",
-            enMain: computedStyle.getPropertyValue('--font-en-main').trim() || "'Poppins', sans-serif"
+            koMain: computedStyle.getPropertyValue('--font-ko-main').trim() || "'Noto Serif KR', serif",
+            koSub: computedStyle.getPropertyValue('--font-ko-sub').trim() || "'MaruBuri', sans-serif",
+            enMain: computedStyle.getPropertyValue('--font-en-main').trim() || "'Travel November', serif"
         };
 
         return this._cachedDefaultFonts;
@@ -259,8 +226,8 @@ class PreviewHandler {
         const computedStyle = getComputedStyle(root);
 
         this._cachedDefaultColors = {
-            primary: computedStyle.getPropertyValue('--color-primary').trim() || '#786659',
-            secondary: computedStyle.getPropertyValue('--color-secondary').trim() || '#3f3025'
+            primary: computedStyle.getPropertyValue('--color-primary').trim() || '#f6f2e7',
+            secondary: computedStyle.getPropertyValue('--color-secondary').trim() || '#866552'
         };
 
         return this._cachedDefaultColors;
@@ -354,7 +321,6 @@ class PreviewHandler {
     }
 
     handlePopupUpdate(data) {
-        // 팝업을 직접 편집하는 경우 → '오늘 하루 보지 않기' 무시하고 강제 노출(편집 미리보기)
         if (window.popupManager) {
             window.popupManager.updateFromPreview(data, true);
         } else if (window.PopupManager) {
@@ -367,9 +333,10 @@ class PreviewHandler {
         this.notifyRenderComplete('POPUP_UPDATE_COMPLETE');
     }
 
-    // 메인 템플릿 데이터 수신 시 팝업(homepage.customFields.popup.popups) 갱신 (preview에서 팝업 노출)
+    // 전체 템플릿 데이터에서 팝업 추출 → 미리보기 렌더 (초기/업데이트 렌더 시 enabled 팝업 표시)
+    // POPUP_UPDATE 메시지가 따로 오지 않아도 template-full-banner-flat처럼 enabled면 노출되도록 보강.
     refreshPopupFromTemplate(data) {
-        var popups =
+        const popups =
             (data && data.homepage && data.homepage.customFields && data.homepage.customFields.popup && data.homepage.customFields.popup.popups) ||
             (data && data.customFields && data.customFields.popup && data.customFields.popup.popups) ||
             [];
@@ -377,7 +344,7 @@ class PreviewHandler {
             window.popupManager.updateFromPreview(popups);
         } else if (window.PopupManager) {
             window.popupManager = new PopupManager();
-            window.popupManager.init().then(function () {
+            window.popupManager.init().then(() => {
                 window.popupManager.updateFromPreview(popups);
             });
         }
@@ -405,7 +372,6 @@ class PreviewHandler {
             return;
         }
 
-        // 현재 페이지와 동일하고 동일한 ID이면 리로드하지 않음
         const currentPage = this.getCurrentPageType();
         const urlParams = new URLSearchParams(window.location.search);
         const currentId = urlParams.get('id');
@@ -418,18 +384,15 @@ class PreviewHandler {
             return;
         }
 
-        // 페이지 이동 전에 부모 창에 네비게이션 시작 알림
         this.notifyNavigationStart(messageData.page);
 
-        // 페이지 이동 (현재 디렉토리 기준)
         const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
         let newPath = `${basePath}${targetPage}`;
 
-        // room 또는 facility 페이지인 경우 id 쿼리 파라미터 추가
         if (messageData.page === 'room' && messageData.roomId) {
-            newPath += `?id=${encodeURIComponent(messageData.roomId)}`;
+            newPath += `?room_id=${encodeURIComponent(messageData.roomId)}`;
         } else if (messageData.page === 'facility' && messageData.facilityId) {
-            newPath += `?id=${encodeURIComponent(messageData.facilityId)}`;
+            newPath += `?facility_id=${encodeURIComponent(messageData.facilityId)}`;
         }
 
         window.location.href = newPath;
@@ -448,80 +411,141 @@ class PreviewHandler {
     }
 
     async renderTemplate(data) {
-        const currentPage = this.getCurrentPageType();
-        let mapper = null;
+        // header-footer-loader.js와 동일하게 처리
+        // 실제 매핑은 header-footer-loader.js에서 처리하도록 위임
+        if (window.HeaderFooterLoader) {
+            const isDisabledPage = this.isCurrentPageDisabled(data);
+            if (this.isPreviewFrame()) {
+                if (isDisabledPage) {
+                    this.showPreviewNotFound();
+                    return;
+                }
 
-        switch (currentPage) {
-            case 'index':
-                if (window.IndexMapper) mapper = new IndexMapper();
-                break;
-            case 'main':
-                if (window.MainMapper) mapper = new MainMapper();
-                break;
-            case 'room':
-                if (window.RoomMapper) mapper = new RoomMapper();
-                break;
-            case 'facility':
-                if (window.FacilityMapper) mapper = new FacilityMapper();
-                break;
-            case 'reservation':
-                if (window.ReservationMapper) mapper = new ReservationMapper();
-                break;
-            case 'directions':
-                if (window.DirectionsMapper) mapper = new DirectionsMapper();
-                break;
-            case 'nearbyAttractions':
-                if (window.NearbyAttractionsMapper) mapper = new NearbyAttractionsMapper();
-                break;
-            case 'layoutMap':
-                if (window.LayoutMapMapper) mapper = new LayoutMapMapper();
-                break;
-            default:
+                this.hidePreviewNotFound();
+            } else if (isDisabledPage) {
+                window.HeaderFooterLoader.checkPageEnabled(data);
                 return;
-        }
+            }
 
-        if (mapper) {
-            mapper.data = data;
-            mapper.isDataLoaded = true;
-            await mapper.mapPage();
-            if (window.__tplReveal) window.__tplReveal(); // 매핑 완료 → 화면 노출(페이드인)
-        }
+            // 이미 로드된 경우 mapPageContent 직접 호출
+            window.HeaderFooterLoader.mapPageContent(data);
 
-        await this.waitForHeaderDOM();
+            // Header/Footer 실시간 재매핑 (업데이트 시 DOM은 이미 로드되어 있음)
+            if (window.HeaderFooterMapper) {
+                HeaderFooterMapper.mapHeader(data);
+                HeaderFooterMapper.mapFooter(data);
+            }
 
-        if (window.HeaderFooterMapper) {
-            const headerFooterMapper = new window.HeaderFooterMapper();
-            headerFooterMapper.data = data;
-            headerFooterMapper.isDataLoaded = true;
-            await headerFooterMapper.mapPage();
-        }
-
-        if (window._checkPageEnabled) {
-            window._checkPageEnabled();
+            setTimeout(() => {
+                window.HeaderFooterLoader.reinitializeSwiper();
+            }, 100);
         }
     }
 
-    async waitForHeaderDOM() {
-        const maxWaitTime = 5000;
-        const checkInterval = 50;
-        let waitedTime = 0;
+    isPreviewFrame() {
+        return window.parent !== window;
+    }
 
-        return new Promise((resolve) => {
-            const checkHeader = () => {
-                const header = document.querySelector('header, .header');
+    isCurrentPageDisabled(data) {
+        const currentPage = this.getCurrentPageType();
+        const pages = data?.homepage?.customFields?.pages;
 
-                if (header) {
-                    resolve();
-                } else if (waitedTime >= maxWaitTime) {
-                    resolve();
-                } else {
-                    waitedTime += checkInterval;
-                    setTimeout(checkHeader, checkInterval);
-                }
-            };
+        if (currentPage === 'nearbyAttractions') {
+            return pages?.nearbyAttractions?.sections?.[0]?.enabled === false;
+        }
 
-            checkHeader();
-        });
+        if (currentPage === 'layoutMap') {
+            return pages?.layoutMap?.sections?.[0]?.enabled === false;
+        }
+
+        return false;
+    }
+
+    showPreviewNotFound() {
+        if (!document.getElementById('preview-not-found-style')) {
+            const style = document.createElement('style');
+            style.id = 'preview-not-found-style';
+            style.textContent = `
+body.preview-not-found-active > .wrapper {
+    display: none !important;
+}
+
+.preview-not-found {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 20px;
+    background-color: var(--color-primary);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.preview-not-found .errorCode {
+    font-size: 120px;
+    font-weight: 900;
+    color: var(--color-secondary);
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.preview-not-found .errorTitle {
+    font-family: var(--font-ko-main);
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.preview-not-found .errorMessage {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.8;
+}
+
+@media (max-width: 1440px) {
+    .preview-not-found .errorCode {
+        font-size: 80px;
+    }
+
+    .preview-not-found .errorTitle {
+        font-size: 22px;
+    }
+
+    .preview-not-found .errorMessage {
+        font-size: 14px;
+    }
+}`;
+            document.head.appendChild(style);
+        }
+
+        let previewNotFound = document.getElementById('preview-not-found');
+        if (!previewNotFound) {
+            previewNotFound = document.createElement('main');
+            previewNotFound.id = 'preview-not-found';
+            previewNotFound.className = 'preview-not-found';
+            previewNotFound.innerHTML = `
+<div class="errorContainer">
+    <div class="errorCode">404</div>
+    <h1 class="errorTitle">페이지를 찾을 수 없습니다.</h1>
+    <p class="errorMessage">
+        요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br />
+        노출 설정을 변경하면 미리보기가 다시 표시됩니다.
+    </p>
+</div>`;
+            document.body.appendChild(previewNotFound);
+        }
+
+        document.body.classList.add('preview-not-found-active');
+    }
+
+    hidePreviewNotFound() {
+        document.body.classList.remove('preview-not-found-active');
+
+        const previewNotFound = document.getElementById('preview-not-found');
+        if (previewNotFound) {
+            previewNotFound.remove();
+        }
     }
 
     getCurrentPageType() {
@@ -579,28 +603,9 @@ class PreviewHandler {
     }
 
     async loadFallbackData() {
-        const currentPage = this.getCurrentPageType();
-
-        const mapperConfig = {
-            'index': 'IndexMapper',
-            'main': 'MainMapper',
-            'room': 'RoomMapper',
-            'facility': 'FacilityMapper',
-            'reservation': 'ReservationMapper',
-            'directions': 'DirectionsMapper',
-            'nearbyAttractions': 'NearbyAttractionsMapper',
-            'layoutMap': 'LayoutMapMapper'
-        };
-
-        const mapperClass = mapperConfig[currentPage];
-        if (mapperClass && window[mapperClass]) {
-            const mapper = new window[mapperClass]();
-            await mapper.initialize();
-        }
-
-        if (window.HeaderFooterMapper) {
-            const headerFooterMapper = new window.HeaderFooterMapper();
-            await headerFooterMapper.initialize();
+        // header-footer-loader.js에 위임
+        if (window.HeaderFooterLoader) {
+            window.HeaderFooterLoader.loadAndMapData();
         }
     }
 }

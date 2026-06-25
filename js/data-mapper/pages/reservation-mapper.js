@@ -1,87 +1,170 @@
-(function (global) {
-  'use strict';
+// Reservation Page Mapper - 예약안내 페이지 동적 매핑
+var ReservationMapper = {
+  map: function(data) {
+    if (!data) return;
 
-  function ReservationMapper() {
-    BaseDataMapper.call(this);
-  }
-  ReservationMapper.prototype = Object.create(BaseDataMapper.prototype);
-  ReservationMapper.prototype.constructor = ReservationMapper;
+    // MAPPER: customFields.pages.reservation.sections[0].hero.images[0] (히어로 이미지)
+    this.mapHero(data);
 
-  function nl2br(s) { return String(s == null ? '' : s).replace(/\n/g, '<br>'); }
+    // MAPPER: customFields.pages.reservation.sections[0].about (이용안내)
+    this.mapUsageGuide(data);
 
-  ReservationMapper.prototype.getReservationSection = function () {
-    var pages = this.getPages();
-    return (pages.reservation && pages.reservation.sections && pages.reservation.sections[0]) || {};
-  };
+    // MAPPER: customFields.pages.reservation.sections[1].about (환불정책)
+    this.mapRefundPolicy(data);
 
-  ReservationMapper.prototype.mapPage = function () {
-    this.mapHero();
-    this.mapUsageGuide();
-    this.mapRefundPolicies();
-    this.refreshLoco();
-  };
+    // MAPPER: 예약하기 버튼 링크
+    this.mapBookingButton(data);
+    this.updateMetaTags(data);
+  },
 
-  ReservationMapper.prototype.refreshLoco = function () {
-    window.setTimeout(function () {
-      if (window.locoScroll && window.locoScroll.update) window.locoScroll.update();
-    }, 400);
-  };
+  // 히어로 이미지 매핑 (customFields.pages.reservation.sections[0].hero.images[0])
+  mapHero: function(data) {
+    var customFields = data && data.homepage && data.homepage.customFields;
+    var reservationData = customFields && customFields.pages && customFields.pages.reservation;
+    var sections = reservationData && reservationData.sections;
+    var hero = sections && sections[0] && sections[0].hero;
+    var images = hero && hero.images;
 
-  // sub_visual ← pages.reservation.sections[0].hero.images[isSelected]
-  ReservationMapper.prototype.mapHero = function () {
-    var wrapper = document.querySelector('[data-reservation-hero-slides]');
-    if (!wrapper) return;
-    var hero = this.getReservationSection().hero || {};
-    var images = this.getSelectedImages(hero.images || []);
-
-    var sig = images.map(function (s) { return s.url; }).join('|') || 'placeholder';
-    if (wrapper.dataset.heroSig === sig) return;
-    wrapper.dataset.heroSig = sig;
-
-    if (!images.length) {
-      wrapper.innerHTML = '<div class="swiper-slide"></div>';
-      var ph = wrapper.firstChild;
-      ImageHelpers.applyBackgroundPlaceholder(ph);
-      ph.style.backgroundSize = 'cover';
-      ph.style.backgroundPosition = 'center';
-    } else {
-      wrapper.innerHTML = images.map(function (img) {
-        return '<div class="swiper-slide" style="background:url(' + img.url + ') no-repeat 50% 46%;background-size:cover;"></div>';
-      }).join('');
+    // 타이틀 매핑: hero.title 우선, 없으면 '예약안내' fallback
+    var tx0_1El = document.querySelector('.con12 .tx0_1');
+    if (tx0_1El) {
+      if (hero && hero.title && hero.title.trim()) {
+        tx0_1El.textContent = hero.title;
+      } else {
+        tx0_1El.textContent = '예약안내';
+      }
     }
-    if (typeof window.initVisualSwiper === 'function') window.initVisualSwiper();
-  };
 
-  // 이용안내 ← property.usageGuide
-  ReservationMapper.prototype.mapUsageGuide = function () {
-    var guide = this.getProperty().usageGuide || '';
-    document.querySelectorAll('[data-reservation-usage-guide]').forEach(function (el) {
-      el.innerHTML = nl2br(guide);
-    });
-  };
+    var con0 = document.querySelector('.con0');
+    if (!con0) return;
 
-  // 환불안내 ← property.refundPolicies[] (* 이용일 N일 이전 취소시 R% 환불, 당일=0)
-  ReservationMapper.prototype.mapRefundPolicies = function () {
-    var el = document.querySelector('[data-reservation-refund-policies]');
-    if (!el) return;
-    var policies = (this.getProperty().refundPolicies || []).slice().sort(function (a, b) {
-      return (b.refundProcessingDays || 0) - (a.refundProcessingDays || 0);
-    });
-    if (!policies.length) { el.innerHTML = ''; return; }
-    el.innerHTML = policies.map(function (p) {
-      var days = p.refundProcessingDays || 0;
-      var rate = (p.refundRate != null ? p.refundRate : 0);
-      var label = days === 0 ? '* 당일 취소시 ' : ('* 이용일 ' + days + '일 이전 취소시 ');
-      return label + rate + '% 환불';
-    }).join('<br>');
-  };
+    // 이미지 없음: placeholder 적용
+    if (!images || images.length === 0) {
+      con0.style.backgroundImage = 'url(' + ImageHelpers.EMPTY_IMAGE_SVG + ')';
+      con0.style.backgroundColor = '#f0f0f0';
+      con0.style.backgroundRepeat = 'no-repeat';
+      con0.style.backgroundPosition = 'center';
+      con0.style.backgroundSize = 'cover';
+      return;
+    }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.previewHandler && window.previewHandler.currentData) return;
-    var mapper = new ReservationMapper();
-    mapper.initialize();
-    global.reservationMapperInstance = mapper;
-  });
+    // 첫 번째 이미지 사용
+    var heroImg = images[0];
+    if (heroImg && heroImg.url) {
+      con0.style.backgroundImage = 'url(' + heroImg.url + ')';
+    } else {
+      // URL 없음: placeholder 적용
+      con0.style.backgroundImage = 'url(' + ImageHelpers.EMPTY_IMAGE_SVG + ')';
+      con0.style.backgroundColor = '#f0f0f0';
+    }
 
-  global.ReservationMapper = ReservationMapper;
-})(window);
+    con0.style.backgroundRepeat = 'no-repeat';
+    con0.style.backgroundPosition = 'center';
+    con0.style.backgroundSize = 'cover';
+  },
+
+  // 이용안내 매핑 (customFields.pages.reservation.sections[0].about 우선 > property.usageGuide)
+  mapUsageGuide: function(data) {
+    var con13 = document.querySelector('.con13');
+    if (!con13) return;
+
+    var customFields = data && data.homepage && data.homepage.customFields;
+    var reservationData = customFields && customFields.pages && customFields.pages.reservation;
+    var sections = reservationData && reservationData.sections;
+    var about = sections && sections[0] && sections[0].about;
+
+    // 제목 매핑: customFields.pages.reservation.sections[0].about.title 우선
+    var titleEl = con13.querySelector('.tx1');
+    if (titleEl) {
+      if (about && about.title && about.title.trim()) {
+        titleEl.textContent = about.title;
+      } else {
+        titleEl.textContent = 'USER GUIDE';
+      }
+    }
+
+    // 내용 매핑: property.usageGuide
+    var contentEl = con13.querySelector('.tx2');
+    if (contentEl) {
+      var usageContent = (data && data.property && data.property.usageGuide) || '';
+
+      if (usageContent) {
+        contentEl.innerHTML = usageContent
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/\n/g, '<br>');
+      }
+    }
+  },
+
+  // 환불정책 매핑 (customFields > property.refundPolicies)
+  mapRefundPolicy: function(data) {
+    var refundEl = document.querySelectorAll('.con13 .tx1 + .tx2');
+    if (!refundEl || refundEl.length < 2) return;
+
+    var refundContainer = refundEl[1];
+
+    var customFields = data && data.homepage && data.homepage.customFields;
+    var reservationData = customFields && customFields.pages && customFields.pages.reservation;
+    var sections = reservationData && reservationData.sections;
+    var refundAbout = sections && sections[1] && sections[1].about;
+
+    var refundContent = '';
+
+    // Priority 1: customFields.pages.reservation.sections[1].about.description
+    if (refundAbout && refundAbout.description && refundAbout.description.trim()) {
+      refundContent = refundAbout.description;
+    }
+    // Priority 2: property.refundPolicies
+    else if (data && data.property && data.property.refundPolicies) {
+      var policies = data.property.refundPolicies;
+      policies.forEach(function(p) {
+        var days = p.refundProcessingDays;
+        var daysLabel = days === 0 ? '당일' : days + '일전';
+        var refundText = p.refundRate === 100 ? '전액 환불' : p.refundRate + '% 환불';
+        refundContent += '* 이용일 ' + daysLabel + ' 취소시 ' + refundText + '<br>';
+      });
+    }
+
+    if (refundContent) {
+      refundContainer.innerHTML = refundContent;
+    }
+  },
+
+  // 예약하기 버튼 링크 설정
+  mapBookingButton: function(data) {
+    var btnEl = document.querySelector('[data-booking-link]');
+    if (!btnEl) return;
+
+    if (data && data.property && data.property.realtimeBookingId) {
+      btnEl.href = data.property.realtimeBookingId;
+      btnEl.target = '_blank';
+    }
+  }
+,
+
+  updateMetaTags: function(data) {
+    var hp = data && data.homepage || {};
+    var seo = (hp && hp.seo) || {};
+    
+    if (seo.title) {
+      var titleEl = document.querySelector('title');
+      if (titleEl) titleEl.textContent = seo.title;
+    }
+    
+    if (seo.description) {
+      var metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', seo.description);
+      }
+    }
+    
+    if (seo.keywords) {
+      var metaKeys = document.querySelector('meta[name="keywords"]');
+      if (metaKeys) {
+        metaKeys.setAttribute('content', seo.keywords);
+      }
+    }
+  }
+};

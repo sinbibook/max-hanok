@@ -1,110 +1,181 @@
-(function (global) {
-  'use strict';
+// Nearby Attractions Page Mapper - 주변 여행지 페이지 동적 매핑
+var NearbyAttractionsMapper = {
+  map: function(data) {
+    if (!data) return;
 
-  function NearbyAttractionsMapper() {
-    BaseDataMapper.call(this);
-  }
-  NearbyAttractionsMapper.prototype = Object.create(BaseDataMapper.prototype);
-  NearbyAttractionsMapper.prototype.constructor = NearbyAttractionsMapper;
+    var customFields = data && data.homepage && data.homepage.customFields;
+    var pages = customFields && customFields.pages;
+    var nearbyAttractions = pages && pages.nearbyAttractions;
 
-  function nl2br(s) {
-    return String(s == null ? '' : s).replace(/\n/g, '<br>');
-  }
-  function escapeHtml(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-  function pad2(n) { return ('0' + n).slice(-2); }
-  // 빈 값도 항상 반영 (백오피스에서 값 삭제 시 이전 값/기본 텍스트 잔존 방지)
-  function setText(sel, val) {
-    document.querySelectorAll(sel).forEach(function (el) { el.textContent = (val == null ? '' : val); });
-  }
-
-  NearbyAttractionsMapper.prototype.getSection = function () {
-    var pages = this.getPages();
-    return (pages.nearbyAttractions && pages.nearbyAttractions.sections &&
-      pages.nearbyAttractions.sections[0]) || null;
-  };
-
-  NearbyAttractionsMapper.prototype.mapPage = function () {
-    var section = this.getSection();
-    // 섹션 없음/비활성 → 404 리다이렉트 (헤더 메뉴 숨김과 일관)
-    // preview(iframe)에선 백오피스 데이터 도착 전(currentData 없음) 정적 JSON으로 튕기는 것만 방지.
-    // 백오피스에서 '비노출' 선택(currentData 있음)이면 preview에도 404를 보여준다.
-    if (!section || section.enabled === false) {
-      if (window.parent !== window && !(window.previewHandler && window.previewHandler.currentData)) return;
-      window.location.replace('404.html');
+    // enabled=false이면 매핑 스킵
+    if (!nearbyAttractions || !nearbyAttractions.sections || !nearbyAttractions.sections[0] || nearbyAttractions.sections[0].enabled === false) {
       return;
     }
-    this.mapHero(section);
-    setText('[data-nearby-subtitle]', (section.hero && section.hero.description) || '');
-    this.mapNavAndList(section);
-    this.refreshLoco();
-  };
 
-  NearbyAttractionsMapper.prototype.refreshLoco = function () {
-    window.setTimeout(function () {
-      if (window.locoScroll && window.locoScroll.update) window.locoScroll.update();
-      if (window.refreshTravelSpy) window.refreshTravelSpy();
-    }, 400);
-  };
+    // MAPPER: Hero 이미지
+    this.mapHero(data);
 
-  // sub_visual ← hero.images[isSelected][0] 단일 고정 (슬라이드 미사용)
-  NearbyAttractionsMapper.prototype.mapHero = function (section) {
-    var el = document.querySelector('[data-nearby-hero-image]');
-    if (!el) return;
-    el.style.backgroundRepeat = 'no-repeat';
-    el.style.backgroundPosition = '50% 66%';
-    el.style.backgroundSize = 'cover';
-    var url = this.getFirstSelectedImage((section.hero && section.hero.images) || []);
-    if (url) el.style.backgroundImage = 'url(' + url + ')';
-    else ImageHelpers.applyBackgroundPlaceholder(el);
-  };
+    // MAPPER: Hero 제목/설명
+    this.mapHeroTitle(data);
 
-  // about[] → 좌측 앵커 네비(.travel-slide) + 우측 카드(.travel-list) 동적 생성 (앵커 id 매칭)
-  NearbyAttractionsMapper.prototype.mapNavAndList = function (section) {
-    var nav = document.querySelector('[data-nearby-nav]');
-    var list = document.querySelector('[data-nearby-list]');
-    if (!nav || !list) return;
-    var about = section.about || [];
-    var self = this;
-    var EMPTY = ImageHelpers.EMPTY_IMAGE_SVG;
+    // MAPPER: 항목 카드들
+    this.mapAttractionCards(data);
+    this.updateMetaTags(data);
+  },
 
-    var navHtml = '';
-    var listHtml = '';
-    about.forEach(function (block, i) {
-      block = block || {};
-      var id = 'anchor' + pad2(i + 1);
-      var title = escapeHtml(block.title || '');
-      var url = self.getFirstSelectedImage(block.images || []);
-      var imgUrl = url || EMPTY;
+  // Hero 이미지 슬라이드 매핑
+  mapHero: function(data) {
+    var customFields = data && data.homepage && data.homepage.customFields;
+    var pages = customFields && customFields.pages;
+    var nearbyAttractions = pages && pages.nearbyAttractions;
+    var sections = nearbyAttractions && nearbyAttractions.sections;
+    var hero = sections && sections[0] && sections[0].hero;
 
-      navHtml += '<li' + (i === 0 ? ' class="active"' : '') +
-        '><a href="#' + id + '" class="anchor-btn">' + title + '</a></li>';
+    var wrapper = document.querySelector('[data-nearby-attractions-hero-slides]');
+    if (!wrapper || !hero) return;
 
-      listHtml += '' +
-        '<li data-index="' + i + '">' +
-          '<div class="sch" id="' + id + '"></div>' +
-          '<div class="img fadeUp is-inview" data-scroll="" style="background:url(' + imgUrl + ') no-repeat center top;background-size:cover;">' +
-            '<img src="' + imgUrl + '" alt="' + title + '">' +
-          '</div>' +
-          '<div class="txt">' +
-            '<p class="btxt fadeUp is-inview" data-scroll="">' + title + '</p>' +
-            '<p class="stxt fadeUp is-inview" data-scroll="">' + nl2br(block.description || '') + '</p>' +
-          '</div>' +
-        '</li>';
+    wrapper.innerHTML = '';
+
+    var images = (hero.images || []).filter(function(img) { return img && img.isSelected; });
+
+    if (!images.length) {
+      var placeholderDiv = document.createElement('div');
+      placeholderDiv.className = 'swiper-slide';
+      var imgDiv = document.createElement('div');
+      imgDiv.className = 'img';
+      ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+      placeholderDiv.appendChild(imgDiv);
+      wrapper.appendChild(placeholderDiv);
+      return;
+    }
+
+    images.forEach(function(img) {
+      var div = document.createElement('div');
+      div.className = 'swiper-slide';
+      var imgDiv = document.createElement('div');
+      imgDiv.className = 'img';
+
+      if (img && img.url) {
+        imgDiv.style.backgroundImage = 'url(' + img.url + ')';
+        imgDiv.style.backgroundRepeat = 'no-repeat';
+        imgDiv.style.backgroundPosition = 'center';
+        imgDiv.style.backgroundSize = 'cover';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+      }
+
+      div.appendChild(imgDiv);
+      wrapper.appendChild(div);
     });
+  },
 
-    nav.innerHTML = navHtml;
-    list.innerHTML = listHtml;
-  };
+  // Hero 제목/설명 매핑
+  mapHeroTitle: function(data) {
+    var customFields = data && data.homepage && data.homepage.customFields;
+    var pages = customFields && customFields.pages;
+    var nearbyAttractions = pages && pages.nearbyAttractions;
+    var sections = nearbyAttractions && nearbyAttractions.sections;
+    var hero = sections && sections[0] && sections[0].hero;
 
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.previewHandler && window.previewHandler.currentData) return;
-    var mapper = new NearbyAttractionsMapper();
-    mapper.initialize();
-    global.nearbyAttractionsMapperInstance = mapper;
-  });
+    if (!hero) return;
 
-  global.NearbyAttractionsMapper = NearbyAttractionsMapper;
-})(window);
+    // 제목: hero.title (없으면 "주변 여행지")
+    var titleEl = document.querySelector('[data-nearby-attractions-hero-title]');
+    if (titleEl) {
+      if (hero.title && hero.title.trim()) {
+        titleEl.textContent = hero.title;
+      } else {
+        titleEl.textContent = '주변 여행지';
+      }
+    }
+
+    // 설명: hero.description (없으면 "펜션 주변의 아름다운 여행지들")
+    var descEl = document.querySelector('[data-nearby-attractions-hero-description]');
+    if (descEl) {
+      if (hero.description && hero.description.trim()) {
+        descEl.textContent = hero.description;
+      } else {
+        descEl.textContent = '펜션 주변의 아름다운 여행지들';
+      }
+    }
+  },
+
+  // 항목 카드 매핑
+  mapAttractionCards: function(data) {
+    var customFields = data && data.homepage && data.homepage.customFields;
+    var pages = customFields && customFields.pages;
+    var nearbyAttractions = pages && pages.nearbyAttractions;
+    var sections = nearbyAttractions && nearbyAttractions.sections;
+    var about = sections && sections[0] && sections[0].about;
+
+    var itemWrap = document.querySelector('[data-nearby-attractions-items]');
+    if (!itemWrap || !about || !about.length) return;
+
+    itemWrap.innerHTML = '';
+
+    about.forEach(function(item, index) {
+      var div = document.createElement('div');
+      div.className = 'item';
+      div.setAttribute('data-aos', 'fade-up');
+
+      // 이미지
+      var images = item.images || [];
+      var selectedImage = images.find(function(img) { return img && img.isSelected; }) || images[0];
+
+      var img = document.createElement('img');
+      if (selectedImage && selectedImage.url) {
+        img.src = selectedImage.url;
+        img.alt = item.title || '';
+      } else {
+        ImageHelpers.applyPlaceholder(img);
+      }
+      div.appendChild(img);
+
+      // tx1: 제목
+      var tx1 = document.createElement('div');
+      tx1.className = 'tx1';
+      tx1.textContent = item.title || '';
+      div.appendChild(tx1);
+
+      // tx2: 거리 정보 (이미지 description) - fallback 포함
+      var distanceInfo = selectedImage && selectedImage.description ? selectedImage.description : '소개 이미지 설명';
+      var tx2 = document.createElement('div');
+      tx2.className = 'tx2';
+      tx2.textContent = distanceInfo;
+      div.appendChild(tx2);
+
+      // tx3: 설명
+      var tx3 = document.createElement('div');
+      tx3.className = 'tx3';
+      tx3.textContent = item.description || '';
+      div.appendChild(tx3);
+
+      itemWrap.appendChild(div);
+    });
+  }
+,
+
+  updateMetaTags: function(data) {
+    var hp = data && data.homepage || {};
+    var seo = (hp && hp.seo) || {};
+    
+    if (seo.title) {
+      var titleEl = document.querySelector('title');
+      if (titleEl) titleEl.textContent = seo.title;
+    }
+    
+    if (seo.description) {
+      var metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', seo.description);
+      }
+    }
+    
+    if (seo.keywords) {
+      var metaKeys = document.querySelector('meta[name="keywords"]');
+      if (metaKeys) {
+        metaKeys.setAttribute('content', seo.keywords);
+      }
+    }
+  }
+};
