@@ -1,19 +1,28 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading">
   <head>
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title data-page-title>Max 한옥 - 예약안내</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/theme.css" as="style">
-    <link rel="preload" href="styles/common.css" as="style">
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/reservation.css" />
+    <link rel="icon" href="data:," />
+    <!-- SEO: homepage.seo → preview-handler.applySeo()가 title/description/keywords/og 동적 주입 (하드코딩 없음) -->
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/theme.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/vendor/swiper-bundle.min.css" />
+
+    <script src="js/gsap.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <script type="text/javascript" src="js/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="js/locomotive-scroll.min.js"></script>
+
+    <script nomodule="" src="js/polyfill.min.js" crossorigin="anonymous"></script>
+    <script
+      nomodule=""
+      src="https://polyfill.io/v3/polyfill.min.js?features=Object.assign%2CElement.prototype.append%2CNodeList.prototype.forEach%2CCustomEvent%2Csmoothscroll"
+      crossorigin="anonymous"
+    ></script>
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 예약안내" />
@@ -28,89 +37,78 @@
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
 </head>
   <body>
-    <div class="wrapper">
-      <div class="container">
-        <!-- MAPPER: customFields.pages.reservation.sections[0].hero.images[isSelected] -->
-        <div class="con01" data-aos="fade-up">
-          <div class="img swiper-container">
-            <div class="swiper-wrapper" data-reservation-hero-slides></div>
+    <div id="wrap">
+      <div id="header-wrap"></div>
+
+      <!-- s: scroll-wrap -->
+      <div class="scroll-wrap" id="doc" data-scroll-container="">
+        <!-- s: container -->
+        <div id="container" class="fadeDown" data-scroll="">
+          <!-- s: sub_visual -->
+          <div class="sub_visual visual tour">
+            <div class="visual_box">
+              <div class="swiper-container svisual">
+                <!-- data-* : data-reservation-hero-slides | customFields.pages.reservation.sections[0].hero.images[isSelected] (배경 슬라이드 동적 생성) -->
+                <div class="swiper-wrapper" data-reservation-hero-slides>
+                  <!-- MAPPER: hero.images 기준 .swiper-slide>.img(background) 동적 생성 -->
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="tx1_1">이용안내</div>
+          <!-- e: sub_visual -->
+          <div id="snb_wrap">
+            <ul>
+              <!-- data-* : data-booking-link | property.realtimeBookingId (header-footer-mapper 공통 처리) -->
+              <li><a href="#!" target="_blank" data-booking-link>예약하기</a></li>
+              <li class="active"><a href="reservation.html">이용안내</a></li>
+            </ul>
+          </div>
+          <!-- s: content -->
+          <section id="content" class="sub">
+            <!-- s: reser-wrap -->
+            <div class="reser-wrap" id="direction">
+              <div class="sub_title">
+                <!-- data-* : data-reservation-title | customFields.pages.reservation.sections[0].hero.title (없으면 기존 문구 fallback) -->
+                <p class="sub_txt" data-reservation-title>예약시 참고하실 내용을 안내해 드립니다.</p>
+              </div>
+              <div class="info_box inner">
+                <dt class="title_box">
+                  <h3>이용안내</h3>
+                </dt>
+                <dd>
+                  <!-- data-* : data-reservation-checkin-info | [입퇴실안내] 라벨 + property.checkin/checkout + checkInOutInfo -->
+                  <p data-reservation-checkin-info></p>
+                  <!-- data-* : data-reservation-usage-guide | property.usageGuide (\n→<br>) -->
+                  <p data-reservation-usage-guide></p>
+                  <!-- data-* : data-reservation-reservation-guide | property.reservationGuide (\n→<br>) -->
+                  <p data-reservation-reservation-guide></p>
+                </dd>
+                <dt class="title_box">
+                  <h3>환불안내</h3>
+                </dt>
+                <!-- data-* : data-reservation-refund-policies | property.refundPolicies (동적 생성) -->
+                <dd data-reservation-refund-policies></dd>
+              </div>
+            </div>
+            <!-- e: reser-wrap -->
+          </section>
+          <!-- e: content -->
         </div>
-        <div class="conReservation w1440">
-          <div class="conTitle" data-aos="fade-up">
-            <div class="tx1">INFORMATION</div>
-            <div class="tx2">
-              <div class="bold spot">펜션정보</div>
-            </div>
-          </div>
-
-          <!-- MAPPER: property.usageGuide, reservationGuide, checkInOutInfo; property.refundPolicies -->
-          <div class="reservationWrap" data-aos="fade-up">
-            <!-- MAPPER: customFields.pages.reservation.sections[0].about.title (우선), property.usageGuide (내용) -->
-            <div class="accordion">
-              <div class="accordionHeader" data-target="usage-content">
-                <span class="accordionTitle" data-reservation-usage-title>이용안내</span>
-                <span class="accordionIcon">+</span>
-              </div>
-              <div class="accordionContent active" id="usage-content" data-reservation-usage-content></div>
-            </div>
-
-            <!-- MAPPER: property.reservationGuide -->
-            <div class="accordion">
-              <div class="accordionHeader" data-target="reservation-guide-content">
-                <span class="accordionTitle">예약안내</span>
-                <span class="accordionIcon">+</span>
-              </div>
-              <div class="accordionContent active" id="reservation-guide-content" data-reservation-guide-content></div>
-            </div>
-
-            <!-- MAPPER: property.checkInOutInfo -->
-            <div class="accordion">
-              <div class="accordionHeader" data-target="checkin-content">
-                <span class="accordionTitle">입/퇴실 안내</span>
-                <span class="accordionIcon">+</span>
-              </div>
-              <div class="accordionContent active" id="checkin-content" data-reservation-checkin-content></div>
-            </div>
-
-            <!-- MAPPER: customFields.pages.reservation.about (title, images, description) -->
-            <div class="accordion" data-reservation-about-accordion>
-              <div class="accordionHeader" data-target="about-content">
-                <span class="accordionTitle" data-reservation-about-title>예약 정보</span>
-                <span class="accordionIcon">+</span>
-              </div>
-              <div class="accordionContent active" id="about-content">
-                <div data-reservation-about-images></div>
-                <div data-reservation-about-description></div>
-              </div>
-            </div>
-
-          </div>
-
-        <!-- MAPPER: property.refundPolicies[] (refundProcessingDays, refundRate) -->
-        <div class="conRefund w1440">
-          <div class="conTitle" data-aos="fade-up">
-            <div class="tx1">REFUND INFO</div>
-            <div class="tx2">
-              <span class="bold spot">환불정보</span>
-            </div>
-          </div>
-          <div class="bottom" data-aos="fade-up" data-reservation-refund-table></div>
-        </div>
+        <!-- e: container -->
+        <div id="footer-wrap"></div>
       </div>
+      <!-- e: scroll-wrap -->
     </div>
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="js/preview-handler.js"></script>
+    <!-- infra: 데이터 매핑 & 동적 헤더/푸터 -->
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/reservation-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/data-mapper/pages/reservation-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
+    <!-- 페이지 인터랙션 (vanilla) -->
     <script src="js/common.js"></script>
-    <script src="js/pages/reservation.js"></script>
+    <script src="js/custom.js"></script>
   </body>
 </html>
