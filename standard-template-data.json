@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.247.0",
-    "generatedAt": "2026-06-25T02:18:28.084191303Z",
+    "version": "1.248.0",
+    "generatedAt": "2026-06-25T02:21:00.125965615Z",
     "templateType": "trip_e",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1831,7 +1831,7 @@
             "sections": [
               {
                 "hero": {
-                  "title": "찜질방입니다.\n하루의 피로를 풀어보시고\n좋은 시간 보내세요.",
+                  "title": "찜질방입니다.\n하루의 피로를 풀어보시고\n좋은 시간 보내세요 !!!",
                   "images": [ ],
                   "description": ""
                 },
