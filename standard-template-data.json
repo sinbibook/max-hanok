@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.245.0",
-    "generatedAt": "2026-06-25T01:42:41.547793185Z",
+    "version": "1.246.0",
+    "generatedAt": "2026-06-25T02:13:53.828940968Z",
     "templateType": "trip_e",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1932,7 +1932,7 @@
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/reservation_hero/1759123623260-a92dibpzky.jpg",
                     "sortOrder": 0,
                     "description": "",
-                    "isSelected": true,
+                    "isSelected": false,
                     "blockId": null
                   },
                   {
