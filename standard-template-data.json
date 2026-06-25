@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.250.0",
-    "generatedAt": "2026-06-25T03:19:48.669143365Z",
+    "version": "1.251.0",
+    "generatedAt": "2026-06-25T03:23:34.884366082Z",
     "templateType": "trip_f",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2187,8 +2187,8 @@
           "enMain": null
         },
         "color": {
-          "primary": "#F5F5F5",
-          "secondary": "#5C82B4"
+          "primary": "#F8E9DB",
+          "secondary": "#274946"
         }
       },
       "property": {
