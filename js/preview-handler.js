@@ -484,6 +484,7 @@ class PreviewHandler {
             mapper.data = data;
             mapper.isDataLoaded = true;
             await mapper.mapPage();
+            if (window.__tplReveal) window.__tplReveal(); // 매핑 완료 → 화면 노출(페이드인)
         }
 
         await this.waitForHeaderDOM();

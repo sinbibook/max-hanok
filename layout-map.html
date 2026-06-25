@@ -1,4 +1,7 @@
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" class="is-smooth-scroll-compatible is-loading"><head>
+        <!-- 렌더 게이트: 매핑 전 placeholder/fallback 깜빡임 방지 (매핑 완료 시 페이드인) -->
+        <style>html.tpl-loading body{opacity:0}body{opacity:1;transition:opacity .3s ease}</style>
+        <script>document.documentElement.classList.add('tpl-loading');window.__tplReveal=function(){document.documentElement.classList.remove('tpl-loading');};setTimeout(function(){window.__tplReveal&&window.__tplReveal();},3000);</script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta property="og:type" content="website">

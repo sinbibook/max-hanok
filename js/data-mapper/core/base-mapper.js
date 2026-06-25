@@ -18,9 +18,11 @@
         self.data = json;
         self.isDataLoaded = true;
         self.mapPage();
+        if (window.__tplReveal) window.__tplReveal(); // 매핑 완료 → 화면 노출(페이드인)
       })
       .catch(function (err) {
         console.error('[BaseDataMapper] initialize error:', err);
+        if (window.__tplReveal) window.__tplReveal(); // 실패해도 화면은 노출
       });
   };
 
@@ -30,6 +32,7 @@
     this.data = newData;
     this.isDataLoaded = true;
     this.mapPage();
+    if (window.__tplReveal) window.__tplReveal(); // 매핑 완료 → 화면 노출(페이드인)
   };
 
   // ── 데이터 접근 헬퍼 ──────────────────────────────────────
