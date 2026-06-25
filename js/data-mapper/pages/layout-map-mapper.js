@@ -1,226 +1,249 @@
-(function (global) {
-  'use strict';
+// Layout Map Page Mapper - 레이아웃 맵 페이지 동적 매핑
+var LayoutMapMapper = {
+  map: function(data) {
+    if (!data) return;
 
-  var ROOM_COUNT_LABELS = {
-    bedroom: '침대룸',
-    bathroom: '화장실',
-    livingRoom: '거실',
-    ondol: '온돌룸',
-    kitchen: '주방'
-  };
+    // MAPPER: homepage.customFields.pages.layoutMap.sections[0].hero.images[isSelected]
+    this.mapHeroImage(data);
 
-  // roomStructures[0] + "/ " + totalRoomCount 값≥1 항목 한글 나열 (room-mapper와 동일)
-  function buildRoomStructure(room) {
-    if (!room) return '';
-    var structures = room.roomStructures || [];
-    var base = structures.length ? structures[0] : '';
-    var counts = room.totalRoomCount || {};
-    var labels = [];
-    Object.keys(ROOM_COUNT_LABELS).forEach(function (key) {
-      if (counts[key] >= 1) labels.push(ROOM_COUNT_LABELS[key]);
+    // Room Navigation 매핑
+    this.mapRoomNavigation(data);
+
+    // MAPPER: homepage.customFields.pages.layoutMap.sections[0].about.title
+    this.mapConTitle(data);
+
+    // MAPPER: homepage.customFields.pages.layoutMap.sections[0].about.images[].description (3개까지)
+    this.mapConSubtitle(data);
+
+    // Con3: Room Preview Swiper (그대로 유지)
+    this.mapRoomPreview(data);
+
+    // MAPPER: homepage.customFields.pages.layoutMap.sections[0].about.images[0].url
+    this.mapConImage(data);
+    this.updateMetaTags(data);
+  },
+
+  // Con0: Hero 이미지 매핑 (homepage.customFields.pages.layoutMap.sections[0].hero.images[isSelected])
+  mapHeroImage: function(data) {
+    var slide = document.querySelector('.con0 .swiper-slide');
+    if (!slide) return;
+
+    var imgDiv = slide.querySelector('.img');
+    if (!imgDiv) return;
+
+    var layoutMap = data.homepage && data.homepage.customFields &&
+                    data.homepage.customFields.pages &&
+                    data.homepage.customFields.pages.layoutMap &&
+                    data.homepage.customFields.pages.layoutMap.sections &&
+                    data.homepage.customFields.pages.layoutMap.sections[0];
+
+    if (layoutMap && layoutMap.hero && layoutMap.hero.images) {
+      var selectedImg = layoutMap.hero.images.find(function(img) { return img.isSelected; }) || layoutMap.hero.images[0];
+
+      if (selectedImg && selectedImg.url) {
+        imgDiv.style.backgroundImage = 'url(' + selectedImg.url + ')';
+        imgDiv.style.backgroundRepeat = 'no-repeat';
+        imgDiv.style.backgroundPosition = 'center';
+        imgDiv.style.backgroundSize = 'cover';
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+      }
+    } else {
+      ImageHelpers.applyBackgroundPlaceholder(imgDiv);
+    }
+  },
+
+  // Room Navigation (snb_wrap ul) - 객실명=roomtypes, status=rooms id 매칭
+  mapRoomNavigation: function(data) {
+    var ul = document.querySelector('[data-room-nav-list]');
+    if (!ul) return;
+
+    var cf = (data && data.homepage && data.homepage.customFields) || (data && data.customFields) || {};
+    var roomtypes = cf.roomtypes || [];
+    var rooms = (data && data.rooms) || [];
+
+    // 미리보기(첫 번째 li) 제외한 나머지 li 제거
+    var lis = ul.querySelectorAll('li');
+    for (var i = lis.length - 1; i > 0; i--) {
+      lis[i].remove();
+    }
+
+    // room 링크 추가 (roomtypes 순회, 이름 있는 active 객실만)
+    roomtypes.forEach(function(rt) {
+      if (!rt.name || !rt.name.trim()) return;
+      var matched = rooms.find(function(r) { return r.id === rt.id; });
+      if (matched && matched.status === 'inactive') return;
+      var li = document.createElement('li');
+      var link = document.createElement('a');
+      link.href = 'room.html?room_id=' + rt.id;
+      link.textContent = rt.name;
+
+      li.appendChild(link);
+      ul.appendChild(li);
     });
-    if (base && labels.length) return base + '/ ' + labels.join(' ');
-    return base || labels.join(' ');
-  }
 
-  function LayoutMapMapper() {
-    BaseDataMapper.call(this);
-  }
-  LayoutMapMapper.prototype = Object.create(BaseDataMapper.prototype);
-  LayoutMapMapper.prototype.constructor = LayoutMapMapper;
-
-  LayoutMapMapper.prototype.mapPage = function () {
-    // enabled=false이면 404로 리다이렉트
-    var pages = this.getPages();
-    if (!pages.layoutMap ||
-        !pages.layoutMap.sections ||
-        !pages.layoutMap.sections[0] ||
-        pages.layoutMap.sections[0].enabled === false) {
-      window.location.href = '404.html';
-      return;
+    // Layout-map 페이지이므로 미리보기가 항상 active
+    var previewLi = ul.querySelector('li');
+    if (previewLi) {
+      previewLi.className = 'active';
     }
+  },
 
-    this.mapPropertyName();
-    this.mapHero();
-    this.mapLayoutContent();
-    this.mapRoomPreview();
-    this.updateMetaTags();
+  // Con3: Title 매핑 (homepage.customFields.pages.layoutMap.sections[0].about.title)
+  mapConTitle: function(data) {
+    var titleEl = document.querySelector('.con3 .conTitle .title');
+    if (!titleEl) return;
 
-    // 슬라이드 DOM 주입 완료를 알림 → layout-map.js에서 Swiper 초기화 (localhost/preview 공통)
-    document.dispatchEvent(new CustomEvent('template:rendered', { detail: { page: 'layoutMap' } }));
-  };
+    var layoutMap = data.homepage && data.homepage.customFields &&
+                    data.homepage.customFields.pages &&
+                    data.homepage.customFields.pages.layoutMap &&
+                    data.homepage.customFields.pages.layoutMap.sections &&
+                    data.homepage.customFields.pages.layoutMap.sections[0];
 
-  // MAPPER: property.name → 숙소명
-  LayoutMapMapper.prototype.mapPropertyName = function () {
-    var propertyName = this.getPropertyName();
-    var propertyNameEl = document.querySelector('[data-property-name]');
-    if (propertyNameEl) {
-      propertyNameEl.textContent = propertyName;
+    if (layoutMap && layoutMap.about && layoutMap.about.title) {
+      titleEl.textContent = layoutMap.about.title;
     }
-  };
+  },
 
-  // MAPPER: customFields.pages.layoutMap.sections[0].hero.images[isSelected]
-  LayoutMapMapper.prototype.mapHero = function () {
-    var pages = this.getPages();
-    var hero = pages.layoutMap && pages.layoutMap.sections && pages.layoutMap.sections[0] && pages.layoutMap.sections[0].hero;
-    if (!hero) return;
+  // Con3: SubTitle (Tags) 매핑 (layoutMap.about.images[].description → # 기준으로 분리)
+  mapConSubtitle: function(data) {
+    var subTitleEl = document.querySelector('.con3 .conTitle .subTitle');
+    if (!subTitleEl) return;
 
-    var images = this.getSelectedImages(hero.images || []);
-    var wrapper = document.querySelector('[data-layout-map-hero-slides]');
+    subTitleEl.innerHTML = '';
 
-    if (wrapper) {
-      wrapper.innerHTML = '';
-      if (images.length) {
-        images.forEach(function (img) {
-          var div = document.createElement('div');
-          div.className = 'swiper-slide';
-          div.innerHTML = '<img src="' + img.url + '" alt="" /><div class="tx1">배치도</div>';
-          wrapper.appendChild(div);
+    var layoutMap = data.homepage?.customFields?.pages?.layoutMap?.sections?.[0];
+    var images = layoutMap?.about?.images || [];
+    var tags = [];
+
+    images.forEach(function(img) {
+      if (img && img.description) {
+        img.description.split('#').map(function(s) { return s.trim(); }).filter(Boolean).forEach(function(t) {
+          tags.push(t);
         });
-      } else {
-        // Placeholder when no images
-        var placeholderDiv = document.createElement('div');
-        placeholderDiv.className = 'swiper-slide';
-        var img = document.createElement('img');
-        ImageHelpers.applyPlaceholder(img);
-        img.alt = 'Layout Map Hero';
-        var titleDiv = document.createElement('div');
-        titleDiv.className = 'tx1';
-        titleDiv.textContent = '배치도';
-        placeholderDiv.appendChild(img);
-        placeholderDiv.appendChild(titleDiv);
-        wrapper.appendChild(placeholderDiv);
       }
-    }
+    });
 
-    // 또는 단일 이미지 요소
-    var heroImg = document.querySelector('[data-layout-map-hero-image]');
-    if (heroImg) {
-      if (images.length) {
-        heroImg.style.backgroundImage = 'url(' + images[0].url + ')';
-        heroImg.style.backgroundPosition = 'center';
-        heroImg.style.backgroundSize = 'cover';
-        heroImg.style.backgroundRepeat = 'no-repeat';
-      } else {
-        // background-image placeholder
-        heroImg.style.backgroundColor = '#f0f0f0';
-        heroImg.style.backgroundImage = ImageHelpers.EMPTY_IMAGE_SVG;
-        heroImg.style.backgroundRepeat = 'no-repeat';
-        heroImg.style.backgroundPosition = 'center';
-        heroImg.style.backgroundSize = 'cover';
-      }
-    }
-
-    // hero.title을 "ROOM PREVIEW" 영역에 매핑 (1순위) / fallback: 현재값
-    var heroTitleEl = document.querySelector('[data-layout-map-hero-title]');
-    if (heroTitleEl && hero.title && hero.title.trim()) {
-      heroTitleEl.textContent = hero.title;
-    }
-
-    // hero.description을 "객실 배치도" 영역에 매핑 (1순위) / fallback: 현재값
-    var heroDescEl = document.querySelector('[data-layout-map-hero-description]');
-    if (heroDescEl && hero.description && hero.description.trim()) {
-      heroDescEl.innerHTML = hero.description
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-    }
-  };
-
-  // MAPPER: customFields.pages.layoutMap.sections[0].about (이미지 + 설명)
-  LayoutMapMapper.prototype.mapLayoutContent = function () {
-    var pages = this.getPages();
-    var about = pages.layoutMap && pages.layoutMap.sections && pages.layoutMap.sections[0] && pages.layoutMap.sections[0].about;
-    if (!about) return;
-
-    // 제목
-    var titleEl = document.querySelector('[data-layout-map-about-title]');
-    if (titleEl && about.title) titleEl.textContent = about.title;
-
-    // 설명
-    var descEl = document.querySelector('[data-layout-map-about-description]');
-    if (descEl && about.description) {
-      descEl.innerHTML = about.description
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-    }
-
-    // 이미지들 (각 이미지마다 설명)
-    if (about.images && about.images.length) {
-      about.images.forEach(function (image, index) {
-        var imgEl = document.querySelector('[data-layout-map-image-' + index + ']');
-        if (imgEl) {
-          if (image.url) {
-            imgEl.src = image.url;
-          } else {
-            ImageHelpers.applyPlaceholder(imgEl);
-          }
-        }
+    if (tags.length) {
+      tags.forEach(function(tag) {
+        var tagEl = document.createElement('div');
+        tagEl.className = 'tag';
+        tagEl.textContent = '#' + tag;
+        subTitleEl.appendChild(tagEl);
       });
     } else {
-      // Placeholder when no images
-      for (var i = 0; i < 2; i++) {
-        var imgEl = document.querySelector('[data-layout-map-image-' + i + ']');
-        if (imgEl) {
-          ImageHelpers.applyPlaceholder(imgEl);
-        }
+      for (var i = 0; i < 3; i++) {
+        var tagEl = document.createElement('div');
+        tagEl.className = 'tag';
+        tagEl.textContent = '#이미지설명';
+        subTitleEl.appendChild(tagEl);
       }
     }
-  };
+  },
 
-  // MAPPER: customFields.roomtypes[] (+ rooms[] id매칭) → [data-index-room-slides]
-  LayoutMapMapper.prototype.mapRoomPreview = function () {
-    var roomtypes = this.getRoomtypes();
-    var rooms = (this.data && this.data.rooms) || [];
-    var wrapper = document.querySelector('[data-index-room-slides]');
+  // Con3: Room Preview Swiper (객실명/이미지=roomtypes, 설명/status=rooms id 매칭)
+  mapRoomPreview: function(data) {
+    var wrapper = document.querySelector('.con3 .swiper-wrapper');
     if (!wrapper) return;
 
+    var cf = (data && data.homepage && data.homepage.customFields) || (data && data.customFields) || {};
+    var roomtypes = cf.roomtypes || [];
+    var rooms = (data && data.rooms) || [];
+
     wrapper.innerHTML = '';
-    if (!roomtypes.length) return;
 
-    var self = this;
-    roomtypes.forEach(function (rt) {
+    if (roomtypes.length === 0) return;
+
+    roomtypes.forEach(function(rt) {
       if (!rt.name || !rt.name.trim()) return;
-      var thumbUrl = self.getFirstSelectedImage(
-        (rt.images || []).filter(function (img) {
-          return img.category === 'roomtype_thumbnail';
-        })
-      );
-      var matched = rooms.filter(function (r) {
-        return r.id === rt.id;
-      })[0];
 
-      var div = document.createElement('div');
-      div.className = 'swiper-slide';
-      div.setAttribute('data-title', rt.name || '');
+      var matched = rooms.find(function(r) { return r.id === rt.id; });
+      if (matched && matched.status === 'inactive') return;
 
-      var img = document.createElement('img');
-      if (thumbUrl) {
-        img.src = thumbUrl;
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+
+      var link = document.createElement('a');
+      link.href = 'room.html?room_id=' + rt.id;
+
+      var imgDiv = document.createElement('div');
+      imgDiv.className = 'img';
+
+      // roomtype_thumbnail 중 isSelected === true (sortOrder순) 첫 이미지
+      var thumbs = (rt.images || []).filter(function(im) { return im.category === 'roomtype_thumbnail' && im.isSelected; });
+      thumbs.sort(function(a, b) { return (a.sortOrder || 0) - (b.sortOrder || 0); });
+      var thumbnailUrl = thumbs[0] && thumbs[0].url ? thumbs[0].url : null;
+
+      if (thumbnailUrl) {
+        imgDiv.style.backgroundImage = 'url(' + thumbnailUrl + ')';
+        imgDiv.style.backgroundRepeat = 'no-repeat';
+        imgDiv.style.backgroundPosition = 'center';
+        imgDiv.style.backgroundSize = 'cover';
       } else {
-        ImageHelpers.applyPlaceholder(img);
+        ImageHelpers.applyBackgroundPlaceholder(imgDiv);
       }
-      img.alt = rt.name || '';
 
-      var a = document.createElement('a');
-      a.href = 'room.html?id=' + rt.id;
-      a.className = 'tx';
-      a.innerHTML =
-        '<div class="tx1">' + (rt.name || '') + '</div>' +
-        '<div class="tx2">' + buildRoomStructure(matched) + '</div>' +
-        '<div class="more"></div>';
+      var txDiv = document.createElement('div');
+      txDiv.className = 'tx';
 
-      div.appendChild(img);
-      div.appendChild(a);
-      wrapper.appendChild(div);
+      var tx1 = document.createElement('div');
+      tx1.className = 'tx1';
+      tx1.textContent = rt.name || '';
+
+      var tx2 = document.createElement('div');
+      tx2.className = 'tx2';
+      tx2.textContent = (matched && (matched.description || matched.roomInfo)) || '';
+
+      txDiv.appendChild(tx1);
+      txDiv.appendChild(tx2);
+
+      link.appendChild(imgDiv);
+      link.appendChild(txDiv);
+      slide.appendChild(link);
+      wrapper.appendChild(slide);
     });
-  };
+  },
 
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.previewHandler) return;
-    var mapper = new LayoutMapMapper();
-    mapper.initialize();
-    global.layoutMapMapperInstance = mapper;
-  });
+  // Con5: Image 매핑 (homepage.customFields.pages.layoutMap.sections[0].about.images[0].url)
+  mapConImage: function(data) {
+    var imgEl = document.querySelector('.con5 .img img');
+    if (!imgEl) return;
 
-  global.LayoutMapMapper = LayoutMapMapper;
-})(window);
+    var layoutMap = data.homepage && data.homepage.customFields &&
+                    data.homepage.customFields.pages &&
+                    data.homepage.customFields.pages.layoutMap &&
+                    data.homepage.customFields.pages.layoutMap.sections &&
+                    data.homepage.customFields.pages.layoutMap.sections[0];
+
+    if (layoutMap && layoutMap.about && layoutMap.about.images && layoutMap.about.images[0] && layoutMap.about.images[0].url) {
+      imgEl.src = layoutMap.about.images[0].url;
+    } else {
+      ImageHelpers.applyPlaceholder(imgEl);
+    }
+  }
+,
+
+  updateMetaTags: function(data) {
+    var hp = data && data.homepage || {};
+    var seo = (hp && hp.seo) || {};
+    
+    if (seo.title) {
+      var titleEl = document.querySelector('title');
+      if (titleEl) titleEl.textContent = seo.title;
+    }
+    
+    if (seo.description) {
+      var metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', seo.description);
+      }
+    }
+    
+    if (seo.keywords) {
+      var metaKeys = document.querySelector('meta[name="keywords"]');
+      if (metaKeys) {
+        metaKeys.setAttribute('content', seo.keywords);
+      }
+    }
+  }
+};
