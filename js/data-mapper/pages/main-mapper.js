@@ -256,11 +256,10 @@
       titleEl.textContent = (closing && closing.title) || 'YOUR PERFECT STAY';
     }
 
-    // Description 매핑 (\n을 <br>로 변환)
+    // Description 매핑 (\n을 <br>로 변환, 빈 값도 반영)
     var descEl = document.querySelector('[data-closing-description]');
-    if (descEl && closing.description) {
-      var html = closing.description.replace(/\n/g, '<br>');
-      descEl.innerHTML = html;
+    if (descEl) {
+      descEl.innerHTML = closing.description ? closing.description.replace(/\n/g, '<br>') : '';
     }
 
     // Images 매핑 (isSelected=true인 첫번째)
@@ -269,7 +268,7 @@
       if (closing.images && closing.images.length > 0) {
         var selectedImg = closing.images.find(function (img) { return img.isSelected; });
         if (selectedImg && selectedImg.url) {
-          imgEl.src = selectedImg.url;
+          ImageHelpers.setImage(imgEl, selectedImg.url);
         } else {
           ImageHelpers.applyPlaceholder(imgEl);
         }

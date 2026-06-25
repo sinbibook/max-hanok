@@ -170,8 +170,8 @@
 
     // 이용안내 설명
     var descEl = document.querySelector('[data-directions-notice-description]');
-    if (descEl && notice.description) {
-      descEl.innerHTML = notice.description.replace(/\n/g, '<br>');
+    if (descEl) {
+      descEl.innerHTML = notice.description ? notice.description.replace(/\n/g, '<br>') : '';
     }
   };
 

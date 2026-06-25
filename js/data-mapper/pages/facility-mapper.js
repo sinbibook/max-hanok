@@ -46,14 +46,14 @@
     return facilities[0];
   };
 
-  // MAPPER: customFields.pages.facility[현재 id].sections[0].about.title
-  FacilityMapper.prototype.getFacilityAboutTitle = function (f) {
+  // MAPPER: customFields.pages.facility[현재 id].sections[0].hero.title
+  FacilityMapper.prototype.getFacilityHeroTitle = function (f) {
     if (!f) return '';
     var facPages = this.getPages().facility;
     if (!Array.isArray(facPages)) return '';
     var entry = facPages.find(function (p) { return p.id === f.id; });
-    var about = entry && entry.sections && entry.sections[0] && entry.sections[0].about;
-    return (about && about.title) ? about.title : '';
+    var hero = entry && entry.sections && entry.sections[0] && entry.sections[0].hero;
+    return (hero && hero.title) ? hero.title : '';
   };
 
   // MAPPER: customFields.pages.facility[현재 id].sections[0].experience
@@ -158,7 +158,7 @@
   };
 
   // MAPPER: property.facilities[current].name → con11 타이틀
-  // MAPPER: property.facilities[current].usageGuide → con11 설명 텍스트
+  // MAPPER: customFields hero.title 우선 → 없으면 property.facilities[current].usageGuide → con11 설명 텍스트
   FacilityMapper.prototype.mapFacilityInfo = function () {
     var f = this.getCurrentFacility();
     if (!f) return;
@@ -167,10 +167,10 @@
       el.textContent = f.name || '';
     });
 
-    // about title(customFields) 우선 → 입력 안 했으면 usageGuide fallback
+    // hero title(customFields) 우선 → 입력 안 했으면 property usageGuide fallback
     // 빈 값도 항상 반영 → 프리뷰에서 실시간으로 지워지고 바뀜
-    var aboutTitle = this.getFacilityAboutTitle(f);
-    var usageText = (aboutTitle && aboutTitle.trim()) ? aboutTitle : (f.usageGuide || '');
+    var heroTitle = this.getFacilityHeroTitle(f);
+    var usageText = (heroTitle && heroTitle.trim()) ? heroTitle : (f.usageGuide || '');
     document.querySelectorAll('[data-facility-usage]').forEach(function (usageEl) {
       usageEl.innerHTML = usageText
         .replace(/&/g, '&amp;')

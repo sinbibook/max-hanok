@@ -420,38 +420,27 @@ class PreviewHandler {
 
     async renderTemplate(data) {
         const currentPage = this.getCurrentPageType();
-        let mapper = null;
 
-        switch (currentPage) {
-            case 'index':
-                if (window.IndexMapper) mapper = new IndexMapper();
-                break;
-            case 'main':
-                if (window.MainMapper) mapper = new MainMapper();
-                break;
-            case 'room':
-                if (window.RoomMapper) mapper = new RoomMapper();
-                break;
-            case 'facility':
-                if (window.FacilityMapper) mapper = new FacilityMapper();
-                break;
-            case 'reservation':
-                if (window.ReservationMapper) mapper = new ReservationMapper();
-                break;
-            case 'directions':
-                if (window.DirectionsMapper) mapper = new DirectionsMapper();
-                break;
-            case 'nearbyAttractions':
-                if (window.NearbyAttractionsMapper) mapper = new NearbyAttractionsMapper();
-                break;
-            case 'layoutMap':
-                if (window.LayoutMapMapper) mapper = new LayoutMapMapper();
-                break;
-            default:
-                return;
-        }
+        const mapperClassByPage = {
+            index: 'IndexMapper',
+            main: 'MainMapper',
+            room: 'RoomMapper',
+            facility: 'FacilityMapper',
+            reservation: 'ReservationMapper',
+            directions: 'DirectionsMapper',
+            nearbyAttractions: 'NearbyAttractionsMapper',
+            layoutMap: 'LayoutMapMapper'
+        };
 
-        if (mapper) {
+        const mapperName = mapperClassByPage[currentPage];
+        if (!mapperName) return;
+
+        // 데이터(INITIAL_DATA)가 매퍼 스크립트보다 먼저 도착할 수 있으므로
+        // (preview-handler.js 가 mapper 스크립트보다 먼저 TEMPLATE_READY 를 보냄)
+        // 클래스가 정의될 때까지 잠깐 대기 → 초기 렌더 누락(빈값/placeholder) 방지
+        const MapperClass = await this.waitForGlobal(mapperName);
+        if (MapperClass) {
+            const mapper = new MapperClass();
             mapper.data = data;
             mapper.isDataLoaded = true;
             await mapper.mapPage();
@@ -459,8 +448,9 @@ class PreviewHandler {
 
         await this.waitForHeaderDOM();
 
-        if (window.HeaderFooterMapper) {
-            const headerFooterMapper = new window.HeaderFooterMapper();
+        const HeaderFooterMapperClass = await this.waitForGlobal('HeaderFooterMapper');
+        if (HeaderFooterMapperClass) {
+            const headerFooterMapper = new HeaderFooterMapperClass();
             headerFooterMapper.data = data;
             headerFooterMapper.isDataLoaded = true;
             await headerFooterMapper.mapPage();
@@ -469,6 +459,28 @@ class PreviewHandler {
         if (window._checkPageEnabled) {
             window._checkPageEnabled();
         }
+    }
+
+    // window[name] 전역(매퍼 클래스 등)이 정의될 때까지 폴링 대기.
+    // 이미 로드되어 있으면 즉시 반환하므로 정상 케이스 성능 영향 없음.
+    async waitForGlobal(name, maxWaitTime = 3000) {
+        const checkInterval = 30;
+        let waitedTime = 0;
+
+        return new Promise((resolve) => {
+            const check = () => {
+                if (window[name]) {
+                    resolve(window[name]);
+                } else if (waitedTime >= maxWaitTime) {
+                    resolve(window[name] || null);
+                } else {
+                    waitedTime += checkInterval;
+                    setTimeout(check, checkInterval);
+                }
+            };
+
+            check();
+        });
     }
 
     async waitForHeaderDOM() {
