@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.242.0",
-    "generatedAt": "2026-06-25T01:14:41.481121762Z",
+    "version": "1.243.0",
+    "generatedAt": "2026-06-25T01:17:49.868880467Z",
     "templateType": "trip_e",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1386,7 +1386,7 @@
           "sections": [
             {
               "hero": {
-                "title": "전통 한옥의 느낌",
+                "title": "MAX HANOK PENSION",
                 "images": [
                   {
                     "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
