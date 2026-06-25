@@ -77,7 +77,7 @@
           var m = self.getMatchedRoom(rt);
           return m && m.status === 'active';
         });
-        roomsLink.href = firstActive ? ('room.html?id=' + firstActive.id) : 'room.html';
+        roomsLink.href = firstActive ? ('room.html?room_id=' + firstActive.id) : 'room.html';
       }
     }
 
@@ -176,7 +176,7 @@
     var lis = roomtypes
       .filter(function (rt) { return rt.name && rt.name.trim(); })
       .map(function (rt) {
-        return '<li data-mapped><a href="room.html?id=' + escapeHtml(rt.id) + '">' +
+        return '<li data-mapped><a href="room.html?room_id=' + escapeHtml(rt.id) + '">' +
           escapeHtml(rt.name) + '</a></li>';
       });
 
