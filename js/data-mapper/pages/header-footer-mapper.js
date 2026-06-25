@@ -1,8 +1,6 @@
 (function (global) {
   'use strict';
 
-  var YBS_BASE_URL = 'https://www.yapen.co.kr/external?ypIdx=';
-
   function HeaderFooterMapper() {
     BaseDataMapper.call(this);
   }
@@ -12,105 +10,142 @@
   HeaderFooterMapper.prototype.mapPage = function () {
     this.mapLogo();
     this.mapBookingLinks();
-    this.mapYbs();
+    this.mapYbsButton();
     this.mapRoomMenu();
     this.mapFacilityMenu();
-    this.mapPageToggles();
-    this.mapAllmenuBg();
+    this.mapFooterMenu();
+    this.mapTravelMenu();
+    this.mapHeaderNavHover();
     this.mapFooter();
   };
 
-  // 숙소 대표이미지: property.images[0].thumbnail[isSelected][0] (없으면 exterior)
-  HeaderFooterMapper.prototype.getRepresentativeImage = function () {
-    var images = (this.getProperty().images || [])[0] || {};
-    return (
-      this.getFirstSelectedImage(images.thumbnail || []) ||
-      this.getFirstSelectedImage(images.exterior || [])
-    );
+  // MAPPER: nearbyAttractions.enabled === false 이면 TRAVEL/주변여행지 메뉴 숨김 (헤더 PC·모바일 + 푸터)
+  HeaderFooterMapper.prototype.mapTravelMenu = function () {
+    var pages = this.getPages();
+    var na = pages.nearbyAttractions && pages.nearbyAttractions.sections &&
+      pages.nearbyAttractions.sections[0];
+    var hide = !!(na && na.enabled === false);
+    document.querySelectorAll('[data-travel-menu]').forEach(function (el) {
+      el.style.display = hide ? 'none' : '';
+    });
   };
 
-  // customFields.roomtypes (localhost / preview 경로 모두 대응)
-  HeaderFooterMapper.prototype.getRoomtypes = function () {
-    var cf = this.getCustomFields();
-    if (cf.roomtypes && cf.roomtypes.length) return cf.roomtypes;
-    if (this.data && this.data.customFields && this.data.customFields.roomtypes) {
-      return this.data.customFields.roomtypes;
+  // MAPPER: footer 대메뉴 → 헤더 각 대메뉴의 첫 서브메뉴로 이동
+  HeaderFooterMapper.prototype.mapFooterMenu = function () {
+    // ROOMS: layoutMap(미리보기)이 enabled면 layout-map.html, 아니면 첫 활성 객실
+    var roomsLink = document.querySelector('[data-footer-rooms-link]');
+    if (roomsLink) {
+      var pages = this.getPages();
+      var layoutEnabled = pages.layoutMap && pages.layoutMap.sections &&
+        pages.layoutMap.sections[0] && pages.layoutMap.sections[0].enabled !== false;
+      if (layoutEnabled) {
+        roomsLink.href = 'layout-map.html';
+      } else {
+        var self = this;
+        var firstActive = this.getRoomtypes().filter(function (rt) {
+          return rt.name && rt.name.trim();
+        }).find(function (rt) {
+          var m = self.getMatchedRoom(rt);
+          return m && m.status === 'active';
+        });
+        roomsLink.href = firstActive ? ('room.html?id=' + firstActive.id) : 'room.html';
+      }
     }
-    return cf.roomtypes || [];
+
+    // SPECIAL: 첫 facility
+    var specialLink = document.querySelector('[data-footer-special-link]');
+    if (specialLink) {
+      var facilities = this.getProperty().facilities || [];
+      if (facilities.length) {
+        specialLink.href = 'facility.html?id=' + facilities[0].id;
+      }
+    }
   };
 
-  // 페이지 enabled 여부 (sections[0].enabled === false 이면 비활성)
-  HeaderFooterMapper.prototype.isPageEnabled = function (pageKey) {
-    var page = this.getPages()[pageKey];
-    var section = page && page.sections && page.sections[0];
-    return !(section && section.enabled === false);
-  };
-
-  // MAPPER: homepage.images[0].logo[isSelected].url → [data-logo]
-  // F 템플릿 로고는 <a data-logo style="background-image:..."> (배경이미지). <img data-logo>도 호환.
+  // MAPPER: homepage.images[0].logo[isSelected].url
   HeaderFooterMapper.prototype.mapLogo = function () {
     var logoUrl = this.getLogo();
-    document.querySelectorAll('[data-logo]').forEach(function (el) {
-      if (el.tagName === 'IMG') {
-        if (logoUrl) {
-          el.src = logoUrl;
-        } else {
-          ImageHelpers.applyPlaceholder(el);
-        }
-      } else if (logoUrl) {
-        // 배경이미지 로고
-        el.style.backgroundImage = "url('" + logoUrl + "')";
-      } else {
-        // 데이터 없으면 empty placeholder (정적 logo.png fallback 안 씀)
-        ImageHelpers.applyBackgroundPlaceholder(el);
+    var els = document.querySelectorAll('[data-logo]');
+    if (!els || !els.length) return;
+
+    els.forEach(function (el) {
+      el.style.width = '140px';
+      el.style.height = 'auto';
+
+      if (logoUrl) {
+        el.src = logoUrl;
+        el.setAttribute('data-logo-mapped', '');
+      } else if (!el.hasAttribute('data-logo-mapped')) {
+        // 이전 실행에서 실제 로고가 이미 들어갔다면 placeholder로 덮어쓰지 않음
+        ImageHelpers.applyPlaceholder(el);
       }
     });
   };
 
-  // MAPPER: property.realtimeBookingId → [data-booking-link] (href 직접 주입)
+  // MAPPER: property.realtimeBookingId
   HeaderFooterMapper.prototype.mapBookingLinks = function () {
     var bookingUrl = this.getBookingUrl();
     document.querySelectorAll('[data-booking-link]').forEach(function (el) {
       if (bookingUrl && bookingUrl !== '#!') {
-        el.href = bookingUrl;
-        el.setAttribute('target', '_blank');
+        el.href = 'javascript:void(0)';
+        el.addEventListener('click', function () {
+          window.open(bookingUrl, '_blank');
+        });
       }
     });
   };
 
-  // MAPPER: property.ybsId → [data-ybs-button] (없으면 숨김)
-  HeaderFooterMapper.prototype.mapYbs = function () {
-    var ybsId = this.getProperty().ybsId;
-    document.querySelectorAll('[data-ybs-button]').forEach(function (el) {
-      if (!ybsId) {
-        el.style.display = 'none';
-        return;
-      }
-      el.style.display = '';
-      el.setAttribute('data-ybs-id', ybsId);
-      var target = el.tagName === 'A' ? el : el.querySelector('a');
-      if (target) {
-        target.href = YBS_BASE_URL + ybsId;
-        target.setAttribute('target', '_blank');
+  // MAPPER: property.ybsId
+  HeaderFooterMapper.prototype.mapYbsButton = function () {
+    var prop = this.getProperty();
+    var ybsId = prop.ybsId;
+    var ybs_url = 'https://rev.yapen.co.kr/external?ypIdx=';
+    var ybsButtons = document.querySelectorAll('[data-ybs-button]');
+
+    if (!ybsId) {
+      ybsButtons.forEach(function (button) {
+        button.style.display = 'none';
+      });
+      return;
+    }
+
+    ybsButtons.forEach(function (button) {
+      button.style.display = '';
+      button.setAttribute('data-ybs-id', ybsId);
+      // data-ybs-button이 <a> 자체(E)이거나 컨테이너 안의 <a>(C) 둘 다 지원
+      var link = (button.tagName === 'A') ? button : button.querySelector('a');
+      if (link) {
+        link.href = 'javascript:void(0)';
+        link.addEventListener('click', function () {
+          window.open(ybs_url + ybsId, '_blank');
+        });
       }
     });
   };
 
-  // MAPPER: roomtypes[].name → [data-rooms-submenu] (data-room-menu-link 앵커 뒤에 li 동적 생성)
+  // 매퍼가 추가한 항목만 제거 (중복 실행 대비 — 하드코딩 항목은 유지)
+  function clearMapped(container) {
+    if (!container) return;
+    container.querySelectorAll('[data-mapped]').forEach(function (el) {
+      el.parentNode.removeChild(el);
+    });
+  }
+
+  // MAPPER: roomtypes[].name → ROOMS 메뉴 동적 생성 (미리보기 다음에)
   HeaderFooterMapper.prototype.mapRoomMenu = function () {
     var roomtypes = this.getRoomtypes();
-    document.querySelectorAll('[data-rooms-submenu]').forEach(function (container) {
-      // 이전 생성분 제거 (preview 재렌더 대비)
-      container.querySelectorAll('[data-generated="room"]').forEach(function (li) {
-        li.remove();
-      });
+    // PC + 모바일 ROOMS 서브메뉴 둘 다 동적 생성 ("미리보기" 다음에 객실들 append)
+    var containers = document.querySelectorAll('[data-rooms-submenu], [data-rooms-submenu-mobile]');
+    if (!containers.length) return;
+
+    containers.forEach(function (container) {
+      clearMapped(container);
       roomtypes.forEach(function (rt) {
-        // 이름 없는 객실타입은 빈 메뉴 항목(여백)이 되므로 건너뜀
         if (!rt.name || !rt.name.trim()) return;
         var li = document.createElement('li');
-        li.setAttribute('data-generated', 'room');
+        li.setAttribute('data-mapped', '');
         var a = document.createElement('a');
-        a.href = 'room.html?room_id=' + rt.id;
+        a.href = 'room.html?id=' + rt.id;
         a.textContent = rt.name;
         li.appendChild(a);
         container.appendChild(li);
@@ -118,88 +153,100 @@
     });
   };
 
-  // MAPPER: property.facilities[].name → [data-facility-menu-link] (컨테이너 비우고 li 동적 생성)
+  // MAPPER: property.facilities[].name → SPECIAL 메뉴 동적 생성
   HeaderFooterMapper.prototype.mapFacilityMenu = function () {
     var facilities = this.getProperty().facilities || [];
-    document.querySelectorAll('[data-facility-menu-link]').forEach(function (container) {
-      container.innerHTML = '';
+    var container = document.querySelector('[data-facility-submenu]');
+    var mobileContainer = document.querySelector('[data-facility-submenu-mobile]');
+
+    if (!container && !mobileContainer) return;
+
+    clearMapped(container);
+    clearMapped(mobileContainer);
+
+    [container, mobileContainer].forEach(function (target) {
+      if (!target) return;
       facilities.forEach(function (f) {
         var li = document.createElement('li');
+        li.setAttribute('data-mapped', '');
         var a = document.createElement('a');
         a.href = 'facility.html?id=' + f.id;
-        a.textContent = f.name || '';
+        a.textContent = f.name;
         li.appendChild(a);
-        container.appendChild(li);
+        target.appendChild(li);
       });
     });
   };
 
-  // MAPPER: pages.layoutMap / nearbyAttractions enabled → 메뉴 표시/숨김
-  HeaderFooterMapper.prototype.mapPageToggles = function () {
-    var layoutMapEnabled = this.isPageEnabled('layoutMap');
-    document.querySelectorAll('[data-menu-id="layout-map"]').forEach(function (el) {
-      el.style.display = layoutMapEnabled ? '' : 'none';
-    });
+  // 헤더 호버 스타일 처리
+  HeaderFooterMapper.prototype.mapHeaderNavHover = function () {
+    var gnb = document.getElementById('shGnb');
+    var navItems = document.querySelectorAll('.sh_nav .depth1');
+    var lnbBg = document.querySelector('.sh_lnb_bg');
 
-    var nearbyEnabled = this.isPageEnabled('nearbyAttractions');
-    document.querySelectorAll('[data-travel-menu]').forEach(function (el) {
-      el.style.display = nearbyEnabled ? '' : 'none';
+    navItems.forEach(function (item) {
+      item.addEventListener('mouseenter', function () {
+        if (gnb) {
+          gnb.classList.add('on');
+        }
+        if (lnbBg) {
+          lnbBg.style.display = 'block';
+        }
+        item.classList.add('on');
+      });
+
+      item.addEventListener('mouseleave', function () {
+        if (gnb) {
+          gnb.classList.remove('on');
+        }
+        if (lnbBg) {
+          lnbBg.style.display = 'none';
+        }
+        item.classList.remove('on');
+      });
     });
   };
 
-  // MAPPER: 숙소 대표이미지 → [data-allmenu-bg] (전체메뉴 오버레이 배경, 없으면 empty placeholder)
-  HeaderFooterMapper.prototype.mapAllmenuBg = function () {
-    var url = this.getRepresentativeImage();
-    document.querySelectorAll('[data-allmenu-bg]').forEach(function (el) {
-      if (url) {
-        el.style.background = 'url(' + url + ') no-repeat center bottom';
-        el.style.backgroundSize = 'cover';
-      } else {
-        ImageHelpers.applyBackgroundPlaceholder(el);
-      }
-    });
+  // 한글 받침 판별하여 "과/와" 선택
+  HeaderFooterMapper.prototype.getKoreanParticle = function (word) {
+    if (!word || word.length === 0) return '과';
+    var lastChar = word.charCodeAt(word.length - 1);
+    if (lastChar >= 0xAC00 && lastChar <= 0xD7A3) {
+      var code = lastChar - 0xAC00;
+      return (code % 28 !== 0) ? '과' : '와';
+    }
+    return '과';
   };
 
-  // MAPPER: property.businessInfo → footer 라인별 텍스트
+  // MAPPER: property.name, businessInfo.businessPhone, businessInfo
   HeaderFooterMapper.prototype.mapFooter = function () {
-    var biz = this.getProperty().businessInfo || {};
-    var fields = {
-      '[data-footer-phone]': biz.businessPhone,
-      '[data-footer-address]': biz.businessAddress,
-      '[data-footer-business-name]': biz.businessName,
-      '[data-footer-representative]': biz.representativeName,
-      '[data-footer-business-number]': biz.businessNumber
-    };
-    Object.keys(fields).forEach(function (selector) {
-      var value = fields[selector];
-      if (value === undefined || value === null || value === '') return;
-      document.querySelectorAll(selector).forEach(function (el) {
-        el.textContent = value;
-      });
-    });
+    var prop = this.getProperty();
 
-    // 전화번호 tel: 링크 (F 템플릿 푸터: <a data-footer-phone-link href="tel:...">)
-    if (biz.businessPhone) {
-      var tel = String(biz.businessPhone).replace(/[^0-9+]/g, '');
-      document.querySelectorAll('[data-footer-phone-link]').forEach(function (el) {
-        el.setAttribute('href', 'tel:' + tel);
-      });
+    // Footer 슬로건
+    var sloganEl = document.querySelector('[data-footer-slogan]');
+    if (sloganEl) {
+      var propertyName = this.getPropertyName();
+      var particle = this.getKoreanParticle(propertyName);
+      sloganEl.textContent = '지금 바로 ' + propertyName + particle + ' 함께해 보세요.';
     }
 
-    // 푸터 ROOMS 링크: layoutMap(미리보기) 활성 시 layout-map.html, 아니면 첫 번째 객실 room.html
-    // (헤더 ROOMS 메뉴의 미리보기 노출 로직 isPageEnabled('layoutMap')과 일관)
-    var roomLink;
-    if (this.isPageEnabled('layoutMap')) {
-      roomLink = 'layout-map.html';
-    } else {
-      var firstRoom = this.getRoomtypes().filter(function (rt) {
-        return rt.name && rt.name.trim();
-      })[0];
-      roomLink = firstRoom ? 'room.html?room_id=' + firstRoom.id : 'room.html';
+    // 업체 전화번호
+    var phoneEl = document.querySelector('[data-footer-phone]');
+    if (phoneEl && prop.businessInfo && prop.businessInfo.businessPhone) {
+      phoneEl.textContent = prop.businessInfo.businessPhone;
     }
-    document.querySelectorAll('[data-footer-room-link]').forEach(function (el) {
-      el.setAttribute('href', roomLink);
-    });
+
+    // 사업자 정보 (주소 / 사업자번호 / 대표자 — 줄바꿈 유지, 링크·pop은 형제이므로 건드리지 않음)
+    var bizEl = document.querySelector('[data-footer-business-info]');
+    if (bizEl && prop.businessInfo) {
+      var b = prop.businessInfo;
+      bizEl.innerHTML =
+        '주소 : ' + (b.businessAddress || '') + '<br>' +
+        '사업자 번호 : ' + (b.businessNumber || '') + '<br>' +
+        '대표자 : ' + (b.representativeName || '');
+    }
+
+    // 저작권 : 트립일레븐 하드코딩 (footer.html 정적 텍스트, 매핑 안 함)
   };
 
   document.addEventListener('headerFooterLoaded', function () {
