@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.251.0",
-    "generatedAt": "2026-06-25T03:23:34.884366082Z",
+    "version": "1.252.0",
+    "generatedAt": "2026-06-25T03:33:21.978255427Z",
     "templateType": "trip_f",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1552,7 +1552,7 @@
                 ],
                 "videos": [ ],
                 "mediaType": "image",
-                "description": "맥스펜션에서의 뜻깊은 순간들"
+                "description": "안녕하세요 맥스 펜션입니다."
               },
               "signature": {
                 "title": "주요 순간들",
