@@ -29,6 +29,16 @@
     return this.getProperty().facilities || [];
   };
 
+  // MAPPER: customFields.pages.facility[현재 id].sections[0].hero.title
+  FacilityMapper.prototype.getHeroTitle = function (f) {
+    if (!f) return '';
+    var list = this.getPages().facility;
+    if (!Array.isArray(list)) return '';
+    var entry = list.filter(function (p) { return String(p.id) === String(f.id); })[0];
+    var hero = entry && entry.sections && entry.sections[0] && entry.sections[0].hero;
+    return (hero && hero.title) ? hero.title : '';
+  };
+
   // ?id={facility.id} 로 현재 시설 결정 (없으면 첫 시설)
   FacilityMapper.prototype.getCurrent = function (facilities) {
     var id = new URLSearchParams(window.location.search).get('id');
@@ -95,7 +105,10 @@
   FacilityMapper.prototype.mapDetail = function (current) {
     setText('[data-facility-name]', current.name);
     setText('[data-facility-name-en]', this.getProperty().nameEn);
-    setHtml('[data-facility-description]', current.description || '');
+    // 이용안내: customFields hero.title 우선 → 없으면 facilities[].description fallback (빈 값도 항상 반영)
+    var heroTitle = this.getHeroTitle(current);
+    var descText = (heroTitle && heroTitle.trim()) ? heroTitle : (current.description || '');
+    setHtml('[data-facility-description]', descText);
 
     var images = this.getSelectedImages(current.images || []);
     setBg(document.querySelector('[data-facility-image]'), images[0] && images[0].url);

@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.253.0",
-    "generatedAt": "2026-06-25T06:39:20.179527021Z",
+    "version": "1.254.0",
+    "generatedAt": "2026-06-25T06:41:39.029346008Z",
     "templateType": "trip_f",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1678,40 +1678,35 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287240706-6fepbqg4ale.jpg",
                       "sortOrder": 0,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
+                      "isSelected": true
                     },
                     {
                       "id": "4da7168b-0587-49c0-9c6a-37d11f9d7371",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287240706-u5fxb3mio4.jpg",
                       "sortOrder": 1,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
+                      "isSelected": true
                     },
                     {
                       "id": "5f86d412-4ac0-4029-9a21-8bae524fce7b",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287201453-csrkd6t24su.jpg",
                       "sortOrder": 2,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
+                      "isSelected": true
                     },
                     {
                       "id": "1f18fa50-e2cb-467e-bae8-5a382228a317",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1776049077659-sv571oz4ckn.jpg",
                       "sortOrder": 3,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
+                      "isSelected": true
                     },
                     {
                       "id": "9ea22335-1e10-407f-b3bb-202deab7d12e",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1776049077660-ibm4decynh.jpg",
                       "sortOrder": 4,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
+                      "isSelected": true
                     }
                   ],
                   "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11",
@@ -1725,32 +1720,28 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857850-wnw3ksxcgib.jpg",
                       "sortOrder": 5,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
+                      "isSelected": true
                     },
                     {
                       "id": "3c262154-f606-4675-b1fc-7b951f74d8ba",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857849-94b8jg0plxq.jpg",
                       "sortOrder": 6,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
+                      "isSelected": true
                     },
                     {
                       "id": "b387ffb4-ffe9-4941-b4aa-68e849602957",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857850-4fft2g0x8n5.jpg",
                       "sortOrder": 7,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
+                      "isSelected": true
                     },
                     {
                       "id": "c0c33b74-f340-482c-9838-5adff5bf7b85",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1776049574612-j4oc68z9rj.jpg",
                       "sortOrder": 8,
                       "description": "",
-                      "isSelected": false,
-                      "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
+                      "isSelected": false
                     }
                   ],
                   "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23",
@@ -2006,24 +1997,21 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205991962-imhzssmzl6.jpg",
                       "sortOrder": 0,
                       "description": "숙소에서 1분 거리",
-                      "isSelected": true,
-                      "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
+                      "isSelected": true
                     },
                     {
                       "id": "704d54dd-ef4a-4f27-ae2d-e3b1633e01b1",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992294-f9qunm2pc0.jpg",
                       "sortOrder": 1,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
+                      "isSelected": true
                     },
                     {
                       "id": "1c8b1896-fad0-4816-8b95-d589d5d02f0a",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992098-gtrtvzpdgo.jpg",
                       "sortOrder": 2,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7"
+                      "isSelected": true
                     }
                   ],
                   "blockId": "3b384d76-69ca-42ee-8333-5407d392cae7",
@@ -2037,24 +2025,21 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992296-f5gkm63hiq.jpg",
                       "sortOrder": 3,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
+                      "isSelected": true
                     },
                     {
                       "id": "d97519d4-4241-4b4b-8a15-5a6974088030",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992205-r83cxkz1b1.jpg",
                       "sortOrder": 4,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
+                      "isSelected": true
                     },
                     {
                       "id": "d2d87917-782e-49e2-9350-7bc3465d98c7",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778205992184-qmbbuqh08t.jpg",
                       "sortOrder": 5,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95"
+                      "isSelected": true
                     }
                   ],
                   "blockId": "6ce47e5a-bbef-4f29-aeb9-762f968f7f95",
@@ -2068,8 +2053,7 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1778466050220-i4xn4h4on6.jpg",
                       "sortOrder": 6,
                       "description": "애견동반 객실이 준비되어 있습니다.",
-                      "isSelected": true,
-                      "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4"
+                      "isSelected": true
                     }
                   ],
                   "blockId": "5b807d21-78f2-4c85-9e45-25d18a061ad4",
@@ -2083,16 +2067,14 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1779167575107-dnyuwdwdmz.jpg",
                       "sortOrder": 7,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "7a3b058f-30c3-48a6-8b37-261bbf38fc09"
+                      "isSelected": true
                     },
                     {
                       "id": "6a1b1f13-5e27-4dfa-aec2-308f57a8a186",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1779167575081-wlec2mjm2n.jpg",
                       "sortOrder": 8,
                       "description": "",
-                      "isSelected": true,
-                      "blockId": "7a3b058f-30c3-48a6-8b37-261bbf38fc09"
+                      "isSelected": true
                     }
                   ],
                   "blockId": "7a3b058f-30c3-48a6-8b37-261bbf38fc09",
@@ -2159,16 +2141,14 @@
                 "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1767766134566-j4faoi5x3q8.jpg",
                 "sortOrder": 0,
                 "description": "",
-                "isSelected": true,
-                "blockId": "ab6f5b31-5ead-4e67-8f9f-4d3bfd7ce07d"
+                "isSelected": true
               },
               {
                 "id": "a821cdd0-46cb-4a32-a69f-99efa6ea066b",
                 "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1767766134567-vk1z03o4h0p.jpg",
                 "sortOrder": 1,
                 "description": "",
-                "isSelected": false,
-                "blockId": "ab6f5b31-5ead-4e67-8f9f-4d3bfd7ce07d"
+                "isSelected": false
               }
             ],
             "slider": true,

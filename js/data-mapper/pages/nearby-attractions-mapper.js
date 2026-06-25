@@ -15,9 +15,9 @@
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function pad2(n) { return ('0' + n).slice(-2); }
+  // 빈 값도 항상 반영 (백오피스에서 값 삭제 시 이전 값/기본 텍스트 잔존 방지)
   function setText(sel, val) {
-    if (!val) return;
-    document.querySelectorAll(sel).forEach(function (el) { el.textContent = val; });
+    document.querySelectorAll(sel).forEach(function (el) { el.textContent = (val == null ? '' : val); });
   }
 
   NearbyAttractionsMapper.prototype.getSection = function () {
