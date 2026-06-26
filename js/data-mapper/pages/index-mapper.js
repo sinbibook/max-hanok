@@ -209,7 +209,44 @@ var IndexMapper = {
           imgRolling.appendChild(placeholderDiv);
         }
       }
+
+      // 이미지를 채운 "뒤" 롤링 초기화 (main-mapper와 동일 방식 - 끊김 없는 마퀴)
+      this.initializeRolling(imgRolling);
     }
+  },
+
+  // ImgRolling 초기화 (이미지 1벌 복제 → 2배, totalWidth/2에서 리셋)
+  // common.js의 페이지 로드 시점 초기화는 컨테이너가 비어 있어 복제가 안 되므로
+  // 데이터 매핑이 끝난 이 시점에서 직접 초기화한다.
+  initializeRolling: function(container) {
+    if (!container) return;
+
+    // 원본 이미지 한 벌 복제
+    var images = container.querySelectorAll('.img:not([data-roll-clone])');
+    images.forEach(function(img) {
+      var clone = img.cloneNode(true);
+      clone.setAttribute('data-roll-clone', 'true');
+      container.appendChild(clone);
+    });
+
+    // 복제 후 폭 갱신 (재렌더 대응)
+    container._rollHalf = container.scrollWidth / 2;
+
+    // 롤링 루프는 1회만 시작 (재렌더 시 중복 루프 방지)
+    if (container._rolling) return;
+    container._rolling = true;
+
+    var position = 0;
+    var speed = 0.4;
+    function roll() {
+      position -= speed;
+      if (container._rollHalf > 0 && Math.abs(position) >= container._rollHalf) {
+        position = 0;
+      }
+      container.style.transform = 'translateX(' + position + 'px)';
+      requestAnimationFrame(roll);
+    }
+    roll();
   },
 
   // CON3: Essence 제목/태그 매핑
