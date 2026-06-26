@@ -1178,7 +1178,7 @@ body {
   height: 1px;
   padding-top: 20px;
   font-size: 14px;
-  color: #b39e91;
+  color: var(--color-secondary);
   white-space: nowrap;
 }
 @media (max-width: 1440px) {

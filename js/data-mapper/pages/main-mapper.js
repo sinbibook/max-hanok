@@ -160,7 +160,7 @@ var MainMapper = {
         titleEl.textContent = aboutItem.title;
       }
 
-      // 태그 매핑 (about.images[] - 최대 3개까지만)
+      // 태그 매핑 (about.images[] - description 있는 이미지 최대 3개)
       var subTitle = con2.querySelector('.subTitle');
       if (subTitle) {
         subTitle.innerHTML = '';
@@ -169,13 +169,15 @@ var MainMapper = {
         var hasDescription = aboutItem.images && aboutItem.images.some(function(img) { return img && img.description; });
 
         if (hasDescription) {
-          // 입력된 태그만 표시 (최대 3개까지)
-          aboutItem.images.forEach(function(img, index) {
-            if (index < 3 && img && img.description) {
+          // 입력된 태그만 표시 (배열 전체 순회, 최대 3개까지 - index-mapper와 동일 로직)
+          var tagCount = 0;
+          aboutItem.images.forEach(function(img) {
+            if (tagCount < 3 && img && img.description) {
               var tag = document.createElement('div');
               tag.className = 'tag';
               tag.textContent = '#' + img.description;
               subTitle.appendChild(tag);
+              tagCount++;
             }
           });
         } else {

@@ -4,7 +4,7 @@
 #snb_wrap
 =========================================================*/
 #snb_wrap{}
-#snb_wrap ul{font-size:0;text-align:center;max-width:1440px; margin:0 auto;margin-bottom:170px;border-bottom:2px solid var(--color-primary);}
+#snb_wrap ul{font-size:0;text-align:center;max-width:1440px; margin:0 auto;margin-bottom:170px;border-bottom:2px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);}
 #snb_wrap ul:after{display:block; content:"";clear:both}
 #snb_wrap ul:nth-child(n+2){border-top:1px solid #c8c7c3}
 #snb_wrap li{display:inline-block;vertical-align:top;}
@@ -67,7 +67,7 @@
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
         height: 67px;
-        border-bottom: 2px solid var(--color-primary);
+        border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
     }
 
     #snb_wrap ul::-webkit-scrollbar {

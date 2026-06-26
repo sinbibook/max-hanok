@@ -91,7 +91,7 @@
   max-width: 1440px;
   margin: 0 auto;
   margin-bottom: 200px;
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
 }
 #snb_wrap ul:after {
   display: block;
@@ -199,7 +199,7 @@
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     height: 67px;
-    border-bottom: 2px solid var(--color-primary);
+    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
   }
   #snb_wrap ul::-webkit-scrollbar {
     display: none;
