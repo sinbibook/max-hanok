@@ -39,36 +39,9 @@ $(document).ready(function () {
     $(".header .menu").toggleClass("active");
   });
 
-  // 이미지 롤링
-  function startRolling($container) {
-    if ($container.length) {
-      let position = 0;
-      const speed = 0.4;
-      const width = $container.width();
-      const totalWidth = $container[0].scrollWidth;
-
-      function roll() {
-        position -= speed;
-        if (Math.abs(position) >= totalWidth / 2) {
-          position = 0;
-        }
-        $container.css("transform", `translateX(${position}px)`);
-        requestAnimationFrame(roll);
-      }
-
-      roll();
-    }
-  }
-
-  function cloneImages($container) {
-    $container.find(".img").each(function () {
-      $container.append($(this).clone());
-    });
-  }
-
-  const $con2 = $(".con2 .imgRolling");
-  cloneImages($con2);
-  startRolling($con2);
+  // con2(.imgRolling) 롤링은 각 페이지 mapper에서 이미지 매핑 직후 초기화한다.
+  // (페이지 로드 시점엔 컨테이너가 비어 있어 복제가 안 됨 → index에서 여백 발생하던 버그)
+  // index: IndexMapper.initializeRolling, main: MainMapper.initializeRolling
 
   $(".header .menu .depth_1 > a").on("click", function (e) {
     e.preventDefault();
