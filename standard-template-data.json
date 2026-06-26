@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.260.0",
-    "generatedAt": "2026-06-25T08:58:23.188307676Z",
+    "version": "1.261.0",
+    "generatedAt": "2026-06-26T01:17:35.535708302Z",
     "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2097,7 +2097,7 @@
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/nearby_attractions_about/1779167575107-dnyuwdwdmz.jpg",
                       "sortOrder": 7,
                       "description": "",
-                      "isSelected": true,
+                      "isSelected": false,
                       "blockId": "7a3b058f-30c3-48a6-8b37-261bbf38fc09"
                     },
                     {
