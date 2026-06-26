@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.266.0",
-    "generatedAt": "2026-06-26T01:54:03.498201732Z",
+    "version": "1.267.0",
+    "generatedAt": "2026-06-26T01:56:32.902228357Z",
     "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1676,7 +1676,7 @@
                       "id": "dd293c39-04ba-4b41-9894-1a124b0c12bd",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287240706-6fepbqg4ale.jpg",
                       "sortOrder": 0,
-                      "description": "",
+                      "description": "전통",
                       "isSelected": true,
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
                     },
@@ -1684,7 +1684,7 @@
                       "id": "4da7168b-0587-49c0-9c6a-37d11f9d7371",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287240706-u5fxb3mio4.jpg",
                       "sortOrder": 1,
-                      "description": "",
+                      "description": "한옥",
                       "isSelected": true,
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
                     },
@@ -1692,7 +1692,7 @@
                       "id": "5f86d412-4ac0-4029-9a21-8bae524fce7b",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1761287201453-csrkd6t24su.jpg",
                       "sortOrder": 2,
-                      "description": "",
+                      "description": "입니다.",
                       "isSelected": true,
                       "blockId": "7c5f32a7-077a-4084-8be0-c77a0e3c3b11"
                     },
@@ -1723,7 +1723,7 @@
                       "id": "18809828-802d-4e18-86cc-445985cbcf0b",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857850-wnw3ksxcgib.jpg",
                       "sortOrder": 5,
-                      "description": "",
+                      "description": "테스트",
                       "isSelected": true,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
                     },
@@ -1731,7 +1731,7 @@
                       "id": "3c262154-f606-4675-b1fc-7b951f74d8ba",
                       "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_about/1762307857849-94b8jg0plxq.jpg",
                       "sortOrder": 6,
-                      "description": "",
+                      "description": "왜안나와",
                       "isSelected": true,
                       "blockId": "a4352b65-5df4-4706-903e-d89bf9d87a23"
                     },
