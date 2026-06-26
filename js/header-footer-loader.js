@@ -220,8 +220,10 @@ var HeaderFooterLoader = {
 
       new Swiper(con4Container.querySelector(".swiper-container"), {
         slidesPerView: "auto",
-        loop: slideCount > 1, // 슬라이드 부족 시 loop 비활성 (Swiper 경고 방지)
-        autoplay: slideCount > 1 ? {
+        // 2장 이하는 모두 보이므로 정적(off). 3장은 index-mapper에서 6장으로 복제되어
+        // slideCount>2가 되고, 4장 이상도 마찬가지로 loop/autoplay 활성화.
+        loop: slideCount > 2,
+        autoplay: slideCount > 2 ? {
           delay: 5000,
           disableOnInteraction: false,
         } : false,
