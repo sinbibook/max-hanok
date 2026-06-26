@@ -360,7 +360,7 @@ var IndexMapper = {
     // 기존 슬라이드 제거 (샘플 제거)
     wrapper.innerHTML = '';
 
-    facilities.forEach(function(facility) {
+    facilities.forEach(function(facility, index) {
       var slide = document.createElement('div');
       slide.className = 'swiper-slide';
 
@@ -393,16 +393,37 @@ var IndexMapper = {
       var textDiv = document.createElement('div');
       textDiv.className = 'tx';
 
+      // 좌측: SPECIAL #N (순서)
       var tx1 = document.createElement('div');
       tx1.className = 'tx1';
-      tx1.textContent = facility.name || '';
+      tx1.textContent = 'SPECIAL #' + (index + 1);
+
+      // 우측: 부대시설명
+      var tx2 = document.createElement('div');
+      tx2.className = 'tx2';
+      tx2.textContent = facility.name || '';
 
       textDiv.appendChild(tx1);
+      textDiv.appendChild(tx2);
       link.appendChild(imgDiv);
       link.appendChild(textDiv);
       slide.appendChild(link);
       wrapper.appendChild(slide);
     });
+
+    // 한 화면에 약 2.5장 노출:
+    // - 2개 이하 → 모두 보임(잘림 없음) → 복제/loop 불필요 (정적)
+    // - 3개 → 3번째가 잘림 → 원본 복제로 개수를 채워 4개 이상처럼 연속 루프
+    // - 4개 이상 → 그대로 loop
+    var MIN_SLIDES = 6;
+    if (facilities.length === 3 && wrapper.children.length < MIN_SLIDES) {
+      var originals = Array.prototype.slice.call(wrapper.children);
+      var i = 0;
+      while (wrapper.children.length < MIN_SLIDES) {
+        wrapper.appendChild(originals[i % originals.length].cloneNode(true));
+        i++;
+      }
+    }
   },
 
   // CON5: Closing 섹션 매핑
