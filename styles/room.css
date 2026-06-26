@@ -10,7 +10,7 @@
   max-width: 1440px;
   margin: 0 auto;
   margin-bottom: 200px;
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
 }
 #snb_wrap ul:after {
   display: block;
@@ -112,7 +112,7 @@
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
         height: 67px;
-        border-bottom: 2px solid var(--color-primary);
+        border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
     }
 
     #snb_wrap ul::-webkit-scrollbar {
@@ -468,8 +468,8 @@
   margin-top: 60px;
   padding: 0 8px;
   font-size: 24px;
-  color: var(--color-secondary);
-  background-color: var(--color-primary);
+  color: #fff;
+  background-color: var(--color-secondary);
   border-radius: 999px;
   font-family: var(--font-ko-main);
   font-weight: bold;
@@ -527,7 +527,7 @@
   height: 1px;
   padding-top: 20px;
   font-size: 14px;
-  color: #b39e91;
+  color: var(--color-secondary);
   white-space: nowrap;
 }
 @media (max-width: 1440px) {

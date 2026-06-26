@@ -253,14 +253,23 @@ var FacilityMapper = {
     });
   },
 
-  // Con4: 시설 제목(하드코딩) + 부대시설명 태그 (최대 3개)
+  // Con4: 시설 제목(about.title, 없으면 '준비된 특별함') + 부대시설명 태그 (최대 3개)
   mapFacilityAbout: function(data) {
     var facilities = (data && data.property && data.property.facilities) || [];
+    var currentFacility = this.getCurrentFacility(data);
 
-    // Title 하드코딩
+    // Title 매핑 (customFields...facility[current].sections[0].about.title, 없으면 fallback)
     var titleEl = document.querySelector('.con4 .title');
     if (titleEl) {
-      titleEl.textContent = '준비된 특별함';
+      var aboutTitle = null;
+      if (currentFacility && data.homepage && data.homepage.customFields && data.homepage.customFields.pages && data.homepage.customFields.pages.facility) {
+        var customFacility = data.homepage.customFields.pages.facility.find(function(f) { return f.id === currentFacility.id; });
+        if (customFacility && customFacility.sections && customFacility.sections[0] && customFacility.sections[0].about && customFacility.sections[0].about.title) {
+          aboutTitle = customFacility.sections[0].about.title;
+        }
+      }
+
+      titleEl.textContent = (aboutTitle && aboutTitle.trim()) ? aboutTitle : '준비된 특별함';
     }
 
     // SubTitle 매핑 (부대시설명 #태그, 최대 3개)
@@ -304,7 +313,6 @@ var FacilityMapper = {
       navList.appendChild(li);
     });
   },
-,
 
   updateMetaTags: function(data) {
     var hp = data && data.homepage || {};
