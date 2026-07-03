@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.276.0",
-    "generatedAt": "2026-07-03T03:05:41.678828498Z",
+    "version": "1.277.0",
+    "generatedAt": "2026-07-03T03:06:07.231876138Z",
     "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1389,25 +1389,9 @@
                 "title": "MAX HANOK PENSION",
                 "images": [
                   {
-                    "id": "01ee8165-3195-480b-b0da-eb17fd1e0216",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1783042363923-1skqmmprcg.jpg",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
-                  },
-                  {
-                    "id": "977e603b-a03b-457a-914f-864c7ce6b541",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776940544707-d048um01g3b.jpg",
-                    "sortOrder": 1,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
-                  },
-                  {
                     "id": "cd63aeb5-42ac-4466-96bf-33faf9048bd9",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1759403312211-z6jfoo7x0er.jpg",
-                    "sortOrder": 2,
+                    "sortOrder": 0,
                     "description": "",
                     "isSelected": true,
                     "blockId": null
@@ -1415,8 +1399,16 @@
                   {
                     "id": "ee21ca5e-6cd5-48c2-9eac-7487b4dcf195",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776940544704-t8g0ij64f1i.jpg",
-                    "sortOrder": 3,
+                    "sortOrder": 1,
                     "description": "숙소",
+                    "isSelected": true,
+                    "blockId": null
+                  },
+                  {
+                    "id": "977e603b-a03b-457a-914f-864c7ce6b541",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776940544707-d048um01g3b.jpg",
+                    "sortOrder": 2,
+                    "description": "",
                     "isSelected": true,
                     "blockId": null
                   }
