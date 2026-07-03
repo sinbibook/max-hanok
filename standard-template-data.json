@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.284.0",
-    "generatedAt": "2026-07-03T05:41:24.260411302Z",
+    "version": "1.285.0",
+    "generatedAt": "2026-07-03T05:43:42.331127683Z",
     "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1445,17 +1445,9 @@
                 "title": "한옥의 멋을 느껴보세요.",
                 "images": [
                   {
-                    "id": "d727e893-053f-4596-bdcb-f0b943746b7e",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1766389986260-zipndqtjxwk.jpg",
-                    "sortOrder": 0,
-                    "description": "",
-                    "isSelected": false,
-                    "blockId": null
-                  },
-                  {
                     "id": "c4538519-d73f-4aed-b074-f4d114013d6f",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1766389986261-q3vzxdt1tgi.jpg",
-                    "sortOrder": 1,
+                    "sortOrder": 0,
                     "description": "",
                     "isSelected": false,
                     "blockId": null
@@ -1463,9 +1455,17 @@
                   {
                     "id": "248feeac-3629-4f29-929a-bee4058d4edb",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1759229421988-vbkoo87rmda.jpg",
-                    "sortOrder": 2,
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": true,
+                    "blockId": null
+                  },
+                  {
+                    "id": "d727e893-053f-4596-bdcb-f0b943746b7e",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_essence/1766389986260-zipndqtjxwk.jpg",
+                    "sortOrder": 2,
+                    "description": "",
+                    "isSelected": false,
                     "blockId": null
                   },
                   {
