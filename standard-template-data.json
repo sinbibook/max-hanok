@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.270.0",
-    "generatedAt": "2026-06-30T05:58:36.253257302Z",
+    "version": "1.271.0",
+    "generatedAt": "2026-07-03T01:31:31.812168327Z",
     "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -15,7 +15,7 @@
     "address": "제주특별자치도 제주시 구좌읍 비자숲길 15 한옥펜션",
     "latitude": 33.4952332300215,
     "longitude": 126.811950585325,
-    "contactPhone": "",
+    "contactPhone": "010-0000-0000",
     "contactEmail": "max@n.com",
     "checkin": "15:00",
     "checkout": "11:00",
@@ -1389,25 +1389,17 @@
                 "title": "MAX HANOK PENSION",
                 "images": [
                   {
-                    "id": "1125cd8c-8386-4a96-877f-c6e09394f2f2",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1762826519181-c5ba4mauezl.jpg",
+                    "id": "7bf4da6b-3adf-4177-82ad-8a23bc98c5cb",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1759403312210-jyx877k0c5.jpg",
                     "sortOrder": 0,
-                    "description": "전통",
-                    "isSelected": false,
-                    "blockId": null
-                  },
-                  {
-                    "id": "2f012877-d686-4aff-b672-dea4e11bfd7a",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1769397904038-fojbgcti2d7.jpg",
-                    "sortOrder": 1,
-                    "description": "한옥 ",
+                    "description": "",
                     "isSelected": true,
                     "blockId": null
                   },
                   {
                     "id": "ee21ca5e-6cd5-48c2-9eac-7487b4dcf195",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776940544704-t8g0ij64f1i.jpg",
-                    "sortOrder": 2,
+                    "sortOrder": 1,
                     "description": "숙소",
                     "isSelected": true,
                     "blockId": null
@@ -1415,7 +1407,7 @@
                   {
                     "id": "977e603b-a03b-457a-914f-864c7ce6b541",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1776940544707-d048um01g3b.jpg",
-                    "sortOrder": 3,
+                    "sortOrder": 2,
                     "description": "",
                     "isSelected": true,
                     "blockId": null
@@ -1423,15 +1415,7 @@
                   {
                     "id": "cd63aeb5-42ac-4466-96bf-33faf9048bd9",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1759403312211-z6jfoo7x0er.jpg",
-                    "sortOrder": 4,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
-                  },
-                  {
-                    "id": "7bf4da6b-3adf-4177-82ad-8a23bc98c5cb",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/index_hero/1759403312210-jyx877k0c5.jpg",
-                    "sortOrder": 5,
+                    "sortOrder": 3,
                     "description": "",
                     "isSelected": true,
                     "blockId": null
