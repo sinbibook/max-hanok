@@ -11,7 +11,6 @@ var DirectionsMapper = {
 
     // Con14: 카카오 맵 초기화
     this.initKakaoMap(data);
-    this.updateMetaTags(data);
   },
 
   // CON0: Hero 이미지 매핑
@@ -160,29 +159,5 @@ var DirectionsMapper = {
 
     checkSdkAndLoad();
   }
-,
 
-  updateMetaTags: function(data) {
-    var hp = data && data.homepage || {};
-    var seo = (hp && hp.seo) || {};
-    
-    if (seo.title) {
-      var titleEl = document.querySelector('title');
-      if (titleEl) titleEl.textContent = seo.title;
-    }
-    
-    if (seo.description) {
-      var metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', seo.description);
-      }
-    }
-    
-    if (seo.keywords) {
-      var metaKeys = document.querySelector('meta[name="keywords"]');
-      if (metaKeys) {
-        metaKeys.setAttribute('content', seo.keywords);
-      }
-    }
-  }
 };

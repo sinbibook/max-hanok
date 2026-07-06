@@ -14,7 +14,6 @@ var ReservationMapper = {
 
     // MAPPER: 예약하기 버튼 링크
     this.mapBookingButton(data);
-    this.updateMetaTags(data);
   },
 
   // 히어로 이미지 매핑 (customFields.pages.reservation.sections[0].hero.images[0])
@@ -142,29 +141,5 @@ var ReservationMapper = {
       btnEl.target = '_blank';
     }
   }
-,
 
-  updateMetaTags: function(data) {
-    var hp = data && data.homepage || {};
-    var seo = (hp && hp.seo) || {};
-    
-    if (seo.title) {
-      var titleEl = document.querySelector('title');
-      if (titleEl) titleEl.textContent = seo.title;
-    }
-    
-    if (seo.description) {
-      var metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', seo.description);
-      }
-    }
-    
-    if (seo.keywords) {
-      var metaKeys = document.querySelector('meta[name="keywords"]');
-      if (metaKeys) {
-        metaKeys.setAttribute('content', seo.keywords);
-      }
-    }
-  }
 };

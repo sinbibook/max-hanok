@@ -14,7 +14,6 @@ var MainMapper = {
 
     // Con5: Closing 섹션 매핑
     this.mapClosingSection(data);
-    this.updateMetaTags(data);
   },
 
   // CON0: 메인 히어로 슬라이드 매핑
@@ -76,10 +75,11 @@ var MainMapper = {
 
   // CON1: 숙소 영문명 + 히어로 마지막 이미지 매핑
   mapCon1Section: function(data) {
-    // 영문명 매핑 (property.nameEn → .con1 .tx.travelFont)
+    // 영문명 매핑 (customFields.property.nameEn 우선 → .con1 .tx.travelFont)
     var engNameEl = document.querySelector('.con1 .tx.travelFont');
-    if (engNameEl && data.property.nameEn) {
-      engNameEl.textContent = data.property.nameEn;
+    var nameEn = HeaderFooterMapper.getPropertyNameEn(data);
+    if (engNameEl && nameEn) {
+      engNameEl.textContent = nameEn;
     }
 
     // 이미지 매핑 (customFields.pages.main.sections[0].hero.images 마지막 이미지)
@@ -296,29 +296,5 @@ var MainMapper = {
       txEl.innerHTML = 'Enjoy<br />Fullness and rest';
     }
   }
-,
 
-  updateMetaTags: function(data) {
-    var hp = data && data.homepage || {};
-    var seo = (hp && hp.seo) || {};
-    
-    if (seo.title) {
-      var titleEl = document.querySelector('title');
-      if (titleEl) titleEl.textContent = seo.title;
-    }
-    
-    if (seo.description) {
-      var metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', seo.description);
-      }
-    }
-    
-    if (seo.keywords) {
-      var metaKeys = document.querySelector('meta[name="keywords"]');
-      if (metaKeys) {
-        metaKeys.setAttribute('content', seo.keywords);
-      }
-    }
-  }
 };

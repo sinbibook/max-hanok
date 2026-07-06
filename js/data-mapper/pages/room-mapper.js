@@ -36,7 +36,6 @@ var RoomMapper = {
 
     // MAPPER: roomtypes[] (snb_wrap)
     this.mapRoomNavigation(data, rt);
-    this.updateMetaTags(data);
   },
 
   // ── 공통 헬퍼 ───────────────────────────────────────────
@@ -93,6 +92,11 @@ var RoomMapper = {
     });
     if (base && labels.length) return base + '/ ' + labels.join(' ');
     return base || labels.join(' ');
+  },
+
+  // 객실 유형+구조 조합: HeaderFooterMapper.buildRoomTypeDetail 공용 사용 (con6 tx3 / con3 슬라이드)
+  buildRoomTypeDetail: function(room) {
+    return HeaderFooterMapper.buildRoomTypeDetail(room);
   },
 
   // Con0: 히어로 슬라이드 (roomtype interior 이미지) + 객실명 (tx1)
@@ -165,17 +169,14 @@ var RoomMapper = {
       rightTx2.textContent = name;
     }
 
-    // tx3: 객실 유형 (rooms[current].bedTypes — 이층침대/이불 등)
+    // tx3: 객실 유형 + 구조 조합 (예: "독채형/분리형/ 침대룸2 거실 주방 화장실2")
     var rightTx3 = document.querySelector('.con6 .right .tx3');
     if (rightTx3) {
-      rightTx3.textContent = (room && room.bedTypes && room.bedTypes.length) ? room.bedTypes.join(' / ') : '';
+      rightTx3.textContent = this.buildRoomTypeDetail(room);
     }
 
-    // tx4: usageGuide (rooms[current])
-    var rightTx4 = document.querySelector('.con6 .right .tx4');
-    if (rightTx4) {
-      rightTx4.textContent = (room && room.usageGuide) || '';
-    }
+    // tx4: NOTICE — 하드코딩 (매핑 삭제)
+    // "※ 자세한 내용은 이용안내 페이지 참고 부탁드립니다." (room.html에 직접 작성)
 
     // 오른쪽 이미지 (con6 .right .img img) - roomtype interior[0]
     var interior = this.getCategoryImages(rt, 'roomtype_interior');
@@ -210,7 +211,10 @@ var RoomMapper = {
       tableTd[1].textContent = (room && room.baseOccupancy != null) ? room.baseOccupancy : '';
       tableTd[2].textContent = (room && room.maxOccupancy != null) ? room.maxOccupancy : '';
       tableTd[3].textContent = this.buildRoomStructure(room);
-      tableTd[4].textContent = (room && room.size != null) ? room.size + '평' : '';
+      // 평형: rooms[j].size(㎡)를 평으로 환산 (1평=3.305785㎡, 소수 1자리) — sizePyeong 미전송 대비
+      var sqm = (room && room.size != null) ? Number(room.size) : null;
+      var pyeong = (sqm != null && !isNaN(sqm)) ? Math.round(sqm / 3.305785 * 10) / 10 : null;
+      tableTd[4].textContent = (pyeong != null) ? pyeong + '평' : '';
     }
   },
 
@@ -312,7 +316,7 @@ var RoomMapper = {
 
       var tx2 = document.createElement('div');
       tx2.className = 'tx2';
-      tx2.textContent = (matched && matched.description) || '';
+      tx2.textContent = self.buildRoomTypeDetail(matched);
 
       txDiv.appendChild(tx1);
       txDiv.appendChild(tx2);
@@ -348,29 +352,5 @@ var RoomMapper = {
       li.appendChild(link);
       ul.appendChild(li);
     });
-  },
-
-  updateMetaTags: function(data) {
-    var hp = data && data.homepage || {};
-    var seo = (hp && hp.seo) || {};
-
-    if (seo.title) {
-      var titleEl = document.querySelector('title');
-      if (titleEl) titleEl.textContent = seo.title;
-    }
-
-    if (seo.description) {
-      var metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', seo.description);
-      }
-    }
-
-    if (seo.keywords) {
-      var metaKeys = document.querySelector('meta[name="keywords"]');
-      if (metaKeys) {
-        metaKeys.setAttribute('content', seo.keywords);
-      }
-    }
   }
 };

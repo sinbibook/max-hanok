@@ -20,7 +20,6 @@ var NearbyAttractionsMapper = {
 
     // MAPPER: 항목 카드들
     this.mapAttractionCards(data);
-    this.updateMetaTags(data);
   },
 
   // Hero 이미지 슬라이드 매핑
@@ -153,29 +152,5 @@ var NearbyAttractionsMapper = {
       itemWrap.appendChild(div);
     });
   }
-,
 
-  updateMetaTags: function(data) {
-    var hp = data && data.homepage || {};
-    var seo = (hp && hp.seo) || {};
-    
-    if (seo.title) {
-      var titleEl = document.querySelector('title');
-      if (titleEl) titleEl.textContent = seo.title;
-    }
-    
-    if (seo.description) {
-      var metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', seo.description);
-      }
-    }
-    
-    if (seo.keywords) {
-      var metaKeys = document.querySelector('meta[name="keywords"]');
-      if (metaKeys) {
-        metaKeys.setAttribute('content', seo.keywords);
-      }
-    }
-  }
 };
