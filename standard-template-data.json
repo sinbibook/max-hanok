@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.287.0",
-    "generatedAt": "2026-07-06T08:33:37.354532858Z",
+    "version": "1.288.0",
+    "generatedAt": "2026-07-06T08:37:05.240503400Z",
     "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -1373,8 +1373,8 @@
       "title": "한옥펜션!!",
       "description": "안녕하세요!!",
       "keywords": "한옥,전통,맥스!!",
-      "naverSiteVerification": "fjlqkwfjkl",
-      "googleSiteVerification": "fqjwklfqwmkl"
+      "naverSiteVerification": "",
+      "googleSiteVerification": ""
     },
     "socialLinks": {
       "facebook": null,
