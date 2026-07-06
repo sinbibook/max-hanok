@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.286.0",
-    "generatedAt": "2026-07-06T08:32:57.611375738Z",
+    "version": "1.287.0",
+    "generatedAt": "2026-07-06T08:33:37.354532858Z",
     "templateType": "trip_l",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2185,6 +2185,7 @@
       },
       "property": {
         "name": "Max 한옥",
+        "nameEn": "Jeju Bijasupgil15 Pension",
         "images": [
           {
             "id": "62e5fbf0-47f0-4fd5-84c8-c4f535bc4e13",
@@ -2240,8 +2241,7 @@
             "blockId": null,
             "category": "property_surrounding"
           }
-        ],
-        "nameEn": "Jeju Bijasupgil15 Pension"
+        ]
       },
       "roomtypes": [
         {

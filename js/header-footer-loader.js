@@ -132,6 +132,9 @@ var HeaderFooterLoader = {
   },
 
   mapPageContent: function(data) {
+    // SEO: 페이지 종류와 무관하게 전역 seo 메타태그를 먼저 주입 (공통 base-mapper)
+    if (typeof BaseMapper !== 'undefined') BaseMapper.updateMetaTags(data);
+
     // 현재 페이지 이름 추출
     var pathname = window.location.pathname;
     var filename = pathname.split('/').pop().replace('.html', '');

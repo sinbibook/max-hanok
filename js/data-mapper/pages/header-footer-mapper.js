@@ -1,7 +1,58 @@
 // Header Footer Mapper - JSON 데이터로 헤더/푸터 동적 매핑
 var HeaderFooterMapper = {
+  // 숙소 한글명: customFields.property.name 우선, 없으면 property.name (C/D/E 동일 컨벤션)
+  getPropertyName: function(data) {
+    var cf = data && data.homepage && data.homepage.customFields;
+    if (cf && cf.property && cf.property.name) return cf.property.name;
+    return (data && data.property && data.property.name) || '';
+  },
+
+  // 숙소 영문명: customFields.property.nameEn 우선, 없으면 property.nameEn
+  getPropertyNameEn: function(data) {
+    var cf = data && data.homepage && data.homepage.customFields;
+    if (cf && cf.property && cf.property.nameEn) return cf.property.nameEn;
+    return (data && data.property && data.property.nameEn) || '';
+  },
+
+  // 객실 유형 + 구조 조합 (예: "독채형/분리형/ 침대룸2 거실 주방 화장실2")
+  // roomStructures 전체를 '/'로 결합 + totalRoomCount(2개 이상이면 개수 표기, 순서: 침대룸·온돌룸·거실·주방·화장실)
+  ROOM_STRUCTURE_LABELS: {
+    bedroom: '침대룸', ondol: '온돌룸', livingRoom: '거실', kitchen: '주방', bathroom: '화장실'
+  },
+  buildRoomTypeDetail: function(room) {
+    if (!room) return '';
+    var typePart = (room.roomStructures || []).join('/');
+    var counts = room.totalRoomCount || {};
+    var labels = [];
+    var map = this.ROOM_STRUCTURE_LABELS;
+    ['bedroom', 'ondol', 'livingRoom', 'kitchen', 'bathroom'].forEach(function(key) {
+      var c = counts[key];
+      if (c >= 1) labels.push(map[key] + (c > 1 ? c : ''));
+    });
+    if (typePart && labels.length) return typePart + '/ ' + labels.join(' ');
+    return typePart || labels.join(' ');
+  },
+
+  // 파비콘 매핑: homepage.images[0].logo[isSelected].url 재사용 (C/D/E 동일)
+  mapFavicon: function(data) {
+    var logoImg = data && data.homepage && data.homepage.images && data.homepage.images[0] && data.homepage.images[0].logo;
+    if (!logoImg || !logoImg.length) return;
+    var selectedLogo = logoImg.find(function(l) { return l.isSelected; }) || logoImg[0];
+    if (!selectedLogo || !selectedLogo.url) return;
+
+    var link = document.querySelector('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.href = selectedLogo.url;
+  },
+
   mapHeader: function(data) {
-    if (!data || !data.property) return;
+    if (!data) return;
+    this.mapFavicon(data);
+    if (!data.property) return;
 
     // enabled 값 안전하게 접근
     var nearbyAttractionsEnabled = (data.homepage &&
@@ -212,10 +263,10 @@ var HeaderFooterMapper = {
 
     var businessInfo = data.property.businessInfo || {};
 
-    // 1. 전화번호
+    // 1. 전화번호 (property.contactPhone)
     var phoneEl = document.querySelector('[data-phone]');
-    if (phoneEl && businessInfo.businessPhone) {
-      phoneEl.textContent = businessInfo.businessPhone;
+    if (phoneEl && data.property.contactPhone) {
+      phoneEl.textContent = data.property.contactPhone;
     }
 
     // 2. 주소

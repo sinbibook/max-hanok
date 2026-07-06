@@ -17,7 +17,6 @@ var FacilityMapper = {
 
     // MAPPER: facilities[] (layout-map + active facilities)
     this.mapFacilityNavigation(data);
-    this.updateMetaTags(data);
   },
 
   getCurrentFacility: function(data) {
@@ -312,29 +311,5 @@ var FacilityMapper = {
       li.appendChild(link);
       navList.appendChild(li);
     });
-  },
-
-  updateMetaTags: function(data) {
-    var hp = data && data.homepage || {};
-    var seo = (hp && hp.seo) || {};
-    
-    if (seo.title) {
-      var titleEl = document.querySelector('title');
-      if (titleEl) titleEl.textContent = seo.title;
-    }
-    
-    if (seo.description) {
-      var metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', seo.description);
-      }
-    }
-    
-    if (seo.keywords) {
-      var metaKeys = document.querySelector('meta[name="keywords"]');
-      if (metaKeys) {
-        metaKeys.setAttribute('content', seo.keywords);
-      }
-    }
   }
 };

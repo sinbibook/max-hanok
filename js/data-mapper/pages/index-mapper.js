@@ -23,7 +23,6 @@ var IndexMapper = {
 
     // Con5: Closing 섹션 매핑
     this.mapClosingSection(data);
-    this.updateMetaTags(data);
   },
 
   // CON0: 히어로 슬라이드 매핑
@@ -87,17 +86,19 @@ var IndexMapper = {
   // CON0: 숙소 한글명 매핑
   mapHeroTitle: function(data) {
     var el = document.querySelector('.con0 .tx1');
-    if (el && data.property.name) {
-      el.textContent = data.property.name;
+    var name = HeaderFooterMapper.getPropertyName(data);
+    if (el && name) {
+      el.textContent = name;
     }
   },
 
   // CON1: 숙소 영문명 + 히어로 이미지 매핑
   mapCon1Section: function(data) {
-    // 영문명 매핑 (property.nameEn → span.travelFont)
+    // 영문명 매핑 (customFields.property.nameEn 우선 → span.travelFont)
     var engNameEl = document.querySelector('.con1 span.travelFont');
-    if (engNameEl && data.property && data.property.nameEn) {
-      engNameEl.textContent = data.property.nameEn;
+    var nameEn = HeaderFooterMapper.getPropertyNameEn(data);
+    if (engNameEl && nameEn) {
+      engNameEl.textContent = nameEn;
     }
 
     // 이미지 매핑 (customFields.pages.index.sections[0].hero.images[isSelected])
@@ -274,10 +275,11 @@ var IndexMapper = {
       subTitle.innerHTML = '';
 
       // 숙소한글명 태그
-      if (data.property && data.property.name) {
+      var nameKr = HeaderFooterMapper.getPropertyName(data);
+      if (nameKr) {
         var tag1 = document.createElement('div');
         tag1.className = 'tag';
-        tag1.textContent = '#' + data.property.name;
+        tag1.textContent = '#' + nameKr;
         subTitle.appendChild(tag1);
       }
 
@@ -337,7 +339,7 @@ var IndexMapper = {
 
       var tx2 = document.createElement('div');
       tx2.className = 'tx2';
-      tx2.textContent = (matched && matched.description) || '';
+      tx2.textContent = HeaderFooterMapper.buildRoomTypeDetail(matched);
 
       textDiv.appendChild(tx1);
       textDiv.appendChild(tx2);
@@ -373,10 +375,11 @@ var IndexMapper = {
       subTitle.innerHTML = '';
 
       // 숙소한글명 태그
-      if (data.property && data.property.name) {
+      var nameKr = HeaderFooterMapper.getPropertyName(data);
+      if (nameKr) {
         var tag1 = document.createElement('div');
         tag1.className = 'tag';
-        tag1.textContent = '#' + data.property.name;
+        tag1.textContent = '#' + nameKr;
         subTitle.appendChild(tag1);
       }
 
@@ -510,29 +513,5 @@ var IndexMapper = {
       txEl.innerHTML = 'Experience<br />Fullness and rest';
     }
   }
-,
 
-  updateMetaTags: function(data) {
-    var hp = data && data.homepage || {};
-    var seo = (hp && hp.seo) || {};
-    
-    if (seo.title) {
-      var titleEl = document.querySelector('title');
-      if (titleEl) titleEl.textContent = seo.title;
-    }
-    
-    if (seo.description) {
-      var metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', seo.description);
-      }
-    }
-    
-    if (seo.keywords) {
-      var metaKeys = document.querySelector('meta[name="keywords"]');
-      if (metaKeys) {
-        metaKeys.setAttribute('content', seo.keywords);
-      }
-    }
-  }
 };
