@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max 한옥</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <meta name="description" content="안녕하세요!!">
+    <meta name="keywords" content="한옥,전통,맥스!!">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/nearby-attractions.css" as="style">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/nearby-attractions.css" />
-    <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="stylesheet" href="styles/nearby-attractions.css">
+    <link rel="stylesheet" href="styles/theme.css">
+
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -21,47 +25,95 @@
   <meta name="twitter:title" content="Max 한옥" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta name="naver-site-verification" content="fqwffqwqfqwf" />
+  <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-      <div class="container">
-        <!-- MAPPER: customFields.pages.nearbyAttractions.sections[0].hero.images[isSelected] -->
-        <div class="con0 height img" data-aos="fade-up">
-          <div class="swiper-container">
-            <div class="swiper-wrapper" data-nearby-attractions-hero-slides></div>
-          </div>
-        </div>
+<body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
 
-        <div class="con12" data-aos="fade-up">
-          <div class="tx0">
-            <span class="travelFont">Travel</span>
-            <span class="tx0_1">여행안내</span>
-          </div>
-        </div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+            <div class="hero-background">
+                <!-- Custom-field: homepage.customFields.pages.nearbyAttractions.sections[0].hero.images -->
+                <img src="" alt="주변관광지 배경" data-nearby-hero-image>
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-text-center">
+                    <!-- 하드코딩 fixed -->
+                    <h1 class="hero-title">주변 관광지</h1>
+                </div>
+            </div>
 
-        <!-- MAPPER: customFields.pages.nearbyAttractions.sections[0].hero (title, description) -->
-        <div class="con12" data-aos="fade-up" style="padding-top: 0;">
-          <div class="tx1" data-nearby-attractions-hero-title></div>
-          <div class="tx2" data-nearby-attractions-hero-description></div>
-        </div>
+            <!-- Scroll Down Indicator -->
+            <div class="hero-scroll-down" onclick="scrollToNextSection()">
+                <svg class="scroll-arrow" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </div>
+    </section>
 
-        <!-- MAPPER: customFields.pages.nearbyAttractions.sections[0].about[] (title, distance, description, image) -->
-        <div class="con11">
-          <div class="w1440" data-nearby-attractions-items></div>
+    <!-- Main Content Section -->
+    <main class="attractions-container">
+        <div class="attractions-intro-section">
+            <div class="attractions-intro-content">
+                <div class="attractions-label">
+                    <!-- 하드코딩 fixed -->
+                    <span class="attractions-number">NEARBY ATTRACTIONS</span>
+                </div>
+                <!-- Custom-field: homepage.customFields.pages.nearbyAttractions.sections[0].hero.title -->
+                <h2 class="attractions-title" data-nearby-attractions-about-title></h2>
+                <!-- Custom-field: homepage.customFields.pages.nearbyAttractions.sections[0].hero.description -->
+                <p class="attractions-description" data-nearby-attractions-about-description></p>
+            </div>
         </div>
-      </div>
-    </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js"></script>
-  <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-  <script src="js/data-mapper/core/base-mapper.js"></script>
-  <script src="js/data-mapper/pages/nearby-attractions-mapper.js"></script>
-  <script src="js/image-helpers.js"></script>
-  <script src="js/preview-handler.js"></script>
-  <script src="js/header-footer-loader.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/pages/nearby-attractions.js"></script>
+        <!-- Custom-field: homepage.customFields.pages.nearbyAttractions.sections[0].about[].images, about[].title, about[].description -->
+        <div class="attractions-grid" id="attractions-grid-container">
+        </div>
+    </main>
+
+    <!-- Closing Section -->
+    <section class="attractions-closing">
+        <!-- Custom-field: property.images[0].exterior[0] (first exterior image) -->
+        <div class="attractions-closing-bg" style="background-size: cover; background-position: center;" data-nearby-closing-image-bg></div>
+        <div class="attractions-closing-overlay">
+            <div class="attractions-closing-content">
+                <!-- Custom-field: property logo (ImageHelpers.extractLogoUrl) -->
+                <img src="" alt="로고" class="closing-logo" data-closing-logo="">
+            </div>
+        </div>
+    </section>
+
+    <!-- Include Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
+
+    <!-- Common Slider Module -->
+    <script src="js/common/slider.js"></script>
+
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Nearby Attractions Mapper -->
+    <script src="js/data-mapper/pages/nearby-attractions-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
+    <script src="js/pages/nearby-attractions.js"></script>
+
+</body>
 </html>

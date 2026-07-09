@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max 한옥 - 시설안내</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <meta name="description" content="안녕하세요!!">
+    <meta name="keywords" content="한옥,전통,맥스!!">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/facility.css" as="style">
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/facility.css" />
-    <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="stylesheet" href="styles/facility.css">
+
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 시설안내" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -25,86 +25,135 @@
   <meta name="twitter:title" content="Max 한옥 - 시설안내" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta name="naver-site-verification" content="fqwffqwqfqwf" />
+  <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-      <div class="container">
-        <!-- MAPPER: property.facilities[current].images[isSelected] + name -->
-        <div class="con0" data-aos="fade-up">
-          <div class="swiper-container">
-            <div class="swiper-wrapper"></div>
-            <div class="swiperNavi">
-              <div class="swiper-button-prev">
-                <img src="images/icon_arrow_left_1.png" alt="" />
-                Prev
-              </div>
-              <div class="bar"></div>
-              <div class="swiper-button-next">
-                Next
-                <img src="images/icon_arrow_right_1.png" alt="" />
-              </div>
-            </div>
-          </div>
-          <div class="tx1"></div>
-        </div>
+<body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
 
-        <!-- MAPPER: property.facilities[] (동적 생성) -->
-        <div id="snb_wrap">
-          <ul data-facility-nav-list>
-          </ul>
+    <!-- Hero Slider Section -->
+    <section class="hero-slider-section">
+        <div class="hero-slider" id="hero-slider">
+            <!-- Slides will be dynamically generated -->
         </div>
-
-        <!-- MAPPER: property.facilities[current] (name, description, usageGuide, images[0-2]) -->
-        <div class="con9 w1440">
-          <div class="item">
-            <div class="top" data-aos="fade-up">
-              <div class="img">
-                <img alt="" data-facility-image-0 />
-              </div>
-              <div class="tx3 travelFont" data-aos="fade-up" data-facility-name-en></div>
-              <div class="tx0" data-aos="fade-up" data-facility-name></div>
-              <div class="tx1" data-aos="fade-up" data-facility-usage></div>
+        <div class="hero-content">
+            <div class="hero-text-center">
+                <h1 class="hero-title" data-facility-hero-page-title></h1>
             </div>
-            <div class="bottom">
-              <div class="img" data-aos="fade-up" data-facility-image-1></div>
-              <div class="img" data-aos="fade-up" data-facility-image-2></div>
-            </div>
-          </div>
         </div>
-
-        <!-- MAPPER: property.facilities[] (excluding current facility) -->
-        <div class="con4">
-          <div class="w1440">
-            <div class="conTitle" data-aos="fade-up">
-              <div class="subTitle"></div>
-              <div class="title"></div>
-              <div class="swiperNavi">
-                <div class="swiper-button-prev">
-                  <img src="images/icon_arrow_left_2.png" alt="" />
+        <!-- Slider Progress -->
+        <div class="hero-slider-progress">
+            <div class="hero-slider-nav">
+                <button class="hero-slider-arrow prev" id="hero-prev"></button>
+                <span class="hero-slider-current" id="hero-current">01</span>
+                <div class="hero-slider-line">
+                    <div class="hero-slider-line-fill" id="hero-progress-fill"></div>
                 </div>
-                <div class="bar"></div>
-                <div class="swiper-button-next">
-                  <img src="images/icon_arrow_right_2.png" alt="" />
-                </div>
-              </div>
+                <span class="hero-slider-total" id="hero-total">05</span>
+                <button class="hero-slider-arrow next" id="hero-next"></button>
             </div>
-            <div class="swiper-container">
-              <div class="swiper-wrapper"></div>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js"></script>
-  <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-  <script src="js/data-mapper/core/base-mapper.js"></script>
-  <script src="js/data-mapper/pages/facility-mapper.js"></script>
-  <script src="js/image-helpers.js"></script>
-  <script src="js/preview-handler.js"></script>
-  <script src="js/header-footer-loader.js"></script>
-  <script src="js/common.js"></script>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="main-content-section main-content-fade-in">
+        <div class="facility-content-container">
+        <!-- Facility Introduction Section -->
+        <div class="facility-intro-section">
+            <div class="facility-intro-content">
+                <div class="facility-label">
+                    <span id="facility-number" class="facility-number">SPECIAL 01</span>
+                </div>
+                <h1 id="facility-title" class="facility-title" data-facility-name></h1>
+                <div class="facility-description">
+                    <pre data-facility-description></pre>
+                </div>
+                <div class="facility-text-content usage-guide">
+                    <div class="facility-text-header">
+                        <h3 class="facility-section-title">이용 안내</h3>
+                    </div>
+                    <div class="facility-text-body" data-facility-features-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 주요 특징 섹션 custom field -->
+        <div class="facility-content-section">
+            <div class="facility-image-content">
+                <img src="" alt="Facility View" class="facility-content-img" data-facility-features-image>
+            </div>
+            <!-- 임시 주석 처리 -->
+            <div class="facility-text-content">
+                <!-- <div class="facility-text-header">
+                    <h3 class="facility-section-title">주요 특징</h3>
+                </div>
+                <div class="facility-text-body" data-facility-features-container>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- 추가 정보 섹션 custom field -->
+        <div class="facility-content-section facility-content-reversed">
+            <div class="facility-image-content">
+                <img src="" alt="Facility View" class="facility-content-img" data-facility-additionalinfos-image>
+            </div>
+            <!-- 임시 주석 처리 -->
+            <div class="facility-text-content">
+                <!-- <div class="facility-text-header">
+                    <h3 class="facility-section-title">추가 정보</h3>
+                </div>
+                <div class="facility-text-body" data-facility-additionalinfos-container>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- 이용 혜택 섹션 custom field -->
+        <div class="facility-content-section">
+            <div class="facility-image-content">
+                <img src="" alt="Facility View" class="facility-content-img" data-facility-benefits-image>
+            </div>
+            <!-- 임시 주석 처리 -->
+            <div class="facility-text-content">
+                <!-- <div class="facility-text-header">
+                    <h3 class="facility-section-title">이용 혜택</h3>
+                </div>
+                <div class="facility-text-body" data-facility-benefits-container>
+                </div> -->
+            </div>
+        </div>
+        </div> <!-- facility-content-container -->
+    </section>
+
+
+
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
+
+    <!-- Common Slider Module -->
+    <script src="js/common/slider.js"></script>
+
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Facility Page Mapper -->
+    <script src="js/data-mapper/pages/facility-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
+    <script src="js/pages/facility.js"></script>
+
+</body>
 </html>

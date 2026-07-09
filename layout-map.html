@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
-    <title>Max 한옥</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="styles/theme.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="안녕하세요!!">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/layout-map.css" as="style">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/layout-map.css" />
-    <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="stylesheet" href="styles/layout-map.css">
+    <link rel="stylesheet" href="styles/theme.css">
+
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -25,73 +23,98 @@
   <meta name="twitter:title" content="Max 한옥" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta name="naver-site-verification" content="fqwffqwqfqwf" />
+  <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-<div class="container">
-        <!-- MAPPER: homepage.customFields.pages.layoutMap.sections[0].hero.images[isSelected] -->
-        <div class="con0" data-aos="fade-up">
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="img"></div>
-              </div>
+<body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <!-- Custom-field layout-map-hero-image-0 -->
+            <img src="" alt="배치도 배경" data-layout-map-hero-image>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text-center">
+                <!-- 하드코딩 fixed -->
+                <h1 class="hero-title">숙소 배치도</h1>
             </div>
-          </div>
         </div>
 
-        <!-- Room Navigation -->
-        <div id="snb_wrap">
-          <ul data-room-nav-list>
-            <li class="active"><a href="layout-map.html">미리보기</a></li>
-          </ul>
+        <!-- Scroll Down Indicator -->
+        <div class="hero-scroll-down" onclick="scrollToNextSection()">
+            <svg class="scroll-arrow" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </section>
+
+    <main class="layout-map-container">
+        <!-- Custom-field layout-map-hero-title -->
+        <div class="layout-map-intro">
+            <h2 class="layout-map-title" data-layout-map-about-title></h2>
+            <!-- Custom-field layout-map-hero-description -->
+            <p class="layout-map-description" data-layout-map-about-description></p>
         </div>
 
-        <div class="con3 pt200">
-          <div class="w1440">
-            <!-- MAPPER: homepage.customFields.pages.layoutMap.sections[0].about.title -->
-            <!-- MAPPER: homepage.customFields.pages.layoutMap.sections[0].about.images[].description (3개까지, fallback: #이미지설명) -->
-            <div class="conTitle" data-aos="fade-up">
-              <div class="subTitle"></div>
-              <div class="title"></div>
+        <!-- Layout Map About Section - 이미지와 설명이 교대로 -->
+        <div class="layout-map-content" id="layout-map-content-container">
+            <!-- Image Item 1 -->
+            <div class="layout-map-item">
+                <!-- Custom-field: layout-map.sections[0].about.images[0] -->
+                <img alt="배치도" class="layout-map-image" data-layout-map-image-0>
             </div>
-            <!-- MAPPER: rooms[].images[0].thumbnail[0].url + name + description (Room Preview Swiper) -->
-            <div class="swiper-container" data-aos="fade-up">
-              <div class="swiper-wrapper"></div>
-              <div class="swiperNavi">
-                <div class="swiper-button-prev">
-                  <img src="images/icon_arrow_left_2.png" alt="" />
-                </div>
-                <div class="bar"></div>
-                <div class="swiper-button-next">
-                  <img src="images/icon_arrow_right_2.png" alt="" />
-                </div>
-              </div>
+
+            <!-- Description Item 1 -->
+            <div class="layout-map-description-item">
+                <!-- Custom-field: layout-map.sections[0].about.description[0] -->
+                <p data-layout-map-description-0></p>
             </div>
-          </div>
         </div>
-        <!-- MAPPER: homepage.customFields.pages.layoutMap.sections[0].about.images[0].url -->
-        <div class="con5 w1440">
-          <div class="img" data-aos="fade-up">
-            <img alt="" />
-          </div>
-          <div class="w1440">
-            <div class="tx travelFont" data-aos="fade-up">Room Priview</div>
-          </div>
+    </main>
+
+    <!-- Closing Section -->
+    <section class="layout-closing">
+        <div class="layout-closing-bg" style="background-size: cover; background-position: center;" data-layout-map-closing-image-bg></div>
+        <div class="layout-closing-overlay">
+            <div class="layout-closing-content">
+                <img src="" alt="로고" class="closing-logo" data-closing-logo="">
+            </div>
         </div>
-      </div>
-    </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js"></script>
-  <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-  <script src="js/data-mapper/core/base-mapper.js"></script>
-  <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
-  <script src="js/image-helpers.js"></script>
-  <script src="js/preview-handler.js"></script>
-  <script src="js/header-footer-loader.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/pages/layout-map.js"></script>
+    </section>
+
+    <!-- Include Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
+
+    <!-- Common Slider Module -->
+    <script src="js/common/slider.js"></script>
+
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Layout Map Mapper -->
+    <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
+    <script src="js/pages/layout-map.js"></script>
+
+</body>
 </html>

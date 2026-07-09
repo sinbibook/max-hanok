@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max 한옥 - 숙소소개</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/main.css" />
-    <!-- Open Graph Meta Tags for Social Media -->
+    <meta name="description" content="안녕하세요!!">
+    <meta name="keywords" content="한옥,전통,맥스!!">
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/common.css">
+  <link rel="stylesheet" href="styles/main.css">
+
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 숙소소개" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -25,67 +22,77 @@
   <meta name="twitter:title" content="Max 한옥 - 숙소소개" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta name="naver-site-verification" content="fqwffqwqfqwf" />
+  <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-<div class="container">
-        <!-- MAPPER: customFields.pages.main.hero.images[isSelected] -->
-        <div class="con0" data-aos="fade-up">
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-            </div>
-            <div class="swiperNavi">
-              <div class="swiper-button-prev">
-                <img src="images/icon_arrow_left_1.png" alt="" />
-                Prev
-              </div>
-              <div class="bar"></div>
-              <div class="swiper-button-next">
-                Next
-                <img src="images/icon_arrow_right_1.png" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- MAPPER: property.nameEn + property.images[0].exterior[isSelected].url -->
-        <div class="con1">
-          <div class="img">
-            <img alt="" data-aos="fade-up" />
-            <div class="tx travelFont"></div>
-          </div>
-        </div>
-        <!-- MAPPER: customFields.pages.main.about (title + images rolling) -->
-        <div class="con2">
-          <div class="conTitle" data-aos="fade-up">
-            <div class="subTitle">
-            </div>
-            <div class="title"></div>
-          </div>
-          <!-- MAPPER: about[].images rolling -->
-          <div class="imgRolling">
-          </div>
-        </div>
-        <!-- MAPPER: property.surrounding[0].images[isSelected] -->
-        <div class="con5">
-          <div class="img" data-aos="fade-up"></div>
-          <div class="w1440">
-            <div class="tx travelFont" data-aos="fade-up">
-            </div>
-          </div>
-        </div>
+<body>
+  <!-- Include Header -->
+  <div id="header-placeholder"></div>
+
+  <!-- 메인 소개 섹션 히어로 0번째 이미지-->
+  <section class="hero-section">
+    <div class="hero-background">
+      <img src="" alt="메인 배경" data-customfield-main-hero-image-0>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text-center">
+        <h1 class="hero-title">ABOUT</h1>
       </div>
     </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-  <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-  <script src="js/data-mapper/core/base-mapper.js"></script>
-  <script src="js/data-mapper/pages/main-mapper.js"></script>
-  <script src="js/image-helpers.js"></script>
-  <script src="js/preview-handler.js"></script>
-  <script src="js/header-footer-loader.js"></script>
+
+    <!-- Scroll Down Indicator -->
+    <div class="hero-scroll-down" onclick="scrollToNextSection()">
+      <svg class="scroll-arrow" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Main Info Section -->
+  <section class="location-info-section">
+    <!-- Facility Introduction Section -->
+    <div class="facility-intro-section">
+      <div class="facility-intro-content">
+        <div class="facility-label">
+          <span class="facility-number" data-main-title>ABOUT</span>
+        </div>
+        <p class="facility-description" data-main-description>메인 페이지 안내입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 소개섹션 custom-field (동적으로 생성됨) -->
+  <div class="main-content-wrapper">
+    <!-- JavaScript로 동적 생성됨 -->
+  </div>
+
+  <!-- Include ImageWithFallback script -->
+  <script src="js/image-with-fallback.js"></script>
+
+  <!-- Common JavaScript -->
   <script src="js/common.js"></script>
+
+  <!-- Preview Handler for Admin Integration -->
+  <script src="js/preview-handler.js"></script>
+
+  <!-- Image Helpers -->
+  <script src="js/image-helpers.js"></script>
+
+  <!-- Base Data Mapper -->
+  <script src="js/data-mapper/core/base-mapper.js"></script>
+
+  <!-- Main Page Mapper -->
+  <script src="js/data-mapper/pages/main-mapper.js"></script>
+
+  <!-- Header Footer Mapper -->
+  <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+  <!-- Header and Footer Loader -->
+  <script src="js/header-footer-loader.js"></script>
+
+  <!-- Page-specific script -->
+  <script type="module" src="js/pages/main.js"></script>
+
+</body>
 </html>

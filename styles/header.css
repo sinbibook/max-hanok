@@ -1,0 +1,640 @@
+/* ===================================
+   Header Styles - Transparent with Scroll Effect
+   =================================== */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: 20px 0;
+}
+
+/* Scrolled state - 크기 축소 없이 배경/그림자만 변경 (스크롤 시 영역·로고 크기 유지) */
+.header.scrolled {
+    background: color-mix(in srgb, var(--color-secondary) 70%, transparent);
+    box-shadow: 0 2px 20px color-mix(in srgb, var(--color-secondary) 5%, transparent);
+}
+
+.header-content {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.header .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    /* Override any animations from index.css */
+    animation: none !important;
+    opacity: 1;
+    transform: none !important;
+    transition: opacity 0.5s ease;
+}
+
+.logo-icon {
+    width: 200px;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 480px) {
+    .logo-icon {
+        width: 100px;
+        max-width: 100px;
+    }
+}
+
+.logo-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    opacity: 1;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+    opacity: 1;
+}
+
+.header.scrolled .logo-text {
+    color: white;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.main-menu {
+    display: flex;
+    gap: 40px;
+}
+
+.menu-item-wrapper {
+    position: relative;
+}
+
+.menu-item {
+    font-family: var(--font-ko-main);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+}
+
+.header.scrolled .menu-item {
+    color: white;
+}
+
+.menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .menu-item::after {
+    background: white;
+}
+
+.menu-item:hover::after {
+    width: 100%;
+}
+
+/* Individual Submenus */
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: color-mix(in srgb, white 90%, transparent);
+    padding: 15px;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 10%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    border-radius: 0 0 8px 8px;
+    min-width: 120px;
+    white-space: nowrap;
+}
+
+.menu-item-wrapper:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.submenu-item {
+    font-family: var(--font-ko-sub);
+    color: #666;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: none;
+    border: none;
+    text-align: center;
+    white-space: nowrap;
+    position: relative;
+}
+
+.submenu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-secondary);
+    transition: all 0.3s ease;
+}
+
+.submenu-item:hover {
+    color: var(--color-secondary);
+}
+
+.submenu-item:hover::after {
+    width: 100%;
+}
+
+/* Reservation Button - Room List Style */
+.reservation-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 24px;
+    background: transparent;
+    color: white;
+    border: 1px solid color-mix(in srgb, white 30%, transparent);
+    font-family: 'Pretendard', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+.reservation-btn:hover {
+    background: white;
+    color: var(--color-secondary);
+    border-color: white;
+}
+
+.header.scrolled .reservation-btn {
+    border-color: color-mix(in srgb, white 30%, transparent);
+    color: white;
+}
+
+.header.scrolled .reservation-btn:hover {
+    background: white;
+    color: var(--color-secondary);
+    border-color: white;
+}
+
+.reservation-btn .btn-text {
+    display: inline-block;
+}
+
+.reservation-btn .icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s ease;
+}
+
+.reservation-btn:hover .icon {
+    transform: translate(2px, -2px);
+}
+
+/* YBS Button - Same style as Reservation Button */
+.ybs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 24px;
+    background: transparent;
+    color: white;
+    border: 1px solid color-mix(in srgb, white 30%, transparent);
+    font-family: 'Pretendard', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+.ybs-btn:hover {
+    background: white;
+    color: var(--color-secondary);
+    border-color: white;
+}
+
+.header.scrolled .ybs-btn {
+    border-color: color-mix(in srgb, white 30%, transparent);
+    color: white;
+}
+
+.header.scrolled .ybs-btn:hover {
+    background: white;
+    color: var(--color-secondary);
+    border-color: white;
+}
+
+.ybs-btn .btn-text {
+    display: inline-block;
+}
+
+.ybs-btn .icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s ease;
+}
+
+.ybs-btn:hover .icon {
+    transform: translate(2px, -2px);
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+    display: none;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    transition: none;
+    position: relative;
+    z-index: 1001;
+}
+
+.mobile-toggle .icon {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+    stroke-width: 2;
+    fill: none;
+}
+
+.header.scrolled .mobile-toggle .icon {
+    stroke: white;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background: color-mix(in srgb, var(--color-secondary) 95%, transparent);
+    transition: right 0.3s ease;
+    z-index: 2000;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+/* 모바일 메뉴 활성화시 body 스크롤 방지 */
+body.mobile-menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.mobile-menu-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 10;
+    padding: 10px;
+    background: transparent;
+    border: none;
+}
+
+.mobile-menu-close .icon {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+    stroke-width: 2;
+    fill: none;
+    pointer-events: none;
+}
+
+.mobile-menu-grid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 80px 20px;
+    padding-bottom: 120px;
+    margin-bottom: 0;
+    height: calc(100dvh - 200px);
+}
+
+.mobile-menu-section {
+    padding-bottom: 10px;
+}
+
+.mobile-menu-section:not(:last-child) {
+    border-bottom: 1px solid color-mix(in srgb, white 10%, transparent);
+}
+
+.mobile-menu-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mobile-sub-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mobile-sub-items .mobile-sub-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-sub-item {
+    font-family: var(--font-ko-main);
+    background: transparent;
+    border: none;
+    color: color-mix(in srgb, white 80%, transparent);
+    font-size: 1rem;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-sub-item:hover {
+    background: color-mix(in srgb, white 10%, transparent);
+    color: white;
+    padding-left: 15px;
+}
+
+.mobile-menu-title-button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-title-button:hover {
+    background: color-mix(in srgb, white 10%, transparent);
+    padding-left: 10px;
+}
+
+/* Mobile Accordion Styles */
+.mobile-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.mobile-accordion-icon {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s ease;
+}
+
+.mobile-accordion-header.active .mobile-accordion-icon {
+    transform: rotate(45deg);
+}
+
+.mobile-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-accordion-content.active {
+    max-height: 2000px;
+}
+
+
+.mobile-buttons-container {
+    display: none;
+    gap: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: color-mix(in srgb, var(--color-secondary) 95%, transparent);
+    padding: 20px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    z-index: 2001;
+}
+
+.mobile-menu.active .mobile-buttons-container {
+    display: flex;
+}
+
+.mobile-reservation-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    background: white;
+    border: none;
+    color: var(--color-secondary);
+    font-family: 'Pretendard', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border-radius: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    position: relative;
+}
+
+.mobile-reservation-btn:hover {
+    background: color-mix(in srgb, white 95%, transparent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px color-mix(in srgb, var(--color-secondary) 25%, transparent);
+}
+
+.mobile-reservation-btn:hover .icon {
+    transform: translate(2px, -2px);
+}
+
+.mobile-reservation-btn .icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s ease;
+}
+
+/* Mobile YBS Button - Same style as Mobile Reservation Button */
+.mobile-ybs-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    background: white;
+    border: none;
+    color: var(--color-secondary);
+    font-family: 'Pretendard', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border-radius: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 20%, transparent);
+    position: relative;
+}
+
+.mobile-ybs-btn:hover {
+    background: color-mix(in srgb, white 95%, transparent);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px color-mix(in srgb, var(--color-secondary) 25%, transparent);
+}
+
+.mobile-ybs-btn:hover .icon {
+    transform: translate(2px, -2px);
+}
+
+.mobile-ybs-btn .icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .mobile-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .header { 
+        padding: 0;
+    }
+
+    .header.scrolled {
+        padding: 0 0 10px 0;
+    }
+    .header-content {
+        padding: 10px 0 0;
+        max-width: 90%;
+    }
+
+    .header-inner {
+        position: relative;
+    }
+
+    .logo-text {
+        font-size: 1rem;
+    }
+
+    .mobile-toggle {
+        position: fixed !important;
+        right: 15px !important;
+        top: 10px !important;
+        transform: none !important;
+        margin: 0 !important;
+        z-index: 1002 !important;
+        border-radius: 0 !important;
+        padding: 8px !important;
+    }
+}
