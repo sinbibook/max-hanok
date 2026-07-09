@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max 한옥 - 오시는길</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
-    />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <meta name="description" content="안녕하세요!!">
+    <meta name="keywords" content="한옥,전통,맥스!!">
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/directions.css" />
-    <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="stylesheet" href="styles/directions.css">
+
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 오시는길" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -25,64 +22,111 @@
   <meta name="twitter:title" content="Max 한옥 - 오시는길" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta name="naver-site-verification" content="fqwffqwqfqwf" />
+  <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-<div class="container">
-        <!-- MAPPER: customFields.directions.hero.images[0] -->
-        <div class="con0 height" data-aos="fade-up">
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="img"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="con12" data-aos="fade-up">
-          <div class="tx0">
-            <span class="travelFont">Direction</span>
-            <span class="tx0_1">오시는길</span>
-          </div>
-        </div>
-        <!-- MAPPER: property.latitude, property.longitude -->
-        <div class="con14 w1440">
-          <div class="map_wrap" data-aos="fade-up">
-            <div class="map_inner">
-              <div id="kakao-map"></div>
-            </div>
-          </div>
+<body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
 
-          <!-- MAPPER: property.address -->
-          <div class="address" data-aos="fade-up">
-            <div class="tx1">네비게이션 이용 시</div>
-            <div class="tx2">
-              도로명 주소 ｜
-              <!-- MAPPER: property.businessInfo.businessAddress -->
-              <span data-directions-address></span>
-            </div>
-          </div>
-
-          <!-- MAPPER: customFields.pages.directions.sections[0].notice.title + description -->
-          <div class="address notice" data-aos="fade-up" data-directions-notice-section>
-            <div class="tx1" data-directions-notice-title>이용안내</div>
-            <div class="tx2" data-directions-notice-description>
-            </div>
-          </div>
+    <!-- 메인 소개 섹션 히어로 0번째 이미지-->
+    <section class="hero-section">
+        <div class="hero-background">
+            <img src="" alt="오시는길 배경" data-customfield-directions-hero-image-0>
+            <div class="hero-overlay"></div>
         </div>
-      </div>
-    </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js"></script>
-  <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>
-  <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-  <script src="js/data-mapper/core/base-mapper.js"></script>
-  <script src="js/data-mapper/pages/directions-mapper.js"></script>
-  <script src="js/image-helpers.js"></script>
-  <script src="js/preview-handler.js"></script>
-  <script src="js/header-footer-loader.js"></script>
-  <script src="js/common.js"></script>
+        <div class="hero-content">
+            <div class="hero-text-center">
+                <h1 class="hero-title" data-directions-hero-title>LOCATION</h1>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="hero-scroll-down" onclick="scrollToNextSection()">
+            <svg class="scroll-arrow" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Location Info Section -->
+    <section class="location-info-section">
+        <div class="directions-content-container">
+        <!-- Facility Introduction Section -->
+        <div class="facility-intro-section">
+            <div class="facility-intro-content">
+                <div class="facility-label">
+                    <span class="facility-number" data-directions-title>LOCATION</span>
+                </div>
+                <p class="facility-description" data-directions-description>
+                    오시는 길 안내입니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- Banner Image Section 히어로 1번째 이미지 -->
+        <div class="directions-banner-section">
+            <div class="container">
+                <img src="" alt="오시는길 배너" class="directions-banner-image" data-customfield-directions-hero-image-1>
+            </div>
+        </div>
+
+        <!-- 지도 섹션 -->
+        <section class="map-section main-content-fade-in">
+            <div class="container">
+                <div class="address-section">
+                    <p>
+                        <svg class="location-icon" viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span data-directions-address></span>
+                    </p>
+                    <!-- 안내사항  -->
+                     <div class="notice-wrap">
+                        <h4 data-customfield-directions-notice-title>안내사항</h4>
+                        <p data-customfield-directions-notice-description>안내사항 1</p>
+                     </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="map-container">
+                    <div id="kakao-map"></div>
+                </div>
+            </div>
+        </section>
+        </div> <!-- directions-content-container -->
+
+    <!-- Kakao Map SDK -->
+    <script type="text/javascript" src="js/kakao-maps-sdk.js"></script>
+
+    <!-- Include ImageWithFallback script -->
+    <script src="js/image-with-fallback.js"></script>
+
+    <!-- Common JavaScript -->
+    <script src="js/common.js"></script>
+
+    <!-- Image Helpers -->
+    <script src="js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Directions Page Mapper -->
+    <script src="js/data-mapper/pages/directions-mapper.js"></script>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Page-specific script -->
+    <script src="js/pages/directions.js"></script>
+
+</body>
 </html>

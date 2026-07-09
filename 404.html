@@ -1,84 +1,122 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="안녕하세요!!">
     <title>Max 한옥</title>
-    <link rel="stylesheet" href="styles/theme.css" />
-    <link rel="stylesheet" href="styles/common.css" />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/common.css" as="style">
+    <link rel="preload" href="styles/theme.css" as="style">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/theme.css">
+
     <style>
-      html, body { height: 100%; }
-      body {
-        display: flex;
-        flex-direction: column;
-        background-color: var(--color-primary);
-      }
-      main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      .errorContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 300px 20px 100px;
-        text-align: center;
-      }
-      .errorCode {
-        font-size: 120px;
-        font-weight: 900;
-        color: var(--color-secondary);
-        line-height: 1;
-        margin-bottom: 20px;
-        letter-spacing: -4px;
-      }
-      .errorTitle {
-        font-family: var(--font-ko-main);
-        font-size: 28px;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 15px;
-      }
-      .errorMessage {
-        font-size: 16px;
-        color: #666;
-        margin-bottom: 50px;
-        line-height: 1.8;
-        max-width: 480px;
-      }
-      .errorContainer .btnReservation {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 250px;
-        height: 55px;
-        border: 2px solid var(--color-secondary);
-        font-size: 15px;
-        font-weight: 600;
-        color: #fff;
-        background-color: var(--color-secondary);
-        text-decoration: none;
-        transition: all 0.3s ease;
-        padding: 0;
-      }
-      @media (max-width: 1440px) {
-        .errorCode { font-size: 80px; }
-        .errorTitle { font-size: 22px; }
-        .errorMessage { font-size: 14px; }
-        .errorContainer { padding: 300px 20px 80px; }
-        .errorContainer .btnReservation {
-          width: 140px;
-          height: 40px;
-          font-size: 14px;
+        html, body {
+            height: 100%;
         }
-      }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background: color-mix(in srgb, var(--color-secondary) 30%, transparent);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #footer-placeholder {
+            margin-top: auto;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 150px 20px 100px;
+            text-align: center;
+        }
+
+        .error-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+        }
+
+        .error-code {
+            font-size: 80px;
+            font-weight: 900;
+            color: var(--color-secondary, #658399);
+            line-height: 1;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .error-title {
+            font-family: var(--font-ko-main);
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .error-message {
+            font-family: var(--font-ko-sub);
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .error-button {
+            display: inline-block;
+            padding: 14px 48px;
+            background: var(--color-secondary, #658399);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: var(--font-ko-sub);
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .error-button:hover {
+            background: #5a7185;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 100px 20px 80px;
+            }
+
+            .error-code {
+                font-size: 60px;
+            }
+
+            .error-title {
+                font-size: 24px;
+            }
+
+            .error-message {
+                font-size: 14px;
+            }
+        }
     </style>
-    <!-- Open Graph Meta Tags for Social Media -->
+  <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
   <meta property="og:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
@@ -90,27 +128,43 @@
   <meta name="twitter:title" content="Max 한옥" />
   <meta name="twitter:description" content="자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!" />
   <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta name="naver-site-verification" content="fqwffqwqfqwf" />
+  <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-      <main>
-        <div class="errorContainer">
-          <div class="errorCode">404</div>
-          <h1 class="errorTitle">페이지를 찾을 수 없습니다.</h1>
-          <p class="errorMessage">
-            요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br />
-            홈으로 돌아가기 버튼을 클릭해주세요.
-          </p>
-          <a href="index.html" class="btnReservation">홈으로 돌아가기</a>
-        </div>
-      </main>
-    </div>
+<body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <!-- Error Content -->
+    <main class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-title">페이지를 찾을 수 없습니다.</h1>
+        <p class="error-message">
+            요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br>
+            홈으로 돌아가기 버튼을 클릭해주세요.
+        </p>
+        <button class="error-button" onclick="window.location.href='index.html'">
+            홈으로 돌아가기
+        </button>
+    </main>
+
+    <!-- Include Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Image Helpers -->
     <script src="js/image-helpers.js"></script>
+
+    <!-- Base Data Mapper -->
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+
+    <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
-    <script src="js/common.js"></script>
-  </body>
+
+</body>
 </html>

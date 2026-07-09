@@ -1,210 +1,382 @@
-@import url('./theme.css');
+/* ===================================
+   Directions Page Styles
+   =================================== */
 
-.con0 {
-  position: relative;
-}
-.con0.height .img {
-  aspect-ratio: 1920/800;
-}
-.con0 .tx1 {
-  position: absolute;
-  bottom: 130px;
-  left: 50%;
-  z-index: 11;
-  transform: translateX(-50%);
-  font-size: 40px;
-  color: #fff;
-  font-family: var(--font-ko-main);
-  font-weight: bold;
-}
-@media (max-width: 1440px) {
-  .con0 .tx1 {
-    bottom: 60px;
-    font-size: 20px;
-  }
-}
-.con0 .img {
-  width: 100%;
-  aspect-ratio: 1920/1000;
-  background-size: cover !important;
-}
-@media (max-width: 1440px) {
-  .con0 .img {
-    height: 420px;
-  }
-}
-.con0 .swiperNavi {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-@media (max-width: 1440px) {
-  .con0 .swiperNavi {
-    gap: 40px;
-  }
-}
-.con0 .swiperNavi .bar {
-  width: 1px;
-  height: 90px;
-  background-color: #fff;
-}
-@media (max-width: 1440px) {
-  .con0 .swiperNavi .bar {
-    height: 40px;
-  }
-}
-.con0 .swiper-button-next,
-.con0 .swiper-button-prev {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  inset: 0;
-  width: auto;
-  height: auto;
-  margin: 0;
-  color: #fff;
-  font-size: 18px;
-}
-@media (max-width: 1440px) {
-  .con0 .swiper-button-next,
-  .con0 .swiper-button-prev {
-    font-size: 14px;
-  }
-  .con0 .swiper-button-next img,
-  .con0 .swiper-button-prev img {
-    width: 16px;
-  }
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
-
-.con12 {
-  padding-top: 240px;
-  padding-bottom: 200px;
-  text-align: center;
-}
-@media (max-width: 1440px) {
-  .con12 {
-    padding-top: 110px;
-    padding-bottom: 100px;
-  }
-}
-.con12 .tx0 {
-  display: flex;
-  flex-direction: column;
-  font-size: 160px;
-  color: var(--color-secondary);
-}
-@media (max-width: 1440px) {
-  .con12 .tx0 {
-    font-size: 70px;
-  }
-}
-.con12 .tx0 .tx0_1 {
-  font-size: 34px;
-}
-@media (max-width: 1440px) {
-  .con12 .tx0 .tx0_1 {
-    font-size: 16px;
-  }
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
-
-.con13 {
-  padding-bottom: 280px;
-  color: var(--color-secondary);
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
-@media (max-width: 1440px) {
-  .con13 {
-    padding-bottom: 90px;
-  }
-  .btn {
+
+/* Container */
+.container {
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Location Info Section */
+.location-info-section {
+    padding: 100px 0 0 0;
+}
+
+/* Directions Content Container */
+.directions-content-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+/* Facility Introduction Section */
+.facility-intro-section {
     text-align: center;
-    padding-bottom: 160px;
-  }
+    margin-bottom: 80px;
+    padding: 0 40px;
 }
-.con13 .tx1 {
-  font-size: 18px;
-  font-family: var(--font-ko-main);
-  font-weight: bold;
+
+.facility-intro-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
-.con13 .tx1.mt150 {
-  margin-top: 150px;
-}
-@media (max-width: 1440px) {
-  .con13 .tx1.mt150 {
-    margin-top: 50px;
-  }
-}
-.con13 .tx2 {
-  margin-top: 30px;
-  line-height: 1.6;
-  font-family: var(--font-ko-sub);
+
+.facility-label {
+    margin-bottom: 20px;
 }
 
 
-.con14 {
-  padding-top: 80px;
-  padding-bottom: 80px;
+.facility-description {
+    font-family: var(--font-ko-sub);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+    max-width: 600px;
+    margin: 0 auto;
 }
-@media (max-width: 1440px) {
-  .con14 {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
+
+/* Banner Image Section */
+.directions-banner-section {
+    margin: 60px 0;
 }
-.con14 .map_wrap {
-  width: 100%;
-  height: 500px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 60px;
+
+/* 배너 섹션은 동일한 container 스타일 사용 */
+
+.directions-banner-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+    opacity: 1;
+    transform: translateY(0);
 }
-@media (max-width: 1440px) {
-  .con14 .map_wrap {
-    height: 300px;
-    margin-bottom: 40px;
-  }
+
+/* Info Section */
+.info-section {
+    padding: 100px 0;
 }
-.con14 .map_inner {
-  width: 100%;
-  height: 100%;
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 60px 0;
+    color: var(--color-secondary);
 }
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.info-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 8%, transparent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px color-mix(in srgb, var(--color-secondary) 12%, transparent);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 20px;
+    color: var(--color-secondary);
+}
+
+.info-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.info-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    color: var(--color-secondary);
+}
+
+.info-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    margin: 0;
+}
+
+/* Notice Box */
+.notice-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 8%, transparent);
+}
+
+.notice-box h4 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    color: var(--color-secondary);
+    border-bottom: 2px solid color-mix(in srgb, var(--color-secondary) 10%, var(--color-primary));
+    padding-bottom: 10px;
+}
+
+.notice-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #666;
+    margin: 0 0 8px 0;
+}
+
+.notice-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Notice Section */
+.notice-section {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.notice-section p {
+    font-family: var(--font-ko-main);
+    font-size: 1rem;
+    color: var(--color-secondary);
+    margin: 0;
+}
+
+/* Map Section */
+.map-section {
+    padding: 0 0 100px 0;
+}
+
+/* Address Section */
+.address-section {
+    text-align: center;
+    margin-bottom: 85px;
+}
+
+.address-section p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-ko-sub);
+    font-size: 1rem;
+    color: var(--color-secondary);
+    margin: 0;
+    padding: 20px 0;
+}
+
+.address-section .notice-wrap {
+    width: 100%;
+    border: 1px dashed color-mix(in srgb, var(--color-secondary) 30%, transparent);
+    padding: 30px 40px;
+    margin: 20px 0 0;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--color-secondary) 8%, var(--color-primary));
+}
+
+.address-section .notice-wrap p {
+   margin-bottom: 0;
+   padding: 20px 0 0 0;
+}
+
+
+.location-icon {
+    width: 20px;
+    height: 20px;
+    stroke: color-mix(in srgb, var(--color-secondary) 60%, transparent);
+    stroke-width: 2;
+    fill: none;
+}
+
+.map-container {
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--color-secondary) 10%, transparent);
+    margin-bottom: 30px;
+}
+
 #kakao-map {
-  width: 100%;
-  height: 100%;
-}
-.con14 .address {
-  padding: 30px 0;
-  border-bottom: 1px solid #ddd;
-}
-.con14 .address:last-child {
-  border-bottom: none;
-}
-.con14 .address .tx1 {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--color-secondary);
-  font-family: var(--font-ko-main);
-}
-.con14 .address .tx2 {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-  font-family: var(--font-ko-sub);
-}
-.con14 .address.notice .tx1 {
-  margin-top: 0;
+    width: 100%;
+    height: 100%;
 }
 
+.map-info {
+    text-align: center;
+}
 
-.con14 {
-  margin-bottom: 70px;
+.map-info p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 60vh;
+        min-height: 60vh;
+    }
+
+    .directions-content-container {
+        max-width: 100%;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    .hero-content {
+        padding: 0 20px;
+    }
+
+    .location-info-section {
+        padding: 0;
+    }
+
+    .facility-intro-section {
+        margin-bottom: 60px;
+        padding: 60px 20px 0 20px;
+    }
+
+    .facility-description {
+        font-size: 1rem;
+    }
+
+    .directions-banner-section {
+        margin: 40px 0;
+    }
+
+    .directions-banner-section .container {
+        padding: 0 20px;
+    }
+
+    .address-section .notice-wrap {
+        padding: 30px 20px;
+    }
+
+    .directions-banner-image {
+        height: 250px;
+    }
+
+    .info-section {
+        padding: 60px 0;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .info-card {
+        padding: 30px 20px;
+    }
+
+    .notice-box {
+        padding: 30px 20px;
+    }
+
+
+    .map-section {
+        padding: 0;
+    }
+
+    .map-container {
+        height: 400px;
+    }
+
+    .section-title {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .hero-content {
+        padding: 0 15px;
+    }
+
+    .facility-intro-section {
+        padding: 60px 15px 0 15px;
+    }
+
+    .directions-banner-section .container {
+        padding: 0 15px;
+    }
+
+    .address-section .notice-wrap {
+        padding: 30px 15px;
+    }
+
+    .info-section {
+        padding: 40px 0;
+    }
+
+    .map-section {
+        padding: 0;
+    }
+
+    .info-card {
+        padding: 25px 15px;
+    }
+
+    .notice-box {
+        padding: 25px 15px;
+    }
+
+    .map-container {
+        height: 300px;
+    }
+}
