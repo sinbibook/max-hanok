@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.289.0",
-    "generatedAt": "2026-07-09T03:09:39.877001062Z",
+    "version": "1.290.0",
+    "generatedAt": "2026-07-29T03:20:24.483880583Z",
     "templateType": "full_banner_slider_flat",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -10,12 +10,12 @@
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "name": "Max 한옥",
     "nameEn": "Jeju Bijasupgil15 Pension",
-    "description": "자연이 함께하는 곳, 비자숲길15 제주펜션 입니다! 비자림 인근에 위치해 있어 숲내음을 맡으며 편안히 휴식을 즐기세요!",
-    "subtitle": "한옥의 멋을 살린 맥스 한옥 펜션",
+    "description": "",
+    "subtitle": "",
     "address": "제주특별자치도 제주시 구좌읍 비자숲길 15 한옥펜션",
     "latitude": 33.4952332300215,
     "longitude": 126.811950585325,
-    "contactPhone": "010-0000-0000",
+    "contactPhone": "010-2222-3333",
     "contactEmail": "max@n.com",
     "checkin": "15:00",
     "checkout": "11:00",
@@ -25,8 +25,8 @@
     "province": "서울특별시",
     "city": "금천구",
     "domain": "max-hanok.com",
-    "realtimeBookingId": "https://www.bookingplay.co.kr/booking/1/12401",
-    "ybsId": "80550",
+    "realtimeBookingId": "",
+    "ybsId": "",
     "amenities": [ ],
     "nearbyAttractions": [
       "산",
@@ -232,7 +232,7 @@
       }
     ],
     "refundSettings": {
-      "customerRefundNotice": "",
+      "customerRefundNotice": "환불정책 안내문 테스트",
       "immediateRefundEnabled": true,
       "immediateRefundTimeLimit": "60",
       "immediateRefundMinuteLimit": "20",
@@ -343,7 +343,7 @@
       "id": "c20a834f-87a0-458c-a75f-bc81df58ab98",
       "name": "별하방",
       "description": "별하방입니다.\n안녕\n하세요",
-      "roomInfo": "이것저것 많아요",
+      "roomInfo": "",
       "usageGuide": "체크인/체크아웃 시간 준수",
       "group": "A동(미디어아트)",
       "size": 13,
@@ -2178,10 +2178,7 @@
           "koSub": null,
           "enMain": null
         },
-        "color": {
-          "primary": "#F5F0E8",
-          "secondary": "#3E5B45"
-        }
+        "color": null
       },
       "property": {
         "name": "Max 한옥",
