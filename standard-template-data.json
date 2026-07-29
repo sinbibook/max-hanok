@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.291.0",
-    "generatedAt": "2026-07-29T03:25:35.083372265Z",
+    "version": "1.292.0",
+    "generatedAt": "2026-07-29T03:29:15.040260168Z",
     "templateType": "full_banner_slider_flat",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2178,7 +2178,10 @@
           "koSub": null,
           "enMain": null
         },
-        "color": null
+        "color": {
+          "primary": "#e6f3ff",
+          "secondary": "#658399"
+        }
       },
       "property": {
         "name": "Max 한옥",
