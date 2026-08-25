@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.292.0",
-    "generatedAt": "2026-07-29T03:29:15.040260168Z",
+    "version": "1.293.0",
+    "generatedAt": "2026-08-25T05:18:27.375712652Z",
     "templateType": "full_banner_slider_flat",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -15,7 +15,9 @@
     "address": "제주특별자치도 제주시 구좌읍 비자숲길 15 한옥펜션",
     "latitude": 33.4952332300215,
     "longitude": 126.811950585325,
-    "contactPhone": "010-2222-3333",
+    "contactPhone": [
+      "070-1234-5678"
+    ],
     "contactEmail": "max@n.com",
     "checkin": "15:00",
     "checkout": "11:00",
@@ -77,17 +79,9 @@
         "displayOrder": 0,
         "images": [
           {
-            "id": "10fe85d4-265e-438d-9175-011a48fab6ce",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613234-pwza1c2ilc.jpg",
-            "sortOrder": 0,
-            "description": "시설이미지 1에 대한 설명",
-            "isSelected": true,
-            "blockId": null
-          },
-          {
             "id": "85fb7ae3-e25e-495a-b9e8-91b331bf555c",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1769410159556-mjjc8uubvi.jpg",
-            "sortOrder": 1,
+            "sortOrder": 0,
             "description": "시설이미지 2에 대한 설명",
             "isSelected": true,
             "blockId": null
@@ -95,8 +89,16 @@
           {
             "id": "d351e84f-aef8-46a7-81ef-7414b38f59ec",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-8pw23atnlte.jpg",
-            "sortOrder": 2,
+            "sortOrder": 1,
             "description": "test",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "10fe85d4-265e-438d-9175-011a48fab6ce",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613234-pwza1c2ilc.jpg",
+            "sortOrder": 2,
+            "description": "시설이미지 1에 대한 설명",
             "isSelected": true,
             "blockId": null
           },
@@ -168,16 +170,138 @@
         ]
       },
       {
-        "id": "63ac5e9b-aa71-460b-aba1-fab8d814c61f",
-        "name": "스파",
-        "description": "",
-        "usageGuide": "- 이용 객실: 전 객실\n- 스파 형태: 스파\n- 수용 인원: 2\n\n",
-        "displayOrder": 3,
+        "id": "7803f984-134e-4a7f-9fb2-27396c950185",
+        "name": "수기시설",
+        "description": "안녕하세요",
+        "usageGuide": "",
+        "displayOrder": 4,
         "images": [
           {
-            "id": "b15ea5bf-c88f-409f-8c3b-c042a9c7af3a",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/63ac5e9b-aa71-460b-aba1-fab8d814c61f/main/1781658509368-j5zu6e4t1o.jpg",
+            "id": "8bbd489a-20fd-4df9-94fc-895f2432354c",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/7803f984-134e-4a7f-9fb2-27396c950185/main/1787048044726-gff62nc7kq.jpg",
             "sortOrder": 0,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "b5b98155-e538-4eea-8b40-df9b69c37dbb",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/7803f984-134e-4a7f-9fb2-27396c950185/main/1787048044937-vla8x2bs1v.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "f423a228-0b1e-4710-9fab-105a75e056f8",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/7803f984-134e-4a7f-9fb2-27396c950185/main/1787048044936-q4z6pcv24c.jpg",
+            "sortOrder": 2,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "95e9f0c3-ff0f-468e-ad1a-f1aa071912cf",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/7803f984-134e-4a7f-9fb2-27396c950185/main/1787048044829-37b489pwwy.jpg",
+            "sortOrder": 3,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "0ab56c1d-fb03-404b-8fea-fd46a5cfde42",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/7803f984-134e-4a7f-9fb2-27396c950185/main/1787048044725-jecq4bv3nw.jpg",
+            "sortOrder": 4,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          }
+        ]
+      },
+      {
+        "id": "2b0d8d26-378b-484e-821a-2fbc627ef411",
+        "name": "테스트12",
+        "description": "",
+        "usageGuide": "",
+        "displayOrder": 5,
+        "images": [
+          {
+            "id": "4143a71e-6348-45a1-a5a5-7167a86f78be",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2b0d8d26-378b-484e-821a-2fbc627ef411/main/1787293644460-6hzomioknd.jpg",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "cc4e5a15-0ba0-4674-84b7-4f26f8a2d422",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2b0d8d26-378b-484e-821a-2fbc627ef411/main/1787293644741-yahgsn5uu4.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "4c3b6636-d6e9-476f-b794-f78fc63f9acf",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2b0d8d26-378b-484e-821a-2fbc627ef411/main/1787293644738-inhoqwjknz.jpg",
+            "sortOrder": 2,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "c30fd2ed-8913-4c28-b5ea-c6356665f22b",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2b0d8d26-378b-484e-821a-2fbc627ef411/main/1787293644788-c5te9401wn.jpg",
+            "sortOrder": 3,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "d6860298-bad4-4e68-8169-249f7b49d396",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/2b0d8d26-378b-484e-821a-2fbc627ef411/main/1787293644460-uaatdg9u60.jpg",
+            "sortOrder": 4,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          }
+        ]
+      },
+      {
+        "id": "47614b17-64d5-4e42-a1d1-90a7646fe782",
+        "name": "2222",
+        "description": "",
+        "usageGuide": "",
+        "displayOrder": 6,
+        "images": [
+          {
+            "id": "2babc0cf-f171-43ba-9047-ff8f0958f227",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/47614b17-64d5-4e42-a1d1-90a7646fe782/main/1787293720605-yz1h5ew34y.jpg",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "8510290b-ff17-46a2-9ead-cc81e2ae12ca",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/47614b17-64d5-4e42-a1d1-90a7646fe782/main/1787293720666-xdjyzukxaa.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "5e37edf3-38fa-4ef5-9e3d-cf8fbb22329b",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/47614b17-64d5-4e42-a1d1-90a7646fe782/main/1787293720661-rkusdvio65.jpg",
+            "sortOrder": 2,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "3e102ce8-6fb3-4e33-87f6-14a202467d99",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/47614b17-64d5-4e42-a1d1-90a7646fe782/main/1787293720600-ov25aiv43i.jpg",
+            "sortOrder": 3,
             "description": "",
             "isSelected": true,
             "blockId": null
