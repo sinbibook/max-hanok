@@ -477,40 +477,27 @@ class HeaderFooterMapper extends BaseDataMapper {
             ecommerceElement.textContent = businessInfo.eCommerceRegistrationNumber;
         }
 
-        // 저작권 정보 매핑 - 신비서 하드코딩
+        // 저작권 정보 - '신비서' 주체명이 포함되어 저작권 문구 전체를 블라인드 처리(미노출)
+        // TODO: 추후 공급사 정보를 매핑해서 노출하도록 변경
         const copyrightElement = this.safeSelect('[data-footer-copyright]');
         if (copyrightElement) {
-            const currentYear = new Date().getFullYear();
-            copyrightElement.innerHTML = `<a href="https://www.sinbibook.com/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">© ${currentYear} 신비서. All rights reserved.</a>`;
+            // const currentYear = new Date().getFullYear();
+            // copyrightElement.innerHTML = `<a href="https://www.sinbibook.com/" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">© ${currentYear} 신비서. All rights reserved.</a>`;
+            copyrightElement.innerHTML = '';
+            copyrightElement.style.display = 'none';
         }
     }
 
     /**
      * Footer 소셜 링크 매핑
-     * socialLinks가 빈 객체면 전체 섹션 숨김
-     * 값이 있는 링크만 표시
+     * 값이 있는 링크만 표시하고, 노출할 링크가 하나도 없으면
+     * FOLLOW US 타이틀을 포함한 전체 섹션 숨김
      */
     mapSocialLinks() {
         if (!this.isDataLoaded) return;
 
         const socialLinks = this.safeGet(this.data, 'homepage.socialLinks') || {};
         const socialSection = this.safeSelect('[data-social-links-section]');
-
-        // socialLinks가 빈 객체인지 체크
-        const hasSocialLinks = Object.keys(socialLinks).length > 0;
-
-        if (!hasSocialLinks) {
-            // 빈 객체면 전체 섹션 숨김
-            if (socialSection) {
-                socialSection.style.display = 'none';
-            }
-            return;
-        }
-
-        // 소셜 링크가 있으면 섹션 표시
-        if (socialSection) {
-            socialSection.style.display = 'block';
-        }
 
         // 소셜 링크 설정 객체와 루프를 사용한 매핑
         const socialLinkConfig = [
@@ -519,17 +506,27 @@ class HeaderFooterMapper extends BaseDataMapper {
             { type: 'blog', selector: '[data-social-blog]' }
         ];
 
+        // 실제로 노출되는 링크 개수 카운트
+        // (빈 객체 / 값이 빈 문자열 / 지원하지 않는 타입만 있는 경우 모두 0)
+        let visibleCount = 0;
+
         socialLinkConfig.forEach(({ type, selector }) => {
             const linkElement = this.safeSelect(selector);
             if (linkElement) {
                 if (socialLinks[type]) {
                     linkElement.href = socialLinks[type];
                     linkElement.style.display = 'flex';
+                    visibleCount++;
                 } else {
                     linkElement.style.display = 'none';
                 }
             }
         });
+
+        // 매핑된 링크가 하나도 없으면 FOLLOW US 섹션 자체를 숨김
+        if (socialSection) {
+            socialSection.style.display = visibleCount > 0 ? 'block' : 'none';
+        }
     }
 
     // ============================================================================

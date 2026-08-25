@@ -34,8 +34,8 @@
                     </div>
                 </div>
 
-                <!-- Social & Follow Us -->
-                <div class="footer-section footer-social" data-social-links-section>
+                <!-- Social & Follow Us : 매핑된 소셜 링크가 있을 때만 mapper가 노출 -->
+                <div class="footer-section footer-social" data-social-links-section style="display: none;">
                     <h3 class="footer-title">FOLLOW US</h3>
                     <div class="social-icons">
                         <a href="#" class="social-icon" data-social-instagram aria-label="Instagram" style="display: none;">
@@ -61,10 +61,11 @@
             </div>
         </div>
 
-        <!-- Bottom Section -->
+        <!-- Bottom Section : 저작권 문구는 블라인드 처리, 영역은 하단 여백 용도로 유지 -->
         <div class="footer-bottom">
             <div class="footer-bottom-content">
-                <p class="copyright" data-footer-copyright></p>
+                <!-- custom field : 저작권 정보 (현재 블라인드 처리 / 추후 공급사 매핑 예정) -->
+                <p class="copyright" data-footer-copyright style="display: none;"></p>
             </div>
         </div>
     </div>
