@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.297.0",
-    "generatedAt": "2026-08-25T05:28:07.201790362Z",
+    "version": "1.298.0",
+    "generatedAt": "2026-09-13T10:48:39.569392186Z",
     "templateType": "full_banner_slider_flat",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2288,11 +2288,34 @@
               }
             ],
             "slider": true,
-            "enabled": true,
+            "enabled": false,
             "endDate": null,
             "sortOrder": 0,
             "startDate": null,
             "description": ""
+          },
+          {
+            "id": "01a09a61-883c-772f-9404-9e6ca24320e1",
+            "link": "http://localhost:3000/homepage/popups",
+            "title": "다건 팝업 생성",
+            "images": [
+              {
+                "id": "01a09a61-8835-7898-b874-c6f1b583be19",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/d6e0452b-2bdf-4ae0-82d2-49841a948428/popup/1789296475770-oeyv9t152y.png",
+                "sortOrder": 2,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a09a61-883c-772f-9404-9e6ca24320e1"
+              }
+            ],
+            "slider": true,
+            "enabled": false,
+            "endDate": "2026-09-30",
+            "sortOrder": 1,
+            "startDate": "2026-09-13",
+            "usageType": "homepage",
+            "description": "다건 팝업 생성 테스트",
+            "unlimitedPeriod": false
           }
         ]
       },
