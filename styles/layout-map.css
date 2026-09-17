@@ -1,287 +1,104 @@
-/* ===========================
-   Layout Map Page Styles
-   =========================== */
-
-/* ===========================
-   Hero Section
-   =========================== */
-.hero-section {
-    height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+/* ============================================================
+   Layout Map Page - Con01 (Hero)
+   ============================================================ */
+.con01 {
+  position: relative;
+}
+.con01 .img {
+  width: 100%;
+  aspect-ratio: 1920 / 460;
+  background-size: cover !important;
+  background-position: center;
+}
+.con01 .tx1_1 {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  z-index: 11;
+  transform: translateX(-50%);
+  font-size: 40px;
+  color: #fff;
+}
+@media (max-width: 1440px) {
+  .con01 .img {
+    height: 420px;
+  }
+  .con01 .tx1_1 {
+    bottom: 60px;
+    font-size: 16px;
+  }
+}
+@media (max-width: 1180px) {
+  .con01 .img {
+    height: 300px;
+  }
 }
 
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+/* ============================================================
+   Layout Map Page - Con14 (Layout Map)
+   ============================================================ */
+.con14 {
+  padding-top: 180px;
+  padding-bottom: 190px;
+}
+@media (max-width: 1440px) {
+  .con14 {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
 }
 
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.con14 .conTitle {
+  margin-bottom: 40px;
 }
 
-/* ===========================
-   Main Container
-   =========================== */
-
-.layout-map-container {
-    position: relative;
-    z-index: 10;
-    margin: 0 auto;
-    max-width: 90%;
-    padding: 100px 40px;
+.con14 img {
+  width: 100%;
 }
 
-/* ===========================
-   Intro Section
-   =========================== */
-
-.layout-map-intro {
-    text-align: center;
-    margin-bottom: 80px;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
+/* Legacy class names for compatibility */
+.conLayoutMap {
+  padding-top: 180px;
+  padding-bottom: 190px;
+}
+@media (max-width: 1440px) {
+  .conLayoutMap {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
 }
 
-.layout-map-intro.animate {
-    opacity: 1;
-    transform: translateY(0);
+.conLayoutMap .conTitle {
+  margin-bottom: 40px;
 }
 
-.layout-map-title {
-    font-family: var(--font-ko-main);
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin: 0 0 20px 0;
-    color: var(--color-secondary);
-    letter-spacing: -0.5px;
+.mapDesc {
+  font-size: 20px;
+  color: #000000;
+  word-break: keep-all;
+  line-height: 1.5;
+}
+@media (max-width: 1440px) {
+  .mapDesc {
+    font-size: 18px;
+  }
 }
 
-.layout-map-description {
-    font-family: var(--font-ko-sub);
-    font-size: 1.1rem;
-    color: #666;
-    margin: 0;
-    line-height: 1.8;
-    max-width: 700px;
-    margin: 0 auto;
+.mapContent {
+  margin-top: 60px;
 }
-
-/* ===========================
-   Layout Map Content
-   =========================== */
-
-.layout-map-content {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+@media (max-width: 1440px) {
+  .mapContent {
     margin-top: 40px;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+  }
 }
 
-/* ===========================
-   Layout Map Item
-   =========================== */
-
-.layout-map-item {
-    width: 100%;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
+.mapItem img {
+  width: 100%;
+  display: block;
 }
 
-.layout-map-item.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.layout-map-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    border-radius: 12px;
-    min-height: 500px;
-}
-
-/* ===========================
-   Layout Map Description Item
-   =========================== */
-
-.layout-map-description-item {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-    text-align: center;
-    padding: 0 20px;
-}
-
-.layout-map-description-item.animate {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.layout-map-description-item p {
-    font-family: var(--font-ko-sub);
-    font-size: 1rem;
-    color: #666;
-    margin: 0;
-    line-height: 1.8;
-    font-weight: 400;
-}
-
-/* ===========================
-   Responsive Design
-   =========================== */
-
-@media (max-width: 1200px) {
-    .layout-map-container {
-        max-width: 100%;
-        padding: 80px 40px;
-    }
-
-    .layout-map-title {
-        font-size: 2.2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .layout-map-container {
-        max-width: 100%;
-        padding: 60px 25px;
-    }
-
-    .layout-map-intro {
-        margin-bottom: 60px;
-    }
-
-    .layout-map-title {
-        font-size: 1.8rem;
-    }
-
-    .layout-map-description {
-        font-size: 1rem;
-    }
-
-    .layout-map-content {
-        gap: 50px;
-    }
-
-    .layout-map-image-description {
-        font-size: 0.95rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .layout-map-container {
-        padding: 40px 15px;
-    }
-
-    .layout-map-intro {
-        margin-bottom: 40px;
-    }
-
-    .layout-map-title {
-        font-size: 1.5rem;
-    }
-
-    .layout-map-description {
-        font-size: 0.95rem;
-    }
-
-    .layout-map-content {
-        gap: 40px;
-    }
-
-    .layout-map-image-description {
-        font-size: 0.9rem;
-    }
-}
-
-/* ===========================
-   Closing Banner Section
-   =========================== */
-
-.layout-closing {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.layout-closing-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-/* Desktop 전용 parallax (모바일에선 background-attachment: fixed가 깨지므로 데스크톱에서만 적용) */
-@media (min-width: 769px) {
-    .layout-closing-bg {
-        background-attachment: fixed;
-    }
-}
-
-.layout-closing-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-
-.layout-closing-content {
-    text-align: center;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.layout-closing-content .closing-logo {
-    width: 200px !important;
-    height: auto !important;
-    object-fit: contain !important;
-    max-width: 200px;
-    z-index: 100 !important;
-    position: relative !important;
-    display: block !important;
-    margin: 0 auto !important;
-    opacity: 0;
-    transform: translateY(50px);
-    animation: logoFadeIn 1.5s ease-out 1s forwards;
-}
-
-@keyframes logoFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ROOM PREVIEW 제목 - 영문 폰트 */
+.con14 .conTitle .tx1 {
+  font-family: var(--font-en-main);
 }

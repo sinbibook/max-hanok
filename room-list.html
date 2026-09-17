@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max 한옥</title>
-    <meta name="description" content="안녕하세요!!">
-    <meta name="keywords" content="한옥,전통,맥스!!">
+  <head>
+    <!-- 렌더 게이트: 매핑 전 placeholder/fallback 깜빡임 방지 (매핑 완료 시 페이드인) -->
+    <style>html.tpl-loading body{opacity:0}body{opacity:1;transition:opacity .3s ease}</style>
+    <script>document.documentElement.classList.add('tpl-loading');window.__tplReveal=function(){document.documentElement.classList.remove('tpl-loading');};setTimeout(function(){window.__tplReveal&&window.__tplReveal();},3000);</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:,">
+    <title data-page-title>Max 한옥</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/theme.css" as="style">
+    <link rel="preload" href="styles/common.css" as="style">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/room-list.css">
-
-  <!-- Open Graph Meta Tags for Social Media -->
+    <link rel="stylesheet" href="styles/room-list.css" />
+    <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
   
@@ -26,80 +32,93 @@
   <meta name="naver-site-verification" content="fqwffqwqfqwf" />
   <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-<body>
-
-    <!-- Include Header -->
-    <div id="header-placeholder"></div>
-
-    <!-- DATA MAPPING: Hero Section -->
-    <section class="hero-section">
-        <div class="hero-background">
-            <!-- DATA MAPPING: Hero Background Image -->
-            <img src="" alt="객실 배경" data-customfield-room-list-hero-image-0>
-            <div class="hero-overlay"></div>
-        </div>
-        <div class="hero-content">
-            <div class="hero-text-center">
-                <!-- DATA MAPPING: Hero Title -->
-                <h1 class="hero-title" data-customfield-room-list-hero-title></h1>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <!-- MAPPER: customFields.pages.roomList.sections[0].hero.images[isSelected] -->
+        <div class="con0" data-aos="fade-up">
+          <div class="swiper">
+            <div class="swiper-wrapper" data-room-list-hero-slides>
+              <div class="swiper-slide">
+                <img alt="" />
+                <div class="tx1">ROOMS</div>
+              </div>
             </div>
+          </div>
         </div>
-
-        <!-- Scroll Down Indicator -->
-        <div class="hero-scroll-down" onclick="scrollToNextSection()">
-            <svg class="scroll-arrow" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Room List Section -->
-    <section class="room-list-section main-content-fade-in">
-
-            <!-- DATA MAPPING: Stylized Title Section -->
-            <div class="stylized-title-container">
-                <div class="circle-background"></div>
-                <div class="title-content">
-                    <!-- DATA MAPPING: Title Label -->
-                    <span class="title-label" data-customfield-room-list-title-label>ROOMS</span>
-                    <!-- DATA MAPPING: Main Title -->
-                    <h1 class="stylized-title" data-customfield-room-list-main-title></h1>
+        <div class="conRoomList w1440">
+          <!-- MAPPER: homepage.customFields.property.name -->
+          <div class="conTitle" data-aos="fade-up">
+            <div class="tx1">ROOMS</div>
+            <div class="tx2">
+              <div class="bold spot" data-property-name></div>
+            </div>
+          </div>
+          <div class="roomGrid" data-room-list-grid>
+            <!-- 객실 카드는 room-list-mapper.js가 동적 생성 -->
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img alt="" />
                 </div>
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
+                </div>
+              </a>
             </div>
-
-            <!-- Room Grid -->
-            <div class="room-grid" id="room-grid">
-                <!-- Room cards will be dynamically generated here -->
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img alt="" />
+                </div>
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
+                </div>
+              </a>
             </div>
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img alt="" />
+                </div>
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
+                </div>
+              </a>
+            </div>
+            <div class="roomCard" data-aos="fade-up">
+              <a href="room.html">
+                <div class="imgOb">
+                  <img alt="" />
+                </div>
+                <div class="info">
+                  <div class="name">하드코딩</div>
+                  <div class="desc">하드코딩</div>
+                  <div class="more">VIEW MORE</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    </section>
-
-    <!-- Include ImageWithFallback script -->
-    <script src="js/image-with-fallback.js"></script>
-
-    <!-- Common JavaScript -->
-    <script src="js/common.js"></script>
-
-    <!-- Image Helpers -->
-    <script src="js/image-helpers.js"></script>
-
-    <!-- Base Data Mapper -->
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-
-    <!-- Room List Mapper -->
-    <script src="js/data-mapper/pages/room-list-mapper.js"></script>
-
-    <!-- Preview Handler for Admin Integration -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="js/preview-handler.js"></script>
-
-    <!-- Header Footer Mapper -->
+    <script src="js/image-helpers.js"></script>
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/room-list-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-
-    <!-- Header and Footer Loader -->
     <script src="js/header-footer-loader.js"></script>
-
-    <!-- Page-specific script -->
+    <script src="js/common.js"></script>
     <script src="js/pages/room-list.js"></script>
-
-</body>
+  </body>
 </html>

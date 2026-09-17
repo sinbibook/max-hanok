@@ -1,415 +1,98 @@
-/* ===========================
-   Nearby Attractions Page Styles
-   =========================== */
-
-/* ===========================
-   Hero Section
-   =========================== */
-/* Hero Section */
-.hero-section {
-    height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+/* ============================================================
+   Nearby Attractions Page - Con01 (Hero)
+   ============================================================ */
+.con01 {
+  position: relative;
 }
 
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+.con01 .img {
+  width: 100%;
+  aspect-ratio: 1920 / 460;
+  background-size: cover !important;
 }
 
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+@media (max-width: 1440px) {
+  .con01 .img {
+    height: 420px;
+  }
 }
 
-.hero-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
-    z-index: 2;
+@media (max-width: 1180px) {
+  .con01 .img {
+    height: 300px;
+  }
 }
 
-/* ===========================
-   Main Container
-   =========================== */
-
-.attractions-container {
-    position: static;
-    background: var(--color-primary);
-    margin: 0 auto;
-    max-width: 80%;
-    padding: 80px 0;
+.con01 .tx1_1 {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  z-index: 11;
+  transform: translateX(-50%);
+  font-size: 40px;
+  color: #fff;
 }
 
-.attractions-header {
-    text-align: center;
-    margin-bottom: 60px;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
+@media (max-width: 1440px) {
+  .con01 .tx1_1 {
+    bottom: 20px;
+    font-size: 20px;
+  }
 }
 
-.attractions-header.animate {
-    opacity: 1;
-    transform: translateY(0);
+/* ============================================================
+   Nearby Attractions Page (Tour) - Con13
+   ============================================================ */
+.con13 {
+  padding-top: 240px;
+  padding-bottom: 240px;
 }
-
-.attractions-title {
-    font-size: 2rem;
-    font-weight: 400;
-    margin: 0;
-    color: color-mix(in srgb, var(--color-secondary) 30%, transparent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+@media (max-width: 1440px) {
+  .con13 {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
 }
-
-/* ===========================
-   Attractions Introduction Section
-   =========================== */
-
-.attractions-intro-section {
-    text-align: center;
-    margin-bottom: 80px;
-    padding: 0 40px;
+.con13 .itemWrap {
+  display: grid;
+  grid-gap: 120px 40px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 70px;
 }
-
-.attractions-intro-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.attractions-label {
-    margin-bottom: 20px;
-}
-
-.attractions-number {
-    font-family: var(--font-en-main);
-    font-size: 0.9rem;
-    font-weight: 900;
-    color: var(--color-secondary);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-}
-
-.attractions-description {
-    font-family: var(--font-ko-sub);
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #666;
-    margin: 0 auto;
-    max-width: 600px;
-}
-
-/* ===========================
-   Grid Layout - 1 column
-   =========================== */
-
-.attractions-grid {
-    display: flex;
-    flex-direction: column;
+@media (max-width: 1440px) {
+  .con13 .itemWrap {
+    grid-gap: 40px 20px;
+    grid-template-columns: repeat(2, 1fr);
     margin-top: 40px;
+  }
+  .con13 .itemWrap img { width: 100%; }
 }
-
-/* ===========================
-   Attraction Item - Image Left, Content Right
-   =========================== */
-
-.attraction-item {
-    display: flex;
-    flex-direction: row;
-    gap: 60px;
-    align-items: center;
+@media (max-width: 1180px) {
+  .con13 .itemWrap { grid-template-columns: repeat(1, 1fr); }
 }
-
-/* Image with top-left radius animation */
-.attraction-item-image {
-    width: 50%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    transition: border-radius 0.5s ease;
-    opacity: 0;
-    transform: translateX(-60px);
+.con13 .item { font-weight: 500; }
+/* 세로 이미지를 첨부해도 가로 카드 비율로 통일되도록 고정 비율 + cover 적용 */
+.con13 .item img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
 }
-
-.attraction-item.animate .attraction-item-image {
-    border-top-left-radius: 60px;
-    animation: slideInFromLeft 0.5s ease-out forwards;
+.con13 .item .tx1 {
+  margin-top: 30px;
+  font-size: 14px;
 }
-
-/* Content Section */
-.attraction-item-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.con13 .item .tx1 .bold {
+  font-size: 18px;
+  font-weight: 700;
 }
-
-/* Title */
-.attraction-item-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
-    color: #1a1a1a;
-    line-height: 1.4;
-    letter-spacing: -0.3px;
-    word-break: keep-all;
-    opacity: 0;
-    transform: translateX(60px);
+.con13 .item .tx1 .bar {
+  margin: 0 5px;
+  font-size: 19px;
 }
-
-.attraction-item.animate .attraction-item-title {
-    animation: slideInFromRight 0.5s ease-out 0.05s forwards;
-}
-
-/* Divider */
-.attraction-item-divider {
-    width: 40px;
-    height: 2px;
-    background-color: #ddd;
-    border: none;
-    margin: 0;
-}
-
-/* Description */
-.attraction-item-description {
-    font-size: 15px;
-    color: #666;
-    margin: 0;
-    line-height: 1.7;
-    word-break: keep-all;
-    opacity: 0;
-    transform: translateX(60px);
-}
-
-.attraction-item.animate .attraction-item-description {
-    animation: slideInFromRight 0.5s ease-out 0.5s forwards;
-}
-
-.attractions-number {
-    font-family: var(--font-ko-main);
-    font-size: 1.1rem;
-    font-weight: 400;
-    color:
-color-mix(in srgb, var(--color-secondary) 70%, transparent);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-}
-
-/* Item Separator */
-.attractions-item-separator {
-    border: none;
-    border-top: 1px solid #e0e0e0;
-    margin: 40px 0;
-}
-
-/* ===========================
-   Responsive Design
-   =========================== */
-
-@media (max-width: 1024px) {
-    .attractions-container {
-        max-width: 85%;
-        padding: 50px 60px;
-    }
-
-    .attractions-title {
-        font-size: 1.8rem;
-    }
-
-    .attraction-item {
-        flex-direction: column;
-        gap: 40px;
-    }
-
-    .attraction-item-image {
-        flex: 0 0 100%;
-        height: 300px;
-        width: 100%;
-    }
-
-    .attraction-item-content {
-        width: 100%;
-    }
-
-    .attraction-item-title {
-        font-size: 22px;
-        opacity: 0;
-        transform: translateX(60px);
-    }
-
-    .attraction-item.animate .attraction-item-title {
-        animation: slideInFromRight 0.5s ease-out 0.05s forwards;
-    }
-
-    .attraction-item-description {
-        font-size: 15px;
-        opacity: 0;
-        transform: translateX(60px);
-    }
-
-    .attraction-item.animate .attraction-item-description {
-        animation: slideInFromRight 0.5s ease-out 0.5s forwards;
-    }
-}
-
-@media (max-width: 768px) {
-    .attractions-container {
-        padding: 50px 25px;
-    }
-
-    .attractions-title {
-        font-size: 1.5rem;
-    }
-
-    .attraction-item-image {
-        height: 250px;
-    }
-
-    .attraction-item-title {
-        font-size: 20px;
-    }
-
-    .attraction-item-description {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .attractions-container {
-        padding: 40px 15px;
-    }
-
-    .attractions-title {
-        font-size: 1.2rem;
-    }
-
-    .attraction-item {
-        gap: 30px;
-    }
-
-    .attraction-item-image {
-        height: 200px;
-    }
-
-    .attraction-item-title {
-        font-size: 18px;
-    }
-
-    .attraction-item-description {
-        font-size: 13px;
-    }
-}
-
-/* ===========================
-   Closing Section
-   =========================== */
-
-.attractions-closing {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.attractions-closing-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-/* Desktop 전용 parallax (모바일에선 background-attachment: fixed가 깨지므로 데스크톱에서만 적용) */
-@media (min-width: 769px) {
-    .attractions-closing-bg {
-        background-attachment: fixed;
-    }
-}
-
-.attractions-closing-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-
-.attractions-closing-content {
-    text-align: center;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.attractions-closing-content .closing-logo {
-    width: 200px !important;
-    height: auto !important;
-    object-fit: contain !important;
-    max-width: 200px;
-    z-index: 100 !important;
-    position: relative !important;
-    display: block !important;
-    margin: 0 auto !important;
-    opacity: 0;
-    transform: translateY(50px);
-    animation: logoFadeIn 1.5s ease-out 1s forwards;
-}
-
-@keyframes logoFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInFromLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-60px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(60px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.con13 .item .tx2 {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #111;
+  line-height: 1.4;
 }
