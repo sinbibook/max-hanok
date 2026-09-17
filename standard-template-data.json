@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.298.0",
-    "generatedAt": "2026-09-13T10:48:39.569392186Z",
-    "templateType": "full_banner_slider_flat",
+    "version": "1.299.0",
+    "generatedAt": "2026-09-17T01:49:27.492102541Z",
+    "templateType": "trip_c",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -29,6 +29,9 @@
     "domain": "max-hanok.com",
     "realtimeBookingId": "",
     "ybsId": "",
+    "tripPropertyId": "",
+    "partnerType": "distributor_a",
+    "tripProviderName": "트립일레븐",
     "amenities": [ ],
     "nearbyAttractions": [
       "산",
@@ -1454,7 +1457,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "full_banner_slider_flat",
+    "templateType": "trip_c",
     "images": [
       {
         "logo": [
@@ -2493,9 +2496,19 @@
               "isSelected": true,
               "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
               "category": "roomtype_exterior"
+            },
+            {
+              "id": "01a0ad0d-cf83-728a-9a6c-93001f715c20",
+              "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/roomtype_floorplan/1789609757697-gjj7f39x7m.jpg",
+              "sortOrder": 0,
+              "description": "",
+              "isSelected": true,
+              "blockId": "c20a834f-87a0-458c-a75f-bc81df58ab98",
+              "category": "roomtype_floorplan"
             }
           ],
-          "nameEn": "byeolhabang room"
+          "nameEn": "byeolhabang room",
+          "groupName": "A"
         },
         {
           "id": "43387b98-deb4-4271-a3ee-dd2045ae75e6",
@@ -2529,7 +2542,8 @@
               "category": "roomtype_interior"
             }
           ],
-          "nameEn": "다온방"
+          "nameEn": "다온방",
+          "groupName": "A"
         },
         {
           "id": "2e5a7cc2-cb44-4cac-81c7-9bf3f8b200ea",
@@ -2581,7 +2595,8 @@
               "category": "roomtype_interior"
             }
           ],
-          "nameEn": "난이당"
+          "nameEn": "난이당",
+          "groupName": "A"
         },
         {
           "id": "ef3f9ca4-2ccc-42df-a68b-c427cc37e122",
@@ -2631,7 +2646,8 @@
               "blockId": "ef3f9ca4-2ccc-42df-a68b-c427cc37e122",
               "category": "roomtype_interior"
             }
-          ]
+          ],
+          "groupName": "B"
         },
         {
           "id": "e82bf33d-6bc0-4940-90d3-b02d63738522",
@@ -2647,7 +2663,8 @@
               "category": "roomtype_thumbnail"
             }
           ],
-          "nameEn": "시네마"
+          "nameEn": "시네마",
+          "groupName": "B"
         },
         {
           "id": "492bb296-fcf2-44c1-bea4-172873f900ce",
@@ -2697,7 +2714,8 @@
               "blockId": "492bb296-fcf2-44c1-bea4-172873f900ce",
               "category": "roomtype_interior"
             }
-          ]
+          ],
+          "groupName": "B"
         },
         {
           "id": "46d60b1b-c1fa-497f-9f96-2bfb357929aa",
@@ -2738,15 +2756,18 @@
               "blockId": "46d60b1b-c1fa-497f-9f96-2bfb357929aa",
               "category": "roomtype_interior"
             }
-          ]
+          ],
+          "groupName": "C"
         },
         {
           "id": "c0344251-fccc-4881-8108-86aad1cc3be6",
-          "images": [ ]
+          "images": [ ],
+          "groupName": "C"
         },
         {
           "id": "ae8d34ce-d8b8-4018-830c-80010812b67b",
-          "images": [ ]
+          "images": [ ],
+          "groupName": "C"
         }
       ]
     }

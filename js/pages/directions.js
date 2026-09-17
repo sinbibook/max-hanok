@@ -1,77 +1,42 @@
-/**
- * Directions Page JavaScript
- */
+var directionsSwipers = [];
 
-(function() {
-    'use strict';
+function initDirectionsPage() {
+  // preview 재렌더 등으로 다시 호출될 때 이전 Swiper 인스턴스 정리(중복 방지)
+  directionsSwipers.forEach(function (sw) {
+    if (sw && typeof sw.destroy === 'function') sw.destroy(true, true);
+  });
+  directionsSwipers = [];
 
+  // con0 히어로 (슬라이드 2장 이상일 때만 Swiper)
+  if ($('.con0 .swiper-slide').length > 1) {
+    directionsSwipers.push(initSwiper($('.con0'), {
+      slidesPerView: 1,
+      effect: 'fade',
+      autoplay: { delay: 2500, disableOnInteraction: false },
+      loop: true,
+      navigation: {
+        nextEl: $('.con0 .swiper-button-next')[0],
+        prevEl: $('.con0 .swiper-button-prev')[0],
+      },
+    }));
+  }
 
-    // Scroll to next section function (no parallax)
-    function scrollToNextSection() {
-        const mapSection = document.querySelector('.map-section');
+  // con4 타이핑 효과 (typingEffect는 idempotent - 재호출 안전)
+  typingEffect(
+    $('#typing1'), $('#typing2'),
+    $('#cursor1'), $('#cursor2'),
+    $('.typing-container')
+  );
+}
 
-        if (mapSection) {
-            const targetPosition = mapSection.offsetTop;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    }
+// 매퍼가 슬라이드/텍스트를 주입한 뒤 발생시키는 이벤트로 초기화 (localhost/preview 공통)
+document.addEventListener('template:rendered', function () {
+  initDirectionsPage();
+});
 
-    // Make function globally available
-    window.scrollToNextSection = scrollToNextSection;
-
-    // Dynamic notice section visibility
-    function toggleNoticeSection() {
-        const noticeSection = document.getElementById('directions-notice-section');
-
-        // noticeSection이 없으면 함수 종료
-        if (!noticeSection) return;
-
-        const noticeContent = noticeSection.querySelector('[data-customfield-directions-notice-content]');
-
-        // Check if data exists (not empty or default content)
-        const hasContent = noticeContent && noticeContent.textContent.trim() &&
-                          !noticeContent.textContent.includes('안내사항이 표시됩니다.');
-
-        if (hasContent) {
-            noticeSection.style.display = 'block';
-        } else {
-            noticeSection.style.display = 'none';
-        }
-    }
-
-    // Image animation using IntersectionObserver
-    function initImageAnimation() {
-        const bannerImage = document.querySelector('.directions-banner-image');
-
-        if (!bannerImage) return;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // 뷰포트에 들어오면 'animate' 클래스를 추가하고, 나가면 제거합니다.
-                entry.target.classList.toggle('animate', entry.isIntersecting);
-            });
-        }, {
-            threshold: 0.1 // 10% 이상 보일 때 트리거
-        });
-
-        observer.observe(bannerImage);
-    }
-
-    // Initialize when DOM is ready
-    document.addEventListener('DOMContentLoaded', async function() {
-        // Initialize DirectionsMapper for data mapping
-        if (typeof DirectionsMapper !== 'undefined') {
-            const directionsMapper = new DirectionsMapper();
-            await directionsMapper.initialize(); // initialize()가 자동으로 mapPage() 호출
-        }
-
-        // Simple initialization - no parallax effects
-        toggleNoticeSection();
-        initImageAnimation();
-        console.log('Directions page loaded');
-    });
-
-})();
+$(document).ready(function () {
+  // 이미 주입된 경우(이벤트를 놓친 경우) 대비 fallback
+  if ($('.con0 .swiper-slide').length || $('#typing1').text().trim()) {
+    initDirectionsPage();
+  }
+});
