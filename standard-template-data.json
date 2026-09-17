@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.299.0",
-    "generatedAt": "2026-09-17T01:49:27.492102541Z",
-    "templateType": "trip_c",
+    "version": "1.300.0",
+    "generatedAt": "2026-09-17T07:05:09.870251734Z",
+    "templateType": "trip_b",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1457,7 +1457,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "trip_c",
+    "templateType": "trip_b",
     "images": [
       {
         "logo": [
@@ -2543,7 +2543,7 @@
             }
           ],
           "nameEn": "다온방",
-          "groupName": "A"
+          "groupName": "A형"
         },
         {
           "id": "2e5a7cc2-cb44-4cac-81c7-9bf3f8b200ea",

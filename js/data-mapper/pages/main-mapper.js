@@ -8,241 +8,224 @@
   MainMapper.prototype.constructor = MainMapper;
 
   MainMapper.prototype.mapPage = function () {
-    this.mapHero();
-    this.mapAboutTitle();
-    this.mapAbout();
-    this.mapGalleryRolling();
-    this.mapTypingSection();
-    this.mapConFooterInfo();
     this.mapPropertyNames();
-    this.updateMetaTags();
+    this.mapHero();
+    this.mapAboutBlocks();
+    this.mapClosing();
 
-    // 슬라이드/텍스트 DOM 주입 완료를 알림 → main.js에서 Swiper·타이핑·롤링 초기화 (localhost/preview 공통)
-    document.dispatchEvent(new CustomEvent('template:rendered', { detail: { page: 'main' } }));
+    if (typeof window.initMainSwipers === 'function') window.initMainSwipers();
   };
 
-  // 한글 받침 판별하여 "을/를" 선택
-  MainMapper.prototype.getKoreanObjectParticle = function (word) {
-    if (!word || word.length === 0) return '을';
-    var lastChar = word.charCodeAt(word.length - 1);
-    if (lastChar >= 0xAC00 && lastChar <= 0xD7A3) {
-      var code = lastChar - 0xAC00;
-      return (code % 28 !== 0) ? '을' : '를';
-    }
-    return '을';
+  MainMapper.prototype.getSection = function () {
+    var page = this.getPages().main;
+    return (page && page.sections && page.sections[0]) || {};
   };
 
-  // MAPPER: customFields.pages.main.sections[0].hero.images[isSelected]
-  // TEXT: property.name (숙소 한글명)
-  MainMapper.prototype.mapHero = function () {
-    var pages = this.getPages();
-    var hero = pages.main && pages.main.sections && pages.main.sections[0] && pages.main.sections[0].hero;
-    if (!hero) return;
-
-    var images = this.getSelectedImages(hero.images || []);
-    var wrapper = document.querySelector('[data-main-hero-slides]');
-    var propertyName = this.getPropertyName();
-    if (!wrapper) return;
-
-    wrapper.innerHTML = '';
-
-    if (!images.length) {
-      // Show placeholder when no images
-      var placeholderDiv = document.createElement('div');
-      placeholderDiv.className = 'swiper-slide';
-      var img = document.createElement('img');
-      ImageHelpers.applyPlaceholder(img);
-      img.alt = propertyName || 'Hero Image';
-      var titleDiv = document.createElement('div');
-      titleDiv.className = 'tx1';
-      titleDiv.textContent = propertyName || '';
-      placeholderDiv.appendChild(img);
-      placeholderDiv.appendChild(titleDiv);
-      wrapper.appendChild(placeholderDiv);
-      return;
-    }
-
-    images.forEach(function (img) {
-      var div = document.createElement('div');
-      div.className = 'swiper-slide';
-      div.innerHTML = '<img src="' + img.url + '" alt="" /><div class="tx1">' + propertyName + '</div>';
-      wrapper.appendChild(div);
-    });
+  MainMapper.prototype.getAboutBlocks = function () {
+    var about = this.getSection().about;
+    return Array.isArray(about) ? about : [];
   };
 
-  // MAPPER: customFields.pages.main.sections[0].hero (title, description)
-  // Fallback: property.name + 기본값 (ABOUT & VIEW, 쉼이 필요한 날)
-  MainMapper.prototype.mapAboutTitle = function () {
-    var pages = this.getPages();
-    var heroData = pages.main && pages.main.sections && pages.main.sections[0] && pages.main.sections[0].hero;
-    var propertyName = this.getPropertyName();
-    var particle = this.getKoreanObjectParticle(propertyName);
-
-    // tx1: 섹션 제목 (ABOUT & VIEW 또는 customField hero title)
-    var tx1El = document.querySelector('.con6 .conTitle .tx1');
-    if (tx1El) {
-      if (heroData && heroData.title) {
-        tx1El.textContent = heroData.title;
-      } else {
-        tx1El.textContent = 'ABOUT & VIEW';
-      }
-    }
-
-    // tx2: 섹션 설명 및 property name
-    var tx2El = document.querySelector('.con6 .conTitle .tx2');
-    if (tx2El) {
-      var description = '';
-      var descriptionSpan = '';
-
-      if (heroData && heroData.description) {
-        // customField hero description 사용
-        description = heroData.description;
-        descriptionSpan = propertyName;
-      } else {
-        // 기본값 사용
-        description = '쉼이 필요한 날,';
-        descriptionSpan = propertyName + particle + ' 만나다';
-      }
-
-      tx2El.innerHTML = description.replace(/\n/g, '<br>') + '<br /><div class="bold spot">' + descriptionSpan + '</div>';
-    }
+  MainMapper.prototype.getIndexClosing = function () {
+    var indexPage = this.getPages().index;
+    var section = (indexPage && indexPage.sections && indexPage.sections[0]) || {};
+    return section.closing || {};
   };
 
-  // MAPPER: customFields.pages.main.sections[0].about[] → 동적 생성
-  // about 배열의 개수에 따라 여러 개의 about 아이템 생성
-  MainMapper.prototype.mapAbout = function () {
-    var pages = this.getPages();
-    var about = pages.main && pages.main.sections && pages.main.sections[0] && pages.main.sections[0].about;
-
-    if (!about || !about.length) return;
-
-    var container = document.querySelector('[data-main-about-container]');
-    if (!container) return;
-
-    container.innerHTML = '';
-    var propertyName = this.getPropertyName();
-    var self = this;
-
-    about.forEach(function (item) {
-      // 아이템 래퍼
-      var itemDiv = document.createElement('div');
-      itemDiv.className = 'about-item';
-
-      // 이미지
-      var imgDiv = document.createElement('div');
-      imgDiv.className = 'img';
-      var img = document.createElement('img');
-      img.setAttribute('data-aos', 'fade-up');
-      var imgUrl = self.getFirstSelectedImage(item.images || []);
-      if (imgUrl) {
-        img.src = imgUrl;
-      } else {
-        ImageHelpers.applyPlaceholder(img);
-      }
-      imgDiv.appendChild(img);
-      itemDiv.appendChild(imgDiv);
-
-      // 설명 텍스트
-      var txDiv = document.createElement('div');
-      txDiv.className = 'txWrap';
-      txDiv.setAttribute('data-aos', 'fade-up');
-      var t1 = document.createElement('div');
-      t1.className = 't1';
-      if (item.description) {
-        t1.innerHTML = item.description
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/\n/g, '<br>');
-      }
-      txDiv.appendChild(t1);
-      itemDiv.appendChild(txDiv);
-
-      // 하단 정보 (바 + 숙소명)
-      var bottomDiv = document.createElement('div');
-      bottomDiv.className = 'bottom';
-      bottomDiv.innerHTML = '<span class="bar"></span><span class="t2">' + propertyName + '</span>';
-      itemDiv.appendChild(bottomDiv);
-
-      container.appendChild(itemDiv);
-    });
-  };
-
-  // MAPPER: homepage.customFields.property.images[category=property_exterior]
-  MainMapper.prototype.mapGalleryRolling = function () {
-    var cf = this.getCustomFields();
-    var propImages = (cf.property && cf.property.images) || [];
-    var exterior = propImages.filter(function (img) {
-      return img.isSelected && img.category === 'property_exterior';
-    }).sort(function (a, b) { return a.sortOrder - b.sortOrder; });
-
-    var con7 = document.querySelector('[data-main-gallery]');
-    if (!con7) return;
-
-    con7.innerHTML = '';
-
-    if (!exterior.length) {
-      // Show placeholder when no images
-      var placeholderDiv = document.createElement('div');
-      placeholderDiv.className = 'img';
-      var img = document.createElement('img');
-      ImageHelpers.applyPlaceholder(img);
-      placeholderDiv.appendChild(img);
-      con7.appendChild(placeholderDiv);
-      return;
-    }
-
-    exterior.forEach(function (img) {
-      var div = document.createElement('div');
-      div.className = 'img';
-      div.innerHTML = '<img src="' + img.url + '" alt="" />';
-      con7.appendChild(div);
-    });
-  };
-
-  // MAPPER: property.name → typing section (index.html과 동일)
-  MainMapper.prototype.mapTypingSection = function () {
-    var propertyName = this.getPropertyName();
-    var typing1El = document.querySelector('#typing1');
-    var typing2El = document.querySelector('#typing2');
-
-    if (typing1El) {
-      typing1El.textContent = propertyName + '에서 사랑하는 사람들과 함께';
-    }
-
-    if (typing2El) {
-      typing2El.textContent = '특별하고 소중한 시간을 보내보세요';
-    }
-  };
-
-  // MAPPER: customFields.property.name + customFields.property.nameEn → con4 하단 숙소명 영역
-  MainMapper.prototype.mapConFooterInfo = function () {
-    var nameKr = this.getPropertyName();
-    var nameEn = this.getPropertyNameEn();
-
-    // t1: 숙소 한글명
-    var t1El = document.querySelector('.con4 .t0 .t1');
-    if (t1El) {
-      t1El.textContent = nameKr;
-    }
-
-    // t2: "Welcome To [숙소 영문명]"
-    var t2El = document.querySelector('.con4 .t0 .t2');
-    if (t2El) {
-      t2El.textContent = 'Welcome To ' + nameEn;
-    }
-  };
-
-  // MAPPER: homepage.customFields.property.name
   MainMapper.prototype.mapPropertyNames = function () {
     var name = this.getPropertyName();
     document.querySelectorAll('[data-property-name]').forEach(function (el) {
       el.textContent = name;
     });
+    this.applyPropertyCaptions();
+  };
+
+  MainMapper.prototype.renderPropertyCaption = function (template) {
+    return this.nl2br(
+      String(template || '')
+        .replace(/\{name\}/g, this.getPropertyName())
+        .replace(/\{nameEn\}/g, this.getPropertyNameEn() || this.getPropertyName())
+    );
+  };
+
+  MainMapper.prototype.mapClosing = function () {
+    var closing = this.getIndexClosing();
+    var fallback = '편안함과 즐거움이 있는 곳,\n{name}에 오신 것을 환영합니다.';
+    var desc = this.firstText(closing.description, fallback);
+
+    document.querySelectorAll('[data-main-closing-description]').forEach(
+      function (el) {
+        el.innerHTML = this.renderPropertyCaption(desc);
+      }.bind(this)
+    );
+  };
+
+  MainMapper.prototype.mapHero = function () {
+    var section = this.getSection();
+    var hero = section.hero || {};
+    var images = this.getSelectedImages(hero.images || []);
+    if (!images.length) images = this.getLandscapeImages();
+
+    var wrapper = document.querySelector('[data-main-hero-slides]');
+    if (!wrapper) return;
+    wrapper.innerHTML = '';
+
+    if (!images.length) {
+      var empty = document.createElement('div');
+      empty.className = 'swiper-slide';
+      ImageHelpers.applyBackgroundPlaceholder(empty, '펜션소개 이미지');
+      wrapper.appendChild(empty);
+      return;
+    }
+
+    images.forEach(
+      function (img) {
+        var slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        this.setBackground(slide, img.url, '펜션소개 이미지');
+        wrapper.appendChild(slide);
+      }.bind(this)
+    );
+  };
+
+  MainMapper.prototype.mapAboutBlocks = function () {
+    var self = this;
+    var section = this.getSection();
+    var hero = section.hero || {};
+    var blocks = this.getAboutBlocks();
+    var fallbackImages = this.getLandscapeImages();
+    var isFallbackBlock = false;
+    var isPreviewMode = window.parent !== window;
+    var nameEn = this.firstText(this.getPropertyNameEn(), this.getPropertyName(), 'Pension');
+    var bookingUrl = this.getBookingUrl();
+
+    if (!blocks.length) {
+      isFallbackBlock = true;
+      blocks = [
+        {
+          title: self.firstText(hero.title, 'About'),
+          description: self.firstText(hero.description, self.getProperty().subtitle),
+          images: fallbackImages
+        }
+      ];
+    }
+
+    document.querySelectorAll('[data-main-about-blocks]').forEach(function (container) {
+      container.innerHTML = '';
+
+      blocks.forEach(function (block, index) {
+        var title = self.firstText(block && block.title, index === 0 ? hero.title : '');
+        var desc = self.firstText(block && block.description, index === 0 ? hero.description : '');
+        var images = self.getSelectedImages((block && block.images) || []);
+        if (!images.length && isFallbackBlock) images = fallbackImages;
+
+        var textBox = document.createElement('div');
+        textBox.className = 'sub_txt_box';
+        textBox.setAttribute('data-generated', 'main-about');
+        // 블록 순번. 필기체 워터마크(.txt:before)를 블록별로 바꾸는 CSS 훅이다.
+        // 갤러리(.sub_inner)가 이미지 없으면 생성되지 않아 nth-of-type 으로는 셀 수 없다.
+        textBox.setAttribute('data-block-index', String(index));
+
+        var inner = document.createElement('div');
+        inner.className = 'sub_inner';
+
+        var subTitle = document.createElement('div');
+        subTitle.className = 'sub_title';
+
+        // 아이브로우: 원본은 블록마다 문구가 다르지만(Memories / Welcome to / Travel With)
+        // main.about[] 스키마에 담을 필드가 없어 'Welcome to {nameEn}' 으로 통일한다.
+        var eyebrow = document.createElement('span');
+        eyebrow.textContent = 'Welcome to ' + nameEn;
+
+        var h3 = document.createElement('h3');
+        h3.className = 'main_block_title';
+        h3.textContent = title || 'About';
+
+        subTitle.appendChild(eyebrow);
+        subTitle.appendChild(h3);
+
+        // 리드문: 첫 블록에만 h3 아래 <p> 로 붙인다.
+        // desc(.txt 본문)와 같은 문장이면 중복이라 생략한다.
+        if (index === 0) {
+          var lead = self.cleanText(hero.description);
+          if (lead && lead !== self.cleanText(desc)) {
+            var leadP = document.createElement('p');
+            leadP.innerHTML = self.nl2br(lead);
+            subTitle.appendChild(leadP);
+          }
+        }
+
+        var box = document.createElement('div');
+        box.className = 'box';
+
+        var imageWrap = document.createElement('div');
+        imageWrap.className = 'img';
+        var image = document.createElement('img');
+        if (images.length) {
+          image.src = images[0].url;
+          image.alt = title || '펜션소개 이미지';
+        } else {
+          ImageHelpers.applyPlaceholder(image, '펜션소개 이미지');
+        }
+        imageWrap.appendChild(image);
+
+        var txt = document.createElement('div');
+        txt.className = 'txt';
+        if (desc) txt.innerHTML = self.nl2br(desc);
+
+        // 장식 문구: 전 페이지 공통 문장이라 하드코딩한다(이름만 치환).
+        var decoration = document.createElement('span');
+        decoration.innerHTML =
+          'All seasons of the year are beautiful here. ' +
+          nameEn +
+          '<br>I give you a gift for your life.';
+        txt.appendChild(decoration);
+
+        // 예약 버튼: 원본은 블록마다 유무가 제각각이라 템플릿은 "첫 블록에만" 으로 규칙을 고정한다.
+        if (index === 0 && bookingUrl && bookingUrl !== '#!') {
+          var bookingLink = document.createElement('a');
+          bookingLink.className = 'btn_reserve';
+          bookingLink.href = bookingUrl;
+          bookingLink.target = '_blank';
+          bookingLink.textContent = '→ 예약하기 바로가기';
+          txt.appendChild(bookingLink);
+        }
+
+        box.appendChild(imageWrap);
+        box.appendChild(txt);
+        inner.appendChild(subTitle);
+        inner.appendChild(box);
+        textBox.appendChild(inner);
+        container.appendChild(textBox);
+
+        var galleryWrap = document.createElement('div');
+        galleryWrap.className = 'sub_inner';
+        galleryWrap.setAttribute('data-generated', 'main-about');
+        var gallery = document.createElement('ul');
+        gallery.className = 'about_img';
+
+        var galleryImages = images.length > 1 ? images.slice(1, 5) : images.slice(0, 4);
+
+        if (!galleryImages.length && isPreviewMode) {
+          galleryImages = [null, null, null, null];
+        }
+
+        if (galleryImages.length) {
+          galleryImages.forEach(function (img, imgIndex) {
+            var li = document.createElement('li');
+            self.setBackground(li, img && img.url, '외부풍경 ' + (imgIndex + 1));
+            gallery.appendChild(li);
+          });
+
+          galleryWrap.appendChild(gallery);
+          container.appendChild(galleryWrap);
+        }
+      });
+    });
   };
 
   document.addEventListener('DOMContentLoaded', function () {
-    if (window.parent !== window) return;
+    if (window.previewHandler) return;
     var mapper = new MainMapper();
     mapper.initialize();
     global.mainMapperInstance = mapper;
