@@ -1,98 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
-    <title>Max 한옥</title>
-    <link rel="stylesheet" href="styles/common.css" />
+    <!-- 렌더 게이트: 매핑 전 placeholder 깜빡임 방지 (매핑 완료 시 페이드인) -->
     <style>
-      html, body { height: 100%; }
+      html.tpl-loading body {
+        opacity: 0;
+      }
       body {
-        display: flex;
-        flex-direction: column;
-        background-color: #f5f6f8;
+        opacity: 1;
+        transition: opacity 0.3s ease;
       }
-      main {
-        flex: 1;
+    </style>
+    <script>
+      document.documentElement.classList.add('tpl-loading');
+      window.__tplReveal = function () {
+        document.documentElement.classList.remove('tpl-loading');
+      };
+      setTimeout(function () {
+        window.__tplReveal && window.__tplReveal();
+      }, 3000);
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:type" content="website" />
+    <title data-page-title>Max 한옥</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" type="text/css" href="styles/theme.css" />
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <style>
+      .error_wrap {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-      }
-      .errorContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 300px 20px 100px;
+        min-height: 70vh;
         text-align: center;
+        padding: 200px 20px 120px;
       }
-      .errorCode {
+      .error_wrap .error_code {
         font-size: 120px;
-        font-weight: 900;
-        color: #2d3a80;
         line-height: 1;
         margin-bottom: 20px;
         letter-spacing: -4px;
+        color: var(--color-secondary);
+        font-family: var(--font-en-main);
       }
-      .errorTitle {
-        font-size: 28px;
-        font-weight: 700;
-        color: #111;
-        margin-bottom: 15px;
+      .error_wrap .error_title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 14px;
+        font-family: var(--font-ko-main);
       }
-      .errorMessage {
-        font-size: 16px;
-        color: #555;
-        margin-bottom: 50px;
-        line-height: 1.8;
-        max-width: 480px;
-      }
-      /* 404 페이지 버튼 스타일 오버라이드 */
-      .errorContainer .btnBooking_2 {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        width: 250px;
-        height: 55px;
-        border: 1px solid #2d3a80;
+      .error_wrap .error_msg {
         font-size: 15px;
-        font-weight: 600;
-        font-style: italic;
-        color: #2d3a80;
-        background: linear-gradient(to right, rgba(96, 70, 58, 0) 25%, #2d3a80);
-        background-position: 1% 50%;
-        background-size: 400% 300%;
-        transition: 3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        text-decoration: none;
+        color: #6a747d;
+        line-height: 1.8;
+        margin-bottom: 40px;
       }
-      .errorContainer .btnBooking_2:after {
-        content: "";
-        width: 6px;
-        height: 12px;
-        background-image: url(./images/icon_bullet_1.png);
-        background-repeat: no-repeat;
-        background-position: 0 0;
-      }
-      .errorContainer .btnBooking_2:hover {
-        transition: 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+      .error_wrap .btn_home {
+        display: inline-block;
+        font-size: 15px;
+        line-height: 3;
+        padding: 0 3em;
         color: #fff;
-        background-position: 99% 50%;
+        background: var(--color-secondary);
+        transition: all 0.3s;
       }
-      .errorContainer .btnBooking_2:hover:after {
-        background-image: url(./images/icon_bullet_1_2.png);
+      .error_wrap .btn_home:hover {
+        opacity: 0.85;
       }
-      @media (max-width: 1180px) {
-        .errorCode { font-size: 80px; }
-        .errorTitle { font-size: 22px; }
-        .errorMessage { font-size: 14px; }
-        .errorContainer { padding: 300px 20px 80px; }
-        .errorContainer .btnBooking_2 {
-          width: 140px;
-          height: 40px;
-          font-size: 14px;
+      @media only screen and (max-width: 640px) {
+        .error_wrap {
+          padding: 140px 20px 80px;
+        }
+        .error_wrap .error_code {
+          font-size: 80px;
+        }
+        .error_wrap .error_title {
+          font-size: 20px;
         }
       }
     </style>
@@ -111,22 +97,32 @@
   <meta name="naver-site-verification" content="fqwffqwqfqwf" />
   <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <main>
-      <div class="errorContainer">
-        <div class="errorCode">404</div>
-        <h1 class="errorTitle">페이지를 찾을 수 없습니다.</h1>
-        <p class="errorMessage">
-          요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br />
-          홈으로 돌아가기 버튼을 클릭해주세요.
-        </p>
-        <a href="index.html" class="btnBooking_2">홈으로 돌아가기</a>
-      </div>
-    </main>
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/preview-handler.js"></script>
+  <body oncontextmenu="return false;" onselectstart="return false" ondragstart="return false;">
+    <div id="wrap">
+      <div id="header-wrap"></div>
+
+      <div id="container">
+        <div class="error_wrap">
+          <div>
+            <div class="error_code">404</div>
+            <h1 class="error_title">페이지를 찾을 수 없습니다.</h1>
+            <p class="error_msg">
+              요청하신 페이지가 존재하지 않거나 비활성화되었습니다.
+              <br />
+              홈으로 돌아가기 버튼을 클릭해주세요.
+            </p>
+            <a href="./index.html" class="btn_home">홈으로 돌아가기</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-wrap"></div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>

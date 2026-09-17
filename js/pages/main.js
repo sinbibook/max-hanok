@@ -1,51 +1,33 @@
-var mainSwipers = [];
-var mainCon7Rolled = false;
+/* ============================================================
+   pages/main.js — 펜션소개(ABOUT) 페이지 스크립트
+   페이지 내용은 원본 view.html(외경보기 / Landscape) 구조다.
+   슬라이드는 main-mapper 가 동적 생성하므로, 매핑 완료 후
+   window.initMainSwipers() 를 호출받아 초기화한다.
+   ============================================================ */
+window.initMainSwipers = function () {
+  if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
 
-function initMainPage() {
-  // preview 재렌더 등으로 다시 호출될 때 이전 Swiper 인스턴스 정리(중복 방지)
-  mainSwipers.forEach(function (sw) {
-    if (sw && typeof sw.destroy === 'function') sw.destroy(true, true);
+  // 히어로 (풀와이드 페이드)
+  var mainHero = window.TplSwiper.initHero('mainHero', '.sub_visual_box .swiper-container', {
+    spaceBetween: 0,
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    navigation: {
+      nextEl: '.sub_visual_wide .swiper-button-next',
+      prevEl: '.sub_visual_wide .swiper-button-prev'
+    }
   });
-  mainSwipers = [];
 
-  // con0 히어로 Swiper
-  if ($('.con0 .swiper-slide').length > 1) {
-    mainSwipers.push(initSwiper($('.con0'), {
-      slidesPerView: 1,
-      effect: 'fade',
-      autoplay: { delay: 2500, disableOnInteraction: false },
-      loop: true,
-      navigation: {
-        nextEl: $('.con0 .swiper-button-next')[0],
-        prevEl: $('.con0 .swiper-button-prev')[0],
-      },
-    }));
+  var prev = document.querySelector('.sub_visual_wide .swiper-button-prev');
+  var next = document.querySelector('.sub_visual_wide .swiper-button-next');
+  if (mainHero && prev && next) {
+    prev.onclick = function (e) {
+      e.preventDefault();
+      mainHero.slidePrev();
+    };
+    next.onclick = function (e) {
+      e.preventDefault();
+      mainHero.slideNext();
+    };
   }
-
-  // con7 이미지 롤링 (복제 누적 방지: 1회만)
-  var $con7 = $('.con7');
-  if ($con7.length && !mainCon7Rolled) {
-    cloneImages($con7);
-    startRolling($con7);
-    mainCon7Rolled = true;
-  }
-
-  // con4 타이핑 효과 (typingEffect는 idempotent - 재호출 안전)
-  typingEffect(
-    $('#typing1'), $('#typing2'),
-    $('#cursor1'), $('#cursor2'),
-    $('.typing-container')
-  );
-}
-
-// 매퍼가 슬라이드/텍스트를 주입한 뒤 발생시키는 이벤트로 초기화 (localhost/preview 공통)
-document.addEventListener('template:rendered', function () {
-  initMainPage();
-});
-
-$(document).ready(function () {
-  // 이미 주입된 경우(이벤트를 놓친 경우) 대비 fallback
-  if ($('.con0 .swiper-slide').length || $('#typing1').text().trim()) {
-    initMainPage();
-  }
-});
+};

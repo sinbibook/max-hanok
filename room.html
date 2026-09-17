@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="ko">
   <head>
-    <!-- 렌더 게이트: 매핑 전 placeholder/fallback 깜빡임 방지 (매핑 완료 시 페이드인) -->
+    <meta charset="UTF-8" />
+    <!-- 렌더 게이트: 매핑 전 placeholder 깜빡임 방지 (매핑 완료 시 페이드인) -->
     <style>
       html.tpl-loading body {
         opacity: 0;
@@ -12,30 +13,27 @@
       }
     </style>
     <script>
-      document.documentElement.classList.add("tpl-loading");
+      document.documentElement.classList.add('tpl-loading');
       window.__tplReveal = function () {
-        document.documentElement.classList.remove("tpl-loading");
+        document.documentElement.classList.remove('tpl-loading');
       };
       setTimeout(function () {
         window.__tplReveal && window.__tplReveal();
       }, 3000);
     </script>
-    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:," />
+    <meta property="og:type" content="website" />
     <title data-page-title>Max 한옥 - 객실안내</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" type="text/css" href="styles/theme.css" />
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
     <link
       rel="stylesheet"
-      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/theme.css" as="style" />
-    <link rel="preload" href="styles/common.css" as="style" />
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css" />
-    <link rel="stylesheet" href="styles/common.css" />
-    <link rel="stylesheet" href="styles/room.css" />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 객실안내" />
@@ -51,174 +49,203 @@
   <meta name="naver-site-verification" content="fqwffqwqfqwf" />
   <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-      <div class="container">
-        <!-- MAPPER: rooms[current].images[0].interior[isSelected] + name -->
-        <div class="con0" data-aos="fade-up">
-          <div class="swiper">
-            <div class="swiper-wrapper" data-room-hero-slides></div>
-            <div class="swiperNavi">
-              <div class="swiper-button-prev">
-                <img src="images/icon_left_1.png" alt="" />
-                Prev
-              </div>
-              <div class="bar"></div>
-              <div class="swiper-button-next">
-                Next
-                <img src="images/icon_right_1.png" alt="" />
+
+  <body oncontextmenu="return false;" onselectstart="return false" ondragstart="return false;">
+    <div id="wrap">
+      <div id="header-wrap"></div>
+
+      <div id="container">
+        <!-- 원본 room.html?room_id= (객실 상세). ?room_id= 없으면 첫 번째 객실을 보여준다.
+             백오피스 preview 는 ?id= 로 보내므로 둘 다 받는다. -->
+        <section id="content" class="sub2_2 sub_room sub_room_detail">
+          <div class="sub_visual_wide visual">
+            <div class="sub_visual_box">
+              <div class="swiper-container">
+                <!-- data-* 속성 : data-room-hero-slides | 동적 매핑 필요
+                     roomtypes[current].images (category=roomtype_interior) 전체 -->
+                <div class="swiper-wrapper" data-room-hero-slides></div>
+                <div class="swiper-button-prev"><img src="images/arrow_left.png" alt="prev" /></div>
+                <div class="swiper-button-next"><img src="images/arrow_right.png" alt="next" /></div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- MAPPER: 객실 탭 — 그룹 안이면 그 그룹의 객실만, 아니면 그룹/객실 목록 -->
-        <div class="roomNav">
-          <ul class="w1440" data-room-nav-list>
-            <li class="on"><a href="layout-map.html">미리보기</a></li>
-          </ul>
-        </div>
+          <!--// sub_visual -->
 
-        <div class="con8">
-          <div class="w1440">
-            <!-- MAPPER: rooms[current].name + description + images[0].thumbnail[0].url -->
-            <div class="textWrap">
-              <div class="conTitle2">
-                <div class="tx1">ROOM</div>
-                <!-- MAPPER: rooms[current].name -->
-                <div class="tx2">
-                  <div class="spot" data-room-name></div>
+          <div class="sub_cont">
+            <div class="view_cate_box">
+              <div class="sub_title">
+                <!-- data-* 속성 : data-room-name -->
+                <h3 data-room-name></h3>
+                <span>WELCOME TO PENSION</span>
+              </div>
+              <div class="sub_cate_wrap">
+                <!-- data-* 속성 : data-room-list-nav | 동적 매핑 필요
+                     customFields.roomtypes[] → "미리보기" li 뒤에 객실 li 추가 (현재 객실 .on) -->
+                <ul data-room-list-nav>
+                  <li><a href="./layout-map.html">미리보기</a></li>
+                  <!-- MAPPER: roomtypes[] 동적 생성 -->
+                </ul>
+              </div>
+            </div>
+
+            <div class="sub_inner">
+              <div class="table_box">
+                <!-- PC 표 -->
+                <div class="price_table for_pc">
+                  <table cellspacing="0" cellpadding="0" class="table_default">
+                    <thead>
+                      <tr>
+                        <th style="width: 15%">객실명</th>
+                        <th style="width: 5%">기준</th>
+                        <th style="width: 5%">최대</th>
+                        <th style="width: 20%">유형</th>
+                        <th style="width: 20%">평형</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <!-- data-* 속성 : data-room-name / -base-occupancy / -max-occupancy
+                             / -structure / -size-pyeong -->
+                        <td data-room-name></td>
+                        <td data-room-base-occupancy></td>
+                        <td data-room-max-occupancy></td>
+                        <td data-room-structure></td>
+                        <td data-room-size-pyeong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <ul class="table_text">
+                    <li>
+                      <strong>집기품목</strong>
+                      :
+                      <!-- data-* 속성 : data-room-amenities (rooms[j].amenities.join(', ')) -->
+                      <span data-room-amenities></span>
+                    </li>
+                  </ul>
                 </div>
-                <!-- MAPPER: customFields.pages.room[id].sections[0].hero.title -->
-                <div class="tx3" data-room-description></div>
-              </div>
-              <a href="#!" data-booking-link class="btnBooking_2">BOOKING</a>
-            </div>
-            <!-- MAPPER: rooms[?id].images[0].thumbnail[0].url -->
-            <div class="imgWrap">
-              <img alt="" data-room-main-image />
-            </div>
-          </div>
-        </div>
-        <div class="con9 w1440">
-          <!-- PC 버전 -->
-          <div class="price_table for_pc">
-            <!-- MAPPER: rooms[current].name/baseOccupancy/maxOccupancy/description/size -->
-            <table cellspacing="0" cellpadding="0" class="table_default">
-              <thead>
-                <tr>
-                  <th style="width: 15%">객실명</th>
-                  <th style="width: 5%">기준</th>
-                  <th style="width: 5%">최대</th>
-                  <th style="width: 20%">유형</th>
-                  <th style="width: 20%">평형</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-room-name></td>
-                  <td data-room-base-occupancy></td>
-                  <td data-room-max-occupancy></td>
-                  <td data-room-type></td>
-                  <td data-room-size></td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- MAPPER: rooms[current].amenities (집기품목) -->
-            <ul class="table_text">
-              <li>
-                <strong>집기품목</strong> :
-                <span data-room-amenities></span>
-              </li>
-            </ul>
-          </div>
 
-          <!-- 모바일 버전 -->
-          <div class="price_table for_m">
-            <!-- MAPPER: rooms[current].name/baseOccupancy/maxOccupancy/description/size -->
-            <table cellspacing="0" cellpadding="0" class="table_default">
-              <thead>
-                <tr>
-                  <th>객실명</th>
-                  <th>기준</th>
-                  <th>최대</th>
-                  <th>유형</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-room-name></td>
-                  <td data-room-base-occupancy></td>
-                  <td data-room-max-occupancy></td>
-                  <td data-room-type></td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- MAPPER: rooms[current].amenities (집기품목) -->
-            <ul class="table_text">
-              <li>
-                <strong>집기품목</strong> :
-                <span data-room-amenities></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- MAPPER: rooms[?id].images[0].exterior[isSelected][0~1] -->
-        <div class="con10 w1440">
-          <img alt="" data-room-image-0 />
-          <img alt="" data-room-image-1 />
-        </div>
-        <!-- s: 객실 평면도 — 원본 객실 상세의 평면도 크롤링 이미지가 있을 때만 노출.
-             제목 영역 없이 도면 이미지 한 장만 놓는다. 없으면 매퍼가 구간째 숨긴다. -->
-        <div class="room_floorplan" data-room-floorplan-section style="display: none">
-          <!-- data-* : data-room-floorplan-image
-               roomtypes[current] 평면도 이미지 → 없으면 섹션 미노출 -->
-          <img alt="객실 평면도" data-room-floorplan-image />
-        </div>
-        <!--// 객실 평면도 -->
-        <div class="con1">
-          <div class="w1440">
-            <div class="conTitle" data-aos="fade-up">
-              <div class="tx1">ROOM PREVIEW</div>
-              <div class="tx2">
-                여유롭고 특별한 공간<br />
-                <!-- MAPPER: property.name -->
-                <div class="bold spot" data-property-name></div>
-              </div>
-            </div>
-            <div class="swiper-pagination" data-aos="fade-up"></div>
-            <div class="swiperControl">
-              <div class="fraction">
-                <div class="number"></div>
-                <span class="bar">/</span>
-                <div class="total"></div>
-              </div>
-              <div class="navi">
-                <div class="swiper-button-prev">
-                  <img src="images/icon_left_2.png" alt="" />
+                <!-- 모바일 표 (평형 열 없음) -->
+                <div class="price_table for_m">
+                  <table cellspacing="0" cellpadding="0" class="table_default">
+                    <tbody>
+                      <tr>
+                        <td>객실명</td>
+                        <td>기준</td>
+                        <td>최대</td>
+                        <td>유형</td>
+                      </tr>
+                      <tr>
+                        <td data-room-name></td>
+                        <td data-room-base-occupancy></td>
+                        <td data-room-max-occupancy></td>
+                        <td data-room-structure></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <ul class="table_text">
+                    <li>
+                      <strong>집기품목</strong>
+                      :
+                      <span data-room-amenities></span>
+                    </li>
+                  </ul>
                 </div>
-                <div class="swiper-button-next">
-                  <img src="images/icon_right_2.png" alt="" />
+
+                <div class="btn_wrap">
+                  <!-- data-* 속성 : data-booking-url (property.realtimeBookingId) -->
+                  <a href="#!" target="_blank" class="btn_reserve" data-booking-url>예약하기</a>
                 </div>
               </div>
             </div>
-            <!-- MAPPER: rooms[].images[0].thumbnail[0].url + name + description -->
-            <div class="swiper right" data-aos="fade-left">
-              <div class="swiper-wrapper" data-index-room-slides></div>
+
+            <div class="sub_txt_box">
+              <div class="sub_title sub_inner">
+                <span data-room-detail-eyebrow>Memories Pension</span>
+                <h3 data-room-detail-title>Rooms Detail</h3>
+                <!-- data-* 속성 : pages.room[current].sections[0].hero.title / .description -->
+                <p data-room-detail-description></p>
+              </div>
+              <div class="box sub_inner">
+                <div class="img"><img alt="객실 이미지" data-room-detail-main-image /></div>
+                <div class="txt">
+                  <!-- ⚠️ `src` 를 비워 두지 않는다. `src=""` 는 브라우저가 현재 페이지를 다시 요청한다.
+                       매퍼가 채우기 전까지 속성 자체를 두지 않는다. -->
+                  <img alt="객실 이미지" data-room-detail-side-image />
+                  <span data-room-detail-copy></span>
+                  <a href="#!" target="_blank" class="btn_reserve" data-booking-url>→&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예약하기</a>
+                </div>
+              </div>
             </div>
+
+            <div class="sub_img_box">
+              <!-- data-* 속성 : data-room-quad-images | 동적 매핑 필요
+                   roomtype_interior 중 최대 4장만 노출 -->
+              <ul class="sub_inner" data-room-quad-images>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+
+            <!-- s: 와이드 1장 — 원본 .sub_img_box 직계 <img>.
+                 이 영역이 없는 사이트(dbff)도 있어 이미지가 없으면 통째로 숨긴다. -->
+            <div class="sub_img_box sub_inner" data-room-wide-section>
+              <!-- data-* 속성 : data-room-wide-image | roomtype_exterior[6] -->
+              <img alt="객실 이미지" data-room-wide-image />
+            </div>
+            <!--// 와이드 -->
+
+            <!-- s: 객실 평면도 — 원본 객실 상세의 평면도 영역 크롤링 이미지가 있을 때만 노출 -->
+            <div class="room_floorplan" data-room-floorplan-section>
+              <div class="sub_inner">
+                <div class="sub_title2">
+                  <h3>객실 평면도</h3>
+                </div>
+                <div class="floorplan_img">
+                  <!-- data-* 속성 : data-room-floorplan-image
+                       roomtypes[current] 평면도 크롤링 이미지 → 없으면 섹션 미노출 -->
+                  <img alt="객실 평면도" data-room-floorplan-image />
+                </div>
+              </div>
+            </div>
+            <!--// 객실 평면도 -->
+
+            <!-- s: main_room — 객실 미리보기 슬라이더 (index / layout-map 과 동일 구조) -->
+            <div class="main_room">
+              <div class="room_list">
+                <div class="main_title sub_inner">
+                  <span data-index-eyebrow>WELCOME TO PENSION</span>
+                  <h3 data-index-room-title>Room Preview</h3>
+                  <!-- data-* 속성 : data-index-room-description (index.essence.description — index 와 같은 소스) -->
+                  <p data-index-room-description></p>
+                </div>
+                <div class="room_sld_wrap">
+                  <div class="swiper-container room_list_sld">
+                    <!-- data-* 속성 : data-room-list-slides | 동적 매핑 필요
+                         customFields.roomtypes[] × rooms[] id 매칭 -->
+                    <div class="swiper-wrapper" data-room-list-slides></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--// main_room -->
           </div>
-        </div>
+          <!--// sub_cont -->
+        </section>
       </div>
+
+      <div id="footer-wrap"></div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="js/preview-handler.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="js/parallax.js"></script>
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/room-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/data-mapper/pages/room-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
     <script src="js/common.js"></script>
     <script src="js/pages/room.js"></script>

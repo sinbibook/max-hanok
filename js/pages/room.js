@@ -1,70 +1,33 @@
-var roomSwipers = [];
+/* ============================================================
+   pages/room.js — 객실 상세 페이지 스크립트
+   슬라이드는 room-mapper 가 동적 생성하므로, 매핑 완료 후
+   window.initRoomSwipers() 를 호출받아 초기화한다.
+   ============================================================ */
+window.initRoomSwipers = function () {
+  if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
 
-function initRoomSwipers() {
-  // preview 재렌더 등으로 다시 호출될 때 이전 Swiper 인스턴스 정리(중복 방지)
-  roomSwipers.forEach(function (sw) {
-    if (sw && typeof sw.destroy === 'function') sw.destroy(true, true);
-  });
-  roomSwipers = [];
-
-  // con0 히어로 Swiper
-  if ($('.con0 .swiper-slide').length > 1) {
-    roomSwipers.push(initSwiper($('.con0'), {
-      slidesPerView: 1,
-      effect: 'fade',
-      autoplay: { delay: 2500, disableOnInteraction: false },
-      loop: true,
-      navigation: {
-        nextEl: $('.con0 .swiper-button-next')[0],
-        prevEl: $('.con0 .swiper-button-prev')[0],
-      },
-    }));
-  }
-
-  // con1 Room Preview Swiper
-  roomSwipers.push(initSwiper($('.con1'), {
-    slidesPerView: 3,
-    spaceBetween: 40,
-    loop: true,
-    speed: 1000,
-    allowTouchMove: true,
-    waitForTransition: false,
-    autoplay: { delay: 3000, disableOnInteraction: false },
-    pagination: {
-      el: $('.con1 .swiper-pagination')[0],
-      clickable: true,
-      renderBullet: function (index, className) {
-        return '<span class="' + className + '">' + ($('.con1 .swiper-slide').eq(index).data('title') || '') + '</span>';
-      },
-    },
+  // 객실 히어로 (풀와이드 페이드)
+  window.TplSwiper.initHero('roomHero', '.sub_visual_box .swiper-container', {
+    spaceBetween: 0,
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
     navigation: {
-      nextEl: $('.con1 .swiper-button-next')[0],
-      prevEl: $('.con1 .swiper-button-prev')[0],
-    },
-    on: {
-      init: function () {
-        $('.con1 .total').text($('.con1 .swiper-slide').length);
-      },
-      slideChange: function () {
-        $('.con1 .number').text(this.realIndex + 1);
-      },
-    },
+      nextEl: '.sub_visual_wide .swiper-button-next',
+      prevEl: '.sub_visual_wide .swiper-button-prev'
+    }
+  });
+
+  // 하단 객실 미리보기 (원본 room_list_sld: 데스크톱 4장)
+  var previewPerView = window.TplSwiper.roomPerView('.main_room .room_list_sld');
+  window.TplSwiper.init('roomPreview', '.main_room .room_list_sld', {
+    loop: window.TplSwiper.shouldLoop('.main_room .room_list_sld', previewPerView),
+    slidesPerView: previewPerView,
+    spaceBetween: 30,
+    grabCursor: true,
     breakpoints: {
-      0:    { slidesPerView: 1, spaceBetween: 20 },
-      768:  { slidesPerView: 2, spaceBetween: 30 },
-      1440: { slidesPerView: 3, spaceBetween: 40 },
-    },
-  }));
-}
-
-// 매퍼가 슬라이드를 주입한 뒤 발생시키는 이벤트로 초기화 (localhost/preview 공통)
-document.addEventListener('template:rendered', function () {
-  initRoomSwipers();
-});
-
-$(document).ready(function () {
-  // 이미 슬라이드가 주입된 경우(이벤트를 놓친 경우) 대비 fallback
-  if ($('.con0 .swiper-slide').length || $('.con1 .swiper-slide').length) {
-    initRoomSwipers();
-  }
-});
+      0: { slidesPerView: 1, spaceBetween: 15 },
+      480: { slidesPerView: 2, spaceBetween: 20 },
+      961: { slidesPerView: previewPerView, spaceBetween: 30 }
+    }
+  });
+};

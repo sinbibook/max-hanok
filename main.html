@@ -1,22 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
-    <!-- 렌더 게이트: 매핑 전 placeholder/fallback 깜빡임 방지 (매핑 완료 시 페이드인) -->
-    <style>html.tpl-loading body{opacity:0}body{opacity:1;transition:opacity .3s ease}</style>
-    <script>document.documentElement.classList.add('tpl-loading');window.__tplReveal=function(){document.documentElement.classList.remove('tpl-loading');};setTimeout(function(){window.__tplReveal&&window.__tplReveal();},3000);</script>
     <meta charset="UTF-8" />
+    <style>
+      html.tpl-loading body {
+        opacity: 0;
+      }
+      body {
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add('tpl-loading');
+      window.__tplReveal = function () {
+        document.documentElement.classList.remove('tpl-loading');
+      };
+      setTimeout(function () {
+        window.__tplReveal && window.__tplReveal();
+      }, 3000);
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+    <meta property="og:type" content="website" />
     <title data-page-title>Max 한옥 - 숙소소개</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/theme.css" as="style">
-    <link rel="preload" href="styles/common.css" as="style">
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" type="text/css" href="styles/theme.css" />
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 숙소소개" />
@@ -32,100 +48,56 @@
   <meta name="naver-site-verification" content="fqwffqwqfqwf" />
   <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
+
   <body>
-    <div class="wrapper">
-      <div class="container">
-        <!-- MAPPER: customFields.pages.main.sections[0].hero.images[isSelected] -->
-        <div class="con0" data-aos="fade-up">
-          <div class="swiper">
-            <div class="swiper-wrapper" data-main-hero-slides>
-              <div class="swiper-slide">
-                <img alt="" />
-                <div class="tx1">하드코딩</div>
-              </div>
-              <div class="swiper-slide">
-                <img alt="" />
-                <div class="tx1">하드코딩</div>
-              </div>
-              <div class="swiper-slide">
-                <img alt="" />
-                <div class="tx1">하드코딩</div>
+    <div id="wrap">
+      <div id="header-wrap"></div>
+
+      <div id="container">
+        <section id="content" class="sub1_2 sub_about">
+          <div class="sub_visual_wide visual">
+            <div class="sub_visual_box">
+              <div class="swiper-container">
+                <div class="swiper-wrapper" data-main-hero-slides></div>
+                <div class="swiper-button-prev"><img src="images/arrow_left.png" alt="prev" /></div>
+                <div class="swiper-button-next"><img src="images/arrow_right.png" alt="next" /></div>
               </div>
             </div>
-            <div class="swiperNavi">
-              <div class="swiper-button-prev">
-                <img src="images/icon_left_1.png" alt="" />
-                Prev
-              </div>
-              <div class="bar"></div>
-              <div class="swiper-button-next">
-                Next
-                <img src="images/icon_right_1.png" alt="" />
+            <div class="visual_title">
+              <strong>About,</strong>
+              <div class="sub_cate_wrap">
+                <ul>
+                  <li class="on"><a href="./main.html">펜션소개</a></li>
+                </ul>
               </div>
             </div>
           </div>
-        </div>
-        <div class="con6 w1440">
-          <div class="conTitle" data-aos="fade-up">
-            <div class="tx1">ABOUT &amp; VIEW</div>
-            <div class="tx2">
-              쉼이 필요한 날,<br />
-              <!-- MAPPER: property.name + 을/를 판별 -->
-              <div class="bold spot" data-about-title></div>
+
+          <div class="sub_cont">
+            <div data-main-about-blocks></div>
+
+            <div class="sub_title main_closing">
+              <h3 data-property-caption="Hello, {nameEn}"></h3>
+              <span data-property-caption="Welcome to {nameEn}"></span>
+              <p
+                data-main-closing-description
+                data-property-caption="편안함과 즐거움이 있는 곳,\n{name}에 오신 것을 환영합니다."
+              ></p>
             </div>
           </div>
-          <!-- MAPPER: customFields.pages.main.sections[0].about[] → 동적 생성 -->
-          <div data-main-about-container></div>
-        </div>
-        <!-- MAPPER: homepage.customFields.property.images[category=property_exterior] -->
-        <div class="con7" data-main-gallery>
-          <div class="img"><img alt="" /></div>
-          <div class="img"><img alt="" /></div>
-          <div class="img"><img alt="" /></div>
-          <div class="img"><img alt="" /></div>
-        </div>
-        <div class="con4">
-          <div class="conTitle" data-aos="fade-up">
-            <div class="tx0">Make your Stay Even Better</div>
-            <!-- MAPPER: property.name (typing 섹션) -->
-            <div class="typing-container tx2">
-              <div class="typing-wrapper">
-                <div class="typing-line-wrapper">
-                  <div id="typing1" class="typing-line"></div>
-                  <div class="cursor" id="cursor1"></div>
-                </div>
-                <div class="typing-line-wrapper">
-                  <div id="typing2" class="typing-line bold spot"></div>
-                  <div class="cursor" id="cursor2"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- MAPPER: property.name + property.nameEn (con4 하단) -->
-          <div class="t0" data-aos="fade-up">
-            <span class="t1"></span>
-            <span class="bar">|</span>
-            <span class="t2"></span>
-          </div>
-          <a href="#!" data-booking-link class="btnBooking" data-aos="fade-up">
-            <div class="circle">
-              <img src="images/icon_plus_black.png" alt="" />
-              <div class=""><em class="black">BOOKING</em></div>
-              <div class="cover"><em class="white">BOOKING</em></div>
-            </div>
-          </a>
-        </div>
+        </section>
       </div>
+
+      <div id="footer-wrap"></div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="js/preview-handler.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/main-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/data-mapper/pages/main-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
     <script src="js/common.js"></script>
     <script src="js/pages/main.js"></script>

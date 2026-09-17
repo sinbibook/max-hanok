@@ -1,28 +1,6 @@
 (function (global) {
   'use strict';
 
-  var ROOM_COUNT_LABELS = {
-    bedroom: '침대룸',
-    bathroom: '화장실',
-    livingRoom: '거실',
-    ondol: '온돌룸',
-    kitchen: '주방'
-  };
-
-  // roomStructures[0] + "/ " + totalRoomCount 값≥1 항목 한글 나열 (room-mapper와 동일)
-  function buildRoomStructure(room) {
-    if (!room) return '';
-    var structures = room.roomStructures || [];
-    var base = structures.length ? structures[0] : '';
-    var counts = room.totalRoomCount || {};
-    var labels = [];
-    Object.keys(ROOM_COUNT_LABELS).forEach(function (key) {
-      if (counts[key] >= 1) labels.push(ROOM_COUNT_LABELS[key]);
-    });
-    if (base && labels.length) return base + '/ ' + labels.join(' ');
-    return base || labels.join(' ');
-  }
-
   function LayoutMapMapper() {
     BaseDataMapper.call(this);
   }
@@ -30,190 +8,112 @@
   LayoutMapMapper.prototype.constructor = LayoutMapMapper;
 
   LayoutMapMapper.prototype.mapPage = function () {
-    // enabled=false이면 404로 리다이렉트
-    var pages = this.getPages();
-    if (!pages.layoutMap ||
-        !pages.layoutMap.sections ||
-        !pages.layoutMap.sections[0] ||
-        pages.layoutMap.sections[0].enabled === false) {
+    var section = this.getSection();
+
+    // enabled=false (또는 섹션 자체가 없음) → 404 리다이렉트.
+    // 헤더의 "미리보기" li 도 header-footer-mapper 가 같은 기준으로 숨긴다.
+    if (!section || section.enabled === false) {
       window.location.href = '404.html';
       return;
     }
 
-    this.mapPropertyName();
-    this.mapHero();
-    this.mapLayoutContent();
-    this.mapRoomPreview();
-    this.updateMetaTags();
+    this.mapPropertyNames();
+    this.mapHeroBg(section);
+    this.mapIndexRoomHeading();
+    this.renderRoomSlides('[data-room-list-slides]');
+    this.mapLayoutImage(section);
 
-    // 슬라이드 DOM 주입 완료를 알림 → layout-map.js에서 Swiper 초기화 (localhost/preview 공통)
-    document.dispatchEvent(new CustomEvent('template:rendered', { detail: { page: 'layoutMap' } }));
+    if (typeof window.initLayoutMapSwipers === 'function') window.initLayoutMapSwipers();
   };
 
-  // MAPPER: property.name → 숙소명
-  LayoutMapMapper.prototype.mapPropertyName = function () {
-    var propertyName = this.getPropertyName();
-    var propertyNameEl = document.querySelector('[data-property-name]');
-    if (propertyNameEl) {
-      propertyNameEl.textContent = propertyName;
-    }
+  // layoutMap 페이지 섹션 (customFields.pages.layoutMap.sections[0])
+  LayoutMapMapper.prototype.getSection = function () {
+    var page = this.getPages().layoutMap;
+    return (page && page.sections && page.sections[0]) || null;
   };
 
-  // MAPPER: customFields.pages.layoutMap.sections[0].hero.images[isSelected]
-  LayoutMapMapper.prototype.mapHero = function () {
-    var pages = this.getPages();
-    var hero = pages.layoutMap && pages.layoutMap.sections && pages.layoutMap.sections[0] && pages.layoutMap.sections[0].hero;
-    if (!hero) return;
-
-    var images = this.getSelectedImages(hero.images || []);
-    var wrapper = document.querySelector('[data-layout-map-hero-slides]');
-
-    if (wrapper) {
-      wrapper.innerHTML = '';
-      if (images.length) {
-        images.forEach(function (img) {
-          var div = document.createElement('div');
-          div.className = 'swiper-slide';
-          div.innerHTML = '<img src="' + img.url + '" alt="" /><div class="tx1">배치도</div>';
-          wrapper.appendChild(div);
-        });
-      } else {
-        // Placeholder when no images
-        var placeholderDiv = document.createElement('div');
-        placeholderDiv.className = 'swiper-slide';
-        var img = document.createElement('img');
-        ImageHelpers.applyPlaceholder(img);
-        img.alt = 'Layout Map Hero';
-        var titleDiv = document.createElement('div');
-        titleDiv.className = 'tx1';
-        titleDiv.textContent = '배치도';
-        placeholderDiv.appendChild(img);
-        placeholderDiv.appendChild(titleDiv);
-        wrapper.appendChild(placeholderDiv);
-      }
-    }
-
-    // 또는 단일 이미지 요소
-    var heroImg = document.querySelector('[data-layout-map-hero-image]');
-    if (heroImg) {
-      if (images.length) {
-        heroImg.style.backgroundImage = 'url(' + images[0].url + ')';
-        heroImg.style.backgroundPosition = 'center';
-        heroImg.style.backgroundSize = 'cover';
-        heroImg.style.backgroundRepeat = 'no-repeat';
-      } else {
-        // background-image placeholder
-        heroImg.style.backgroundColor = '#f0f0f0';
-        heroImg.style.backgroundImage = ImageHelpers.EMPTY_IMAGE_SVG;
-        heroImg.style.backgroundRepeat = 'no-repeat';
-        heroImg.style.backgroundPosition = 'center';
-        heroImg.style.backgroundSize = 'cover';
-      }
-    }
-
-    // hero.title → tx1 (값 우선, 없으면 fallback 'ROOM PREVIEW') — HTML 정적 텍스트 대신 JS fallback
-    var heroTitleEl = document.querySelector('[data-layout-map-hero-title]');
-    if (heroTitleEl) {
-      heroTitleEl.textContent = (hero.title && hero.title.trim()) ? hero.title : 'ROOM PREVIEW';
-    }
-
-    // hero.description → tx2 (값 우선, 없으면 fallback '객실 배치도') — HTML 정적 텍스트 대신 JS fallback
-    var heroDescEl = document.querySelector('[data-layout-map-hero-description]');
-    if (heroDescEl) {
-      if (hero.description && hero.description.trim()) {
-        heroDescEl.innerHTML = hero.description
-          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-          .replace(/\n/g, '<br>');
-      } else {
-        heroDescEl.textContent = '객실 배치도';
-      }
-    }
+  // MAPPER: customFields.property.propertyUnameEn / property.nameEn / property.name + [data-property-caption]
+  LayoutMapMapper.prototype.mapPropertyNames = function () {
+    var nameEn = this.getPropertyNameEn();
+    var name = this.getPropertyName();
+    document.querySelectorAll('[data-property-name-en]').forEach(function (el) {
+      el.textContent = nameEn;
+    });
+    document.querySelectorAll('[data-property-name]').forEach(function (el) {
+      el.textContent = name;
+    });
+    this.applyPropertyCaptions();
   };
 
-  // MAPPER: customFields.pages.layoutMap.sections[0].about (이미지 + 설명)
-  LayoutMapMapper.prototype.mapLayoutContent = function () {
-    var pages = this.getPages();
-    var about = pages.layoutMap && pages.layoutMap.sections && pages.layoutMap.sections[0] && pages.layoutMap.sections[0].about;
-    if (!about) return;
+  // MAPPER: layoutMap.hero.images[isSelected][0] → [data-layout-map-hero-bg]
+  // 없으면 property.images[0].thumbnail 로 폴백한다.
+  LayoutMapMapper.prototype.mapHeroBg = function (section) {
+    var hero = (section && section.hero) || {};
+    var url = this.getFirstSelectedImage(hero.images || []);
 
-    // 제목
-    var titleEl = document.querySelector('[data-layout-map-about-title]');
-    if (titleEl && about.title) titleEl.textContent = about.title;
-
-    // 설명
-    var descEl = document.querySelector('[data-layout-map-about-description]');
-    if (descEl && about.description) {
-      descEl.innerHTML = about.description
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
+    if (!url) {
+      var propImages = this.getProperty().images || [];
+      var thumbs = (propImages[0] && propImages[0].thumbnail) || [];
+      url = this.getFirstSelectedImage(thumbs) || (thumbs[0] && thumbs[0].url) || '';
     }
-
-    // 이미지들 (각 이미지마다 설명)
-    if (about.images && about.images.length) {
-      about.images.forEach(function (image, index) {
-        var imgEl = document.querySelector('[data-layout-map-image-' + index + ']');
-        if (imgEl) {
-          if (image.url) {
-            imgEl.src = image.url;
-          } else {
-            ImageHelpers.applyPlaceholder(imgEl);
-          }
-        }
-      });
-    } else {
-      // Placeholder when no images
-      for (var i = 0; i < 2; i++) {
-        var imgEl = document.querySelector('[data-layout-map-image-' + i + ']');
-        if (imgEl) {
-          ImageHelpers.applyPlaceholder(imgEl);
-        }
-      }
-    }
-  };
-
-  // MAPPER: customFields.roomtypes[] (+ rooms[] id매칭) → [data-index-room-slides]
-  LayoutMapMapper.prototype.mapRoomPreview = function () {
-    var roomtypes = this.getRoomtypes();
-    var roomItems = this.getRoomMenuItems(roomtypes, function (rt) { return (rt && rt.name) || ''; });
-    var rooms = (this.data && this.data.rooms) || [];
-    var wrapper = document.querySelector('[data-index-room-slides]');
-    if (!wrapper) return;
-
-    wrapper.innerHTML = '';
-    if (!roomtypes.length) return;
 
     var self = this;
-    roomItems.forEach(function (item) {
-      var rt = self.getRoomMenuRoomtype(item);
-      var roomLabel = self.getRoomMenuLabel(item);
-      if (!String(roomLabel).trim() || !rt) return;
-      var thumbUrl = self.getFirstSelectedImage((rt.images || []).filter(function (img) { return img.category === 'roomtype_thumbnail'; }));
-      var matched = rooms.filter(function (r) { return r.id === rt.id; })[0];
-
-      var div = document.createElement('div');
-      div.className = 'swiper-slide';
-      div.setAttribute('data-title', roomLabel);
-
-      var img = document.createElement('img');
-      if (thumbUrl) { img.src = thumbUrl; } else { ImageHelpers.applyPlaceholder(img); }
-      img.alt = roomLabel;
-
-      var a = document.createElement('a');
-      a.href = self.getRoomMenuLink(item, 'id');
-      a.className = 'tx';
-      a.innerHTML =
-        '<div class="tx1">' + roomLabel + '</div>' +
-        '<div class="tx2">' + buildRoomStructure(matched) + '</div>' +
-        '<div class="more"></div>';
-
-      div.appendChild(img);
-      div.appendChild(a);
-      wrapper.appendChild(div);
+    document.querySelectorAll('[data-layout-map-hero-bg]').forEach(function (el) {
+      self.setBackground(el, url, '객실 미리보기 대표 이미지');
     });
   };
 
+  // MAPPER: layoutMap.about.images[isSelected] → [data-layout-map-image]
+  // 배치도 이미지가 없으면 영역을 통째로 숨긴다 (빈 회색 박스 방지).
+  LayoutMapMapper.prototype.mapLayoutImage = function (section) {
+    var about = (section && section.about) || {};
+    // about 이 배열로 오는 경우도 있어 둘 다 받는다
+    var images = Array.isArray(about) ? (about[0] && about[0].images) || [] : about.images || [];
+    var selectedImages = this.getSelectedImages(images).filter(function (image) {
+      return image && image.url;
+    });
+    var targets = document.querySelectorAll('[data-layout-map-image]');
+
+    var wrap = document.querySelector('[data-layout-map-wrap]');
+    if (!selectedImages.length) {
+      if (wrap) wrap.style.display = 'none';
+      return;
+    }
+    if (wrap) wrap.style.display = '';
+
+    // 배치도는 도면이라 잘리면 안 된다. background(cover) 가 아니라 <img> 로 넣어
+    // 원본 비율 그대로 전체가 보이게 한다. 선택 이미지가 여러 장이면 모두 노출한다.
+    targets.forEach(function (el) {
+      var parent = el.parentNode;
+      if (!parent) return;
+      parent.innerHTML = '';
+
+      selectedImages.forEach(function (image, index) {
+        var img = document.createElement('img');
+        img.src = image.url;
+        img.alt = image.description || '배치도' + (index > 0 ? ' ' + (index + 1) : '');
+        img.setAttribute('data-layout-map-image', '');
+        parent.appendChild(img);
+      });
+    });
+
+    if (!targets.length) {
+      document.querySelectorAll('.layout_map_wide').forEach(function (el) {
+        el.innerHTML = '';
+        selectedImages.forEach(function (image, index) {
+          var img = document.createElement('img');
+          img.src = image.url;
+          img.alt = image.description || '배치도' + (index > 0 ? ' ' + (index + 1) : '');
+          img.setAttribute('data-layout-map-image', '');
+          el.appendChild(img);
+        });
+      });
+    }
+  };
+
+  // preview-handler 가 standalone/preview 양쪽 초기화를 담당한다
   document.addEventListener('DOMContentLoaded', function () {
-    if (window.parent !== window) return;
+    if (window.previewHandler) return;
     var mapper = new LayoutMapMapper();
     mapper.initialize();
     global.layoutMapMapperInstance = mapper;

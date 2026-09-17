@@ -1,74 +1,113 @@
-<header class="header">
-  <div class="w1440">
-    <h1 class="logo">
-      <a href="index.html">
-        <!-- MAPPER: homepage.images[0].logo[isSelected].url -->
-        <img data-logo alt="logo" />
+<header id="header" class="header">
+  <div class="hd_inner for_pc">
+    <div class="logo">
+      <a href="./index.html">
+        <img src="" alt="" data-logo-image />
+        <span class="logo_text" data-property-name></span>
       </a>
-    </h1>
-    <nav class="menu">
-      <div class="depth1">
-        <span>ABOUT</span>
-        <div class="depth2">
-          <a href="main.html">펜션소개</a>
-        </div>
-      </div>
-      <div class="depth1">
-        <span>ROOMS</span>
-        <div class="depth2" data-rooms-submenu>
-          <!-- MAPPER: layout-map 링크 동적 생성 -->
-          <!-- MAPPER: customFields.roomtypes[].name → 동적 생성 (header-footer-mapper) -->
-          <a data-room-menu-link href="room-list.html">객실 목록</a>
-        </div>
-      </div>
-      <div class="depth1">
-        <span>SPECIAL</span>
-        <div class="depth2">
-          <!-- MAPPER: property.facilities[].name → 동적 생성 (header-footer-mapper) -->
-          <a data-facility-menu-link href="facility.html">시설 안내</a>
-        </div>
-      </div>
-      <div class="depth1">
-        <span>RESERVE</span>
-        <div class="depth2">
-          <!-- MAPPER: property.realtimeBookingId -->
-          <a data-booking-link href="#!">예약하기</a>
-          <a href="reservation.html">이용안내</a>
-        </div>
-      </div>
-      <div class="depth1" data-travel-menu>
-        <span>TRAVEL</span>
-        <div class="depth2" data-travel-submenu>
-          <!-- MAPPER: nearby-attractions 링크 동적 생성 -->
-        </div>
-      </div>
-      <div class="depth1">
-        <span>LOCATION</span>
-        <div class="depth2">
-          <a href="directions.html">오시는길</a>
-        </div>
-      </div>
-    </nav>
-    <div class="right">
-      <div class="btnReservation">
-        <!-- MAPPER: property.realtimeBookingId -->
-        <a data-booking-link href="#!">
-          <img src="images/icon_reservation.png" alt="" />
-          예약하기
+    </div>
+    <div class="hd_right">
+      <div class="btn_hd_res" data-ybs-wrap>
+        <a href="#!" target="_blank" data-ybs-button>
+          <img src="images/common/ybs_w.png" alt="YBS" />
         </a>
       </div>
-      <div class="btnYbs" data-ybs-button style="display: none;">
-        <!-- MAPPER: property.ybsId -->
-        <a href="#!">
-          <img src="images/icon_reservation.png" alt="" />
-          YBS
+      <div class="btn_hd_res btn_hd_special">
+        <img class="reser_price" src="images/common/reserve_price.png" alt="특가" />
+        <a href="#!" target="_blank" data-booking-link>
+          <img src="images/common/reser_w.png" alt="실시간예약" />
         </a>
       </div>
-      <div class="btnMenu">
-        <img src="images/icon_menu.png" alt="" />
+      <button type="button" class="btn_menu" aria-label="메뉴 열기">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="hd_inner for_m">
+    <div class="logo">
+      <a href="./index.html">
+        <img src="" alt="" data-logo-image />
+        <span class="logo_text" data-property-name></span>
+      </a>
+    </div>
+    <div class="hd_right">
+      <div class="btn_hd_res" data-ybs-wrap>
+        <a href="#!" target="_blank" data-ybs-button>
+          <img src="images/common/ybs_w.png" alt="YBS" />
+        </a>
       </div>
-      <div class="btnClose">
-        <img src="images/icon_close.png" alt="" />
+      <div class="btn_hd_res btn_hd_special">
+        <img class="reser_price" src="images/common/reserve_price.png" alt="특가" />
+        <a href="#!" target="_blank" data-booking-link>
+          <img src="images/common/reser_w.png" alt="실시간예약" />
+        </a>
+      </div>
+      <button type="button" class="btn_menu" aria-label="메뉴 열기">
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="aside">
+    <div class="aisde_inner">
+      <a href="#" class="btn_close" aria-label="메뉴 닫기"></a>
+      <div class="aside_box">
+        <ul>
+          <li class="depth1">
+            <a href="./main.html" class="depth1_a">
+              ABOUT
+              <span>펜션소개</span>
+            </a>
+            <ul class="depth_box">
+              <li><a href="./main.html">펜션소개</a></li>
+            </ul>
+          </li>
+          <li class="depth1">
+            <a href="./layout-map.html" class="depth1_a">
+              ROOMS
+              <span>객실보기</span>
+            </a>
+            <ul class="depth_box" data-rooms-submenu>
+              <li data-menu-id="layout-map"><a href="./layout-map.html">미리보기</a></li>
+            </ul>
+          </li>
+          <li class="depth1">
+            <a href="./facility.html" class="depth1_a">
+              SPECIAL
+              <span>스페셜</span>
+            </a>
+            <ul class="depth_box" data-special-submenu></ul>
+          </li>
+          <li class="depth1">
+            <a href="#!" class="depth1_a" target="_blank" data-booking-link>
+              RESERVE
+              <span>예약안내</span>
+            </a>
+            <ul class="depth_box">
+              <li><a href="#!" target="_blank" data-booking-link>예약하기</a></li>
+              <li><a href="./reservation.html">이용안내</a></li>
+            </ul>
+          </li>
+          <li class="depth1" data-travel-menu>
+            <a href="./nearby-attractions.html" class="depth1_a">
+              TRAVEL
+              <span>주변여행지</span>
+            </a>
+            <ul class="depth_box">
+              <li><a href="./nearby-attractions.html">주변여행지</a></li>
+            </ul>
+          </li>
+          <li class="depth1">
+            <a href="./directions.html" class="depth1_a">
+              LOCATION
+              <span>오시는길</span>
+            </a>
+            <ul class="depth_box">
+              <li><a href="./directions.html">오시는길</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

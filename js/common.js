@@ -1,138 +1,80 @@
-(function () {
-  'use strict';
+/* ============================================================
+   common.js — t-template-B common interactions
+   Header/footer are injected by header-footer-loader.js, so bindings wait
+   for window.loaderReady and use delegated events for mapped menus.
+   ============================================================ */
+$(function () {
+  (window.loaderReady || Promise.resolve()).then(function () {
+    $(document).on('click', '.btn_menu, .btn_close', function (e) {
+      e.preventDefault();
+      $('.aside').toggleClass('on');
+    });
+  });
+});
 
-  // Swiper 초기화 헬퍼 - 즉시 노출 (pages/[page].js의 ready()에서 사용)
-  window.initSwiper = function (container, options) {
-    if (container && container.length) {
-      return new Swiper(container.find('.swiper')[0], options);
+window.TplSwiper = (function () {
+  var instances = {};
+
+  function init(key, selector, options) {
+    var el = document.querySelector(selector);
+    if (!el) return null;
+    if (!el.querySelectorAll('.swiper-slide').length) return null;
+
+    if (instances[key]) {
+      try {
+        instances[key].destroy(true, true);
+      } catch (e) {
+        /* ignore stale instances */
+      }
+      delete instances[key];
     }
-  };
 
-  function initCommon() {
-    // AOS
-    // ⚠️ 404.html 은 aos.js 를 싣지 않는다(오류 페이지라 등장 애니메이션이 불필요).
-    //    존재 검사 없이 호출하면 ReferenceError 로 이 아래 전체가 중단된다.
-    //    layout-map / nearby-attractions 가 비노출이면 404 로 리다이렉트되므로
-    //    그 두 페이지에서도 같은 에러가 났다.
-    if (window.AOS) AOS.init({ once: true, duration: 2000 });
-
-    // 모바일 헤더 메뉴
-    $(document).on('click', '.header .btnMenu', function () {
-      $('.header').toggleClass('active');
-    });
-    $(document).on('click', '.header .btnClose', function () {
-      $('.header').toggleClass('active');
-    });
-    $(document).on('click', '.header .depth1 > span', function () {
-      $(this).parent().toggleClass('on');
-    });
-
-    // 푸터 IntersectionObserver
-    var $footer = $('#footer');
-    if ($footer.length) {
-      var footerObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            $footer.addClass('footer-visible');
-          } else {
-            $footer.removeClass('footer-visible');
-          }
-        });
-      }, { threshold: 0.1 });
-      footerObserver.observe($footer[0]);
-    }
+    instances[key] = new Swiper(selector, options);
+    return instances[key];
   }
 
-  // 타이핑 효과
-  // preview에서는 renderTemplate()이 여러 번 호출되어 같은 요소에 typingEffect가
-  // 중복 실행될 수 있다. 이전 실행의 타이머/옵저버를 정리하지 않으면 타이핑 루프가
-  // 동시에 여러 개 돌면서 글자가 겹쳐 나온다(예: '당신' → '당당신신').
-  // 따라서 새로 시작하기 전에 직전 실행을 반드시 취소한다.
-  window.typingEffect = function ($element1, $element2, cursor1, cursor2, container) {
-    // 직전 실행 정리: 진행 중이던 setTimeout 루프와 IntersectionObserver를 취소
-    if (window._typingEffectState) {
-      if (window._typingEffectState.timer1) clearTimeout(window._typingEffectState.timer1);
-      if (window._typingEffectState.timer2) clearTimeout(window._typingEffectState.timer2);
-      if (window._typingEffectState.observer) window._typingEffectState.observer.disconnect();
+  /** 슬라이더 안의 원본 슬라이드 개수 (loop 복제 전에 세야 한다) */
+  function slideCount(selector) {
+    var el = document.querySelector(selector);
+    return el ? el.querySelectorAll('.swiper-slide').length : 0;
+  }
+
+  /**
+   * 객실 카드 슬라이더의 데스크톱 노출 장수.
+   * 기본 4장이되, 카드가 4개가 안 되면 카드 수만큼만 보여준다.
+   * 3장 자리에 2장만 있으면 loop 가 복제본으로 빈칸을 채워 같은 객실이 두 번 나온다.
+   * (그룹 숙소는 카드가 그룹 단위로 접혀 2~3장이 되는 일이 흔하다)
+   */
+  function roomPerView(selector) {
+    var n = slideCount(selector);
+    return n >= 4 ? 4 : Math.max(n, 1);
+  }
+
+  /** 슬라이드가 한 화면에 다 들어가면 loop 를 끈다 (복제본 방지) */
+  function shouldLoop(selector, perView) {
+    return slideCount(selector) > perView;
+  }
+
+  /**
+   * 서브페이지 히어로 초기화.
+   * 원본 히어로는 자동 전환이 없다 — loop / autoplay 없이 화살표로만 넘긴다.
+   * (evergreen 원본 측정: index 메인비주얼·about·view·room상세 전부 loop:false, autoplay 없음)
+   * 이미지가 1장이면 Swiper 가 watchOverflow 로 잠가 화살표까지 감춘다.
+   * loop 를 켜두면 슬라이드가 복제돼 이 잠금 판정이 걸리지 않으므로 반드시 꺼야 한다.
+   * (navigation 설정은 그대로 둔다 — 잠기면 Swiper 가 버튼에 swiper-button-lock 을 붙인다)
+   */
+  function initHero(key, selector, options) {
+    var opts = {};
+    for (var k in options) {
+      if (Object.prototype.hasOwnProperty.call(options, k)) opts[k] = options[k];
     }
-    var state = window._typingEffectState = { timer1: null, timer2: null, observer: null };
+    opts.loop = false;
+    opts.autoplay = false;
+    return init(key, selector, opts);
+  }
 
-    var text1 = $element1.text().trim();
-    var text2 = $element2.text().trim();
-    var speed = 100;
-    var index1 = 0;
-    var index2 = 0;
-
-    $element1.text('');
-    $element2.text('');
-
-    function typeFirstLine() {
-      if (index1 < text1.length) {
-        $element1.append(text1.charAt(index1++));
-        state.timer1 = setTimeout(typeFirstLine, speed);
-      } else {
-        cursor1.hide();
-        cursor2.show();
-        typeSecondLine();
-      }
-    }
-
-    function typeSecondLine() {
-      if (index2 < text2.length) {
-        $element2.append(text2.charAt(index2++));
-        state.timer2 = setTimeout(typeSecondLine, speed);
-      }
-    }
-
-    var typingObserver = new IntersectionObserver(function (entries, observer) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          container.css('visibility', 'visible');
-          cursor1.show();
-          typeFirstLine();
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.1 });
-    state.observer = typingObserver;
-
-    if ($element1.length) {
-      typingObserver.observe($element1[0]);
-    }
+  return {
+    init: init, initHero: initHero, instances: instances,
+    slideCount: slideCount, roomPerView: roomPerView, shouldLoop: shouldLoop,
   };
-
-  // 이미지 롤링
-  window.cloneImages = function ($container) {
-    $container.find('.img').each(function () {
-      $container.append($(this).clone());
-    });
-  };
-
-  window.startRolling = function ($container) {
-    if ($container.length) {
-      var position = 0;
-      var speed = 1;
-
-      function roll() {
-        position -= speed;
-        if (Math.abs(position) >= $container[0].scrollWidth / 2) {
-          position = 0;
-        }
-        $container.css('transform', 'translateX(' + position + 'px)');
-        requestAnimationFrame(roll);
-      }
-      roll();
-    }
-  };
-
-  // headerFooterLoaded 이벤트 시 공통 초기화
-  document.addEventListener('headerFooterLoaded', function () {
-    initCommon();
-  });
-
-  // header/footer-loader 없이 직접 열 경우 폴백
-  $(document).ready(function () {
-    if (!document.querySelector('.header')) return;
-    initCommon();
-  });
 })();

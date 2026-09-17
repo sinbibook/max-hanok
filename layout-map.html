@@ -1,22 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
-    <!-- 렌더 게이트: 매핑 전 placeholder/fallback 깜빡임 방지 (매핑 완료 시 페이드인) -->
-    <style>html.tpl-loading body{opacity:0}body{opacity:1;transition:opacity .3s ease}</style>
-    <script>document.documentElement.classList.add('tpl-loading');window.__tplReveal=function(){document.documentElement.classList.remove('tpl-loading');};setTimeout(function(){window.__tplReveal&&window.__tplReveal();},3000);</script>
     <meta charset="UTF-8" />
+    <!-- 렌더 게이트: 매핑 전 placeholder 깜빡임 방지 (매핑 완료 시 페이드인) -->
+    <style>
+      html.tpl-loading body {
+        opacity: 0;
+      }
+      body {
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+    </style>
+    <script>
+      document.documentElement.classList.add('tpl-loading');
+      window.__tplReveal = function () {
+        document.documentElement.classList.remove('tpl-loading');
+      };
+      setTimeout(function () {
+        window.__tplReveal && window.__tplReveal();
+      }, 3000);
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:,">
+    <meta property="og:type" content="website" />
     <title data-page-title>Max 한옥</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Preload critical resources -->
-    <link rel="preload" href="styles/theme.css" as="style">
-    <link rel="preload" href="styles/common.css" as="style">
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link rel="stylesheet" href="styles/layout-map.css" />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" type="text/css" href="styles/theme.css" />
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
@@ -32,80 +49,66 @@
   <meta name="naver-site-verification" content="fqwffqwqfqwf" />
   <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
 </head>
-  <body>
-    <div class="wrapper">
-      <div class="container">
-        <!-- MAPPER: customFields.pages.layout-map.sections[0].hero.images[isSelected] -->
-        <div class="con01" data-aos="fade-up">
-          <div class="img swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="img" data-layout-map-hero-image></div>
-              </div>
-            </div>
-          </div>
-          <div class="tx1_1">객실 미리보기</div>
-        </div>
 
-        <!-- MAPPER: customFields.pages.layout-map.sections[0].about + images -->
-        <div class="con14 w1440">
-          <div class="conTitle" data-aos="fade-up">
-            <!-- MAPPER: customFields.pages.layoutMap.sections[0].hero.title (우선) / fallback: ROOM PREVIEW -->
-            <div class="tx1" data-layout-map-hero-title></div>
-            <!-- MAPPER: customFields.pages.layoutMap.sections[0].hero.description (우선) / fallback: 객실 배치도 -->
-            <div class="tx2">
-              <span class="bold spot" data-layout-map-hero-description></span>
-            </div>
-          </div>
-          <div class="img" data-aos="fade-up">
-            <img alt="배치도" data-layout-map-image-0 />
-          </div>
-        </div>
+  <body oncontextmenu="return false;" onselectstart="return false" ondragstart="return false;">
+    <div id="wrap">
+      <div id="header-wrap"></div>
 
-        <div class="con1">
-          <div class="w1440">
-            <div class="conTitle" data-aos="fade-up">
-              <div class="tx1">ROOM PREVIEW</div>
-              <!-- MAPPER: customFields.pages.layoutMap.sections[0].hero.description (우선) 또는 기본값 -->
-              <div class="tx2" data-layout-map-room-preview-title>
-                여유롭고 특별한 공간<br />
-                <!-- MAPPER: property.name -->
-                <div class="bold spot" data-property-name></div>
-              </div>
-            </div>
-            <div class="swiper-pagination" data-aos="fade-up"></div>
-            <div class="swiperControl">
-              <div class="fraction">
-                <div class="number"></div>
-                <span class="bar">/</span>
-                <div class="total"></div>
-              </div>
-              <div class="navi">
-                <div class="swiper-button-prev">
-                  <img src="images/icon_left_2.png" alt="" />
+      <div id="container">
+        <!-- 원본 room.html (room_id 없는 목록 화면). ROOMS 대메뉴의 랜딩이자 "미리보기" 링크 대상.
+             백오피스 편집 화면 라벨은 "배치도 (선택)" — layoutMap.hero 가 페이지 히어로,
+             layoutMap.about 이 하단 배치도 이미지에 대응한다. -->
+        <section id="content" class="sub2_1 sub_room">
+          <!-- 원본 room.html 목록 화면에는 .visual_title 이 없다 (객실상세 / special 도 동일).
+               히어로는 배경 이미지 전용이다. 높이는 CSS height:100vh 가 담당한다. -->
+          <div class="sub_visual_wide visual" data-layout-map-hero-bg></div>
+          <!--// sub_visual -->
+
+          <div class="sub_cont">
+            <!-- s: main_room — 객실 슬라이더 (index.html 과 동일 구조) -->
+            <div class="main_room">
+              <div class="room_list">
+                <div class="main_title sub_inner">
+                  <span data-index-eyebrow>WELCOME TO PENSION</span>
+                  <h3 data-index-room-title>Room Preview</h3>
+                  <!-- data-* 속성 : data-index-room-description (index.essence.description — index 와 같은 소스) -->
+                  <p data-index-room-description></p>
                 </div>
-                <div class="swiper-button-next">
-                  <img src="images/icon_right_2.png" alt="" />
+                <div class="room_sld_wrap">
+                  <div class="swiper-container room_list_sld">
+                    <!-- data-* 속성 : data-room-list-slides | 동적 매핑 필요
+                         customFields.roomtypes[] × rooms[] id 매칭 (index 와 동일) -->
+                    <div class="swiper-wrapper" data-room-list-slides></div>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- MAPPER: customFields.roomtypes[] thumbnail[isSelected] + name (+ rooms[] id매칭 구조) -->
-            <div class="swiper right" data-aos="fade-left">
-              <div class="swiper-wrapper" data-index-room-slides></div>
+
+            <!--// main_room -->
+
+            <!-- s: 배치도 이미지 (layoutMap.about) — 이미지가 없으면 매퍼가 통째로 숨긴다 -->
+            <div class="room_map layout_map_wide" data-layout-map-wrap>
+              <!-- data-* 속성 : data-layout-map-image
+                   pages.layoutMap.sections[0].about.images[isSelected]
+                   배치도는 도면이라 잘리면 안 되므로 background(cover) 가 아니라 <img> 로 넣는다 -->
+              <img data-layout-map-image alt="배치도" />
             </div>
+            <!--// 배치도 -->
           </div>
-        </div>
+          <!--// sub_cont -->
+        </section>
       </div>
+
+      <div id="footer-wrap"></div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="js/preview-handler.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="js/image-helpers.js"></script>
+    <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
     <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/data-mapper/pages/layout-map-mapper.js"></script>
     <script src="js/header-footer-loader.js"></script>
     <script src="js/common.js"></script>
     <script src="js/pages/layout-map.js"></script>
