@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.300.0",
-    "generatedAt": "2026-09-17T07:05:09.870251734Z",
+    "version": "1.301.0",
+    "generatedAt": "2026-09-23T09:16:40.463745572Z",
     "templateType": "trip_b",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2264,6 +2264,9 @@
               "enabled": true
             }
           ]
+        },
+        "landing": {
+          "sections": [ ]
         }
       },
       "popup": {
