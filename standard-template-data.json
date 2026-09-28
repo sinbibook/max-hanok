@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.302.0",
-    "generatedAt": "2026-09-28T00:45:07.189353769Z",
+    "version": "1.303.0",
+    "generatedAt": "2026-09-28T01:54:54.218037607Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2281,7 +2281,7 @@
                   {
                     "id": "01a0e578-d70f-74db-a1ef-72192918d654",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790556295565-0tipqwsb8r.png",
-                    "sortOrder": 0,
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": false,
                     "blockId": "a4d10f12-7382-4a03-9e12-b2bc7d976a22"
@@ -2289,7 +2289,7 @@
                   {
                     "id": "01a0cd8d-7d76-7614-ae72-e63b10247364",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995485-eh7ieli5sd.png",
-                    "sortOrder": 1,
+                    "sortOrder": 2,
                     "description": "",
                     "isSelected": true,
                     "blockId": "5c1d96a8-9328-4256-80fc-241eec625590"
@@ -2297,7 +2297,7 @@
                   {
                     "id": "01a0e578-d74a-71c5-b38c-04de93e0320d",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790556295411-p08doujh5l.png",
-                    "sortOrder": 1,
+                    "sortOrder": 3,
                     "description": "",
                     "isSelected": true,
                     "blockId": "8f1978bf-5886-4416-8086-1757e9b185f3"
@@ -2305,7 +2305,7 @@
                   {
                     "id": "01a0cd8d-7cac-7d08-a90a-79651d5e3b66",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995562-2b3ap2oziz.png",
-                    "sortOrder": 2,
+                    "sortOrder": 4,
                     "description": "",
                     "isSelected": true,
                     "blockId": "55ffa731-6ac3-4c8a-9c0a-835a3a3cbec0"
@@ -2313,7 +2313,7 @@
                   {
                     "id": "01a0e578-d6ce-7f88-a6eb-16269fd0bd2e",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790556295769-k0rsr5xier.png",
-                    "sortOrder": 2,
+                    "sortOrder": 5,
                     "description": "",
                     "isSelected": true,
                     "blockId": "a4d10f12-7382-4a03-9e12-b2bc7d976a22"
@@ -2321,7 +2321,7 @@
                   {
                     "id": "01a0cd8d-7d78-7f8d-9a93-0c8371c5f818",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995567-udv4lsmlsv.png",
-                    "sortOrder": 3,
+                    "sortOrder": 6,
                     "description": "",
                     "isSelected": false,
                     "blockId": "c90d5a39-1785-46a2-9639-8573910fc288"
@@ -2329,7 +2329,7 @@
                   {
                     "id": "01a0cd8d-7dd8-7999-9b19-77d8abf0aa6f",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995479-5iyvk3pwrk.png",
-                    "sortOrder": 4,
+                    "sortOrder": 7,
                     "description": "",
                     "isSelected": true,
                     "blockId": "c90d5a39-1785-46a2-9639-8573910fc288"
@@ -2337,10 +2337,18 @@
                   {
                     "id": "01a0cd8d-7d1e-7bf5-a759-04d72539ab0c",
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995570-6xn8nwuuwg.png",
-                    "sortOrder": 5,
+                    "sortOrder": 8,
                     "description": "",
                     "isSelected": true,
                     "blockId": "16c21172-047b-4cd2-aef9-ebe67fa4ef1b"
+                  },
+                  {
+                    "id": "01a0e5b8-d162-79d0-95d6-9de72bb7e210",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790560489284-cpzt5ghurz.png",
+                    "sortOrder": 9,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": "5af37148-069d-4170-b9ea-79b2c2e334b8"
                   }
                 ]
               },
@@ -2363,17 +2371,18 @@
                 },
                 {
                   "order": 2,
+                  "domain": "uuid.co.kr",
                   "images": [
                     {
-                      "id": "01a0e578-d790-7eed-8991-ba98a8cabe1c",
-                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_background/1790556295413-ukq24f3zq0.jpg",
-                      "sortOrder": 1,
+                      "id": "01a0e5b8-d1a3-769a-a4f0-353776c4e3f0",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_background/1790560489285-v6kuz6w1bx.jpg",
+                      "sortOrder": 2,
                       "description": "",
                       "isSelected": true,
-                      "blockId": "8f1978bf-5886-4416-8086-1757e9b185f3"
+                      "blockId": "5af37148-069d-4170-b9ea-79b2c2e334b8"
                     }
                   ],
-                  "blockId": "8f1978bf-5886-4416-8086-1757e9b185f3",
+                  "blockId": "5af37148-069d-4170-b9ea-79b2c2e334b8",
                   "propertyId": ""
                 }
               ],
