@@ -29,11 +29,6 @@
     <link rel="stylesheet" type="text/css" href="styles/theme.css" />
     <link rel="stylesheet" type="text/css" href="styles/reset.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 예약안내" />
@@ -56,51 +51,47 @@
 
       <div id="container">
         <!-- 원본 reservation.html (이용안내) -->
-        <section id="content" class="sub5_1 sub_reservation">
-          <div class="sub_visual_wide visual">
-            <div class="sub_visual_box">
-              <div class="swiper-container">
-                <!-- data-* 속성 : data-reservation-hero-slides
-                     pages.reservation.sections[0].hero.images[isSelected] -->
-                <div class="swiper-wrapper" data-reservation-hero-slides></div>
-                <div class="swiper-button-prev"><img src="images/arrow_left.png" alt="prev" /></div>
-                <div class="swiper-button-next"><img src="images/arrow_right.png" alt="next" /></div>
-              </div>
-            </div>
-            <div class="visual_title">
-              <strong>RESERVATION,</strong>
-              <div class="sub_cate_wrap">
-                <ul>
-                  <!-- data-* 속성 : data-booking-url (property.realtimeBookingId) -->
-                  <li><a href="#!" target="_blank" data-booking-url>예약하기</a></li>
-                  <li class="on"><a href="./reservation.html">이용안내</a></li>
-                </ul>
-              </div>
+        <section id="content" class="sub4_1 sub_reserve">
+          <!-- data-* 속성 : data-reservation-hero-image
+               pages.reservation.sections[0].hero.images[isSelected][0].url (background-image) -->
+          <div class="sub_visual" data-reservation-hero-image>
+            <div class="txt_box">
+              <h3>RESERVE</h3>
+              <!-- data-* 속성 : data-property-caption ({name} → property.name) -->
+              <span data-property-caption="{name} 이용안내"></span>
             </div>
           </div>
           <!--// sub_visual -->
 
-          <div class="sub_cont">
-            <div class="info_box">
+          <div class="sub_cate_wrap">
+            <div class="sub_inner">
+              <ul>
+                <!-- data-* 속성 : data-booking-url (property.realtimeBookingId) -->
+                <li><a href="#!" target="_blank" data-booking-url>예약하기</a></li>
+                <li class="on"><a href="./reservation.html">이용안내</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sub_cont sub_inner">
+            <div class="reserve_info">
+              <div class="sub_title3">
+                <h3>Information</h3>
+              </div>
               <dl>
-                <dt class="view_cate_box">
-                  <div class="sub_title">
-                    <h3>INFORMATION</h3>
-                    <p data-reservation-info-title>기본예약사항</p>
-                  </div>
-                </dt>
+                <dt>펜션정보</dt>
                 <!-- data-* 속성 : data-reservation-info
                      property.usageGuide -->
                 <dd data-reservation-info></dd>
               </dl>
+            </div>
 
+            <div class="reserve_info">
+              <div class="sub_title3">
+                <h3>Refund Info</h3>
+              </div>
               <dl>
-                <dt class="view_cate_box">
-                  <div class="sub_title">
-                    <h3>REFUND GUIDE</h3>
-                    <p data-reservation-refund-title>환불안내</p>
-                  </div>
-                </dt>
+                <dt>환불정보</dt>
                 <!-- data-* 속성 : data-reservation-refund-policies
                      property.refundPolicies (동적 생성) -->
                 <dd data-reservation-refund-policies></dd>
@@ -115,7 +106,6 @@
     </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="js/image-helpers.js"></script>
     <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>

@@ -8,26 +8,24 @@ window.initMainSwipers = function () {
   if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
 
   // 히어로 (풀와이드 페이드)
-  var mainHero = window.TplSwiper.initHero('mainHero', '.sub_visual_box .swiper-container', {
+  window.TplSwiper.init('mainHero', '.sub_visual_box .swiper-container', {
+    loop: true,
     spaceBetween: 0,
     effect: 'fade',
     fadeEffect: { crossFade: true },
+    autoplay: { delay: 4000, disableOnInteraction: false },
     navigation: {
-      nextEl: '.sub_visual_wide .swiper-button-next',
-      prevEl: '.sub_visual_wide .swiper-button-prev'
+      nextEl: '.sub_visual_wide .arw_right',
+      prevEl: '.sub_visual_wide .arw_left'
     }
   });
 
-  var prev = document.querySelector('.sub_visual_wide .swiper-button-prev');
-  var next = document.querySelector('.sub_visual_wide .swiper-button-next');
-  if (mainHero && prev && next) {
-    prev.onclick = function (e) {
-      e.preventDefault();
-      mainHero.slidePrev();
-    };
-    next.onclick = function (e) {
-      e.preventDefault();
-      mainHero.slideNext();
-    };
-  }
+  // 외경 갤러리 (페이드 자동 재생)
+  window.TplSwiper.init('mainLandscape', '.main_landscape .swiper-container_room', {
+    loop: true,
+    spaceBetween: 0,
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    autoplay: { delay: 4000, disableOnInteraction: false }
+  });
 };

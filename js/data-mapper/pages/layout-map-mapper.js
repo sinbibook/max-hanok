@@ -19,7 +19,7 @@
 
     this.mapPropertyNames();
     this.mapHeroBg(section);
-    this.mapIndexRoomHeading();
+    this.renderRoomNav('[data-room-list-nav]', null);
     this.renderRoomSlides('[data-room-list-slides]');
     this.mapLayoutImage(section);
 

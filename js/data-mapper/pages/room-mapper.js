@@ -16,7 +16,7 @@
   RoomMapper.prototype.mapPage = function () {
     var roomtype = this.getCurrentRoomtype();
     var room = roomtype ? this.findRoomById(roomtype.id) : null;
-    // roomtype_interior 는 히어로 슬라이더 / 상세 이미지 블록 / 4장 갤러리가 나눠 쓴다
+    // roomtype_interior 는 히어로 슬라이더 / 교차 배너 / 와이드 이미지가 나눠 쓴다
     var interiors = roomtype ? this.getRoomtypeImages(roomtype, 'roomtype_interior') : [];
 
     this.mapPropertyNames();
@@ -24,15 +24,14 @@
     this.mapHeroSlides(roomtype, interiors);
     this.renderRoomNav('[data-room-list-nav]', roomtype && roomtype.id);
     this.mapBookingUrl();
-    this.mapDetailHeading(roomtype);
-    this.mapDetailBlocks(roomtype, interiors);
-    this.mapWideImage(roomtype);
+    this.mapBanners(roomtype, interiors);
     this.mapFloorplan(roomtype);
-    // 하단 Room Preview 슬라이더 (원본 room_list_sld: 데스크톱 4장)
-    this.mapIndexRoomHeading();
+    // 하단 "Room's Preview" 슬라이더 (index / layout-map 과 동일 마크업)
     this.renderRoomSlides('[data-room-list-slides]');
+    this.mapClosingText();
 
     if (typeof window.initRoomSwipers === 'function') window.initRoomSwipers();
+    if (typeof window.initParallax === 'function') window.initParallax();
   };
 
   // 현재 객실타입: URL ?room_id= (preview 는 ?id= 호환), 없으면 첫 번째
@@ -71,13 +70,16 @@
   };
 
   // MAPPER: roomtypes[current] interior 전체 → [data-room-hero-slides] (배경 슬라이드)
+  // ⚠️ 히어로만 sortOrder 순으로 정렬한다.
+  //    interior 의 배열 순서는 교차 배너/패럴랙스/와이드 슬롯 배분용이고(원본이 슬롯마다
+  //    고른 사진을 그 순서로 담고 있다), 히어로 슬라이더는 원본에서 sortOrder 순이다.
   RoomMapper.prototype.mapHeroSlides = function (roomtype, interiors) {
     var self = this;
-    var images = interiors.slice();
+    var images = this.sortRoomtypeImages(interiors);
 
     // interior 가 없으면 thumbnail 로 폴백
     if (!images.length && roomtype) {
-      images = this.getRoomtypeImages(roomtype, 'roomtype_thumbnail');
+      images = this.sortRoomtypeImages(this.getRoomtypeImages(roomtype, 'roomtype_thumbnail'));
     }
 
     var wrapper = document.querySelector('[data-room-hero-slides]');
@@ -111,7 +113,7 @@
     });
   };
 
-  // 고정 슬롯에 이미지를 순서대로 채운다.
+  // 고정 슬롯(li 2개 / 와이드 1장)에 이미지를 순서대로 채운다.
   // 이미지가 모자라면 앞에서부터 순환해 빈 칸을 남기지 않는다.
   RoomMapper.prototype.fillSlots = function (selector, images, offset, label) {
     var self = this;
@@ -128,125 +130,76 @@
   };
 
   /**
-   * 원본 상세 블록의 "자리별" 이미지. 크롤러가 roomtype_exterior 에
-   * [0]좌 [1]우 [2..5]그리드 [6]와이드 순서로 담는다 (순서가 곧 자리다).
-   * 비어 있으면 빈 배열 → 호출부가 기존 interior 위치 기반 로직으로 폴백한다.
+   * 슬롯 마커로 이미지를 고른다 — description 이 `room_bnr1:0` 같은 꼴이다.
+   *
+   * ⚠️ 배열 위치로 고르면 안 된다. 어드민이 이미지 배열을 화면 상태로 재조립할 때
+   *    순서가 sortOrder 기준으로 바뀌어, 히어로(sortOrder 로 그림)만 맞고 슬롯이 깨진다.
+   *    마커가 없는 예전 데이터는 호출부에서 배열 위치로 폴백한다.
    */
-  RoomMapper.prototype.getRoomDetailSlots = function (roomtype) {
-    if (!roomtype) return [];
-    return this.getRoomtypeImages(roomtype, 'roomtype_exterior') || [];
+  RoomMapper.prototype.pickSlot = function (images, mark) {
+    var prefix = mark + ':';
+    return (images || [])
+      .filter(function (img) {
+        return img && typeof img.description === 'string' && img.description.indexOf(prefix) === 0;
+      })
+      .sort(function (a, b) {
+        return (
+          parseInt(a.description.slice(prefix.length), 10) -
+          parseInt(b.description.slice(prefix.length), 10)
+        );
+      });
   };
 
-  RoomMapper.prototype.getRoomDetailImages = function (roomtype, interiors) {
+  // MAPPER: interior 배분 — 교차 배너 2장 / 패럴랙스 1장 / 배너2 2장 / 와이드 1장
+  RoomMapper.prototype.mapBanners = function (roomtype, interiors) {
+    var self = this;
     var images = interiors.slice();
+
+    // 원본이 슬롯마다 고른 사진 (객실마다 다르다). 없으면 배열 위치로 폴백한다.
+    var bnr1 = this.pickSlot(images, 'room_bnr1');
+    var bnr2 = this.pickSlot(images, 'room_bnr2');
+    var parallax = this.pickSlot(images, 'room_parallax')[0];
+    var wide = this.pickSlot(images, 'room_wide')[0];
+
     if (!images.length && roomtype) {
       images = this.getRoomtypeImages(roomtype, 'roomtype_thumbnail');
     }
-    return images;
-  };
 
-  // MAPPER: DBFF 원본 상세 구성 — 본문 2장 + 하단 4장 갤러리.
-  // 4장 갤러리는 이미지가 더 많아도 원본 레이아웃과 같이 최대 4장만 노출한다.
-  // MAPPER: pages.room[current].sections[0].hero → "Rooms Detail" 머리말
-  // 원본 객실상세의 .sub_txt_box .sub_title 자리다. 값이 없으면 기존 기본 문구로 떨어진다.
-  RoomMapper.prototype.mapDetailHeading = function (roomtype) {
-    var self = this;
-    var pages = this.getPages();
-    var list = Array.isArray(pages.room) ? pages.room : [];
-    var id = roomtype && roomtype.id;
-    var entry = null;
-    for (var i = 0; i < list.length; i++) {
-      if (list[i] && String(list[i].id) === String(id)) { entry = list[i]; break; }
-    }
-    var hero = (entry && entry.sections && entry.sections[0] && entry.sections[0].hero) || {};
+    // 교차 배너 #1 — 마커 우선, 없으면 앞 2장 (원본 레이아웃이 li 2개 고정)
+    this.fillSlots('[data-room-bnr-images]', bnr1.length ? bnr1 : images, bnr1.length ? 0 : 0, '객실 이미지');
 
-    setAllText('[data-room-detail-title]', this.firstText(hero.title, 'Rooms Detail'));
-
-    var desc = this.firstText(hero.description, '{name}의 객실을 만나보세요.');
-    document.querySelectorAll('[data-room-detail-description]').forEach(function (el) {
-      el.innerHTML = self.nl2br(
-        String(desc)
-          .replace(/\{name\}/g, self.getPropertyName())
-          .replace(/\{nameEn\}/g, self.getPropertyNameEn())
-      );
-    });
-  };
-
-  RoomMapper.prototype.mapDetailBlocks = function (roomtype, interiors) {
-    var self = this;
-    var images = this.getRoomDetailImages(roomtype, interiors);
-    var slots = this.getRoomDetailSlots(roomtype);
+    // 배너 문구는 숙소 영문명 고정이다 (원본 room.html 과 동일).
+    // 객실명을 넣지 않는다 — 객실명은 히어로 아래 .sub_title2 h3 에서 이미 크게 노출된다.
     var propNameEn = this.getPropertyNameEn();
-    var detailCopy = this.cleanText((images[0] && images[0].description) || roomtype.description);
+    setAllText('[data-room-bnr-title]', propNameEn);
 
-    setAllText(
-      '[data-room-detail-eyebrow]',
-      propNameEn ? 'Memories ' + propNameEn : 'Memories Pension'
-    );
-    // 원본 .txt > span 은 main / nearby 와 같은 2줄 장식 문구다 (이름만 치환).
-    // 예약/객실 설명이 아니라서 "…에서 편안한 휴식을 만나보세요" 같은 문장을 지어내지 않는다.
-    var decoration =
-      'All seasons of the year are beautiful here. ' +
-      this.firstText(propNameEn, this.getPropertyName()) +
-      '<br>I give you a gift for your life.';
-    document.querySelectorAll('[data-room-detail-copy]').forEach(function (el) {
-      el.innerHTML = detailCopy ? self.nl2br(detailCopy) : decoration;
+    var desc = this.cleanText(images[0] && images[0].description);
+    document.querySelectorAll('[data-room-bnr-description]').forEach(function (el) {
+      // 폴백 문구는 <br> 를 포함한 HTML 이라 이스케이프하지 않는다
+      el.innerHTML = desc ? self.nl2br(desc) : self.BNR_FALLBACK_DESC_HTML;
     });
 
-    document.querySelectorAll('[data-room-detail-main-image]').forEach(function (el) {
-      var img = slots[0] || images[0];
-      if (!img || !img.url) {
-        ImageHelpers.applyPlaceholder(el, '객실 이미지');
-        return;
-      }
-      el.src = img.url;
-      el.alt = self.cleanText(img.description) || '객실 이미지';
-    });
-
-    document.querySelectorAll('[data-room-detail-side-image]').forEach(function (el) {
-      var img = slots[1] || images[1] || images[0];
-      if (!img || !img.url) {
-        ImageHelpers.applyPlaceholder(el, '객실 이미지');
-        return;
-      }
-      el.src = img.url;
-      el.alt = self.cleanText(img.description) || '객실 이미지';
-    });
-
-    document.querySelectorAll('[data-room-quad-images]').forEach(function (container) {
-      container.innerHTML = '';
-      var quad = slots.length > 2 ? slots.slice(2, 6) : images.slice(0, 4);
-      quad.forEach(function (img) {
-        var li = document.createElement('li');
-        self.setBackground(li, img && img.url, '객실 이미지');
-        container.appendChild(li);
-      });
-
-      if (!container.children.length) {
-        for (var i = 0; i < 4; i++) {
-          var empty = document.createElement('li');
-          ImageHelpers.applyBackgroundPlaceholder(empty, '객실 이미지');
-          container.appendChild(empty);
-        }
+    // 패럴랙스 밴드 — 마커 → interior[2] → 폴백 thumbnail
+    var parallaxUrl =
+      (parallax && parallax.url) || (images[2] && images[2].url) || (images[0] && images[0].url) || '';
+    document.querySelectorAll('[data-room-parallax]').forEach(function (el) {
+      if (parallaxUrl) {
+        // ⚠️ background-image 를 직접 주지 않는다 (.parallax-mirror 가 z-index:-100)
+        el.setAttribute('data-image-src', parallaxUrl);
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(el, '객실 이미지');
       }
     });
-  };
 
-  // MAPPER: roomtype_exterior[6] → [data-room-wide-image]
-  // 원본에 이 영역이 없는 사이트도 있다 → 이미지가 없으면 섹션째 숨긴다.
-  RoomMapper.prototype.mapWideImage = function (roomtype) {
-    var section = document.querySelector('[data-room-wide-section]');
-    if (!section) return;
-    var wide = this.getRoomDetailSlots(roomtype)[6];
-    if (!wide || !wide.url) {
-      section.style.display = 'none';
-      return;
-    }
-    section.style.display = '';
-    var self = this;
-    section.querySelectorAll('[data-room-wide-image]').forEach(function (el) {
-      el.src = wide.url;
-      el.alt = self.cleanText(wide.description) || '객실 이미지';
+    // 와이드 이미지 하단 문구 — 원본 카피 "Hello, {nameEn}"
+    setAllText('[data-room-hello-title]', propNameEn ? 'Hello, ' + propNameEn : '');
+
+    // 교차 배너 #2 — 마커 우선, 없으면 interior[3..]
+    this.fillSlots('[data-room-gallery]', bnr2.length ? bnr2 : images, bnr2.length ? 0 : 3, '객실 이미지');
+    // 와이드 — 마커 → interior[5]
+    document.querySelectorAll('[data-room-wide-image]').forEach(function (el) {
+      var url = (wide && wide.url) || (images[5] && images[5].url) || (images[1] && images[1].url) || '';
+      self.setBackground(el, url, '객실 이미지');
     });
   };
 
@@ -268,6 +221,27 @@
       imgEl.src = image.url;
       imgEl.alt = this.cleanText(image.description) || '객실 평면도';
     }
+  };
+
+  // MAPPER: 패럴랙스 밴드 문구 — index.closing 공유 (index / main 과 동일 규칙)
+  RoomMapper.prototype.mapClosingText = function () {
+    var indexPage = this.getPages().index;
+    var closing =
+      (indexPage && indexPage.sections && indexPage.sections[0] && indexPage.sections[0].closing) ||
+      {};
+
+    var nameEn = this.cleanText(this.getPropertyNameEn());
+    setAllText(
+      '[data-index-closing-title]',
+      this.firstText(closing.title, nameEn ? 'Welcome to ' + nameEn : '')
+    );
+
+    var desc = this.cleanText(closing.description);
+    document.querySelectorAll('[data-index-closing-description]').forEach(
+      function (el) {
+        el.innerHTML = desc ? this.nl2br(desc) : this.CLOSING_FALLBACK_DESC_HTML;
+      }.bind(this)
+    );
   };
 
   // preview-handler 가 standalone/preview 양쪽 초기화를 담당한다

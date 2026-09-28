@@ -1,6 +1,22 @@
 (function (global) {
   'use strict';
 
+  function setAllText(selector, value) {
+    document.querySelectorAll(selector).forEach(function (el) {
+      el.textContent = value;
+    });
+  }
+
+  // 메뉴명은 "펜션소개"고, 페이지 내용은 원본 about.html(펜션소개) + view.html(외경보기)
+  // 두 페이지를 합친 구조다. 백오피스 편집 화면이 8개뿐이라 main 하나로 합쳤다.
+  //
+  //   property.images[].exterior → 히어로 슬라이더(전부) + WELCOME 배너([0])
+  //   main.hero                  → .about_top 인삿말 (제목 / 본문 / 이미지 3장)
+  //   main.about[]               → Landscape 갤러리 + .main_pic 문구·3분할
+  //   index.closing              → 맨 아래 Welcome 밴드 (index / room 과 공유)
+  //
+  // ⚠️ 히어로의 span/strong(WELCOME TO PENSION / About)과 갤러리 라벨(Landscape)은
+  //    전부 정적이다. --font-en-main 필기체 슬롯(50~100px)이라 한글이 들어가면 깨진다.
   function MainMapper() {
     BaseDataMapper.call(this);
   }
@@ -10,12 +26,19 @@
   MainMapper.prototype.mapPage = function () {
     this.mapPropertyNames();
     this.mapHero();
+    this.mapGreeting();
+    this.mapExteriorBanner();
+    this.mapLandscapeSlides();
     this.mapAboutBlocks();
     this.mapClosing();
 
+    // 슬라이드가 만들어진 뒤에 Swiper 초기화
     if (typeof window.initMainSwipers === 'function') window.initMainSwipers();
+    // 배너는 data-image-src 를 주입한 뒤에야 패럴랙스를 걸 수 있다
+    if (typeof window.initParallax === 'function') window.initParallax();
   };
 
+  // main 페이지 섹션 (customFields.pages.main.sections[0])
   MainMapper.prototype.getSection = function () {
     var page = this.getPages().main;
     return (page && page.sections && page.sections[0]) || {};
@@ -26,204 +49,222 @@
     return Array.isArray(about) ? about : [];
   };
 
-  MainMapper.prototype.getIndexClosing = function () {
-    var indexPage = this.getPages().index;
-    var section = (indexPage && indexPage.sections && indexPage.sections[0]) || {};
-    return section.closing || {};
-  };
-
+  // MAPPER: customFields.property.propertyUnameEn / property.nameEn / property.name + [data-property-caption]
   MainMapper.prototype.mapPropertyNames = function () {
-    var name = this.getPropertyName();
-    document.querySelectorAll('[data-property-name]').forEach(function (el) {
-      el.textContent = name;
-    });
+    setAllText('[data-property-name-en]', this.getPropertyNameEn());
+    setAllText('[data-property-name]', this.getPropertyName());
     this.applyPropertyCaptions();
   };
 
-  MainMapper.prototype.renderPropertyCaption = function (template) {
-    return this.nl2br(
-      String(template || '')
-        .replace(/\{name\}/g, this.getPropertyName())
-        .replace(/\{nameEn\}/g, this.getPropertyNameEn() || this.getPropertyName())
-    );
-  };
-
-  MainMapper.prototype.mapClosing = function () {
-    var closing = this.getIndexClosing();
-    var fallback = '편안함과 즐거움이 있는 곳,\n{name}에 오신 것을 환영합니다.';
-    var desc = this.firstText(closing.description, fallback);
-
-    document.querySelectorAll('[data-main-closing-description]').forEach(
-      function (el) {
-        el.innerHTML = this.renderPropertyCaption(desc);
-      }.bind(this)
-    );
-  };
-
+  // MAPPER: property.images[].exterior → 히어로 배경 슬라이더
+  // 히어로 문구(span/strong/p)는 정적이라 여기서 건드리지 않는다.
   MainMapper.prototype.mapHero = function () {
-    var section = this.getSection();
-    var hero = section.hero || {};
-    var images = this.getSelectedImages(hero.images || []);
+    var self = this;
+    var images = this.getPropertyExteriorImages();
+    // 숙소외경이미지가 비면 갤러리 소스(about[] 평탄화)로 폴백해 빈 히어로를 막는다
     if (!images.length) images = this.getLandscapeImages();
 
     var wrapper = document.querySelector('[data-main-hero-slides]');
     if (!wrapper) return;
     wrapper.innerHTML = '';
 
+    // 이미지가 없으면 매핑 위치 안내용 placeholder 한 장
     if (!images.length) {
       var empty = document.createElement('div');
       empty.className = 'swiper-slide';
-      ImageHelpers.applyBackgroundPlaceholder(empty, '펜션소개 이미지');
+      ImageHelpers.applyBackgroundPlaceholder(empty, '펜션소개 대표 이미지');
       wrapper.appendChild(empty);
       return;
     }
 
-    images.forEach(
-      function (img) {
-        var slide = document.createElement('div');
-        slide.className = 'swiper-slide';
-        this.setBackground(slide, img.url, '펜션소개 이미지');
-        wrapper.appendChild(slide);
-      }.bind(this)
-    );
+    images.forEach(function (img) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      self.setBackground(slide, img.url, '펜션소개 대표 이미지');
+      wrapper.appendChild(slide);
+    });
   };
 
-  MainMapper.prototype.mapAboutBlocks = function () {
+  // MAPPER: main.hero.title/description/images → .about_top 인삿말
+  // 원본 about.html 상단 블록이다. 제목은 --font-ko-main 30px 슬롯이라 한글 여러 줄이 정상.
+  // 이미지는 img01(큰 사진) + img02·03(작은 사진) 3장. 모자라면 앞에서부터 순환한다.
+  MainMapper.prototype.mapGreeting = function () {
     var self = this;
-    var section = this.getSection();
-    var hero = section.hero || {};
-    var blocks = this.getAboutBlocks();
-    var fallbackImages = this.getLandscapeImages();
-    var isFallbackBlock = false;
-    var isPreviewMode = window.parent !== window;
-    var nameEn = this.firstText(this.getPropertyNameEn(), this.getPropertyName(), 'Pension');
-    var bookingUrl = this.getBookingUrl();
+    var hero = this.getSection().hero || {};
 
-    if (!blocks.length) {
-      isFallbackBlock = true;
-      blocks = [
-        {
-          title: self.firstText(hero.title, 'About'),
-          description: self.firstText(hero.description, self.getProperty().subtitle),
-          images: fallbackImages
-        }
-      ];
-    }
+    var title = this.cleanText(hero.title);
+    document.querySelectorAll('[data-main-hero-title]').forEach(function (el) {
+      el.innerHTML = title ? self.nl2br(title) : '';
+      el.style.display = title ? '' : 'none';
+    });
 
-    document.querySelectorAll('[data-main-about-blocks]').forEach(function (container) {
-      container.innerHTML = '';
+    var desc = this.firstText(hero.description, this.getProperty().subtitle);
+    document.querySelectorAll('[data-main-hero-description]').forEach(function (el) {
+      el.innerHTML = desc ? self.nl2br(desc) : '';
+      el.style.display = desc ? '' : 'none';
+    });
 
-      blocks.forEach(function (block, index) {
-        var title = self.firstText(block && block.title, index === 0 ? hero.title : '');
-        var desc = self.firstText(block && block.description, index === 0 ? hero.description : '');
-        var images = self.getSelectedImages((block && block.images) || []);
-        if (!images.length && isFallbackBlock) images = fallbackImages;
-
-        var textBox = document.createElement('div');
-        textBox.className = 'sub_txt_box';
-        textBox.setAttribute('data-generated', 'main-about');
-        // 블록 순번. 필기체 워터마크(.txt:before)를 블록별로 바꾸는 CSS 훅이다.
-        // 갤러리(.sub_inner)가 이미지 없으면 생성되지 않아 nth-of-type 으로는 셀 수 없다.
-        textBox.setAttribute('data-block-index', String(index));
-
-        var inner = document.createElement('div');
-        inner.className = 'sub_inner';
-
-        var subTitle = document.createElement('div');
-        subTitle.className = 'sub_title';
-
-        // 아이브로우: 원본은 블록마다 문구가 다르지만(Memories / Welcome to / Travel With)
-        // main.about[] 스키마에 담을 필드가 없어 'Welcome to {nameEn}' 으로 통일한다.
-        var eyebrow = document.createElement('span');
-        eyebrow.textContent = 'Welcome to ' + nameEn;
-
-        var h3 = document.createElement('h3');
-        h3.className = 'main_block_title';
-        h3.textContent = title || 'About';
-
-        subTitle.appendChild(eyebrow);
-        subTitle.appendChild(h3);
-
-        // 리드문: 첫 블록에만 h3 아래 <p> 로 붙인다.
-        // desc(.txt 본문)와 같은 문장이면 중복이라 생략한다.
-        if (index === 0) {
-          var lead = self.cleanText(hero.description);
-          if (lead && lead !== self.cleanText(desc)) {
-            var leadP = document.createElement('p');
-            leadP.innerHTML = self.nl2br(lead);
-            subTitle.appendChild(leadP);
-          }
-        }
-
-        var box = document.createElement('div');
-        box.className = 'box';
-
-        var imageWrap = document.createElement('div');
-        imageWrap.className = 'img';
-        var image = document.createElement('img');
-        if (images.length) {
-          image.src = images[0].url;
-          image.alt = title || '펜션소개 이미지';
-        } else {
-          ImageHelpers.applyPlaceholder(image, '펜션소개 이미지');
-        }
-        imageWrap.appendChild(image);
-
-        var txt = document.createElement('div');
-        txt.className = 'txt';
-        if (desc) txt.innerHTML = self.nl2br(desc);
-
-        // 장식 문구: 전 페이지 공통 문장이라 하드코딩한다(이름만 치환).
-        var decoration = document.createElement('span');
-        decoration.innerHTML =
-          'All seasons of the year are beautiful here. ' +
-          nameEn +
-          '<br>I give you a gift for your life.';
-        txt.appendChild(decoration);
-
-        // 예약 버튼: 원본은 블록마다 유무가 제각각이라 템플릿은 "첫 블록에만" 으로 규칙을 고정한다.
-        if (index === 0 && bookingUrl && bookingUrl !== '#!') {
-          var bookingLink = document.createElement('a');
-          bookingLink.className = 'btn_reserve';
-          bookingLink.href = bookingUrl;
-          bookingLink.target = '_blank';
-          bookingLink.textContent = '→ 예약하기 바로가기';
-          txt.appendChild(bookingLink);
-        }
-
-        box.appendChild(imageWrap);
-        box.appendChild(txt);
-        inner.appendChild(subTitle);
-        inner.appendChild(box);
-        textBox.appendChild(inner);
-        container.appendChild(textBox);
-
-        var galleryWrap = document.createElement('div');
-        galleryWrap.className = 'sub_inner';
-        galleryWrap.setAttribute('data-generated', 'main-about');
-        var gallery = document.createElement('ul');
-        gallery.className = 'about_img';
-
-        var galleryImages = images.length > 1 ? images.slice(1, 5) : images.slice(0, 4);
-
-        if (!galleryImages.length && isPreviewMode) {
-          galleryImages = [null, null, null, null];
-        }
-
-        if (galleryImages.length) {
-          galleryImages.forEach(function (img, imgIndex) {
-            var li = document.createElement('li');
-            self.setBackground(li, img && img.url, '외부풍경 ' + (imgIndex + 1));
-            gallery.appendChild(li);
-          });
-
-          galleryWrap.appendChild(gallery);
-          container.appendChild(galleryWrap);
-        }
+    var images = this.getSelectedImages(hero.images || []);
+    document.querySelectorAll('[data-main-hero-images]').forEach(function (box) {
+      ['img01', 'img02', 'img03'].forEach(function (cls, idx) {
+        var div = box.querySelector('.' + cls);
+        if (!div) return;
+        var picked = images.length ? images[idx % images.length] : null;
+        self.setBackground(div, picked ? picked.url : '', '펜션소개 이미지 ' + (idx + 1));
       });
     });
   };
 
+  // MAPPER: property.images[].exterior 중 category:'about_banner' → .about_img WELCOME 배너
+  //         (마커가 없는 기존 데이터는 exterior[0])
+  // ⚠️ background-image 를 직접 주지 않는다 (.parallax-mirror 가 z-index:-100).
+  MainMapper.prototype.mapExteriorBanner = function () {
+    var banner = this.getExteriorBannerImage();
+    var url = (banner && banner.url) || '';
+
+    document.querySelectorAll('[data-main-exterior-banner]').forEach(function (el) {
+      if (url) {
+        el.setAttribute('data-image-src', url);
+      } else {
+        ImageHelpers.applyBackgroundPlaceholder(el, '숙소외경이미지');
+      }
+    });
+  };
+
+  // MAPPER: main.about[].images → [data-main-landscape-slides]
+  // 원본 view.html 의 외경 갤러리. getLandscapeImages() 가 about[] 이미지를 평탄화해 준다
+  // (index.html 의 Healing Place 도 같은 소스를 본다).
+  MainMapper.prototype.mapLandscapeSlides = function () {
+    var self = this;
+    var images = this.getLandscapeImages();
+
+    var wrapper = document.querySelector('[data-main-landscape-slides]');
+    if (!wrapper) return;
+    wrapper.innerHTML = '';
+
+    function buildSlide(url) {
+      var slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      var box = document.createElement('div');
+      box.className = 'room_box';
+      var img = document.createElement('div');
+      img.className = 'img';
+      self.setBackground(img, url, '외부 전경');
+      box.appendChild(img);
+      slide.appendChild(box);
+      return slide;
+    }
+
+    if (!images.length) {
+      wrapper.appendChild(buildSlide(''));
+      return;
+    }
+
+    images.forEach(function (image) {
+      wrapper.appendChild(buildSlide(image.url));
+    });
+  };
+
+  // MAPPER: main.about[] → [data-main-about-blocks]
+  // 블록마다 .about_txt_box(문구) + .pic_box(3분할 이미지) 한 쌍을 생성한다.
+  // 개수 가변 — 백오피스에서 소개 블록을 늘리면 그만큼 늘어난다
+  // (t-template-D2 의 "블록당 1개" 규약과 동일).
+  // 생성분은 .txt_box(Welcome 밴드) 앞에 삽입해, 밴드가 항상 페이지 맨 끝에 오게 한다.
+  MainMapper.prototype.mapAboutBlocks = function () {
+    var self = this;
+    var blocks = this.getAboutBlocks();
+    var hero = this.getSection().hero || {};
+
+    document.querySelectorAll('[data-main-about-blocks]').forEach(function (container) {
+      // 이전 생성분 제거 (preview 재렌더 대비)
+      container.querySelectorAll('[data-generated="about"]').forEach(function (el) {
+        el.remove();
+      });
+
+      var band = container.querySelector('.txt_box');
+
+      // 블록이 없으면 hero 문구로 한 칸만 만든다 (레이아웃이 비지 않도록)
+      var list = blocks.length ? blocks : [{ title: hero.title, description: hero.description }];
+
+      list.forEach(function (block, i) {
+        var title = self.cleanText(block && block.title);
+        var desc = self.cleanText(block && block.description);
+        // 첫 블록의 문구가 비면 hero 로 폴백한다
+        if (i === 0 && !title && !desc) {
+          title = self.cleanText(hero.title);
+          desc = self.cleanText(hero.description);
+        }
+        var hasText = !!(title || desc);
+
+        if (hasText) {
+          var txtBox = document.createElement('div');
+          txtBox.className = 'about_txt_box sub_inner';
+          txtBox.setAttribute('data-generated', 'about');
+
+          var strong = document.createElement('strong');
+          strong.innerHTML = title ? self.nl2br(title) : '';
+          if (!title) strong.style.display = 'none';
+
+          var p = document.createElement('p');
+          p.innerHTML = desc ? self.nl2br(desc) : '';
+          if (!desc) p.style.display = 'none';
+
+          txtBox.appendChild(strong);
+          txtBox.appendChild(p);
+          container.insertBefore(txtBox, band);
+        }
+
+        // 3분할 이미지 — 해당 블록의 이미지를 쓰고, 없으면 전체 풀에서 가져온다
+        var images = self.getSelectedImages((block && block.images) || []);
+        if (!images.length) images = self.getLandscapeImages();
+        // 갤러리가 첫 장부터 쓰므로 그 뒤부터, 모자라면 앞에서 순환
+        var picked = images.length > 3 ? images.slice(1).concat(images) : images.concat(images);
+
+        var picBox = document.createElement('div');
+        picBox.className = 'pic_box';
+        picBox.setAttribute('data-generated', 'about');
+        // 문구가 없으면 겹침(margin-top:-220px)을 해제한다
+        if (!hasText) picBox.classList.add('no-txt');
+
+        var picList = document.createElement('div');
+        picList.className = 'pic_list';
+
+        ['img01', 'img02', 'img03'].forEach(function (cls, idx) {
+          var div = document.createElement('div');
+          div.className = cls;
+          self.setBackground(div, picked[idx] ? picked[idx].url : '', '전경 이미지 ' + (idx + 1));
+          picList.appendChild(div);
+        });
+
+        picBox.appendChild(picList);
+        container.insertBefore(picBox, band);
+      });
+    });
+  };
+
+  // MAPPER: 맨 아래 Welcome 밴드 — index.closing 공유 (index / room 과 동일 규칙)
+  MainMapper.prototype.mapClosing = function () {
+    var indexPage = this.getPages().index;
+    var closing =
+      (indexPage && indexPage.sections && indexPage.sections[0] && indexPage.sections[0].closing) ||
+      {};
+
+    var nameEn = this.cleanText(this.getPropertyNameEn());
+    setAllText(
+      '[data-index-closing-title]',
+      this.firstText(closing.title, nameEn ? 'Welcome to ' + nameEn : '')
+    );
+
+    var desc = this.cleanText(closing.description);
+    document.querySelectorAll('[data-index-closing-description]').forEach(
+      function (el) {
+        // 폴백 문구는 <br> 를 포함한 HTML 이라 이스케이프하지 않는다
+        el.innerHTML = desc ? this.nl2br(desc) : this.CLOSING_FALLBACK_DESC_HTML;
+      }.bind(this)
+    );
+  };
+
+  // preview-handler 가 standalone/preview 양쪽 초기화를 담당한다
   document.addEventListener('DOMContentLoaded', function () {
     if (window.previewHandler) return;
     var mapper = new MainMapper();

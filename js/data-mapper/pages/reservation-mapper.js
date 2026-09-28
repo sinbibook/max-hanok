@@ -15,13 +15,10 @@
 
   ReservationMapper.prototype.mapPage = function () {
     this.mapPropertyNames();
-    this.mapHeroSlides();
+    this.mapHeroImage();
     this.mapBookingUrl();
-    this.mapSectionTitles();
     this.mapInfo();
     this.mapRefundPolicies();
-
-    if (typeof window.initReservationSwipers === 'function') window.initReservationSwipers();
   };
 
   // reservation 페이지 섹션 (customFields.pages.reservation.sections[0])
@@ -37,30 +34,13 @@
     this.applyPropertyCaptions();
   };
 
-  // MAPPER: reservation.hero.images[isSelected] → [data-reservation-hero-slides]
-  ReservationMapper.prototype.mapHeroSlides = function () {
-    var self = this;
+  // MAPPER: reservation.hero.images[isSelected][0] → [data-reservation-hero-image]
+  ReservationMapper.prototype.mapHeroImage = function () {
     var hero = this.getSection().hero || {};
-    var images = this.getSelectedImages(hero.images || []);
-    if (!images.length && hero.images) images = hero.images.slice();
-
-    var wrapper = document.querySelector('[data-reservation-hero-slides]');
-    if (!wrapper) return;
-    wrapper.innerHTML = '';
-
-    if (!images.length) {
-      var empty = document.createElement('div');
-      empty.className = 'swiper-slide';
-      ImageHelpers.applyBackgroundPlaceholder(empty, '이용안내 대표 이미지');
-      wrapper.appendChild(empty);
-      return;
-    }
-
-    images.forEach(function (image) {
-      var slide = document.createElement('div');
-      slide.className = 'swiper-slide';
-      self.setBackground(slide, image.url, '이용안내 대표 이미지');
-      wrapper.appendChild(slide);
+    var url = this.getFirstSelectedImage(hero.images || []);
+    var self = this;
+    document.querySelectorAll('[data-reservation-hero-image]').forEach(function (el) {
+      self.setBackground(el, url, '이용안내 대표 이미지');
     });
   };
 
@@ -73,16 +53,6 @@
         el.setAttribute('target', '_blank');
       }
     });
-  };
-
-  // MAPPER: reservation.hero.title / reservation.about.title → 본문 섹션 라벨
-  ReservationMapper.prototype.mapSectionTitles = function () {
-    var section = this.getSection();
-    var hero = section.hero || {};
-    var about = section.about || {};
-
-    setAllText('[data-reservation-info-title]', this.firstText(hero.title, '기본예약사항'));
-    setAllText('[data-reservation-refund-title]', this.firstText(about.title, '환불안내'));
   };
 
   // MAPPER: property.usageGuide → [data-reservation-info]

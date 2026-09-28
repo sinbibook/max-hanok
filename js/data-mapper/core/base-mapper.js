@@ -212,8 +212,7 @@
   // 조사 앞에 공백이 끼어 "펜션 의 객실을" 로 렌더된다. 그래서 문장 전체를 매퍼가 조립한다.
   BaseDataMapper.prototype.applyPropertyCaptions = function () {
     var name = this.getPropertyName();
-    // 영문명이 비어 있으면 "Hello, " 처럼 문장이 끊기므로 국문명으로 대체한다.
-    var nameEn = this.getPropertyNameEn() || name;
+    var nameEn = this.cleanText(this.getProperty().nameEn);
 
     document.querySelectorAll('[data-property-caption]').forEach(function (el) {
       var tpl = el.getAttribute('data-property-caption') || '';
@@ -263,36 +262,6 @@
     return null;
   };
 
-  // 원본은 index / room.html(목록) / room.html?room_id= 세 곳의 Room Preview 머리말이
-  // 모두 같은 문구다. 소스는 index.essence 하나이므로 여기서 공용으로 그린다.
-  // (layout-map / room 페이지가 하드코딩 caption 을 쓰면 index 와 문구가 갈린다)
-  BaseDataMapper.prototype.mapIndexRoomHeading = function () {
-    var self = this;
-    var indexPage = this.getPages().index;
-    var section = (indexPage && indexPage.sections && indexPage.sections[0]) || {};
-    var essence = section.essence || {};
-
-    var nameEn = this.getPropertyNameEn();
-    var eyebrow = nameEn ? 'WELCOME TO ' + nameEn.toUpperCase() : 'WELCOME TO PENSION';
-    document.querySelectorAll('[data-index-eyebrow]').forEach(function (el) {
-      el.textContent = eyebrow;
-    });
-
-    var title = this.firstText(essence.title, 'Room Preview');
-    document.querySelectorAll('[data-index-room-title]').forEach(function (el) {
-      el.textContent = title;
-    });
-
-    var desc = this.firstText(essence.description, '{name}의 객실을 소개합니다.');
-    document.querySelectorAll('[data-index-room-description]').forEach(function (el) {
-      el.innerHTML = self.nl2br(
-        String(desc)
-          .replace(/\{name\}/g, self.getPropertyName())
-          .replace(/\{nameEn\}/g, nameEn)
-      );
-    });
-  };
-
   // 객실명. roomtypes[i] 에 name 이 없는 응답이 흔하므로
   // 같은 id 의 rooms[j].name 으로 폴백한다 (동일 엔티티).
   BaseDataMapper.prototype.getRoomtypeName = function (roomtype) {
@@ -304,7 +273,6 @@
   // 객실 메뉴/미리보기 그룹 규칙.
   // roomtypes[].groupName 이 하나라도 있으면 groupName 을 메뉴명으로 쓰고,
   // 같은 그룹의 첫 번째 객실 id 로 상세 페이지에 진입한다.
-  // 필드명은 groupName 하나만 본다(모든 템플릿 공통).
   BaseDataMapper.prototype.getRoomGroupName = function (roomtype) {
     return this.firstText(roomtype && roomtype.groupName);
   };
@@ -329,6 +297,11 @@
     var items = [];
     roomtypes.forEach(function (rt) {
       var groupName = self.getRoomGroupName(rt);
+      // 그룹 숙소에서는 미그룹 객실을 메뉴에 내지 않는다.
+      // 원본 헤더가 그룹만 노출하고, 미그룹 객실은 목록 / Room Preview 로만 도달한다.
+      // (Room Preview 는 roomtypes[] 전체를 그리므로 영향 없다)
+      if (!groupName) return;
+
       var label = groupName || self.getRoomtypeName(rt);
       if (!String(label).trim()) return;
 
@@ -340,7 +313,38 @@
         seen[key].roomtypes.push(rt);
       }
     });
-    return items;
+    return this.sortRoomMenuItems(items);
+  };
+
+  // 메뉴 순서는 pages.room[] 배열 순서를 따른다 (크롤러 규약).
+  //
+  // ⚠️ 원본은 순서를 두 벌 갖는다 — 헤더 ROOMS 메뉴는 그룹 순서, 본문 Room's Preview 는
+  //    카드 순서다. 미리보기는 roomtypes[] 순서로 그리므로, 메뉴까지 같은 배열에서
+  //    파생하면 한쪽이 원본과 어긋난다. pages.room[] 은 어드민이 배열 순서 그대로
+  //    보존하는 유일한 신호다 (roomtypes 는 5개 필드만 남기고 잘린다).
+  //    pages.room 이 없으면 종전처럼 roomtypes 등장 순서를 쓴다.
+  BaseDataMapper.prototype.sortRoomMenuItems = function (items) {
+    var roomPages = (this.getPages().room || []);
+    if (!roomPages.length || items.length < 2) return items;
+
+    var rankById = {};
+    roomPages.forEach(function (page, index) {
+      if (page && page.id != null && rankById[page.id] === undefined) rankById[page.id] = index;
+    });
+
+    var rankOf = function (item) {
+      var best = Infinity;
+      (item.roomtypes || []).forEach(function (rt) {
+        var at = rt && rankById[rt.id];
+        if (at !== undefined && at < best) best = at;
+      });
+      return best;
+    };
+
+    return items
+      .map(function (item, index) { return { item: item, index: index, rank: rankOf(item) }; })
+      .sort(function (a, b) { return a.rank - b.rank || a.index - b.index; })
+      .map(function (x) { return x.item; });
   };
 
   BaseDataMapper.prototype.getRoomMenuLabel = function (item) {
@@ -376,9 +380,7 @@
         return labels[key];
       });
 
-    // 백오피스는 문자열, DB 는 { code, name:{ko,en} } 객체로 내려줘 둘 다 받는다
-    var s0 = (room.roomStructures && room.roomStructures[0]) || '';
-    var structure = typeof s0 === 'string' ? s0 : (s0 && s0.name && (s0.name.ko || s0.name.en)) || '';
+    var structure = (room.roomStructures && room.roomStructures[0]) || '';
     if (!structure && !parts.length) return '';
     if (!parts.length) return structure;
     if (!structure) return parts.join(' ');
@@ -393,27 +395,120 @@
     return Math.round((n / 3.305785) * 10) / 10 + '평';
   };
 
-  // roomtypes[i].images 중 특정 category 만 isSelected + sortOrder 순으로 반환
+  // roomtypes[i].images 중 특정 category 만 isSelected 필터해 **배열 순서 그대로** 반환한다.
   // category 예) 'roomtype_thumbnail' | 'roomtype_interior' | 'roomtype_exterior'
+  //
+  // ⚠️ sortOrder 로 정렬하지 않는다. roomtype_interior 는 배열 순서와 sortOrder 가 다른 뜻이다.
+  //    배열 순서 = room.html 의 교차 배너 / 패럴랙스 / 와이드 슬롯 배분 순서
+  //    sortOrder = 히어로 슬라이더 노출 순서
+  //    순서가 필요한 쪽에서 sortRoomtypeImages() 로 직접 정렬한다.
   BaseDataMapper.prototype.getRoomtypeImages = function (roomtype, category) {
     var images = (roomtype && roomtype.images) || [];
     var filtered = images.filter(function (img) {
       return img.category === category;
     });
-    var selected = this.getSelectedImages(filtered);
-    // isSelected 가 하나도 없으면 카테고리 전체를 sortOrder 순으로 폴백
-    if (selected.length) return selected;
-    return filtered.slice().sort(function (a, b) {
-      return a.sortOrder - b.sortOrder;
+    var selected = filtered.filter(function (img) {
+      return img.isSelected;
     });
+    // isSelected 가 하나도 없으면 카테고리 전체를 폴백
+    return selected.length ? selected : filtered.slice();
+  };
+
+  // 히어로 슬라이더 / 썸네일처럼 노출 순서가 필요한 곳에서 쓴다
+  BaseDataMapper.prototype.sortRoomtypeImages = function (images) {
+    return (images || []).slice().sort(function (a, b) {
+      return (a.sortOrder || 0) - (b.sortOrder || 0);
+    });
+  };
+
+  // ── 숙소외경이미지 ─────────────────────────────────────
+  // 백오피스 "숙소관리" 의 외경 사진. main.html 의 히어로 슬라이더와
+  // WELCOME 배너(.about_img)가 이 소스를 공유한다.
+  //   히어로 슬라이더 : 전부
+  //   WELCOME 배너    : [0]
+  // (room.html 의 roomtype_interior 배분 규약과 같은 방식)
+  //
+  // 위치와 모양이 각각 두 가지다 — 넷 다 받는다.
+  //   위치: customFields.property.images 우선, 없으면 top-level property.images
+  //         (getPropertyName / getPropertyNameEn 과 같은 우선순위)
+  //   모양: property.images[0].exterior[]                        (중첩형 — 숙소관리 DB)
+  //         property.images[] 중 category === 'property_exterior' (평탄형 — 크롤러)
+  // .about_img WELCOME 배너 몫 표시 (크롤러 규약).
+  // 원본이 히어로와 같은 컷을 배너로 쓰는 경우가 있어 URL 로는 구분할 수 없다.
+  //
+  // ⚠️ 마커는 description 에 있다. category 로 하면 어드민이 property 이미지를 화면
+  //    상태로 만들 때 3종 화이트리스트 밖이라며 이미지를 버려 프리뷰까지 오지 못한다.
+  //    (sinbibook-admin utils/homepage-initial-images.ts)
+  //    category 를 보던 예전 데이터도 계속 받는다.
+  var EXTERIOR_BANNER_MARK = 'about_banner';
+
+  function isExteriorBanner(img) {
+    if (!img) return false;
+    return img.description === EXTERIOR_BANNER_MARK || img.category === EXTERIOR_BANNER_MARK;
+  }
+
+  BaseDataMapper.prototype.pickExteriorBanner = function (images) {
+    return (images || []).filter(isExteriorBanner);
+  };
+
+  BaseDataMapper.prototype.excludeExteriorBanner = function (images) {
+    return (images || []).filter(function (img) {
+      return !isExteriorBanner(img);
+    });
+  };
+
+  // 배너에 쓸 한 장. 마커가 없으면 종전처럼 외경 이미지 첫 장을 쓴다.
+  BaseDataMapper.prototype.getExteriorBannerImage = function () {
+    var marked = this.pickExteriorBanner(this.getPropertyExteriorImages({ raw: true }));
+    if (marked.length) return marked[0];
+    var images = this.getPropertyExteriorImages();
+    if (!images.length) images = this.getLandscapeImages();
+    return images[0] || null;
+  };
+
+  // options.raw 가 true 면 배너 마커까지 포함해 원본 배열 그대로 돌려준다.
+  BaseDataMapper.prototype.getPropertyExteriorImages = function (options) {
+    var self = this;
+    var raw = !!(options && options.raw);
+    var sources = [(this.getCustomFields().property || {}).images, this.getProperty().images];
+
+    for (var i = 0; i < sources.length; i++) {
+      var propImages = sources[i];
+      if (!Array.isArray(propImages) || !propImages.length) continue;
+
+      var exterior = (propImages[0] && propImages[0].exterior) || [];
+      if (!exterior.length) {
+        // 평탄형. 배너 마커(about_banner)도 같은 배열에 있으므로 raw 일 때는 함께 담는다
+        // — 안 담으면 getExteriorBannerImage() 가 마커를 못 찾아 [0] 으로 폴백한다.
+        exterior = propImages.filter(function (img) {
+          if (!img) return false;
+          if (img.category === 'property_exterior') return true;
+          // 예전 데이터: 마커가 category 에 있던 시절
+          return raw && img.category === EXTERIOR_BANNER_MARK;
+        });
+      }
+      if (!exterior.length) continue;
+
+      if (!raw) exterior = self.excludeExteriorBanner(exterior);
+      if (!exterior.length) continue;
+
+      var selected = self.getSelectedImages(exterior);
+      return selected.length
+        ? selected
+        : exterior.slice().sort(function (a, b) {
+            return a.sortOrder - b.sortOrder;
+          });
+    }
+    return [];
   };
 
   // ── 외부 전경(Landscape) 이미지 ─────────────────────────
   // 원본 사이트의 "외경보기(view.html)" 갤러리 소스.
   // A 는 백오피스 편집 화면이 8개뿐이라 원본의 `펜션소개`+`외경보기` 두 페이지를
-  // main.html 하나로 병합했다. 그 안에서 두 페이지를 이렇게 나눠 담는다.
-  //   main.hero    = 펜션소개 (히어로 배경 / 소개 문구 / 상단 3분할)
-  //   main.about[] = 외경보기 (소개 블록 밴드 / 외경 갤러리 / 하단 3분할)
+  // main.html 하나로 병합했다. 그 안에서 세 소스를 이렇게 나눠 담는다.
+  //   property.images[].exterior = 히어로 슬라이더 + WELCOME 배너
+  //   main.hero                  = 인삿말 (.about_top 제목·본문·이미지 3장)
+  //   main.about[]               = 외경 갤러리 + .main_pic 문구·3분할
   // 따라서 외경 갤러리는 about[] 블록의 이미지를 순서대로 평탄화해 쓴다.
   // index.html 의 Healing Place 도 같은 소스를 본다.
   BaseDataMapper.prototype.getLandscapeImages = function () {
@@ -437,10 +532,7 @@
     var heroImages = this.getSelectedImages((section.hero && section.hero.images) || []);
     if (heroImages.length) return heroImages;
 
-    var propImages = this.getProperty().images || [];
-    var exterior = (propImages[0] && propImages[0].exterior) || [];
-    var selected = this.getSelectedImages(exterior);
-    return selected.length ? selected : exterior.slice();
+    return this.getPropertyExteriorImages();
   };
 
   // 객실 평면도 소스.
@@ -454,9 +546,8 @@
       (roomtype.floorplan && roomtype.floorplan.images) ||
       [];
     if (direct && !Array.isArray(direct)) direct = [direct];
-
-    var selectedDirect = this.getSelectedImages(direct);
-    if (direct.length) return selectedDirect.length ? selectedDirect : direct;
+    if (direct.length)
+      return this.getSelectedImages(direct).length ? this.getSelectedImages(direct) : direct;
 
     var images = roomtype.images || [];
     var filtered = images.filter(function (img) {
@@ -487,14 +578,9 @@
   };
 
   // ── 객실 슬라이드 공용 렌더러 ────────────────────────────
-  // index.html / layout-map.html / room.html 이 같은 객실 카드 구조를 쓴다.
-  //   <a class="spe_list"> overlay / .img(thumbnail) / strong 객실명
-  //   / p 구조 문자열 / .btn_more "Read More"
-  //
-  // ⚠️ 미리보기 카드는 그룹으로 접지 않는다 — 원본이 전부 "전체 객실"이다.
-  //    ongdal365(숙박/민박 8실) · jplusps(22실) · orionpoolvilla(20실) 모두
-  //    Room Preview 에는 개별 객실이 전부 깔린다. 그룹은 헤더 메뉴와
-  //    객실상세 탭에서만 쓴다 (getRoomMenuItems / renderRoomNav).
+  // index.html / layout-map.html / room.html 이 같은 마크업을 쓴다.
+  //   .img(thumbnail) / .img_over / .t01 "Detail Room" / .t02 객실명
+  //   / .t03 구조 문자열 / .t04 "Read More"
   BaseDataMapper.prototype.renderRoomSlides = function (selector) {
     var self = this;
     var roomtypes = this.getRoomtypes();
@@ -502,50 +588,67 @@
     document.querySelectorAll(selector).forEach(function (wrapper) {
       wrapper.innerHTML = '';
 
+      // Room Preview 카드는 groupName 과 무관하게 **항상 전체 객실**을 깐다.
+      // 그룹으로 접히는 곳은 헤더 ROOMS 메뉴와 객실 상세 탭뿐이고,
+      // 카드는 저마다 자기 객실 상세로 연결한다.
       roomtypes.forEach(function (rt) {
+        // 원본이 내려둔 객실은 카드도 내지 않는다 — 그룹도 없고 사진도 없으면 보여줄 게 없다.
+        // (kalcamping: 원본 상세가 본문뿐인 껍데기. 백오피스는 숙소관리 DB 객실명을 합쳐
+        //  보여주므로 이름만으로는 걸러지지 않는다)
+        // 크롤러가 이름·사진을 못 읽은 경우는 groupName 이 남아 있어 여기서 걸리지 않는다.
+        if (rt && !self.getRoomGroupName(rt) && !(rt.images || []).length) return;
+
         var name = self.getRoomtypeName(rt);
         if (!String(name).trim() || !rt) return;
 
         var room = self.findRoomById(rt.id);
 
-        var thumbs = self.getRoomtypeImages(rt, 'roomtype_thumbnail');
+        var thumbs = self.sortRoomtypeImages(self.getRoomtypeImages(rt, 'roomtype_thumbnail'));
         var thumbUrl = thumbs.length ? thumbs[0].url : '';
         if (!thumbUrl) {
-          // thumbnail 이 없으면 interior 첫 장으로 폴백
-          var interiors = self.getRoomtypeImages(rt, 'roomtype_interior');
+          // thumbnail 이 없으면 interior 첫 장으로 폴백 (노출 순서 = sortOrder)
+          var interiors = self.sortRoomtypeImages(
+            self.getRoomtypeImages(rt, 'roomtype_interior')
+          );
           thumbUrl = interiors.length ? interiors[0].url : '';
         }
 
         var slide = document.createElement('div');
         slide.className = 'swiper-slide';
 
-        var overlay = document.createElement('a');
-        overlay.className = 'spe_list';
-        overlay.href = './room.html?room_id=' + rt.id;
-
-        var card = document.createElement('div');
+        var a = document.createElement('a');
+        a.className = 'spe_list';
+        a.href = './room.html?room_id=' + rt.id;
 
         var img = document.createElement('div');
         img.className = 'img';
         self.setBackground(img, thumbUrl, '객실 이미지');
 
-        var strong = document.createElement('strong');
-        strong.textContent = name;
+        var over = document.createElement('div');
+        over.className = 'img_over';
+        var overImg = document.createElement('img');
+        overImg.src = 'images/more.png';
+        overImg.alt = '더보기';
+        over.appendChild(overImg);
 
-        var p = document.createElement('p');
-        p.textContent = self.formatRoomStructure(room);
+        var txt = document.createElement('div');
+        txt.className = 'txt_box';
+        [
+          ['t01', 'Detail Room'],
+          ['t02', name],
+          ['t03', self.formatRoomStructure(room)],
+          ['t04', 'Read More']
+        ].forEach(function (pair) {
+          var div = document.createElement('div');
+          div.className = pair[0];
+          div.textContent = pair[1];
+          txt.appendChild(div);
+        });
 
-        var more = document.createElement('a');
-        more.className = 'btn_more';
-        more.href = './room.html?room_id=' + rt.id;
-        more.textContent = 'Read More';
-
-        card.appendChild(img);
-        card.appendChild(strong);
-        card.appendChild(p);
-        card.appendChild(more);
-        slide.appendChild(overlay);
-        slide.appendChild(card);
+        a.appendChild(img);
+        a.appendChild(over);
+        a.appendChild(txt);
+        slide.appendChild(a);
         wrapper.appendChild(slide);
       });
     });

@@ -59,39 +59,65 @@
              백오피스 편집 화면 라벨은 "배치도 (선택)" — layoutMap.hero 가 페이지 히어로,
              layoutMap.about 이 하단 배치도 이미지에 대응한다. -->
         <section id="content" class="sub2_1 sub_room">
-          <!-- 원본 room.html 목록 화면에는 .visual_title 이 없다 (객실상세 / special 도 동일).
-               히어로는 배경 이미지 전용이다. 높이는 CSS height:100vh 가 담당한다. -->
-          <div class="sub_visual_wide visual" data-layout-map-hero-bg></div>
+          <!-- data-* 속성 : data-layout-map-hero-bg
+               pages.layoutMap.sections[0].hero.images[isSelected][0].url (background-image) -->
+          <div class="sub_visual" data-layout-map-hero-bg>
+            <div class="txt_box">
+              <h3>ROOMS</h3>
+              <!-- data-* 속성 : data-property-caption ({name} → property.name) -->
+              <span data-property-caption="{name}, 객실 미리보기"></span>
+            </div>
+          </div>
           <!--// sub_visual -->
+
+          <div class="sub_cate_wrap">
+            <div class="sub_inner">
+              <!-- data-* 속성 : data-room-list-nav | 동적 매핑 필요
+                   customFields.roomtypes[] → "미리보기" li 뒤에 객실 li 추가 -->
+              <ul data-room-list-nav>
+                <li class="on"><a href="./layout-map.html">미리보기</a></li>
+                <!-- MAPPER: roomtypes[] → <li><a href="./room.html?room_id={id}"> 동적 생성 -->
+              </ul>
+            </div>
+          </div>
 
           <div class="sub_cont">
             <!-- s: main_room — 객실 슬라이더 (index.html 과 동일 구조) -->
             <div class="main_room">
+              <div class="arw_box">
+                <div class="arw_left"><img src="images/spe_le.png" alt="이전" /></div>
+                <div class="arw_right"><img src="images/spe_ri.png" alt="다음" /></div>
+              </div>
               <div class="room_list">
-                <div class="main_title sub_inner">
-                  <span data-index-eyebrow>WELCOME TO PENSION</span>
-                  <h3 data-index-room-title>Room Preview</h3>
-                  <!-- data-* 속성 : data-index-room-description (index.essence.description — index 와 같은 소스) -->
-                  <p data-index-room-description></p>
+                <div class="main_title">
+                  <h3>Room's Preview</h3>
+                  <!-- data-* 속성 : data-property-caption -->
+                  <p data-property-caption="{name}의 객실을 소개합니다."></p>
                 </div>
-                <div class="room_sld_wrap">
-                  <div class="swiper-container room_list_sld">
-                    <!-- data-* 속성 : data-room-list-slides | 동적 매핑 필요
-                         customFields.roomtypes[] × rooms[] id 매칭 (index 와 동일) -->
-                    <div class="swiper-wrapper" data-room-list-slides></div>
-                  </div>
+                <div class="swiper-container_special">
+                  <!-- data-* 속성 : data-room-list-slides | 동적 매핑 필요
+                       customFields.roomtypes[] × rooms[] id 매칭 (index 와 동일) -->
+                  <div class="swiper-wrapper" data-room-list-slides></div>
                 </div>
               </div>
             </div>
-
             <!--// main_room -->
 
-            <!-- s: 배치도 이미지 (layoutMap.about) — 이미지가 없으면 매퍼가 통째로 숨긴다 -->
-            <div class="room_map layout_map_wide" data-layout-map-wrap>
-              <!-- data-* 속성 : data-layout-map-image
-                   pages.layoutMap.sections[0].about.images[isSelected]
-                   배치도는 도면이라 잘리면 안 되므로 background(cover) 가 아니라 <img> 로 넣는다 -->
-              <img data-layout-map-image alt="배치도" />
+            <!-- s: 배치도 (layoutMap.about) — 이미지가 없으면 매퍼가 통째로 숨긴다.
+                 원본 room.html 의 .layout_box 다. 제목은 --font-en-main 필기체 50px 정적 라벨이고
+                 '객실 평면도' 가 아니다 — 평면도(roomtype_floorplan)는 room.html 전용이다. -->
+            <div class="sub_inner" data-layout-map-wrap>
+              <div class="sub_title">
+                <h3>Room's Layout</h3>
+                <!-- data-* 속성 : data-property-caption -->
+                <p data-property-caption="{name} 배치도 안내입니다."></p>
+              </div>
+              <div class="sub_img_box_wide layout_map_wide">
+                <!-- data-* 속성 : data-layout-map-image
+                     pages.layoutMap.sections[0].about.images[isSelected][0].url
+                     배치도는 도면이라 잘리면 안 되므로 background(cover) 가 아니라 <img> 로 넣는다 -->
+                <img data-layout-map-image alt="배치도" />
+              </div>
             </div>
             <!--// 배치도 -->
           </div>

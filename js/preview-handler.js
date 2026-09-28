@@ -249,9 +249,9 @@ if (typeof window.PreviewHandler === 'undefined') {
       this._cachedDefaultFonts = {
         koMain:
           computedStyle.getPropertyValue('--font-ko-main').trim() ||
-          "'Noto Serif KR', serif",
-        koSub: computedStyle.getPropertyValue('--font-ko-sub').trim() || "'Noto Sans KR', sans-serif",
-        enMain: computedStyle.getPropertyValue('--font-en-main').trim() || "'Parisienne', cursive"
+          "'Pretendard Variable', sans-serif",
+        koSub: computedStyle.getPropertyValue('--font-ko-sub').trim() || "'Noto Serif KR', serif",
+        enMain: computedStyle.getPropertyValue('--font-en-main').trim() || "'Chonburi', serif"
       };
 
       return this._cachedDefaultFonts;
@@ -266,8 +266,8 @@ if (typeof window.PreviewHandler === 'undefined') {
       const computedStyle = getComputedStyle(root);
 
       this._cachedDefaultColors = {
-        primary: computedStyle.getPropertyValue('--color-primary').trim() || '#def1f9',
-        secondary: computedStyle.getPropertyValue('--color-secondary').trim() || '#f89725'
+        primary: computedStyle.getPropertyValue('--color-primary').trim() || '#f5f6f8',
+        secondary: computedStyle.getPropertyValue('--color-secondary').trim() || '#2d3a80'
       };
 
       return this._cachedDefaultColors;

@@ -19,7 +19,6 @@
   DirectionsMapper.prototype.mapPage = function () {
     this.mapPropertyNames();
     this.mapHeroImage();
-    this.mapBodyTitle();
     this.mapAddress();
     this.mapNotice();
     this.mapKakaoMap();
@@ -38,66 +37,55 @@
     this.applyPropertyCaptions();
   };
 
-  // MAPPER: directions.hero.images[isSelected][0] → [data-directions-hero-bg]
+  // MAPPER: directions.hero.images[isSelected][0] → [data-directions-hero-image]
   DirectionsMapper.prototype.mapHeroImage = function () {
+    var hero = this.getSection().hero || {};
+    var url = this.getFirstSelectedImage(hero.images || []);
     var self = this;
-    var hero = this.getSection().hero || {};
-    var images = this.getSelectedImages(hero.images || []);
-    if (!images.length && hero.images) images = hero.images.slice();
-    var image = images[0] || null;
-
-    document.querySelectorAll('[data-directions-hero-bg]').forEach(function (el) {
-      self.setBackground(el, image && image.url, '오시는길 대표 이미지');
+    document.querySelectorAll('[data-directions-hero-image]').forEach(function (el) {
+      self.setBackground(el, url, '오시는길 대표 이미지');
     });
-  };
-
-  // MAPPER: directions.hero.title → 본문 위치안내
-  DirectionsMapper.prototype.mapBodyTitle = function () {
-    var hero = this.getSection().hero || {};
-    var title = this.firstText(hero.title, '위치안내');
-
-    setAllText('[data-directions-body-title]', title);
   };
 
   // MAPPER: property.address → [data-property-address]
   DirectionsMapper.prototype.mapAddress = function () {
     var address = this.cleanText(this.getProperty().address);
     document.querySelectorAll('[data-property-address]').forEach(function (el) {
-      el.textContent = address || '';
+      el.textContent = address ? '주소 : ' + address : '';
       el.style.display = address ? '' : 'none';
     });
   };
 
   // MAPPER: directions.notice.title / .description → [data-directions-notice]
-  // notice 가 배열로 오는 경우도 있어 설명을 합쳐 노출한다.
+  // notice 가 배열로 오는 경우도 있어 둘 다 받는다 (항목당 dt/dd 한 쌍).
   DirectionsMapper.prototype.mapNotice = function () {
     var self = this;
     var notice = this.getSection().notice;
     var list = Array.isArray(notice) ? notice : notice ? [notice] : [];
-    var property = this.getProperty();
-    var address = this.cleanText(property.address);
-
-    var firstTitle = '';
-    var descriptions = [];
-
-    list.forEach(function (item) {
-      var title = self.cleanText(item && item.title);
-      var desc = self.cleanText(item && item.description);
-      if (!firstTitle && title) firstTitle = title;
-      if (desc) descriptions.push(desc);
-    });
-
-    if (!descriptions.length && address) {
-      descriptions.push(
-        '※ 네비게이션에 아래 주소를 입력해주세요.\n도로명주소 : ' + address
-      );
-    }
-
-    setAllText('[data-directions-notice-title]', firstTitle || '자가용 이용시');
 
     document.querySelectorAll('[data-directions-notice]').forEach(function (dl) {
-      dl.innerHTML = descriptions.length ? self.nl2br(descriptions.join('\n\n')) : '';
-      dl.style.display = descriptions.length ? '' : 'none';
+      dl.innerHTML = '';
+
+      var rendered = 0;
+      list.forEach(function (item) {
+        var title = self.cleanText(item && item.title);
+        var desc = self.cleanText(item && item.description);
+        if (!title && !desc) return;
+
+        if (title) {
+          var dt = document.createElement('dt');
+          dt.textContent = title;
+          dl.appendChild(dt);
+        }
+        if (desc) {
+          var dd = document.createElement('dd');
+          dd.innerHTML = self.nl2br(desc);
+          dl.appendChild(dd);
+        }
+        rendered += 1;
+      });
+
+      dl.style.display = rendered ? '' : 'none';
     });
   };
 
@@ -109,7 +97,7 @@
     if (!container) return;
 
     // 좌표가 없어도 영역은 그대로 둔다.
-    // CSS(.sub_map .map_box #kakao-map)가 높이와 배경색을 갖고 있어
+    // CSS(.sub_traffic .map #kakao-map)가 높이와 배경색을 갖고 있어
     // 지도가 안 그려져도 자리가 유지된다 (지도 렌더 시 타일이 덮음).
     if (!property.latitude || !property.longitude) return;
 

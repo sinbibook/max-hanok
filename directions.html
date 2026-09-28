@@ -29,11 +29,6 @@
     <link rel="stylesheet" type="text/css" href="styles/theme.css" />
     <link rel="stylesheet" type="text/css" href="styles/reset.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥 - 오시는길" />
@@ -57,45 +52,38 @@
       <div id="container">
         <!-- 원본 traffic.html (오시는길).
              원본은 daum roughmap 임베드(고정 key)였으나 좌표 기반 kakao-maps-sdk 로 교체했다. -->
-        <section id="content" class="sub6_1 sub_map">
-          <div class="sub_visual_wide visual" data-directions-hero-bg>
-            <div class="visual_title">
-              <strong>MAP,</strong>
-              <div class="sub_cate_wrap">
-                <ul>
-                  <li class="on"><a href="./directions.html">오시는길</a></li>
-                </ul>
-              </div>
+        <section id="content" class="sub6_1 sub_traffic">
+          <!-- data-* 속성 : data-directions-hero-image
+               pages.directions.sections[0].hero.images[isSelected][0].url (background-image) -->
+          <div class="sub_visual" data-directions-hero-image>
+            <div class="txt_box">
+              <h3>LOCATION</h3>
+              <!-- data-* 속성 : data-property-caption -->
+              <span data-property-caption="{name} 오시는길"></span>
             </div>
           </div>
           <!--// sub_visual -->
 
+          <div class="sub_cate_wrap">
+            <div class="sub_inner">
+              <ul>
+                <li class="on"><a href="./directions.html">오시는길</a></li>
+              </ul>
+            </div>
+          </div>
+
           <div class="sub_cont">
-            <div class="view_cate_box">
-              <div class="sub_title">
-                <h3>MAP</h3>
-                <p data-directions-body-title>위치안내</p>
-              </div>
-            </div>
-            <div class="map_box sub_inner">
-              <div>
-                <!-- data-* 속성 : property.latitude / property.longitude -->
-                <div id="kakao-map"></div>
-                <!-- data-* 속성 : data-property-address (property.address) -->
-                <strong data-property-address></strong>
-              </div>
-            </div>
-            <div class="info_box">
-              <dl>
-                <dt class="view_cate_box">
-                  <div class="sub_title">
-                    <h3>CAR</h3>
-                    <p data-directions-notice-title>자가용 이용시</p>
-                  </div>
-                </dt>
-                <!-- data-* 속성 : data-directions-notice
-                     pages.directions.sections[0].notice.description -->
-                <dd data-directions-notice></dd>
+            <!-- 카카오맵 : property.latitude / property.longitude
+                 좌표가 없어도 영역이 유지되도록 높이/배경색은 CSS 에서 준다
+                 (원본은 daum roughmap 임베드가 자체 높이를 가졌다) -->
+            <div class="map"><div id="kakao-map"></div></div>
+            <div class="map_info">
+              <!-- data-* 속성 : data-property-address (property.address) -->
+              <strong data-property-address></strong>
+              <!-- data-* 속성 : data-directions-notice | 동적 매핑 필요
+                   pages.directions.sections[0].notice.title / .description -->
+              <dl data-directions-notice>
+                <!-- MAPPER: notice → <dt>title</dt><dd>description</dd> -->
               </dl>
             </div>
           </div>
@@ -107,7 +95,6 @@
     </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="js/image-helpers.js"></script>
     <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>

@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+/* ============================================================
+   Reset CSS
+   - 폰트 @import / @font-face 는 styles/theme.css 로 이동했다.
+   - 기본 폰트는 var(--font-ko-sub) 를 참조하므로 theme.css 가 먼저 로드되어야 한다.
+   ============================================================ */
+
 html,
 body,
 div,
@@ -91,6 +97,7 @@ video {
   letter-spacing: -0.07em;
 }
 
+/* HTML5 display-role reset for older browsers */
 article,
 aside,
 details,
@@ -119,18 +126,12 @@ q {
   quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
   content: '';
   content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
 }
 
 div,
@@ -192,7 +193,8 @@ button span {
 input,
 button {
   -webkit-appearance: none;
-  -webkit-border-radius: 0;
+  appearance: none;
+  border-radius: 0;
 }
 
 h1,
@@ -203,6 +205,13 @@ h5,
 h6 {
   font-size: 100%;
   font-style: normal;
+}
+
+/* table */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
 }
 
 th {
@@ -227,6 +236,7 @@ caption {
   line-height: 0;
 }
 
+/* form */
 form {
   display: inline;
 }
@@ -247,6 +257,7 @@ button {
   border: none;
 }
 
+/* font */
 i,
 em,
 u,
@@ -258,6 +269,7 @@ em {
   font-weight: bold;
 }
 
+/* link */
 a {
   color: #666;
   text-decoration: none;

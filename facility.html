@@ -55,70 +55,66 @@
       <div id="header-wrap"></div>
 
       <div id="container">
-        <!-- 원본 special1~N.html (부대시설). ?id= 로 시설을 고르고, 없으면 첫 번째. -->
+        <!-- 원본 special1~7.html (부대시설). ?id= 로 시설을 고르고, 없으면 첫 번째.
+             ⚠️ 백오피스 페이지 키는 'facility' 그대로다 (파일명만 facility.html). -->
         <section id="content" class="sub3_1 sub_special">
           <div class="sub_visual_wide visual">
+            <div class="main_txt_top">
+              <span>Special Information</span>
+              <!-- data-* 속성 : data-special-name-en (facilities[current].nameEn → name) -->
+              <strong data-special-name-en></strong>
+              <!-- data-* 속성 : data-special-name (facilities[current].name)
+                   nameEn 이 없어 strong 이 한글명으로 폴백되면 중복이라 숨긴다 -->
+              <p data-special-name></p>
+            </div>
+            <div class="arw_box">
+              <div class="arw_left"><img src="images/spe_le.png" alt="이전" /></div>
+              <div class="arw_right"><img src="images/spe_ri.png" alt="다음" /></div>
+            </div>
+            <a href="#" class="scroll_down"><img src="images/scroll_down.png" alt="스크롤" /></a>
             <div class="sub_visual_box">
               <div class="swiper-container">
                 <!-- data-* 속성 : data-special-hero-slides | 동적 매핑 필요
                      property.facilities[current].images (배경 슬라이드) -->
                 <div class="swiper-wrapper" data-special-hero-slides></div>
-                <div class="swiper-button-prev"><img src="images/arrow_left.png" alt="prev" /></div>
-                <div class="swiper-button-next"><img src="images/arrow_right.png" alt="next" /></div>
               </div>
             </div>
           </div>
           <!--// sub_visual -->
 
+          <div class="sub_cate_wrap">
+            <div class="sub_inner">
+              <!-- data-* 속성 : data-special-nav | 동적 매핑 필요
+                   property.facilities[] → li 동적 생성 (현재 시설 .on, 이름 없으면 skip) -->
+              <ul data-special-nav>
+                <!-- MAPPER: facilities[] → <li><a href="./facility.html?id={id}"> -->
+              </ul>
+            </div>
+          </div>
+
           <div class="sub_cont">
-            <div class="view_cate_box">
-              <div class="sub_title">
+            <div class="sub_inner">
+              <div class="sub_title2">
                 <!-- data-* 속성 : data-special-name-en -->
                 <h3 data-special-name-en></h3>
-                <span data-property-caption="WELCOME TO {nameEn}"></span>
+                <!-- data-* 속성 : data-special-name -->
+                <p data-special-name></p>
               </div>
-              <div class="sub_cate_wrap">
-                <!-- data-* 속성 : data-special-nav | 동적 매핑 필요
-                     property.facilities[] → li 동적 생성 (현재 시설 .on, 이름 없으면 skip) -->
-                <ul data-special-nav>
-                  <!-- MAPPER: facilities[] → <li><a href="./facility.html?id={id}"> -->
-                </ul>
-              </div>
-            </div>
 
-            <div class="sub_txt">
-              <!-- data-* 속성 : data-special-name -->
-              <em data-special-name></em>
               <!-- data-* 속성 : data-special-description
                    facilities[current].description → 폴백 usageGuide -->
-              <p data-special-description></p>
-            </div>
+              <p class="notice_txt" data-special-description></p>
 
-            <div class="sub_img_box">
-              <!-- data-* 속성 : data-special-images | 동적 매핑 필요 (최대 4장) -->
-              <ul class="sub_inner" data-special-images>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+              <!-- data-* 속성 : data-special-images | 동적 매핑 필요 (li 2개 고정) -->
+              <ul class="sub_img_box sub_img_box_align" data-special-images>
+                <li class="img"></li>
+                <li class="img"></li>
               </ul>
-            </div>
 
-            <div class="sub_img_box sub_inner" data-special-wide-wrap>
-              <!-- data-* 속성 : data-special-wide-image -->
-              <!-- ⚠️ `src` 를 비워 두지 않는다. `src=""` 는 브라우저가 현재 페이지를 다시 요청한다.
-                   매퍼가 채우기 전까지 속성 자체를 두지 않는다. -->
-              <img alt="부대시설 이미지" data-special-wide-image />
-            </div>
-
-            <div class="main_special inner">
-              <div class="main_title">
-                <h3>SPECIAL</h3>
-                <span data-property-caption="WELCOME TO {nameEn}"></span>
+              <div class="sub_img_box_wide">
+                <!-- data-* 속성 : data-special-wide-image -->
+                <div class="img" data-special-wide-image></div>
               </div>
-              <ul data-special-list>
-                <!-- MAPPER: facilities[] 공용 목록 -->
-              </ul>
             </div>
           </div>
           <!--// sub_cont -->
