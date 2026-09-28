@@ -7,27 +7,32 @@ window.initRoomSwipers = function () {
   if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
 
   // 객실 히어로 (풀와이드 페이드)
-  window.TplSwiper.initHero('roomHero', '.sub_visual_box .swiper-container', {
+  window.TplSwiper.init('roomHero', '.sub_visual_box .swiper-container', {
+    loop: true,
     spaceBetween: 0,
     effect: 'fade',
     fadeEffect: { crossFade: true },
+    autoplay: { delay: 4000, disableOnInteraction: false },
     navigation: {
-      nextEl: '.sub_visual_wide .swiper-button-next',
-      prevEl: '.sub_visual_wide .swiper-button-prev'
+      nextEl: '.sub_visual_wide .arw_right',
+      prevEl: '.sub_visual_wide .arw_left'
     }
   });
 
-  // 하단 객실 미리보기 (원본 room_list_sld: 데스크톱 4장)
-  var previewPerView = window.TplSwiper.roomPerView('.main_room .room_list_sld');
-  window.TplSwiper.init('roomPreview', '.main_room .room_list_sld', {
-    loop: window.TplSwiper.shouldLoop('.main_room .room_list_sld', previewPerView),
-    slidesPerView: previewPerView,
+  // 하단 객실 미리보기 (index.html 과 동일 설정)
+  window.TplSwiper.init('roomPreview', '.main_room .swiper-container_special', {
+    loop: true,
+    slidesPerView: 3,
     spaceBetween: 30,
     grabCursor: true,
+    navigation: {
+      nextEl: '.main_room .arw_right',
+      prevEl: '.main_room .arw_left'
+    },
     breakpoints: {
       0: { slidesPerView: 1, spaceBetween: 15 },
       480: { slidesPerView: 2, spaceBetween: 20 },
-      961: { slidesPerView: previewPerView, spaceBetween: 30 }
+      961: { slidesPerView: 3, spaceBetween: 30 }
     }
   });
 };

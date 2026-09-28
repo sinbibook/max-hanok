@@ -7,13 +7,15 @@ window.initFacilitySwipers = function () {
   if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
 
   // 부대시설 히어로 (풀와이드 페이드)
-  window.TplSwiper.initHero('specialHero', '.sub_visual_box .swiper-container', {
+  window.TplSwiper.init('specialHero', '.sub_visual_box .swiper-container', {
+    loop: true,
     spaceBetween: 0,
     effect: 'fade',
     fadeEffect: { crossFade: true },
+    autoplay: { delay: 4000, disableOnInteraction: false },
     navigation: {
-      nextEl: '.sub_visual_wide .swiper-button-next',
-      prevEl: '.sub_visual_wide .swiper-button-prev'
+      nextEl: '.sub_visual_wide .arw_right',
+      prevEl: '.sub_visual_wide .arw_left'
     }
   });
 };

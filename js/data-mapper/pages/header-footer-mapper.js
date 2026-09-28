@@ -59,26 +59,12 @@
   HeaderFooterMapper.prototype.mapPropertyNames = function () {
     var nameEn = this.getPropertyNameEn();
     var name = this.getPropertyName();
-    var logoUrl = this.getLogo();
 
     document.querySelectorAll('[data-property-name-en]').forEach(function (el) {
       el.textContent = nameEn;
     });
     document.querySelectorAll('[data-property-name]').forEach(function (el) {
       el.textContent = name;
-    });
-    document.querySelectorAll('[data-logo-image]').forEach(function (img) {
-      var text = img.parentNode && img.parentNode.querySelector('.logo_text');
-      if (logoUrl) {
-        img.src = logoUrl;
-        img.alt = name || nameEn || 'logo';
-        img.style.display = '';
-        if (text) text.style.display = 'none';
-      } else {
-        img.removeAttribute('src');
-        img.style.display = 'none';
-        if (text) text.style.display = '';
-      }
     });
 
     this.fitLogo(nameEn);
@@ -129,7 +115,7 @@
   HeaderFooterMapper.prototype.mapYbs = function () {
     var ybsId = this.getProperty().ybsId;
     document.querySelectorAll('[data-ybs-button]').forEach(function (el) {
-      var host = el.closest('[data-ybs-wrap]') || el.closest('.privacy') || el;
+      var host = el.closest('.privacy') || el;
       if (!ybsId) {
         host.style.display = 'none';
         return;
@@ -280,9 +266,9 @@
     });
   };
 
-  // MAPPER: property.contactPhone 또는 property.phone / property.businessInfo → footer 라인별 텍스트
+  // MAPPER: property.contactPhone / property.businessInfo → footer 라인별 텍스트
   // 전화번호 소스는 businessInfo.businessPhone(사업자 번호)이 아니라
-  // property.contactPhone/property.phone(노출용 번호 배열)이다.
+  // property.contactPhone(노출용 번호 배열)이다.
   // MAPPER: property.tripProviderName → [data-copyright]
   // 공급사명이 있으면 data-copyright 의 템플릿 문자열에서 {provider} 를 치환한다.
   // 값이 없으면(백오피스 미입력 → "") HTML 의 기존 트립일레븐 문구를 그대로 둔다.
@@ -299,8 +285,7 @@
     this.mapCopyright();
     var prop = this.getProperty();
     var biz = prop.businessInfo || {};
-    var phoneSource = prop.contactPhone !== undefined && prop.contactPhone !== null ? prop.contactPhone : prop.phone;
-    var phones = this.toPhoneList(phoneSource);
+    var phones = this.toPhoneList(prop.contactPhone);
 
     var fields = {
       '[data-footer-address]': biz.businessAddress,

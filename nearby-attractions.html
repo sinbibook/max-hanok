@@ -29,11 +29,6 @@
     <link rel="stylesheet" type="text/css" href="styles/theme.css" />
     <link rel="stylesheet" type="text/css" href="styles/reset.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
     <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Max 한옥" />
@@ -56,30 +51,38 @@
 
       <div id="container">
         <!-- 원본 travel.html (주변여행지) -->
-        <section id="content" class="sub4_1 sub_travel">
-          <div class="sub_visual_wide visual">
-            <div class="sub_visual_box">
-              <div class="swiper-container">
-                <!-- data-* 속성 : data-nearby-hero-slides
-                     pages.nearbyAttractions.sections[0].hero.images[isSelected] -->
-                <div class="swiper-wrapper" data-nearby-hero-slides></div>
-                <div class="swiper-button-prev"><img src="images/arrow_left.png" alt="prev" /></div>
-                <div class="swiper-button-next"><img src="images/arrow_right.png" alt="next" /></div>
-              </div>
-            </div>
-            <div class="visual_title">
-              <strong>TRAVEL</strong>
-              <div class="sub_cate_wrap">
-                <ul>
-                  <li class="on"><a href="./nearby-attractions.html">주변여행지</a></li>
-                </ul>
-              </div>
+        <section id="content" class="sub5_1 sub_travel">
+          <!-- data-* 속성 : data-nearby-hero-image
+               pages.nearbyAttractions.sections[0].hero.images[isSelected][0].url -->
+          <div class="sub_visual" data-nearby-hero-image>
+            <div class="txt_box">
+              <h3>TRAVEL</h3>
+              <!-- data-* 속성 : data-property-caption -->
+              <span data-property-caption="{name} 주변 여행지"></span>
             </div>
           </div>
           <!--// sub_visual -->
 
-          <div class="sub_cont" data-nearby-attractions-list>
-            <!-- MAPPER: nearbyAttractions.about[] → .sub_txt_box 반복 -->
+          <div class="sub_cate_wrap">
+            <div class="sub_inner">
+              <ul>
+                <li class="on"><a href="./nearby-attractions.html">주변여행지</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sub_cont sub_inner">
+            <div class="sub_title2">
+              <h3 data-nearby-title>Tourist Spot</h3>
+              <p data-nearby-description>펜션 근처의 주요 관광지 정보를 확인해 보세요.</p>
+            </div>
+            <div class="travel_list">
+              <!-- data-* 속성 : data-nearby-attractions-list | 동적 매핑 필요
+                   pages.nearbyAttractions.sections[0].about[] -->
+              <ul data-nearby-attractions-list>
+                <!-- MAPPER: about[i] → li > img + strong + p(> span) -->
+              </ul>
+            </div>
           </div>
           <!--// sub_cont -->
         </section>
@@ -89,7 +92,6 @@
     </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="js/image-helpers.js"></script>
     <script src="js/preview-handler.js"></script>
     <script src="js/data-mapper/core/base-mapper.js"></script>

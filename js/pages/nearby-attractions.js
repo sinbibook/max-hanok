@@ -1,16 +1,6 @@
 /* ============================================================
-   pages/nearby-attractions.js — 주변여행지 페이지 스크립트
+   pages/nearby-attractions.js — 페이지 스크립트
+   이 페이지는 슬라이더/패럴랙스가 없어 별도 초기화가 필요 없다.
+   공통 동작(헤더, aside)은 js/common.js 가 담당한다.
+   자리만 확보해 두며, 페이지 전용 스크립트가 필요해지면 여기에 추가한다.
    ============================================================ */
-window.initNearbyAttractionsSwipers = function () {
-  if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
-
-  window.TplSwiper.initHero('nearbyHero', '.sub_visual_box .swiper-container', {
-    spaceBetween: 0,
-    effect: 'fade',
-    fadeEffect: { crossFade: true },
-    navigation: {
-      nextEl: '.sub_visual_wide .swiper-button-next',
-      prevEl: '.sub_visual_wide .swiper-button-prev'
-    }
-  });
-};

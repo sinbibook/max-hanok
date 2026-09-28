@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.301.0",
-    "generatedAt": "2026-09-23T09:16:40.463745572Z",
-    "templateType": "trip_b",
+    "version": "1.302.0",
+    "generatedAt": "2026-09-28T00:45:07.189353769Z",
+    "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1457,7 +1457,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "trip_b",
+    "templateType": "trip_a",
     "images": [
       {
         "logo": [
@@ -2266,7 +2266,120 @@
           ]
         },
         "landing": {
-          "sections": [ ]
+          "sections": [
+            {
+              "hero": {
+                "images": [
+                  {
+                    "id": "01a0cd8d-7cd5-75d7-b633-4f76d4a18466",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995273-yk4dh0va66.png",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": false,
+                    "blockId": "55ffa731-6ac3-4c8a-9c0a-835a3a3cbec0"
+                  },
+                  {
+                    "id": "01a0e578-d70f-74db-a1ef-72192918d654",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790556295565-0tipqwsb8r.png",
+                    "sortOrder": 0,
+                    "description": "",
+                    "isSelected": false,
+                    "blockId": "a4d10f12-7382-4a03-9e12-b2bc7d976a22"
+                  },
+                  {
+                    "id": "01a0cd8d-7d76-7614-ae72-e63b10247364",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995485-eh7ieli5sd.png",
+                    "sortOrder": 1,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": "5c1d96a8-9328-4256-80fc-241eec625590"
+                  },
+                  {
+                    "id": "01a0e578-d74a-71c5-b38c-04de93e0320d",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790556295411-p08doujh5l.png",
+                    "sortOrder": 1,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": "8f1978bf-5886-4416-8086-1757e9b185f3"
+                  },
+                  {
+                    "id": "01a0cd8d-7cac-7d08-a90a-79651d5e3b66",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995562-2b3ap2oziz.png",
+                    "sortOrder": 2,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": "55ffa731-6ac3-4c8a-9c0a-835a3a3cbec0"
+                  },
+                  {
+                    "id": "01a0e578-d6ce-7f88-a6eb-16269fd0bd2e",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790556295769-k0rsr5xier.png",
+                    "sortOrder": 2,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": "a4d10f12-7382-4a03-9e12-b2bc7d976a22"
+                  },
+                  {
+                    "id": "01a0cd8d-7d78-7f8d-9a93-0c8371c5f818",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995567-udv4lsmlsv.png",
+                    "sortOrder": 3,
+                    "description": "",
+                    "isSelected": false,
+                    "blockId": "c90d5a39-1785-46a2-9639-8573910fc288"
+                  },
+                  {
+                    "id": "01a0cd8d-7dd8-7999-9b19-77d8abf0aa6f",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995479-5iyvk3pwrk.png",
+                    "sortOrder": 4,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": "c90d5a39-1785-46a2-9639-8573910fc288"
+                  },
+                  {
+                    "id": "01a0cd8d-7d1e-7bf5-a759-04d72539ab0c",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790154995570-6xn8nwuuwg.png",
+                    "sortOrder": 5,
+                    "description": "",
+                    "isSelected": true,
+                    "blockId": "16c21172-047b-4cd2-aef9-ebe67fa4ef1b"
+                  }
+                ]
+              },
+              "about": [
+                {
+                  "order": 1,
+                  "images": [
+                    {
+                      "id": "01a0e578-d78c-70f0-846c-c8a578ce91fd",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_background/1790556295771-bqj6kpypnf.jpg",
+                      "sortOrder": 0,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "a4d10f12-7382-4a03-9e12-b2bc7d976a22"
+                    }
+                  ],
+                  "blockId": "a4d10f12-7382-4a03-9e12-b2bc7d976a22",
+                  "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
+                  "propertyName": "Max 한옥"
+                },
+                {
+                  "order": 2,
+                  "images": [
+                    {
+                      "id": "01a0e578-d790-7eed-8991-ba98a8cabe1c",
+                      "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_background/1790556295413-ukq24f3zq0.jpg",
+                      "sortOrder": 1,
+                      "description": "",
+                      "isSelected": true,
+                      "blockId": "8f1978bf-5886-4416-8086-1757e9b185f3"
+                    }
+                  ],
+                  "blockId": "8f1978bf-5886-4416-8086-1757e9b185f3",
+                  "propertyId": ""
+                }
+              ],
+              "enabled": true
+            }
+          ]
         }
       },
       "popup": {

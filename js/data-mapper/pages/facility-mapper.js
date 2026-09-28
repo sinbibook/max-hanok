@@ -15,8 +15,8 @@
     });
   }
 
-  // 부대시설 상세 페이지. 페이지 파일은 facility.html 이고,
-  // 시설 목록/상세 데이터는 property.facilities[] 를 사용한다.
+  // 부대시설 페이지. 파일명은 facility.html 이지만
+  // 백오피스 페이지 키는 'facility' 그대로다 (BFF 계약).
   function FacilityMapper() {
     BaseDataMapper.call(this);
   }
@@ -32,7 +32,6 @@
     this.mapHeroSlides(facility);
     this.mapNav(facility);
     this.mapImages(facility);
-    this.mapSpecialList(facility);
 
     if (typeof window.initFacilitySwipers === 'function') window.initFacilitySwipers();
   };
@@ -63,20 +62,34 @@
   };
 
   // MAPPER: facilities[current].nameEn → name
-  // nameEn 이 없는 응답이 일반적이라 상세 타이틀은 한글명으로 폴백한다.
+  // 원본은 strong=영문명 / p=한글명 구조지만 facilities[] 에 nameEn 이 없는 응답이 일반적이라
+  // strong 이 한글명으로 폴백된다. 그러면 p 가 같은 이름을 반복하므로 p 를 숨긴다.
   FacilityMapper.prototype.mapNames = function (facility) {
     var nameEn = this.cleanText(facility && facility.nameEn);
     var name = this.cleanText(facility && facility.name);
 
     setAllText('[data-special-name-en]', nameEn || name);
-    setTextOrHide('[data-special-name]', name);
+    setTextOrHide('[data-special-name]', nameEn ? name : '');
   };
 
   // MAPPER: 이용안내 문구
-  //   facilities[current].description → facilities[current].usageGuide
+  // 폴백 체인은 C·D·E·F·L 과 동일하게 맞춘다.
+  //   pages.facility.sections[0].hero.title  ← 백오피스에서 직접 입력한 값 (1순위)
+  //   → facilities[current].description
+  //   → facilities[current].usageGuide
   // 실데이터에서 description 이 빈 문자열이고 usageGuide 에만 내용이 있는 경우가 흔하다.
   FacilityMapper.prototype.mapDescription = function (facility) {
-    var text = this.firstText(facility && facility.description, facility && facility.usageGuide);
+    var page = this.getPages().facility;
+    var hero = (page && page.sections && page.sections[0] && page.sections[0].hero) || {};
+
+    // description(소개문)과 usageGuide(이용안내)를 한 줄 띄워 **둘 다** 보여준다.
+    // 예전에는 폴백이라 description 이 있으면 usageGuide 가 통째로 묻혔다 —
+    // 이용 요금·시간·제약이 화면에서 사라졌다. 둘 다 비면 슬롯을 숨긴다.
+    // (t-template-H · I · J 와 같은 방식)
+    var body = this.cleanText(facility && facility.description);
+    var guide = this.cleanText(facility && facility.usageGuide);
+    var joined = body + (body && guide ? '\n\n' : '') + guide;
+    var text = this.firstText(hero.title, joined);
     var self = this;
     document.querySelectorAll('[data-special-description]').forEach(function (el) {
       el.innerHTML = text ? self.nl2br(text) : '';
@@ -132,8 +145,8 @@
     });
   };
 
-  // MAPPER: facilities[current].images → 4장 이미지 박스 + 와이드 1장
-  // evergreen special6 원본은 1번 이미지를 와이드, 2~5번 이미지를 4장 박스에 쓴다.
+  // MAPPER: facilities[current].images → 교차 배너 2장 + 와이드 1장
+  // 원본 레이아웃이 li 2개 + 와이드 1개 고정이라 개수를 늘리지 않는다.
   // 나머지 이미지는 히어로 슬라이더에서 전부 노출된다.
   FacilityMapper.prototype.mapImages = function (facility) {
     var self = this;
@@ -141,76 +154,15 @@
     if (!images.length && facility && facility.images) images = facility.images.slice();
 
     document.querySelectorAll('[data-special-images]').forEach(function (ul) {
-      var pool = images.length > 1 ? images.slice(1, 5) : images.slice(0, 4);
-      var count = Math.min(pool.length, 4);
-      ul.innerHTML = '';
-      ul.className = 'sub_inner special_grid_count_' + count;
-      ul.style.display = count ? '' : 'none';
-
-      pool.slice(0, 4).forEach(function (image) {
-        var li = document.createElement('li');
-        self.setBackground(li, image && image.url, '부대시설 이미지');
-        ul.appendChild(li);
+      Array.prototype.slice.call(ul.children).forEach(function (li, i) {
+        self.setBackground(li, images[i] ? images[i].url : '', '부대시설 이미지');
       });
     });
 
     document.querySelectorAll('[data-special-wide-image]').forEach(function (el) {
-      var image = images[0] || null;
-      if (!image || !image.url) {
-        ImageHelpers.applyPlaceholder(el, '부대시설 이미지');
-        return;
-      }
-      el.src = image.url;
-      el.alt = self.cleanText(image.description) || '부대시설 이미지';
-    });
-
-    document.querySelectorAll('[data-special-wide-wrap]').forEach(function (el) {
-      el.style.display = images.length ? '' : 'none';
-    });
-  };
-
-  // MAPPER: property.facilities[] → 하단 SPECIAL 원형 카드 목록
-  FacilityMapper.prototype.mapSpecialList = function (currentFacility) {
-    var self = this;
-    var facilities = this.getFacilities();
-    var currentId = currentFacility && currentFacility.id;
-
-    document.querySelectorAll('[data-special-list]').forEach(function (ul) {
-      ul.innerHTML = '';
-
-      facilities.forEach(function (facility) {
-        var name = self.cleanText(facility.name);
-        if (!name) return;
-
-        var images = self.getSelectedImages(facility.images || []);
-        if (!images.length && facility.images) images = facility.images.slice();
-        var image = images[0];
-
-        var li = document.createElement('li');
-        if (currentId && facility.id === currentId) li.className = 'on';
-
-        var link = document.createElement('a');
-        link.href = './facility.html?id=' + facility.id;
-
-        var img = document.createElement('div');
-        img.className = 'img';
-        self.setBackground(img, image && image.url, '부대시설 이미지');
-        img.style.backgroundPosition = '50% 100%';
-
-        var p = document.createElement('p');
-        p.textContent = name;
-
-        li.appendChild(link);
-        li.appendChild(img);
-        var nameEn = self.cleanText(facility.nameEn);
-        if (nameEn) {
-          var span = document.createElement('span');
-          span.textContent = nameEn;
-          li.appendChild(span);
-        }
-        li.appendChild(p);
-        ul.appendChild(li);
-      });
+      // 앞 2장은 교차 배너가 썼으므로 3번째부터, 없으면 첫 장으로 폴백
+      var url = (images[2] && images[2].url) || (images[0] && images[0].url) || '';
+      self.setBackground(el, url, '부대시설 이미지');
     });
   };
 

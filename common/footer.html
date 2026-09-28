@@ -1,5 +1,44 @@
 <div class="footer_wrap">
-  <!-- 우측 하단 플로팅 버튼 2개. 상담하기(아래) + 예약하기(위) 순으로 쌓인다.
+  <div class="footer">
+    <!-- data-* 속성 : data-footer-phone (번호 텍스트) / data-footer-phone-link (tel: 링크)
+         소스: property.contactPhone (string[]). 번호가 여러 개면 이 링크를 개수만큼 복제해 " | " 로 구분 노출 -->
+    <div class="tel">
+      <!-- "T." 는 styles/style.css 의 ::before 로 붙인다.
+           HTML 에 텍스트로 두면 prettier 가 줄바꿈해 "T. 010-…" 처럼 공백이 생긴다. -->
+      <a href="tel:" data-footer-phone-link><span data-footer-phone></span></a>
+    </div>
+    <div class="address">
+      <ul>
+        <!-- data-* 속성 : data-footer-address (property.businessInfo.businessAddress) -->
+        <li>
+          주소 :
+          <span data-footer-address></span>
+        </li>
+        <!-- data-* 속성 : data-footer-business-name (property.businessInfo.businessName) -->
+        <li>
+          업체명 :
+          <span data-footer-business-name></span>
+        </li>
+        <!-- data-* 속성 : data-footer-representative (property.businessInfo.representativeName) -->
+        <li>
+          대표자 :
+          <span data-footer-representative></span>
+        </li>
+        <!-- data-* 속성 : data-footer-business-number (property.businessInfo.businessNumber) -->
+        <li>
+          사업자번호 :
+          <span data-footer-business-number></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="copy" data-copyright="COPYRIGHT©{provider}. ALL RIGHTS RESERVED.">COPYRIGHT©트립일레븐. ALL RIGHTS RESERVED.</p>
+  <!-- 개인정보처리방침(.privacy) : 매핑 소스가 없어 제거 (t-template-D2 선례) -->
+  <!-- data-* 속성 : data-ybs-button (property.ybsId / 없으면 숨김) -->
+  <div class="privacy"><a href="#!" target="_blank" data-ybs-button>야놀자 YBS</a></div>
+</div>
+
+<!-- 우측 하단 플로팅 버튼 2개. 상담하기(아래) + 예약하기(위) 순으로 쌓인다.
      예약하기는 `for_m` 이라 모바일에서만 뜨고, 상담하기는 총판A + tripPropertyId 가
      있을 때 전 화면폭에서 뜬다 (header-footer-mapper.mapConsult). -->
 
@@ -7,41 +46,13 @@
      상담 URL 은 `https://www.bookingplay.co.kr/api/cti_eicn/kakao_happy_talk?tid={tripPropertyId}` -->
 <div id="talk_custom_button" data-consult-wrap>
   <a title="상담하기" href="#!" target="_blank" data-consult-button>
-    <img src="images/common/consult.png" alt="상담하기" />
+    <img src="images/consult.png" alt="상담하기" />
   </a>
 </div>
 
 <!-- data-* 속성 : data-booking-link (property.realtimeBookingId) -->
 <div class="ft_btn_reserve for_m on">
   <a title="예약하기" href="#!" target="_blank" data-booking-link>
-    <img src="images/common/talk.png" alt="예약하기" />
+    <img src="images/talk.png" alt="예약하기" />
   </a>
-</div>
-<div class="footer">
-    <div class="tel">
-      <a href="tel:" data-footer-phone-link>
-        T.<span data-footer-phone></span>
-      </a>
-    </div>
-    <div class="address">
-      <p>
-        주소 :
-        <span data-footer-address></span>
-      </p>
-      <p>
-        대표 :
-        <span data-footer-representative></span>
-      </p>
-      <p>
-        업체명 :
-        <span data-footer-business-name></span>
-      </p>
-      <p>
-        사업자 번호 :
-        <span data-footer-business-number></span>
-      </p>
-      <p><a href="#!" target="_blank" data-ybs-button>야놀자 YBS</a></p>
-    </div>
-  </div>
-  <div class="copy" data-copyright="COPYRIGHT©{provider}. ALL RIGHTS RESERVED.">COPYRIGHT©트립일레븐. ALL RIGHTS RESERVED.</div>
 </div>

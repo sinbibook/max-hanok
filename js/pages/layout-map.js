@@ -7,18 +7,19 @@ window.initLayoutMapSwipers = function () {
   if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
 
   // 객실 미리보기 (index.html 과 동일 설정)
-  // 객실 카드: 데스크톱 4장 (객실이 4개 미만이면 3장)
-  var layoutRoomPerView = window.TplSwiper.roomPerView('.room_list_sld');
-  window.TplSwiper.init('layoutMapRoom', '.room_list_sld', {
-    loop: window.TplSwiper.shouldLoop('.room_list_sld', layoutRoomPerView),
-    slidesPerView: layoutRoomPerView,
+  window.TplSwiper.init('layoutMapRoom', '.main_room .swiper-container_special', {
+    loop: true,
+    slidesPerView: 3,
     spaceBetween: 30,
+    grabCursor: true,
+    navigation: {
+      nextEl: '.main_room .arw_right',
+      prevEl: '.main_room .arw_left'
+    },
     breakpoints: {
-      280: { slidesPerView: 1, spaceBetween: 10 },
-      640: { slidesPerView: 2, spaceBetween: 10 },
-      768: { slidesPerView: 2, spaceBetween: 20 },
-      980: { slidesPerView: layoutRoomPerView, spaceBetween: 20 },
-      1451: { slidesPerView: layoutRoomPerView, spaceBetween: 30 }
+      0: { slidesPerView: 1, spaceBetween: 15 },
+      480: { slidesPerView: 2, spaceBetween: 20 },
+      961: { slidesPerView: 3, spaceBetween: 30 }
     }
   });
 };
