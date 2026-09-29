@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.305.0",
-    "generatedAt": "2026-09-29T01:41:32.389369205Z",
+    "version": "1.306.0",
+    "generatedAt": "2026-09-29T05:14:09.601541292Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2347,6 +2347,14 @@
                     "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790560489284-cpzt5ghurz.png",
                     "sortOrder": 9,
                     "description": "",
+                    "isSelected": false,
+                    "blockId": "5af37148-069d-4170-b9ea-79b2c2e334b8"
+                  },
+                  {
+                    "id": "01a0eb95-98fb-729d-8059-1eb6adb516fe",
+                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/landing_logo/1790658843595-2l4mzglhb9.png",
+                    "sortOrder": 10,
+                    "description": "",
                     "isSelected": true,
                     "blockId": "5af37148-069d-4170-b9ea-79b2c2e334b8"
                   }
@@ -2355,6 +2363,7 @@
               "about": [
                 {
                   "order": 1,
+                  "title": "",
                   "images": [
                     {
                       "id": "01a0e578-d78c-70f0-846c-c8a578ce91fd",
@@ -2383,10 +2392,11 @@
                     }
                   ],
                   "blockId": "5af37148-069d-4170-b9ea-79b2c2e334b8",
-                  "propertyId": ""
+                  "propertyId": "bafbf5cb-a42d-4a75-8345-b4fbe8275ba1",
+                  "propertyName": "컨텐츠 숙소"
                 }
               ],
-              "enabled": false
+              "enabled": true
             }
           ]
         }
