@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.304.0",
-    "generatedAt": "2026-09-28T01:58:45.121971816Z",
+    "version": "1.305.0",
+    "generatedAt": "2026-09-29T01:41:32.389369205Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2416,7 +2416,7 @@
               }
             ],
             "slider": true,
-            "enabled": false,
+            "enabled": true,
             "endDate": null,
             "sortOrder": 0,
             "startDate": null,
@@ -2437,7 +2437,7 @@
               }
             ],
             "slider": true,
-            "enabled": false,
+            "enabled": true,
             "endDate": "2026-09-30",
             "sortOrder": 1,
             "startDate": "2026-09-13",
