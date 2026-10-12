@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.306.0",
-    "generatedAt": "2026-09-29T05:14:09.601541292Z",
+    "version": "1.307.0",
+    "generatedAt": "2026-10-12T09:21:11.693770389Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -27,8 +27,8 @@
     "province": "서울특별시",
     "city": "금천구",
     "domain": "max-hanok.com",
-    "realtimeBookingId": "",
-    "ybsId": "",
+    "realtimeBookingId": "https://naver.com",
+    "ybsId": "12345",
     "tripPropertyId": "",
     "partnerType": "distributor_a",
     "tripProviderName": "트립일레븐",
@@ -305,6 +305,95 @@
             "id": "3e102ce8-6fb3-4e33-87f6-14a202467d99",
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/47614b17-64d5-4e42-a1d1-90a7646fe782/main/1787293720600-ov25aiv43i.jpg",
             "sortOrder": 3,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          }
+        ]
+      },
+      {
+        "id": "01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2",
+        "name": "드래그앤드롭 테스트",
+        "description": "",
+        "usageGuide": "",
+        "displayOrder": 7,
+        "images": [
+          {
+            "id": "01a10eea-abfe-79f6-a949-5de58390a84b",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615138-5lvebm7p9g.jpg",
+            "sortOrder": 0,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-af19-756f-b89a-d65b1fb803bd",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615142-2eq4l3d30h.jpg",
+            "sortOrder": 1,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-9a1a-722c-b207-0b03868e1574",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615016-6egx515pdf.jpg",
+            "sortOrder": 2,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-ae0e-7723-b545-8d8bc9d6f0bb",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615135-dmm7grff9f.jpg",
+            "sortOrder": 3,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-ad51-7d46-ad9d-3ddab6f6fab8",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251614941-yp17nf70mf.jpg",
+            "sortOrder": 4,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-ad3c-7d40-8c9d-0f79e68f58fb",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615140-h5pa12klz3.jpg",
+            "sortOrder": 5,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-ae10-7ce3-83e0-58ccba925858",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615137-a6zww8mdsl.jpg",
+            "sortOrder": 6,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-ac73-7fdc-a1e0-e5b65ef61687",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251614941-0hct2r4rnu.jpg",
+            "sortOrder": 7,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-a9af-7e56-9cc9-10fab2236ce7",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615196-26y8037i4c.jpg",
+            "sortOrder": 8,
+            "description": "",
+            "isSelected": true,
+            "blockId": null
+          },
+          {
+            "id": "01a10eea-ad7a-7545-b9ad-896c5155bd65",
+            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/01a10eea-82b4-7e6e-8bdd-53c92a2d4eb2/main/1791251615134-5tdoksv0jy.jpg",
+            "sortOrder": 9,
             "description": "",
             "isSelected": true,
             "blockId": null
@@ -1753,22 +1842,6 @@
                     "description": "메인 슬라이더4",
                     "isSelected": true,
                     "blockId": null
-                  },
-                  {
-                    "id": "1d179de7-71ee-454d-9779-fb803eb78e99",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1760084694650-lswg7lpyyvd.jpg",
-                    "sortOrder": 4,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
-                  },
-                  {
-                    "id": "a5fbbb0a-650c-462f-b00b-12493dd99772",
-                    "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/main_hero/1776049349858-gcxs5vc9e1f.jpg",
-                    "sortOrder": 5,
-                    "description": "",
-                    "isSelected": true,
-                    "blockId": null
                   }
                 ],
                 "description": ""
@@ -2454,6 +2527,176 @@
             "usageType": "homepage",
             "description": "다건 팝업 생성 테스트",
             "unlimitedPeriod": false
+          },
+          {
+            "id": "01a10fd2-afdc-7679-90fe-6234361b7c74",
+            "link": "https://naver.com",
+            "title": "팝업 테스트",
+            "images": [
+              {
+                "id": "01a10fd2-b047-730c-a69a-1c3628ce7e33",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791266824878-q5p3u903uc.jpg",
+                "sortOrder": 3,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a10fd2-afdc-7679-90fe-6234361b7c74"
+              },
+              {
+                "id": "01a10fd2-b078-7b15-8d63-32a7bb4997e1",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791266824920-trllgws2vj.jpg",
+                "sortOrder": 4,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a10fd2-afdc-7679-90fe-6234361b7c74"
+              }
+            ],
+            "slider": false,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 2,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "안녕하세요. 이번달 이벤트 안내드립니다.",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a10fd9-62ab-794e-bf30-9e09ae8bff8e",
+            "link": "",
+            "title": "테스트",
+            "images": [
+              {
+                "id": "01a10fd9-62bf-7d35-a8e3-0c05756b5a00",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791267266336-6zugoiuf41.jpg",
+                "sortOrder": 5,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a10fd9-62ab-794e-bf30-9e09ae8bff8e"
+              }
+            ],
+            "slider": false,
+            "enabled": false,
+            "endDate": null,
+            "sortOrder": 3,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "테스트 입니다 !\n개행",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a10fee-817f-7740-b597-a0e20779423b",
+            "link": "",
+            "title": "팝업",
+            "images": [ ],
+            "slider": false,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 4,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a10fee-c0e7-7371-97f6-d0f0466a8e0d",
+            "link": "",
+            "title": "팝업2",
+            "images": [ ],
+            "slider": false,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 5,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a10fef-1c1d-7a27-b771-eb7e83c6a81d",
+            "link": "",
+            "title": "popup3",
+            "images": [ ],
+            "slider": false,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 6,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a10fef-5520-77a2-9096-9110a60486e0",
+            "link": "",
+            "title": "popup4",
+            "images": [ ],
+            "slider": false,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 7,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a10fef-c55f-7a71-9919-c3ce70157e31",
+            "link": "",
+            "title": "test",
+            "images": [
+              {
+                "id": "01a10fef-c577-705b-95c0-0ad8ff7d2462",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791268733598-v2m7olwl4f.jpg",
+                "sortOrder": 6,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a10fef-c55f-7a71-9919-c3ce70157e31"
+              }
+            ],
+            "slider": true,
+            "enabled": false,
+            "endDate": null,
+            "sortOrder": 8,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a10ff0-23ba-7112-a90b-9a7dfe46229b",
+            "link": "",
+            "title": "testtt",
+            "images": [ ],
+            "slider": false,
+            "enabled": true,
+            "endDate": "2026-10-30",
+            "sortOrder": 9,
+            "startDate": "2026-10-01",
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": false
+          },
+          {
+            "id": "01a10ff0-9848-7805-b032-5ef4e92ddaf6",
+            "link": "",
+            "title": "tteesstt",
+            "images": [
+              {
+                "id": "01a10ff0-9850-7018-8297-f6657ec7de8d",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791268787960-mhgpn4wmiz.jpg",
+                "sortOrder": 7,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a10ff0-9848-7805-b032-5ef4e92ddaf6"
+              }
+            ],
+            "slider": false,
+            "enabled": false,
+            "endDate": null,
+            "sortOrder": 10,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
           }
         ]
       },
