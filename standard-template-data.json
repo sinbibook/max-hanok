@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.307.0",
-    "generatedAt": "2026-10-12T09:21:11.693770389Z",
+    "version": "1.308.0",
+    "generatedAt": "2026-10-12T10:20:42.552773046Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -102,22 +102,6 @@
             "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613234-pwza1c2ilc.jpg",
             "sortOrder": 2,
             "description": "시설이미지 1에 대한 설명",
-            "isSelected": true,
-            "blockId": null
-          },
-          {
-            "id": "0d17e872-c76f-4a62-91af-f0ca2201ea1d",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-bemhe14wvq7.jpg",
-            "sortOrder": 3,
-            "description": "",
-            "isSelected": true,
-            "blockId": null
-          },
-          {
-            "id": "5174ae08-1aac-471b-9c83-522b23da92bb",
-            "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/facility/3a00278d-ed36-4da4-ba90-9cbd5ea9ba07/main/1760078613236-nmortwduvv.jpg",
-            "sortOrder": 4,
-            "description": "",
             "isSelected": true,
             "blockId": null
           }
@@ -2693,6 +2677,30 @@
             "enabled": false,
             "endDate": null,
             "sortOrder": 10,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a12f9f-41ea-7151-88c1-c683ef7636d0",
+            "link": "",
+            "title": "",
+            "width": 600,
+            "images": [
+              {
+                "id": "01a12f9f-421e-7f4d-9f4f-454db185db84",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791800327267-de9auwxsho.jpg",
+                "sortOrder": 8,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a12f9f-41ea-7151-88c1-c683ef7636d0"
+              }
+            ],
+            "slider": false,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 11,
             "startDate": null,
             "usageType": "homepage",
             "description": "",
