@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.310.0",
-    "generatedAt": "2026-10-12T10:39:36.145147341Z",
+    "version": "1.311.0",
+    "generatedAt": "2026-10-13T07:57:20.155519713Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2463,19 +2463,20 @@
           {
             "id": "01a12fad-3685-761a-9a4e-02ccd95cf91a",
             "link": "",
-            "title": "팝업크기",
-            "width": 350,
-            "images": [
+            "title": "",
+            "width": 600,
+            "images": [ ],
+            "slider": false,
+            "videos": [
               {
-                "id": "01a12fad-36dc-7c1c-94f6-cafa52b09489",
-                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791801242499-udw510v9mm.jpg",
+                "id": "01a1343e-274b-7a30-8e93-ca3d1c000415",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791877847459-ozjoi2m941.mp4",
                 "sortOrder": 0,
                 "description": "",
                 "isSelected": true,
                 "blockId": "01a12fad-3685-761a-9a4e-02ccd95cf91a"
               }
             ],
-            "slider": false,
             "enabled": true,
             "endDate": null,
             "sortOrder": 0,
