@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "version": "1.315.0",
-    "generatedAt": "2026-10-16T05:43:30.174611220Z",
+    "version": "1.316.0",
+    "generatedAt": "2026-10-16T08:17:27.619713800Z",
     "templateType": "gallery_sidebar",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
-    "name": "Max 한옥",
+    "name": "맥스 한옥펜션",
     "nameEn": "Jeju Bijasupgil15 Pension",
     "description": "",
     "subtitle": "",
@@ -2030,12 +2030,12 @@
             "sections": [
               {
                 "hero": {
-                  "title": "Max 한옥에서 다양한 부대시설을 경험해보세요.\n어릴 적 가족끼리 즐겨왔던 민속놀이,\n이젠 맥스 한옥 펜션에서 즐겨보세요",
+                  "title": "한옥펜션 맥스에서 다양한 부대시설을 경험해보세요.\n어릴 적 가족끼리 즐겨왔던 민속놀이,\n이젠 맥스 한옥 펜션에서 즐겨보세요",
                   "images": [ ],
                   "description": ""
                 },
                 "about": {
-                  "title": "Max 한옥에서 즐기는 다양한 부대시설",
+                  "title": "한옥펜션 맥스에서 즐기는 다양한 부대시설",
                   "images": [ ],
                   "description": ""
                 },
@@ -2524,7 +2524,7 @@
         }
       },
       "property": {
-        "name": "Max 한옥",
+        "name": "한옥펜션 맥스",
         "images": [
           {
             "id": "62e5fbf0-47f0-4fd5-84c8-c4f535bc4e13",
