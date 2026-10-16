@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.313.0",
-    "generatedAt": "2026-10-13T08:31:50.446953984Z",
+    "version": "1.314.0",
+    "generatedAt": "2026-10-16T05:38:26.838164209Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2035,7 +2035,7 @@
                   "description": ""
                 },
                 "about": {
-                  "title": "",
+                  "title": "Max 한옥에서 즐기는 다양한 부대시설",
                   "images": [ ],
                   "description": ""
                 },
@@ -2459,7 +2459,58 @@
         }
       },
       "popup": {
-        "popups": [ ]
+        "popups": [
+          {
+            "id": "01a13466-846d-7caf-91d7-25f4136ff882",
+            "link": "",
+            "title": "",
+            "width": 600,
+            "images": [ ],
+            "slider": true,
+            "videos": [
+              {
+                "id": "01a13466-9395-7bb3-a9c4-1c374e80ff4e",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-videos/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791880497546-lyyolwmlr7.mp4",
+                "sortOrder": 0,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a13466-846d-7caf-91d7-25f4136ff882"
+              }
+            ],
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 0,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          },
+          {
+            "id": "01a134bf-91de-70a7-b23b-92a99fa8ab7f",
+            "link": "",
+            "title": "",
+            "width": 350,
+            "images": [
+              {
+                "id": "01a134bf-91f2-7633-829f-28118b65aa22",
+                "url": "https://nbuihqqrvgfuwjxgbdym.supabase.co/storage/v1/object/public/app-images/homepage/7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c/popup/1791886330323-mq2a3xymz3.jpg",
+                "sortOrder": 0,
+                "description": "",
+                "isSelected": true,
+                "blockId": "01a134bf-91de-70a7-b23b-92a99fa8ab7f"
+              }
+            ],
+            "slider": false,
+            "videos": [ ],
+            "enabled": false,
+            "endDate": null,
+            "sortOrder": 1,
+            "startDate": null,
+            "usageType": "homepage",
+            "description": "",
+            "unlimitedPeriod": true
+          }
+        ]
       },
       "theme": {
         "font": {
