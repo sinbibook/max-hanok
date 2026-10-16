@@ -1,31 +1,49 @@
-/* ============================================================
-   pages/main.js — 펜션소개(ABOUT) 페이지 스크립트
-   페이지 내용은 원본 view.html(외경보기 / Landscape) 구조다.
-   슬라이드는 main-mapper 가 동적 생성하므로, 매핑 완료 후
-   window.initMainSwipers() 를 호출받아 초기화한다.
-   ============================================================ */
-window.initMainSwipers = function () {
-  if (typeof Swiper === 'undefined' || !window.TplSwiper) return;
+// Main Slider with Enhanced Features
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the fullscreen slider using the reusable component
+    // Store instance globally so mapper can reinitialize it
+    window.mainSliderInstance = new FullscreenSlider('.fullscreen-slider-container', {
+        slideDuration: 4000,
+        autoplay: true,
+        enableSwipe: true,
+        enableKeyboard: true
+    });
 
-  // 히어로 (풀와이드 페이드)
-  window.TplSwiper.init('mainHero', '.sub_visual_box .swiper-container', {
-    loop: true,
-    spaceBetween: 0,
-    effect: 'fade',
-    fadeEffect: { crossFade: true },
-    autoplay: { delay: 4000, disableOnInteraction: false },
-    navigation: {
-      nextEl: '.sub_visual_wide .arw_right',
-      prevEl: '.sub_visual_wide .arw_left'
+    // Initialize scroll animations
+    setupScrollAnimations();
+});
+
+// 스크롤 애니메이션 체크 함수 (재사용을 위해 전역)
+let scrollAnimationHandler = null;
+
+// 스크롤 애니메이션 설정
+function setupScrollAnimations() {
+    // 기존 이벤트 리스너 제거
+    if (scrollAnimationHandler) {
+        window.removeEventListener('scroll', scrollAnimationHandler);
+        window.removeEventListener('resize', scrollAnimationHandler);
     }
-  });
 
-  // 외경 갤러리 (페이드 자동 재생)
-  window.TplSwiper.init('mainLandscape', '.main_landscape .swiper-container_room', {
-    loop: true,
-    spaceBetween: 0,
-    effect: 'fade',
-    fadeEffect: { crossFade: true },
-    autoplay: { delay: 4000, disableOnInteraction: false }
-  });
-};
+    // 새로운 핸들러 생성
+    scrollAnimationHandler = function() {
+        const animateElements = document.querySelectorAll('.animate-element');
+        animateElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('animate');
+            }
+        });
+    };
+
+    // 초기 체크
+    scrollAnimationHandler();
+
+    // 이벤트 리스너 등록
+    window.addEventListener('scroll', scrollAnimationHandler);
+    window.addEventListener('resize', scrollAnimationHandler);
+}
+
+// 전역으로 노출
+window.setupScrollAnimations = setupScrollAnimations;

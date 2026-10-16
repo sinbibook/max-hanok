@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.314.0",
-    "generatedAt": "2026-10-16T05:38:26.838164209Z",
-    "templateType": "trip_a",
+    "version": "1.315.0",
+    "generatedAt": "2026-10-16T05:43:30.174611220Z",
+    "templateType": "gallery_sidebar",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
@@ -1530,7 +1530,7 @@
   "homepage": {
     "id": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c",
     "domain": "max-hanok.com",
-    "templateType": "trip_a",
+    "templateType": "gallery_sidebar",
     "images": [
       {
         "logo": [
@@ -2030,7 +2030,7 @@
             "sections": [
               {
                 "hero": {
-                  "title": "어릴 적 가족끼리 즐겨왔던 민속놀이,\n이젠 맥스 한옥 펜션에서 즐겨보세요",
+                  "title": "Max 한옥에서 다양한 부대시설을 경험해보세요.\n어릴 적 가족끼리 즐겨왔던 민속놀이,\n이젠 맥스 한옥 펜션에서 즐겨보세요",
                   "images": [ ],
                   "description": ""
                 },
