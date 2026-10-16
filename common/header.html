@@ -1,148 +1,119 @@
-<header id="header" class="header">
-  <div class="hd_inner">
-    <!-- 로고: 원본 사이트와 동일하게 "텍스트" 로고다 (이미지 아님).
-         서체는 styles/theme.css 의 --font-en-main 으로 제어된다.
-         data-* 속성 : data-property-name-en (getPropertyNameEn()) / data-property-name (property.name) -->
-    <div class="logo">
-      <a href="./index.html">
-        <b data-property-name-en></b>
-        <span data-property-name></span>
-      </a>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max 한옥</title>
+    <link rel="stylesheet" href="styles/header.css">
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Max 한옥" />
+  
+  <meta property="og:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta property="og:url" content="https://max-hanok.com" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Max 한옥" />
+  
+  <meta name="twitter:image" content="https://bookingplay-media-fred.s3.amazonaws.com/item_images/2021/12/06/kOscAnHqKp4e.jpg" />
+  <meta name="naver-site-verification" content="fqwffqwqfqwf" />
+  <meta name="google-site-verification" content="fqwegwegggwegewgwegweg" />
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="top-header-content">
+            <div class="hamburger-button" id="hamburger-button">
+        <div class="toggle-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
-    <div class="logo2">
-      <a href="./index.html" data-property-name-en></a>
+            <div class="logo-container" onclick="navigateTo('home')">
+                <!-- <img data-logo src="images/mutenlol_logo.png" alt="로고" class="logo-image"> -->
+                <span class="logo-text" data-logo-text></span>
+            </div>
+            <div class="booking-buttons">
+                <button class="book-now-btn" data-booking-engine>
+                    예약
+                </button>
+                <button class="ybs-btn" data-ybs-booking>
+                    YBS
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Header -->
+    <div class="side-header" id="side-header">
+        <button class="close-button" onclick="toggleSideHeader()" aria-label="메뉴 닫기"></button>
+        <div class="side-header-content">
+            <div class="side-content-top">
+                <!-- Side Header Top with Logo and Close Button -->
+                <div class="side-header-top">
+                    <div class="side-logo-container" onclick="navigateTo('home')">
+                        <span class="side-logo-text" data-logo-text></span>
+                    </div>
+                </div>
+                <div class="side-menu-grid">
+                    <!-- About Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title">About</h3>
+                        <ul class="menu-section-list">
+                            <li><a onclick="navigateTo('main')">소개</a></li>
+                            <li><a onclick="navigateTo('directions')">오시는길</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Spaces Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Spaces</h3>
+                        <ul class="menu-section-list accordion-content active" data-rooms-list>
+                            <li><a onclick="navigateTo('room')">객실명</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Specials Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title expandable active" onclick="toggleMenuAccordion(this)">Specials</h3>
+                        <ul class="menu-section-list accordion-content active" data-facilities-list>
+                            <li><a onclick="navigateTo('facility')">편의시설</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Reservation Section -->
+                    <div class="menu-section">
+                        <h3 class="menu-section-title">Reservation</h3>
+                        <ul class="menu-section-list">
+                            <li><a onclick="navigateTo('reservation')">예약안내</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Banner -->
+            <div class="side-content-bottom">
+                <!-- 숙소 외경이미지 ? 썸네일 이미지 ?  -->
+                <div class="side-image-banner" id="side-image-banner" data-side-banner-img></div>
+            </div>
+        </div>
     </div>
 
-    <div class="hd_lnb" id="hd_lnb">
-      <ul class="hd_lnb01">
-        <li class="depth1">
-          <a href="./main.html" class="depth1_a">ABOUT</a>
-          <ul class="depth_box">
-            <li><a href="./main.html">펜션소개</a></li>
-          </ul>
-        </li>
-        <li class="depth1">
-          <a href="./layout-map.html" class="depth1_a">ROOMS</a>
-          <!-- data-* 속성 : data-rooms-submenu (ROOMS 서브메뉴 컨테이너) -->
-          <ul class="depth_box" data-rooms-submenu>
-            <!-- data-* 속성 : data-menu-id="layout-map" (layoutMap enabled=false 면 숨김) -->
-            <li><a href="./layout-map.html" data-menu-id="layout-map">미리보기</a></li>
-            <!-- MAPPER: roomtypes[] → <li><a href="./room.html?id={id}"> 동적 생성 -->
-          </ul>
-        </li>
-        <li class="depth1">
-          <a href="./facility.html" class="depth1_a">SPECIAL</a>
-          <!-- data-* 속성 : data-special-submenu (SPECIAL 서브메뉴 컨테이너) -->
-          <ul class="depth_box" data-special-submenu>
-            <!-- MAPPER: facilities[] → <li><a href="./facility.html?id={id}"> 동적 생성 -->
-          </ul>
-        </li>
-      </ul>
-      <ul class="hd_lnb02">
-        <li class="depth1">
-          <!-- data-* 속성 : data-booking-link (property.realtimeBookingId) -->
-          <a href="#!" class="depth1_a" target="_blank" data-booking-link>RESERVE</a>
-          <ul class="depth_box">
-            <li><a href="#!" target="_blank" data-booking-link>예약하기</a></li>
-            <li><a href="./reservation.html">이용안내</a></li>
-          </ul>
-        </li>
-        <!-- data-* 속성 : data-travel-menu (nearbyAttractions enabled=false 면 숨김) -->
-        <li class="depth1" data-travel-menu>
-          <a href="./nearby-attractions.html" class="depth1_a">TRAVEL</a>
-          <ul class="depth_box">
-            <li>
-              <a href="./nearby-attractions.html" data-menu-id="nearby-attractions">주변여행지</a>
-            </li>
-          </ul>
-        </li>
-        <li class="depth1">
-          <a href="./directions.html" class="depth1_a">LOCATION</a>
-          <ul class="depth_box">
-            <li><a href="./directions.html">오시는길</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <!-- Side Header Overlay for all pages -->
+    <div class="side-header-overlay" id="side-header-overlay"></div>
 
-    <div class="btn_hd_res">
-      <!-- data-* 속성 : data-booking-link -->
-      <a href="#!" target="_blank" data-booking-link>예약하기</a>
-    </div>
-    <div class="btn_menu">
-      <img src="images/menu_btn2.png" alt="메뉴버튼" />
-    </div>
-  </div>
-  <!--// hd_inner -->
-  <div class="hd_lnb_bg"></div>
+    <!-- Preview Handler for Admin Integration -->
+    <script src="js/preview-handler.js"></script>
 
-  <!-- 모바일 aside -->
-  <div class="aside">
-    <a href="#" class="btn_close" style="background-image: url('images/close.png')"></a>
-    <div class="aisde_inner">
-      <div class="aside_box">
-        <div class="depth1">ABOUT</div>
-        <ul class="depth_list">
-          <li><a href="./main.html">펜션소개</a></li>
-        </ul>
+    <!-- Header Footer Mapper -->
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
 
-        <div class="depth1">ROOMS</div>
-        <!-- data-* 속성 : data-rooms-submenu (모바일 ROOMS 서브메뉴) -->
-        <ul class="depth_list" data-rooms-submenu>
-          <li><a href="./layout-map.html" data-menu-id="layout-map">미리보기</a></li>
-          <!-- MAPPER: roomtypes[] 동적 생성 -->
-        </ul>
+    <!-- Header and Footer Loader -->
+    <script src="js/header-footer-loader.js"></script>
 
-        <div class="depth1">SPECIAL</div>
-        <!-- data-* 속성 : data-special-submenu (모바일 SPECIAL 서브메뉴) -->
-        <ul class="depth_list" data-special-submenu>
-          <!-- MAPPER: facilities[] 동적 생성 -->
-        </ul>
-
-        <div class="depth1">RESERVE</div>
-        <ul class="depth_list">
-          <li><a href="#!" target="_blank" data-booking-link>예약하기</a></li>
-          <li><a href="./reservation.html">이용안내</a></li>
-        </ul>
-
-        <!-- data-* 속성 : data-travel-menu (모바일 TRAVEL 대메뉴 + 서브메뉴 묶음) -->
-        <div class="depth1" data-travel-menu>TRAVEL</div>
-        <ul class="depth_list" data-travel-menu>
-          <li>
-            <a href="./nearby-attractions.html" data-menu-id="nearby-attractions">주변여행지</a>
-          </li>
-        </ul>
-
-        <div class="depth1">LOCATION</div>
-        <ul class="depth_list">
-          <li><a href="./directions.html">오시는길</a></li>
-        </ul>
-
-        <ul class="aside_btm">
-          <li class="aside_ico01">
-            <a href="./index.html" style="background-image: url('images/i3.png')">메인</a>
-          </li>
-          <li class="aside_ico02">
-            <!-- data-* 속성 : data-booking-link -->
-            <a
-              href="#!"
-              target="_blank"
-              style="background-image: url('images/i1.png')"
-              data-booking-link
-            >
-              예약
-            </a>
-          </li>
-          <li class="aside_ico03">
-            <!-- data-* 속성 : data-footer-phone-link (property.contactPhone[0] → tel:) -->
-            <a href="tel:" style="background-image: url('images/i2.png')" data-footer-phone-link>
-              전화
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <!--// aside -->
-  <div class="aside_bg"></div>
-</header>
+    <!-- Header script -->
+    <script src="js/common/header.js"></script>
+</body>
+</html>
