@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.317.0",
-    "generatedAt": "2026-10-19T01:56:52.489891285Z",
+    "version": "1.318.0",
+    "generatedAt": "2026-10-19T06:23:55.055252617Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
@@ -2581,7 +2581,7 @@
             "category": "property_surrounding"
           }
         ],
-        "nameEn": "Jeju Bijasupgil15 Pension"
+        "nameEn": "max hanok"
       },
       "roomtypes": [
         {
