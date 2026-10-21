@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "version": "1.319.0",
-    "generatedAt": "2026-10-19T06:36:54.673540637Z",
+    "version": "1.320.0",
+    "generatedAt": "2026-10-21T02:48:28.398658072Z",
     "templateType": "trip_a",
     "propertyId": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
     "homepageId": "7a63a9df-3f9d-4b54-93bc-4d208f8c2b8c"
   },
   "property": {
     "id": "373324d8-f2fb-4cb1-a8b1-9fc3d7796624",
-    "name": "맥스 한옥펜션",
+    "name": "Max 한옥",
     "nameEn": "Jeju Bijasupgil15 Pension",
     "description": "",
     "subtitle": "",
@@ -2959,7 +2959,10 @@
           "images": [ ],
           "groupName": "C"
         }
-      ]
+      ],
+      "footer": {
+        "ruralStayMark": null
+      }
     }
   }
 }
